@@ -24,7 +24,7 @@ les reprodueix (comprovat a l'auditoria 1, §7.1).
 | `fase2/resultats/vm/llavor1-mon512x256-r2-m0.001-final.bin` | Corrent 0,001, llavor 1, final | món 512×256, corrent 0,001, llavor 1 (VM) | Entrada 4 |
 | `fase2/resultats/vm/llavor2-mon512x256-r2-m0.01-final.bin` | Corrent 0,01, llavor 2, final (palíndrom del punt) | món 512×256, corrent 0,01, llavor 2 (VM) | Entrada 4; registre de famílies v2 (prova del replicador espaiat) |
 
-Comprimides ocupen uns 48 MB en total (un 40 % menys que sense comprimir: s'assemblen força a soroll).
+Comprimides ocupen uns 48 MB en total, la meitat que sense comprimir (s'assemblen força a soroll).
 
 **On es guarda la còpia:** pendent de decidir (disc extern, núvol o *releases* de GitHub). La màquina
 virtual no serveix de còpia de seguretat, perquè és al mateix disc que el PC.

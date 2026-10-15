@@ -10,7 +10,7 @@ let generation = 0; // un reinici invalida les anàlisis que estiguin a mig fer
 
 async function compressedSize(bytes) {
   if (typeof CompressionStream === 'undefined') return null;
-  const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate'));
+  const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw'));
   return (await new Response(stream).arrayBuffer()).byteLength;
 }
 
