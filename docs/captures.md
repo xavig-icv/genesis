@@ -26,5 +26,5 @@ les reprodueix (comprovat a l'auditoria 1, §7.1).
 
 Comprimides ocupen uns 48 MB en total, la meitat que sense comprimir (s'assemblen força a soroll).
 
-**On es guarda la còpia:** pendent de decidir (disc extern, núvol o *releases* de GitHub). La màquina
+**On es guarda la còpia:** a la carpeta local `arxiu-captures/` i en un disc extern (còpia feta el 15-10-2026). La màquina
 virtual no serveix de còpia de seguretat, perquè és al mateix disc que el PC.

@@ -123,6 +123,8 @@ Dues propostes més, per després:
 | 15-10-2026 | Una sola prova de replicació (`fase2/replication.js`) per a totes les eines | `analitza.mjs` tenia una versió pròpia sense el filtre de finestres monòtones i comptava un 48 % de falsos replicadors en un món de prova (AUD-02). Cap xifra publicada no en depenia |
 | 15-10-2026 | Proves de regressió del determinisme amb empremtes fixades (`test/determinisme.mjs`) | Totes les conclusions depenen que una llavor doni sempre la mateixa història (AUD-16) |
 | 15-10-2026 | Els canvis al simulador i a les eines d'anàlisi passen per una *pull request* revisada per una persona | El desenvolupament és majoritàriament assistit per IA (AUD-25) |
+| 15-10-2026 | Llicència: Apache 2.0 per al codi i CC BY 4.0 per al quadern i la documentació, amb els crèdits a `NOTICE` | Apache 2.0 té clàusula de patents i un mecanisme estàndard d'atribució, i és la de cubff; CC BY 4.0 és l'habitual per a text científic i divulgatiu (AUD-11) |
+| 15-10-2026 | Auditories iteratives: després de cada grup de tasques, un informe de traspàs per a l'auditor (`../auditories/claude-origins/auditorN/auditM/`), el seu informe i la nostra resposta | Revisió externa contínua; les troballes conserven l'identificador entre auditories |
 | 15-10-2026 | Registre de famílies v2: es parteix de la prova de replicació sobre 512 cel·les (sol i en context amb un veí), les famílies s'agrupen pel codi compacte (només instruccions) i el nucli es recalcula a cada anàlisi | La v1 no veia els replicadors espaiats, ni els que necessiten parella, ni seguia l'evolució. Validat amb proves i amb els mons desats de l'escombrat |
 
 ## 6. Estat i resultats principals

@@ -1,0 +1,26 @@
+claude-origins
+Copyright 2026 xavig-icv i els col·laboradors de claude-origins
+
+Aquest projecte s'ha desenvolupat amb l'ajuda de Claude (Anthropic).
+
+El codi es distribueix amb la llicència Apache 2.0 (vegeu LICENSE). El quadern de laboratori
+(quadern/) i la documentació (docs/, README.md) es distribueixen amb la llicència Creative Commons
+Reconeixement 4.0 Internacional (CC BY 4.0; vegeu LICENSE-docs.md).
+
+Crèdits
+-------
+
+L'experiment de la Fase 1 reprodueix el que descriu:
+
+  Blaise Agüera y Arcas, Jyrki Alakuijala, James Evans, Ben Laurie, Alexander Mordvintsev,
+  Eyvind Niklasson, Ettore Randazzo i Luca Versari (2024). "Computational Life: How Well-formed,
+  Self-replicating Programs Emerge from Simple Interaction". arXiv:2406.19108.
+
+La semàntica del llenguatge BFF, la versió 2D de l'experiment i els paràmetres per defecte segueixen
+la implementació de referència d'aquest article, cubff (https://github.com/paradigms-of-intelligence/cubff),
+Copyright 2024 Google LLC, amb llicència Apache 2.0. claude-origins no en conté codi: n'és una
+reimplementació independent en JavaScript, contrastada amb el comportament de cubff.
+
+El generador aleatori v2 implementa xoshiro128** de David Blackman i Sebastiano Vigna (domini públic),
+inicialitzat amb una variant de SplitMix32 que fa servir el finalitzador de MurmurHash3 d'Austin Appleby
+(domini públic). El generador v1 és mulberry32 de Tommy Ettinger (domini públic).

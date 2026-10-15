@@ -1,0 +1,14 @@
+# Llicència del quadern i de la documentació
+
+El quadern de laboratori (`quadern/`), la documentació (`docs/`) i el `README.md` de claude-origins es
+distribueixen amb la llicència **Creative Commons Reconeixement 4.0 Internacional (CC BY 4.0)**.
+
+Copyright 2026 xavig-icv i els col·laboradors de claude-origins.
+
+Podeu copiar, redistribuir, adaptar i fer-ne obres derivades, per a qualsevol finalitat, també comercial,
+sempre que en reconegueu l'autoria, hi enllaceu la llicència i indiqueu si hi heu fet canvis.
+
+- Resum: <https://creativecommons.org/licenses/by/4.0/deed.ca>
+- Text legal complet: <https://creativecommons.org/licenses/by/4.0/legalcode>
+
+El codi font (inclòs el JavaScript del quadern) té la llicència Apache 2.0: vegeu `LICENSE` i `NOTICE`.

@@ -40,7 +40,8 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 - La màquina virtual rep el codi amb `bash desplega-vm.sh`, que copia exactament el commit actual i
   deixa el fitxer `VERSIO`. No despleguis mentre hi corre un lot: barrejaria versions.
 - Les captures `.bin` no van a git (vegeu `.gitignore`): es regeneren amb el mateix commit i llavor.
-- Abans de fer públic el repositori: llicència, crèdit a Agüera y Arcas et al. (2024) i treure'n les
+- Llicència: Apache 2.0 per al codi (`LICENSE`, `NOTICE` amb els crèdits) i CC BY 4.0 per al quadern i la
+  documentació (`LICENSE-docs.md`). Abans de fer públic el repositori, cal treure-hi les
   dades internes (IP de la màquina virtual, camins locals).
 
 ## Regles del projecte (vegeu `docs/disseny.md`)

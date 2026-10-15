@@ -71,3 +71,11 @@ Els experiments anteriors es van fer amb el v1 (mulberry32): per reproduir-los, 
 Les regles completes i els motius són a [docs/disseny.md](docs/disseny.md). En resum: dissenyem les
 lleis, mai els organismes; un canvi cada vegada, comparat amb la Fase 1; i un univers tancat, on els
 organismes no tenen accés al sistema, a la xarxa ni als fitxers.
+
+## Llicència i crèdits
+
+- **Codi:** Apache 2.0 (`LICENSE`).
+- **Quadern i documentació:** Creative Commons Reconeixement 4.0 (`LICENSE-docs.md`).
+- **Crèdits** (`NOTICE`): l'experiment de la Fase 1 reprodueix *Computational Life* (Agüera y Arcas et al.,
+  2024, arXiv:2406.19108) i segueix el comportament de la seva implementació de referència, cubff
+  (Google LLC, Apache 2.0). claude-origins n'és una reimplementació independent, sense codi copiat.
