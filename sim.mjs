@@ -226,7 +226,7 @@ function topBytes() {
     .map((v) => `${glyph(v)}:${((counts[v] / soup.length) * 100).toFixed(1)}%`).join(' ');
 }
 
-console.log(`codi=${codeVersion()}  rng=${rngVersion}  node=${process.version}  ordre=node sim.mjs ${process.argv.slice(2).join(' ')}`);
+console.log(`codi=${codeVersion()}  rng=${rngVersion}  node=${process.version}  zlib=${process.versions.zlib}  ordre=node sim.mjs ${process.argv.slice(2).join(' ')}`);
 console.log(`llavor=${seed} ${world ? `món=${world[0]}x${world[1]} radi=${radius} barreja=${mixing} difusió=${diffusion} riu=${flow} renovació=${renewal}` : `sopa=${nPrograms}`} mutació=${mutation}${from ? ` des de=${from} (època ${start}; branca: atzar nou amb la llavor, sense detecció de transició)` : ''}`);
 const t0 = Date.now();
 let ops = 0, runs = 0, transitionAt = -1, firstFamilyAt = -1;

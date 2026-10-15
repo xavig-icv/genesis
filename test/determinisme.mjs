@@ -48,7 +48,14 @@ const tests = {
   },
   'v1 · registre històric de la Fase 1 (fase1/resultats/llavor-1.log, època 100)'() {
     const out = sim('--rng', 'v1', '--seed', '1', '--epochs', '100', '--every', '100');
-    assert.ok(out.includes('època 100  H0=7.999  HOE=0.183  ops/execució=67.3'), out.split('\n').find((l) => l.startsWith('època 100')));
+    const line = out.split('\n').find((l) => l.startsWith('època 100')) ?? '';
+    // H0 i les operacions només depenen de la història, i es comparen exactament. L'HOE també depèn
+    // de la implementació de zlib: Node 16 (zlib 1.2.11) i Node 20 (zlib 1.3.1) donen 0.183, però
+    // Node 22 dona 0.184 (AU2-07 de l'auditoria externa 2). Per això es compara amb una tolerància.
+    assert.ok(line.startsWith('època 100  H0=7.999  HOE='), line);
+    assert.ok(line.includes('  ops/execució=67.3  '), line);
+    const hoe = Number(line.match(/HOE=([\d.]+)/)?.[1]);
+    assert.ok(Math.abs(hoe - 0.183) <= 0.002, `HOE=${hoe}: s'esperava 0.183 ± 0.002 (zlib ${process.versions.zlib})`);
   },
 
   // Generador v2 (xoshiro128**): el de les sèries noves.
