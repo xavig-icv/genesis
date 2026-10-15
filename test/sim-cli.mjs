@@ -22,6 +22,7 @@ const rejected = {
   'opció de la sopa amb --world': ['--world', '64x64', '--log2size', '12'],
   'branca que acaba abans de començar': ['--world', '64x64', '--from', 'x.bin', '--start', '100', '--epochs', '50'],
   'opció repetida': ['--seed', '1', '--seed', '2'],
+  'generador desconegut': ['--rng', 'v3'],
 };
 
 const tests = {};

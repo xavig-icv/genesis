@@ -19,32 +19,50 @@ const sim = (...args) => execFileSync(process.execPath, ['sim.mjs', ...args], { 
 const fingerprint = (out) => out.match(/empremta del món: ([0-9a-f]+)/)?.[1];
 const tmp = mkdtempSync(join(tmpdir(), 'claude-origins-'));
 
+const LAWS = ['--mixing', '0.1', '--diffusion', '0.05', '--flow', '0.3', '--renewal', '0.002'];
+const QUIET = ['--every', '1000', '--census', '1000'];
+
 const tests = {
-  'sopa barrejada (Fase 1)'() {
-    assert.strictEqual(fingerprint(sim('--seed', '1', '--log2size', '12', '--epochs', '60', '--every', '1000')), 'a1cdd7f5');
+  // Generador v1 (mulberry32): els experiments fets fins a l'auditoria 1. Aquestes empremtes es van
+  // fixar abans d'introduir el generador v2 i no poden canviar mai.
+  'v1 · sopa barrejada (Fase 1)'() {
+    assert.strictEqual(fingerprint(sim('--rng', 'v1', '--seed', '1', '--log2size', '12', '--epochs', '60', '--every', '1000')), 'a1cdd7f5');
   },
-  'sopa que imita el navegador amb 3 fils (--chunks)'() {
-    assert.strictEqual(fingerprint(sim('--seed', '2', '--log2size', '12', '--chunks', '3', '--epochs', '60', '--every', '1000')), 'a77836cc');
+  'v1 · sopa que imita el navegador amb 3 fils (--chunks)'() {
+    assert.strictEqual(fingerprint(sim('--rng', 'v1', '--seed', '2', '--log2size', '12', '--chunks', '3', '--epochs', '60', '--every', '1000')), 'a77836cc');
   },
-  'món 2D quiet (llei 1)'() {
-    assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '3', '--epochs', '80', '--every', '1000', '--census', '1000', '--save', tmp)), 'f2fb6937');
+  'v1 · món 2D quiet (llei 1)'() {
+    assert.strictEqual(fingerprint(sim('--rng', 'v1', '--world', '128x64', '--seed', '3', '--epochs', '80', ...QUIET, '--save', tmp)), 'f2fb6937');
   },
-  'món 2D amb corrents, difusió, riu i renovació (lleis 1 a 3)'() {
-    assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '4', '--epochs', '80', '--mixing', '0.1', '--diffusion', '0.05',
-      '--flow', '0.3', '--renewal', '0.002', '--every', '1000', '--census', '1000')), 'b8887bbd');
+  'v1 · món 2D amb corrents, difusió, riu i renovació (lleis 1 a 3)'() {
+    assert.strictEqual(fingerprint(sim('--rng', 'v1', '--world', '128x64', '--seed', '4', '--epochs', '80', ...LAWS, ...QUIET)), 'b8887bbd');
   },
-  'experiment de branca des d\'una captura (--from)'() {
+  'v1 · experiment de branca des d\'una captura (--from)'() {
     // fa servir la captura final del món quiet, que desa la prova anterior
-    assert.strictEqual(fingerprint(sim('--world', '128x64', '--from', join(tmp, 'llavor3-mon128x64-r2-final.bin'), '--start', '80',
-      '--epochs', '120', '--seed', '9', '--mixing', '0.01', '--every', '1000', '--census', '1000', '--after', '99999')), '2f786a9e');
+    assert.strictEqual(fingerprint(sim('--rng', 'v1', '--world', '128x64', '--from', join(tmp, 'llavor3-mon128x64-r2-final.bin'),
+      '--start', '80', '--epochs', '120', '--seed', '9', '--mixing', '0.01', ...QUIET)), '2f786a9e');
   },
-  'empremta històrica de la llei 2 (a07175f0, comprovada al navegador i a la VM)'() {
-    assert.strictEqual(fingerprint(sim('--world', '256x128', '--seed', '5', '--epochs', '30', '--every', '1000', '--census', '1000',
+  'v1 · empremta històrica de la llei 2 (a07175f0, comprovada al navegador i a la VM)'() {
+    assert.strictEqual(fingerprint(sim('--rng', 'v1', '--world', '256x128', '--seed', '5', '--epochs', '30', ...QUIET,
       '--mixing', '0.1', '--diffusion', '0.1')), 'a07175f0');
   },
-  'registre històric de la Fase 1 (fase1/resultats/llavor-1.log, època 100)'() {
-    const out = sim('--seed', '1', '--epochs', '100', '--every', '100');
+  'v1 · registre històric de la Fase 1 (fase1/resultats/llavor-1.log, època 100)'() {
+    const out = sim('--rng', 'v1', '--seed', '1', '--epochs', '100', '--every', '100');
     assert.ok(out.includes('època 100  H0=7.999  HOE=0.183  ops/execució=67.3'), out.split('\n').find((l) => l.startsWith('època 100')));
+  },
+
+  // Generador v2 (xoshiro128**): el de les sèries noves.
+  'v2 · sopa barrejada'() {
+    assert.strictEqual(fingerprint(sim('--rng', 'v2', '--seed', '1', '--log2size', '12', '--epochs', '60', '--every', '1000')), '959e7937');
+  },
+  'v2 · sopa amb --chunks 3'() {
+    assert.strictEqual(fingerprint(sim('--rng', 'v2', '--seed', '2', '--log2size', '12', '--chunks', '3', '--epochs', '60', '--every', '1000')), '573eb8f1');
+  },
+  'v2 · món 2D amb les lleis 1 a 3'() {
+    assert.strictEqual(fingerprint(sim('--rng', 'v2', '--world', '128x64', '--seed', '4', '--epochs', '80', ...LAWS, ...QUIET)), 'edfd9766');
+  },
+  'v2 és el generador per defecte'() {
+    assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '4', '--epochs', '80', ...LAWS, ...QUIET)), 'edfd9766');
   },
 };
 

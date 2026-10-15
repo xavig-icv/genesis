@@ -70,6 +70,12 @@
       </label>
       <label>Mutació <input id="mutation" type="number" value="0.024" min="0" max="5" step="0.001"> %</label>
       <label>Fils <select id="threads"></select></label>
+      <label title="v2: xoshiro128**, per a experiments nous. v1: mulberry32, el que feien servir els experiments publicats fins a l'auditoria 1">Generador
+        <select id="rng">
+          <option value="v2" selected>v2</option>
+          <option value="v1">v1 (resultats antics)</option>
+        </select>
+      </label>
     </div>
     <p class="hint">Canviar qualsevol paràmetre, tret de la mutació, reinicia el món. Amb la mateixa configuració, surt la mateixa història que a <code>node sim.mjs --world</code>.</p>
   </section>

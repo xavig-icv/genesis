@@ -23,6 +23,8 @@
 //   --chunks K       sopa barrejada: imita el navegador amb K fils (mateixa història)
 //   --save carpeta   desa la sopa en la transició i al final (.bin)
 //   --save-every N   i també cada N èpoques
+//   --rng v1|v2      generador aleatori (per defecte v2, xoshiro128**). Per reproduir els experiments
+//                    fets abans de l'auditoria 1, que feien servir mulberry32, cal --rng v1.
 //   --help           mostra aquesta ajuda
 //
 // Una opció desconeguda o un valor incorrecte aturen el programa amb un missatge d'error.
@@ -33,7 +35,7 @@ import { execSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { PROGRAM_SIZE, TAPE_SIZE, runPairs } from './fase1/bff.js';
 import {
-  DEFAULT_MUTATION, createRng, randomSoup, shuffle, gather, scatter,
+  DEFAULT_MUTATION, makeRng, RNG_VERSIONS, randomSoup, shuffle, gather, scatter,
   mutate, shannonEntropy, higherOrderEntropy, topPrograms,
 } from './fase1/soup.js';
 import { topMotifs, DATA } from './fase1/motifs.js';
@@ -76,6 +78,7 @@ const OPTIONS = {
   chunks: { type: 'int', min: 0, soupOnly: true },
   save: { type: 'str' },
   'save-every': { type: 'int', min: 0 },
+  rng: { type: 'enum', values: RNG_VERSIONS },
 };
 
 function fail(message) {
@@ -106,6 +109,8 @@ function parseArgs(argv) {
       if (spec.type === 'int' && !Number.isInteger(value)) fail(`--${name} ha de ser un nombre enter, no "${raw}"`);
       if (spec.min !== undefined && value < spec.min) fail(`--${name} ha de ser com a mínim ${spec.min}`);
       if (spec.max !== undefined && value > spec.max) fail(`--${name} ha de ser com a màxim ${spec.max}`);
+    } else if (spec.type === 'enum') {
+      if (!spec.values.includes(raw)) fail(`--${name} ha de ser ${spec.values.join(' o ')}, no "${raw}"`);
     } else if (spec.type === 'dims') {
       const m = raw.match(/^(\d+)x(\d+)$/);
       if (!m || Number(m[1]) < 2 || Number(m[2]) < 2) fail(`--${name} ha de ser AMPLADAxALÇADA, per exemple 512x256`);
@@ -124,6 +129,7 @@ function parseArgs(argv) {
 
 const args = parseArgs(process.argv.slice(2));
 const seed = args.seed ?? 1;
+const rngVersion = args.rng ?? 'v2';
 const world = args.world ?? null; // [amplada, alçada] o null
 const radius = args.radius ?? DEFAULT_RADIUS;
 const mixing = args.mixing ?? 0;
@@ -151,7 +157,7 @@ const branchTag = from ? `-des${start}` : '';
 const tag = world ? `mon${world[0]}x${world[1]}-r${radius}${lawsTag}${branchTag}-` : chunks ? `fils${chunks}-` : '';
 const save = (name) => saveDir && writeFileSync(join(saveDir, `llavor${seed}-${tag}${name}.bin`), soup);
 
-const rng = createRng(seed);
+const rng = makeRng(seed, rngVersion);
 let soup;
 if (from) {
   soup = new Uint8Array(readFileSync(from));
@@ -177,7 +183,7 @@ function soupEpoch() {
       const count = Math.min(per, nPairs - i * per);
       if (count <= 0) break;
       const part = pairs.subarray(i * per * TAPE_SIZE, (i * per + count) * TAPE_SIZE);
-      mutate(part, part.length, mutation, createRng((rng() * 4294967296) >>> 0));
+      mutate(part, part.length, mutation, makeRng((rng() * 4294967296) >>> 0, rngVersion));
     }
   } else mutate(pairs, nPairs * TAPE_SIZE, mutation, rng);
   const ops = runPairs(pairs, nPairs);
@@ -212,7 +218,7 @@ function topBytes() {
     .map((v) => `${glyph(v)}:${((counts[v] / soup.length) * 100).toFixed(1)}%`).join(' ');
 }
 
-console.log(`codi=${codeVersion()}  ordre=node sim.mjs ${process.argv.slice(2).join(' ')}`);
+console.log(`codi=${codeVersion()}  rng=${rngVersion}  node=${process.version}  ordre=node sim.mjs ${process.argv.slice(2).join(' ')}`);
 console.log(`llavor=${seed} ${world ? `món=${world[0]}x${world[1]} radi=${radius} barreja=${mixing} difusió=${diffusion} riu=${flow} renovació=${renewal}` : `sopa=${nPrograms}`} mutació=${mutation}${from ? ` des de=${from} (època ${start}; branca: atzar nou amb la llavor, sense detecció de transició)` : ''}`);
 const t0 = Date.now();
 let ops = 0, runs = 0, transitionAt = -1, firstFamilyAt = -1;

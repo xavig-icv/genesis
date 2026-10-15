@@ -1,5 +1,5 @@
 import { PROGRAM_SIZE, TAPE_SIZE } from './bff.js';
-import { createRng, randomSoup, shuffle, gather, scatter } from './soup.js';
+import { makeRng, randomSoup, shuffle, gather, scatter } from './soup.js';
 import { LineChart } from './chart.js';
 import { motifMask, renderProgram, byteLut, countInstructions } from './glyphs.js';
 
@@ -25,14 +25,16 @@ function readParams() {
     log2size: Number($('size').value),
     mutation: Math.max(0, Number($('mutation').value) || 0) / 100,
     threads: Number($('threads').value),
+    rng: $('rng').value,
   };
 }
 
 function createSim(p) {
   const n = 1 << p.log2size;
-  const rng = createRng(p.seed);
+  const rng = makeRng(p.seed, p.rng);
   return {
     n, rng,
+    rngVersion: p.rng,
     mutation: p.mutation,
     soup: randomSoup(n, rng),
     perm: new Uint32Array(n).map((_, i) => i),
@@ -79,7 +81,7 @@ async function runEpoch(s) {
     if (!buffer || buffer.byteLength !== count * TAPE_SIZE) buffer = new ArrayBuffer(count * TAPE_SIZE);
     gather(s.soup, s.perm, new Uint8Array(buffer), first, count);
     const seed = (s.rng() * 4294967296) >>> 0;
-    jobs.push(callWorker(workers[i], { buffer, nPairs: count, seed, mutation: s.mutation }).then((r) => {
+    jobs.push(callWorker(workers[i], { buffer, nPairs: count, seed, mutation: s.mutation, rng: s.rngVersion }).then((r) => {
       s.buffers[i] = r.buffer;
       scatter(s.soup, s.perm, new Uint8Array(r.buffer), first, count);
       s.opsAcc += r.ops;
@@ -336,7 +338,7 @@ $('step').addEventListener('click', async () => {
   $('play').textContent = 'Continua';
 });
 $('reset').addEventListener('click', reset);
-for (const id of ['seed', 'size', 'threads']) $(id).addEventListener('change', reset);
+for (const id of ['seed', 'size', 'threads', 'rng']) $(id).addEventListener('change', reset);
 $('mutation').addEventListener('change', () => { sim.mutation = readParams().mutation; });
 
 $('csv').addEventListener('click', () => {
