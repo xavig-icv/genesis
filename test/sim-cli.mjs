@@ -23,6 +23,9 @@ const rejected = {
   'branca que acaba abans de començar': ['--world', '64x64', '--from', 'x.bin', '--start', '100', '--epochs', '50'],
   'opció repetida': ['--seed', '1', '--seed', '2'],
   'generador desconegut': ['--rng', 'v3'],
+  // Residus de l'auditoria 2 (AUD-03)
+  'branca sense --start': ['--world', '64x64', '--from', 'x.bin', '--epochs', '50'],
+  '--save-every sense --save': ['--world', '64x64', '--save-every', '100'],
 };
 
 const tests = {};
@@ -53,6 +56,8 @@ tests['una branca no detecta transició ni s\'atura abans d\'hora (AUD-07)'] = (
     assert.strictEqual(r.status, 0, r.stderr);
     assert.ok(!r.stdout.includes('HOE >'), 'la branca ha detectat una transició');
     assert.ok(r.stdout.includes('època 60 '), 'la branca s\'ha aturat abans de l\'època final');
+    // --threshold i --after no hi tenen efecte: s'accepten (llistes antigues), però amb un avís
+    assert.ok(r.stderr.includes('Avís: --threshold') && r.stderr.includes('Avís: --after'), r.stderr);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }

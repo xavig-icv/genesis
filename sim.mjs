@@ -14,7 +14,7 @@
 //   --from fitxer    comença des d'un món desat (.bin) en lloc d'un de nou (experiments de branca).
 //                    La branca reinicia l'atzar amb --seed (no continua el de l'experiment original),
 //                    i no detecta cap "transició": el món de partida ja pot tenir vida.
-//   --start N        època del món desat (per numerar les èpoques a partir d'aquí)
+//   --start N        època del món desat (obligatòria amb --from: s'hi numeren les èpoques)
 //   --census N       món 2D: cens de famílies de replicadors cada N èpoques (per defecte 250)
 //   --mutation P     probabilitat de mutació per byte i època (per defecte 0.00024)
 //   --every N        cada quantes èpoques es mesura (per defecte 100)
@@ -22,7 +22,7 @@
 //   --after N        èpoques a seguir després de la transició (per defecte 300)
 //   --chunks K       sopa barrejada: imita el navegador amb K fils (mateixa història)
 //   --save carpeta   desa la sopa en la transició i al final (.bin)
-//   --save-every N   i també cada N èpoques
+//   --save-every N   i també cada N èpoques (només amb --save)
 //   --rng v1|v2      generador aleatori (per defecte v2, xoshiro128**). Per reproduir els experiments
 //                    fets abans de l'auditoria 1, que feien servir mulberry32, cal --rng v1.
 //   --help           mostra aquesta ajuda
@@ -123,7 +123,15 @@ function parseArgs(argv) {
     if (OPTIONS[name].soupOnly && out.world) fail(`--${name} només té sentit a la sopa barrejada (sense --world)`);
   }
   if (out.start !== undefined && out.from === undefined) fail('--start només té sentit amb --from');
+  if (out.from !== undefined && out.start === undefined) fail('--from necessita --start (l\'època del món desat), per numerar bé les èpoques');
   if (out.from !== undefined && (out.epochs ?? 16000) <= (out.start ?? 0)) fail('--epochs ha de ser més gran que --start (és l\'època final, no el nombre d\'èpoques)');
+  if (out['save-every'] !== undefined && out.save === undefined) fail('--save-every només té sentit amb --save');
+  // Les llistes de branca antigues porten --after 99999: no es rebutja, però s'avisa (residu d'AUD-03)
+  if (out.from !== undefined) {
+    for (const name of ['threshold', 'after']) {
+      if (name in out) console.error(`Avís: --${name} no té efecte en una branca (--from), perquè no hi ha detecció de transició`);
+    }
+  }
   return out;
 }
 
