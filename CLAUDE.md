@@ -43,6 +43,12 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 - Llicència: Apache 2.0 per al codi (`LICENSE`, `NOTICE` amb els crèdits) i CC BY 4.0 per al quadern i la
   documentació (`LICENSE-docs.md`). Abans de fer públic el repositori, cal treure-hi les
   dades internes (IP de la màquina virtual, camins locals).
+- Auditories externes iteratives a `../auditories/claude-origins/auditor1/auditN/`. En acabar cada grup
+  de tasques, deixa-hi un `informe-de-traspas.md` (commits, estat de cada troballa AUD-xx, què cal
+  revisar). Quan arribi l'informe de l'auditor, comprova'n les afirmacions amb dades i respon a
+  `resposta-equip.md`. Les troballes conserven l'identificador entre auditories.
+- El protocol de la sèrie confirmatòria (`docs/protocol-estadistic.md`) no es llança fins que l'auditoria
+  l'hagi revisat.
 
 ## Regles del projecte (vegeu `docs/disseny.md`)
 
