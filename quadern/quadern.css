@@ -1,0 +1,92 @@
+/* El quadern reutilitza els colors i components de fase1/style.css
+   i hi afegeix la tipografia de lectura i el microscopi. */
+
+body { max-width: 860px; }
+
+article { margin-bottom: 48px; }
+article > header { margin: 8px 0 28px; padding-bottom: 20px; border-bottom: 1px solid var(--grid); }
+article > header .date { margin: 0 0 4px; color: var(--muted); font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; }
+article h1 { font-size: 34px; }
+article h2 { font-size: 21px; margin: 40px 0 10px; }
+article p, article li { color: var(--text-2); font-size: 16.5px; line-height: 1.65; max-width: 70ch; }
+article p strong, article li strong { color: var(--text); }
+article ul { padding-left: 20px; }
+article li { margin: 6px 0; }
+.lede { font-size: 18px; }
+
+.params { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 16px 0; }
+.param { padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.param b { display: block; font-size: 18px; color: var(--text); }
+.param span { font-size: 13px; color: var(--text-2); }
+
+.figure { margin: 20px 0; }
+.figure .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 720px) { .figure .grid2 { grid-template-columns: minmax(0, 1fr); } }
+.figure figcaption { font-size: 13px; color: var(--text-2); margin-top: 8px; }
+
+.specimen {
+  margin: 18px 0;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: clamp(11px, 2.3vw, 17px);
+  letter-spacing: 0.08em;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.specimen .mirror { display: block; margin-top: 6px; font-size: 13px; letter-spacing: 0.02em; color: var(--muted); font-family: system-ui, sans-serif; white-space: normal; }
+
+.bars { display: grid; gap: 8px; margin: 16px 0; max-width: 560px; }
+.bar { display: grid; grid-template-columns: 210px minmax(0, 1fr) 56px; gap: 10px; align-items: center; font-size: 14px; color: var(--text-2); }
+.bar .track { height: 12px; background: var(--grid); border-radius: 4px; overflow: hidden; }
+.bar .fill { height: 100%; background: var(--series-1); border-radius: 0 4px 4px 0; }
+.bar .val { text-align: right; font-weight: 650; color: var(--text); font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) { .bar { grid-template-columns: 1fr 48px; } .bar .track { grid-column: 1 / -1; grid-row: 2; } }
+
+.g.x175 { color: var(--text-2); font-weight: 700; }
+
+.pending { border-left: 3px solid var(--axis); padding: 4px 0 4px 14px; }
+
+/* Microscopi */
+.microscope { margin: 18px 0; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.ms-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.ms-tape { display: grid; gap: 4px; }
+.ms-label { font-weight: 650; font-size: 14px; margin-top: 6px; }
+.ms-label span { font-weight: 400; color: var(--muted); margin-left: 6px; }
+.ms-row { display: grid; grid-template-columns: repeat(32, minmax(0, 1fr)); gap: 2px; }
+.ms-cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 0.8;
+  min-width: 0;
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: clamp(9px, 1.7vw, 15px);
+  border-radius: 3px;
+  background: var(--page);
+}
+.ms-cell.w { background: color-mix(in srgb, var(--op-copy) 22%, var(--page)); }
+.ms-cell.pc { outline: 2px solid var(--text); outline-offset: -1px; }
+.ms-cell.h0::after, .ms-cell.h1::before {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  height: 3px;
+  border-radius: 2px;
+}
+.ms-cell.h0::after { left: 0; right: 50%; background: var(--text); }
+.ms-cell.h1::before { left: 50%; right: 0; background: var(--muted); }
+.ms-keys { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; font-size: 13px; color: var(--text-2); }
+.ms-keys span { display: inline-flex; align-items: center; gap: 6px; }
+.ms-keys i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; }
+.ms-keys .k-pc { outline: 2px solid var(--text); outline-offset: -2px; }
+.ms-keys .k-h0 { height: 4px; background: var(--text); }
+.ms-keys .k-h1 { height: 4px; background: var(--muted); }
+.ms-keys .k-w { background: color-mix(in srgb, var(--op-copy) 22%, var(--page)); }
+.ms-note { min-height: 3.2em; margin: 12px 0 2px; color: var(--text); font-size: 15px; }
+.ms-stats { margin: 0; font-size: 13px; color: var(--muted); }
+
+nav.toc { margin: 0 0 20px; font-size: 14px; }
+nav.toc a { margin-right: 14px; }

@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quadern de laboratori</title>
+  <link rel="stylesheet" href="../fase1/style.css">
+  <link rel="stylesheet" href="quadern.css">
+</head>
+<body>
+  <p class="eyebrow">claude-origins · Quadern de laboratori</p>
+  <nav class="toc" aria-label="Enllaços">
+    <a href="../fase1/">Obre la sopa</a>
+    <a href="#entrada-1">Entrada 1</a>
+    <a href="#entrada-2">Entrada 2</a>
+    <a href="#entrada-3">Entrada 3</a>
+    <a href="#entrada-4">Entrada 4</a>
+    <a href="#entrada-5">Entrada 5</a>
+  </nav>
+
+  <article id="entrada-1">
+    <header>
+      <p class="date">Entrada 1 · 14 d'octubre de 2026</p>
+      <h1>La sopa cobra vida</h1>
+      <p class="lede">Una sopa de 131.072 programes aleatoris. Ningú no hi ha escrit cap replicador i ningú no premia copiar-se. Després de 190 èpoques, la sopa s'omple de còpies d'un programa que ningú no havia dissenyat.</p>
+    </header>
+
+    <h2>La pregunta</h2>
+    <p>Pot aparèixer un programa que es copiï a si mateix en una sopa de bytes aleatoris, sense que ningú l'escrigui i sense cap premi per fer-ho? El 2024, un equip de Google va dir que sí. Abans de construir el nostre univers, volíem veure-ho amb els nostres propis ulls. Aquest experiment és el nostre <strong>grup de control</strong>: la base amb què compararem totes les lleis que inventem després.</p>
+
+    <h2>El muntatge</h2>
+    <p>Hem reproduït l'experiment amb els mateixos paràmetres que l'article original:</p>
+    <div class="params">
+      <div class="param"><b>131.072</b><span>programes a la sopa</span></div>
+      <div class="param"><b>64 bytes</b><span>per programa</span></div>
+      <div class="param"><b>10</b><span>instruccions del llenguatge BFF</span></div>
+      <div class="param"><b>0,024 %</b><span>de mutació per byte i època</span></div>
+      <div class="param"><b>8.192</b><span>passos màxims per execució</span></div>
+    </div>
+    <p>A cada època, els programes s'aparellen a l'atzar. Cada parella s'enganxa en una cinta de 128 bytes i s'executa. El codi i les dades comparteixen la cinta, així que un programa pot reescriure el seu company.</p>
+    <p>Abans de fiar-nos de cap resultat, hem verificat el motor amb 13 proves automàtiques. La més important compara el nostre intèrpret, optimitzat per anar de pressa, amb una versió lenta calcada del codi original dels autors. Hem provat 20.000 cintes aleatòries i coincideixen byte a byte.</p>
+
+    <h2>El resultat</h2>
+    <p>Amb la llavor 1, durant 190 èpoques no passa res d'especial. L'entropia d'ordre superior, que mesura quanta estructura repetida hi ha a la sopa, puja molt a poc a poc. I llavors, en unes 30 èpoques, salta de 0,28 a 3,07 bits per byte. Alhora, les instruccions executades per parella passen de 76 a més de 600: els programes han començat a fer feina de veritat.</p>
+    <div class="figure">
+      <div class="grid2">
+        <figure class="card">
+          <figcaption style="margin:0 0 10px"><span class="title">Entropia d'ordre superior</span><span class="sub">Bits per byte</span></figcaption>
+          <div id="q-hoe"></div>
+        </figure>
+        <figure class="card">
+          <figcaption style="margin:0 0 10px"><span class="title">Operacions per execució</span><span class="sub">Mitjana per parella</span></figcaption>
+          <div id="q-ops"></div>
+        </figure>
+      </div>
+      <figcaption>Llavor 1, 7 fils. El resultat és reproduïble: amb la mateixa llavor, mida i nombre de fils, la transició torna a passar a la mateixa època.</figcaption>
+    </div>
+
+    <h2>El replicador</h2>
+    <p>Hem buscat els fragments de codi més repetits de la sopa i n'hem extret un exemplar. El nucli fa 39 bytes:</p>
+    <div class="specimen" aria-label="Nucli del replicador">
+      <span class="g arith">-</span><span class="g data">···</span><span class="g loop">[</span><span class="g data">··</span><span class="g copy">,</span><span class="g head">&lt;</span><span class="g data">·</span><span class="g head">}</span><span class="g loop">]</span><span class="g data">·······</span><span class="g loop">]</span><span class="g data">·······</span><span class="g loop">]</span><span class="g head">}</span><span class="g data">·</span><span class="g head">&lt;</span><span class="g copy">,</span><span class="g data">··</span><span class="g loop">[</span><span class="g data">···</span><span class="g arith">-</span>
+      <span class="mirror">Els punts són bytes de dades. Llegit d'esquerra a dreta o de dreta a esquerra, és el mateix (35 de 39 bytes coincideixen; els altres 4 són mutacions).</span>
+    </div>
+    <p><strong>És un palíndrom</strong>, com «Senén té sis nens i set nenes». No és casualitat. Funciona així:</p>
+    <ul>
+      <li><strong>El <code>-</code> inicial</strong> resta 1 al primer byte de la cinta. Si era 0, passa a ser 255, i això garanteix que el bucle arrencarà.</li>
+      <li><strong>El bucle <code>[ , &lt; } ]</code></strong> fa la còpia. A cada volta, head1 llegeix un byte i avança cap a la dreta, i head0 l'escriu i retrocedeix cap a l'esquerra. Com que head0 comença a la posició 0 i, en retrocedir, dona la volta fins al final de la cinta, el programa s'escriu <strong>al revés</strong> dins del seu company.</li>
+      <li><strong>La còpia surt invertida</strong>, i només un palíndrom sobreviu intacte a una còpia invertida. Per això la selecció ha triat un programa que es llegeix igual en tots dos sentits. Ningú no ho ha dissenyat: és la solució que ha trobat la sopa.</li>
+    </ul>
+    <p>L'equip de Google va trobar un replicador semblant, també palíndrom: <code>[[{.&gt;]-]&nbsp;&nbsp;]-]&gt;.{[[</code>. El nostre fa servir l'altra instrucció de còpia (<code>,</code> en lloc de <code>.</code>) i intercanvia els papers dels dos caps. És la mateixa estratègia amb una implementació diferent, com quan l'evolució inventa l'ull diverses vegades.</p>
+
+    <h2>El microscopi</h2>
+    <p>Aquí tens el replicador real, amb els seus 64 bytes, aparellat amb un company aleatori. Prem <strong>Reprodueix</strong> i mira com el bucle va escrivint, de dreta a esquerra, una còpia invertida dins de B. Les cel·les de color blau clar són els bytes reescrits.</p>
+    <div id="microscopi"></div>
+    <p>Fixa't en dues coses. Primer, la còpia comença pel final de B i avança cap a l'esquerra. Segon, el replicador només funciona quan va <strong>primer</strong> a la parella. Quan va segon, el company sol aturar l'execució abans d'arribar-hi: en 2.000 proves, no es va copiar ni un sol cop.</p>
+
+    <h2>Còpies trencades</h2>
+    <p>A l'època 301 hem classificat tots els programes de la sopa segons quines meitats del palíndrom contenen:</p>
+    <div class="bars" role="list">
+      <div class="bar" role="listitem"><span>Les dues meitats</span><div class="track"><div class="fill" style="width:15.5%"></div></div><span class="val">15,5 %</span></div>
+      <div class="bar" role="listitem"><span>Només la meitat mirall</span><div class="track"><div class="fill" style="width:34.2%"></div></div><span class="val">34,2 %</span></div>
+      <div class="bar" role="listitem"><span>Només la meitat original</span><div class="track"><div class="fill" style="width:7.7%"></div></div><span class="val">7,7 %</span></div>
+      <div class="bar" role="listitem"><span>Cap de les dues</span><div class="track"><div class="fill" style="width:42.7%"></div></div><span class="val">42,7 %</span></div>
+    </div>
+    <p>Per què hi ha tants programes amb només mig replicador? Ho hem comprovat. El bucle s'atura quan el byte on ha d'escriure és un <strong>0</strong>. Si el company té un zero al lloc equivocat, la còpia queda a mitges. En 2.000 proves amb companys sense cap zero, la còpia va sortir completa el 100 % de les vegades. I en les proves amb companys aleatoris, totes les còpies a mitges tenien algun zero al company.</p>
+    <p>Aquestes còpies trencades ja no es poden replicar, però omplen la sopa. Recorden els pseudogens del nostre ADN: còpies antigues de gens que van deixar de funcionar i que continuem portant a dins.</p>
+
+    <h2>Altres llavors</h2>
+    <p>Hem fet córrer tres sopes més (llavors 1, 2 i 3, sense gràfics), fins a 16.000 èpoques cadascuna. A l'article original, només un 40 % de les sopes fan la transició dins d'aquest temps.</p>
+    <p class="pending" id="altres-llavors"><strong>Corregit a l'<a href="#entrada-2">entrada 2</a>: no era una inundació, era un replicador que es va extingir.</strong> Deixem el text original tal com estava:<br><strong>Llavor 3: un esdeveniment estrany a l'època 9.000.</strong> L'entropia d'ordre superior va superar el llindar (1,46 bits), però de seguida va tornar a baixar (0,67 bits 300 èpoques després). L'entropia de Shannon va caure de 7,5 a 5,4 bits, i els programes més repetits eren un sol caràcter repetit: <code>[[[[[[…</code> i <code>&lt;&lt;&lt;&lt;&lt;&lt;…</code>. Les operacions per execució amb prou feines van pujar. Tot plegat fa pensar en una <strong>inundació</strong> d'un byte repetit, no en un replicador. Encara és una hipòtesi: estem repetint l'experiment amb més detall per comprovar-ho.</p>
+    <p><strong>Llavor 1 (sense gràfics): transició a l'època 16.000</strong>, just al final. 479 còpies idèntiques del mateix programa, un altre palíndrom: <code>[ ,[  &lt;,}  …  ]   ]  …  },&lt;  [, [</code>. Fa servir el mateix bucle de còpia (<code>, &lt; }</code>), però l'estructura és diferent de la del navegador. <strong>Confirmat:</strong> en repetir-ho i seguir 800 èpoques més, l'entropia d'ordre superior es manté al voltant de 3 bits. A l'època 16.800, només 47.382 dels 131.072 programes són diferents; la resta són còpies.</p>
+    <p><strong>Llavor 2: cap transició</strong> en 16.000 èpoques.</p>
+    <p class="sub">Per què la llavor 1 dona resultats diferents al navegador i aquí? Perquè el navegador reparteix la feina entre 7 fils, i cada fil fa servir la seva pròpia seqüència aleatòria per a les mutacions. Amb la mateixa llavor surten dues històries diferents, cadascuna reproduïble.</p>
+
+    <h2>Preguntes per a la Fase 2</h2>
+    <ul>
+      <li><strong>L'ordre importa.</strong> El replicador només funciona quan va primer. La meitat de les trobades no li serveixen de res. Un món on l'ordre no importés, canviaria el tipus de vida que hi apareix?</li>
+      <li><strong>Reproducció amb un altre, però no entre iguals.</strong> Aquí cada còpia necessita un company, però la relació és asimètrica: un programa escriu sobre l'altre i el converteix en una còpia de si mateix. S'assembla més a un virus que a una parella. És just el contrari del que buscàvem amb la reproducció obligada entre dos, i per això és un bon punt de partida.</li>
+      <li><strong>Els zeros fan d'escut.</strong> Un programa amb zeros al lloc adequat atura les còpies. Si en un món amb més temps i espai sorgissin programes "immunes", vindrien replicadors capaços de saltar-se l'escut? Seria una cursa d'armaments, com la dels virus i els sistemes immunitaris.</li>
+      <li><strong>Després de la conquesta.</strong> Un cop el replicador ho omple tot, l'entropia d'ordre superior baixa a poc a poc. La sopa es torna a diversificar. Què hi està evolucionant?</li>
+    </ul>
+  </article>
+
+  <article id="entrada-2">
+    <header>
+      <p class="date">Entrada 2 · 14 d'octubre de 2026, vespre</p>
+      <h1>La vida que es va enverinar</h1>
+      <p class="lede">La llavor 3 va crear vida a l'època 8.950. Mil cinc-centes èpoques després, gairebé no en quedava res. No la va matar ningú: es va enverinar ella mateixa.</p>
+    </header>
+
+    <h2>Una correcció</h2>
+    <p>A l'entrada 1 vam dir que l'esdeveniment de la llavor 3 semblava una <em>inundació</em> d'un byte repetit, i no un replicador. <strong>Ens vam equivocar.</strong> Per comprovar-ho, vam repetir l'experiment (amb la mateixa llavor surt la mateixa història) i vam desar la sopa sencera en el moment exacte de l'esdeveniment. Després vam posar a prova 4.000 programes, un per un: cadascun s'aparellava amb companys aleatoris i miràvem si hi deixava una còpia de si mateix.</p>
+    <p>El resultat: a l'època 8.950, <strong>el 27,6 % dels programes eren replicadors</strong> que funcionaven, amb èxits del 85 al 100 %. El byte 175 que inundava la sopa no era soroll: formava part del replicador, i es copiava amb ell.</p>
+
+    <h2>Tres sopes, tres palíndroms</h2>
+    <p>Ja tenim tres replicadors nascuts en tres sopes que no tenien res en comú. Els tres són palíndroms:</p>
+    <div class="specimen">
+      <span class="g arith">-</span><span class="g data">···</span><span class="g loop">[</span><span class="g data">··</span><span class="g copy">,</span><span class="g head">&lt;</span><span class="g data">·</span><span class="g head">}</span><span class="g loop">]</span><span class="g data">·······</span><span class="g loop">]</span><span class="g data">·······</span><span class="g loop">]</span><span class="g head">}</span><span class="g data">·</span><span class="g head">&lt;</span><span class="g copy">,</span><span class="g data">··</span><span class="g loop">[</span><span class="g data">···</span><span class="g arith">-</span>
+      <span class="mirror">Llavor 1, navegador · 39 bytes · època 190</span>
+    </div>
+    <div class="specimen">
+      <span class="g loop">[</span><span class="g data">·</span><span class="g copy">,</span><span class="g loop">[</span><span class="g data">··</span><span class="g head">&lt;</span><span class="g copy">,</span><span class="g head">}</span><span class="g data">·············</span><span class="g loop">]</span><span class="g data">···</span><span class="g loop">]</span><span class="g data">·············</span><span class="g head">}</span><span class="g copy">,</span><span class="g head">&lt;</span><span class="g data">··</span><span class="g loop">[</span><span class="g copy">,</span><span class="g data">·</span><span class="g loop">[</span>
+      <span class="mirror">Llavor 1, sense gràfics · 49 bytes · època 16.000</span>
+    </div>
+    <div class="specimen">
+      <span class="g loop">[</span><span class="g head">}</span><span class="g data">·</span><span class="g copy">,</span><span class="g data">····</span><span class="g x175">xxxxxx</span><span class="g data">····</span><span class="g head">&lt;</span><span class="g data">·</span><span class="g loop">]]</span><span class="g data">·</span><span class="g head">&lt;</span><span class="g data">····</span><span class="g x175">xxxxxx</span><span class="g data">····</span><span class="g copy">,</span><span class="g data">·</span><span class="g head">}</span><span class="g loop">[</span>
+      <span class="mirror">Llavor 3 · 42 bytes · època 8.950 · cada <b>x</b> és un byte de valor 175</span>
+    </div>
+    <p>Fixa't en les instruccions de còpia: els tres combinen <code>,</code> (copiar de head1 a head0), <code>&lt;</code> (head0 retrocedeix) i <code>}</code> (head1 avança). És el mateix mecanisme de còpia invertida, descobert tres vegades per separat. En biologia se'n diu <strong>evolució convergent</strong>: quan un problema té poques bones solucions, la vida les acaba trobant per camins diferents.</p>
+
+    <h2>El col·lapse</h2>
+    <div class="figure">
+      <figure class="card">
+        <figcaption style="margin:0 0 10px"><span class="title">Entropia d'ordre superior, llavor 3</span><span class="sub">Bits per byte, de l'època 8.500 a la 10.450</span></figcaption>
+        <div id="q-seed3"></div>
+      </figure>
+      <figcaption>En 50 èpoques, l'entropia salta de 0,29 a 1,88 bits. Després cau de manera sostinguda fins a 0,11, per sota i tot del nivell d'abans de l'aparició.</figcaption>
+    </div>
+    <p>A l'època 10.450 vam repetir la prova de replicació: només 2 de cada 4.000 programes encara es podien copiar. <strong>El replicador s'havia extingit gairebé del tot.</strong></p>
+
+    <h2>Què el va matar</h2>
+    <p>Vam agafar 150 replicadors fiables de l'època 8.950 i els vam enfrontar a companys de tres orígens diferents. Els replicadors són sempre els mateixos; només canvia el món on viuen:</p>
+    <div class="bars" role="list">
+      <div class="bar" role="listitem"><span>Companys de soroll aleatori</span><div class="track"><div class="fill" style="width:93.5%"></div></div><span class="val">93,5 %</span></div>
+      <div class="bar" role="listitem"><span>Companys de la sopa a l'època 8.950</span><div class="track"><div class="fill" style="width:75.8%"></div></div><span class="val">75,8 %</span></div>
+      <div class="bar" role="listitem"><span>Companys de la sopa a l'època 10.450</span><div class="track"><div class="fill" style="width:6.2%"></div></div><span class="val">6,2 %</span></div>
+    </div>
+    <p>El món s'havia tornat hostil. La causa principal són els <strong>zeros</strong>. Ja sabíem, per l'entrada 1, que un zero al company atura el bucle de còpia. Amb els companys de la sopa final, l'èxit de la còpia cau en picat com més zeros tenen:</p>
+    <div class="bars" role="list">
+      <div class="bar" role="listitem"><span>Cap zero</span><div class="track"><div class="fill" style="width:100%"></div></div><span class="val">100 %</span></div>
+      <div class="bar" role="listitem"><span>1 zero</span><div class="track"><div class="fill" style="width:37%"></div></div><span class="val">37 %</span></div>
+      <div class="bar" role="listitem"><span>2 zeros</span><div class="track"><div class="fill" style="width:16%"></div></div><span class="val">16 %</span></div>
+      <div class="bar" role="listitem"><span>3 zeros</span><div class="track"><div class="fill" style="width:13%"></div></div><span class="val">13 %</span></div>
+      <div class="bar" role="listitem"><span>4 zeros</span><div class="track"><div class="fill" style="width:9%"></div></div><span class="val">9 %</span></div>
+      <div class="bar" role="listitem"><span>5 o més zeros</span><div class="track"><div class="fill" style="width:2%"></div></div><span class="val">&lt; 5 %</span></div>
+    </div>
+    <p>I d'on venen els zeros? <strong>Del mateix replicador.</strong> Cada vegada que es copia en un company aleatori, hi deixa uns 6 zeros de mitjana, que probablement arrossega dels marges del seu propi programa. Abans de l'aparició, el zero ni tan sols era entre els tres bytes més freqüents de la sopa (menys del 3,1 %). Al pic eren el 9,7 %, i al final, el 13,3 %. Cada còpia feia el món una mica més difícil per a les còpies següents, fins que gairebé cap no se'n va sortir.</p>
+    <p>És com els llevats que fan el vi: es multipliquen menjant sucre i produeixen alcohol, i quan n'hi ha prou, l'alcohol els mata. Una precisió honesta: és l'explicació que encaixa amb totes les dades, però no l'hem demostrat amb un experiment d'intervenció (per exemple, netejar els zeros i veure si el replicador sobreviu).</p>
+    <p>Un detall: amb companys de la sopa al pic, que de mitjana tenien 6 zeros, l'èxit encara era del 76 %. Per tant, no compta només quants zeros hi ha, sinó també <strong>on</strong> són. La nostra hipòtesi, encara per comprovar, és aquesta: al principi, molts zeros eren als llocs "segurs" de les còpies del mateix replicador, i amb el temps, les mutacions i les còpies trencades els van anar escampant pels llocs que bloquegen.</p>
+
+    <h2>I el replicador del navegador?</h2>
+    <p id="seed1-llarg">El nostre simulador sense gràfics ara imita exactament el navegador amb 7 fils: reprodueix la transició a l'època 190 amb el mateix fragment. Així hem pogut seguir el replicador de la llavor 1 molt més enllà.</p>
+    <p>Al principi va pel mateix camí que el de la llavor 3. Els zeros pugen fins al 13,5 % de la sopa, i el seu fragment passa de ser al 47 % dels programes a l'11 %. Però a l'època 575 passa una cosa nova: <strong>apareix un replicador successor i, en 25 èpoques, ocupa el 92 % de la sopa.</strong> La diferència està en una peça petita: una instrucció <code>-</code> col·locada dins de la zona del bucle de còpia.</p>
+    <div class="bars" role="list" aria-label="Èxit de còpia segons els zeros del company">
+      <div class="bar" role="listitem"><span>Vell, company amb 2 zeros</span><div class="track"><div class="fill" style="width:56%"></div></div><span class="val">56 %</span></div>
+      <div class="bar" role="listitem"><span>Nou, company amb 2 zeros</span><div class="track"><div class="fill" style="width:96%"></div></div><span class="val">96 %</span></div>
+      <div class="bar" role="listitem"><span>Vell, company amb 8 zeros</span><div class="track"><div class="fill" style="width:10%"></div></div><span class="val">10 %</span></div>
+      <div class="bar" role="listitem"><span>Nou, company amb 8 zeros</span><div class="track"><div class="fill" style="width:92%"></div></div><span class="val">92 %</span></div>
+      <div class="bar" role="listitem"><span>Vell, contra la sopa enverinada</span><div class="track"><div class="fill" style="width:18%"></div></div><span class="val">18 %</span></div>
+      <div class="bar" role="listitem"><span>Nou, contra la sopa enverinada</span><div class="track"><div class="fill" style="width:83%"></div></div><span class="val">83 %</span></div>
+    </div>
+    <p>Quan el bucle de còpia topa amb un zero i s'atura, el <code>-</code> el converteix en 255, i el bucle pot continuar. En companys que tenien uns 6 zeros, després de la còpia n'hi queden 0, i hi apareixen uns 5 bytes de valor 255. <strong>El replicador nou ha evolucionat immunitat al verí</strong>, i a més el neutralitza allà on passa. Ningú no li ha ensenyat: les variants que se'n sortien en un món ple de zeros són les que van quedar.</p>
+    <p>Per tant, la vida de la llavor 1 no es va extingir: es va adaptar. L'hem seguit fins a l'època 1.650 i el successor immune es manté estable: és al 87 % dels programes, amb l'entropia d'ordre superior a 3,11 bits. Ara, però, cada execució fa més de 4.000 operacions (abans, unes 680), i cada època triga uns 7 segons. Vam aturar la simulació aquí perquè el panorama ja era clar.</p>
+
+    <h2>Què ens diu per a la Fase 2</h2>
+    <ul>
+      <li><strong>Un món tancat acumula residus.</strong> Aquí ningú no neteja els zeros, i la primera vida s'ofega en les seves pròpies deixalles. És exactament la intuïció de les <strong>forces externes</strong>: a la Terra, el Sol, la pluja i els corrents renoven el medi constantment. Una llei que renovi la sopa (per exemple, un "sol" que injecti bytes frescos o un corrent que s'emporti els residus) podria fer que la vida fos sostenible.</li>
+      <li><strong>L'espai com a refugi.</strong> En una sopa ben barrejada, el verí arriba a tot arreu alhora. En un món amb geografia, un replicador podria enverinar el seu racó i colonitzar-ne un altre de net, com fan moltes espècies reals.</li>
+      <li><strong>Defenses que ningú no ha dissenyat.</strong> Els zeros funcionen com un sistema immunitari accidental: ningú no els hi ha posat per defensar-se, però protegeixen els programes de ser sobreescrits. Si el món durés prou, sorgirien replicadors capaços de saltar-se aquesta defensa?</li>
+    </ul>
+  </article>
+
+  <article id="entrada-3">
+    <header>
+      <p class="date">Entrada 3 · 14 d'octubre de 2026, nit</p>
+      <h1>El món 2D: primer intent, silenci</h1>
+      <p class="lede">Hem posat la mateixa química en un mapa on cada programa només es troba amb els veïns. En tres mons i 16.000 èpoques, no ha nascut res.</p>
+    </header>
+
+    <h2>El muntatge</h2>
+    <p>És la <strong>llei 1</strong>, l'espai. Hi ha els mateixos 131.072 programes que a la sopa, ara en un mapa de 512 × 256 cel·les. A cada època, cada cel·la tria un veí a l'atzar, com a molt a dues cel·les de distància. Si el veí està lliure, s'aparellen. Com que no sempre està lliure, cada època s'aparellen el 75 % de les cel·les, mentre que a la sopa ho fan totes. La química, la mutació i el límit de passos són idèntics als de la Fase 1.</p>
+
+    <h2>El resultat</h2>
+    <p>Hem fet córrer tres mons (llavors 1, 2 i 3) durant 16.000 èpoques. L'entropia d'ordre superior s'hi ha mantingut tota l'estona al voltant de 0,28 bits, el mateix nivell que a la sopa abans de la vida.</p>
+    <p>En un món amb espai, però, la vida podria ser <strong>local</strong>: una colònia petita en un racó gairebé no mouria la mesura global. Per això hem fet la prova de replicació a 6.000 cel·les a l'atzar de cada captura (èpoques 4.000, 8.000, 12.000 i 16.000) i hem passat el registre de famílies per tot el mapa. Resultat: <strong>cap família</strong> en cap dels tres mons. Només hi ha un cas aïllat, a la llavor 2 i l'època 8.000: un programa que es copiava amb èxit en una prova, i que no va arribar a formar colònia.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Llavor</th><th style="text-align:left">Sopa barrejada (Fase 1)</th><th style="text-align:left">Món 2D (Fase 2a)</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">1</td><td style="text-align:left">vida a l'època 16.000</td><td style="text-align:left">res</td></tr>
+          <tr><td style="text-align:left">2</td><td style="text-align:left">res</td><td style="text-align:left">res</td></tr>
+          <tr><td style="text-align:left">3</td><td style="text-align:left">vida a l'època 8.950 (extingida)</td><td style="text-align:left">res</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Què en podem dir, i què no</h2>
+    <p>La temptació és concloure que l'espai fa més difícil que neixi la vida. <strong>Encara no ho podem afirmar.</strong> Per tres motius:</p>
+    <ul>
+      <li><strong>Pocs casos.</strong> Dos de tres contra zero de tres pot ser casualitat. A la sopa, la vida neix de manera molt irregular: una vegada a l'època 190, una altra a la 8.950, una altra a la 16.000, i una no gens.</li>
+      <li><strong>Menys trobades.</strong> Com que només s'aparellen el 75 % de les cel·les, 16.000 èpoques del món equivalen a unes 12.000 de la sopa. I a la sopa, abans de l'època 12.000, només una de les tres llavors havia fet la transició.</li>
+      <li><strong>No són els mateixos mons.</strong> La llavor 1 de la sopa i la llavor 1 del món no comparteixen història. No comparem el mateix univers amb i sense espai, sinó dues mostres a l'atzar de cada tipus.</li>
+    </ul>
+    <p>Per poder comparar de debò, calen moltes més llavors de cada tipus, i probablement més temps.</p>
+
+    <h2>Com seria la vida, si aparegués</h2>
+    <p>Per comprovar que el mapa funcionava, vam fer una prova visual: vam plantar el replicador de la Fase 1 en un racó d'un món nou. <strong>No és un experiment</strong>, perquè trenca la nostra regla principal, però ensenya què hauríem de veure. La família s'escampa amb formes ramificades, com un corall. Darrere del front queda un halo de cel·les sense família: el verí de l'entrada 2, ara visible en l'espai. I a la vora hi apareixen famílies mutants amb territori propi.</p>
+
+    <h2>Hipòtesis per si l'espai frena de debò la vida</h2>
+    <ul>
+      <li><strong>El primer replicador queda envoltat dels seus.</strong> A la sopa, cada còpia nova es troba amb companys nous de qualsevol lloc. Al mapa, els fills queden al costat del pare, i copiar-se sobre una còpia d'un mateix no fa créixer res. El creixement passa a dependre només del front.</li>
+      <li><strong>La transició necessita "precursors" escampats.</strong> A la sopa, l'entropia puja lentament abans de la vida, potser perquè s'hi acumulen trossos útils que es troben a l'atzar. Al mapa, aquests trossos potser no arriben a coincidir mai.</li>
+    </ul>
+    <p>Aquí hi ha una connexió interessant amb la <strong>llei 2</strong> (els corrents): si l'espai pur frena la vida, una mica de barreja podria ser justament el que la fa possible.</p>
+  </article>
+
+  <article id="entrada-4">
+    <header>
+      <p class="date">Entrada 4 · 15 d'octubre de 2026</p>
+      <h1>Corrents: quanta barreja necessita la vida?</h1>
+      <p class="lede">Hem afegit corrents al món 2D i n'hem anat variant la força, del món quiet fins a la sopa. La vida torna a aparèixer, de tres maneres diferents. Una d'elles necessita una parella.</p>
+    </header>
+
+    <h2>L'experiment</h2>
+    <p>La <strong>llei 2</strong> mou els programes pel mapa abans de cada època. El paràmetre <em>m</em> diu quina fracció de les cel·les arrossega el corrent i deixa en llocs a l'atzar. Amb <em>m</em> = 0, el món és quiet com a l'entrada 3; amb <em>m</em> = 1, tot es barreja cada època i el món es comporta com la sopa de la Fase 1. Entremig, mons intermedis.</p>
+    <p>Hem fet córrer 5 nivells de corrent amb 3 llavors cadascun, fins a 16.000 èpoques. Els experiments s'han repartit entre el PC i una màquina virtual Debian, que dona exactament els mateixos resultats (ho hem comprovat amb l'empremta del món final).</p>
+
+    <h2>El resultat</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Corrent <em>m</em></th><th style="text-align:left">Llavor 1</th><th style="text-align:left">Llavor 2</th><th style="text-align:left">Llavor 3</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">0 (quiet)</td><td style="text-align:left">res</td><td style="text-align:left">res</td><td style="text-align:left">res</td></tr>
+          <tr><td style="text-align:left">0,001</td><td style="text-align:left"><strong>vida</strong> a l'època 6.600</td><td style="text-align:left">res</td><td style="text-align:left">res</td></tr>
+          <tr><td style="text-align:left">0,01</td><td style="text-align:left">esclat a la 12.000, i col·lapse</td><td style="text-align:left"><strong>vida</strong> a l'època 2.100</td><td style="text-align:left">res</td></tr>
+          <tr><td style="text-align:left">0,1</td><td style="text-align:left">res</td><td style="text-align:left" id="m01-llavor2">res</td><td style="text-align:left">res</td></tr>
+          <tr><td style="text-align:left">1 (com la sopa)</td><td style="text-align:left"><strong>vida</strong> a l'època 7.100</td><td style="text-align:left">res</td><td style="text-align:left"><strong>vida</strong> a l'època 15.200</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">"Vida" vol dir que, al final, una part important dels programes es replica: del 34 % al 95 % segons el cas, mesurat amb la prova de replicació sobre 2.000 cel·les a l'atzar. L'època és quan l'entropia d'ordre superior supera 1 bit. "Res" vol dir 0 replicadors a la mostra.</p>
+    <p>La lectura honesta: amb tres llavors per nivell, no podem dir quina força de corrent és la millor. El que sí que veiem és que el món quiet no ha produït vida cap vegada i que <strong>fins i tot un corrent minúscul</strong> (un 0,1 % de cel·les mogudes per època) n'ha produït. Encaixa amb la hipòtesi de l'entrada 3, que l'espai pur frena la vida i que una mica de barreja l'allibera.</p>
+    <p>Però la fila del corrent 0,1 avisa: <strong>zero de tres</strong>, menys que amb corrents més febles. No té cap sentit físic que més barreja doni menys vida; és molt més probable que sigui l'atzar. En total, la vida ha nascut en 4 de 12 mons amb corrent i en 0 de 3 sense. És una pista, no una conclusió: per separar l'efecte del corrent de la sort de cada llavor calen desenes de llavors per nivell.</p>
+
+    <h2>Tres maneres de copiar-se</h2>
+    <p>El més interessant no és quantes vegades neix la vida, sinó <strong>com</strong>. Hem trobat tres mecanismes:</p>
+    <ul>
+      <li><strong>El palíndrom de la coma.</strong> La família de la Fase 1, amb el bucle <code>, &lt; }</code>: head1 llegeix endavant, head0 escriu enrere. Ha tornat a aparèixer a <em>m</em> = 0,001 i a <em>m</em> = 1. Ja són cinc vegades.</li>
+      <li><strong>El palíndrom del punt.</strong> A <em>m</em> = 0,01 (llavor 2) ha nascut un replicador que copia amb <code>. { &gt;</code>: és el mecanisme que va trobar l'equip de Google, amb els papers dels caps intercanviats respecte del nostre. És molt espaiat, amb les instruccions separades per tirades llargues de dades: <code>[········{··.&gt;············]]············&gt;.··{········[</code>.</li>
+      <li><strong>El replicador que necessita una parella.</strong> A <em>m</em> = 0,01 (llavor 1) va aparèixer un fragment, <code>[·0·,{····,,</code>, que en 200 èpoques va passar del 0,6 % al 7,5 % dels programes, i que no es copia sol.</li>
+    </ul>
+    <div class="bars" role="list" aria-label="El company rep el fragment, segons la posició i el company">
+      <div class="bar" role="listitem"><span>Primer, company aleatori</span><div class="track"><div class="fill" style="width:0%"></div></div><span class="val">0 %</span></div>
+      <div class="bar" role="listitem"><span>Segon, company aleatori</span><div class="track"><div class="fill" style="width:0%"></div></div><span class="val">0 %</span></div>
+      <div class="bar" role="listitem"><span>Segon, company qualsevol del món</span><div class="track"><div class="fill" style="width:2.1%"></div></div><span class="val">2,1 %</span></div>
+      <div class="bar" role="listitem"><span>Segon, company ple de <code>&lt;</code></span><div class="track"><div class="fill" style="width:19.7%"></div></div><span class="val">19,7 %</span></div>
+    </div>
+    <p>Només es copia quan va <strong>després d'un company ple de <code>&lt;</code></strong>. La nostra hipòtesi és que les <code>&lt;</code> del primer programa deixen els caps de còpia just on el bucle del segon els necessita. Cap dels dos no es reprodueix sol, però junts, sí. És molt a prop de la idea que va obrir la Fase 2, la reproducció entre dos, i ha sorgit sense que ningú la dissenyés. No va durar: en 300 èpoques el món es va omplir de zeros (fins al 35 %) i es va extingir, com la llavor 3 de l'entrada 2.</p>
+
+    <h2>Competència i successió</h2>
+    <p>Amb <em>m</em> = 1 i la llavor 3, el cens de famílies explica una petita història ecològica:</p>
+    <ul>
+      <li>Època 14.250: neix una primera onada de tres famílies, però no s'acaben d'imposar. A l'època 15.000 gairebé han desaparegut.</li>
+      <li>Època 15.250: una segona onada. La família 4 ocupa el 56 % del món, la 5 el 19 % i la 6 el 5 %.</li>
+      <li>Època 16.000: la família 4 ha baixat al 10 %, la 5 ha pujat al 35 % i la 6 al 12 %. Les famílies competeixen i unes desplacen les altres. Totes fan servir variants del bucle <code>, &lt; }</code>.</li>
+    </ul>
+    <p>Amb <em>m</em> = 1 i la llavor 1, també hi van conviure quatre famílies alhora. En una sopa ben barrejada, la primera família no sempre ho ocupa tot.</p>
+
+    <h2>Els nostres instruments s'equivocaven</h2>
+    <p>Aquest escombrat ens ha ensenyat tres punts cecs del registre de famílies:</p>
+    <ul>
+      <li><strong>Només provava una posició.</strong> Posava el candidat primer, amb un company aleatori, i per això no veia el replicador que necessita una parella. Ja està corregit: ara també el prova segon i amb companys del mateix món.</li>
+      <li><strong>No veia els replicadors espaiats.</strong> Busca fragments de 12 bytes amb almenys 5 instruccions, i el palíndrom del punt no en té cap. El 85 % del món era viu i el registre no va trobar cap família.</li>
+      <li><strong>No seguia l'evolució.</strong> Quan una família canviava de forma, el registre continuava buscant la forma antiga i la comptava com a extingida.</li>
+    </ul>
+    <p>Per això la taula d'aquesta entrada no fa servir el registre. Fa servir la prova de replicació directa sobre cada món final, que no depèn de cap fragment.</p>
+    <p><strong>Actualització: el registre nou.</strong> L'hem redissenyat perquè comenci per la vida i no pels fragments. A cada anàlisi posa a prova 512 cel·les a l'atzar, primer amb un company de soroll i després en segona posició amb un veí real. Es replica qui deixa al company un tros de si mateix. Els replicadors s'agrupen en famílies pel seu codi compacte, és a dir, les instruccions sense les dades: el palíndrom espaiat queda <code>[{.&gt;]]&gt;.{[</code>. El nucli de cada família es recalcula a cada anàlisi amb els membres que té en aquell moment, i així el registre segueix la família quan evoluciona. Sobre els mons desats de l'escombrat, ara troba el replicador que necessita parella (el 3,9 % del mapa a l'època 12.000), troba el palíndrom espaiat i no s'inventa cap família en un món sense vida.</p>
+  </article>
+
+  <article id="entrada-5">
+    <header>
+      <p class="date">Entrada 5 · 15 d'octubre de 2026</p>
+      <h1>El flux: salvar el replicador que necessita una parella</h1>
+      <p class="lede">Hem tornat al moment de l'esclat de l'entrada 4 i l'hem fet continuar en mons diferents. Sense ajuda mor en 200 èpoques. Cap riu no el salva. Una renovació prou forta, sí: s'hi manté i continua evolucionant. I en un riu torrencial hi ha nascut una vida nova.</p>
+    </header>
+
+    <h2>La llei 3 i l'experiment de branca</h2>
+    <p>La <strong>llei 3</strong> obre el món: hi entra material nou i en surt de vell. Té dues formes. El <em>riu</em> desplaça tot el mapa cap a la dreta; per l'esquerra entren programes de bytes a l'atzar i per la dreta surten els vells. La <em>renovació</em> substitueix cel·les qualssevol per material nou, sense direcció, com la pluja o un quimiòstat de laboratori.</p>
+    <p>En lloc d'esperar que la vida neixi per atzar, hem fet un <strong>experiment de branca</strong>. Hem agafat el món desat a l'època 12.000 del corrent 0,01 amb la llavor 1, just quan el replicador que necessita una parella s'escampava, i l'hem fet continuar de diverses maneres. Totes surten del mateix punt i només canvia una llei. Cada condició s'ha repetit amb tres continuacions diferents (tres seqüències d'atzar).</p>
+
+    <h2>El resultat</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Condició</th><th style="text-align:left">Material nou per època</th><th style="text-align:left">Sobreviu?</th><th style="text-align:left">Què passa</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Control (sense flux)</td><td style="text-align:left">0</td><td style="text-align:left">0 de 3</td><td style="text-align:left">mor abans de l'època 12.250; el món queda enverinat</td></tr>
+          <tr><td style="text-align:left">Riu lent (0,05 columnes)</td><td style="text-align:left">0,01 %</td><td style="text-align:left">0 de 3</td><td style="text-align:left">mor igual; el món es neteja una mica</td></tr>
+          <tr><td style="text-align:left">Riu ràpid (0,5 columnes)</td><td style="text-align:left">0,1 %</td><td style="text-align:left">0 de 3</td><td style="text-align:left">mor igual; el món queda net</td></tr>
+          <tr><td style="text-align:left">Renovació suau</td><td style="text-align:left">0,1 %</td><td style="text-align:left">0 de 3</td><td style="text-align:left">mor; en un cas, <strong>torna a esclatar</strong> i torna a morir</td></tr>
+          <tr id="fila-renovacio-mitjana"><td style="text-align:left">Renovació mitjana</td><td style="text-align:left">0,3 %</td><td style="text-align:left">3 de 3, pels pèls</td><td style="text-align:left">la família es manté molt petita (0,5–1,7 % del mapa); en un cas baixa per sota del que detecta el cens i després reapareix</td></tr>
+          <tr><td style="text-align:left"><strong>Renovació forta</strong></td><td style="text-align:left">1 %</td><td style="text-align:left"><strong>3 de 3</strong></td><td style="text-align:left">es manté 3.000 èpoques i continua evolucionant</td></tr>
+          <tr id="fila-riu-torrencial"><td style="text-align:left">Riu torrencial (5 columnes)</td><td style="text-align:left">1 %</td><td style="text-align:left">0 de 3</td><td style="text-align:left">el riu se l'emporta; però en un cas hi <strong>neix un replicador nou</strong> que arriba al 63 % del món</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Un estat estacionari</h2>
+    <p>Amb la renovació forta, la família no desapareix mai. Entre l'1 i el 2 % dels programes es repliquen en cada cens, i el seu territori creix a poc a poc: de l'1,7 % al 5,6 % del mapa en 3.000 èpoques. El nucli de la família també va canviant (<code>[,{,&lt;]</code>, <code>&lt;,{,[&lt;</code>, <code>+[,{,&lt;</code>): <strong>continua evolucionant</strong>.</p>
+    <p>El més curiós és que el món continua ple de zeros, al voltant del 24 %. La renovació no elimina el verí, però l'equilibra: els zeros que fa el replicador i els que s'emporta la renovació s'igualen. La nostra hipòtesi és que el que salva el replicador no és un món net, sinó un <strong>subministrament constant de material nou</strong> on copiar-se, com els nutrients que entren en un quimiòstat.</p>
+
+    <h2>Cicles d'explosió i col·lapse</h2>
+    <p>Amb la renovació suau, una de les continuacions va fer una cosa que no esperàvem. Després de la mort del replicador, el món es va anar netejant (els zeros van baixar del 26 % al 3 %), i a l'època 14.500 hi va haver un <strong>segon esclat</strong>, que va tornar a enverinar el món (24 % de zeros). La renovació suau no basta per mantenir la vida, però sí per tornar-li a donar una oportunitat. Hi ha poblacions reals que funcionen així: creixen de cop, esgoten el medi i s'enfonsen.</p>
+
+    <h2 id="riu-o-quantitat">El riu o la quantitat?</h2>
+    <p id="riu-o-quantitat-text">Un riu de 0,5 columnes per època renova el 0,1 % del món a cada època, igual que la renovació suau, i tots dos fracassen. La renovació forta n'aporta deu vegades més. Per saber si importa la direcció o només la quantitat, vam provar un <strong>riu torrencial</strong> de 5 columnes per època, que renova exactament el mateix que la renovació forta (l'1 %).</p>
+    <p>Resultat: <strong>la direcció importa</strong>. Amb la mateixa quantitat de material nou, la renovació sense direcció salva el replicador 3 de 3 vegades, i el riu torrencial, 0 de 3. Hi ha una raó física senzilla: en aquest món, una còpia avança com a molt 2 cel·les per època, que és la nostra "velocitat de la llum". Un riu de 5 columnes per època va més de pressa que qualsevol colònia i se l'emporta fora del món en unes 100 èpoques. En canvi, la renovació deixa les colònies al seu lloc i només en renova trossos.</p>
+    <p>El llindar de la renovació és entre el 0,1 % (mor, i de vegades fa cicles) i el 0,3 % (sobreviu pels pèls). A l'1 %, sobreviu amb marge.</p>
+
+    <h2>Vida nova al riu</h2>
+    <p>En una de les tres continuacions del riu torrencial va passar una cosa que no buscàvem. El replicador que necessita una parella va morir com als altres casos, però a l'època 12.750 va aparèixer un replicador <strong>completament diferent</strong>: el palíndrom del punt, el mecanisme <code>. { &gt;</code> de l'article de Google. Va créixer sense parar fins a ocupar el 63 % del món a l'època 15.000, i durant el camí el seu nucli va anar canviant (<code>[.{&gt;]]</code>, <code>-[.{&gt;]</code>, <code>&gt;]&gt;{.[</code>).</p>
+    <p>No hi era abans. Hem comprovat el món de partida: cap de les 131.072 cel·les no contenia el seu nucli, i el tros més curt (4 instruccions) només apareixia en 4 cel·les. <strong>Va néixer de nou</strong>, en menys de 750 èpoques, en un món que no para d'entrar-hi material nou.</p>
+    <p>I com pot ocupar el 63 % d'un món que el riu escombra sencer cada 100 èpoques? La nostra hipòtesi és que hi treballen dues lleis alhora. El <strong>riu</strong> (llei 3) porta matèria primera nova sense parar. El <strong>corrent</strong> (llei 2, que en aquests mons arrossega l'1 % de les cel·les cada època i les deixa a qualsevol lloc) sembra replicadors aigües amunt, dins del material que acaba d'entrar. El riu alimenta i el corrent escampa. És un sol cas de tres, però és la primera vegada que veiem la vida néixer de nou després d'un col·lapse.</p>
+
+    <h2>Què ens diu</h2>
+    <ul>
+      <li><strong>Un món obert pot mantenir una vida que un món tancat mata.</strong> El replicador que necessita una parella, condemnat sense ajuda, es manté i evoluciona si li arriba prou material nou.</li>
+      <li><strong>No n'hi ha prou amb netejar: cal que el medi no se l'emporti.</strong> El riu ràpid neteja el món millor que ningú i, tot i així, el mata.</li>
+      <li><strong>Les lleis es combinen.</strong> Riu i corrent junts han fet néixer i escampar una vida nova que cap de les dues lleis no explica sola.</li>
+    </ul>
+    <p class="sub">Tots aquests resultats surten de tres continuacions per condició, des d'un sol punt de partida. Són pistes fortes, no lleis generals.</p>
+  </article>
+
+  <script type="module" src="quadern.js"></script>
+</body>
+</html>

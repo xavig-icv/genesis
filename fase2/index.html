@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El món 2D</title>
+  <link rel="stylesheet" href="../fase1/style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <p class="eyebrow">claude-origins · Fase 2 · Lleis 1, 2 i 3: espai, corrents i flux</p>
+    <h1>El món 2D</h1>
+    <p class="lede">La mateixa química que la sopa, però ara cada programa té un lloc al mapa i només es troba amb els veïns. Les famílies de replicadors que neixen ocupen territoris. Poden conviure? I poden fugir del verí que deixen enrere?</p>
+  </header>
+
+  <section class="controls" aria-label="Controls de la simulació">
+    <div class="buttons">
+      <button id="play" class="primary" type="button">Inicia</button>
+      <button id="step" type="button">+1 època</button>
+      <button id="reset" type="button">Reinicia</button>
+    </div>
+    <div class="params">
+      <label>Llavor <input id="seed" type="number" value="1" min="0" step="1"></label>
+      <label>Mida
+        <select id="size">
+          <option value="256x128">256 × 128</option>
+          <option value="512x256" selected>512 × 256</option>
+        </select>
+      </label>
+      <label>Veïns a distància
+        <select id="radius">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </label>
+      <label title="Llei 2: fracció de cel·les que el corrent arrossega a llocs a l'atzar cada època">Corrent
+        <select id="mixing">
+          <option value="0" selected>quiet</option>
+          <option value="0.001">0,1 %</option>
+          <option value="0.01">1 %</option>
+          <option value="0.1">10 %</option>
+          <option value="1">100 % (com la sopa)</option>
+        </select>
+      </label>
+      <label title="Llei 2: intercanvis amb un veí del costat, per cel·la i època">Difusió
+        <select id="diffusion">
+          <option value="0" selected>cap</option>
+          <option value="0.01">1 %</option>
+          <option value="0.1">10 %</option>
+          <option value="0.5">50 %</option>
+        </select>
+      </label>
+      <label title="Llei 3: riu d'esquerra a dreta, en columnes per època. Per l'esquerra entra material nou i per la dreta en surt de vell">Riu
+        <select id="flow">
+          <option value="0" selected>sec</option>
+          <option value="0.05">lent (0,05)</option>
+          <option value="0.2">mitjà (0,2)</option>
+          <option value="0.5">ràpid (0,5)</option>
+        </select>
+      </label>
+      <label title="Llei 3: fracció de cel·les que se substitueixen per material nou cada època">Renovació
+        <select id="renewal">
+          <option value="0" selected>cap</option>
+          <option value="0.001">0,1 %</option>
+          <option value="0.01">1 %</option>
+        </select>
+      </label>
+      <label>Mutació <input id="mutation" type="number" value="0.024" min="0" max="5" step="0.001"> %</label>
+      <label>Fils <select id="threads"></select></label>
+    </div>
+    <p class="hint">Canviar qualsevol paràmetre, tret de la mutació, reinicia el món. Amb la mateixa configuració, surt la mateixa història que a <code>node sim.mjs --world</code>.</p>
+  </section>
+
+  <div id="banner" class="banner" role="status" hidden>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7"/><path d="M4.5 8.2l2.3 2.3 4.7-4.9"/></svg>
+    <span id="banner-text"></span>
+  </div>
+
+  <section class="stats" aria-label="Indicadors">
+    <div class="stat"><span class="label">Època</span><span class="value" id="s-epoch">0</span></div>
+    <div class="stat"><span class="label">Èpoques per segon</span><span class="value" id="s-speed">–</span></div>
+    <div class="stat"><span class="label">Entropia d'ordre superior</span><span class="value" id="s-hoe">–</span></div>
+    <div class="stat"><span class="label">Programes que es repliquen</span><span class="value" id="s-alive">–</span></div>
+    <div class="stat"><span class="label">Famílies vives</span><span class="value" id="s-families">0</span></div>
+    <div class="stat"><span class="label">Territori de la família més gran</span><span class="value" id="s-largest">–</span></div>
+  </section>
+
+  <figure class="card map-card">
+    <figcaption>
+      <span class="title">El mapa</span>
+      <span class="sub" id="map-sub">Roda del ratolí per apropar-te, arrossega per moure't. De molt a prop es veu el codi de cada cel·la.</span>
+    </figcaption>
+    <div class="map-tools">
+      <button type="button" id="zoom-in" aria-label="Apropa">+</button>
+      <button type="button" id="zoom-out" aria-label="Allunya">−</button>
+      <button type="button" id="zoom-fit">Tot el món</button>
+      <span class="sub" id="zoom-label"></span>
+    </div>
+    <div class="map-wrap">
+      <canvas id="map" aria-label="Mapa del món"></canvas>
+      <div id="map-tip" class="tooltip" hidden></div>
+    </div>
+    <ul class="legend" id="legend-families" aria-label="Llegenda del mapa"></ul>
+    <ul class="legend" id="legend-code" aria-label="Llegenda de la vista de codi" hidden>
+      <li><i class="sw op-copy"></i>copiar <code>. ,</code></li>
+      <li><i class="sw op-loop"></i>bucles <code>[ ]</code></li>
+      <li><i class="sw op-head"></i>moure caps <code>&lt; &gt; { }</code></li>
+      <li><i class="sw op-arith"></i>sumar i restar <code>+ -</code></li>
+      <li><i class="sw byte-data"></i>dades</li>
+      <li><i class="sw byte-zero"></i>zero</li>
+      <li><i class="sw frame"></i>el marc de cada cel·la és el color de la seva família</li>
+    </ul>
+  </figure>
+
+  <main class="lab">
+    <figure class="card">
+      <figcaption>
+        <span class="title">Entropia d'ordre superior</span>
+        <span class="sub">Bits per byte. Quan puja, el món s'omple de còpies.</span>
+      </figcaption>
+      <div id="chart-hoe"></div>
+    </figure>
+    <figure class="card">
+      <figcaption>
+        <span class="title">Operacions per execució</span>
+        <span class="sub">Instruccions reals executades per parella (màxim 8.192).</span>
+      </figcaption>
+      <div id="chart-ops"></div>
+    </figure>
+  </main>
+
+  <section class="detail">
+    <div class="card">
+      <h2>Inspector</h2>
+      <p class="sub" id="inspector-title">Fes clic a una cel·la del mapa per seguir el seu programa en directe.</p>
+      <div id="inspector" class="code"></div>
+    </div>
+    <div class="card">
+      <h2>Famílies</h2>
+      <p class="sub">Cada anàlisi posa a prova 512 cel·les a l'atzar: es replica qui deixa al company un tros de si mateix. Els replicadors que comparteixen codi (sense comptar les dades) són una família, i el seu nucli es recalcula a cada anàlisi per seguir-ne l'evolució. Cada família conserva el color mentre viu.</p>
+      <ol id="families" class="top-list"></ol>
+      <p class="sub" id="extinct"></p>
+    </div>
+  </section>
+
+  <details class="card table-card">
+    <summary>Taula de dades</summary>
+    <button id="csv" type="button">Descarrega CSV</button>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Època</th><th>Entropia d'ordre superior</th><th>Operacions per execució</th><th>Es repliquen (%)</th><th>Famílies vives</th><th>Família més gran</th></tr></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </details>
+
+  <section class="card explainer">
+    <h2>Què canvia respecte de la sopa</h2>
+    <p>A la sopa de la Fase 1, qualsevol programa es podia trobar amb qualsevol altre. Aquí, el món és un mapa de cel·les i cada programa només es troba amb els veïns que té a dues cel·les de distància com a màxim. És la <strong>llei 1</strong> del nostre univers. La química és exactament la mateixa.</p>
+    <p>Conseqüència: una còpia només pot viatjar dues cel·les per època. És la "velocitat de la llum" d'aquest món. Una família que neix en un racó ha de conquerir el mapa veí a veí, i dues famílies poden créixer lluny l'una de l'altra sense tocar-se.</p>
+    <p>La <strong>llei 2</strong> afegeix corrents, que mouen els programes abans de cada època. El <em>corrent</em> arrossega una part de les cel·les i les deixa en llocs a l'atzar: amb el corrent quiet tenim el món 2D pur, i al 100 % tot es barreja cada època i el món es comporta com la sopa de la Fase 1. La <em>difusió</em> és una remenada suau: cel·les que intercanvien el lloc amb un veí del costat.</p>
+    <p>La <strong>llei 3</strong> obre el món. El <em>riu</em> desplaça tot el mapa cap a la dreta: per l'esquerra entra material nou (bytes a l'atzar, com al principi) i per la dreta en surt el vell. Aigües amunt hi ha material jove; aigües avall, el que porta més temps al món, i potser enverinat. La <em>renovació</em> fa el mateix sense direcció: cel·les qualssevol se substitueixen per material nou, com la pluja.</p>
+    <p class="sub">Igual que la versió 2D de l'article <em>Computational Life</em>: veïns dins d'un quadrat de 5×5 i vores sense volta. Diferència: el nostre mapa és més gran (512×256 en lloc de 240×135).</p>
+  </section>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

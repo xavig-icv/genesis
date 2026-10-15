@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sopa primordial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <p class="eyebrow">claude-origins · Fase 1</p>
+    <h1>Sopa primordial</h1>
+    <p class="lede">Milers de programes fets de bytes aleatoris es troben a l'atzar i s'executen junts. Cap d'ells no sap copiar-se, i no hi ha cap premi per fer-ho. Observa si, tot i així, en sorgeix algun que ho aconsegueixi.</p>
+  </header>
+
+  <section class="controls" aria-label="Controls de la simulació">
+    <div class="buttons">
+      <button id="play" class="primary" type="button">Inicia</button>
+      <button id="step" type="button">+1 època</button>
+      <button id="reset" type="button">Reinicia</button>
+    </div>
+    <div class="params">
+      <label>Llavor <input id="seed" type="number" value="1" min="0" step="1"></label>
+      <label>Mida
+        <select id="size">
+          <option value="12">4.096 programes</option>
+          <option value="13">8.192 programes</option>
+          <option value="14">16.384 programes</option>
+          <option value="15">32.768 programes</option>
+          <option value="16">65.536 programes</option>
+          <option value="17" selected>131.072 programes</option>
+        </select>
+      </label>
+      <label>Mutació <input id="mutation" type="number" value="0.024" min="0" max="5" step="0.001"> %</label>
+      <label>Fils <select id="threads"></select></label>
+    </div>
+    <p class="hint">Canviar la llavor, la mida o els fils reinicia la sopa.</p>
+  </section>
+
+  <div id="banner" class="banner" role="status" hidden>
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7"/><path d="M4.5 8.2l2.3 2.3 4.7-4.9"/></svg>
+    <span id="banner-text"></span>
+  </div>
+
+  <section class="stats" aria-label="Indicadors">
+    <div class="stat"><span class="label">Època</span><span class="value" id="s-epoch">0</span></div>
+    <div class="stat"><span class="label">Èpoques per segon</span><span class="value" id="s-speed">–</span></div>
+    <div class="stat"><span class="label">Entropia d'ordre superior</span><span class="value" id="s-hoe">–</span></div>
+    <div class="stat"><span class="label">Operacions per execució</span><span class="value" id="s-ops">–</span></div>
+    <div class="stat"><span class="label">Programes amb el fragment principal</span><span class="value" id="s-share">–</span></div>
+  </section>
+
+  <main class="lab">
+    <figure class="card soup-panel">
+      <figcaption>
+        <span class="title">La sopa</span>
+        <span class="sub" id="soup-sub">Cada franja horitzontal de 64 píxels és un programa.</span>
+      </figcaption>
+      <div class="canvas-wrap">
+        <canvas id="soup" width="512" height="512" aria-label="Mapa de bytes de la sopa"></canvas>
+        <div id="soup-tip" class="tooltip" hidden></div>
+      </div>
+      <ul class="legend" aria-label="Llegenda de colors">
+        <li><i class="sw op-copy"></i>copiar <code>. ,</code></li>
+        <li><i class="sw op-loop"></i>bucles <code>[ ]</code></li>
+        <li><i class="sw op-head"></i>moure caps <code>&lt; &gt; { }</code></li>
+        <li><i class="sw op-arith"></i>sumar i restar <code>+ -</code></li>
+        <li><i class="sw byte-data"></i>dades</li>
+        <li><i class="sw byte-zero"></i>zero</li>
+      </ul>
+    </figure>
+
+    <div class="charts">
+      <figure class="card">
+        <figcaption>
+          <span class="title">Entropia d'ordre superior</span>
+          <span class="sub">Bits per byte. Prop de 0: soroll. Quan puja de cop, la sopa s'ha omplert de còpies.</span>
+        </figcaption>
+        <div id="chart-hoe"></div>
+      </figure>
+      <figure class="card">
+        <figcaption>
+          <span class="title">Operacions per execució</span>
+          <span class="sub">Instruccions reals executades per parella (màxim 8.192).</span>
+        </figcaption>
+        <div id="chart-ops"></div>
+      </figure>
+    </div>
+  </main>
+
+  <section class="detail">
+    <div class="card">
+      <h2>Inspector</h2>
+      <p class="sub" id="inspector-title">Fes clic a la sopa per seguir un programa en directe.</p>
+      <div id="inspector" class="code" aria-live="off"></div>
+    </div>
+    <div class="card">
+      <h2>Fragments més abundants</h2>
+      <p class="sub">Trossos de codi de 12 bytes que apareixen en més programes (mostra de 8.192). Si un fragment s'escampa per la sopa, és que algú el copia.</p>
+      <ol id="top" class="top-list"></ol>
+    </div>
+  </section>
+
+  <details class="card table-card">
+    <summary>Taula de dades</summary>
+    <button id="csv" type="button">Descarrega CSV</button>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Època</th><th>Entropia d'ordre superior</th><th>Entropia de Shannon</th><th>Bits per byte comprimit</th><th>Operacions per execució</th></tr></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+  </details>
+
+  <section class="card explainer">
+    <h2>Com funciona</h2>
+    <p>Cada programa té 64 bytes. A cada <strong>època</strong>, els programes es barregen i s'aparellen a l'atzar. Cada parella s'enganxa en una cinta de 128 bytes i s'executa com a codi del llenguatge <strong>BFF</strong>, que només té deu instruccions. El codi i les dades comparteixen la cinta, així que un programa pot reescriure's a si mateix i també el seu company. Després, la cinta es torna a partir i cada meitat torna a la sopa.</p>
+    <p>Els 246 valors de byte restants no fan res: són dades. Una sopa aleatòria té només un 4% d'instruccions, i gairebé totes les execucions s'aturen ràpidament.</p>
+    <p>L'<strong>entropia d'ordre superior</strong> mesura quanta estructura repetida hi ha. És l'entropia de Shannon (quant variats són els bytes) menys el que ocupa la sopa un cop comprimida. Si la sopa és soroll, no es pot comprimir i el valor és prop de 0. Si s'omple de còpies d'un mateix programa, es comprimeix molt i el valor puja.</p>
+    <p class="sub">Basat en <a href="https://arxiv.org/abs/2406.19108" target="_blank" rel="noopener">Agüera y Arcas et al. (2024), <em>Computational Life</em></a>. Mateix llenguatge, mida de sopa i taxa de mutació. Diferència: aquí es comprimeix amb <em>deflate</em> en lloc de <em>brotli</em>, així que els valors absoluts varien una mica.</p>
+  </section>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

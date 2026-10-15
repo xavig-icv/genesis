@@ -1,0 +1,56 @@
+/* Colors de les famílies: validats per a daltonisme amb qualsevol parella (mode clar i fosc) */
+:root {
+  --fam-1: #e87ba4;
+  --fam-2: #008300;
+  --fam-3: #4a3aa7;
+  --fam-other: #52514e;
+  --cell-lo: #f3f2ee;   /* cel·la sense instruccions */
+  --cell-hi: #c9c7bf;   /* cel·la amb moltes instruccions */
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fam-1: #d55181;
+    --fam-2: #008300;
+    --fam-3: #9085e9;
+    --fam-other: #c3c2b7;
+    --cell-lo: #1f1f1e;
+    --cell-hi: #45453f;
+  }
+}
+:root[data-theme="dark"] {
+  --fam-1: #d55181;
+  --fam-2: #008300;
+  --fam-3: #9085e9;
+  --fam-other: #c3c2b7;
+  --cell-lo: #1f1f1e;
+  --cell-hi: #45453f;
+}
+
+.map-card { margin-bottom: 16px; }
+.legend[hidden] { display: none; }
+.map-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.map-tools button { min-width: 38px; }
+.map-wrap { position: relative; }
+#map {
+  display: block;
+  width: 100%;
+  height: min(62vh, 640px);
+  min-height: 260px;
+  border-radius: 6px;
+  background: var(--cell-lo);
+  cursor: grab;
+  touch-action: none;
+}
+#map.dragging { cursor: grabbing; }
+
+.sw.fam-1 { background: var(--fam-1); }
+.sw.fam-2 { background: var(--fam-2); }
+.sw.fam-3 { background: var(--fam-3); }
+.sw.fam-other { background: var(--fam-other); }
+.sw.cells { background: linear-gradient(90deg, var(--cell-lo), var(--cell-hi)); }
+.sw.frame { background: transparent; box-shadow: inset 0 0 0 2px var(--fam-1); }
+
+.top-list .family-name { display: block; font-weight: 650; }
+.top-list .family-meta { display: block; font-size: 12px; color: var(--muted); }
+.top-list li.family { grid-template-columns: 18px 96px minmax(0, 1fr); }
+.top-list li.family .sw { margin-top: 4px; }
