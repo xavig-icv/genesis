@@ -11,7 +11,9 @@
 //   --diffusion D    llei 2: intercanvis amb un veí del costat per cel·la i època
 //   --flow F         llei 3: riu d'esquerra a dreta, F columnes per època (material nou per l'esquerra)
 //   --renewal R      llei 3: fracció de cel·les substituïdes per material nou cada època
-//   --from fitxer    comença des d'un món desat (.bin) en lloc d'un de nou (experiments de branca)
+//   --from fitxer    comença des d'un món desat (.bin) en lloc d'un de nou (experiments de branca).
+//                    La branca reinicia l'atzar amb --seed (no continua el de l'experiment original),
+//                    i no detecta cap "transició": el món de partida ja pot tenir vida.
 //   --start N        època del món desat (per numerar les èpoques a partir d'aquí)
 //   --census N       món 2D: cens de famílies de replicadors cada N èpoques (per defecte 250)
 //   --mutation P     probabilitat de mutació per byte i època (per defecte 0.00024)
@@ -21,6 +23,9 @@
 //   --chunks K       sopa barrejada: imita el navegador amb K fils (mateixa història)
 //   --save carpeta   desa la sopa en la transició i al final (.bin)
 //   --save-every N   i també cada N èpoques
+//   --help           mostra aquesta ajuda
+//
+// Una opció desconeguda o un valor incorrecte aturen el programa amb un missatge d'error.
 import { deflateRawSync } from 'zlib';
 import { mkdirSync, writeFileSync, readFileSync } from 'fs';
 import { join } from 'path';
@@ -49,28 +54,97 @@ function codeVersion() {
   }
 }
 
-const args = Object.fromEntries(
-  process.argv.slice(2).reduce((acc, a, i, all) => (a.startsWith('--') ? [...acc, [a.slice(2), all[i + 1]]] : acc), []),
-);
-const seed = Number(args.seed ?? 1);
-const world = args.world ? args.world.split('x').map(Number) : null; // [amplada, alçada] o null
-const radius = Number(args.radius ?? DEFAULT_RADIUS);
-const mixing = Number(args.mixing ?? 0);
-const diffusion = Number(args.diffusion ?? 0);
-const flow = Number(args.flow ?? 0);
-const renewal = Number(args.renewal ?? 0);
+// Opcions acceptades, amb el tipus i el rang de cadascuna (AUD-03 de l'auditoria 1: abans, una
+// opció mal escrita o un "0,01" amb coma s'ignoraven sense avís i l'experiment quedava mal etiquetat).
+const OPTIONS = {
+  seed: { type: 'int', min: 0 },
+  log2size: { type: 'int', min: 2, max: 24, soupOnly: true },
+  world: { type: 'dims' },
+  radius: { type: 'int', min: 1, max: 16, worldOnly: true },
+  mixing: { type: 'num', min: 0, max: 1, worldOnly: true },
+  diffusion: { type: 'num', min: 0, worldOnly: true },
+  flow: { type: 'num', min: 0, worldOnly: true },
+  renewal: { type: 'num', min: 0, max: 1, worldOnly: true },
+  from: { type: 'str' },
+  start: { type: 'int', min: 0 },
+  census: { type: 'int', min: 1, worldOnly: true },
+  epochs: { type: 'int', min: 1 },
+  mutation: { type: 'num', min: 0, max: 1 },
+  every: { type: 'int', min: 1 },
+  threshold: { type: 'num' },
+  after: { type: 'int', min: 0 },
+  chunks: { type: 'int', min: 0, soupOnly: true },
+  save: { type: 'str' },
+  'save-every': { type: 'int', min: 0 },
+};
+
+function fail(message) {
+  console.error(`Error: ${message}\nFes servir --help per veure les opcions.`);
+  process.exit(2);
+}
+
+function parseArgs(argv) {
+  const out = {};
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === '--help') {
+      const self = readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n');
+      console.log(self.slice(0, self.findIndex((l) => !l.startsWith('//'))).map((l) => l.replace(/^\/\/ ?/, '')).join('\n'));
+      process.exit(0);
+    }
+    if (!a.startsWith('--')) fail(`no s'esperava "${a}" (les opcions comencen per --)`);
+    const name = a.slice(2);
+    const spec = OPTIONS[name];
+    if (!spec) fail(`opció desconeguda --${name}`);
+    if (name in out) fail(`--${name} està repetida`);
+    const raw = argv[++i];
+    if (raw === undefined || raw.startsWith('--')) fail(`--${name} necessita un valor`);
+    let value = raw;
+    if (spec.type === 'int' || spec.type === 'num') {
+      if (!/^-?(\d+\.?\d*|\.\d+)(e-?\d+)?$/i.test(raw)) fail(`--${name} ha de ser un nombre (amb punt decimal), no "${raw}"`);
+      value = Number(raw);
+      if (spec.type === 'int' && !Number.isInteger(value)) fail(`--${name} ha de ser un nombre enter, no "${raw}"`);
+      if (spec.min !== undefined && value < spec.min) fail(`--${name} ha de ser com a mínim ${spec.min}`);
+      if (spec.max !== undefined && value > spec.max) fail(`--${name} ha de ser com a màxim ${spec.max}`);
+    } else if (spec.type === 'dims') {
+      const m = raw.match(/^(\d+)x(\d+)$/);
+      if (!m || Number(m[1]) < 2 || Number(m[2]) < 2) fail(`--${name} ha de ser AMPLADAxALÇADA, per exemple 512x256`);
+      value = [Number(m[1]), Number(m[2])];
+    }
+    out[name] = value;
+  }
+  for (const name of Object.keys(out)) {
+    if (OPTIONS[name].worldOnly && !out.world) fail(`--${name} només té sentit amb --world`);
+    if (OPTIONS[name].soupOnly && out.world) fail(`--${name} només té sentit a la sopa barrejada (sense --world)`);
+  }
+  if (out.start !== undefined && out.from === undefined) fail('--start només té sentit amb --from');
+  if (out.from !== undefined && (out.epochs ?? 16000) <= (out.start ?? 0)) fail('--epochs ha de ser més gran que --start (és l\'època final, no el nombre d\'èpoques)');
+  return out;
+}
+
+const args = parseArgs(process.argv.slice(2));
+const seed = args.seed ?? 1;
+const world = args.world ?? null; // [amplada, alçada] o null
+const radius = args.radius ?? DEFAULT_RADIUS;
+const mixing = args.mixing ?? 0;
+const diffusion = args.diffusion ?? 0;
+const flow = args.flow ?? 0;
+const renewal = args.renewal ?? 0;
 const from = args.from ?? null;
-const start = Number(args.start ?? 0);
-const censusEvery = Number(args.census ?? 250);
-const nPrograms = world ? world[0] * world[1] : 1 << Number(args.log2size ?? 17);
-const maxEpochs = Number(args.epochs ?? 16000);
-const mutation = Number(args.mutation ?? DEFAULT_MUTATION);
-const logEvery = Number(args.every ?? 100);
-const threshold = Number(args.threshold ?? 1.0);
-const afterTransition = Number(args.after ?? 300);
-const chunks = Number(args.chunks ?? 0);
-const saveEvery = Number(args['save-every'] ?? 0);
+const start = args.start ?? 0;
+const censusEvery = args.census ?? 250;
+const nPrograms = world ? world[0] * world[1] : 1 << (args.log2size ?? 17);
+const maxEpochs = args.epochs ?? 16000;
+const mutation = args.mutation ?? DEFAULT_MUTATION;
+const logEvery = args.every ?? 100;
+const threshold = args.threshold ?? 1.0;
+const afterTransition = args.after ?? 300;
+const chunks = args.chunks ?? 0;
+const saveEvery = args['save-every'] ?? 0;
 const saveDir = args.save ?? null;
+// En una branca el món de partida ja pot tenir vida: la "transició" saltaria a la primera mesura
+// i aturaria l'experiment --after èpoques després (AUD-07). Per això no es detecta.
+const detectTransition = !from;
 if (saveDir) mkdirSync(saveDir, { recursive: true });
 const lawsTag = (mixing ? `-m${mixing}` : '') + (diffusion ? `-d${diffusion}` : '') + (flow ? `-f${flow}` : '') + (renewal ? `-n${renewal}` : '');
 const branchTag = from ? `-des${start}` : '';
@@ -139,7 +213,7 @@ function topBytes() {
 }
 
 console.log(`codi=${codeVersion()}  ordre=node sim.mjs ${process.argv.slice(2).join(' ')}`);
-console.log(`llavor=${seed} ${world ? `món=${world[0]}x${world[1]} radi=${radius} barreja=${mixing} difusió=${diffusion} riu=${flow} renovació=${renewal}` : `sopa=${nPrograms}`} mutació=${mutation}${from ? ` des de=${from} (època ${start})` : ''}`);
+console.log(`llavor=${seed} ${world ? `món=${world[0]}x${world[1]} radi=${radius} barreja=${mixing} difusió=${diffusion} riu=${flow} renovació=${renewal}` : `sopa=${nPrograms}`} mutació=${mutation}${from ? ` des de=${from} (època ${start}; branca: atzar nou amb la llavor, sense detecció de transició)` : ''}`);
 const t0 = Date.now();
 let ops = 0, runs = 0, transitionAt = -1, firstFamilyAt = -1;
 for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
@@ -168,7 +242,7 @@ for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
       .map((m) => `${Array.from(m.bytes, skelGlyph).join('')} (${(m.share * 100).toFixed(1)}%)`).join('  ');
     console.log(`època ${epoch}  H0=${h0.toFixed(3)}  HOE=${hoe.toFixed(3)}  ops/execució=${(ops / runs).toFixed(1)}  parelles=${(runs / (logEvery * nPrograms / 2) * 100).toFixed(0)}%  bytes ${topBytes()}  fragments ${motifs || '–'}  ${secs}s`);
     ops = runs = 0;
-    if (transitionAt < 0 && hoe > threshold) {
+    if (detectTransition && transitionAt < 0 && hoe > threshold) {
       transitionAt = epoch;
       console.log(`*** HOE > ${threshold} a l'època ${epoch} ***`);
       save(`epoca${epoch}`);
