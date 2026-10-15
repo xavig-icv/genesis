@@ -22,7 +22,7 @@ self.onmessage = async (e) => {
   const h0 = shannonEntropy(soup);
   const bytes = await compressedSize(soup);
   if (gen !== generation) return;
-  const result = tracker.analyse(soup, soup.length / PROGRAM_SIZE, msg.epoch, msg.width);
+  const result = tracker.analyse(soup, soup.length / PROGRAM_SIZE, msg.epoch, msg.width, msg.radius);
   self.postMessage({
     id: msg.id,
     h0,

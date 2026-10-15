@@ -230,7 +230,7 @@ for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
 
   // Cens: famílies de replicadors (amb la prova de replicació), encara que siguin locals
   if (tracker && epoch % censusEvery === 0) {
-    const census = tracker.analyse(soup, nPrograms, epoch, world[0]);
+    const census = tracker.analyse(soup, nPrograms, epoch, world[0], radius);
     if (census.families.length && firstFamilyAt < 0) {
       firstFamilyAt = epoch;
       console.log(`*** PRIMERA FAMÍLIA a l'època ${epoch} ***`);

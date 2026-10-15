@@ -191,7 +191,7 @@ function sample(force = false) {
   const id = ++sampleId;
   pendingSamples.set(id, { sim: s, epoch: s.epoch, shifts: s.shifts, ops: s.runsAcc ? s.opsAcc / s.runsAcc : null });
   s.opsAcc = s.runsAcc = 0;
-  analyst.postMessage({ type: 'sample', buffer: snapshot.buffer, id, epoch: s.epoch, width: s.width }, [snapshot.buffer]);
+  analyst.postMessage({ type: 'sample', buffer: snapshot.buffer, id, epoch: s.epoch, width: s.width, radius: s.radius }, [snapshot.buffer]);
 }
 
 // ---------------------------------------------------------------- colors
