@@ -1,7 +1,7 @@
 // Proves de l'intèrpret BFF. Executa: node fase1/test-bff.mjs
 import assert from 'assert';
 import { evaluate, TAPE_SIZE, MAX_STEPS } from './bff.js';
-import { mutate, createRng, randomSoup, shuffle, gather, scatter } from './soup.js';
+import { mutate, createRng, randomSoup, shuffle, gather, scatter, xoshiro128ss, createRngV2, makeRng } from './soup.js';
 import { topMotifs } from './motifs.js';
 
 function tape(code, fill = 1) {
@@ -117,6 +117,40 @@ tests['la versió ràpida coincideix amb la de referència (20.000 cintes)'] = (
     assert.strictEqual(opsFast, opsRef, `ops diferents a la cinta ${n}`);
     assert.deepStrictEqual(a, b, `cinta diferent a la cinta ${n}`);
   }
+};
+
+tests['RNG v1 (mulberry32) no ha canviat'] = () => {
+  const r = createRng(1);
+  const first = [r(), r(), r()].map((x) => Math.floor(x * 4294967296));
+  assert.deepStrictEqual(first, [2693262067, 11749833, 2265367787]);
+};
+
+tests['RNG v2: xoshiro128** dona els valors de referència'] = () => {
+  // estat {1, 2, 3, 4}: valors de la implementació de referència de Blackman i Vigna
+  const next = xoshiro128ss(1, 2, 3, 4);
+  assert.deepStrictEqual([next(), next(), next(), next()], [11520, 0, 5927040, 70819200]);
+};
+
+tests['RNG v2: mateixa llavor, mateixa seqüència; llavors veïnes, seqüències sense relació'] = () => {
+  const take = (r, k) => Array.from({ length: k }, () => r());
+  assert.deepStrictEqual(take(createRngV2(7), 50), take(createRngV2(7), 50));
+  // amb mulberry32, la llavor 2 és la llavor 1 desplaçada; amb v2, cap valor de les primeres
+  // 10.000 sortides de la llavor 2 no apareix entre les de la llavor 1
+  const a = new Set(take(createRngV2(1), 10000));
+  const shared = take(createRngV2(2), 10000).filter((x) => a.has(x)).length;
+  assert.ok(shared <= 1, `${shared} valors compartits`);
+};
+
+tests['RNG v2: distribució uniforme a [0, 1)'] = () => {
+  const r = makeRng(123, 'v2');
+  const buckets = new Array(10).fill(0);
+  const N = 200000;
+  for (let i = 0; i < N; i++) {
+    const x = r();
+    assert.ok(x >= 0 && x < 1);
+    buckets[Math.floor(x * 10)]++;
+  }
+  for (const b of buckets) assert.ok(Math.abs(b - N / 10) < 5 * Math.sqrt(N / 10), `${buckets}`);
 };
 
 tests['gather i scatter: cada programa torna al seu lloc'] = () => {

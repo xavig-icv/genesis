@@ -4,9 +4,12 @@
   "private": true,
   "description": "Abiogènesi digital: una sopa primordial de programes on la vida pot sorgir sola",
   "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
-    "test": "node fase1/test-bff.mjs",
+    "test": "node fase1/test-bff.mjs && node fase2/test-world.mjs && node test/sim-cli.mjs && node test/servidor.mjs && node test/determinisme.mjs",
     "serve": "node server.mjs",
-    "sim": "node fase1/sim-node.mjs"
+    "sim": "node sim.mjs"
   }
 }

@@ -10,7 +10,7 @@ let generation = 0; // un reinici invalida les anàlisis que estiguin a mig fer
 
 async function compressedSize(bytes) {
   if (typeof CompressionStream === 'undefined') return null;
-  const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate'));
+  const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw'));
   return (await new Response(stream).arrayBuffer()).byteLength;
 }
 
@@ -22,7 +22,7 @@ self.onmessage = async (e) => {
   const h0 = shannonEntropy(soup);
   const bytes = await compressedSize(soup);
   if (gen !== generation) return;
-  const result = tracker.analyse(soup, soup.length / PROGRAM_SIZE, msg.epoch, msg.width);
+  const result = tracker.analyse(soup, soup.length / PROGRAM_SIZE, msg.epoch, msg.width, msg.radius);
   self.postMessage({
     id: msg.id,
     h0,

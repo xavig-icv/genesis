@@ -11,49 +11,60 @@ Cal Node.js (16 o superior). No hi ha dependències.
 node server.mjs
 ```
 
-I obre <http://localhost:8420>.
+I obre <http://localhost:8420>. Calen *module workers* i `CompressionStream` amb `deflate-raw`: Chrome,
+Edge o un altre navegador basat en Chromium (és amb el que s'ha comprovat la reproduïbilitat).
 
 ## Què hi ha
 
 | On | Què és |
 |---|---|
 | `docs/disseny.md` | La visió, els principis, les lleis de l'univers i les decisions preses. |
+| `docs/captures.md` | Les captures clau dels mons, i com fer-ne còpia. |
 | `quadern/` | El quadern de laboratori: què hem fet, què hem trobat i les preguntes obertes. |
-| `fase1/` | La sopa primordial: reproducció de l'experiment BFF de *Computational Life* (Agüera y Arcas et al., 2024). |
-| `fase2/` | El món 2D (llei 1, l'espai): la mateixa química en un mapa on cada programa només es troba amb els veïns. |
-| `sim.mjs` | Simulació sense gràfics per a experiments llargs, de la sopa o del món 2D. |
-| `*/resultats/` | Registres i captures dels experiments llargs. |
+| `fase1/` | La sopa primordial: reproducció de l'experiment BFF de *Computational Life* (Agüera y Arcas et al., 2024), i el nucli que fan servir totes les fases (intèrpret, generadors aleatoris, mesures). |
+| `fase2/` | El món 2D i les lleis 1 (espai), 2 (corrents) i 3 (flux), el registre de famílies i les eines d'anàlisi. |
+| `fase3/` | Llistes i registres dels experiments de la llei 3 (el codi és a `fase2/`). |
+| `sim.mjs` | Simulació sense gràfics per a experiments llargs, de la sopa o del món 2D (`node sim.mjs --help`). |
+| `experiments.sh` | Executa una llista d'experiments, uns quants alhora. |
+| `test/` | Proves de la línia d'ordres, del servidor i de regressió del determinisme. |
+| `*/resultats/` | Registres dels experiments llargs (les captures `.bin` no són a git). |
 
 ### Fase 1
 
 - `bff.js`: l'intèrpret del llenguatge BFF (10 instruccions).
-- `soup.js`: la sopa (barrejar, aparellar, mutar, mesurar).
+- `soup.js`: la sopa (barrejar, aparellar, mutar, mesurar) i els generadors aleatoris v1 i v2.
 - `motifs.js`: cerca dels fragments de codi més repetits.
 - `glyphs.js`: com es mostra un programa (colors i caràcters).
 - `main.js`, `worker.js`, `analysis-worker.js`, `chart.js`: la interfície del navegador.
 
 ### Fase 2
 
-- `world.js`: la llei 1. Cada cel·la s'aparella amb un veí a 2 cel·les com a màxim.
-- `families.js`: el registre de famílies de replicadors, amb la prova de replicació.
+- `world.js`: les lleis 1 (aparellament amb veïns), 2 (corrents) i 3 (riu i renovació).
+- `replication.js`: la prova de replicació, compartida per totes les eines.
+- `families.js`: el registre de famílies de replicadors.
+- `analitza.mjs`: anàlisi d'una captura (`node fase2/analitza.mjs fitxer.bin`).
 - `main.js`, `analysis-worker.js`, `style.css`: el mapa, amb zoom des dels territoris fins al codi.
 
 ## Proves i experiments
 
 ```bash
-node fase1/test-bff.mjs
-```
-
-```bash
-node fase2/test-world.mjs
+npm test
 ```
 
 ```bash
 node sim.mjs --world 512x256 --seed 1 --epochs 16000
 ```
 
-`node sim.mjs` sense `--world` simula la sopa barrejada de la Fase 1. Amb la mateixa llavor i els mateixos
-paràmetres, fa exactament la mateixa història que el navegador.
+`node sim.mjs` sense `--world` simula la sopa barrejada de la Fase 1.
+
+**Reproduïbilitat.** Amb el mateix commit, la mateixa llavor i els mateixos paràmetres, la simulació fa
+exactament la mateixa història; `test/determinisme.mjs` ho comprova. Al món 2D, el navegador i
+`sim.mjs` fan la mateixa història amb qualsevol nombre de fils. A la sopa del navegador, cada fil té
+la seva pròpia seqüència de mutacions, i la història depèn del nombre de fils: `sim.mjs --chunks K`
+reprodueix la del navegador amb K fils.
+
+**Generador aleatori.** Des de l'auditoria 1, el generador per defecte és el v2 (xoshiro128\*\*).
+Els experiments anteriors es van fer amb el v1 (mulberry32): per reproduir-los, cal afegir `--rng v1`.
 
 ## Regles del projecte
 

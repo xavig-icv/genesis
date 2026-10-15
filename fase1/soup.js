@@ -7,8 +7,17 @@ import { PROGRAM_SIZE, TAPE_SIZE } from './bff.js';
 
 export const DEFAULT_MUTATION = 0.00024; // 0.024% per byte i època, com a l'article
 
-// Generador pseudoaleatori petit i ràpid (mulberry32), amb llavor
-// perquè els experiments es puguin repetir.
+// Generadors pseudoaleatoris, amb llavor perquè els experiments es puguin repetir.
+//
+// v1 · mulberry32. És el que van fer servir tots els experiments fins a l'auditoria 1. Té un sol
+//      cicle de 2^32 nombres: un món 2D l'esgota cap a l'època 10.000-13.000, i totes les llavors
+//      en són punts de partida diferents del mateix cicle (AUD-01). Es manté per reproduir els
+//      resultats ja publicats (sim.mjs --rng v1).
+// v2 · xoshiro128** (Blackman i Vigna), amb un període de 2^128 - 1. L'estat s'inicialitza amb
+//      SplitMix32 a partir de la llavor, perquè llavors veïnes (1, 2, 3…) donin seqüències sense
+//      cap relació. És el generador per defecte de les sèries noves.
+export const RNG_VERSIONS = ['v1', 'v2'];
+
 export function createRng(seed) {
   let a = seed >>> 0;
   return function rng() {
@@ -18,6 +27,45 @@ export function createRng(seed) {
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
+}
+
+// SplitMix32: suma la proporció àuria i barreja amb el finalitzador de MurmurHash3.
+function splitmix32(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x9e3779b9) >>> 0;
+    let z = Math.imul(a ^ (a >>> 16), 0x85ebca6b) >>> 0;
+    z = Math.imul(z ^ (z >>> 13), 0xc2b2ae35) >>> 0;
+    return (z ^ (z >>> 16)) >>> 0;
+  };
+}
+
+const rotl = (x, k) => (x << k) | (x >>> (32 - k));
+
+// xoshiro128** a partir d'un estat explícit; retorna enters de 32 bits sense signe.
+export function xoshiro128ss(a, b, c, d) {
+  return function next() {
+    const result = Math.imul(rotl(Math.imul(b, 5), 7), 9) >>> 0;
+    const t = b << 9;
+    c ^= a; d ^= b; b ^= c; a ^= d;
+    c ^= t;
+    d = rotl(d, 11);
+    return result;
+  };
+}
+
+export function createRngV2(seed) {
+  const sm = splitmix32(seed);
+  let a = sm(), b = sm(), c = sm(), d = sm();
+  if ((a | b | c | d) === 0) a = 1; // l'estat tot zeros no és vàlid
+  const next = xoshiro128ss(a, b, c, d);
+  return () => next() / 4294967296;
+}
+
+export function makeRng(seed, version = 'v2') {
+  if (version === 'v1') return createRng(seed);
+  if (version === 'v2') return createRngV2(seed);
+  throw new Error(`generador desconegut: ${version}`);
 }
 
 export function randomSoup(nPrograms, rng) {

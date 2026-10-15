@@ -2,6 +2,12 @@
 import assert from 'assert';
 import { pairNeighbors, applyCurrents, applyFlow } from './world.js';
 import { createFamilyTracker } from './families.js';
+import { replicationTest } from './replication.js';
+import { spawnSync } from 'child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
 import { createRng, shuffle, randomSoup } from '../fase1/soup.js';
 
 // El replicador real de la Fase 1 (llavor 1, programa núm. 7 a l'època 301).
@@ -10,6 +16,10 @@ const REPLICATOR = Uint8Array.from([140,221,0,221,20,164,126,32,105,126,78,173,2
 // El palíndrom espaiat del punt (corrent 0,01, llavor 2, cel·la (179,173) al final):
 // ···[········{··.>············]]············>.··{········[·······
 const SPARSE = Uint8Array.from([94,94,251,91,78,198,39,237,82,55,89,53,123,232,163,46,62,181,38,253,255,31,255,23,119,154,94,34,181,93,93,79,34,94,154,40,160,18,170,255,119,107,181,62,46,163,232,123,15,89,55,143,237,117,198,78,91,251,222,94,250,168,50,50]);
+
+// L'"enverinador" de l'auditoria 1 (AUD-02): no es replica, només escriu zeros al final del company.
+const POISONER = new Uint8Array(64);
+for (let i = 0; i < 32; i++) POISONER[1 + i] = '{.'.charCodeAt(i % 2);
 
 // Un món aleatori amb `program` plantat a una fracció `share` de les cel·les.
 function plantedWorld(n, program, share, seed) {
@@ -209,6 +219,44 @@ const tests = {
     const r = createFamilyTracker().analyse(soup, n, 100);
     assert.strictEqual(r.families.length, 2);
     assert.notStrictEqual(r.families[0].slot, r.families[1].slot);
+  },
+  'l\'enverinador no és un replicador, ni sol ni en context (AUD-02)'() {
+    const W = 64, n = W * W;
+    const soup = plantedWorld(n, POISONER, 0.5, 30);
+    const rng = createRng(31);
+    let tested = 0;
+    for (let c = 0; c < n && tested < 200; c++) {
+      if (soup[c * 64 + 1] !== '{'.charCodeAt(0)) continue;
+      tested++;
+      const r = replicationTest(soup, c, rng, { width: W });
+      assert.ok(!r.solo && !r.context, `la cel·la ${c} compta com a replicador`);
+    }
+    assert.strictEqual(createFamilyTracker().analyse(soup, n, 0, W).families.length, 0);
+  },
+  'un replicador real sí que passa la prova compartida'() {
+    const W = 64, n = W * W;
+    const soup = plantedWorld(n, REPLICATOR, 0.2, 32);
+    const rng = createRng(33);
+    let ok = 0, tested = 0;
+    for (let c = 0; c < n && tested < 100; c++) {
+      if (soup[c * 64 + 17] !== 45 || soup[c * 64 + 21] !== 91) continue; // porta el replicador
+      tested++;
+      if (replicationTest(soup, c, rng, { width: W }).solo) ok++;
+    }
+    assert.ok(ok / tested > 0.7, `${ok} de ${tested}`);
+  },
+  'analitza.mjs fa servir la mateixa prova: 0 % amb l\'enverinador'() {
+    const tmp = mkdtempSync(join(tmpdir(), 'claude-origins-'));
+    try {
+      const file = join(tmp, 'mon64x64-enverinador.bin');
+      writeFileSync(file, plantedWorld(64 * 64, POISONER, 0.5, 34));
+      const here = fileURLToPath(new URL('.', import.meta.url));
+      const r = spawnSync(process.execPath, [join(here, 'analitza.mjs'), file, '300'], { encoding: 'utf8' });
+      assert.strictEqual(r.status, 0, r.stderr);
+      assert.ok(r.stdout.includes('replicadors a la mostra de 300: 0.0%'), r.stdout);
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
   },
   'un món aleatori no té cap família'() {
     const n = 8192;

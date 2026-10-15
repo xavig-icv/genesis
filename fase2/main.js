@@ -1,5 +1,5 @@
 import { PROGRAM_SIZE, TAPE_SIZE, KIND } from '../fase1/bff.js';
-import { createRng, randomSoup, shuffle, gather, scatter, mutate } from '../fase1/soup.js';
+import { makeRng, randomSoup, shuffle, gather, scatter, mutate } from '../fase1/soup.js';
 import { LineChart } from '../fase1/chart.js';
 import { renderProgram, countInstructions, byteLut, cssRgb, pack } from '../fase1/glyphs.js';
 import { pairNeighbors, applyCurrents, applyFlow } from './world.js';
@@ -38,12 +38,13 @@ function readParams() {
     renewal: Number($('renewal').value),
     mutation: Math.max(0, Number($('mutation').value) || 0) / 100,
     threads: Number($('threads').value),
+    rng: $('rng').value,
   };
 }
 
 function createSim(p) {
   const n = p.width * p.height;
-  const rng = createRng(p.seed);
+  const rng = makeRng(p.seed, p.rng);
   return {
     ...p, n, rng,
     soup: randomSoup(n, rng),
@@ -190,7 +191,7 @@ function sample(force = false) {
   const id = ++sampleId;
   pendingSamples.set(id, { sim: s, epoch: s.epoch, shifts: s.shifts, ops: s.runsAcc ? s.opsAcc / s.runsAcc : null });
   s.opsAcc = s.runsAcc = 0;
-  analyst.postMessage({ type: 'sample', buffer: snapshot.buffer, id, epoch: s.epoch, width: s.width }, [snapshot.buffer]);
+  analyst.postMessage({ type: 'sample', buffer: snapshot.buffer, id, epoch: s.epoch, width: s.width, radius: s.radius }, [snapshot.buffer]);
 }
 
 // ---------------------------------------------------------------- colors
@@ -568,7 +569,7 @@ $('step').addEventListener('click', async () => {
   $('play').textContent = 'Continua';
 });
 $('reset').addEventListener('click', reset);
-for (const id of ['seed', 'size', 'radius', 'mixing', 'diffusion', 'flow', 'renewal', 'threads']) $(id).addEventListener('change', reset);
+for (const id of ['seed', 'size', 'radius', 'mixing', 'diffusion', 'flow', 'renewal', 'threads', 'rng']) $(id).addEventListener('change', reset);
 $('mutation').addEventListener('change', () => { sim.mutation = readParams().mutation; });
 
 $('csv').addEventListener('click', () => {
