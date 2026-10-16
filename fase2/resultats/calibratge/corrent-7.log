@@ -1,0 +1,23 @@
+codi=734f4de  rng=v1  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --rng v1 --world 512x256 --seed 7 --mixing 0.01 --epochs 1500 --every 250 --census 250 --stop-after-event 99999 --json fase2/resultats/calibratge/corrent-7.jsonl
+llavor=7 món=512x256 radi=2 barreja=0.01 difusió=0 riu=0 renovació=0 mutació=0.00024  cens=v3 mostra=2048  aturada=establiment+99999
+cens 250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 250  H0=7.998  HOE=0.214  ops/execució=69.7  parelles=75%  bytes <:0.6% ,:0.5% >:0.5%  fragments >>>>>>>>>>>> (0.2%)  [[[[[[[[[[[[ (0.1%)  ,,,,,,,,,,,, (0.1%)  47s
+cens 500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 500  H0=7.993  HOE=0.327  ops/execució=78.7  parelles=75%  bytes <:0.8% ,:0.6% >:0.6%  fragments ,,,,,,,,,,,, (0.2%)  >>>>>>>>>>>> (0.2%)  [[[[[[[[[[[[ (0.2%)  94s
+cens 750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 750  H0=7.986  HOE=0.398  ops/execució=83.5  parelles=75%  bytes <:1.1% ,:0.7% >:0.7%  fragments >>>>>>>>>>>> (0.3%)  [[·[[[[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  143s
+cens 1000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1000  H0=7.977  HOE=0.444  ops/execució=89.4  parelles=75%  bytes <:1.4% ,:0.8% >:0.7%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.4%)  <<<<<<<<<<<< (0.3%)  191s
+cens 1250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1250  H0=7.965  HOE=0.466  ops/execució=95.1  parelles=75%  bytes <:1.7% ,:0.9% >:0.8%  fragments [[[[[[[[[[[[ (0.5%)  >>>>>>>>>>>> (0.4%)  <<<<<<<<<<<< (0.4%)  240s
+cens 1500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1500  H0=7.953  HOE=0.477  ops/execució=100.1  parelles=75%  bytes <:2.0% ,:1.0% #61:0.9%  fragments [[[[[[[[[[[[ (0.6%)  [[[[·[[[[[[[ (0.5%)  >>>>>>>>>>>> (0.4%)  287s
+
+empremta del món: 50530eda
+
+programes diferents: 131045 de 131072
+      5  |<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<|
+      4  |                                                                |
+      3  |                                                                |
+      3  |                                                                |
+      3  |,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|

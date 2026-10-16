@@ -18,6 +18,11 @@
 //
 // Cada família conserva el color mentre viu: el color segueix la família, no la
 // seva posició al rànquing.
+//
+// Mostreig (opció `sampling`): a la v3, la mostra són cel·les diferents (AU2-03 de l'auditoria
+// externa 2: a la v2 es triaven amb reemplaçament i una cel·la podia sortir dues vegades), i les
+// famílies que se surten del seguiment perquè n'hi ha massa no es donen per extingides (AUD-14). La
+// v2 es manté per reproduir exactament els censos dels registres antics.
 import { PROGRAM_SIZE, KIND } from '../fase1/bff.js';
 import { createRng } from '../fase1/soup.js';
 import { replicates } from './replication.js';
@@ -51,15 +56,20 @@ function grams(s, k) {
   return out;
 }
 
-export function createFamilyTracker(seed = 20261014) {
+export const SAMPLING_VERSIONS = ['v2', 'v3'];
+
+export function createFamilyTracker(seed = 20261014, { sampling = 'v3' } = {}) {
+  if (!SAMPLING_VERSIONS.includes(sampling)) throw new Error(`mostreig desconegut: ${sampling}`);
   let families = [];
   let nextId = 1;
   let rng = createRng(seed);
+  let indices = null; // v3: permutació parcial de les cel·les (Fisher-Yates), per triar-ne sense repetir
 
   function reset() {
     families = [];
     nextId = 1;
     rng = createRng(seed);
+    indices = null;
   }
 
   // Fracció dels trossos de `kg` que són al perfil `profile`.
@@ -87,8 +97,16 @@ export function createFamilyTracker(seed = 20261014) {
     // 1. Replicadors de la mostra, amb el seu codi compacte
     const sampleSize = Math.min(SAMPLE, n);
     const replicators = [];
+    if (sampling === 'v3' && n > SAMPLE && indices?.length !== n) indices = Uint32Array.from({ length: n }, (_, i) => i);
     for (let k = 0; k < sampleSize; k++) {
-      const c = n <= SAMPLE ? k : (rng() * n) | 0;
+      let c;
+      if (n <= SAMPLE) c = k;
+      else if (sampling === 'v2') c = (rng() * n) | 0;
+      else {
+        const j = k + ((rng() * (n - k)) | 0);
+        [indices[k], indices[j]] = [indices[j], indices[k]];
+        c = indices[k];
+      }
       if (!replicates(soup, c, rng, { width, radius })) continue;
       const code = compactCode(soup, c);
       if (code.length >= K) replicators.push({ c, code, kg: grams(code, K) });
@@ -158,9 +176,10 @@ export function createFamilyTracker(seed = 20261014) {
     for (const f of families) f.low = f.cells / n < DEATH_SHARE ? f.low + 1 : 0;
     let alive = families.filter((f) => f.low < DEATH_SAMPLES);
     const extinct = families.filter((f) => f.low >= DEATH_SAMPLES).map((f) => f.id);
+    const untracked = [];
     if (alive.length > MAX_TRACKED) {
       const dropped = new Set([...alive].sort((a, b) => b.cells - a.cells).slice(MAX_TRACKED).map((f) => f.id));
-      extinct.push(...dropped);
+      (sampling === 'v2' ? extinct : untracked).push(...dropped);
       alive = alive.filter((f) => !dropped.has(f.id));
     }
 
@@ -181,6 +200,7 @@ export function createFamilyTracker(seed = 20261014) {
     return {
       map,
       extinct,
+      untracked,
       alive: replicators.length / sampleSize,
       families: families.map((f) => ({
         id: f.id, slot: f.slot, born: f.born, share: f.cells / n, core: f.core[0] ?? '', example: f.example,

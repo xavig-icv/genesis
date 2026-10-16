@@ -20,13 +20,16 @@ Edge o un altre navegador basat en Chromium (és amb el que s'ha comprovat la re
 |---|---|
 | `docs/disseny.md` | La visió, els principis, les lleis de l'univers i les decisions preses. |
 | `docs/captures.md` | Les captures clau dels mons, i com fer-ne còpia. |
+| `docs/protocol-estadistic.md` | El protocol (preregistre) de la sèrie confirmatòria. |
+| `docs/calibratge.md` | Què detecta el cens de la vida, i què no. |
+| `eines/cubff/` | La comparació de l'intèrpret amb cubff, l'implementació original de l'article. |
 | `quadern/` | El quadern de laboratori: què hem fet, què hem trobat i les preguntes obertes. |
 | `fase1/` | La sopa primordial: reproducció de l'experiment BFF de *Computational Life* (Agüera y Arcas et al., 2024), i el nucli que fan servir totes les fases (intèrpret, generadors aleatoris, mesures). |
 | `fase2/` | El món 2D i les lleis 1 (espai), 2 (corrents) i 3 (flux), el registre de famílies i les eines d'anàlisi. |
 | `fase3/` | Llistes i registres dels experiments de la llei 3 (el codi és a `fase2/`). |
 | `sim.mjs` | Simulació sense gràfics per a experiments llargs, de la sopa o del món 2D (`node sim.mjs --help`). |
 | `experiments.sh` | Executa una llista d'experiments, uns quants alhora. |
-| `test/` | Proves de la línia d'ordres, del servidor i de regressió del determinisme. |
+| `test/` | Proves de la línia d'ordres, del servidor, de l'estadística, de l'oracle de cubff i de regressió del determinisme. `test/fixtures/` té dos retalls petits de mons amb vida. |
 | `*/resultats/` | Registres dels experiments llargs (les captures `.bin` no són a git). |
 
 ### Fase 1
@@ -40,9 +43,12 @@ Edge o un altre navegador basat en Chromium (és amb el que s'ha comprovat la re
 ### Fase 2
 
 - `world.js`: les lleis 1 (aparellament amb veïns), 2 (corrents) i 3 (riu i renovació).
-- `replication.js`: la prova de replicació, compartida per totes les eines.
-- `families.js`: el registre de famílies de replicadors.
+- `replication.js`: la prova de replicació, compartida per totes les eines, amb la de segona generació (la còpia també es copia?).
+- `census.js`: el cens de la vida (versió 3: replicadors hereditaris en una mostra de 2.048 cel·les) i el criteri d'establiment.
+- `families.js`: el registre de famílies de replicadors (descriptiu: el mapa i les històries).
 - `analitza.mjs`: anàlisi d'una captura (`node fase2/analitza.mjs fitxer.bin`).
+- `calibratge.mjs`: el cens sobre les captures clau.
+- `estadistica.mjs`: l'anàlisi estadística de les sèries (log-rank, Kaplan–Meier, dues etapes, sensibilitats), amb la validació de la sèrie contra el manifest `serie-llei2.json` i la decisió de cada etapa (`--etapa`).
 - `main.js`, `analysis-worker.js`, `style.css`: el mapa, amb zoom des dels territoris fins al codi.
 
 ## Proves i experiments
@@ -63,8 +69,16 @@ exactament la mateixa història; `test/determinisme.mjs` ho comprova. Al món 2D
 la seva pròpia seqüència de mutacions, i la història depèn del nombre de fils: `sim.mjs --chunks K`
 reprodueix la del navegador amb K fils.
 
-**Generador aleatori.** Des de l'auditoria 1, el generador per defecte és el v2 (xoshiro128\*\*).
-Els experiments anteriors es van fer amb el v1 (mulberry32): per reproduir-los, cal afegir `--rng v1`.
+**Generador aleatori i cens.** Des de l'auditoria 1, el generador per defecte és el v2 (xoshiro128\*\*),
+i des de la iteració 3, el cens per defecte és el v3. Els experiments anteriors es van fer amb el
+generador v1 (mulberry32) i el cens v2: per reproduir-los, cal afegir `--rng v1 --census-version v2`.
+
+**Versions de Node.** Les proves passen amb Node 16 (zlib 1.2.11) i Node 20 (zlib 1.3.1), amb les mateixes
+empremtes i el mateix cens. Amb Node 22, la compressió és una mica diferent i l'entropia d'ordre superior
+canvia a la tercera xifra decimal: la història del món és la mateixa, però la mesura no.
+
+**Fidelitat.** L'intèrpret dona exactament el mateix resultat que cubff, l'implementació original de
+l'article, en 200.000 cintes (`eines/cubff/README.md`).
 
 ## Regles del projecte
 

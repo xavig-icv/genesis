@@ -1,0 +1,29 @@
+{
+  "name": "Sèrie confirmatòria de la llei 2: món quiet contra corrent 0,01",
+  "protocol": "docs/protocol-estadistic.md",
+  "groups": {
+    "A": { "label": "món quiet (m = 0)", "mixing": 0, "seeds": { "1": [1001, 1050], "2": [1051, 1080] } },
+    "B": { "label": "corrent 0,01", "mixing": 0.01, "seeds": { "1": [2001, 2050], "2": [2051, 2080] } }
+  },
+  "params": {
+    "programs": 131072,
+    "world": [512, 256],
+    "radius": 2,
+    "diffusion": 0,
+    "flow": 0,
+    "renewal": 0,
+    "mutation": 0.00024,
+    "rng": "v2",
+    "epochs": 16000,
+    "every": 100,
+    "from": null,
+    "start": 0,
+    "census": { "version": "v3", "every": 250, "sample": 2048, "seed": 20261016 },
+    "event": { "share": 0.01, "censuses": 2, "stopAfter": 1000 }
+  },
+  "stages": {
+    "1": { "perGroup": 50, "bound": 2.479178635 },
+    "2": { "perGroup": 80, "bound": 2.004268879 }
+  },
+  "informationFraction": 0.625
+}

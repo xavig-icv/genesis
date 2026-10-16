@@ -8,6 +8,7 @@
 // Si un canvi ha d'alterar les històries a propòsit, no es toquen aquestes empremtes: s'hi afegeix
 // una opció nova (com --rng v2) i les antigues continuen reproduint-se igual.
 import assert from 'assert';
+import { createHash } from 'crypto';
 import { execFileSync } from 'child_process';
 import { mkdtempSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
@@ -48,7 +49,14 @@ const tests = {
   },
   'v1 · registre històric de la Fase 1 (fase1/resultats/llavor-1.log, època 100)'() {
     const out = sim('--rng', 'v1', '--seed', '1', '--epochs', '100', '--every', '100');
-    assert.ok(out.includes('època 100  H0=7.999  HOE=0.183  ops/execució=67.3'), out.split('\n').find((l) => l.startsWith('època 100')));
+    const line = out.split('\n').find((l) => l.startsWith('època 100')) ?? '';
+    // H0 i les operacions només depenen de la història, i es comparen exactament. L'HOE també depèn
+    // de la implementació de zlib: Node 16 (zlib 1.2.11) i Node 20 (zlib 1.3.1) donen 0.183, però
+    // Node 22 dona 0.184 (AU2-07 de l'auditoria externa 2). Per això es compara amb una tolerància.
+    assert.ok(line.startsWith('època 100  H0=7.999  HOE='), line);
+    assert.ok(line.includes('  ops/execució=67.3  '), line);
+    const hoe = Number(line.match(/HOE=([\d.]+)/)?.[1]);
+    assert.ok(Math.abs(hoe - 0.183) <= 0.002, `HOE=${hoe}: s'esperava 0.183 ± 0.002 (zlib ${process.versions.zlib})`);
   },
 
   // Generador v2 (xoshiro128**): el de les sèries noves.
@@ -64,6 +72,29 @@ const tests = {
   'v2 és el generador per defecte'() {
     assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '4', '--epochs', '80', ...LAWS, ...QUIET)), 'edfd9766');
   },
+  // Casos que abans només es provaven barrejats amb la resta de lleis (AUD-36 de l'auditoria 2)
+  'v2 · món 2D amb radi 1'() {
+    assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '4', '--epochs', '80', '--radius', '1', ...QUIET)), 'b054f4b');
+  },
+  'v2 · difusió sense barreja'() {
+    assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '4', '--epochs', '80', '--diffusion', '0.1', ...QUIET)), '3db24b96');
+  },
+
+  // El cens (AUD-36): les empremtes del món no el veuen, però ara és la mesura principal. Es prova sobre
+  // dos retalls de 32x32 de mons amb vida (test/fixtures): l'esclat del replicador que necessita
+  // parella i el palíndrom del punt. Els valors del cens v2 es van obtenir amb el codi d'abans de la
+  // iteració 3 (commit 4bbee9a): el cens v2 els ha de reproduir exactament.
+  ...Object.fromEntries([['esclat', 'bbf02f058fe26cd3', '0a30da1b21bb7f8b', '9741e854'], ['punt', '0b74109de2367cb7', 'a67305348633b1e0', 'b01bd77a']]
+    .map(([name, v2, v3, world]) => [`cens v2 i v3 · retall «${name}» (el cens no toca el món)`, () => {
+      const run = (version) => sim('--rng', 'v1', '--world', '32x32', '--from', join(root, 'test', 'fixtures', `${name}-32x32.bin`), '--start', '0',
+        '--epochs', '30', '--every', '1000', '--census', '5', '--census-version', version);
+      for (const [version, expected] of [['v2', v2], ['v3', v3]]) {
+        const out = run(version);
+        const lines = out.split('\n').filter((l) => /^cens |FAMÍLIA|ESTABLIMENT/.test(l)).join('\n') + '\n';
+        assert.strictEqual(createHash('sha256').update(lines).digest('hex').slice(0, 16), expected, `cens ${version}:\n${lines}`);
+        assert.strictEqual(fingerprint(out), world, `cens ${version}: el món ha canviat`);
+      }
+    }])),
 };
 
 let failed = 0;

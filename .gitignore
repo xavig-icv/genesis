@@ -1,6 +1,8 @@
 # Captures dels mons (8 MB cadascuna). Es poden regenerar: amb el mateix codi, la mateixa
 # llavor i els mateixos paràmetres, la simulació fa exactament la mateixa història.
 *.bin
+# ...excepte els retalls petits de mons amb vida que fan servir les proves (64 KB cadascun)
+!test/fixtures/*.bin
 
 # Fitxers del sistema i de l'editor
 .DS_Store
