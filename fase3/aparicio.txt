@@ -1,13 +1,14 @@
 # Aparició des de zero amb corrent 0,01: riu torrencial i renovació forta (llavors 1-6)
-riu5-llavor1 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 1 --flow 5
-renovacio0.01-llavor1 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 1 --renewal 0.01
-riu5-llavor2 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 2 --flow 5
-renovacio0.01-llavor2 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 2 --renewal 0.01
-riu5-llavor3 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 3 --flow 5
-renovacio0.01-llavor3 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 3 --renewal 0.01
-riu5-llavor4 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 4 --flow 5
-renovacio0.01-llavor4 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 4 --renewal 0.01
-riu5-llavor5 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 5 --flow 5
-renovacio0.01-llavor5 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 5 --renewal 0.01
-riu5-llavor6 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 6 --flow 5
-renovacio0.01-llavor6 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 6 --renewal 0.01
+# Es van fer amb el generador v1 i el cens v2: per reproduir-los cal --rng v1 --census-version v2 (AUD-29)
+riu5-llavor1 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 1 --flow 5 --rng v1 --census-version v2
+renovacio0.01-llavor1 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 1 --renewal 0.01 --rng v1 --census-version v2
+riu5-llavor2 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 2 --flow 5 --rng v1 --census-version v2
+renovacio0.01-llavor2 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 2 --renewal 0.01 --rng v1 --census-version v2
+riu5-llavor3 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 3 --flow 5 --rng v1 --census-version v2
+renovacio0.01-llavor3 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 3 --renewal 0.01 --rng v1 --census-version v2
+riu5-llavor4 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 4 --flow 5 --rng v1 --census-version v2
+renovacio0.01-llavor4 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 4 --renewal 0.01 --rng v1 --census-version v2
+riu5-llavor5 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 5 --flow 5 --rng v1 --census-version v2
+renovacio0.01-llavor5 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 5 --renewal 0.01 --rng v1 --census-version v2
+riu5-llavor6 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 6 --flow 5 --rng v1 --census-version v2
+renovacio0.01-llavor6 --world 512x256 --mixing 0.01 --epochs 16000 --every 100 --census 250 --after 300 --save fase3/aparicio --save-every 8000 --seed 6 --renewal 0.01 --rng v1 --census-version v2
