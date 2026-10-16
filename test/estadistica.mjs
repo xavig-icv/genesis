@@ -10,7 +10,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 import {
   fisher, wilson, logrank, kaplanMeier, survivalAt, incidenceDifference, rmst, twoStageBounds, power,
-  readExperiment, readLegacyLog, normalCdf,
+  readExperiment, readLegacyLog, normalCdf, firstRun, SENSITIVITY, withCriterion, originMeasures,
 } from '../fase2/estadistica.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -105,6 +105,23 @@ const tests = {
       rmSync(tmp, { recursive: true, force: true });
     }
   },
+};
+
+tests['sensibilitats i mesures d\'origen sobre censos sintètics'] = () => {
+  const census = (epoch, heritable, replicating, solo, familyShare) => ({ epoch, sample: 1000, heritable, replicating, solo, families: [{ share: familyShare }] });
+  const x = {
+    end: 2250, event: true, time: 1000,
+    censuses: [census(250, 0, 3, 3, 0), census(500, 2, 12, 11, 0.004), census(750, 5, 15, 14, 0.008), census(1000, 12, 20, 2, 0.012),
+      census(1250, 60, 70, 3, 0.05), census(1500, 70, 80, 4, 0.06), census(2000, 80, 90, 5, 0.1)],
+    measures: [{ epoch: 900, hoe: 0.8 }, { epoch: 1100, hoe: 1.4 }],
+  };
+  assert.strictEqual(firstRun(x.censuses, (c) => c.heritable >= 10), 1000);
+  const t = Object.fromEntries(Object.entries(SENSITIVITY).map(([k, f]) => [k, f(x)]));
+  assert.deepStrictEqual(Object.values(t), [500, 1250, 500, 1000, 1100]);
+  // un criteri que no es compleix: censurat al final del seguiment
+  assert.deepStrictEqual(withCriterion([x], () => null).map((y) => [y.event, y.time]), [[false, 2250]]);
+  const o = originMeasures(x);
+  assert.deepStrictEqual([o.firstHeritable, o.firstCopy, o.heritableCensusesBefore, o.copyCensusesBefore, o.delay, o.maintained], [500, 250, 2, 3, 500, true]);
 };
 
 let failed = 0;

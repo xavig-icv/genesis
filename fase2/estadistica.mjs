@@ -180,13 +180,58 @@ export function readExperiment(file) {
   const end = records.find((r) => r.type === 'end');
   if (!start) throw new Error(`${file}: no té la línia d'inici`);
   const censuses = records.filter((r) => r.type === 'census' && r.version === 'v3');
+  const measures = records.filter((r) => r.type === 'measure');
   const t = establishment(censuses);
   const last = end?.epoch ?? (censuses.length ? censuses[censuses.length - 1].epoch : start.start);
   return {
     file, seed: start.seed, code: start.code, mixing: start.mixing, horizon: start.epochs,
     time: t ?? last, event: t !== null, end: last,
     // complet: o ha arribat a l'horitzó, o s'ha aturat després d'un establiment
-    complete: end !== undefined && (t !== null || last >= start.epochs), censuses,
+    complete: end !== undefined && (t !== null || last >= start.epochs), censuses, measures,
+  };
+}
+
+// ---- Anàlisis de sensibilitat i mesures secundàries (protocol, §6 i §7)
+
+// L'època del primer de `count` censos seguits que compleixen `ok`, o null
+export function firstRun(censuses, ok, count = 2) {
+  let run = 0;
+  for (let i = 0; i < censuses.length; i++) {
+    run = ok(censuses[i]) ? run + 1 : 0;
+    if (run >= count) return censuses[i - count + 1].epoch;
+  }
+  return null;
+}
+
+const share = (key, threshold) => (c) => c.sample > 0 && c[key] / c.sample >= threshold;
+export const SENSITIVITY = {
+  'sense herència (es copien ≥ 1 %)': (x) => firstRun(x.censuses, share('replicating', 0.01)),
+  'llindar del 5 %': (x) => firstRun(x.censuses, share('heritable', 0.05)),
+  'només la prova sola (≥ 1 %)': (x) => firstRun(x.censuses, share('solo', 0.01)),
+  'famílies, unió del territori ≥ 1 % (v0.1)': (x) => firstRun(x.censuses, (c) => c.families.reduce((a, f) => a + f.share, 0) >= 0.01),
+  'HOE > 1': (x) => x.measures.find((m) => m.hoe > 1)?.epoch ?? null,
+};
+
+// Un grup amb un altre criteri: mateix final de seguiment, un altre temps d'esdeveniment. (Els
+// experiments s'aturen 1.000 èpoques després de l'establiment principal: un criteri que es compleixi
+// més tard hi queda censurat. Per això aquestes anàlisis són descriptives.)
+export const withCriterion = (group, criterion) => group.map((x) => {
+  const t = criterion(x);
+  return { ...x, time: t ?? x.end, event: t !== null };
+});
+
+// Mesures d'origen i de manteniment d'un experiment (protocol, §6.5 i §6.6)
+export function originMeasures(x) {
+  const firstHeritable = x.censuses.find((c) => c.heritable > 0)?.epoch ?? null;
+  const firstCopy = x.censuses.find((c) => c.replicating > 0)?.epoch ?? null;
+  const before = x.censuses.filter((c) => !x.event || c.epoch < x.time);
+  const after = x.event ? x.censuses.find((c) => c.epoch === x.time + 1000) : undefined;
+  return {
+    firstHeritable, firstCopy,
+    heritableCensusesBefore: before.filter((c) => c.heritable > 0).length,
+    copyCensusesBefore: before.filter((c) => c.replicating > 0).length,
+    delay: x.event && firstHeritable !== null ? x.time - firstHeritable : null,
+    maintained: after ? after.heritable / after.sample >= 0.01 : null,
   };
 }
 
@@ -243,6 +288,20 @@ export function report(A, B, { horizon = null, labelA = 'A', labelB = 'B' } = {}
   lines.push(`RMST fins a l'època ${horizon}: ${labelA} ${ra.rmst.toFixed(0)} ± ${ra.se.toFixed(0)}, ${labelB} ${rb.rmst.toFixed(0)} ± ${rb.se.toFixed(0)} (diferència ${(rb.rmst - ra.rmst).toFixed(0)} ± ${Math.hypot(ra.se, rb.se).toFixed(0)})`);
   for (const [label, g] of [[labelA, A], [labelB, B]]) {
     lines.push(`Kaplan-Meier ${label}: ${kaplanMeier(g).map((st) => `${st.time}:${st.s.toFixed(3)}`).join('  ') || '(cap establiment)'}`);
+  }
+  lines.push('', 'Sensibilitats (descriptives):');
+  for (const [name, criterion] of Object.entries(SENSITIVITY)) {
+    const a = withCriterion(A, criterion), b = withCriterion(B, criterion);
+    lines.push(`  ${name}: ${a.filter((x) => x.event).length}/${a.length} contra ${b.filter((x) => x.event).length}/${b.length}, log-rank p = ${logrank(a, b).p.toFixed(4)}`);
+  }
+  lines.push('', 'Origen i manteniment (descriptius):');
+  const median = (v) => { const s = v.filter((x) => x !== null).sort((p, q) => p - q); return s.length ? s[s.length >> 1] : '—'; };
+  for (const [label, g] of [[labelA, A], [labelB, B]]) {
+    const m = g.map(originMeasures);
+    lines.push(`  ${label}: amb algun hereditari ${m.filter((x) => x.firstHeritable !== null).length}/${g.length} (primer, mediana: època ${median(m.map((x) => x.firstHeritable))}); ` +
+      `amb algun copiador ${m.filter((x) => x.firstCopy !== null).length}/${g.length}; ` +
+      `del primer hereditari a l'establiment, mediana ${median(m.map((x) => x.delay))} èpoques; ` +
+      `mantinguts a t + 1.000: ${m.filter((x) => x.maintained).length} de ${m.filter((x) => x.maintained !== null).length}`);
   }
   return lines.join('\n');
 }

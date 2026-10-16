@@ -32,6 +32,8 @@ const rejected = {
   '--census-sample amb el cens v2': ['--world', '64x64', '--census-version', 'v2', '--census-sample', '100'],
   'versió del cens desconeguda': ['--world', '64x64', '--census-version', 'v4'],
   '--stop-after-event a la sopa': ['--stop-after-event', '1000'],
+  '--save-what sense --save': ['--world', '64x64', '--save-what', 'event'],
+  '--save-what event amb el cens v2': ['--world', '64x64', '--save', 'x', '--census-version', 'v2', '--save-what', 'event'],
 };
 
 const tests = {};
@@ -86,6 +88,18 @@ tests["s'atura N èpoques després de l'establiment, i el JSONL ho registra"] = 
     assert.strictEqual(end.type, 'end');
     assert.strictEqual(end.reason, 'establiment');
     assert.strictEqual(end.epoch, 15);
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+};
+
+tests["--save-what event només desa la captura de l'establiment"] = () => {
+  const tmp = mkdtempSync(join(tmpdir(), 'claude-origins-'));
+  try {
+    const r = sim('--world', '32x32', '--from', join(root, 'test', 'fixtures', 'punt-32x32.bin'), '--start', '0', '--epochs', '100',
+      '--every', '5', '--census', '5', '--stop-after-event', '10', '--save', tmp, '--save-what', 'event');
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.deepStrictEqual(readdirSync(tmp), ['llavor1-mon32x32-r2-des0-establiment5.bin']);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }

@@ -35,6 +35,9 @@
 //   --chunks K       sopa barrejada: imita el navegador amb K fils (mateixa història)
 //   --save carpeta   desa la sopa en la transició i al final (.bin)
 //   --save-every N   i també cada N èpoques (només amb --save)
+//   --save-what all|event
+//                    amb --save: totes les captures (per defecte) o només la de l'establiment de la vida
+//                    (cens v3). Cada captura d'un món de 512x256 són 8 MB
 //   --rng v1|v2      generador aleatori (per defecte v2, xoshiro128**). Per reproduir els experiments
 //                    fets abans de l'auditoria 1, que feien servir mulberry32, cal --rng v1.
 //   --help           mostra aquesta ajuda
@@ -90,6 +93,7 @@ const OPTIONS = {
   chunks: { type: 'int', min: 0, soupOnly: true },
   save: { type: 'str' },
   'save-every': { type: 'int', min: 0 },
+  'save-what': { type: 'enum', values: ['all', 'event'] },
   rng: { type: 'enum', values: RNG_VERSIONS },
   'census-version': { type: 'enum', values: CENSUS_VERSIONS, worldOnly: true },
   'census-sample': { type: 'int', min: 1, worldOnly: true },
@@ -142,6 +146,9 @@ function parseArgs(argv) {
   if (out.from !== undefined && out.start === undefined) fail('--from necessita --start (l\'època del món desat), per numerar bé les èpoques');
   if (out.from !== undefined && (out.epochs ?? 16000) <= (out.start ?? 0)) fail('--epochs ha de ser més gran que --start (és l\'època final, no el nombre d\'èpoques)');
   if (out['save-every'] !== undefined && out.save === undefined) fail('--save-every només té sentit amb --save');
+  if (out['save-what'] !== undefined && out.save === undefined) fail('--save-what només té sentit amb --save');
+  if (out['save-what'] === 'event' && (out['census-version'] === 'v2' || !out.world)) fail('--save-what event necessita el món 2D amb el cens v3');
+  if (out['save-what'] === 'event' && out['save-every'] !== undefined) fail('--save-what event i --save-every són excloents');
   if (out['census-version'] === 'v2') {
     for (const name of ['census-sample', 'stop-after-event']) if (name in out) fail(`--${name} necessita el cens v3`);
   }
@@ -190,7 +197,9 @@ if (saveDir) mkdirSync(saveDir, { recursive: true });
 const lawsTag = (mixing ? `-m${mixing}` : '') + (diffusion ? `-d${diffusion}` : '') + (flow ? `-f${flow}` : '') + (renewal ? `-n${renewal}` : '');
 const branchTag = from ? `-des${start}` : '';
 const tag = world ? `mon${world[0]}x${world[1]}-r${radius}${lawsTag}${branchTag}-` : chunks ? `fils${chunks}-` : '';
-const save = (name) => saveDir && writeFileSync(join(saveDir, `llavor${seed}-${tag}${name}.bin`), soup);
+const saveWhat = args['save-what'] ?? 'all';
+const save = (name, kind = 'all') => saveDir && (saveWhat === 'all' || kind === saveWhat) &&
+  writeFileSync(join(saveDir, `llavor${seed}-${tag}${name}.bin`), soup);
 
 const rng = makeRng(seed, rngVersion);
 let soup;
@@ -292,7 +301,7 @@ for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
           eventAt = t;
           console.log(`*** ESTABLIMENT DE LA VIDA a l'època ${t} (confirmat al cens ${epoch}) ***`);
           json({ type: 'event', epoch: t, confirmed: epoch });
-          save(`establiment${t}`);
+          save(`establiment${t}`, 'event');
         }
       }
       if (stopAfterEvent !== null && eventAt >= 0 && epoch >= eventAt + stopAfterEvent) { stopReason = 'establiment'; break; }
