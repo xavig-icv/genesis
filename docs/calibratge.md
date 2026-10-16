@@ -118,5 +118,32 @@ què passa més a prop de l'establiment: §6.
 
 ## 6. Abans de l'establiment
 
-*(Pendent: s'estan regenerant el món quiet de la llavor 9, amb establiment a l'època 7.750, i el de
-corrent 0,01 de la llavor 11, amb establiment a la 6.750.)*
+Dos mons de la sèrie exploratòria, regenerats amb el cens v3 fins a l'establiment:
+- el món quiet de la llavor 9, que a l'exploració es va establir a la 7.750 pel criteri de família;
+- el món amb corrent 0,01 de la llavor 11, establert a la 6.750.
+
+| Món | Últim cens sense hereditaris | Primer cens amb hereditaris | Cens següent | Establiment (v3) | Criteri de família (v0.1) |
+|---|---|---|---|---|---|
+| Quiet, llavor 9 | 7.500 | 7.750: 0,8 % (es copien l'1,5 %) | 8.000: 3,8 % (7,1 %) | 8.000 | 7.750 |
+| Corrent 0,01, llavor 11 | 6.500 | 6.750: 1,2 % (es copien l'1,5 %) | 7.000: 5,3 % (9,5 %) | 6.750 | 6.750 |
+
+En tots els censos anteriors, de cada 2.048 cel·les se'n copien com a molt una o dues (≤ 0,1 %), i cap no
+és hereditària. El primer replicador hereditari es detecta en el mateix interval de cens en què la vida
+s'enlaira.
+
+**Lectura (provisional, 5 mons).** Les dades apunten al contrari de la hipòtesi d'AUD-34:
+
+1. **Els copiadors no hereditaris són freqüents però escassos.**
+2. **El pas rar és que aparegui un replicador hereditari.**
+3. **Quan apareix, s'estableix en menys de 250 èpoques.**
+
+Durant l'enlairament, una mica més de la meitat dels que es copien són hereditaris: moltes de les
+còpies que es fan llavors són parcials.
+
+**Límit de la mesura.** Si un replicador hereditari ocupés una fracció *d* del món, una mostra de 2.048
+cel·les el detectaria amb una probabilitat de 1 − (1 − *d*)^2048:
+- un 64 % si *d* = 0,05 %;
+- un 18 % si *d* = 0,01 %.
+
+Per tant, "no detectat" no vol dir "absent" a densitats molt baixes. Els censos cada 250 èpoques també
+limiten la resolució en el temps.
