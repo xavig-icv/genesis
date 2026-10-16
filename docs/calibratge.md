@@ -29,6 +29,7 @@ acaba portant alguna finestra del programa original, és un **replicador heredit
 |---|---|---|
 | El replicador de la Fase 1, el palíndrom espaiat del punt i el successor immune, plantats en un món aleatori | Hereditaris | Més del 70 % de les còpies plantades ho són a cada cas |
 | **Copiador parcial** sintètic: 24 bytes de dades diferents i un bucle que les copia al company, però no copia el bucle | Es copia, però **no** és hereditari | Primera generació en 586 de 586 casos; hereditari en **cap** |
+| El copiador parcial **envoltat de replicadors reals** (plantat a cada cel·la dels dos retalls de `test/fixtures`), perquè en context el company va primer i també executa codi | No és hereditari | 0 de 1.026 proves a cada retall; ni tan sols passa la primera generació en context |
 | L'enverinador de l'auditoria 1 (escriu zeros al company) | Ni es copia ni és hereditari | 0 hereditaris |
 | Un món aleatori | Cap hereditari | 0 de 2.048 |
 | El replicador que necessita parella (retall de 32 × 32 de l'esclat, `test/fixtures/esclat-32x32.bin`) | Hereditari en context, mai sol | Només en context; alguns hereditaris |

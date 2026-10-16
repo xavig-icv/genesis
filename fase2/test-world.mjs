@@ -301,6 +301,19 @@ const tests = {
     }
     assert.ok(copies / tested > 0.9, `només ${copies} de ${tested} passen la primera generació`);
   },
+  "el copiador parcial tampoc no és hereditari envoltat de replicadors reals (en context)"() {
+    // En context, el company va primer i també executa codi: un replicador veí no ha de fer que el
+    // copiador parcial sembli hereditari
+    for (const name of ['punt-32x32.bin', 'esclat-32x32.bin']) {
+      const base = fixture(name);
+      const rng = createRng(54);
+      for (let c = 0; c < 1024; c += 16) {
+        const soup = base.slice();
+        soup.set(PARTIAL, c * 64);
+        assert.ok(!replicationTest(soup, c, rng, { width: 32, heredity: true }).heritable, `${name}, cel·la ${c}`);
+      }
+    }
+  },
   "l'enverinador tampoc no és hereditari"() {
     const W = 64, n = W * W;
     const soup = plantedWorld(n, POISONER, 0.5, 48);
