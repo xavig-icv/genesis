@@ -28,3 +28,12 @@ Comprimides ocupen uns 48 MB en total, la meitat que sense comprimir (s'assemble
 
 **On es guarda la còpia:** a la carpeta local `arxiu-captures/` i en un disc extern (còpia feta el 15-10-2026). La màquina
 virtual no serveix de còpia de seguretat, perquè és al mateix disc que el PC.
+
+**Com es comprova una còpia:** `bash arxiva-captures.sh --verifica [carpeta]` descomprimeix cada `.gz` i
+en compara la suma amb `captures.sha256`, que és la de la captura sense comprimir. Per tornar-les a posar
+al seu lloc: `bash arxiva-captures.sh --restaura [carpeta]` (AU2-11 de l'auditoria externa 2).
+
+**Versions.** Totes aquestes captures i els registres de la sèrie exploratòria es van fer amb el
+generador v1 i el cens v2. Per regenerar-les cal `--rng v1 --census-version v2`. Els registres de les
+llavors 4–15 de la VM (`fase2/resultats/vm/`) no porten la capçalera `codi=` ni `rng=`, perquè es van fer
+amb codi anterior a la capçalera, del generador v1 (AUD-37 de l'auditoria 2).

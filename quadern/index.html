@@ -17,6 +17,7 @@
     <a href="#entrada-4">Entrada 4</a>
     <a href="#entrada-5">Entrada 5</a>
     <a href="#entrada-6">Entrada 6</a>
+    <a href="#entrada-7">Entrada 7</a>
   </nav>
 
   <article id="entrada-1">
@@ -365,6 +366,7 @@
       </table>
     </div>
     <p class="sub">Mons de 512 × 256, fins a 16.000 èpoques. "Hi neix vida" vol dir que l'entropia d'ordre superior supera 1 bit. A les llavors 4–15, el cens de famílies (registre v2, que es fa cada 250 èpoques) hi troba replicadors gairebé al mateix moment: entre 350 èpoques abans i 50 després. A les llavors 1–3 es va fer servir el registre antic, que no els veia sempre.</p>
+    <p class="pending"><strong>Afegit (auditoria 2, AUD-37):</strong> els registres de les llavors 4–15 es van fer a la màquina virtual amb codi anterior a la capçalera que diu la versió (<code>codi=</code>, <code>rng=</code>). Se sap per la data i per les empremtes que són del generador vell, però el registre no ho diu. La sèrie confirmatòria ja porta la capçalera completa i les dades estructurades.</p>
     <p>La direcció és clara: amb corrent, la vida neix entre dues i tres vegades més sovint, i sovint molt abans (dues vegades abans de l'època 3.000, quan el món quiet no n'ha fet mai abans de la 8.100). Les proves estadístiques diuen:</p>
     <div class="table-wrap">
       <table>
@@ -375,6 +377,7 @@
         </tbody>
       </table>
     </div>
+    <p class="pending"><strong>Corregit (auditoria 2, AUD-35):</strong> "la direcció és clara" era massa fort. Amb corrent, la vida va néixer 2,7 vegades més sovint, però l'interval de confiança del 95 % va de 0,87 a 8,2: inclou l'1, és a dir, la possibilitat que no hi hagi cap diferència. El que es pot dir és quina va ser la direcció <em>observada</em>. A més, l'esclat es va aturar a l'època 13.000. Si es compta com a seguit fins allà, i no fins a la 16.000, el log-rank sense l'esclat dona <em>p</em> = 0,084. Totes aquestes xifres les va tornar a calcular l'auditor 1 a partir dels registres, amb un programa seu, i coincideixen (AU2-14).</p>
     <p>La prova de supervivència (log-rank) aprofita més informació, perquè també compta <em>quan</em> neix la vida, i en un dels dos recomptes queda per sota de 0,05, el llindar habitual. És temptador dir que ja està demostrat. <strong>No ho direm</strong>, per tres motius:</p>
     <ul>
       <li><strong>Hem triat després de mirar.</strong> Hi ha dues proves i dues maneres de comptar, i només una combinació queda per sota de 0,05. Si es proven diverses anàlisis i es queda la que surt, la <em>p</em> deixa de voler dir el que diu.</li>
@@ -400,6 +403,54 @@
       <li>Un <strong>protocol escrit abans de començar</strong>: què vol dir "neix la vida", fins a quina època, quantes llavors i quina prova.</li>
       <li>Una <strong>sèrie confirmatòria</strong> amb el generador nou: món quiet contra corrent 0,01, unes 40 llavors cadascun.</li>
       <li>Si es confirma, ja no serà una pista: <strong>l'espai sol frena la vida, i una mica de barreja l'ajuda a néixer</strong>.</li>
+    </ul>
+    <p class="pending"><strong>Corregit (auditoria 2, AUD-35):</strong> la sèrie confirmatòria compara dos mons 2D, el quiet i el que té corrent. No pot dir res de "l'espai sol" respecte de la sopa barrejada. A més, el protocol nou (entrada 7) mesura quan la vida <em>s'estableix</em>, no quan apareix. Si es confirma, el que es podrà dir és que, en aquest món, un corrent feble canvia el ritme d'establiment de la vida. Tampoc no seran 40 llavors per condició, sinó dues etapes: 50, i 30 més si cal.</p>
+  </article>
+
+  <article id="entrada-7">
+    <header>
+      <p class="date">Entrada 7 · 16 d'octubre de 2026</p>
+      <h1>Què vol dir estar viu</h1>
+      <p class="lede">Dos auditors, cadascun pel seu compte, ens han dit el mateix: abans de comptar quantes vegades neix la vida, cal estar segurs de què comptem. Hem après a distingir una còpia d'un replicador, i el que hem vist canvia la pregunta.</p>
+    </header>
+
+    <h2>Dos auditors</h2>
+    <p>Aquesta vegada el projecte ha tingut dues auditories del mateix codi alhora. Una l'ha fet l'auditor de la primera vegada, que també és Claude. L'altra, <strong>un model d'intel·ligència artificial diferent</strong>, que no ha vist l'auditoria anterior fins que no ha acabat la primera passada. La idea és que dos sistemes diferents no s'equivoquen de la mateixa manera.</p>
+    <p>Tots dos han arribat a la mateixa conclusió: <strong>la sèrie confirmatòria no s'havia de llançar encara</strong>. Coincideixen en els motius principals, que hem comprovat amb les dades abans d'acceptar-los. El més important és que <strong>no mesuràvem prou bé què és la vida</strong>.</p>
+
+    <h2>Una còpia no és un replicador</h2>
+    <p>Fins ara, un programa "es replicava" si deixava al seu company 16 bytes seguits de si mateix. Però això també ho pot fer un programa que no es reprodueix. Per comprovar-ho hem construït un <strong>copiador parcial</strong>: un programa amb 24 bytes de dades i un bucle que les copia al company, però que no copia el bucle. Supera la prova antiga 586 vegades de 586. I, tanmateix, la seva còpia no pot fer res: no ha heretat la manera de copiar-se.</p>
+    <p>La vida, en canvi, és una còpia que també es copia. Per això hem afegit una <strong>prova de segona generació</strong>. Quan un programa deixa una còpia al company, aquesta còpia (el "fill") es posa a prova de la mateixa manera, i ha de tornar a deixar el programa original al seu company (el "nét"). Ho anomenem <strong>replicador hereditari</strong>. El copiador parcial no ho és mai. Els replicadors que hem trobat al llarg del projecte, sí. El mateix cubff, el programa original de l'article, fa una prova semblant, amb cinc generacions.</p>
+
+    <h2>El que l'herència ens ha ensenyat dels mons vells</h2>
+    <p>Hem tornat a mirar els mons desats amb aquesta prova nova:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Món</th><th style="text-align:left">Es copien</th><th style="text-align:left">Hereditaris</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Sopa enverinada, abans del relleu (entrada 2)</td><td style="text-align:left">8,8 %</td><td style="text-align:left">4,3 %</td></tr>
+          <tr><td style="text-align:left">El successor immune, 250 èpoques després</td><td style="text-align:left">92,2 %</td><td style="text-align:left">89,2 %</td></tr>
+          <tr><td style="text-align:left">L'esclat del replicador que necessita parella (entrada 4)</td><td style="text-align:left">0,9 %</td><td style="text-align:left">0,3 %</td></tr>
+          <tr><td style="text-align:left">El palíndrom del punt, quan domina el món</td><td style="text-align:left">86,0 %</td><td style="text-align:left">85,7 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>A la sopa enverinada, la meitat dels que es copien deixen còpies espatllades: els zeros del verí les tallen. Al successor immune, gairebé totes les còpies són sanes. La prova d'herència mesura sola, sense que l'hàgim ajustat per a això, el fenomen que a l'entrada 2 vam haver de descobrir amb experiments dirigits.</p>
+    <p>També hem vist que <strong>el "territori" d'una família no és una bona mesura de quanta vida hi ha</strong>. El territori són les cel·les que porten un tros del codi característic de la família. En un món, només el 40 % del territori es replicava. En un altre, el 86 % de les cel·les de <em>fora</em> del territori eren hereditàries. Per això la mesura principal ara no depèn de les famílies, sinó de posar a prova directament 2.048 cel·les del món a cada cens.</p>
+
+    <h2>Els copiadors esporàdics</h2>
+    <p>Un dels auditors va trobar que, a la sèrie de l'entrada 6, hi havia "replicadors" esporàdics en tots els 24 mons, molt abans que cap família s'establís. Va proposar una hipòtesi bonica: la còpia apareix sovint, i el difícil és que s'estableixi. Com que la simulació és determinista, hem pogut <strong>tornar a fer cinc d'aquells mons</strong>, exactament iguals, i mirar-los amb la prova nova.</p>
+    <p>Els esporàdics eren gairebé tots <strong>copiadors no hereditaris</strong>, una o dues cel·les de cada 2.048. Abans de l'establiment, no hi ha hagut cap replicador hereditari en cap cens. Tres dels mons els vam mirar fins a l'època 1.500, i dos fins que s'hi va establir la vida. Al món amb corrent de la llavor 11, al cens de l'època 6.500 no n'hi havia cap, i al de la 6.750 ja n'hi havia l'1,2 %, amb una família que ocupava el 5,5 % del mapa. Al món quiet de la llavor 9, igual: cap hereditari a l'època 7.500, el 0,8 % a la 7.750 i el 3,8 % a la 8.000.</p>
+    <p>Si es confirma amb més mons, la hipòtesi s'inverteix: <strong>el que és rar és que aparegui un replicador hereditari; quan apareix, s'estableix gairebé de seguida</strong>. És una pista, encara: només són cinc mons.</p>
+
+    <h2>El nostre intèrpret i el de Google</h2>
+    <p>L'auditor nou va assenyalar un punt cec que compartíem: l'intèrpret del llenguatge el comparàvem amb una versió de referència que també havíem escrit nosaltres. Ara l'hem comparat amb el <strong>codi original de cubff</strong>, compilat a la màquina virtual. En 200.000 cintes, el resultat és idèntic, byte a byte. També coincideix el nombre d'instruccions, fins i tot en les gairebé 7.000 que arriben al límit de passos. Sí que hi hem trobat una petita diferència: l'article diu que la taxa de mutació és del 0,024 %, i el codi de Google fa servir el 0,0244 %. Nosaltres fem servir la de l'article.</p>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li>Un <strong>protocol nou</strong> (<code>docs/protocol-estadistic.md</code>, versió 0.2). La mesura és l'<strong>establiment</strong> de la vida: almenys l'1 % de replicadors hereditaris en dos censos seguits. Cada món s'atura 1.000 èpoques després, i la sèrie es fa en dues etapes, de 50 llavors per condició i 30 més si cal.</li>
+      <li>Una <strong>tercera auditoria</strong> dels dos auditors, només del protocol i de les eines noves, abans de llançar res.</li>
+      <li>Després de la sèrie, <strong>provar la química</strong>: treure-li ingredients (la mutació, una de les instruccions de còpia...) per saber quins són imprescindibles perquè hi neixi vida.</li>
     </ul>
   </article>
 
