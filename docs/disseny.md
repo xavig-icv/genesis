@@ -110,6 +110,35 @@ Dues propostes més, per després:
   només el seu company. Ve de la proposta humana del projecte (conversa del 14-10-2026): la reproducció
   entre diversos elements, en lloc de la simple replicació.
 
+**Idees del responsable del projecte (conversa del 16-10-2026), per a més endavant.**
+
+- **La mida del món.** A la Terra hi ha prou espai perquè no calgui acabar amb un ésser viu per fer-ne
+  lloc a un altre. Al nostre univers, cada cel·la conté sempre un programa, i copiar-se vol dir
+  sobreescriure'n un altre. Passaria igual en un món més gran: el que hi falta no és espai, sinó
+  **matèria lliure, no organitzada**. Sobreescriure un programa de soroll és com fer servir matèria
+  primera; sobreescriure un replicador és competir-hi.
+  - **La renovació (llei 3) és el que s'hi assembla més.**
+  - **Una hipòtesi que es pot comprovar de manera barata.** Si l'aparició d'un replicador hereditari és
+    un esdeveniment rar i local (iteració 3), el temps fins a l'establiment hauria de ser inversament
+    proporcional a la mida del món.
+  - **Una llei d'"espai buit".** Seria tenir cel·les sense programa, on copiar-se no destrueix res. Caldria
+    pensar-la bé, perquè en BFF el zero ja fa de buit i és verinós.
+- **Simbiosi.** A la Terra, els organismes conviuen al mateix espai i en simbiosi.
+  - **El replicador que necessita parella** (entrada 4) és una protosimbiosi: només es copia al costat
+    d'un company ple de `<`. Ara per ara fa de paràsit, perquè sobreescriu el company.
+  - **La versió mutualista** és la reproducció entre dos de més amunt: dos programes que s'ajuden a
+    copiar-se. Seria un hipercicle (Eigen).
+  - **L'espai protegeix aquestes cooperacions dels paràsits** (Boerlijst i Hogeweg, 1991), cosa que
+    connecta amb la llei 1.
+- **Organismes dins d'organismes.** Els humans i molts animals porten microorganismes vius a dins i a
+  fora.
+  - **Ja es pot buscar.** Un replicador curt, dins d'un programa de 64 bytes, es podria endur un altre
+    replicador com a "passatger": quan l'hoste es copia, també copia el que porta a dins. Seria
+    transmissió vertical, com la dels mitocondris. Es pot buscar a les captures: programes amb dos nuclis
+    de famílies diferents.
+  - **Una simbiosi de debò** demana individus més grans que una cel·la: la Química 2 o els compartiments
+    de la llei 7. És una de les transicions evolutives majors (Maynard Smith i Szathmáry).
+
 **Full de ruta (16-10-2026, AUD-40 de l'auditoria 2, decidit pel responsable del projecte).**
 - **Primer, la sèrie confirmatòria de la llei 2.**
 - **Després, un eix de química:** ablacions a la sopa barrejada, que és barata i hi fa vida en milers
@@ -223,4 +252,8 @@ Resum. El detall és al quadern.
 - On és el coll d'ampolla: en l'aparició d'un replicador hereditari o en el seu establiment? (Iteració 3:
   els copiadors esporàdics són gairebé tots no hereditaris.)
 - Quins ingredients de la química són necessaris perquè hi neixi vida (les ablacions de §4)?
+- El temps fins a l'establiment és inversament proporcional a la mida del món, com caldria esperar si
+  l'origen és un esdeveniment rar i local?
+- Hi ha replicadors que en porten un altre a dins ("passatgers") i el copien amb ells? Poden aparèixer
+  cooperacions (hipercicles) en un món amb espai?
 - Què cal perquè la complexitat continuï creixent?
