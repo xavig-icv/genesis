@@ -1,8 +1,13 @@
 // Anàlisi estadística de les sèries d'experiments (protocol estadístic, docs/protocol-estadistic.md).
 //
 // Ús:
-//   node fase2/estadistica.mjs carpeta-A carpeta-B     compara dues condicions (fitxers .jsonl de sim.mjs)
-//   node fase2/estadistica.mjs --potencia [n]          potència del log-rank per simulació
+//   node fase2/estadistica.mjs --etapa 1|2 [--manifest fase2/serie-llei2.json] carpeta-A carpeta-B
+//        la sèrie confirmatòria: valida que els fitxers siguin exactament els preregistrats al manifest
+//        (llavors, paràmetres, commit, censos seguits, final coherent) i, si ho són, aplica la decisió de
+//        l'etapa amb el límit preregistrat. Si hi ha qualsevol anomalia, no decideix (codi de sortida 1)
+//   node fase2/estadistica.mjs carpeta-A carpeta-B     informe descriptiu, sense validació ni decisió
+//   node fase2/estadistica.mjs --potencia [rèpliques]  potència i error de tipus I del procediment de
+//        dues etapes sencer, per simulació
 //
 // Cada experiment és un fitxer .jsonl (sim.mjs --json). L'esdeveniment és l'establiment de la vida
 // segons el criteri de fase2/census.js (el mateix codi que atura els experiments); si no passa abans
@@ -12,6 +17,7 @@
 //
 // Totes les funcions estadístiques s'exporten i tenen proves (test/estadistica.mjs).
 import { readFileSync, readdirSync } from 'fs';
+import { createHash } from 'crypto';
 import { basename, join } from 'path';
 import { fileURLToPath } from 'url';
 import { establishment } from './census.js';
@@ -97,7 +103,8 @@ export function incidenceDifference(a, b, t) {
   const sa = survivalAt(kaplanMeier(a), t), sb = survivalAt(kaplanMeier(b), t);
   const diff = (1 - sb.s) - (1 - sa.s);
   const se = Math.sqrt(sa.se ** 2 + sb.se ** 2);
-  return { diff, low: diff - 1.959964 * se, high: diff + 1.959964 * se };
+  // Interval de Wald, retallat a [-1, 1]: és descriptiu, i amb poques incidències és molt aproximat
+  return { diff, low: Math.max(-1, diff - 1.959964 * se), high: Math.min(1, diff + 1.959964 * se) };
 }
 
 // Temps mitjà restringit fins a l'establiment (RMST) fins a l'època t, amb l'error de la fórmula
@@ -171,6 +178,33 @@ export function power({ n, pA, pB, horizon = 16000, every = 250, reps = 4000, se
   return hits / reps;
 }
 
+// Temps fins a l'establiment d'una distribució de Weibull de forma `shape` amb incidència acumulada `p` a
+// l'horitzó (shape = 1: risc constant; < 1: risc que baixa amb el temps; > 1: que puja), arrodonit al
+// cens següent; censurat a l'horitzó
+export function drawTime(rng, p, shape = 1, horizon = 16000, every = 250) {
+  if (p <= 0) return { time: horizon, event: false };
+  const scale = horizon / Math.pow(-Math.log(1 - p), 1 / shape);
+  const t = scale * Math.pow(-Math.log(1 - rng()), 1 / shape);
+  return t <= horizon ? { time: Math.min(horizon, Math.ceil(t / every) * every), event: true } : { time: horizon, event: false };
+}
+
+// El procediment de dues etapes sencer (protocol §8; AU2-21 de l'auditoria externa 3): etapa 1 amb n1
+// experiments per condició i el límit c1; si no es rebutja H0, etapa 2 amb n2 i el límit c2. Retorna la
+// proporció de rebuigs, la d'aturades a l'etapa 1 i el nombre mitjà d'experiments.
+export function simulateTwoStage({ A, B, n1 = 50, n2 = 80, c1, c2, reps = 20000, seed = 20261017, horizon = 16000, every = 250 }) {
+  const rng = makeRng(seed, 'v2');
+  let rejected = 0, stopped1 = 0, experiments = 0;
+  for (let k = 0; k < reps; k++) {
+    const a = Array.from({ length: n2 }, () => drawTime(rng, A.p, A.shape, horizon, every));
+    const b = Array.from({ length: n2 }, () => drawTime(rng, B.p, B.shape, horizon, every));
+    if (Math.abs(logrank(a.slice(0, n1), b.slice(0, n1)).z) > c1) { rejected++; stopped1++; experiments += 2 * n1; continue; }
+    experiments += 2 * n2;
+    if (Math.abs(logrank(a, b).z) > c2) rejected++;
+  }
+  const rate = rejected / reps;
+  return { rate, se: Math.sqrt(rate * (1 - rate) / reps), stopped1: stopped1 / reps, experiments: experiments / reps };
+}
+
 // ---- Lectura dels experiments
 
 // Un experiment a partir del seu JSONL: { file, seed, time, event, end, horizon, complete, censuses }
@@ -181,23 +215,115 @@ export function readExperiment(file) {
   if (!start) throw new Error(`${file}: no té la línia d'inici`);
   const censuses = records.filter((r) => r.type === 'census' && r.version === 'v3');
   const measures = records.filter((r) => r.type === 'measure');
-  const t = establishment(censuses);
+  if (!start.census?.every) throw new Error(`${file}: la línia d'inici no diu l'interval del cens`);
+  const every = start.census.every;
+  const t = establishment(censuses, every);
   const last = end?.epoch ?? (censuses.length ? censuses[censuses.length - 1].epoch : start.start);
   return {
-    file, seed: start.seed, code: start.code, mixing: start.mixing, horizon: start.epochs,
-    time: t ?? last, event: t !== null, end: last,
+    file, seed: start.seed, code: start.code, mixing: start.mixing, horizon: start.epochs, every,
+    stopAfter: start.event?.stopAfter ?? null,
+    time: t ?? last, event: t !== null, end: last, reason: end?.reason ?? null,
     // complet: o ha arribat a l'horitzó, o s'ha aturat després d'un establiment
-    complete: end !== undefined && (t !== null || last >= start.epochs), censuses, measures,
+    complete: end !== undefined && (t !== null || last >= start.epochs), censuses, measures, records,
+    hash: createHash('sha256').update(readFileSync(file)).digest('hex'),
   };
+}
+
+// ---- Validació de la sèrie confirmatòria (AU2-16, AU2-17 i AUD-44 de l'auditoria 3)
+
+// Els errors d'un experiment respecte del manifest i del grup (llista buida si és correcte)
+export function validateExperiment(x, manifest, group) {
+  const errors = [];
+  const where = basename(x.file);
+  const err = (msg) => errors.push(`${where}: ${msg}`);
+  const types = x.records.map((r) => r.type);
+  if (types[0] !== 'start' || types.filter((t) => t === 'start').length !== 1) err("hi ha d'haver una sola línia d'inici, la primera");
+  if (types[types.length - 1] !== 'end' || types.filter((t) => t === 'end').length !== 1) err("hi ha d'haver una sola línia final, l'última");
+  const start = x.records.find((r) => r.type === 'start') ?? {};
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  for (const [key, value] of Object.entries(manifest.params)) {
+    if (!same(start[key], value)) err(`${key} és ${JSON.stringify(start[key])}, el protocol diu ${JSON.stringify(value)}`);
+  }
+  if (start.mixing !== manifest.groups[group].mixing) err(`mixing ${start.mixing} no és el del grup ${group} (${manifest.groups[group].mixing})`);
+  if (typeof start.code !== 'string' || !/^[0-9a-f]{7,}$/.test(start.code)) err(`el codi "${start.code}" no és un commit net`);
+  // censos: v3, seguits des del primer (every, 2·every…), fins al final
+  const every = manifest.params.census.every;
+  const censuses = x.records.filter((r) => r.type === 'census');
+  if (censuses.some((c) => c.version !== 'v3')) err('hi ha censos que no són v3');
+  censuses.forEach((c, i) => {
+    if (c.epoch !== every * (i + 1)) err(`el cens ${i + 1} és de l'època ${c.epoch}, hauria de ser de la ${every * (i + 1)} (hi falten censos o n'hi ha de repetits)`);
+    if (!(c.sample > 0 && c.heritable >= 0 && c.heritable <= c.sample && c.heritableSolo + c.heritableContext === c.heritable)) err(`el cens de l'època ${c.epoch} té valors incoherents`);
+  });
+  const measures = x.records.filter((r) => r.type === 'measure');
+  if (measures.some((m, i) => i > 0 && m.epoch <= measures[i - 1].epoch)) err("les mesures no van en ordre d'època");
+  // l'esdeveniment i el final, coherents amb el criteri i la regla d'aturada
+  const { epochs } = manifest.params;
+  const { stopAfter } = manifest.params.event;
+  const t = establishment(censuses, every);
+  const events = x.records.filter((r) => r.type === 'event');
+  const end = x.records.find((r) => r.type === 'end') ?? {};
+  if (t === null) {
+    if (events.length) err("hi ha una línia d'establiment, però els censos no compleixen el criteri");
+    if (end.epoch !== epochs || end.reason !== 'horitzó') err(`sense establiment hauria d'arribar a l'època ${epochs}, i s'acaba a la ${end.epoch} (${end.reason})`);
+  } else {
+    if (events.length !== 1 || events[0].epoch !== t || events[0].confirmed !== t + every) err(`la línia d'establiment no és la del criteri (època ${t}, confirmat a la ${t + every})`);
+    const expected = Math.min(epochs, t + stopAfter);
+    if (end.epoch !== expected) err(`amb establiment a l'època ${t} s'hauria d'aturar a la ${expected}, i s'acaba a la ${end.epoch}`);
+  }
+  if (censuses.length && censuses[censuses.length - 1].epoch !== end.epoch) err(`l'últim cens (${censuses[censuses.length - 1].epoch}) no és el de l'època final (${end.epoch})`);
+  return errors;
+}
+
+// Les llavors preregistrades d'un grup fins a una etapa
+export function stageSeeds(manifest, group, stage) {
+  const seeds = [];
+  for (let s = 1; s <= stage; s++) {
+    const [from, to] = manifest.groups[group].seeds[s];
+    for (let k = from; k <= to; k++) seeds.push(k);
+  }
+  return seeds;
+}
+
+// Valida tota la sèrie d'una etapa. Retorna { A, B, errors, code }
+export function validateSeries(dirA, dirB, manifest, stage) {
+  const errors = [];
+  const read = (dir) => readdirSync(dir).filter((f) => f.endsWith('.jsonl')).sort().map((f) => {
+    try { return readExperiment(join(dir, f)); } catch (e) { errors.push(`${f}: no es pot llegir (${e.message})`); return null; }
+  }).filter(Boolean);
+  const groups = { A: read(dirA), B: read(dirB) };
+  for (const [group, list] of Object.entries(groups)) {
+    const expected = stageSeeds(manifest, group, stage);
+    const found = list.map((x) => x.seed);
+    const missing = expected.filter((s) => !found.includes(s));
+    const extra = found.filter((s) => !expected.includes(s));
+    const duplicated = found.filter((s, i) => found.indexOf(s) !== i);
+    if (missing.length) errors.push(`grup ${group}: hi falten les llavors ${missing.join(', ')}`);
+    if (extra.length) errors.push(`grup ${group}: hi sobren llavors que no són d'aquesta etapa: ${extra.join(', ')}`);
+    if (duplicated.length) errors.push(`grup ${group}: llavors repetides: ${[...new Set(duplicated)].join(', ')}`);
+    if (list.length !== manifest.stages[stage].perGroup) errors.push(`grup ${group}: ${list.length} experiments, l'etapa ${stage} en demana ${manifest.stages[stage].perGroup}`);
+    for (const x of list) errors.push(...validateExperiment(x, manifest, group));
+  }
+  const codes = [...new Set([...groups.A, ...groups.B].map((x) => x.code))];
+  if (codes.length > 1) errors.push(`els experiments no són tots del mateix commit: ${codes.join(', ')}`);
+  return { ...groups, errors, code: codes[0] ?? null };
+}
+
+// La decisió de l'etapa (protocol §8): mecànica, amb el límit preregistrat
+export function decide(stage, z, manifest) {
+  const bound = manifest.stages[stage].bound;
+  if (Math.abs(z) > bound) return { bound, decision: `es rebutja H0 a l'etapa ${stage}: la sèrie s'acaba` };
+  if (Number(stage) === 1) return { bound, decision: "no es rebutja H0 a l'etapa 1: cal executar l'etapa 2" };
+  return { bound, decision: "no es rebutja H0: la sèrie no permet afirmar que el corrent canviï el ritme d'establiment" };
 }
 
 // ---- Anàlisis de sensibilitat i mesures secundàries (protocol, §6 i §7)
 
-// L'època del primer de `count` censos seguits que compleixen `ok`, o null
-export function firstRun(censuses, ok, count = 2) {
+// L'època del primer de `count` censos seguits (a `every` èpoques l'un de l'altre) que compleixen `ok`
+export function firstRun(censuses, ok, count = 2, every = 250) {
   let run = 0;
   for (let i = 0; i < censuses.length; i++) {
-    run = ok(censuses[i]) ? run + 1 : 0;
+    const follows = i > 0 && censuses[i].epoch - censuses[i - 1].epoch === every;
+    run = ok(censuses[i]) ? (follows ? run + 1 : 1) : 0;
     if (run >= count) return censuses[i - count + 1].epoch;
   }
   return null;
@@ -205,10 +331,11 @@ export function firstRun(censuses, ok, count = 2) {
 
 const share = (key, threshold) => (c) => c.sample > 0 && c[key] / c.sample >= threshold;
 export const SENSITIVITY = {
-  'sense herència (es copien ≥ 1 %)': (x) => firstRun(x.censuses, share('replicating', 0.01)),
-  'llindar del 5 %': (x) => firstRun(x.censuses, share('heritable', 0.05)),
-  'només la prova sola (≥ 1 %)': (x) => firstRun(x.censuses, share('solo', 0.01)),
-  'famílies, unió del territori ≥ 1 % (v0.1)': (x) => firstRun(x.censuses, (c) => c.families.reduce((a, f) => a + f.share, 0) >= 0.01),
+  'sense herència (es copien ≥ 1 %)': (x) => firstRun(x.censuses, share('replicating', 0.01), 2, x.every),
+  'llindar del 5 %': (x) => firstRun(x.censuses, share('heritable', 0.05), 2, x.every),
+  // AUD-42 i AU2-19: l'herència demostrada sola, sense la prova en context
+  'herència sola (≥ 1 %)': (x) => firstRun(x.censuses, share('heritableSolo', 0.01), 2, x.every),
+  'famílies, unió del territori ≥ 1 % (v0.1)': (x) => firstRun(x.censuses, (c) => c.families.reduce((a, f) => a + f.share, 0) >= 0.01, 2, x.every),
   'HOE > 1': (x) => x.measures.find((m) => m.hoe > 1)?.epoch ?? null,
 };
 
@@ -225,7 +352,7 @@ export function originMeasures(x) {
   const firstHeritable = x.censuses.find((c) => c.heritable > 0)?.epoch ?? null;
   const firstCopy = x.censuses.find((c) => c.replicating > 0)?.epoch ?? null;
   const before = x.censuses.filter((c) => !x.event || c.epoch < x.time);
-  const after = x.event ? x.censuses.find((c) => c.epoch === x.time + 1000) : undefined;
+  const after = x.event ? x.censuses.find((c) => c.epoch === x.time + (x.stopAfter ?? 1000)) : undefined;
   return {
     firstHeritable, firstCopy,
     heritableCensusesBefore: before.filter((c) => c.heritable > 0).length,
@@ -289,10 +416,15 @@ export function report(A, B, { horizon = null, labelA = 'A', labelB = 'B' } = {}
   for (const [label, g] of [[labelA, A], [labelB, B]]) {
     lines.push(`Kaplan-Meier ${label}: ${kaplanMeier(g).map((st) => `${st.time}:${st.s.toFixed(3)}`).join('  ') || '(cap establiment)'}`);
   }
-  lines.push('', 'Sensibilitats (descriptives):');
+  for (const [label, g] of [[labelA, A], [labelB, B]]) {
+    const runs = g.flatMap((x) => x.measures ?? []).reduce((acc, m) => [acc[0] + m.runs, acc[1] + m.epochs], [0, 0]);
+    if (runs[1]) lines.push(`Interaccions ${label}: ${(runs[0] / runs[1]).toFixed(0)} parelles per època de mitjana`);
+  }
+  lines.push('', "Sensibilitats (descriptives; entre parèntesis, els experiments aturats per l'establiment principal abans de complir el criteri, que hi queden censurats):");
   for (const [name, criterion] of Object.entries(SENSITIVITY)) {
     const a = withCriterion(A, criterion), b = withCriterion(B, criterion);
-    lines.push(`  ${name}: ${a.filter((x) => x.event).length}/${a.length} contra ${b.filter((x) => x.event).length}/${b.length}, log-rank p = ${logrank(a, b).p.toFixed(4)}`);
+    const cut = (g) => g.filter((x) => !x.event && x.end < x.horizon).length;
+    lines.push(`  ${name}: ${a.filter((x) => x.event).length}/${a.length} (${cut(a)}) contra ${b.filter((x) => x.event).length}/${b.length} (${cut(b)}), log-rank p = ${logrank(a, b).p.toFixed(4)}`);
   }
   lines.push('', 'Origen i manteniment (descriptius):');
   const median = (v) => { const s = v.filter((x) => x !== null).sort((p, q) => p - q); return s.length ? s[s.length >> 1] : '—'; };
@@ -308,19 +440,56 @@ export function report(A, B, { horizon = null, labelA = 'A', labelB = 'B' } = {}
 
 // ---- Línia d'ordres
 
+// Escenaris de la simulació del procediment de dues etapes (protocol §8)
+export const SCENARIOS = [
+  ...[0.1, 0.3, 0.5, 0.7, 0.9].flatMap((p) => [0.5, 1, 2].map((shape) => ({ name: `H0 · ${p * 100} % · forma ${shape}`, A: { p, shape }, B: { p, shape } }))),
+  { name: 'H1 · 20 % contra 40 % · riscos proporcionals', A: { p: 0.2, shape: 1 }, B: { p: 0.4, shape: 1 } },
+  { name: 'H1 · 20 % contra 50 % · riscos proporcionals', A: { p: 0.2, shape: 1 }, B: { p: 0.5, shape: 1 } },
+  { name: 'H1 · 20 % contra 40 % · B primerenc (forma 0,5), A tardà (forma 2)', A: { p: 0.2, shape: 2 }, B: { p: 0.4, shape: 0.5 } },
+  { name: 'H1 · 20 % contra 40 % · B tardà (forma 2), A primerenc (forma 0,5)', A: { p: 0.2, shape: 0.5 }, B: { p: 0.4, shape: 2 } },
+];
+
 const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
 if (isMain) {
   const args = process.argv.slice(2);
+  const usage = () => {
+    console.error('Ús: node fase2/estadistica.mjs --etapa 1|2 [--manifest fitxer] carpeta-A carpeta-B\n' +
+      '     node fase2/estadistica.mjs carpeta-A carpeta-B\n     node fase2/estadistica.mjs --potencia [rèpliques]');
+    process.exit(2);
+  };
   if (args[0] === '--potencia') {
-    const n = Number(args[1] ?? 50);
-    const row = [[0.2, 0.5], [0.2, 0.45], [0.2, 0.4], [0.2, 0.35]].map(([a, b]) => `${a * 100}/${b * 100}: ${(power({ n, pA: a, pB: b }) * 100).toFixed(0)} %`);
-    console.log(`Potència del log-rank amb ${n} experiments per condició: ${row.join('   ')}`);
+    const reps = Number(args[1] ?? 20000);
     const b = twoStageBounds(50 / 80);
     console.log(`Dues etapes (50 → 80): etapa 1 |Z| > ${b.c1.toFixed(3)} (p < ${b.p1.toFixed(4)}), etapa 2 |Z| > ${b.c2.toFixed(3)} (p < ${b.p2.toFixed(4)})`);
+    console.log(`Procediment sencer, ${reps} rèpliques per escenari (rebuig ± error de Monte Carlo; aturades a l'etapa 1; experiments esperats):`);
+    for (const sc of SCENARIOS) {
+      const r = simulateTwoStage({ A: sc.A, B: sc.B, c1: b.c1, c2: b.c2, reps });
+      console.log(`  ${sc.name.padEnd(68)} ${(r.rate * 100).toFixed(2)} % ± ${(r.se * 100).toFixed(2)}   ${(r.stopped1 * 100).toFixed(0)} %   ${r.experiments.toFixed(0)}`);
+    }
+  } else if (args[0] === '--etapa') {
+    const stage = args[1];
+    let rest = args.slice(2), manifestFile = fileURLToPath(new URL('serie-llei2.json', import.meta.url));
+    if (rest[0] === '--manifest') { manifestFile = rest[1]; rest = rest.slice(2); }
+    if (!['1', '2'].includes(stage) || rest.length !== 2) usage();
+    const manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
+    const { A, B, errors, code } = validateSeries(rest[0], rest[1], manifest, stage);
+    if (errors.length) {
+      console.log(`La sèrie NO és la preregistrada (${errors.length} problemes): no es pren cap decisió.`);
+      for (const e of errors) console.log(`  - ${e}`);
+      process.exit(1);
+    }
+    const lr = logrank(A, B);
+    const { bound, decision } = decide(stage, lr.z, manifest);
+    const all = createHash('sha256').update([...A, ...B].map((x) => x.hash).join('\n')).digest('hex');
+    console.log(`Sèrie validada: etapa ${stage}, ${A.length} + ${B.length} experiments, commit ${code}, manifest ${manifestFile}`);
+    console.log(`Empremta dels fitxers (SHA-256): ${all}`);
+    console.log(`Log-rank: Z = ${lr.z.toFixed(4)}; límit de l'etapa ${stage}: |Z| > ${bound}`);
+    console.log(`DECISIÓ: ${decision}`);
+    if (Math.abs(lr.z) > bound && stage === '1') console.log("(Amb aturada a l'etapa 1, la mida de l'efecte és descriptiva: en un disseny seqüencial tendeix a sobreestimar-se.)");
+    console.log('');
+    console.log(report(A, B, { labelA: manifest.groups.A.label, labelB: manifest.groups.B.label }));
   } else if (args.length === 2) {
+    console.log("Informe descriptiu, sense validació ni decisió (per a la sèrie confirmatòria, feu servir --etapa).\n");
     console.log(report(readSeries(args[0]), readSeries(args[1]), { labelA: basename(args[0]), labelB: basename(args[1]) }));
-  } else {
-    console.error('Ús: node fase2/estadistica.mjs carpeta-A carpeta-B\n     node fase2/estadistica.mjs --potencia [n]');
-    process.exit(2);
-  }
+  } else usage();
 }
