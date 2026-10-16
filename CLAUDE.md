@@ -22,7 +22,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   reproduir-los, `--rng v1 --census-version v2` (les llistes antigues ja ho porten).
 - Prova de replicació: només la de `fase2/replication.js`, amb la de segona generació (`heredity`). No
   n'escriguis cap altra (AUD-02). El criteri d'establiment de la vida és només a `fase2/census.js`.
-- Estadística de les sèries: `node fase2/estadistica.mjs carpeta-A carpeta-B` (JSONL de `sim.mjs --json`).
+- Estadística de la sèrie confirmatòria: `node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B`, que valida
+  els JSONL contra el manifest `fase2/serie-llei2.json` i aplica la decisió; sense `--etapa`, informe descriptiu.
+  El manifest, el criteri d'establiment i els límits no es toquen després del preregistre.
   Protocol: `docs/protocol-estadistic.md`.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Captures clau: `captures.sha256` i `docs/captures.md`; còpia amb `bash arxiva-captures.sh`.
