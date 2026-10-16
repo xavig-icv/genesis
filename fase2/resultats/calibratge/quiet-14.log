@@ -1,17 +1,17 @@
-codi=752ff04+canvis  rng=v1  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --rng v1 --world 512x256 --seed 14 --epochs 1500 --every 250 --census 250 --stop-after-event 99999 --json fase2/resultats/calibratge/quiet-14.jsonl
+codi=734f4de  rng=v1  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --rng v1 --world 512x256 --seed 14 --epochs 1500 --every 250 --census 250 --stop-after-event 99999 --json fase2/resultats/calibratge/quiet-14.jsonl
 llavor=14 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024  cens=v3 mostra=2048  aturada=establiment+99999
-cens 250  mostra=2048  hereditaris=0.0%  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
-època 250  H0=7.998  HOE=0.143  ops/execució=70.8  parelles=75%  bytes <:0.6% ,:0.5% >:0.5%  fragments [[[[[[[[[[[[ (0.2%)  ,,,,,,,,,,,, (0.1%)  >>>>>>>>>>>> (0.1%)  35s
-cens 500  mostra=2048  hereditaris=0.0%  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
-època 500  H0=7.995  HOE=0.196  ops/execució=78.6  parelles=75%  bytes <:0.8% ,:0.6% >:0.6%  fragments [[[[[[[[[[[[ (0.3%)  [[[[[[[·[[[[ (0.2%)  >>>>>>>>>>>> (0.2%)  70s
-cens 750  mostra=2048  hereditaris=0.0%  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
-època 750  H0=7.991  HOE=0.234  ops/execució=84.8  parelles=75%  bytes <:1.0% ,:0.7% >:0.6%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  [[[[[[[·[[[[ (0.3%)  107s
-cens 1000  mostra=2048  hereditaris=0.0%  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
-època 1000  H0=7.986  HOE=0.264  ops/execució=88.2  parelles=75%  bytes <:1.1% ,:0.7% >:0.7%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[[[·[[[[ (0.4%)  ,,,,,,,,,,,, (0.3%)  143s
-cens 1250  mostra=2048  hereditaris=0.0%  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
-època 1250  H0=7.979  HOE=0.291  ops/execució=89.9  parelles=75%  bytes <:1.4% ,:0.8% >:0.8%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.4%)  [[[[[[·[[[[[ (0.4%)  178s
-cens 1500  mostra=2048  hereditaris=0.0%  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
-època 1500  H0=7.972  HOE=0.312  ops/execució=93.6  parelles=75%  bytes <:1.5% ,:0.9% >:0.8%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[·[[[ (0.4%)  ,,,,,,,,,·,, (0.2%)  214s
+cens 250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 250  H0=7.998  HOE=0.143  ops/execució=70.8  parelles=75%  bytes <:0.6% ,:0.5% >:0.5%  fragments [[[[[[[[[[[[ (0.2%)  ,,,,,,,,,,,, (0.1%)  >>>>>>>>>>>> (0.1%)  48s
+cens 500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 500  H0=7.995  HOE=0.196  ops/execució=78.6  parelles=75%  bytes <:0.8% ,:0.6% >:0.6%  fragments [[[[[[[[[[[[ (0.3%)  [[[[[[[·[[[[ (0.2%)  >>>>>>>>>>>> (0.2%)  96s
+cens 750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 750  H0=7.991  HOE=0.234  ops/execució=84.8  parelles=75%  bytes <:1.0% ,:0.7% >:0.6%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  [[[[[[[·[[[[ (0.3%)  147s
+cens 1000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1000  H0=7.986  HOE=0.264  ops/execució=88.2  parelles=75%  bytes <:1.1% ,:0.7% >:0.7%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[[[·[[[[ (0.4%)  ,,,,,,,,,,,, (0.3%)  198s
+cens 1250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1250  H0=7.979  HOE=0.291  ops/execució=89.9  parelles=75%  bytes <:1.4% ,:0.8% >:0.8%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.4%)  [[[[[[·[[[[[ (0.4%)  246s
+cens 1500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1500  H0=7.972  HOE=0.312  ops/execució=93.6  parelles=75%  bytes <:1.5% ,:0.9% >:0.8%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[·[[[ (0.4%)  ,,,,,,,,,·,, (0.2%)  293s
 
 empremta del món: e30bb007
 
