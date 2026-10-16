@@ -5,7 +5,9 @@
 #
 # Una carpeta per commit (AUD-22 de l'auditoria 1): abans es copiava sempre a ~/claude-origins, i un
 # desplegament fet mentre corria un lot hauria barrejat versions. Ara cada lot s'executa des de la
-# carpeta del seu commit, i un commit ja desplegat no es torna a copiar.
+# carpeta del seu commit, i un commit ja desplegat no es torna a copiar. També hi van les proves, el
+# servidor, la portada i el quadern, perquè npm test hi passi sencer (la VM no té npm: les proves
+# s'hi executen una per una amb node, en el mateix ordre que a package.json).
 # Ús: bash desplega-vm.sh
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -21,5 +23,5 @@ if ssh -i "$KEY" -o BatchMode=yes "$HOST" "test -e ~/$DIR"; then
   echo "ja desplegat: ~/$DIR"
   exit 0
 fi
-git archive HEAD package.json sim.mjs server.mjs experiments.sh fase1 fase2 test \
+git archive HEAD package.json sim.mjs server.mjs index.html experiments.sh fase1 fase2 quadern test \
   | ssh -i "$KEY" -o BatchMode=yes "$HOST" "mkdir ~/$DIR && tar xf - -C ~/$DIR && echo $HASH > ~/$DIR/VERSIO && echo desplegat a ~/$DIR"
