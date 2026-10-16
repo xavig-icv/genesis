@@ -9,21 +9,31 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   els identificadors del codi, en anglès.
 - JavaScript amb mòduls ES, sense dependències ni pas de compilació. Node 16 a Windows: els scripts
   per a Node s'anomenen `.mjs` o depenen del `"type": "module"` del `package.json`.
-- Proves: `npm test` (intèrpret, món, línia d'ordres, servidor i regressió del determinisme). Han de
-  passar totes abans de donar res per acabat. Les empremtes de `test/determinisme.mjs` no es toquen
-  mai: si un canvi ha d'alterar les històries a propòsit, va darrere d'una opció nova.
+- Proves: `npm test` (intèrpret, món i cens, línia d'ordres, servidor, estadística, oracle de cubff i
+  regressió del determinisme). Han de passar totes abans de donar res per acabat. Les empremtes de
+  `test/determinisme.mjs` no es toquen mai: si un canvi ha d'alterar les històries a propòsit, va darrere
+  d'una opció nova. El mateix val per als valors del cens v2.
 - Experiments llargs sense gràfics: `node sim.mjs` (sopa) o `node sim.mjs --world 512x256` (món 2D).
   Les opcions es validen estrictament (`node sim.mjs --help`).
 - Generador aleatori: v2 (xoshiro128\*\*) per defecte. Tots els experiments anteriors a l'auditoria 1
   es van fer amb v1 (mulberry32): per reproduir-los, `--rng v1`.
-- Prova de replicació: només la de `fase2/replication.js`. No n'escriguis cap altra (AUD-02).
+- Cens: v3 per defecte (replicadors hereditaris en una mostra de 2.048 cel·les diferents; vegeu
+  `docs/calibratge.md`). Els experiments anteriors a la iteració 3 es van fer amb el cens v2: per
+  reproduir-los, `--rng v1 --census-version v2` (les llistes antigues ja ho porten).
+- Prova de replicació: només la de `fase2/replication.js`, amb la de segona generació (`heredity`). No
+  n'escriguis cap altra (AUD-02). El criteri d'establiment de la vida és només a `fase2/census.js`.
+- Estadística de les sèries: `node fase2/estadistica.mjs carpeta-A carpeta-B` (JSONL de `sim.mjs --json`).
+  Protocol: `docs/protocol-estadistic.md`.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Captures clau: `captures.sha256` i `docs/captures.md`; còpia amb `bash arxiva-captures.sh`.
 - Llistes d'experiments: `bash experiments.sh N carpeta < llista` (cada línia: `nom arguments-de-sim.mjs`).
   Experiments de branca: `node sim.mjs ... --from captura.bin --start EPOCA` continua un món desat.
-- Màquina virtual de laboratori: `ssh -i ~/.ssh/claude_origins_vm claude@192.168.171.3` (Git Bash), amb el
-  projecte a `~/claude-origins`. Escombrats: `bash fase2/escombrat.sh N < llista` (llançar amb `nohup`,
-  entre parèntesis, perquè la sessió SSH no es quedi penjada).
+- Màquina virtual de laboratori: `ssh -i ~/.ssh/claude_origins_vm claude@192.168.171.3` (Git Bash). Cada
+  commit desplegat és a `~/claude-origins-<commit>` (`~/claude-origins` és el desplegament antic, amb
+  els resultats de la sèrie exploratòria). La VM no té `npm`: les proves s'hi executen una per una amb
+  `node`, en l'ordre de `package.json`. Els lots es llancen amb `nohup`, entre parèntesis, perquè la
+  sessió SSH no es quedi penjada. cubff (l'oracle de l'intèrpret) és a `~/cubff`: vegeu
+  `eines/cubff/README.md`.
 - Servidor local: `node server.mjs` (port 8420; configuració "sopa" a `.claude/launch.json`).
 
 ## Git i traçabilitat
@@ -37,8 +47,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   documentació i els registres poden anar directament a `main`.
 - Cada registre d'experiment comença amb `codi=<commit>`: si diu `+canvis`, el codi no estava desat.
   Abans d'un experiment llarg, fes commit del codi.
-- La màquina virtual rep el codi amb `bash desplega-vm.sh`, que copia exactament el commit actual i
-  deixa el fitxer `VERSIO`. No despleguis mentre hi corre un lot: barrejaria versions.
+- La màquina virtual rep el codi amb `bash desplega-vm.sh`, que copia exactament el commit actual a
+  `~/claude-origins-<commit>` i hi deixa el fitxer `VERSIO`. Un lot s'executa sempre des de la carpeta
+  del seu commit.
 - Les captures `.bin` no van a git (vegeu `.gitignore`): es regeneren amb el mateix commit i llavor.
 - Llicència: Apache 2.0 per al codi (`LICENSE`, `NOTICE` amb els crèdits) i CC BY 4.0 per al quadern i la
   documentació (`LICENSE-docs.md`). Abans de fer públic el repositori, cal treure-hi les
