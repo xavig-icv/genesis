@@ -3,8 +3,9 @@ import assert from 'assert';
 import { pairNeighbors, applyCurrents, applyFlow } from './world.js';
 import { createFamilyTracker } from './families.js';
 import { replicationTest } from './replication.js';
+import { createCensus, establishment } from './census.js';
 import { spawnSync } from 'child_process';
-import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { mkdtempSync, rmSync, writeFileSync, readFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
@@ -20,6 +21,19 @@ const SPARSE = Uint8Array.from([94,94,251,91,78,198,39,237,82,55,89,53,123,232,1
 // L'"enverinador" de l'auditoria 1 (AUD-02): no es replica, només escriu zeros al final del company.
 const POISONER = new Uint8Array(64);
 for (let i = 0; i < 32; i++) POISONER[1 + i] = '{.'.charCodeAt(i % 2);
+
+// El successor immune de la Fase 1 (llavor 1 amb 7 fils, el programa més abundant a l'època 750):
+// converteix en 255 els zeros que enverinaven el seu avantpassat (entrada 2 del quadern).
+const IMMUNE = Uint8Array.from([239,241,90,60,255,192,45,111,101,255,2,241,255,255,241,52,91,255,106,91,155,79,44,60,2,125,93,71,71,217,45,5,71,141,93,141,71,5,45,217,71,71,93,125,2,60,44,79,155,91,106,255,91,52,241,2,255,101,111,45,192,52,255,60]);
+
+// Un "copiador parcial" (AUD-33 de l'auditoria 2, AU2-02 de l'auditoria externa 2): 24 bytes de dades
+// diferents, un zero i el bucle {[.>{], que copia les dades (al revés) al final del company. Passa la
+// prova de replicació, però el que copia no és el codi que copia: la còpia no es pot tornar a copiar.
+const PARTIAL = new Uint8Array(64);
+for (let i = 0; i < 24; i++) PARTIAL[i] = 1 + i;
+for (let i = 0; i < 6; i++) PARTIAL[25 + i] = '{[.>{]'.charCodeAt(i);
+
+const fixture = (name) => new Uint8Array(readFileSync(fileURLToPath(new URL(`../test/fixtures/${name}`, import.meta.url))));
 
 // Un món aleatori amb `program` plantat a una fracció `share` de les cel·les.
 function plantedWorld(n, program, share, seed) {
@@ -257,6 +271,74 @@ const tests = {
     } finally {
       rmSync(tmp, { recursive: true, force: true });
     }
+  },
+  'els replicadors reals són hereditaris: el de la Fase 1, el palíndrom espaiat i el successor immune'() {
+    for (const [name, program, seed] of [['Fase 1', REPLICATOR, 40], ['espaiat', SPARSE, 42], ['immune', IMMUNE, 44]]) {
+      const W = 64, n = W * W;
+      const soup = plantedWorld(n, program, 0.1, seed);
+      const rng = createRng(seed + 1);
+      let tested = 0, heritable = 0;
+      for (let c = 0; c < n && tested < 100; c++) {
+        if (soup.subarray(c * 64, c * 64 + 64).every((v, i) => v === program[i])) {
+          tested++;
+          if (replicationTest(soup, c, rng, { width: W, heredity: true }).heritable) heritable++;
+        }
+      }
+      assert.ok(heritable / tested > 0.7, `${name}: ${heritable} de ${tested} hereditaris`);
+    }
+  },
+  'el copiador parcial es copia, però no és hereditari (AUD-33, AU2-02)'() {
+    const W = 64, n = W * W;
+    const soup = plantedWorld(n, PARTIAL, 0.2, 46);
+    const rng = createRng(47);
+    let tested = 0, copies = 0;
+    for (let c = 0; c < n && tested < 100; c++) {
+      if (soup[c * 64 + 25] !== 123 || soup[c * 64] !== 1) continue;
+      tested++;
+      const r = replicationTest(soup, c, rng, { width: W, heredity: true });
+      if (r.solo || r.context) copies++;
+      assert.ok(!r.heritable, `la cel·la ${c} compta com a hereditària`);
+    }
+    assert.ok(copies / tested > 0.9, `només ${copies} de ${tested} passen la primera generació`);
+  },
+  "l'enverinador tampoc no és hereditari"() {
+    const W = 64, n = W * W;
+    const soup = plantedWorld(n, POISONER, 0.5, 48);
+    // La meitat de cel·les són aleatòries, i alguna es pot copiar per casualitat: cap no és hereditària
+    const r = createCensus({ width: W }).run(soup, n, 0);
+    assert.ok(r.replicating <= 5, `es repliquen ${r.replicating} de ${r.sample}`);
+    assert.strictEqual(r.heritable, 0);
+  },
+  'cens v3: en un món aleatori no hi ha cap replicador hereditari'() {
+    const W = 64, n = W * W;
+    const r = createCensus({ width: W }).run(randomSoup(n, createRng(50)), n, 0);
+    assert.strictEqual(r.sample, 2048);
+    assert.strictEqual(r.heritable, 0);
+  },
+  "cens v3: el replicador que necessita parella és hereditari en context (retall de l'esclat)"() {
+    const soup = fixture('esclat-32x32.bin');
+    const r = createCensus({ width: 32 }).run(soup, 1024, 0);
+    assert.strictEqual(r.solo, 0, 'aquest replicador no es copia sol');
+    assert.ok(r.context >= 10, `en context: ${r.context}`);
+    assert.ok(r.heritable >= 1 && r.heritable < r.context, `hereditaris: ${r.heritable} de ${r.context}`);
+  },
+  'cens v3: la mostra són cel·les diferents (AU2-03)'() {
+    // Un món on només una cel·la és un replicador: amb una mostra de la meitat del món, el replicador hi
+    // surt com a molt una vegada (amb reemplaçament, a vegades hi sortia més)
+    const W = 64, n = W * W;
+    const soup = randomSoup(n, createRng(52));
+    soup.set(REPLICATOR, 1234 * 64);
+    const census = createCensus({ width: W, sample: n / 2 });
+    for (let k = 0; k < 20; k++) assert.ok(census.run(soup, n, k).heritable <= 1);
+  },
+  "criteri d'establiment: l'1 % de la mostra en dos censos seguits"() {
+    const c = (epoch, heritable, sample = 2048) => ({ epoch, sample, heritable });
+    assert.strictEqual(establishment([c(250, 0), c(500, 21), c(750, 30)]), 500);
+    assert.strictEqual(establishment([c(250, 25), c(500, 3), c(750, 21), c(1000, 21)]), 750);
+    assert.strictEqual(establishment([c(250, 20), c(500, 20)]), null, "20 de 2.048 no arriba a l'1 %");
+    assert.strictEqual(establishment([c(250, 0), c(500, 100)]), null, "un sol cens no n'hi ha prou");
+    assert.strictEqual(establishment([c(250, 10, 1000), c(500, 10, 1000)]), 250, "exactament l'1 % compta");
+    assert.strictEqual(establishment([]), null);
   },
   'un món aleatori no té cap família'() {
     const n = 8192;

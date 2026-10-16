@@ -8,11 +8,13 @@
 //
 // 1. Prova de replicació (fase2/replication.js, la mateixa que fa servir el registre de famílies)
 //    sobre una mostra de cel·les: sol (primer, amb un company de soroll) i en context (segon, amb un
-//    veí que encara no porta cap tros seu).
+//    veí que encara no porta cap tros seu). Les que es repliquen es tornen a provar amb la prova de
+//    segona generació (la còpia també es copia?), amb un generador a part: així la mostra i les xifres
+//    de replicació són les mateixes que abans de la iteració 3.
 // 2. El que veu el registre de famílies.
 import { readFileSync, existsSync } from 'fs';
 import { KIND, PROGRAM_SIZE } from '../fase1/bff.js';
-import { createRng, shannonEntropy } from '../fase1/soup.js';
+import { createRng, makeRng, shannonEntropy } from '../fase1/soup.js';
 import { replicationTest } from './replication.js';
 import { createFamilyTracker } from './families.js';
 
@@ -38,8 +40,9 @@ for (const v of soup) counts[v]++;
 console.log('bytes més freqüents:', [...counts.keys()].sort((a, b) => counts[b] - counts[a]).slice(0, 5)
   .map((v) => `${KIND[v] ? String.fromCharCode(v) : v === 0 ? '0' : '#' + v}:${(counts[v] / soup.length * 100).toFixed(1)}%`).join(' '));
 
-let solo = 0, context = 0, any = 0;
+let solo = 0, context = 0, any = 0, heritable = 0;
 const examples = [];
+const heredityRng = makeRng(18, 'v2');
 for (let k = 0; k < sampleSize; k++) {
   const c = (rng() * n) | 0;
   const r = replicationTest(soup, c, rng, { width, radius });
@@ -47,11 +50,13 @@ for (let k = 0; k < sampleSize; k++) {
   if (r.context) context++;
   if (r.solo || r.context) {
     any++;
+    if (replicationTest(soup, c, heredityRng, { width, radius, heredity: true }).heritable) heritable++;
     if (examples.length < 4) examples.push(`${r.solo ? 'sol     ' : 'context '} ${where(c)} |${show(soup.subarray(c * PROGRAM_SIZE, (c + 1) * PROGRAM_SIZE))}|`);
   }
 }
 const pct = (x) => `${(x / sampleSize * 100).toFixed(1)}%`;
 console.log(`\nreplicadors a la mostra de ${sampleSize}: ${pct(any)} (sols ${pct(solo)}, en context ${pct(context)})`);
+console.log(`hereditaris (la còpia també es copia): ${pct(heritable)}`);
 for (const e of examples) console.log('  ' + e);
 
 const t0 = Date.now();

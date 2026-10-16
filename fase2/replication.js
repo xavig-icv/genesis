@@ -13,6 +13,12 @@
 //  - en context: A va segon, amb un company del món que encara no porta cap tros seu. Si es
 //    coneix l'amplada del món, el company és un veí dins del radi d'interacció (amb qui A es
 //    troba de debò); si no (sopa barrejada), una cel·la qualsevol (4 intents).
+//
+// Herència (AUD-33 de l'auditoria 2 i AU2-02 de l'auditoria externa 2): un programa que només copia
+// un tros de les seves dades al company passa aquesta prova sense ser un replicador. Un replicador de
+// debò deixa una còpia que també es copia. Amb `heredity`, cada vegada que A es replica, el company tal
+// com ha quedat (el "fill") es posa a prova de la mateixa manera (sol, o en context amb un altre veí de
+// A): si el seu company (el "nét") acaba portant alguna finestra de A, A és un replicador hereditari.
 import { PROGRAM_SIZE, TAPE_SIZE, evaluate } from '../fase1/bff.js';
 
 export const WINDOW = 16;
@@ -37,10 +43,12 @@ export function hasWindow(P, set) {
   return false;
 }
 
-// Prova la cel·la c. Opcions: width (0 = sopa barrejada), radius (radi d'interacció del món) i
-// complete (si és false, para al primer èxit, com fa el registre de famílies per anar de pressa).
-// Retorna { solo, context }: si s'ha replicat sol i si s'ha replicat en context.
-export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete = true } = {}) {
+// Prova la cel·la c. Opcions: width (0 = sopa barrejada), radius (radi d'interacció del món),
+// complete (si és false, para al primer èxit, com fa el registre de famílies per anar de pressa) i
+// heredity (fa també la prova de segona generació; sense, l'atzar que es consumeix és el de sempre).
+// Retorna { solo, context, heritable }: si s'ha replicat sol, si s'ha replicat en context i (només
+// amb heredity) si alguna de les seves còpies també s'ha replicat.
+export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete = true, heredity = false } = {}) {
   const n = soup.length / PROGRAM_SIZE;
   const height = width ? n / width : 0;
   const side = 2 * radius + 1;
@@ -56,28 +64,51 @@ export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete 
   };
   const A = soup.slice(c * PROGRAM_SIZE, (c + 1) * PROGRAM_SIZE);
   const set = windowsOf(A);
-  const result = { solo: false, context: false };
+  const result = { solo: false, context: false, heritable: false };
   if (!set.size) return result;
   const tape = new Uint8Array(TAPE_SIZE);
+  // Executa la parella i retorna el company tal com ha quedat si porta alguna finestra de A (si no, null)
   const run = (first, second, partnerOffset) => {
     tape.set(first, 0);
     tape.set(second, PROGRAM_SIZE);
     evaluate(tape, 0);
-    return hasWindow(tape.subarray(partnerOffset, partnerOffset + PROGRAM_SIZE), set);
+    const partner = tape.subarray(partnerOffset, partnerOffset + PROGRAM_SIZE);
+    return hasWindow(partner, set) ? partner.slice() : null;
   };
-  for (let t = 0; t < SOLO_TRIALS && !result.solo; t++) {
-    const B = Uint8Array.from({ length: PROGRAM_SIZE }, () => (rng() * 256) | 0);
-    if (run(A, B, PROGRAM_SIZE)) result.solo = true;
-  }
-  if (result.solo && !complete) return result;
-  for (let t = 0; t < CONTEXT_TRIALS && !result.context; t++) {
-    let B = null;
-    for (let tries = 0; tries < 20 && !B; tries++) {
+  const noise = () => Uint8Array.from({ length: PROGRAM_SIZE }, () => (rng() * 256) | 0);
+  const contextPartner = () => {
+    for (let tries = 0; tries < 20; tries++) {
       const p = partnerCell();
       const P = soup.subarray(p * PROGRAM_SIZE, (p + 1) * PROGRAM_SIZE);
-      if (!hasWindow(P, set)) B = P.slice();
+      if (!hasWindow(P, set)) return P.slice();
     }
-    if (B && run(B, A, 0)) result.context = true;
+    return null;
+  };
+  // Segona generació: el fill, en el mateix paper que A i amb els mateixos intents, ha de deixar alguna
+  // finestra de A al seu company. (Amb menys intents, la prova perdria els replicadors que només es
+  // copien de tant en tant, com el que necessita parella: un 18 % d'èxit per intent.)
+  const heritable = (child, solo) => {
+    for (let t = 0; t < (solo ? SOLO_TRIALS : CONTEXT_TRIALS); t++) {
+      if (solo) { if (run(child, noise(), PROGRAM_SIZE)) return true; }
+      else { const B = contextPartner(); if (B && run(B, child, 0)) return true; }
+    }
+    return false;
+  };
+  for (let t = 0; t < SOLO_TRIALS && !result.solo; t++) {
+    const child = run(A, noise(), PROGRAM_SIZE);
+    if (child) {
+      result.solo = true;
+      if (heredity) result.heritable = heritable(child, true);
+    }
+  }
+  if (result.solo && !complete && (!heredity || result.heritable)) return result;
+  for (let t = 0; t < CONTEXT_TRIALS && !result.context; t++) {
+    const B = contextPartner();
+    const child = B && run(B, A, 0);
+    if (child) {
+      result.context = true;
+      if (heredity && !result.heritable) result.heritable = heritable(child, false);
+    }
   }
   return result;
 }

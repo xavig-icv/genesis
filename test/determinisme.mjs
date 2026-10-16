@@ -8,6 +8,7 @@
 // Si un canvi ha d'alterar les històries a propòsit, no es toquen aquestes empremtes: s'hi afegeix
 // una opció nova (com --rng v2) i les antigues continuen reproduint-se igual.
 import assert from 'assert';
+import { createHash } from 'crypto';
 import { execFileSync } from 'child_process';
 import { mkdtempSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
@@ -71,6 +72,29 @@ const tests = {
   'v2 és el generador per defecte'() {
     assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '4', '--epochs', '80', ...LAWS, ...QUIET)), 'edfd9766');
   },
+  // Casos que abans només es provaven barrejats amb la resta de lleis (AUD-36 de l'auditoria 2)
+  'v2 · món 2D amb radi 1'() {
+    assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '4', '--epochs', '80', '--radius', '1', ...QUIET)), 'b054f4b');
+  },
+  'v2 · difusió sense barreja'() {
+    assert.strictEqual(fingerprint(sim('--world', '128x64', '--seed', '4', '--epochs', '80', '--diffusion', '0.1', ...QUIET)), '3db24b96');
+  },
+
+  // El cens (AUD-36): les empremtes del món no el veuen, però ara és la mesura principal. Es prova sobre
+  // dos retalls de 32x32 de mons amb vida (test/fixtures): l'esclat del replicador que necessita
+  // parella i el palíndrom del punt. Els valors del cens v2 es van obtenir amb el codi d'abans de la
+  // iteració 3 (commit 4bbee9a): el cens v2 els ha de reproduir exactament.
+  ...Object.fromEntries([['esclat', 'bbf02f058fe26cd3', 'a63675ce4b1a1a44', '9741e854'], ['punt', '0b74109de2367cb7', 'b14ddfa2751389fc', 'b01bd77a']]
+    .map(([name, v2, v3, world]) => [`cens v2 i v3 · retall «${name}» (el cens no toca el món)`, () => {
+      const run = (version) => sim('--rng', 'v1', '--world', '32x32', '--from', join(root, 'test', 'fixtures', `${name}-32x32.bin`), '--start', '0',
+        '--epochs', '30', '--every', '1000', '--census', '5', '--census-version', version);
+      for (const [version, expected] of [['v2', v2], ['v3', v3]]) {
+        const out = run(version);
+        const lines = out.split('\n').filter((l) => /^cens |FAMÍLIA|ESTABLIMENT/.test(l)).join('\n') + '\n';
+        assert.strictEqual(createHash('sha256').update(lines).digest('hex').slice(0, 16), expected, `cens ${version}:\n${lines}`);
+        assert.strictEqual(fingerprint(out), world, `cens ${version}: el món ha canviat`);
+      }
+    }])),
 };
 
 let failed = 0;
