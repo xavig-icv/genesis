@@ -1,0 +1,267 @@
+// Anàlisi estadística de les sèries d'experiments (protocol estadístic, docs/protocol-estadistic.md).
+//
+// Ús:
+//   node fase2/estadistica.mjs carpeta-A carpeta-B     compara dues condicions (fitxers .jsonl de sim.mjs)
+//   node fase2/estadistica.mjs --potencia [n]          potència del log-rank per simulació
+//
+// Cada experiment és un fitxer .jsonl (sim.mjs --json). L'esdeveniment és l'establiment de la vida
+// segons el criteri de fase2/census.js (el mateix codi que atura els experiments); si no passa abans
+// del final, l'experiment queda censurat a l'última època simulada. Els experiments que no han arribat
+// al final previst sense establiment (s'han tallat) s'assenyalen: el protocol diu que es tornen a
+// executar.
+//
+// Totes les funcions estadístiques s'exporten i tenen proves (test/estadistica.mjs).
+import { readFileSync, readdirSync } from 'fs';
+import { basename, join } from 'path';
+import { fileURLToPath } from 'url';
+import { establishment } from './census.js';
+import { makeRng } from '../fase1/soup.js';
+
+// ---- Distribució normal
+
+// Funció de distribució de la normal estàndard (Abramowitz i Stegun 7.1.26 sobre erf; error < 1,5e-7)
+export function normalCdf(z) {
+  const x = Math.abs(z) / Math.SQRT2;
+  const t = 1 / (1 + 0.3275911 * x);
+  const erf = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+  return z >= 0 ? (1 + erf) / 2 : (1 - erf) / 2;
+}
+
+// ---- Proporcions
+
+// Prova exacta de Fisher bilateral (probabilitats menors o iguals que l'observada)
+export function fisher(x1, n1, x2, n2) {
+  const lf = (n) => { let s = 0; for (let i = 2; i <= n; i++) s += Math.log(i); return s; };
+  const total = x1 + x2;
+  const p = (a) => Math.exp(lf(n1) + lf(n2) + lf(total) + lf(n1 + n2 - total) - lf(n1 + n2) - lf(a) - lf(n1 - a) - lf(total - a) - lf(n2 - total + a));
+  const observed = p(x1);
+  let sum = 0;
+  for (let a = Math.max(0, total - n2); a <= Math.min(n1, total); a++) { const q = p(a); if (q <= observed * (1 + 1e-7)) sum += q; }
+  return Math.min(1, sum);
+}
+
+// Interval de Wilson al 95 %
+export function wilson(x, n, z = 1.959964) {
+  const p = x / n, d = 1 + z * z / n, c = (p + z * z / (2 * n)) / d;
+  const h = (z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d;
+  return [Math.max(0, c - h), Math.min(1, c + h)];
+}
+
+// ---- Supervivència. Cada grup és una llista de { time, event } (event: true si hi ha establiment)
+
+// Log-rank bilateral (amb empats). Retorna l'estadístic Z (observats menys esperats al grup A), el
+// khi quadrat i el valor p.
+export function logrank(a, b) {
+  const all = [...a.map((x) => ({ ...x, g: 0 })), ...b.map((x) => ({ ...x, g: 1 }))];
+  const times = [...new Set(all.filter((x) => x.event).map((x) => x.time))].sort((x, y) => x - y);
+  let O = 0, E = 0, V = 0;
+  for (const t of times) {
+    let r0 = 0, r1 = 0, d0 = 0, d = 0;
+    for (const x of all) {
+      if (x.time >= t) { if (x.g === 0) r0++; else r1++; }
+      if (x.time === t && x.event) { d++; if (x.g === 0) d0++; }
+    }
+    const r = r0 + r1;
+    O += d0; E += (d * r0) / r;
+    if (r > 1) V += (d * (r0 / r) * (r1 / r) * (r - d)) / (r - 1);
+  }
+  const z = V > 0 ? (O - E) / Math.sqrt(V) : 0;
+  return { z, chi2: z * z, p: 2 * (1 - normalCdf(Math.abs(z))) };
+}
+
+// Kaplan-Meier: la funció de supervivència (aquí, la probabilitat que la vida encara no s'hagi
+// establert), amb l'error de Greenwood. Retorna els esglaons [{ time, s, se, atRisk, events }].
+export function kaplanMeier(group) {
+  const times = [...new Set(group.filter((x) => x.event).map((x) => x.time))].sort((x, y) => x - y);
+  let s = 1, g = 0;
+  const steps = [];
+  for (const t of times) {
+    const atRisk = group.filter((x) => x.time >= t).length;
+    const events = group.filter((x) => x.time === t && x.event).length;
+    s *= 1 - events / atRisk;
+    if (atRisk > events) g += events / (atRisk * (atRisk - events));
+    steps.push({ time: t, s, se: s * Math.sqrt(g), atRisk, events });
+  }
+  return steps;
+}
+
+// Supervivència a l'època t, amb el seu error
+export function survivalAt(steps, t) {
+  let last = { s: 1, se: 0 };
+  for (const st of steps) if (st.time <= t) last = st;
+  return last;
+}
+
+// Diferència d'incidència acumulada (1 - S) entre B i A a l'època t, amb interval al 95 %
+export function incidenceDifference(a, b, t) {
+  const sa = survivalAt(kaplanMeier(a), t), sb = survivalAt(kaplanMeier(b), t);
+  const diff = (1 - sb.s) - (1 - sa.s);
+  const se = Math.sqrt(sa.se ** 2 + sb.se ** 2);
+  return { diff, low: diff - 1.959964 * se, high: diff + 1.959964 * se };
+}
+
+// Temps mitjà restringit fins a l'establiment (RMST) fins a l'època t, amb l'error de la fórmula
+// habitual (suma sobre els esglaons de Kaplan-Meier)
+export function rmst(group, t) {
+  const steps = kaplanMeier(group).filter((st) => st.time <= t);
+  const knots = [0, ...steps.map((st) => st.time), t];
+  const values = [1, ...steps.map((st) => st.s)];
+  let area = 0;
+  const areas = [];
+  for (let i = 0; i < values.length; i++) { const piece = values[i] * (knots[i + 1] - knots[i]); area += piece; areas.push(piece); }
+  let variance = 0, tail = 0;
+  for (let i = steps.length - 1; i >= 0; i--) {
+    tail += areas[i + 1];
+    const { atRisk, events } = steps[i];
+    if (atRisk > events) variance += (tail * tail * events) / (atRisk * (atRisk - events));
+  }
+  return { rmst: area, se: Math.sqrt(variance) };
+}
+
+// ---- Disseny en dues etapes (protocol §6): límits d'O'Brien-Fleming amb la despesa de Lan-DeMets
+
+// Alfa gastada fins a la fracció d'informació f (bilateral)
+export const obfSpending = (f, alpha = 0.05) => 2 * (1 - normalCdf(normalInverse(1 - alpha / 2) / Math.sqrt(f)));
+
+export function normalInverse(p) {
+  // Cerca binària sobre normalCdf (prou precisa per als límits)
+  let lo = -10, hi = 10;
+  for (let i = 0; i < 100; i++) { const mid = (lo + hi) / 2; if (normalCdf(mid) < p) lo = mid; else hi = mid; }
+  return (lo + hi) / 2;
+}
+
+// Límits |Z| de les dues etapes per a una fracció d'informació f a l'etapa 1. El de l'etapa 2 fa que
+// la probabilitat total de rebutjar H0 sigui alfa: P(|Z1| > c1) + P(|Z1| <= c1, |Z2| > c2) = alfa, amb
+// Z2 = sqrt(f) Z1 + sqrt(1 - f) W (integral numèrica sobre Z1).
+export function twoStageBounds(f, alpha = 0.05) {
+  const a1 = obfSpending(f, alpha);
+  const c1 = normalInverse(1 - a1 / 2);
+  const phi = (z) => Math.exp(-z * z / 2) / Math.sqrt(2 * Math.PI);
+  const reject2 = (c2) => {
+    const N = 2000, h = (2 * c1) / N;
+    let sum = 0;
+    for (let i = 0; i <= N; i++) {
+      const z1 = -c1 + i * h;
+      const w = i === 0 || i === N ? 1 : i % 2 ? 4 : 2;
+      const m = Math.sqrt(f) * z1, s = Math.sqrt(1 - f);
+      sum += w * phi(z1) * (normalCdf((-c2 - m) / s) + 1 - normalCdf((c2 - m) / s));
+    }
+    return (sum * h) / 3;
+  };
+  let lo = 1, hi = 4;
+  for (let i = 0; i < 60; i++) { const mid = (lo + hi) / 2; if (a1 + reject2(mid) > alpha) lo = mid; else hi = mid; }
+  const c2 = (lo + hi) / 2;
+  return { c1, c2, p1: 2 * (1 - normalCdf(c1)), p2: 2 * (1 - normalCdf(c2)) };
+}
+
+// ---- Potència per simulació (riscos exponencials, temps arrodonits al cens, censura a l'horitzó)
+
+export function power({ n, pA, pB, horizon = 16000, every = 250, reps = 4000, seed = 424242, z = 1.959964 }) {
+  const rng = makeRng(seed, 'v2');
+  const draw = (p) => {
+    const lambda = -Math.log(1 - p) / horizon;
+    const t = -Math.log(1 - rng()) / lambda;
+    return t <= horizon ? { time: Math.ceil(t / every) * every, event: true } : { time: horizon, event: false };
+  };
+  let hits = 0;
+  for (let k = 0; k < reps; k++) {
+    const a = Array.from({ length: n }, () => draw(pA)), b = Array.from({ length: n }, () => draw(pB));
+    if (Math.abs(logrank(a, b).z) > z) hits++;
+  }
+  return hits / reps;
+}
+
+// ---- Lectura dels experiments
+
+// Un experiment a partir del seu JSONL: { file, seed, time, event, end, horizon, complete, censuses }
+export function readExperiment(file) {
+  const records = readFileSync(file, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l));
+  const start = records.find((r) => r.type === 'start');
+  const end = records.find((r) => r.type === 'end');
+  if (!start) throw new Error(`${file}: no té la línia d'inici`);
+  const censuses = records.filter((r) => r.type === 'census' && r.version === 'v3');
+  const t = establishment(censuses);
+  const last = end?.epoch ?? (censuses.length ? censuses[censuses.length - 1].epoch : start.start);
+  return {
+    file, seed: start.seed, code: start.code, mixing: start.mixing, horizon: start.epochs,
+    time: t ?? last, event: t !== null, end: last,
+    // complet: o ha arribat a l'horitzó, o s'ha aturat després d'un establiment
+    complete: end !== undefined && (t !== null || last >= start.epochs), censuses,
+  };
+}
+
+export const readSeries = (dir) => readdirSync(dir).filter((f) => f.endsWith('.jsonl')).sort().map((f) => readExperiment(join(dir, f)));
+
+// Un registre de text antic (sèrie exploratòria, cens v2), amb un dels criteris que s'hi han fet servir:
+//  'hoe'        l'HOE supera 1 bit (entrada 6);
+//  'familia'    una mateixa família >= 1 % del mapa en dos censos seguits (protocol v0.1);
+//  'funcional'  la mostra del cens que es replica >= 1 % en dos censos seguits.
+// Retorna { file, time, event, end }: censurat a l'última època del registre si no hi ha esdeveniment.
+export function readLegacyLog(file, criterion = 'hoe') {
+  const text = readFileSync(file, 'utf8');
+  const end = Number([...text.matchAll(/^època (\d+)/gm)].pop()?.[1] ?? 0);
+  let time = null;
+  if (criterion === 'hoe') {
+    time = Number(text.match(/HOE > [\d.]+ a l.època (\d+)/)?.[1] ?? NaN);
+    if (Number.isNaN(time)) time = null;
+  } else {
+    const cs = [...text.matchAll(/^cens (\d+)\s+es repliquen=([\d.]+)%\s+famílies=\d+(.*)$/gm)].map((m) => ({
+      epoch: Number(m[1]), alive: Number(m[2]), fams: [...m[3].matchAll(/#(\d+):([\d.]+)%/g)].map((f) => ({ id: f[1], share: Number(f[2]) })),
+    }));
+    for (let i = 0; i + 1 < cs.length && time === null; i++) {
+      if (criterion === 'funcional' && cs[i].alive >= 1 && cs[i + 1].alive >= 1) time = cs[i].epoch;
+      if (criterion === 'familia' && cs[i].fams.some((f) => f.share >= 1 && cs[i + 1].fams.some((g) => g.id === f.id && g.share >= 1))) time = cs[i].epoch;
+    }
+  }
+  return { file, time: time ?? end, event: time !== null, end };
+}
+
+// ---- Informe de dues condicions
+
+export function report(A, B, { horizon = null, labelA = 'A', labelB = 'B' } = {}) {
+  const lines = [];
+  const pct = (x) => `${(x * 100).toFixed(1)} %`;
+  // L'horitzó és el dels experiments (--epochs): més enllà no hi ha dades
+  const horizons = [...new Set([...A, ...B].map((x) => x.horizon))];
+  if (horizon === null) horizon = Math.min(...horizons);
+  if (horizons.length > 1) lines.push(`ATENCIÓ: els experiments no tenen tots el mateix horitzó (${horizons.join(', ')}); es fa servir ${horizon}`);
+  for (const [label, g] of [[labelA, A], [labelB, B]]) {
+    const events = g.filter((x) => x.event).length;
+    const [lo, hi] = wilson(events, g.length);
+    const codes = [...new Set(g.map((x) => x.code))];
+    lines.push(`${label}: ${g.length} experiments, ${events} amb establiment (${pct(events / g.length)}; Wilson 95 % ${pct(lo)}–${pct(hi)}); codi ${codes.join(', ')}`);
+    const incomplete = g.filter((x) => !x.complete);
+    if (incomplete.length) lines.push(`  ATENCIÓ: ${incomplete.length} experiments tallats abans d'hora (cal tornar-los a executar): ${incomplete.map((x) => x.file).join(', ')}`);
+  }
+  const lr = logrank(A, B);
+  lines.push(`Log-rank bilateral: Z = ${lr.z.toFixed(3)}, khi quadrat = ${lr.chi2.toFixed(3)}, p = ${lr.p.toFixed(4)}`);
+  const eA = A.filter((x) => x.event).length, eB = B.filter((x) => x.event).length;
+  lines.push(`Fisher bilateral (descriptiu): p = ${fisher(eA, A.length, eB, B.length).toFixed(4)}`);
+  const d = incidenceDifference(A, B, horizon);
+  lines.push(`Diferència d'incidència acumulada a l'època ${horizon} (${labelB} − ${labelA}): ${pct(d.diff)} (IC 95 % ${pct(d.low)} a ${pct(d.high)})`);
+  const ra = rmst(A, horizon), rb = rmst(B, horizon);
+  lines.push(`RMST fins a l'època ${horizon}: ${labelA} ${ra.rmst.toFixed(0)} ± ${ra.se.toFixed(0)}, ${labelB} ${rb.rmst.toFixed(0)} ± ${rb.se.toFixed(0)} (diferència ${(rb.rmst - ra.rmst).toFixed(0)} ± ${Math.hypot(ra.se, rb.se).toFixed(0)})`);
+  for (const [label, g] of [[labelA, A], [labelB, B]]) {
+    lines.push(`Kaplan-Meier ${label}: ${kaplanMeier(g).map((st) => `${st.time}:${st.s.toFixed(3)}`).join('  ') || '(cap establiment)'}`);
+  }
+  return lines.join('\n');
+}
+
+// ---- Línia d'ordres
+
+const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];
+if (isMain) {
+  const args = process.argv.slice(2);
+  if (args[0] === '--potencia') {
+    const n = Number(args[1] ?? 50);
+    const row = [[0.2, 0.5], [0.2, 0.45], [0.2, 0.4], [0.2, 0.35]].map(([a, b]) => `${a * 100}/${b * 100}: ${(power({ n, pA: a, pB: b }) * 100).toFixed(0)} %`);
+    console.log(`Potència del log-rank amb ${n} experiments per condició: ${row.join('   ')}`);
+    const b = twoStageBounds(50 / 80);
+    console.log(`Dues etapes (50 → 80): etapa 1 |Z| > ${b.c1.toFixed(3)} (p < ${b.p1.toFixed(4)}), etapa 2 |Z| > ${b.c2.toFixed(3)} (p < ${b.p2.toFixed(4)})`);
+  } else if (args.length === 2) {
+    console.log(report(readSeries(args[0]), readSeries(args[1]), { labelA: basename(args[0]), labelB: basename(args[1]) }));
+  } else {
+    console.error('Ús: node fase2/estadistica.mjs carpeta-A carpeta-B\n     node fase2/estadistica.mjs --potencia [n]');
+    process.exit(2);
+  }
+}
