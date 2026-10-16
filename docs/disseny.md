@@ -19,6 +19,19 @@ persona. El 2024, *Computational Life* (Agüera y Arcas et al.) va mostrar que e
 aleatoris els replicadors apareixen sols. El nostre objectiu no és repetir-ho, sinó respondre el que
 va quedar obert: si la vida es pot mantenir, adaptar, formar ecosistemes i reproduir-se entre dos.
 
+**La pregunta, reformulada (16-10-2026, AUD-39 de l'auditoria 2).** "La vida pot néixer sola?" ja té
+resposta en substrats com aquest. Ho va mostrar *Computational Life*, ho hem reproduït a la Fase 1, i ja
+hi havia precedents en altres químiques artificials: Coreworld (1990), AlChemy (1994) i Amoeba (1996). La
+detallarà un estat de la qüestió, amb les referències comprovades. Les preguntes d'aquest projecte són
+les que queden obertes:
+
+1. **Quines propietats** de la química i de l'entorn calen perquè la vida aparegui.
+2. **De què depèn que s'estableixi i es mantingui.** Les dades de la iteració 3 suggereixen que el
+   difícil no és que aparegui un copiador, sinó que n'aparegui un d'hereditari que s'estableixi.
+3. **Si després hi ha evolució darwiniana sostinguda:** herència, variació i selecció mesurades, no
+   només còpia.
+4. **Si els resultats són generals** o propis de BFF.
+
 ## 2. Principis
 
 1. **Dissenyem les lleis, mai els organismes.** Res de replicadors inicials, cap premi per replicar-se
@@ -29,6 +42,8 @@ va quedar obert: si la vida es pot mantenir, adaptar, formar ecosistemes i repro
    zeros" seria dissenyar la cura d'una malaltia que ja coneixem (vegeu l'entrada 2 del quadern).
 3. **Un canvi cada vegada.** Cada llei és un interruptor, i cada experiment es compara amb el grup de
    control (la Fase 1). Si canviem dues coses alhora, no sabrem quina ha causat l'efecte.
+   **Matís (auditoria externa 2):** el control d'una llei és el mateix món amb la llei apagada. Per
+   exemple, el món quiet és el control del corrent. La Fase 1 és el control de la química.
 4. **Univers tancat.** Els organismes són bytes executats pel nostre propi intèrpret. No tenen accés al
    sistema operatiu, a la xarxa ni als fitxers. Una "estratègia de supervivència" vol dir copiar bytes
    dins de la memòria del món, i res més.
@@ -95,6 +110,21 @@ Dues propostes més, per després:
   només el seu company. Ve de la proposta humana del projecte (conversa del 14-10-2026): la reproducció
   entre diversos elements, en lloc de la simple replicació.
 
+**Full de ruta (16-10-2026, AUD-40 de l'auditoria 2, decidit pel responsable del projecte).**
+- **Primer, la sèrie confirmatòria de la llei 2.**
+- **Després, un eix de química:** ablacions a la sopa barrejada, que és barata i hi fa vida en milers
+  d'èpoques, per saber quins ingredients són necessaris. Per exemple:
+  - sense mutació (l'article diu que la vida hi apareix igualment);
+  - sense una de les dues instruccions de còpia;
+  - amb l'ordre de la parella simètric;
+  - sense automodificació.
+
+  És la pregunta oberta de l'article: per què en BFF hi neix vida i en altres llenguatges no.
+- **L'ordre de les lleis 4–8 i de la Química 2 es decidirà amb els resultats de les ablacions.** Les lleis
+  es provaran preferentment amb branques aparellades des d'un banc de mons amb vida i amb assaigs
+  d'establiment (AUD-41). La llei 4 (energia) s'haurà de dissenyar amb cura, perquè no es converteixi en
+  una funció d'aptitud amagada.
+
 ## 5. Decisions
 
 | Data | Decisió | Motiu |
@@ -126,6 +156,13 @@ Dues propostes més, per després:
 | 15-10-2026 | Llicència: Apache 2.0 per al codi i CC BY 4.0 per al quadern i la documentació, amb els crèdits a `NOTICE` | Apache 2.0 té clàusula de patents i un mecanisme estàndard d'atribució, i és la de cubff; CC BY 4.0 és l'habitual per a text científic i divulgatiu (AUD-11) |
 | 15-10-2026 | Auditories iteratives: després de cada grup de tasques, un informe de traspàs per a l'auditor (`../auditories/claude-origins/auditorN/auditM/`), el seu informe i la nostra resposta | Revisió externa contínua; les troballes conserven l'identificador entre auditories |
 | 15-10-2026 | Registre de famílies v2: es parteix de la prova de replicació sobre 512 cel·les (sol i en context amb un veí), les famílies s'agrupen pel codi compacte (només instruccions) i el nucli es recalcula a cada anàlisi | La v1 no veia els replicadors espaiats, ni els que necessiten parella, ni seguia l'evolució. Validat amb proves i amb els mons desats de l'escombrat |
+| 16-10-2026 | Segon auditor extern, un model diferent de Claude, en paral·lel amb l'auditoria 2. La primera passada la fa sense veure les auditories anteriors. Respostes i pla a `../auditories/claude-origins/equip/pla-iteracio-3.md` | Reduir els punts cecs compartits. Els dos auditors van coincidir de manera independent en els problemes principals del protocol |
+| 16-10-2026 | La mesura principal de vida és funcional: el cens v3 compta els replicadors hereditaris (la còpia també es copia) en una mostra de 2.048 cel·les diferents. El registre de famílies queda com a eina descriptiva | El territori d'una família es desvia dels replicadors reals en tots dos sentits (AU2-01), i la prova antiga no distingia una còpia d'un tros de dades de l'herència (AUD-33). Calibrat a `docs/calibratge.md` |
+| 16-10-2026 | Els experiments s'aturen 1.000 èpoques després de l'establiment, no després que l'HOE superi 1 bit | L'aturada per HOE podia censurar experiments abans que es pogués avaluar el criteri (AUD-30, AU2-04), i l'HOE depèn de la versió de zlib (AU2-07) |
+| 16-10-2026 | La sèrie confirmatòria es fa en dues etapes (50 i, si cal, 80 llavors per condició), amb límits d'O'Brien–Fleming | La potència del log-rank per a efectes plausibles (20 % contra 40 %) era del 59 % amb 50 llavors (AUD-31, AU2-05) |
+| 16-10-2026 | L'intèrpret es compara amb el codi original de cubff (oracle extern), compilat a la VM | La referència de les proves l'havíem escrita nosaltres (AU2-12). Coincideixen en 200.000 cintes. Es manté la mutació del 0,024 % (la de l'article; cubff fa servir 1/4.096) |
+| 16-10-2026 | La pregunta del projecte es reformula: condicions, establiment, evolució posterior i generalitat (§1) | AUD-39; decidit pel responsable del projecte |
+| 16-10-2026 | Després de la sèrie confirmatòria, ablacions de química a la sopa, abans de les lleis 4–8 (§4) | AUD-40; decidit pel responsable del projecte |
 
 ## 6. Estat i resultats principals
 
@@ -144,8 +181,8 @@ Resum. El detall és al quadern.
 - **Fase 2a, primer resultat:** en tres mons sense res plantat (llavors 1, 2 i 3) i 16.000 èpoques, no
   ha nascut cap família, ni tan sols local. Amb tan pocs casos no es pot dir que l'espai freni la vida:
   calen més llavors i més temps (vegeu l'entrada 3 del quadern).
-- **Llei 2, escombrat de corrents (entrada 4):** el món quiet no ha fet vida cap vegada (0 de 3); amb
-  corrent, 4 de 12 (a *m* = 0,001, 0,01 i 1, però 0 de 3 a *m* = 0,1). És una pista, no una conclusió:
+- **Llei 2, escombrat de corrents (entrada 4):** el món quiet no ha fet vida cap vegada (0 de 3; **corregit a
+  l'entrada 6:** amb 15 llavors, 3 de 15); amb corrent, 4 de 12 (a *m* = 0,001, 0,01 i 1, però 0 de 3 a *m* = 0,1). És una pista, no una conclusió:
   l'atzar de cada llavor pesa més que el corrent amb només 3 llavors per nivell. Han aparegut
   tres mecanismes de còpia: el palíndrom de la coma (`, < }`, per cinquena vegada), el palíndrom del punt
   (`. { >`, el de l'article de Google) i un **replicador que necessita una parella** (només es copia
@@ -156,6 +193,16 @@ Resum. El detall és al quadern.
   més de pressa que la "velocitat de la llum" de 2 cel·les per època). En un riu torrencial hi va
   néixer de nou el palíndrom del punt, que va arribar al 63 % del món: el riu alimenta i el corrent
   escampa (hipòtesi, 1 cas de 3).
+- **Llei 2, sèrie de 15 llavors (entrada 6, exploratòria):**
+  - **Resultat:** món quiet, 3 de 15; corrent 0,01, 8 de 15 (log-rank *p* = 0,043; Fisher *p* = 0,13). No
+    es dona per demostrat.
+  - **Aparició des de zero amb flux:** 2 de 6 amb riu i 2 de 6 amb renovació, sense cap senyal que el flux
+    afavoreixi l'aparició.
+- **Iteració 3 (entrada 7):**
+  - **Cens v3:** la mesura de vida és ara la dels replicadors hereditaris.
+  - **Copiadors esporàdics:** en mons sense vida establerta, gairebé tots són no hereditaris.
+  - **Fidelitat:** l'intèrpret coincideix amb cubff.
+  - **Protocol v0.2:** a punt per a l'auditoria 3.
 - **Registre de famílies v2:** arregla els tres punts cecs de la v1. Sobre els mons desats de
   l'escombrat, ara troba el replicador que necessita parella (3,9 % del mapa), el palíndrom espaiat, i
   no s'inventa famílies en un món sense vida. Triga ~0,5 s per anàlisi en un món de 131.072 cel·les.
@@ -171,5 +218,9 @@ Resum. El detall és al quadern.
 - El replicador que necessita una parella pot sobreviure en un món que no s'enverini tan de pressa?
   És el camí natural cap a la reproducció entre dos. (Entrada 5: sí, amb prou renovació.)
 - Els mons amb riu i corrent afavoreixen que neixi vida? (Entrada 5: un cas en 750 èpoques.) Cal un
-  experiment d'aparició des de zero amb riu.
+  experiment d'aparició des de zero amb riu. (Entrada 6: 2 de 6 amb riu i 2 de 6 amb renovació, sense
+  cap senyal que ho afavoreixin.)
+- On és el coll d'ampolla: en l'aparició d'un replicador hereditari o en el seu establiment? (Iteració 3:
+  els copiadors esporàdics són gairebé tots no hereditaris.)
+- Quins ingredients de la química són necessaris perquè hi neixi vida (les ablacions de §4)?
 - Què cal perquè la complexitat continuï creixent?
