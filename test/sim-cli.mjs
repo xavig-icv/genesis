@@ -99,7 +99,8 @@ tests["--save-what event només desa la captura de l'establiment"] = () => {
     const r = sim('--world', '32x32', '--from', join(root, 'test', 'fixtures', 'punt-32x32.bin'), '--start', '0', '--epochs', '100',
       '--every', '5', '--census', '5', '--stop-after-event', '10', '--save', tmp, '--save-what', 'event');
     assert.strictEqual(r.status, 0, r.stderr);
-    assert.deepStrictEqual(readdirSync(tmp), ['llavor1-mon32x32-r2-des0-establiment5.bin']);
+    // l'establiment és a l'època 5 (el primer cens): és l'única captura de t i dels censos anteriors
+    assert.deepStrictEqual(readdirSync(tmp), ['llavor1-mon32x32-r2-des0-establiment5-epoca5.bin']);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }

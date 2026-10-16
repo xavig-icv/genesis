@@ -46,8 +46,19 @@ export function hasWindow(P, set) {
 // Prova la cel·la c. Opcions: width (0 = sopa barrejada), radius (radi d'interacció del món),
 // complete (si és false, para al primer èxit, com fa el registre de famílies per anar de pressa) i
 // heredity (fa també la prova de segona generació; sense, l'atzar que es consumeix és el de sempre).
-// Retorna { solo, context, heritable }: si s'ha replicat sol, si s'ha replicat en context i (només
-// amb heredity) si alguna de les seves còpies també s'ha replicat.
+// Retorna { solo, context, heritable, heritableSolo, heritableContext }: si s'ha replicat sol, si s'ha
+// replicat en context i (només amb heredity) si alguna de les seves còpies també s'ha replicat:
+// heritableSolo si l'herència s'ha demostrat sol, heritableContext si només s'ha demostrat en context
+// (si ja s'ha demostrat sol, no es prova en context).
+//
+// Amb heredity, els intents de cada paper continuen fins que l'herència queda demostrada, dins del
+// mateix pressupost d'intents: el primer fill pot ser una còpia parcial i el segon no (AU2-15 de
+// l'auditoria externa 3).
+//
+// Limitació coneguda (AUD-42 de l'auditoria 3): en context, el company va primer i també executa codi.
+// Envoltat de "lectors" (programes que copien el company dins seu), fins i tot un bloc de dades sense
+// cap instrucció surt hereditari en context. Per això es distingeix heritableSolo de heritableContext, i
+// el protocol estadístic té una anàlisi de sensibilitat només amb l'herència sola.
 export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete = true, heredity = false } = {}) {
   const n = soup.length / PROGRAM_SIZE;
   const height = width ? n / width : 0;
@@ -64,7 +75,7 @@ export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete 
   };
   const A = soup.slice(c * PROGRAM_SIZE, (c + 1) * PROGRAM_SIZE);
   const set = windowsOf(A);
-  const result = { solo: false, context: false, heritable: false };
+  const result = { solo: false, context: false, heritable: false, heritableSolo: false, heritableContext: false };
   if (!set.size) return result;
   const tape = new Uint8Array(TAPE_SIZE);
   // Executa la parella i retorna el company tal com ha quedat si porta alguna finestra de A (si no, null)
@@ -94,22 +105,25 @@ export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete 
     }
     return false;
   };
-  for (let t = 0; t < SOLO_TRIALS && !result.solo; t++) {
+  for (let t = 0; t < SOLO_TRIALS && (!result.solo || (heredity && !result.heritableSolo)); t++) {
     const child = run(A, noise(), PROGRAM_SIZE);
     if (child) {
       result.solo = true;
-      if (heredity) result.heritable = heritable(child, true);
+      if (heredity) result.heritableSolo = heritable(child, true);
     }
   }
+  result.heritable = result.heritableSolo;
   if (result.solo && !complete && (!heredity || result.heritable)) return result;
-  for (let t = 0; t < CONTEXT_TRIALS && !result.context; t++) {
+  const pending = () => heredity && !result.heritableSolo && !result.heritableContext;
+  for (let t = 0; t < CONTEXT_TRIALS && (!result.context || pending()); t++) {
     const B = contextPartner();
     const child = B && run(B, A, 0);
     if (child) {
       result.context = true;
-      if (heredity && !result.heritable) result.heritable = heritable(child, false);
+      if (pending()) result.heritableContext = heritable(child, false);
     }
   }
+  result.heritable = result.heritableSolo || result.heritableContext;
   return result;
 }
 

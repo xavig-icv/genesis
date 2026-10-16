@@ -36,8 +36,9 @@
 //   --save carpeta   desa la sopa en la transició i al final (.bin)
 //   --save-every N   i també cada N èpoques (només amb --save)
 //   --save-what all|event
-//                    amb --save: totes les captures (per defecte) o només la de l'establiment de la vida
-//                    (cens v3). Cada captura d'un món de 512x256 són 8 MB
+//                    amb --save: totes les captures (per defecte) o només les de l'establiment de la vida
+//                    (cens v3): el món dels censos de l'època t de l'establiment i dels dos anteriors,
+//                    amb el nom establimentT-epocaE. Cada captura d'un món de 512x256 són 8 MB
 //   --rng v1|v2      generador aleatori (per defecte v2, xoshiro128**). Per reproduir els experiments
 //                    fets abans de l'auditoria 1, que feien servir mulberry32, cal --rng v1.
 //   --help           mostra aquesta ajuda
@@ -198,8 +199,8 @@ const lawsTag = (mixing ? `-m${mixing}` : '') + (diffusion ? `-d${diffusion}` : 
 const branchTag = from ? `-des${start}` : '';
 const tag = world ? `mon${world[0]}x${world[1]}-r${radius}${lawsTag}${branchTag}-` : chunks ? `fils${chunks}-` : '';
 const saveWhat = args['save-what'] ?? 'all';
-const save = (name, kind = 'all') => saveDir && (saveWhat === 'all' || kind === saveWhat) &&
-  writeFileSync(join(saveDir, `llavor${seed}-${tag}${name}.bin`), soup);
+const save = (name, kind = 'all', data = soup) => saveDir && (saveWhat === 'all' || kind === saveWhat) &&
+  writeFileSync(join(saveDir, `llavor${seed}-${tag}${name}.bin`), data);
 
 const rng = makeRng(seed, rngVersion);
 let soup;
@@ -276,6 +277,10 @@ json({
 const t0 = Date.now();
 let ops = 0, runs = 0, transitionAt = -1, firstFamilyAt = -1, eventAt = -1, lastEpoch = start, stopReason = 'horitzó';
 const censuses = []; // { epoch, sample, heritable } de cada cens v3, per al criteri d'establiment
+// Quan es confirma l'establiment (al cens t + 1 interval), el món ja no és el de l'època t. Per desar el de
+// t i els dos anteriors (AU2-20 de l'auditoria externa 3; AUD-34: l'origen abans de la detecció), es
+// guarden còpies dels mons dels últims censos. Només si es desen captures.
+const censusWorlds = []; // [{ epoch, data }]
 for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
   lastEpoch = epoch;
   const r = world ? worldEpoch() : soupEpoch();
@@ -295,13 +300,18 @@ for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
     json(record);
     if (detectEvent) {
       censuses.push({ epoch, sample: record.sample, heritable: record.heritable });
+      if (saveDir && eventAt < 0) {
+        censusWorlds.push({ epoch, data: soup.slice() });
+        if (censusWorlds.length > 4) censusWorlds.shift();
+      }
       if (eventAt < 0) {
-        const t = establishment(censuses);
+        const t = establishment(censuses, censusEvery);
         if (t !== null) {
           eventAt = t;
           console.log(`*** ESTABLIMENT DE LA VIDA a l'època ${t} (confirmat al cens ${epoch}) ***`);
           json({ type: 'event', epoch: t, confirmed: epoch });
-          save(`establiment${t}`, 'event');
+          for (const w of censusWorlds) if (w.epoch <= t) save(`establiment${t}-epoca${w.epoch}`, 'event', w.data);
+          censusWorlds.length = 0;
         }
       }
       if (stopAfterEvent !== null && eventAt >= 0 && epoch >= eventAt + stopAfterEvent) { stopReason = 'establiment'; break; }

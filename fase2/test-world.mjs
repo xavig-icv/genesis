@@ -9,7 +9,8 @@ import { mkdtempSync, rmSync, writeFileSync, readFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
-import { createRng, shuffle, randomSoup } from '../fase1/soup.js';
+import { createRng, makeRng, shuffle, randomSoup } from '../fase1/soup.js';
+import { KIND } from '../fase1/bff.js';
 
 // El replicador real de la Fase 1 (llavor 1, programa núm. 7 a l'època 301).
 const REPLICATOR = Uint8Array.from([140,221,0,221,20,164,126,32,105,126,78,173,241,242,207,220,199,45,213,101,52,91,155,79,44,60,2,125,93,71,65,217,65,5,71,141,93,141,15,5,65,217,15,71,93,125,2,60,44,79,155,91,52,101,213,45,0,0,62,82,0,77,77,0]);
@@ -287,6 +288,30 @@ const tests = {
       assert.ok(heritable / tested > 0.7, `${name}: ${heritable} de ${tested} hereditaris`);
     }
   },
+  "AU2-15: l'herència es busca en tots els fills, no només en el primer (cel·la 660 de l'esclat)"() {
+    const soup = fixture('esclat-32x32.bin');
+    const r = replicationTest(soup, 660, makeRng(661, 'v2'), { width: 32, heredity: true });
+    assert.ok(r.context && r.heritable && r.heritableContext && !r.heritableSolo, JSON.stringify(r));
+  },
+  "AUD-42: envoltat de lectors, un bloc sense instruccions surt hereditari, però només en context"() {
+    // Limitació coneguda de la prova en context: el company (un lector) copia el bloc dins seu. Per això
+    // el cens separa heritableSolo de heritableContext i el protocol té la sensibilitat de l'herència sola.
+    const W = 32, n = W * W;
+    const rng = makeRng(77, 'v2');
+    const dataByte = () => { let v; do v = (rng() * 256) | 0; while (v === 0 || KIND[v]); return v; };
+    const soup = new Uint8Array(n * 64);
+    for (let c = 0; c < n; c++) {
+      for (let i = 0; i < 64; i++) soup[c * 64 + i] = dataByte();
+      if ((c % W) % 5 === 2 && ((c / W) | 0) % 5 === 2) continue; // bloc passiu
+      soup[c * 64 + 55] = 0;
+      for (let i = 0; i < 6; i++) soup[c * 64 + 56 + i] = '{[,>{]'.charCodeAt(i); // lector
+    }
+    const r = replicationTest(soup, 2 * W + 2, makeRng(1, 'v2'), { width: W, heredity: true });
+    assert.ok(r.heritableContext && !r.heritableSolo && !r.solo, JSON.stringify(r));
+    const census = createCensus({ width: W }).run(soup, n, 0);
+    assert.strictEqual(census.heritableSolo, 0);
+    assert.ok(census.heritableContext > 0.9 * census.sample, `només en context: ${census.heritableContext}`);
+  },
   'el copiador parcial es copia, però no és hereditari (AUD-33, AU2-02)'() {
     const W = 64, n = W * W;
     const soup = plantedWorld(n, PARTIAL, 0.2, 46);
@@ -346,12 +371,16 @@ const tests = {
   },
   "criteri d'establiment: l'1 % de la mostra en dos censos seguits"() {
     const c = (epoch, heritable, sample = 2048) => ({ epoch, sample, heritable });
-    assert.strictEqual(establishment([c(250, 0), c(500, 21), c(750, 30)]), 500);
-    assert.strictEqual(establishment([c(250, 25), c(500, 3), c(750, 21), c(1000, 21)]), 750);
-    assert.strictEqual(establishment([c(250, 20), c(500, 20)]), null, "20 de 2.048 no arriba a l'1 %");
-    assert.strictEqual(establishment([c(250, 0), c(500, 100)]), null, "un sol cens no n'hi ha prou");
-    assert.strictEqual(establishment([c(250, 10, 1000), c(500, 10, 1000)]), 250, "exactament l'1 % compta");
-    assert.strictEqual(establishment([]), null);
+    assert.strictEqual(establishment([c(250, 0), c(500, 21), c(750, 30)], 250), 500);
+    assert.strictEqual(establishment([c(250, 25), c(500, 3), c(750, 21), c(1000, 21)], 250), 750);
+    assert.strictEqual(establishment([c(250, 20), c(500, 20)], 250), null, "20 de 2.048 no arriba a l'1 %");
+    assert.strictEqual(establishment([c(250, 0), c(500, 100)], 250), null, "un sol cens no n'hi ha prou");
+    assert.strictEqual(establishment([c(250, 10, 1000), c(500, 10, 1000)], 250), 250, "exactament l'1 % compta");
+    assert.strictEqual(establishment([], 250), null);
+    // AU2-17: dos censos positius amb censos absents entremig no són "seguits"
+    assert.strictEqual(establishment([c(250, 21), c(1000, 21)], 250), null, 'hi falten els censos de 500 i 750');
+    assert.strictEqual(establishment([c(250, 21), c(1000, 21), c(1250, 21)], 250), 1000);
+    assert.throws(() => establishment([c(250, 21)]), /interval/);
   },
   'un món aleatori no té cap família'() {
     const n = 8192;

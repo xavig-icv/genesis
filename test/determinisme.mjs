@@ -84,7 +84,7 @@ const tests = {
   // dos retalls de 32x32 de mons amb vida (test/fixtures): l'esclat del replicador que necessita
   // parella i el palíndrom del punt. Els valors del cens v2 es van obtenir amb el codi d'abans de la
   // iteració 3 (commit 4bbee9a): el cens v2 els ha de reproduir exactament.
-  ...Object.fromEntries([['esclat', 'bbf02f058fe26cd3', 'a63675ce4b1a1a44', '9741e854'], ['punt', '0b74109de2367cb7', 'b14ddfa2751389fc', 'b01bd77a']]
+  ...Object.fromEntries([['esclat', 'bbf02f058fe26cd3', '0a30da1b21bb7f8b', '9741e854'], ['punt', '0b74109de2367cb7', 'a67305348633b1e0', 'b01bd77a']]
     .map(([name, v2, v3, world]) => [`cens v2 i v3 · retall «${name}» (el cens no toca el món)`, () => {
       const run = (version) => sim('--rng', 'v1', '--world', '32x32', '--from', join(root, 'test', 'fixtures', `${name}-32x32.bin`), '--start', '0',
         '--epochs', '30', '--every', '1000', '--census', '5', '--census-version', version);

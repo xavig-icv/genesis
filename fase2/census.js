@@ -24,12 +24,17 @@ export const EVENT_SHARE = 0.01;     // establiment: almenys l'1 % de la mostra 
 export const EVENT_CENSUSES = 2;     // ...en dos censos seguits
 
 // El criteri d'establiment sobre una llista de censos en ordre ({ epoch, sample, heritable }, com els
-// del JSONL). Retorna l'època del primer dels censos seguits que el compleixen, o null.
-export function establishment(censuses, share = EVENT_SHARE, count = EVENT_CENSUSES) {
+// del JSONL). Retorna l'època del primer dels censos seguits que el compleixen, o null. Dos censos
+// només són "seguits" si les seves èpoques es diferencien exactament en `every` (l'interval del cens):
+// si en falta algun entremig, la ratxa torna a començar (AU2-17 de l'auditoria externa 3).
+export function establishment(censuses, every, share = EVENT_SHARE, count = EVENT_CENSUSES) {
+  if (!(every > 0)) throw new Error("establishment necessita l'interval del cens");
   let run = 0;
   for (let i = 0; i < censuses.length; i++) {
     const c = censuses[i];
-    run = c.sample > 0 && c.heritable / c.sample >= share ? run + 1 : 0;
+    const ok = c.sample > 0 && c.heritable / c.sample >= share;
+    const follows = i > 0 && c.epoch - censuses[i - 1].epoch === every;
+    run = ok ? (follows ? run + 1 : 1) : 0;
     if (run >= count) return censuses[i - count + 1].epoch;
   }
   return null;
@@ -62,15 +67,17 @@ export function createCensus({ version = 'v3', width, radius = 2, sample = CENSU
     };
     if (version === 'v2') return record;
     const cells = pick(n, sample);
-    let replicating = 0, solo = 0, context = 0, heritable = 0;
+    let replicating = 0, solo = 0, context = 0, heritable = 0, heritableSolo = 0, heritableContext = 0;
     for (const c of cells) {
       const r = replicationTest(soup, c, rng, { width, radius, complete: true, heredity: true });
       if (r.solo || r.context) replicating++;
       if (r.solo) solo++;
       if (r.context) context++;
       if (r.heritable) heritable++;
+      if (r.heritableSolo) heritableSolo++;
+      if (r.heritableContext) heritableContext++;
     }
-    return { ...record, sample: cells.length, replicating, solo, context, heritable };
+    return { ...record, sample: cells.length, replicating, solo, context, heritable, heritableSolo, heritableContext };
   }
 
   // La línia del registre de text. La de la v2 és exactament la d'abans.
@@ -79,7 +86,7 @@ export function createCensus({ version = 'v3', width, radius = 2, sample = CENSU
     const tail = `famílies=${r.families.length}${fams ? `  ${fams}` : ''}${r.extinct.length ? `  extingides=${r.extinct.join(',')}` : ''}`;
     if (r.version === 'v2') return `cens ${r.epoch}  es repliquen=${(r.familySample * 100).toFixed(1)}%  ${tail}`;
     const pct = (x) => `${((x / r.sample) * 100).toFixed(1)}%`;
-    return `cens ${r.epoch}  mostra=${r.sample}  hereditaris=${pct(r.heritable)}  es repliquen=${pct(r.replicating)}` +
+    return `cens ${r.epoch}  mostra=${r.sample}  hereditaris=${pct(r.heritable)} (sols ${pct(r.heritableSolo)}, només en context ${pct(r.heritableContext)})  es repliquen=${pct(r.replicating)}` +
       ` (sols ${pct(r.solo)}, en context ${pct(r.context)})  ${tail}${r.untracked.length ? `  sense seguiment=${r.untracked.join(',')}` : ''}`;
   }
 
