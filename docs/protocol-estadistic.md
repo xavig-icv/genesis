@@ -1,7 +1,7 @@
 # Protocol estadístic · sèrie confirmatòria de la llei 2
 
-**Estat: esborrany v0.3 (16-10-2026).** Incorpora les correccions que van demanar tots dos auditors a
-l'auditoria 3, abans del *merge*. No s'ha llançat cap experiment d'aquesta sèrie. Quan el protocol
+**Estat: esborrany v0.4 (16-10-2026).** Incorpora les correccions que van demanar tots dos auditors a
+les auditories 3 i 4, abans del *merge*. No s'ha llançat cap experiment d'aquesta sèrie. Quan el protocol
 estigui aprovat, el commit del *merge* farà de preregistre: qualsevol canvi posterior s'haurà de
 justificar aquí mateix, amb data i motiu, abans de mirar els resultats. Els canvis respecte de les
 versions anteriors són a §13.
@@ -9,7 +9,8 @@ versions anteriors són a §13.
 Respon a:
 - AUD-06 (auditoria 1);
 - AUD-30 a AUD-34 (auditoria 2) i AU2-01 a AU2-09 (auditoria externa 2);
-- AUD-42 a AUD-45 (auditoria 3) i AU2-15 a AU2-22 (auditoria externa 3).
+- AUD-42 a AUD-45 (auditoria 3) i AU2-15 a AU2-22 (auditoria externa 3);
+- AUD-46 a AUD-49 (auditoria 4) i AU2-23 a AU2-28 (auditoria externa 4).
 
 La
 sèrie de 15 llavors (entrada 6 del quadern) va ser exploratòria: generador v1, llavors no
@@ -41,9 +42,10 @@ comparació.
 | Llavors | **Etapa 1:** A 1001–1050, B 2001–2050. **Etapa 2** (si cal, §8): A 1051–1080, B 2051–2080. Grups independents (§12) |
 | Horitzó | 16.000 èpoques |
 | Manifest | `fase2/serie-llei2.json`: les llavors de cada etapa, els paràmetres i els límits. L'anàlisi rebutja qualsevol fitxer que no hi encaixi (§9) |
-| Codi | El commit del preregistre, sense `+canvis` als registres. A la VM s'executa des de la carpeta d'aquell commit (`bash desplega-vm.sh`, `~/claude-origins-<commit>`), i al PC, des d'un `git worktree` del mateix commit |
+| Codi | El commit del *merge*, amb l'etiqueta de git **`preregistre-llei2`** (AUD-46, AU2-23). És una etiqueta anotada, amb l'empremta SHA-256 del manifest, del protocol i de `fase2/estadistica.mjs`, i es publica a GitHub abans de llançar res. A la VM s'executa des de la carpeta d'aquell commit (`bash desplega-vm.sh` des d'una còpia de l'etiqueta, `~/claude-origins-<commit>`), i al PC, des d'un `git worktree` de l'etiqueta. Els registres no poden dir `+canvis`. `--etapa` comprova que el commit de cada experiment sigui el de l'etiqueta |
+| Carpetes | `serie-llei2/A/` i `serie-llei2/B/`, una per condició (AUD-49). Per a cada llavor S: `S.jsonl`, `S.log` i `captures/` dins de la carpeta del grup. En acabar, es copien a `fase2/resultats/serie-llei2/A` i `.../B` (els JSONL i els registres a git; les captures, fora de git) |
 | Entorn | Node 20.19.2 (VM, zlib 1.3.1) o Node 16.15.1 (PC, zlib 1.2.11). Donen resultats idèntics: `npm test` hi passa sencer, amb les mateixes empremtes i el mateix cens. La versió consta a cada registre |
-| Ordre | `node sim.mjs --world 512x256 --seed S --mixing M --epochs 16000 --every 100 --census 250 --census-version v3 --stop-after-event 1000 --rng v2 --json S.jsonl --save captures --save-what event` |
+| Ordre | `node sim.mjs --world 512x256 --seed S --mixing M --epochs 16000 --every 100 --census 250 --census-version v3 --stop-after-event 1000 --rng v2 --json serie-llei2/G/S.jsonl --save serie-llei2/G/captures --save-what event > serie-llei2/G/S.log` (G = A o B) |
 | Dades | Un registre de text i un JSONL per experiment. El JSONL té una línia per cens i per mesura, amb tots els valors sense arrodonir, el commit i les versions. Amb `--save-what event`, quan hi ha establiment, es desen els mons dels censos de *t*, *t* − 250 i *t* − 500 (24 MB). Serviran de banc de mons amb vida (AUD-41) i per estudiar l'origen abans de la detecció (§6.7) |
 
 ## 4. Mesura principal: el moment de l'establiment
@@ -147,9 +149,16 @@ Totes surten dels mateixos JSONL. No canvien la conclusió principal:
 5. L'HOE > 1, com a l'exploració.
 6. La proporcionalitat de riscos, de manera descriptiva (log(−log *S*)).
 
-**Regla d'interpretació (AUD-42).** Si el resultat principal no es manté amb la sensibilitat 3, és a dir,
-si depèn dels hereditaris només en context, es dirà així explícitament. En aquest cas no es donarà per
-confirmat sense una anàlisi del tipus de replicador.
+**Regla d'interpretació (AUD-42, precisada per AU2-28).**
+- **L'única decisió confirmatòria és la prova principal** (el log-rank amb els límits de §8). La
+  sensibilitat 3 no és una segona porta de significació: no converteix un resultat en confirmat ni en no
+  confirmat.
+- **El que canvia és com es formula la conclusió.** Si el resultat principal és positiu però no es manté
+  amb la sensibilitat 3, és a dir, si depèn dels hereditaris només en context, es dirà explícitament: "el
+  corrent canvia el ritme d'establiment operacional segons el cens v3, i la diferència depèn de
+  l'herència demostrada en context".
+- **Qualsevol afirmació mecanística** sobre el tipus de replicador serà exploratòria i, per fer-la
+  confirmatòria, caldrà un preregistre nou.
 
 ## 8. Mida de la mostra: dues etapes
 
@@ -180,6 +189,10 @@ límits d'O'Brien–Fleming (despesa de Lan–DeMets), amb una fracció d'inform
 - **Els límits es fixen ara,** amb la fracció de llavors 50/80, i no es recalculen amb els esdeveniments
   observats. Els dos auditors hi estan d'acord. L'auditor 1 va comprovar per simulació que recalcular-los
   dona el mateix error de tipus I (4,8–5,3 %) i la mateixa potència.
+- **La sortida de `--etapa 1`** (la decisió, el commit i l'empremta dels fitxers) es desa a git amb un
+  commit abans de llançar res de l'etapa 2, perquè la decisió quedi datada (AUD-47).
+- **`--etapa 2` recalcula Z sobre les llavors de l'etapa 1** i es nega a decidir si ja rebutjaven H0
+  (AUD-47, AU2-26).
 
 **Simulació del procediment sencer (AU2-21).** S'ha fet amb el mateix codi de l'anàlisi
 (`node fase2/estadistica.mjs --potencia 20000`): temps de Weibull, arrodonits al cens i censurats a la
@@ -210,6 +223,10 @@ La sortida completa és a `fase2/resultats/calibratge/potencia-dues-etapes-20000
   de mitjana. Coincideix amb la simulació de l'auditor 1 (79,6 %).
 - **Amb riscos no proporcionals,** la potència depèn de la forma de la diferència: és més alta si el
   corrent fa que la vida s'estableixi abans (88 %), i més baixa si l'endarrereix (67 %).
+- **Les tres formes sota H0 no són tres proves de robustesa (AUD-48).** Amb la mateixa llavor, fan
+  servir els mateixos nombres aleatoris transformats de manera monòtona. A més, sota H0 el log-rank només
+  depèn de l'ordre dels temps. Per això les tres files només es diferencien pels empats de l'arrodoniment
+  al cens. La robustesa que importa és la de les dues files H1 amb riscos no proporcionals.
 
 ## 9. Anàlisi
 
@@ -220,12 +237,19 @@ La sortida completa és a `fase2/resultats/calibratge/potencia-dues-etapes-20000
   - casos límit del JSONL;
   - el validador.
 - **Ordre:** `node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B`.
-- **Validació (AU2-16, AUD-44).** Abans de calcular res, el programa comprova:
+- **Validació (AU2-16, AUD-44; ampliada per AU2-23 a AU2-27).** Abans de calcular res, el programa
+  comprova:
   - que hi hagi exactament les llavors del manifest per a l'etapa, sense repetides ni absents;
   - que cada fitxer tingui els paràmetres del protocol i del seu grup;
-  - que tots siguin del mateix commit, sense `+canvis`;
-  - que els censos siguin seguits des del primer;
-  - que l'establiment i el final siguin coherents amb el criteri i amb la regla d'aturada.
+  - que tots siguin **del commit de l'etiqueta `preregistre-llei2`** (o del que es passi amb `--commit`),
+    sense `+canvis`;
+  - que hi hagi **tots** els censos, de la 250 fins al final, seguits i sense forats;
+  - que la mostra de cada cens sigui la del protocol (2.048);
+  - que els recomptes siguin enters, dins de la mostra i coherents entre ells: hereditaris = sols + només
+    en context, i hereditaris ≤ es copien;
+  - que hi hagi **totes** les mesures, cada 100 èpoques;
+  - que l'establiment, l'època final i el motiu del final siguin els que diuen el criteri i la regla
+    d'aturada.
 
   Si hi ha qualsevol anomalia, no decideix. A més, escriu l'empremta SHA-256 dels fitxers i el commit, i
   les interaccions per època de cada condició (AU2-09).
@@ -251,6 +275,19 @@ La sortida completa és a `fase2/resultats/calibratge/potencia-dues-etapes-20000
   No es parlarà de "l'espai sol" ni de l'aparició dels primers replicadors com a resultat confirmatori.
 
 ## 11. Cost i execució
+
+**Procediment de llançament** (auditoria 4, §6):
+1. *Merge* de la branca. Es crea l'etiqueta anotada `preregistre-llei2` sobre el commit del *merge* i es
+   publica a GitHub.
+2. Es desplega el commit de l'etiqueta a la VM i es crea un `git worktree` al PC. La primera línia de
+   cada registre ha de dir `codi=<commit>`, sense `+canvis`.
+3. S'executen les 100 llavors de l'etapa 1, a les carpetes de §3.
+4. **No es miren resultats parcials.** Fins que no acabin els 100 experiments, no se'n fa cap resum ni
+   gràfic, encara que els registres de text es puguin llegir.
+5. Si un experiment falla per un error tècnic, es torna a executar amb la mateixa llavor i s'anota.
+6. Amb els 100 acabats: `node fase2/estadistica.mjs --etapa 1 serie-llei2/A serie-llei2/B`. La sortida es
+   desa a git.
+7. Si cal l'etapa 2, s'executen les 60 llavors restants des del mateix commit i es fa `--etapa 2`.
 
 - **Sense vida,** un experiment dura uns 70 minuts a la VM (amb 3 alhora).
 - **Amb vida,** s'atura 1.000 èpoques després de l'establiment.
@@ -301,6 +338,10 @@ La sortida completa és a `fase2/resultats/calibratge/potencia-dues-etapes-20000
 | **v0.3:** simulació del procediment de dues etapes sencer | AU2-21 |
 | **v0.3:** captures de *t*, *t* − 250 i *t* − 500; l'origen abans de la detecció | AU2-20, auditoria 3 §5 |
 | **v0.3:** censura de les sensibilitats per l'aturada; sensibilitat diferencial com a hipòtesi; el constructe operatiu | AUD-43, AUD-45, AU2-22 |
+| **v0.4:** l'etiqueta `preregistre-llei2` i la comprovació del commit a `--etapa` | AUD-46, AU2-23 |
+| **v0.4:** censos i mesures complets, mostra de 2.048 i recomptes enters i coherents al validador; el motiu del final | AU2-24, AU2-25, AU2-27 |
+| **v0.4:** `--etapa 2` comprova l'etapa 1; la decisió de l'etapa 1 es desa a git | AUD-47, AU2-26 |
+| **v0.4:** les formes sota H0; les carpetes de la sèrie; la regla d'interpretació precisada; el procediment de llançament | AUD-48, AUD-49, AU2-28 |
 
 ## 14. Preguntes respostes a l'auditoria 3
 
