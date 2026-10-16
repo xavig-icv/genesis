@@ -133,9 +133,11 @@ const MANIFEST = {
     census: { version: 'v3', every: 250, sample: 64, seed: 7 }, event: { share: 0.01, censuses: 2, stopAfter: 500 } },
   stages: { 1: { perGroup: 3, bound: 2.479178635 }, 2: { perGroup: 5, bound: 2.004268879 } },
 };
-const COMMIT = 'abc1234';
+// El commit de referència, sencer (40 caràcters), i el codi curt que escriu sim.mjs
+const COMMIT = 'abc1234' + '0123456789abcdef0123456789abcdef0'.slice(0, 33);
+const CODE = COMMIT.slice(0, 7);
 // Un experiment sintètic amb el format de sim.mjs: inici, mesures cada 100, censos cada 250, establiment i final
-function experiment({ seed, mixing, eventAt = null, code = COMMIT }) {
+function experiment({ seed, mixing, eventAt = null, code = CODE }) {
   const { epochs } = MANIFEST.params, every = 250, stopAfter = 500;
   const end = eventAt === null ? epochs : Math.min(epochs, eventAt + stopAfter);
   const records = [{ type: 'start', code, seed, mixing, ...MANIFEST.params }];
@@ -171,10 +173,12 @@ tests['validador: una sèrie correcta passa, i la decisió fa servir el límit d
   const [a, b] = writeSeries(tmp);
   const v = validateSeries(a, b, MANIFEST, '1', { commit: COMMIT });
   assert.deepStrictEqual(v.errors, []);
-  assert.strictEqual(v.code, COMMIT);
+  assert.strictEqual(v.code, CODE);
   assert.strictEqual(v.A.length + v.B.length, 6);
-  // el commit del preregistre també es pot donar sencer
-  assert.deepStrictEqual(validateSeries(a, b, MANIFEST, '1', { commit: COMMIT + '5678def' }).errors, []);
+  // el commit de referència ha de ser sencer: un prefix, ni que sigui el correcte, no serveix (AUD-50, AU2-29)
+  for (const short of [CODE, 'a', 'f']) {
+    assert.ok(validateSeries(a, b, MANIFEST, '1', { commit: short }).errors.some((e) => /hash complet/.test(e)), short);
+  }
 });
 
 const brokenCases = {
@@ -200,6 +204,10 @@ const brokenCases = {
   'cap mesura (AU2-27)': [(g, seed, r) => { if (seed === 1) for (let i = r.length - 1; i >= 0; i--) if (r[i].type === 'measure') r.splice(i, 1); }, /té 0 mesures/],
   'una mesura de l\'interior que falta (AU2-27)': [(g, seed, r) => { if (seed === 3) r.splice(r.findIndex((x) => x.type === 'measure' && x.epoch === 500), 1); }, /té 9 mesures/],
   'un motiu final que no és el de l\'establiment (AU2-27)': [(g, seed, r) => { if (seed === 11) r[r.length - 1].reason = 'horitzó'; }, /motiu del final/],
+  // auditoria externa 5 (AU2-30)
+  "la línia d'establiment fora del seu lloc (AU2-30)": [(g, seed, r) => { if (seed === 11) { const i = r.findIndex((x) => x.type === 'event'); r.splice(r.length - 1, 0, ...r.splice(i, 1)); } }, /ordre en què les escriu/],
+  "una línia d'un tipus desconegut (AU2-30)": [(g, seed, r) => { if (seed === 1) r.splice(3, 0, { type: 'injected', epoch: 300 }); }, /tipus desconegut: injected/],
+  'una mesura abans del seu cens (AU2-30)': [(g, seed, r) => { if (seed === 3) { const i = r.findIndex((x) => x.type === 'census' && x.epoch === 500); const j = r.findIndex((x) => x.type === 'measure' && x.epoch === 500); [r[i], r[j]] = [r[j], r[i]]; } }, /ordre en què les escriu/],
 };
 for (const [name, [edit, pattern]] of Object.entries(brokenCases)) {
   tests[`validador: rebutja ${name}`] = () => withTmp((tmp) => {
@@ -233,21 +241,39 @@ tests["l'etapa 2 es nega a decidir si l'etapa 1 ja rebutjava H0 (AUD-47, AU2-26)
   const { z1, rejected1 } = stageOneCheck(v.A, v.B, strong);
   assert.ok(rejected1, `Z1 = ${z1}`);
   writeFileSync(join(tmp, 'manifest.json'), JSON.stringify(strong));
-  const r = spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '2', '--commit', COMMIT, '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '2', '--prova', '--commit', COMMIT, '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
   assert.strictEqual(r.status, 1, r.stdout + r.stderr);
   assert.match(r.stdout, /L'etapa 1 ja rebutjava H0/);
   assert.doesNotMatch(r.stdout, /DECISIÓ/);
 });
-tests['--etapa decideix amb el commit correcte i no amb un altre (AU2-23)'] = () => withTmp((tmp) => {
+tests['--etapa --prova decideix amb el commit correcte, i ho marca com a prova; no amb un altre ni amb un prefix (AU2-23, AU2-29)'] = () => withTmp((tmp) => {
   const [a, b] = writeSeries(tmp);
   writeFileSync(join(tmp, 'manifest.json'), JSON.stringify(MANIFEST));
-  const run = (commit) => spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '1', '--commit', commit, '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
-  const good = run(COMMIT);
+  const run = (...extra) => spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '1', ...extra, a, b], { encoding: 'utf8' });
+  const good = run('--prova', '--commit', COMMIT, '--manifest', join(tmp, 'manifest.json'));
   assert.strictEqual(good.status, 0, good.stdout + good.stderr);
-  assert.match(good.stdout, /DECISIÓ: /);
-  const bad = run('1234567');
-  assert.strictEqual(bad.status, 1);
-  assert.doesNotMatch(bad.stdout, /DECISIÓ/);
+  assert.match(good.stdout, /DECISIÓ DE PROVA \(no confirmatòria\): /);
+  assert.match(good.stdout, /PROVA, NO CONFIRMATÒRIA/);
+  for (const commit of ['1234567890abcdef1234567890abcdef12345678', 'f', CODE]) {
+    const bad = run('--prova', '--commit', commit, '--manifest', join(tmp, 'manifest.json'));
+    assert.strictEqual(bad.status, 1, commit);
+    assert.doesNotMatch(bad.stdout, /DECISIÓ/, commit);
+  }
+});
+tests["la decisió confirmatòria no admet --commit ni --manifest, i sense l'etiqueta no decideix (AUD-50, AU2-29)"] = () => withTmp((tmp) => {
+  const [a, b] = writeSeries(tmp);
+  writeFileSync(join(tmp, 'manifest.json'), JSON.stringify(MANIFEST));
+  const run = (...extra) => spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '1', ...extra, a, b], { encoding: 'utf8' });
+  for (const extra of [['--commit', COMMIT], ['--manifest', join(tmp, 'manifest.json')], ['--commit', COMMIT, '--manifest', join(tmp, 'manifest.json')]]) {
+    const r = run(...extra);
+    assert.strictEqual(r.status, 1, extra.join(' '));
+    assert.match(r.stdout, /només es poden fer servir amb --prova/);
+  }
+  // Sense res: o no hi ha l'etiqueta, o la còpia de treball no hi és, o (si hi és) la sèrie sintètica no
+  // és la del manifest preregistrat. En cap cas no hi pot haver decisió.
+  const plain = run();
+  assert.strictEqual(plain.status, 1, plain.stdout);
+  assert.doesNotMatch(plain.stdout, /DECISIÓ/);
 });
 tests['el validador accepta els JSONL reals de sim.mjs, amb establiment i sense'] = () => withTmp((tmp) => {
   // AU2, audit4 §6: una execució real del simulador, no només dades sintètiques
@@ -267,7 +293,8 @@ tests['el validador accepta els JSONL reals de sim.mjs, amb establiment i sense'
     const x = readExperiment(file);
     const manifest = { groups: { [c.group]: { mixing: c.mixing } }, params: c.params };
     // el codi pot portar +canvis si l'arbre de treball no està net: llavors només hi ha d'haver aquest error
-    const errors = validateExperiment(x, manifest, c.group, { commit: x.code.replace('+canvis', '') });
+    const head = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).stdout.trim();
+    const errors = validateExperiment(x, manifest, c.group, { commit: head });
     const rest = errors.filter((e) => !/commit net/.test(e));
     assert.deepStrictEqual(rest, [], `${c.group}: ${errors.join(' | ')}`);
     if (c.group === 'B') assert.ok(x.event && x.time === 5, 'el retall del punt té establiment al primer cens');
@@ -283,7 +310,7 @@ tests['decisió de cada etapa, amb els límits preregistrats'] = () => {
 tests['--etapa no decideix si la sèrie no és la preregistrada'] = () => withTmp((tmp) => {
   const [a, b] = writeSeries(tmp, (g, seed, r) => { if (seed === 2) r[0].mixing = 0.9; });
   writeFileSync(join(tmp, 'manifest.json'), JSON.stringify(MANIFEST));
-  const r = spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '1', '--commit', COMMIT, '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '1', '--prova', '--commit', COMMIT, '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
   assert.strictEqual(r.status, 1, r.stdout + r.stderr);
   assert.match(r.stdout, /NO és la preregistrada/);
   assert.doesNotMatch(r.stdout, /DECISIÓ/);

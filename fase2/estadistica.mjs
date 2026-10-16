@@ -1,12 +1,16 @@
 // Anàlisi estadística de les sèries d'experiments (protocol estadístic, docs/protocol-estadistic.md).
 //
 // Ús:
-//   node fase2/estadistica.mjs --etapa 1|2 [--commit HASH] [--manifest fase2/serie-llei2.json] carpeta-A carpeta-B
-//        la sèrie confirmatòria: valida que els fitxers siguin exactament els preregistrats al manifest
-//        (llavors, paràmetres, el commit del preregistre, censos i mesures complets, final coherent) i,
-//        si ho són, aplica la decisió de l'etapa amb el límit preregistrat. El commit del preregistre és
-//        el de l'etiqueta de git preregistre-llei2, o el que es passi amb --commit. Si hi ha qualsevol
+//   node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B
+//        la decisió confirmatòria. Només es pot prendre des d'una còpia neta del commit de l'etiqueta de
+//        git preregistre-llei2: el commit de referència és el de l'etiqueta, i el manifest es llegeix
+//        d'aquest commit (AUD-50, AU2-29). Valida que els fitxers siguin exactament els preregistrats
+//        (llavors, paràmetres, commit, censos i mesures complets, ordre de les línies, final coherent)
+//        i, si ho són, aplica la decisió de l'etapa amb el límit preregistrat. Si hi ha qualsevol
 //        anomalia, no decideix (codi de sortida 1). L'etapa 2 comprova, a més, que l'etapa 1 no rebutjava H0
+//   node fase2/estadistica.mjs --etapa 1|2 --prova --commit HASH --manifest fitxer carpeta-A carpeta-B
+//        el mateix, per provar el programa amb altres dades: NO és una decisió confirmatòria, i ho diu.
+//        El commit ha de ser un hash complet de 40 caràcters
 //   node fase2/estadistica.mjs carpeta-A carpeta-B     informe descriptiu, sense validació ni decisió
 //   node fase2/estadistica.mjs --potencia [rèpliques]  potència i error de tipus I del procediment de
 //        dues etapes sencer, per simulació
@@ -244,6 +248,18 @@ export function validateExperiment(x, manifest, group, { commit = null } = {}) {
   const types = x.records.map((r) => r.type);
   if (types[0] !== 'start' || types.filter((t) => t === 'start').length !== 1) err("hi ha d'haver una sola línia d'inici, la primera");
   if (types[types.length - 1] !== 'end' || types.filter((t) => t === 'end').length !== 1) err("hi ha d'haver una sola línia final, l'última");
+  // només els cinc tipus de línia de sim.mjs, en l'ordre en què els escriu: les èpoques no baixen, i dins
+  // d'una mateixa època, el cens, l'establiment (a l'època en què es confirma) i la mesura (AU2-30)
+  const unknown = [...new Set(types.filter((t) => !['start', 'census', 'measure', 'event', 'end'].includes(t)))];
+  if (unknown.length) err(`té línies d'un tipus desconegut: ${unknown.join(', ')}`);
+  const RANK = { census: 0, event: 1, measure: 2 };
+  let previous = null;
+  for (const r of x.records) {
+    if (!(r.type in RANK)) continue;
+    const key = [r.type === 'event' ? r.confirmed : r.epoch, RANK[r.type]];
+    if (previous && (key[0] < previous[0] || (key[0] === previous[0] && key[1] < previous[1]))) { err("les línies no van en l'ordre en què les escriu sim.mjs"); break; }
+    previous = key;
+  }
   const start = x.records.find((r) => r.type === 'start') ?? {};
   const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   for (const [key, value] of Object.entries(manifest.params)) {
@@ -252,7 +268,8 @@ export function validateExperiment(x, manifest, group, { commit = null } = {}) {
   if (start.mixing !== manifest.groups[group].mixing) err(`mixing ${start.mixing} no és el del grup ${group} (${manifest.groups[group].mixing})`);
   if (typeof start.code !== 'string' || !/^[0-9a-f]{7,}$/.test(start.code)) err(`el codi "${start.code}" no és un commit net`);
   else if (!commit) err("no s'ha indicat el commit del preregistre");
-  else if (!(commit.startsWith(start.code) || start.code.startsWith(commit))) err(`el codi ${start.code} no és el commit del preregistre (${commit})`);
+  else if (!/^[0-9a-f]{40}$/.test(commit)) err(`el commit de referència "${commit}" no és un hash complet de 40 caràcters`);
+  else if (!commit.startsWith(start.code)) err(`el codi ${start.code} no és el commit del preregistre (${commit})`);
   // censos: v3, seguits des del primer (every, 2·every…), fins al final
   const every = manifest.params.census.every;
   const censuses = x.records.filter((r) => r.type === 'census');
@@ -345,15 +362,22 @@ export function stageOneCheck(A, B, manifest) {
   return { z1, rejected1: Math.abs(z1) > manifest.stages[1].bound };
 }
 
-// El commit del preregistre: el que es passa amb --commit o el de l'etiqueta de git preregistre-llei2
-export function preregisteredCommit(explicit = null) {
-  if (explicit) return { commit: explicit, source: 'argument --commit' };
+// El preregistre (AUD-46, AUD-50, AU2-23, AU2-29): el commit de l'etiqueta de git preregistre-llei2 i el
+// manifest d'aquest commit. A més, el programa que decideix ha de ser el d'aquest commit: la còpia de
+// treball ha de ser-hi, sense canvis al codi ni al manifest. Retorna { commit, manifest, problem }
+export function preregistration() {
+  const root = fileURLToPath(new URL('..', import.meta.url));
+  const git = (...a) => execFileSync('git', a, { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString();
+  let commit;
+  try { commit = git('rev-parse', 'preregistre-llei2^{commit}').trim(); }
+  catch { return { problem: "no hi ha l'etiqueta de git preregistre-llei2" }; }
   try {
-    const root = fileURLToPath(new URL('..', import.meta.url));
-    const commit = execFileSync('git', ['rev-parse', 'preregistre-llei2^{commit}'], { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
-    return { commit, source: 'etiqueta de git preregistre-llei2' };
-  } catch {
-    return { commit: null, source: null };
+    const head = git('rev-parse', 'HEAD').trim();
+    if (head !== commit) return { problem: `la còpia de treball és al commit ${head}, no al del preregistre (${commit})` };
+    if (git('status', '--porcelain', '--', '*.js', '*.mjs', '*.json').trim()) return { problem: 'la còpia de treball té canvis al codi o al manifest' };
+    return { commit, manifest: JSON.parse(git('show', `${commit}:fase2/serie-llei2.json`)) };
+  } catch (e) {
+    return { problem: `no es pot llegir el preregistre amb git (${e.message})` };
   }
 }
 
@@ -502,7 +526,8 @@ const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.arg
 if (isMain) {
   const args = process.argv.slice(2);
   const usage = () => {
-    console.error('Ús: node fase2/estadistica.mjs --etapa 1|2 [--manifest fitxer] carpeta-A carpeta-B\n' +
+    console.error('Ús: node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B\n' +
+      '     node fase2/estadistica.mjs --etapa 1|2 --prova --commit HASH --manifest fitxer carpeta-A carpeta-B\n' +
       '     node fase2/estadistica.mjs carpeta-A carpeta-B\n     node fase2/estadistica.mjs --potencia [rèpliques]');
     process.exit(2);
   };
@@ -517,18 +542,35 @@ if (isMain) {
     }
   } else if (args[0] === '--etapa') {
     const stage = args[1];
-    let rest = args.slice(2), manifestFile = fileURLToPath(new URL('serie-llei2.json', import.meta.url)), explicitCommit = null;
+    let rest = args.slice(2), manifestFile = null, explicitCommit = null, test = false;
     for (;;) {
       if (rest[0] === '--manifest') { manifestFile = rest[1]; rest = rest.slice(2); }
       else if (rest[0] === '--commit') { explicitCommit = rest[1]; rest = rest.slice(2); }
+      else if (rest[0] === '--prova') { test = true; rest = rest.slice(1); }
       else break;
     }
     if (!['1', '2'].includes(stage) || rest.length !== 2) usage();
-    const manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
-    const { commit, source } = preregisteredCommit(explicitCommit);
-    if (!commit) {
-      console.log("No es pot decidir sense el commit del preregistre: no hi ha l'etiqueta de git preregistre-llei2, i no s'ha passat --commit.");
+    if (!test && (manifestFile || explicitCommit)) {
+      console.log("--commit i --manifest només es poden fer servir amb --prova: la decisió confirmatòria es pren amb l'etiqueta del preregistre.");
       process.exit(1);
+    }
+    if (test && (!manifestFile || !/^[0-9a-f]{40}$/.test(explicitCommit ?? ''))) {
+      console.log('--prova necessita --manifest i --commit amb un hash complet de 40 caràcters.');
+      process.exit(1);
+    }
+    let commit, manifest, source;
+    if (test) {
+      ({ commit } = { commit: explicitCommit });
+      manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
+      source = `PROVA, NO CONFIRMATÒRIA: --commit i --manifest ${manifestFile}`;
+    } else {
+      const pre = preregistration();
+      if (pre.problem) {
+        console.log(`No es pot prendre la decisió confirmatòria: ${pre.problem}.`);
+        process.exit(1);
+      }
+      ({ commit, manifest } = pre);
+      source = "etiqueta de git preregistre-llei2; manifest i programa d'aquest commit";
     }
     const { A, B, errors, code } = validateSeries(rest[0], rest[1], manifest, stage, { commit });
     if (errors.length) {
@@ -546,13 +588,14 @@ if (isMain) {
       }
     }
     console.log(`Commit del preregistre: ${commit} (${source})`);
+    const label = test ? 'DECISIÓ DE PROVA (no confirmatòria)' : 'DECISIÓ';
     const lr = logrank(A, B);
     const { bound, decision } = decide(stage, lr.z, manifest);
     const all = createHash('sha256').update([...A, ...B].map((x) => x.hash).join('\n')).digest('hex');
-    console.log(`Sèrie validada: etapa ${stage}, ${A.length} + ${B.length} experiments, commit ${code}, manifest ${manifestFile}`);
+    console.log(`Sèrie validada: etapa ${stage}, ${A.length} + ${B.length} experiments, commit ${code}`);
     console.log(`Empremta dels fitxers (SHA-256): ${all}`);
     console.log(`Log-rank: Z = ${lr.z.toFixed(4)}; límit de l'etapa ${stage}: |Z| > ${bound}`);
-    console.log(`DECISIÓ: ${decision}`);
+    console.log(`${label}: ${decision}`);
     if (Math.abs(lr.z) > bound && stage === '1') console.log("(Amb aturada a l'etapa 1, la mida de l'efecte és descriptiva: en un disseny seqüencial tendeix a sobreestimar-se.)");
     console.log('');
     console.log(report(A, B, { labelA: manifest.groups.A.label, labelB: manifest.groups.B.label }));
