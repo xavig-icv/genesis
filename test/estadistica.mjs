@@ -293,7 +293,11 @@ tests['el validador accepta els JSONL reals de sim.mjs, amb establiment i sense'
     const x = readExperiment(file);
     const manifest = { groups: { [c.group]: { mixing: c.mixing } }, params: c.params };
     // el codi pot portar +canvis si l'arbre de treball no està net: llavors només hi ha d'haver aquest error
-    const head = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).stdout.trim();
+    // El commit es prova a part. Aquí, la referència és el commit sencer si hi ha git, o, sense git (a la VM,
+    // on el codi ve de VERSIO), un hash de 40 caràcters que comença pel codi del fitxer
+    const git = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' });
+    const code = x.code.replace('+canvis', '');
+    const head = git.status === 0 ? git.stdout.trim() : code.padEnd(40, '0');
     const errors = validateExperiment(x, manifest, c.group, { commit: head });
     const rest = errors.filter((e) => !/commit net/.test(e));
     assert.deepStrictEqual(rest, [], `${c.group}: ${errors.join(' | ')}`);
