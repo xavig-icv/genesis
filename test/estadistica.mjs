@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 import {
   fisher, wilson, logrank, kaplanMeier, survivalAt, incidenceDifference, rmst, twoStageBounds, power,
   readExperiment, readLegacyLog, normalCdf, firstRun, SENSITIVITY, withCriterion, originMeasures,
-  validateSeries, decide, simulateTwoStage,
+  validateSeries, validateExperiment, decide, simulateTwoStage, stageOneCheck,
 } from '../fase2/estadistica.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -129,42 +129,52 @@ tests['sensibilitats i mesures d\'origen sobre censos sintètics'] = () => {
 // Una sèrie sintètica petita amb el mateix format que la de sim.mjs, per provar el validador
 const MANIFEST = {
   groups: { A: { label: 'A', mixing: 0, seeds: { 1: [1, 3], 2: [4, 5] } }, B: { label: 'B', mixing: 0.01, seeds: { 1: [11, 13], 2: [14, 15] } } },
-  params: { world: [8, 8], radius: 2, mutation: 0.00024, rng: 'v2', epochs: 1000, start: 0,
+  params: { programs: 64, world: [8, 8], radius: 2, mutation: 0.00024, rng: 'v2', epochs: 1000, every: 100, start: 0,
     census: { version: 'v3', every: 250, sample: 64, seed: 7 }, event: { share: 0.01, censuses: 2, stopAfter: 500 } },
   stages: { 1: { perGroup: 3, bound: 2.479178635 }, 2: { perGroup: 5, bound: 2.004268879 } },
 };
-function experiment({ seed, mixing, eventAt = null, code = 'abc1234' }) {
+const COMMIT = 'abc1234';
+// Un experiment sintètic amb el format de sim.mjs: inici, mesures cada 100, censos cada 250, establiment i final
+function experiment({ seed, mixing, eventAt = null, code = COMMIT }) {
   const { epochs } = MANIFEST.params, every = 250, stopAfter = 500;
   const end = eventAt === null ? epochs : Math.min(epochs, eventAt + stopAfter);
   const records = [{ type: 'start', code, seed, mixing, ...MANIFEST.params }];
-  for (let e = every; e <= end; e += every) {
-    const h = eventAt !== null && e >= eventAt ? 10 : 0;
-    records.push({ type: 'census', version: 'v3', epoch: e, sample: 64, heritable: h, heritableSolo: h, heritableContext: 0, replicating: h, solo: h, families: [] });
-    if (eventAt !== null && e === eventAt + every) records.push({ type: 'event', epoch: eventAt, confirmed: e });
+  for (let e = 1; e <= end; e++) {
+    if (e % every === 0) {
+      const h = eventAt !== null && e >= eventAt ? 10 : 0;
+      records.push({ type: 'census', version: 'v3', epoch: e, sample: 64, replicating: h + 1, solo: h + 1, context: 0,
+        heritable: h, heritableSolo: h, heritableContext: 0, families: [] });
+      if (eventAt !== null && e === eventAt + every) records.push({ type: 'event', epoch: eventAt, confirmed: e });
+    }
+    if (e % 100 === 0) records.push({ type: 'measure', epoch: e, h0: 7.9, hoe: 0.2, ops: 1000, runs: 2400, epochs: 100, seconds: 1 });
   }
   records.push({ type: 'end', epoch: end, reason: eventAt !== null && eventAt + stopAfter <= epochs ? 'establiment' : 'horitzó' });
   return records;
 }
-function writeSeries(dir, edit = () => {}) {
-  const groups = { A: [[1, null], [2, 500], [3, null]], B: [[11, 250], [12, 250], [13, 750]] };
+const save = (file, records) => writeFileSync(file, records.map((r) => JSON.stringify(r)).join('\n') + '\n');
+function writeSeries(dir, edit = () => {}, stage = 1) {
+  const groups = { A: [[1, null], [2, 500], [3, null], [4, null], [5, 750]], B: [[11, 250], [12, 250], [13, 750], [14, 500], [15, null]] };
   for (const [g, list] of Object.entries(groups)) {
     mkdirSync(join(dir, g), { recursive: true });
-    for (const [seed, eventAt] of list) {
+    for (const [seed, eventAt] of list.slice(0, stage === 1 ? 3 : 5)) {
       const records = experiment({ seed, mixing: MANIFEST.groups[g].mixing, eventAt });
       edit(g, seed, records);
-      writeFileSync(join(dir, g, `s${seed}.jsonl`), records.map((r) => JSON.stringify(r)).join('\n') + '\n');
+      save(join(dir, g, `s${seed}.jsonl`), records);
     }
   }
   return [join(dir, 'A'), join(dir, 'B')];
 }
+const onlyCensus = (r, epoch) => r.find((x) => x.type === 'census' && x.epoch === epoch);
 function withTmp(fn) { const tmp = mkdtempSync(join(tmpdir(), 'claude-origins-')); try { return fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
 
 tests['validador: una sèrie correcta passa, i la decisió fa servir el límit de l\'etapa'] = () => withTmp((tmp) => {
   const [a, b] = writeSeries(tmp);
-  const v = validateSeries(a, b, MANIFEST, '1');
+  const v = validateSeries(a, b, MANIFEST, '1', { commit: COMMIT });
   assert.deepStrictEqual(v.errors, []);
-  assert.strictEqual(v.code, 'abc1234');
+  assert.strictEqual(v.code, COMMIT);
   assert.strictEqual(v.A.length + v.B.length, 6);
+  // el commit del preregistre també es pot donar sencer
+  assert.deepStrictEqual(validateSeries(a, b, MANIFEST, '1', { commit: COMMIT + '5678def' }).errors, []);
 });
 
 const brokenCases = {
@@ -172,26 +182,96 @@ const brokenCases = {
   'llavor que no és de l\'etapa': [(g, seed, r) => { if (seed === 3) r[0].seed = 99; }, /sobren|falten/],
   'commit amb canvis sense desar': [(g, seed, r) => { if (seed === 1) r[0].code = 'abc1234+canvis'; }, /commit net|mateix commit/],
   'commits diferents': [(g, seed, r) => { if (g === 'B') r[0].code = 'def5678'; }, /mateix commit/],
-  'un cens que falta (AU2-17)': [(g, seed, r) => { if (seed === 1) r.splice(2, 1); }, /hi falten censos/],
+  'un cens que falta (AU2-17)': [(g, seed, r) => { if (seed === 1) r.splice(r.findIndex((x) => x.type === 'census' && x.epoch === 500), 1); }, /hi falten censos/],
   "experiment tallat abans de l'horitzó": [(g, seed, r) => { if (seed === 3) { r.splice(3); r.push({ type: 'end', epoch: 500, reason: 'horitzó' }); } }, /hauria d'arribar/],
   "línia d'establiment que no és la del criteri": [(g, seed, r) => { const e = r.find((x) => x.type === 'event'); if (seed === 11 && e) e.epoch = 500; }, /línia d'establiment/],
   'un paràmetre del protocol canviat': [(g, seed, r) => { if (seed === 12) r[0].mutation = 0.0005; }, /mutation/],
+  // auditoria externa 4 (AU2-23 a AU2-27)
+  'tots del mateix commit net, però no del preregistre (AU2-23)': [(g, seed, r) => { r[0].code = 'deadbee'; }, /no és el commit del preregistre/],
+  'un experiment sense cap cens (AU2-24)': [(g, seed, r) => { if (seed === 1) for (let i = r.length - 1; i >= 0; i--) if (r[i].type === 'census') r.splice(i, 1); }, /té 0 censos/],
+  'censos parcials amb un final coherent (AU2-24)': [(g, seed, r) => { if (seed === 3) r.splice(r.findIndex((x) => x.type === 'census' && x.epoch === 1000), 1); }, /té 3 censos/],
+  'una mostra d\'1 (AU2-25)': [(g, seed, r) => { if (seed === 1) { const c = onlyCensus(r, 250); c.sample = 1; c.replicating = c.solo = 1; } }, /mostra de 1/],
+  'una mostra de 63 (AU2-25)': [(g, seed, r) => { if (seed === 1) onlyCensus(r, 250).sample = 63; }, /mostra de 63/],
+  'hereditaris fraccionaris (AU2-25)': [(g, seed, r) => { if (seed === 2) { const c = onlyCensus(r, 500); c.heritable = 0.5; c.heritableSolo = 0.5; } }, /absents o impossibles: heritable/],
+  'un recompte negatiu (AU2-25)': [(g, seed, r) => { if (seed === 1) onlyCensus(r, 250).replicating = -1; }, /absents o impossibles: replicating/],
+  'més hereditaris que no pas copiadors (AU2-25)': [(g, seed, r) => { if (seed === 2) { const c = onlyCensus(r, 500); c.replicating = 5; c.solo = 5; } }, /incoherents entre ells/],
+  'un recompte absent (AU2-25)': [(g, seed, r) => { if (seed === 1) delete onlyCensus(r, 250).context; }, /absents o impossibles: context/],
+  'una suma de sol i context incorrecta (AU2-25)': [(g, seed, r) => { if (seed === 2) onlyCensus(r, 500).heritableContext = 3; }, /incoherents entre ells/],
+  'cap mesura (AU2-27)': [(g, seed, r) => { if (seed === 1) for (let i = r.length - 1; i >= 0; i--) if (r[i].type === 'measure') r.splice(i, 1); }, /té 0 mesures/],
+  'una mesura de l\'interior que falta (AU2-27)': [(g, seed, r) => { if (seed === 3) r.splice(r.findIndex((x) => x.type === 'measure' && x.epoch === 500), 1); }, /té 9 mesures/],
+  'un motiu final que no és el de l\'establiment (AU2-27)': [(g, seed, r) => { if (seed === 11) r[r.length - 1].reason = 'horitzó'; }, /motiu del final/],
 };
 for (const [name, [edit, pattern]] of Object.entries(brokenCases)) {
   tests[`validador: rebutja ${name}`] = () => withTmp((tmp) => {
     const [a, b] = writeSeries(tmp, edit);
-    const v = validateSeries(a, b, MANIFEST, '1');
+    const v = validateSeries(a, b, MANIFEST, '1', { commit: COMMIT });
     assert.ok(v.errors.some((e) => pattern.test(e)), v.errors.join(' | ') || '(cap error)');
   });
 }
 tests['validador: rebutja una llavor repetida'] = () => withTmp((tmp) => {
   const [a, b] = writeSeries(tmp);
-  writeFileSync(join(a, 'copia.jsonl'), experiment({ seed: 1, mixing: 0 }).map((r) => JSON.stringify(r)).join('\n') + '\n');
-  assert.ok(validateSeries(a, b, MANIFEST, '1').errors.some((e) => /repetides/.test(e)));
+  save(join(a, 'copia.jsonl'), experiment({ seed: 1, mixing: 0 }));
+  assert.ok(validateSeries(a, b, MANIFEST, '1', { commit: COMMIT }).errors.some((e) => /repetides/.test(e)));
 });
 tests["validador: l'etapa 2 demana les llavors de totes dues etapes"] = () => withTmp((tmp) => {
   const [a, b] = writeSeries(tmp);
-  assert.ok(validateSeries(a, b, MANIFEST, '2').errors.some((e) => /falten les llavors 4, 5/.test(e)));
+  assert.ok(validateSeries(a, b, MANIFEST, '2', { commit: COMMIT }).errors.some((e) => /falten les llavors 4, 5/.test(e)));
+});
+tests["sense el commit del preregistre no es valida res (AU2-23)"] = () => withTmp((tmp) => {
+  const [a, b] = writeSeries(tmp);
+  assert.ok(validateSeries(a, b, MANIFEST, '1').errors.some((e) => /no s'ha indicat el commit del preregistre/.test(e)));
+});
+tests["l'etapa 2 es nega a decidir si l'etapa 1 ja rebutjava H0 (AUD-47, AU2-26)"] = () => withTmp((tmp) => {
+  // A sense cap establiment, B amb establiment a totes: a l'etapa 1, |Z1| supera el límit
+  const strong = { ...MANIFEST, stages: { 1: { perGroup: 3, bound: 1.5 }, 2: { perGroup: 5, bound: 2.004268879 } } };
+  const [a, b] = writeSeries(tmp, (g, seed, r) => {
+    if (g === 'A') { r.splice(0, r.length, ...experiment({ seed, mixing: 0 })); }
+    else { r.splice(0, r.length, ...experiment({ seed, mixing: 0.01, eventAt: 250 })); }
+  }, 2);
+  const v = validateSeries(a, b, strong, '2', { commit: COMMIT });
+  assert.deepStrictEqual(v.errors, []);
+  const { z1, rejected1 } = stageOneCheck(v.A, v.B, strong);
+  assert.ok(rejected1, `Z1 = ${z1}`);
+  writeFileSync(join(tmp, 'manifest.json'), JSON.stringify(strong));
+  const r = spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '2', '--commit', COMMIT, '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
+  assert.strictEqual(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stdout, /L'etapa 1 ja rebutjava H0/);
+  assert.doesNotMatch(r.stdout, /DECISIÓ/);
+});
+tests['--etapa decideix amb el commit correcte i no amb un altre (AU2-23)'] = () => withTmp((tmp) => {
+  const [a, b] = writeSeries(tmp);
+  writeFileSync(join(tmp, 'manifest.json'), JSON.stringify(MANIFEST));
+  const run = (commit) => spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '1', '--commit', commit, '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
+  const good = run(COMMIT);
+  assert.strictEqual(good.status, 0, good.stdout + good.stderr);
+  assert.match(good.stdout, /DECISIÓ: /);
+  const bad = run('1234567');
+  assert.strictEqual(bad.status, 1);
+  assert.doesNotMatch(bad.stdout, /DECISIÓ/);
+});
+tests['el validador accepta els JSONL reals de sim.mjs, amb establiment i sense'] = () => withTmp((tmp) => {
+  // AU2, audit4 §6: una execució real del simulador, no només dades sintètiques
+  const sim = (args, file) => spawnSync(process.execPath, [join(root, 'sim.mjs'), ...args, '--json', file], { cwd: root, encoding: 'utf8' });
+  const cases = [
+    { group: 'A', args: ['--world', '16x16', '--seed', '1', '--epochs', '500', '--every', '100', '--census', '250', '--stop-after-event', '250'],
+      params: { programs: 256, world: [16, 16], radius: 2, diffusion: 0, flow: 0, renewal: 0, mutation: 0.00024, rng: 'v2', epochs: 500, every: 100, from: null, start: 0,
+        census: { version: 'v3', every: 250, sample: 2048, seed: 20261016 }, event: { share: 0.01, censuses: 2, stopAfter: 250 } }, mixing: 0 },
+    { group: 'B', args: ['--world', '32x32', '--seed', '2', '--from', 'test/fixtures/punt-32x32.bin', '--start', '0', '--epochs', '100', '--every', '5', '--census', '5', '--stop-after-event', '10', '--mixing', '0.01'],
+      params: { programs: 1024, world: [32, 32], radius: 2, diffusion: 0, flow: 0, renewal: 0, mutation: 0.00024, rng: 'v2', epochs: 100, every: 5, from: 'test/fixtures/punt-32x32.bin', start: 0,
+        census: { version: 'v3', every: 5, sample: 2048, seed: 20261016 }, event: { share: 0.01, censuses: 2, stopAfter: 10 } }, mixing: 0.01 },
+  ];
+  for (const c of cases) {
+    const file = join(tmp, `${c.group}.jsonl`);
+    const r = sim(c.args, file);
+    assert.strictEqual(r.status, 0, r.stderr);
+    const x = readExperiment(file);
+    const manifest = { groups: { [c.group]: { mixing: c.mixing } }, params: c.params };
+    // el codi pot portar +canvis si l'arbre de treball no està net: llavors només hi ha d'haver aquest error
+    const errors = validateExperiment(x, manifest, c.group, { commit: x.code.replace('+canvis', '') });
+    const rest = errors.filter((e) => !/commit net/.test(e));
+    assert.deepStrictEqual(rest, [], `${c.group}: ${errors.join(' | ')}`);
+    if (c.group === 'B') assert.ok(x.event && x.time === 5, 'el retall del punt té establiment al primer cens');
+  }
 });
 tests['decisió de cada etapa, amb els límits preregistrats'] = () => {
   assert.match(decide('1', 2.5, MANIFEST).decision, /es rebutja H0 a l'etapa 1/);
@@ -203,7 +283,7 @@ tests['decisió de cada etapa, amb els límits preregistrats'] = () => {
 tests['--etapa no decideix si la sèrie no és la preregistrada'] = () => withTmp((tmp) => {
   const [a, b] = writeSeries(tmp, (g, seed, r) => { if (seed === 2) r[0].mixing = 0.9; });
   writeFileSync(join(tmp, 'manifest.json'), JSON.stringify(MANIFEST));
-  const r = spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '1', '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [join(root, 'fase2', 'estadistica.mjs'), '--etapa', '1', '--commit', COMMIT, '--manifest', join(tmp, 'manifest.json'), a, b], { encoding: 'utf8' });
   assert.strictEqual(r.status, 1, r.stdout + r.stderr);
   assert.match(r.stdout, /NO és la preregistrada/);
   assert.doesNotMatch(r.stdout, /DECISIÓ/);

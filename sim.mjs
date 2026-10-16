@@ -270,7 +270,7 @@ console.log(`llavor=${seed} ${world ? `món=${world[0]}x${world[1]} radi=${radiu
 json({
   type: 'start', code: codeVersion(), rng: rngVersion, node: process.version, zlib: process.versions.zlib,
   command: `node sim.mjs ${process.argv.slice(2).join(' ')}`, seed, programs: nPrograms, world, radius, mixing, diffusion,
-  flow, renewal, mutation, from, start, epochs: maxEpochs,
+  flow, renewal, mutation, from, start, epochs: maxEpochs, every: logEvery,
   census: world ? { version: censusVersion, every: censusEvery, sample: censusVersion === 'v3' ? censusSample : 512, seed: CENSUS_SEED } : null,
   event: detectEvent ? { share: EVENT_SHARE, censuses: EVENT_CENSUSES, stopAfter: stopAfterEvent } : null,
 });
@@ -314,7 +314,8 @@ for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
           censusWorlds.length = 0;
         }
       }
-      if (stopAfterEvent !== null && eventAt >= 0 && epoch >= eventAt + stopAfterEvent) { stopReason = 'establiment'; break; }
+      // l'aturada es fa al final de l'època, després de la mesura (si n'hi toca): el registre queda complet
+      if (stopAfterEvent !== null && eventAt >= 0 && epoch >= eventAt + stopAfterEvent) stopReason = 'establiment';
     }
   }
 
@@ -334,6 +335,7 @@ for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
     }
     if (stopAfterEvent === null && transitionAt > 0 && epoch - transitionAt >= afterTransition) { stopReason = 'HOE'; break; }
   }
+  if (stopReason === 'establiment') break;
 }
 save('final');
 // Empremta del món final (FNV-1a): serveix per comprovar que el navegador fa la mateixa història

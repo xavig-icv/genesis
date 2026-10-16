@@ -1,10 +1,12 @@
 // Anàlisi estadística de les sèries d'experiments (protocol estadístic, docs/protocol-estadistic.md).
 //
 // Ús:
-//   node fase2/estadistica.mjs --etapa 1|2 [--manifest fase2/serie-llei2.json] carpeta-A carpeta-B
+//   node fase2/estadistica.mjs --etapa 1|2 [--commit HASH] [--manifest fase2/serie-llei2.json] carpeta-A carpeta-B
 //        la sèrie confirmatòria: valida que els fitxers siguin exactament els preregistrats al manifest
-//        (llavors, paràmetres, commit, censos seguits, final coherent) i, si ho són, aplica la decisió de
-//        l'etapa amb el límit preregistrat. Si hi ha qualsevol anomalia, no decideix (codi de sortida 1)
+//        (llavors, paràmetres, el commit del preregistre, censos i mesures complets, final coherent) i,
+//        si ho són, aplica la decisió de l'etapa amb el límit preregistrat. El commit del preregistre és
+//        el de l'etiqueta de git preregistre-llei2, o el que es passi amb --commit. Si hi ha qualsevol
+//        anomalia, no decideix (codi de sortida 1). L'etapa 2 comprova, a més, que l'etapa 1 no rebutjava H0
 //   node fase2/estadistica.mjs carpeta-A carpeta-B     informe descriptiu, sense validació ni decisió
 //   node fase2/estadistica.mjs --potencia [rèpliques]  potència i error de tipus I del procediment de
 //        dues etapes sencer, per simulació
@@ -18,6 +20,7 @@
 // Totes les funcions estadístiques s'exporten i tenen proves (test/estadistica.mjs).
 import { readFileSync, readdirSync } from 'fs';
 import { createHash } from 'crypto';
+import { execFileSync } from 'child_process';
 import { basename, join } from 'path';
 import { fileURLToPath } from 'url';
 import { establishment } from './census.js';
@@ -231,8 +234,10 @@ export function readExperiment(file) {
 
 // ---- Validació de la sèrie confirmatòria (AU2-16, AU2-17 i AUD-44 de l'auditoria 3)
 
-// Els errors d'un experiment respecte del manifest i del grup (llista buida si és correcte)
-export function validateExperiment(x, manifest, group) {
+// Els errors d'un experiment respecte del manifest, del grup i del commit del preregistre (llista buida si
+// és correcte). Auditoria externa 4: el commit ha de ser el del preregistre (AU2-23), els censos i les
+// mesures han de ser-hi tots (AU2-24, AU2-27), i els recomptes han de ser enters i coherents (AU2-25).
+export function validateExperiment(x, manifest, group, { commit = null } = {}) {
   const errors = [];
   const where = basename(x.file);
   const err = (msg) => errors.push(`${where}: ${msg}`);
@@ -246,16 +251,38 @@ export function validateExperiment(x, manifest, group) {
   }
   if (start.mixing !== manifest.groups[group].mixing) err(`mixing ${start.mixing} no és el del grup ${group} (${manifest.groups[group].mixing})`);
   if (typeof start.code !== 'string' || !/^[0-9a-f]{7,}$/.test(start.code)) err(`el codi "${start.code}" no és un commit net`);
+  else if (!commit) err("no s'ha indicat el commit del preregistre");
+  else if (!(commit.startsWith(start.code) || start.code.startsWith(commit))) err(`el codi ${start.code} no és el commit del preregistre (${commit})`);
   // censos: v3, seguits des del primer (every, 2·every…), fins al final
   const every = manifest.params.census.every;
   const censuses = x.records.filter((r) => r.type === 'census');
+  const endRecord = x.records.find((r) => r.type === 'end') ?? {};
   if (censuses.some((c) => c.version !== 'v3')) err('hi ha censos que no són v3');
+  // tots els censos, de l'època `every` fins a la final, sense cap forat (AU2-24)
+  const expectedCensuses = Number.isSafeInteger(endRecord.epoch) ? Math.floor(endRecord.epoch / every) : 0;
+  if (censuses.length !== expectedCensuses) err(`té ${censuses.length} censos, i fins a l'època ${endRecord.epoch} n'hi ha d'haver ${expectedCensuses}`);
+  const sample = Math.min(manifest.params.census.sample, manifest.params.programs);
+  const COUNTS = ['replicating', 'solo', 'context', 'heritable', 'heritableSolo', 'heritableContext'];
   censuses.forEach((c, i) => {
     if (c.epoch !== every * (i + 1)) err(`el cens ${i + 1} és de l'època ${c.epoch}, hauria de ser de la ${every * (i + 1)} (hi falten censos o n'hi ha de repetits)`);
-    if (!(c.sample > 0 && c.heritable >= 0 && c.heritable <= c.sample && c.heritableSolo + c.heritableContext === c.heritable)) err(`el cens de l'època ${c.epoch} té valors incoherents`);
+    // recomptes enters i coherents, amb la mostra del protocol (AU2-25)
+    if (c.sample !== sample) err(`el cens de l'època ${c.epoch} té una mostra de ${c.sample}, el protocol en diu ${sample}`);
+    const bad = COUNTS.filter((k) => !Number.isSafeInteger(c[k]) || c[k] < 0 || c[k] > c.sample);
+    if (bad.length) { err(`el cens de l'època ${c.epoch} té recomptes absents o impossibles: ${bad.join(', ')}`); return; }
+    const ok = c.heritableSolo + c.heritableContext === c.heritable && c.heritable <= c.replicating &&
+      c.heritableSolo <= c.solo && c.heritableContext <= c.context && c.solo <= c.replicating && c.context <= c.replicating &&
+      c.replicating <= c.solo + c.context && Array.isArray(c.families);
+    if (!ok) err(`el cens de l'època ${c.epoch} té recomptes incoherents entre ells`);
   });
+  // totes les mesures, cada `every` èpoques fins a la final (AU2-27)
   const measures = x.records.filter((r) => r.type === 'measure');
-  if (measures.some((m, i) => i > 0 && m.epoch <= measures[i - 1].epoch)) err("les mesures no van en ordre d'època");
+  const step = manifest.params.every;
+  const expectedMeasures = Number.isSafeInteger(endRecord.epoch) ? Math.floor(endRecord.epoch / step) : 0;
+  if (measures.length !== expectedMeasures) err(`té ${measures.length} mesures, i fins a l'època ${endRecord.epoch} n'hi ha d'haver ${expectedMeasures}`);
+  measures.forEach((m, i) => {
+    if (m.epoch !== step * (i + 1)) err(`la mesura ${i + 1} és de l'època ${m.epoch}, hauria de ser de la ${step * (i + 1)}`);
+    if (![m.h0, m.hoe].every(Number.isFinite) || !Number.isSafeInteger(m.runs) || m.runs < 0 || m.epochs !== step) err(`la mesura de l'època ${m.epoch} té valors absents o impossibles`);
+  });
   // l'esdeveniment i el final, coherents amb el criteri i la regla d'aturada
   const { epochs } = manifest.params;
   const { stopAfter } = manifest.params.event;
@@ -269,6 +296,8 @@ export function validateExperiment(x, manifest, group) {
     if (events.length !== 1 || events[0].epoch !== t || events[0].confirmed !== t + every) err(`la línia d'establiment no és la del criteri (època ${t}, confirmat a la ${t + every})`);
     const expected = Math.min(epochs, t + stopAfter);
     if (end.epoch !== expected) err(`amb establiment a l'època ${t} s'hauria d'aturar a la ${expected}, i s'acaba a la ${end.epoch}`);
+    const reason = t + stopAfter <= epochs ? 'establiment' : 'horitzó';
+    if (end.reason !== reason) err(`amb establiment a l'època ${t}, el motiu del final hauria de ser "${reason}", i és "${end.reason}"`);
   }
   if (censuses.length && censuses[censuses.length - 1].epoch !== end.epoch) err(`l'últim cens (${censuses[censuses.length - 1].epoch}) no és el de l'època final (${end.epoch})`);
   return errors;
@@ -284,8 +313,8 @@ export function stageSeeds(manifest, group, stage) {
   return seeds;
 }
 
-// Valida tota la sèrie d'una etapa. Retorna { A, B, errors, code }
-export function validateSeries(dirA, dirB, manifest, stage) {
+// Valida tota la sèrie d'una etapa contra el manifest i el commit del preregistre. Retorna { A, B, errors, code }
+export function validateSeries(dirA, dirB, manifest, stage, { commit = null } = {}) {
   const errors = [];
   const read = (dir) => readdirSync(dir).filter((f) => f.endsWith('.jsonl')).sort().map((f) => {
     try { return readExperiment(join(dir, f)); } catch (e) { errors.push(`${f}: no es pot llegir (${e.message})`); return null; }
@@ -301,11 +330,31 @@ export function validateSeries(dirA, dirB, manifest, stage) {
     if (extra.length) errors.push(`grup ${group}: hi sobren llavors que no són d'aquesta etapa: ${extra.join(', ')}`);
     if (duplicated.length) errors.push(`grup ${group}: llavors repetides: ${[...new Set(duplicated)].join(', ')}`);
     if (list.length !== manifest.stages[stage].perGroup) errors.push(`grup ${group}: ${list.length} experiments, l'etapa ${stage} en demana ${manifest.stages[stage].perGroup}`);
-    for (const x of list) errors.push(...validateExperiment(x, manifest, group));
+    for (const x of list) errors.push(...validateExperiment(x, manifest, group, { commit }));
   }
   const codes = [...new Set([...groups.A, ...groups.B].map((x) => x.code))];
   if (codes.length > 1) errors.push(`els experiments no són tots del mateix commit: ${codes.join(', ')}`);
   return { ...groups, errors, code: codes[0] ?? null };
+}
+
+// L'etapa 2 només té sentit si l'etapa 1 no va rebutjar H0 (AUD-47, AU2-26): es recalcula Z sobre les
+// llavors de l'etapa 1. Retorna { z1, rejected1 }
+export function stageOneCheck(A, B, manifest) {
+  const inStage1 = (g) => (x) => stageSeeds(manifest, g, 1).includes(x.seed);
+  const z1 = logrank(A.filter(inStage1('A')), B.filter(inStage1('B'))).z;
+  return { z1, rejected1: Math.abs(z1) > manifest.stages[1].bound };
+}
+
+// El commit del preregistre: el que es passa amb --commit o el de l'etiqueta de git preregistre-llei2
+export function preregisteredCommit(explicit = null) {
+  if (explicit) return { commit: explicit, source: 'argument --commit' };
+  try {
+    const root = fileURLToPath(new URL('..', import.meta.url));
+    const commit = execFileSync('git', ['rev-parse', 'preregistre-llei2^{commit}'], { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+    return { commit, source: 'etiqueta de git preregistre-llei2' };
+  } catch {
+    return { commit: null, source: null };
+  }
 }
 
 // La decisió de l'etapa (protocol §8): mecànica, amb el límit preregistrat
@@ -468,16 +517,35 @@ if (isMain) {
     }
   } else if (args[0] === '--etapa') {
     const stage = args[1];
-    let rest = args.slice(2), manifestFile = fileURLToPath(new URL('serie-llei2.json', import.meta.url));
-    if (rest[0] === '--manifest') { manifestFile = rest[1]; rest = rest.slice(2); }
+    let rest = args.slice(2), manifestFile = fileURLToPath(new URL('serie-llei2.json', import.meta.url)), explicitCommit = null;
+    for (;;) {
+      if (rest[0] === '--manifest') { manifestFile = rest[1]; rest = rest.slice(2); }
+      else if (rest[0] === '--commit') { explicitCommit = rest[1]; rest = rest.slice(2); }
+      else break;
+    }
     if (!['1', '2'].includes(stage) || rest.length !== 2) usage();
     const manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
-    const { A, B, errors, code } = validateSeries(rest[0], rest[1], manifest, stage);
-    if (errors.length) {
-      console.log(`La sèrie NO és la preregistrada (${errors.length} problemes): no es pren cap decisió.`);
-      for (const e of errors) console.log(`  - ${e}`);
+    const { commit, source } = preregisteredCommit(explicitCommit);
+    if (!commit) {
+      console.log("No es pot decidir sense el commit del preregistre: no hi ha l'etiqueta de git preregistre-llei2, i no s'ha passat --commit.");
       process.exit(1);
     }
+    const { A, B, errors, code } = validateSeries(rest[0], rest[1], manifest, stage, { commit });
+    if (errors.length) {
+      console.log(`La sèrie NO és la preregistrada (${errors.length} problemes): no es pren cap decisió.`);
+      for (const e of errors.slice(0, 50)) console.log(`  - ${e}`);
+      if (errors.length > 50) console.log(`  … i ${errors.length - 50} més`);
+      process.exit(1);
+    }
+    if (stage === '2') {
+      const { z1, rejected1 } = stageOneCheck(A, B, manifest);
+      console.log(`Etapa 1 recalculada sobre les seves llavors: Z1 = ${z1.toFixed(4)} (límit |Z| > ${manifest.stages[1].bound})`);
+      if (rejected1) {
+        console.log("L'etapa 1 ja rebutjava H0: la sèrie s'havia d'acabar allà. No hi ha decisió d'etapa 2.");
+        process.exit(1);
+      }
+    }
+    console.log(`Commit del preregistre: ${commit} (${source})`);
     const lr = logrank(A, B);
     const { bound, decision } = decide(stage, lr.z, manifest);
     const all = createHash('sha256').update([...A, ...B].map((x) => x.hash).join('\n')).digest('hex');
