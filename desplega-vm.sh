@@ -20,8 +20,13 @@ fi
 HASH=$(git rev-parse --short HEAD)
 DIR="claude-origins-$HASH"
 if ssh -i "$KEY" -o BatchMode=yes "$HOST" "test -e ~/$DIR"; then
-  echo "ja desplegat: ~/$DIR"
-  exit 0
+  # Si un desplegament anterior es va interrompre, la carpeta existeix però no té VERSIO (AUD-22, audit3)
+  if ssh -i "$KEY" -o BatchMode=yes "$HOST" "test \"\$(cat ~/$DIR/VERSIO 2>/dev/null)\" = $HASH"; then
+    echo "ja desplegat: ~/$DIR"
+    exit 0
+  fi
+  echo "~/$DIR existeix però no té VERSIO $HASH (un desplegament interromput?): esborreu-la i torneu-ho a provar" >&2
+  exit 1
 fi
 git archive HEAD package.json sim.mjs server.mjs index.html experiments.sh fase1 fase2 quadern test \
   | ssh -i "$KEY" -o BatchMode=yes "$HOST" "mkdir ~/$DIR && tar xf - -C ~/$DIR && echo $HASH > ~/$DIR/VERSIO && echo desplegat a ~/$DIR"
