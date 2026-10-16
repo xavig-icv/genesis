@@ -1,7 +1,7 @@
 # Protocol estadístic · sèrie confirmatòria de la llei 2
 
-**Estat: esborrany v0.4 (16-10-2026).** Incorpora les correccions que van demanar tots dos auditors a
-les auditories 3 i 4, abans del *merge*. No s'ha llançat cap experiment d'aquesta sèrie. Quan el protocol
+**Estat: esborrany v0.5 (16-10-2026).** Incorpora les correccions que van demanar tots dos auditors a
+les auditories 3, 4 i 5, abans del *merge*. No s'ha llançat cap experiment d'aquesta sèrie. Quan el protocol
 estigui aprovat, el commit del *merge* farà de preregistre: qualsevol canvi posterior s'haurà de
 justificar aquí mateix, amb data i motiu, abans de mirar els resultats. Els canvis respecte de les
 versions anteriors són a §13.
@@ -10,7 +10,8 @@ Respon a:
 - AUD-06 (auditoria 1);
 - AUD-30 a AUD-34 (auditoria 2) i AU2-01 a AU2-09 (auditoria externa 2);
 - AUD-42 a AUD-45 (auditoria 3) i AU2-15 a AU2-22 (auditoria externa 3);
-- AUD-46 a AUD-49 (auditoria 4) i AU2-23 a AU2-28 (auditoria externa 4).
+- AUD-46 a AUD-49 (auditoria 4) i AU2-23 a AU2-28 (auditoria externa 4);
+- AUD-50 (auditoria 5) i AU2-29 i AU2-30 (auditoria externa 5).
 
 La
 sèrie de 15 llavors (entrada 6 del quadern) va ser exploratòria: generador v1, llavors no
@@ -236,7 +237,13 @@ La sortida completa és a `fase2/resultats/calibratge/potencia-dues-etapes-20000
   - les xifres de l'entrada 6, refetes a partir dels registres;
   - casos límit del JSONL;
   - el validador.
-- **Ordre:** `node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B`.
+- **Ordre:** `node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B`, des d'una còpia neta del commit
+  de l'etiqueta `preregistre-llei2` (AUD-50, AU2-29).
+  - **El commit i el manifest** de referència són els de l'etiqueta, i el programa es nega a decidir si la
+    còpia de treball no és en aquell commit o té canvis al codi o al manifest.
+  - **`--commit` i `--manifest`** només existeixen en el mode `--prova`, per provar el programa amb altres
+    dades. Aquest mode exigeix un hash complet de 40 caràcters, i la seva sortida diu "DECISIÓ DE PROVA
+    (no confirmatòria)".
 - **Validació (AU2-16, AUD-44; ampliada per AU2-23 a AU2-27).** Abans de calcular res, el programa
   comprova:
   - que hi hagi exactament les llavors del manifest per a l'etapa, sense repetides ni absents;
@@ -248,6 +255,8 @@ La sortida completa és a `fase2/resultats/calibratge/potencia-dues-etapes-20000
   - que els recomptes siguin enters, dins de la mostra i coherents entre ells: hereditaris = sols + només
     en context, i hereditaris ≤ es copien;
   - que hi hagi **totes** les mesures, cada 100 èpoques;
+  - que les línies siguin només dels cinc tipus de `sim.mjs`, i en el seu ordre: les èpoques no baixen, i
+    dins d'una mateixa època van el cens, l'establiment i la mesura (AU2-30);
   - que l'establiment, l'època final i el motiu del final siguin els que diuen el criteri i la regla
     d'aturada.
 
@@ -285,8 +294,8 @@ La sortida completa és a `fase2/resultats/calibratge/potencia-dues-etapes-20000
 4. **No es miren resultats parcials.** Fins que no acabin els 100 experiments, no se'n fa cap resum ni
    gràfic, encara que els registres de text es puguin llegir.
 5. Si un experiment falla per un error tècnic, es torna a executar amb la mateixa llavor i s'anota.
-6. Amb els 100 acabats: `node fase2/estadistica.mjs --etapa 1 serie-llei2/A serie-llei2/B`. La sortida es
-   desa a git.
+6. Amb els 100 acabats, des d'una còpia neta del commit de l'etiqueta, i sense `--commit` ni `--manifest`:
+   `node fase2/estadistica.mjs --etapa 1 serie-llei2/A serie-llei2/B`. La sortida es desa a git.
 7. Si cal l'etapa 2, s'executen les 60 llavors restants des del mateix commit i es fa `--etapa 2`.
 
 - **Sense vida,** un experiment dura uns 70 minuts a la VM (amb 3 alhora).
@@ -342,6 +351,8 @@ La sortida completa és a `fase2/resultats/calibratge/potencia-dues-etapes-20000
 | **v0.4:** censos i mesures complets, mostra de 2.048 i recomptes enters i coherents al validador; el motiu del final | AU2-24, AU2-25, AU2-27 |
 | **v0.4:** `--etapa 2` comprova l'etapa 1; la decisió de l'etapa 1 es desa a git | AUD-47, AU2-26 |
 | **v0.4:** les formes sota H0; les carpetes de la sèrie; la regla d'interpretació precisada; el procediment de llançament | AUD-48, AUD-49, AU2-28 |
+| **v0.5:** la decisió confirmatòria només des de l'etiqueta, amb el seu manifest; `--commit` i `--manifest`, només en mode de prova i amb el hash complet | AUD-50, AU2-29 |
+| **v0.5:** els tipus i l'ordre de les línies del JSONL | AU2-30 |
 
 ## 14. Preguntes respostes a l'auditoria 3
 
