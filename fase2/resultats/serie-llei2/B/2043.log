@@ -1,0 +1,35 @@
+codi=8cd4449  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 2043 --mixing 0.01 --epochs 16000 --every 100 --census 250 --census-version v3 --stop-after-event 1000 --rng v2 --json serie-llei2/B/2043.jsonl --save serie-llei2/B/captures --save-what event
+llavor=2043 món=512x256 radi=2 barreja=0.01 difusió=0 riu=0 renovació=0 mutació=0.00024  cens=v3 mostra=2048  aturada=establiment+1000
+època 100  H0=8.000  HOE=0.103  ops/execució=69.4  parelles=75%  bytes ,:0.5% <:0.5% 0:0.5%  fragments ,,,,,,,,,,,, (0.1%)  [[[[[[[[[[[[ (0.1%)  <<<<<<<<<<<< (0.0%)  18s
+època 200  H0=7.999  HOE=0.171  ops/execució=75.0  parelles=75%  bytes <:0.5% ,:0.5% >:0.5%  fragments [[[[[[[[[[[[ (0.1%)  ,,,,,,,,,,,, (0.1%)  >>>>>>>>>>>> (0.1%)  34s
+cens 250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 300  H0=7.997  HOE=0.233  ops/execució=78.9  parelles=75%  bytes <:0.6% ,:0.6% >:0.5%  fragments ,,,,,,,,,,,, (0.1%)  [[[[[[[[[[[[ (0.1%)  >>>>>>>>>>>> (0.1%)  54s
+època 400  H0=7.994  HOE=0.342  ops/execució=82.9  parelles=75%  bytes <:0.8% ,:0.6% >:0.5%  fragments >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,,, (0.2%)  [[[[[[[[[[[[ (0.1%)  70s
+*** PRIMERA FAMÍLIA a l'època 500 ***
+cens 500  mostra=2048  hereditaris=22.1% (sols 22.1%, només en context 0.0%)  es repliquen=29.8% (sols 29.8%, en context 0.0%)  famílies=1  #1:45.91%(<]<},[)
+època 500  H0=6.107  HOE=2.369  ops/execució=98.4  parelles=75%  bytes 0:8.2% #58:6.8% #22:4.9%  fragments ,··[·,····}< (0.4%)  [,,·····<}·< (0.2%)  <}····,·[··, (0.2%)  96s
+*** HOE > 1 a l'època 500 ***
+època 600  H0=6.041  HOE=1.829  ops/execució=101.4  parelles=75%  bytes 0:9.7% #58:6.7% #22:4.9%  fragments ,··[·,····}< (0.3%)  [,,·····<}·< (0.3%)  <}····,·[··, (0.2%)  118s
+època 700  H0=6.059  HOE=1.522  ops/execució=106.5  parelles=75%  bytes 0:10.7% #58:6.5% #22:4.8%  fragments [,,·····<}·< (0.3%)  ,··[·,····}< (0.2%)  <}····,·[··[ (0.1%)  140s
+cens 750  mostra=2048  hereditaris=5.8% (sols 5.8%, només en context 0.0%)  es repliquen=12.7% (sols 12.7%, en context 0.0%)  famílies=1  #1:24.33%(<]<},[)
+*** ESTABLIMENT DE LA VIDA a l'època 500 (confirmat al cens 750) ***
+època 800  H0=6.098  HOE=1.297  ops/execució=111.1  parelles=75%  bytes 0:11.3% #58:6.3% #22:4.7%  fragments ,··[·,····}< (0.2%)  <<<<<<<<<<<< (0.1%)  [,,·····<}·< (0.1%)  167s
+època 900  H0=6.148  HOE=1.121  ops/execució=113.1  parelles=75%  bytes 0:11.8% #58:6.1% #22:4.5%  fragments ,··[·,····}< (0.2%)  [[[[[[[[[[[[ (0.2%)  ,,,,,,,,,,,, (0.1%)  191s
+cens 1000  mostra=2048  hereditaris=1.7% (sols 1.7%, només en context 0.0%)  es repliquen=6.6% (sols 6.6%, en context 0.0%)  famílies=1  #1:14.48%(<]<},[)
+època 1000  H0=6.203  HOE=0.987  ops/execució=117.3  parelles=75%  bytes 0:12.2% #58:5.9% #22:4.4%  fragments <}····,·[··[ (0.2%)  [[[[[[[[[[[[ (0.2%)  <<<<<<<<<<<< (0.2%)  219s
+època 1100  H0=6.256  HOE=0.879  ops/execució=121.8  parelles=75%  bytes 0:12.5% #58:5.7% #22:4.3%  fragments [[[[[[[[[[[[ (0.2%)  <}····,·[··< (0.1%)  <<<<<<<<<<<< (0.1%)  243s
+època 1200  H0=6.311  HOE=0.792  ops/execució=126.8  parelles=75%  bytes 0:12.7% #58:5.5% #22:4.1%  fragments [[[[[[[[[[[[ (0.1%)  ,·,,,,,,,,,, (0.1%)  <<<<<<<<<<<< (0.1%)  269s
+cens 1250  mostra=2048  hereditaris=0.6% (sols 0.6%, només en context 0.0%)  es repliquen=4.2% (sols 4.2%, en context 0.0%)  famílies=1  #1:8.71%(<]<},[)
+època 1300  H0=6.364  HOE=0.722  ops/execució=129.5  parelles=75%  bytes 0:12.9% #58:5.3% #22:4.0%  fragments [[[[[[[[[[[[ (0.2%)  ,,,,,,,,,,,, (0.2%)  [[[[·[[[[[[[ (0.1%)  298s
+època 1400  H0=6.415  HOE=0.657  ops/execució=133.1  parelles=75%  bytes 0:13.0% #58:5.2% #22:3.9%  fragments ,,,,,,,,,,,, (0.2%)  ,,,,·,,,,,,, (0.1%)  [[[[[[[[[[[[ (0.1%)  323s
+cens 1500  mostra=2048  hereditaris=0.1% (sols 0.1%, només en context 0.0%)  es repliquen=1.8% (sols 1.8%, en context 0.0%)  famílies=1  #1:4.76%(<]<},[)
+època 1500  H0=6.467  HOE=0.606  ops/execució=135.2  parelles=75%  bytes 0:13.1% #58:5.0% #22:3.8%  fragments <<<<<<<<<<<< (0.2%)  ,,,,,,,,,,,, (0.2%)  <<<<·<<<<<<< (0.2%)  353s
+
+empremta del món: 85f79b7b
+
+programes diferents: 131071 de 131072
+      2  |                                                                |
+      1  |0  [   ,  [      { <      }    ]        [                0 00{00|
+      1  | 0 0<0 [}    ,                              [<     ,     0 0  0 |
+      1  |[ . , [  [,,0    <} <               [         0  }         0 000|
+      1  |00 0    [[,  ,  <  } <                     0   <}   ,         00|
