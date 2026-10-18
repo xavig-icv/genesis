@@ -133,6 +133,20 @@ Dues propostes més, per després:
 - **La vida que dura poc també és vida** (conversa del 18-10-2026). Una població que s'estableix i
   desapareix ha viscut un temps, com qualsevol ésser viu. El que cal mesurar és quant viu, no
   excloure-la. Vegeu la decisió del 18-10-2026.
+- **El temps que fa** (conversa del 18-10-2026). El corrent i el riu no haurien de ser sempre fixos: al
+  món real fa sol, plou, neva, fa vent o no en fa.
+  - **Encaixa amb la llei 6 (cicles)**, però hi afegeix l'atzar: no només cicles regulars, sinó un temps
+    que canvia sense cap patró fix.
+  - **Connecta amb la pregunta de B2.** Si el corrent ajuda les colònies noves a escampar-se però desfà
+    les establertes (hipòtesi, entrada 8), alternar calma i temporal podria fer les dues coses alhora.
+    Es pot comprovar: amb la mateixa barreja mitjana, un corrent variable fa establir i mantenir més vida
+    que un de constant?
+  - **Com seria.** Un procés aleatori que mou la barreja (i, si cal, el riu, la difusió i la
+    renovació), amb un generador propi derivat de la llavor perquè sigui determinista. Per exemple, dos
+    estats, calma i temporal, amb una probabilitat de canviar a cada època, o un valor que puja i baixa.
+    Per defecte no s'activaria, i les empremtes de les proves no canviarien.
+  - **La comparació neta** és variable contra constant, amb la mateixa mitjana: un canvi cada vegada.
+  - Pendent de valorar amb els auditors (ronda de propostes de l'auditoria 8).
 - **Organismes dins d'organismes.** Els humans i molts animals porten microorganismes vius a dins i a
   fora.
   - **Ja es pot buscar.** Un replicador curt, dins d'un programa de 64 bytes, es podria endur un altre
@@ -274,6 +288,8 @@ Resum. El detall és al quadern.
   amb corrent i en 0 de 23 sense corrent.) Seria una pregunta preregistrada pròpia, amb branques des de
   les captures de l'establiment. (Auditoria 7: 6 dels 7 casos són de la primera etapa, i a la segona
   la vida que dura queda 5 contra 14. Els indicis són més febles del que semblava.)
+- Un corrent que canvia amb el temps, entre la calma i el temporal, fa més vida que un de constant
+  amb la mateixa mitjana? (Proposta del responsable del projecte, 18-10-2026; §4.)
 - Per què les dues etapes de la sèrie de la llei 2 donen resultats tan diferents (19/18 i 5/16)?
   (AU2-33: el mateix patró a totes dues màquines; cap causa coneguda.)
 - El replicador que necessita una parella pot sobreviure en un món que no s'enverini tan de pressa?
