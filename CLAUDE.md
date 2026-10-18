@@ -45,6 +45,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   concordança amb la història original. Mai no es fa servir amb els mons de la part `confirmacio` del
   repartiment (`fase2/resultats/b2/repartiment.json`): s'hi nega.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
+- Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|animacio|km ...`, a partir de les
+  captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
+  cada imatge ha de dir d'on surt (quina captura, quina llavor, quina època).
 - Captures clau: `docs/captures.sha256` i `docs/captures.md`; còpia amb `bash eines/arxiva-captures.sh`.
 - Llistes d'experiments: `bash eines/experiments.sh N carpeta < llista` (cada línia: `nom arguments-de-sim.mjs`).
   Els lots llargs es llancen amb `bash eines/llanca-lot.sh N carpeta llista`, que escriu el progrés només a
