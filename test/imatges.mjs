@@ -7,7 +7,8 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { encodePng, encodeApng } from '../eines/png.mjs';
-import { soupImage, worldImage, row, COLORS, WORLD } from '../eines/imatges.mjs';
+import { soupImage, worldImage, codeImage, row, COLORS, WORLD, THEMES } from '../eines/imatges.mjs';
+import { randomSoup, makeRng } from '../fase1/soup.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 // La CRC-32 dels PNG, escrita aquí a part (Node 16 no en té cap a zlib) per comprovar la del codificador
@@ -63,6 +64,46 @@ const tests = {
     const im = worldImage(soup, 2, 1, { scale: 1 });
     assert.deepStrictEqual([...im.rgb.subarray(0, 3)], WORLD.lo);
     assert.deepStrictEqual([...im.rgb.subarray(3, 6)], WORLD.hi);
+  },
+  "un món: la regió, la graella, el rectangle i el tema fosc": () => {
+    const soup = new Uint8Array(64 * 6).fill('+'.charCodeAt(0));   // un món de 3 × 2, tot ple d'instruccions
+    const px = (im, x, y) => [...im.rgb.subarray((y * im.width + x) * 3, (y * im.width + x) * 3 + 3)];
+    const im = worldImage(soup, 3, 2, { scale: 3, region: [1, 0, 2, 2], grid: true, theme: THEMES.fosc });
+    assert.deepStrictEqual([im.width, im.height], [6, 6]);
+    assert.deepStrictEqual(px(im, 0, 0), THEMES.fosc.world.hi);
+    assert.deepStrictEqual(px(im, 2, 0), THEMES.fosc.surface);      // la línia de la graella
+    assert.throws(() => worldImage(soup, 3, 2, { region: [2, 0, 2, 2] }), /regió fora del món/);
+    const marked = worldImage(soup, 3, 2, { scale: 4, mark: [1, 0, 1, 1] });
+    assert.deepStrictEqual(px(marked, 3, 2), THEMES.clar.ink);       // el rectangle, just a l'esquerra de la cel·la 1
+    assert.deepStrictEqual(px(marked, 5, 2), WORLD.hi);
+  },
+  "la vista de codi: 64 bytes en 8 × 8, amb el marc i la separació de més a prop": () => {
+    const soup = new Uint8Array(64);
+    soup[0] = '['.charCodeAt(0); soup[9] = ','.charCodeAt(0);       // el primer byte i el de la fila 1, columna 1
+    const px = (im, x, y) => [...im.rgb.subarray((y * im.width + x) * 3, (y * im.width + x) * 3 + 3)];
+    let im = codeImage(soup, 1, 1);
+    assert.deepStrictEqual([im.width, im.height], [10, 10]);
+    assert.deepStrictEqual(px(im, 0, 0), THEMES.clar.surface);      // sense família, el marc és del color del fons
+    assert.deepStrictEqual(px(im, 1, 1), COLORS.loop);
+    assert.deepStrictEqual(px(im, 2, 2), COLORS.copy);
+    assert.deepStrictEqual(px(im, 3, 1), COLORS.zero);
+    im = codeImage(soup, 1, 1, { byte: 4, theme: THEMES.fosc });
+    assert.deepStrictEqual([im.width, im.height], [34, 34]);         // 8 × 4 i un marc d'1 a cada costat
+    assert.deepStrictEqual(px(im, 1, 1), THEMES.fosc.loop);
+    assert.deepStrictEqual(px(im, 4, 1), THEMES.fosc.surface);       // la línia entre bytes
+    assert.deepStrictEqual(px(im, 5, 5), THEMES.fosc.copy);
+  },
+  "aleatoria:LLAVOR:v1 és la sopa inicial de sim.mjs amb el generador v1": () => {
+    const tmp = mkdtempSync(join(tmpdir(), 'imatges-'));
+    try {
+      const out = (name) => join(tmp, name);
+      const run = (args) => spawnSync(process.execPath, [join(root, 'eines', 'imatges.mjs'), 'sopa', ...args, '--programes', '4'], { encoding: 'utf8' });
+      assert.strictEqual(run([out('v1.png'), 'aleatoria:5:v1']).status, 0);
+      assert.strictEqual(run([out('v2.png'), 'aleatoria:5']).status, 0);
+      const expected = soupImage(randomSoup(131072, makeRng(5, 'v1')), { programs: 4 });
+      assert.ok(readFileSync(out('v1.png')).equals(encodePng(expected.rgb, expected.width, expected.height)));
+      assert.ok(!readFileSync(out('v1.png')).equals(readFileSync(out('v2.png'))));
+    } finally { rmSync(tmp, { recursive: true, force: true }); }
   },
   'diverses imatges en fila, amb marge': () => {
     const a = { rgb: new Uint8Array(3).fill(1), width: 1, height: 1 }, b = { rgb: new Uint8Array(3).fill(2), width: 1, height: 1 };
