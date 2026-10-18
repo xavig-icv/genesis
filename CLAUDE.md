@@ -10,7 +10,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 - JavaScript amb mòduls ES, sense dependències ni pas de compilació. Node 16 a Windows: els scripts
   per a Node s'anomenen `.mjs` o depenen del `"type": "module"` del `package.json`.
 - Proves: `npm test` (intèrpret, món i cens, línia d'ordres, lots d'experiments, servidor, estadística,
-  oracle de cubff i regressió del determinisme; necessita `bash`, Git Bash a Windows). Han de passar totes abans de donar res per acabat. Les empremtes de
+  oracle de cubff i regressió del determinisme; necessita `bash`, Git Bash a Windows). **Abans de demanar
+  un merge, `bash prova-neta.sh`**, que les passa en una còpia neta del commit: no poden dependre de canvis
+  sense desar (AUD-58). GitHub també les passa a cada PR, amb Node 16 i 20 (`.github/workflows/proves.yml`). Han de passar totes abans de donar res per acabat. Les empremtes de
   `test/determinisme.mjs` no es toquen mai: si un canvi ha d'alterar les històries a propòsit, va darrere
   d'una opció nova. El mateix val per als valors del cens v2.
 - Experiments llargs sense gràfics: `node sim.mjs` (sopa) o `node sim.mjs --world 512x256` (món 2D).
@@ -33,8 +35,14 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   `carpeta/lot-<llista>.out`, mai a la consola. Una consola de Windows en mode de selecció atura el lot.
   - **Separar-lo de la sessió:** a la VM, `(nohup bash llanca-lot.sh ... > /dev/null 2>&1 &)`; al PC,
     `Start-Process -WindowStyle Hidden` amb `bash llanca-lot.sh ...`.
-  - **Seguiment:** `bash seguiment.sh carpeta` només compta experiments i comprova que els registres
-    siguin complets. Durant una sèrie no es miren resultats parcials.
+  - **Abans de començar,** el lot comprova la llista: almenys un experiment i cap nom repetit, amb 1 a 16
+    experiments alhora. Si no, surt amb el codi 2. Un experiment amb `--json` només es dona per fet si
+    el JSONL és complet (la línia d'inici, amb la llavor, i la final). La línia final del lot diu
+    `lot acabat` o `lot interromput (codi N)`.
+  - **Seguiment:** `bash seguiment.sh [--agregat] carpeta` només compta experiments (l'últim estat de
+    cadascun) i comprova que els registres siguin complets. Durant una sèrie no es miren resultats
+    parcials. A les sèries confirmatòries, amb `--agregat` (sense noms) i amb noms opacs a les llistes
+    (AUD-57).
   - **Experiments de branca:** `node sim.mjs ... --from captura.bin --start EPOCA` continua un món desat.
 - Màquina virtual de laboratori: `ssh -i ~/.ssh/claude_origins_vm claude@192.168.171.3` (Git Bash). Cada
   commit desplegat és a `~/claude-origins-<commit>` (`~/claude-origins` és el desplegament antic, amb
