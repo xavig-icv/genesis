@@ -31,6 +31,7 @@ Edge o un altre navegador basat en Chromium (és amb el que s'ha comprovat la re
 | `experiments.sh` | Executa una llista d'experiments, uns quants alhora, i anota els que fallen. |
 | `llanca-lot.sh` | Llança un lot d'`experiments.sh` i n'escriu el progrés només en un fitxer, mai a la consola. |
 | `seguiment.sh` | Diu com va un lot (començats, acabats, fallats, en marxa) sense mostrar cap resultat. |
+| `prova-neta.sh` | Passa `npm test` en una còpia neta d'un commit, abans de demanar un *merge*. |
 | `test/` | Proves de la línia d'ordres, dels lots d'experiments, del servidor, de l'estadística, de l'oracle de cubff i de regressió del determinisme. `test/fixtures/` té dos retalls petits de mons amb vida. |
 | `*/resultats/` | Registres dels experiments llargs (les captures `.bin` no són a git). |
 

@@ -1,0 +1,21 @@
+# Proves automàtiques a cada pull request i a cada commit de main (AUD-58 de l'auditoria 8): npm test
+# en una còpia neta del commit, amb les versions de Node de les dues màquines del projecte (el PC fa
+# servir Node 16 i la VM, Node 20).
+name: Proves
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  npm-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [16, 20]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - run: npm test
