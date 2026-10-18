@@ -8,7 +8,8 @@ n'escrigui el primer organisme.
 *Un món de 512 × 256 programes aleatoris, de l'època 1.500 a la 2.900, que no va escriure ningú. Cap a
 l'època 2.100 hi apareix un replicador que es copia als veïns i que s'escampa en forma de colònia: en rosa,
 quan el registre de famílies el reconeix. El gris indica quantes instruccions té cada programa: com més
-clar, més. És el món de la llavor 1006 de la sèrie de la llei 2, i es pot tornar a fer exactament igual
+clar, més. És el món de la llavor 1006 de la sèrie de la llei 2, un dels 24 mons quiets on la vida es va
+establir, triat perquè s'hi veu bé la colònia. Es pot tornar a fer exactament igual
 ([d'on surten les imatges](docs/imatges/LLEGEIX-ME.md)).*
 
 > **English summary.** claude-origins is a digital abiogenesis project. Programs in a random "primordial

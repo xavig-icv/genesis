@@ -14,6 +14,14 @@ poden tornar a fer amb el mateix commit i la mateixa llavor. Les que porten SHA-
 | `sopa-abans-i-despres.png` | Els primers programes de la sopa inicial de la llavor 1 de la Fase 1, al costat de la mateixa sopa a l'època 750. | `aleatoria:1:v1`, `fase1/resultats/llavor1-fils7-epoca750.bin` |
 | `llei2-km.svg` | La corba de Kaplan–Meier de la sèrie de la llei 2 (amb colors clars, com el quadern). | Els JSONL de `fase2/resultats/serie-llei2/A` i `B` (sí que són a git). |
 
+**Per què aquests mons.** Les imatges són il·lustratives, no una mostra representativa.
+- **El món quiet de la llavor 1006** és un dels 24 mons quiets de la sèrie de la llei 2 on la vida es va
+  establir (de 80). Es va triar perquè hi neix una sola colònia, que es veu bé.
+- **El món amb corrent de la llavor 2001** va servir per comparar-lo amb un món quiet en el moment de
+  l'establiment.
+- **Al zoom,** les regions es van triar per mostrar el front de la colònia.
+- **Els resultats** són a les sèries i al quadern, no en aquestes imatges.
+
 ## Les ordres
 
 Des de l'arrel del repositori, amb `C=fase2/resultats/serie-llei2`:
