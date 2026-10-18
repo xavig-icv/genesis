@@ -1,5 +1,6 @@
 // Proves dels lots d'experiments: eines/experiments.sh, eines/llanca-lot.sh i eines/seguiment.sh (A6 del pla de la
-// iteració 4; correccions de l'auditoria 8: AU2-37 a AU2-40, AUD-56, AUD-57 i AUD-59).
+// iteració 4; correccions de l'auditoria 8: AU2-37 a AU2-40, AUD-56, AUD-57 i AUD-59), i d'on treu
+// eines/desplega-vm.sh l'adreça de la VM.
 // Executa: node test/lots.mjs (necessita bash: Git Bash a Windows)
 import assert from 'assert';
 import { spawnSync } from 'child_process';
@@ -225,6 +226,35 @@ const tests = {
     writeFileSync(join(copy, 'fase1', 'bff.js'), readFileSync(join(copy, 'fase1', 'bff.js'), 'utf8') + '\n// canvi\n');
     out = launch();
     assert.match(out, new RegExp(`^== lot començat .* codi=${hash}\\+canvis `, 'm'));
+  }),
+  "desplega-vm.sh: l'adreça de la VM surt d'eines/local.env o de VM i VM_KEY, i sense cap de les dues s'atura": () => withDir((dir) => {
+    mkdirSync(join(dir, 'eines'));
+    mkdirSync(join(dir, 'bin'));
+    copyFileSync(join(root, 'eines', 'desplega-vm.sh'), join(dir, 'eines', 'desplega-vm.sh'));
+    // un ssh fals: apunta amb quins arguments l'han cridat i respon que el commit ja és desplegat
+    writeFileSync(join(dir, 'bin', 'ssh'), '#!/usr/bin/env bash\necho "$@" >> "$(dirname "$0")/crides"\n', { mode: 0o755 });
+    const env = { ...process.env };
+    delete env.VM;
+    delete env.VM_KEY;
+    const deploy = (extra = {}) => spawnSync('bash', ['-c', 'PATH="$PWD/bin:$PATH" exec bash eines/desplega-vm.sh'],
+      { cwd: dir, encoding: 'utf8', env: { ...env, ...extra } });
+    let r = deploy();
+    assert.strictEqual(r.status, 2, r.stderr);
+    assert.match(r.stderr, /local\.env\.exemple/);
+    writeFileSync(join(dir, 'eines', 'local.env'), 'VM=usuari@vm-del-fitxer\nVM_KEY=/clau/del-fitxer\n');
+    const git = 'git -c user.name=prova -c user.email=prova@exemple.invalid';
+    assert.strictEqual(spawnSync('bash', ['-c', `${git} init -q && ${git} add -A && ${git} commit -q -m prova`], { cwd: dir }).status, 0);
+    r = deploy();
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.match(r.stdout, /^ja desplegat: /m);
+    let calls = readFileSync(join(dir, 'bin', 'crides'), 'utf8');
+    assert.match(calls, /^-i \/clau\/del-fitxer -o BatchMode=yes usuari@vm-del-fitxer test -e /m);
+    // les variables d'entorn tenen prioritat sobre el fitxer
+    rmSync(join(dir, 'bin', 'crides'));
+    r = deploy({ VM: 'usuari@vm-de-l-entorn', VM_KEY: '/clau/de-l-entorn' });
+    assert.strictEqual(r.status, 0, r.stderr);
+    calls = readFileSync(join(dir, 'bin', 'crides'), 'utf8');
+    assert.match(calls, /^-i \/clau\/de-l-entorn -o BatchMode=yes usuari@vm-de-l-entorn test -e /m);
   }),
   'llanca-lot.sh rebutja els arguments incorrectes': () => {
     assert.strictEqual(bash('llanca-lot.sh', ['2']).status, 2);

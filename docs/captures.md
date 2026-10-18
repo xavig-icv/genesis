@@ -36,7 +36,7 @@ Comprimides ocupen uns 48 MB en total, la meitat que sense comprimir (s'assemble
 - **Quins mons hi són.** Es va comprovar que cada món amb establiment té exactament les captures que li toquen, i que cap món sense establiment no en té. Quan *t* és 250 o 500, n'hi ha menys de tres.
 - **L'arxiu.** Aquestes captures gairebé no es comprimeixen, i l'arxiu `arxiu-captures/` passa a ocupar uns 1,2 GB.
 
-**On es guarda la còpia:** a la carpeta local `arxiu-captures/` i a `D:\abiogenesis-backup\arxiu-captures`. La primera còpia és del 15-10-2026, i el banc de la sèrie de la llei 2 s'hi va afegir el 18-10-2026 (`--verifica`: 183 correctes). `D:` és un segon disc físic, diferent del del sistema (`C:`): protegeix contra una avaria del disc del sistema, però no contra la pèrdua de tot l'ordinador. La màquina
+**On es guarda la còpia:** a la carpeta local `arxiu-captures/` i en una segona carpeta d'un altre disc (el camí és a `CLAUDE.local.md`, que no es publica). La primera còpia és del 15-10-2026, i el banc de la sèrie de la llei 2 s'hi va afegir el 18-10-2026 (`--verifica`: 183 correctes). Aquest segon disc és físicament diferent del del sistema: protegeix contra una avaria del disc del sistema, però no contra la pèrdua de tot l'ordinador. La màquina
 virtual no serveix de còpia de seguretat, perquè és al mateix disc que el PC.
 
 **Com es comprova una còpia:** `bash eines/arxiva-captures.sh --verifica [carpeta]` descomprimeix cada `.gz` i

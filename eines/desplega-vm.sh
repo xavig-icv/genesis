@@ -8,11 +8,23 @@
 # carpeta del seu commit, i un commit ja desplegat no es torna a copiar. També hi van les proves, el
 # servidor, la portada i el quadern, perquè npm test hi passi sencer (la VM no té npm: les proves
 # s'hi executen una per una amb node, en el mateix ordre que a package.json).
+#
+# L'adreça de la VM i la clau no són al repositori: es llegeixen d'eines/local.env (que no va a git; vegeu
+# eines/local.env.exemple) o de les variables d'entorn VM i VM_KEY, que tenen prioritat.
 # Ús: bash eines/desplega-vm.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
-HOST="${VM:-claude@192.168.171.3}"
-KEY="${VM_KEY:-$HOME/.ssh/claude_origins_vm}"
+ENV_VM="${VM:-}" ENV_KEY="${VM_KEY:-}"
+if [[ -f eines/local.env ]]; then
+  # shellcheck source=/dev/null
+  source eines/local.env
+fi
+HOST="${ENV_VM:-${VM:-}}"
+KEY="${ENV_KEY:-${VM_KEY:-}}"
+if [[ -z "$HOST" || -z "$KEY" ]]; then
+  echo "Falta l'adreça de la VM: copieu eines/local.env.exemple a eines/local.env i poseu-hi VM i VM_KEY." >&2
+  exit 2
+fi
 if [[ -n "$(git status --porcelain -- '*.js' '*.mjs' '*.sh' 'test/fixtures')" ]]; then
   echo "Hi ha canvis al codi sense commit: fes-ne el commit abans de desplegar." >&2
   exit 1
