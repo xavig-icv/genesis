@@ -90,3 +90,10 @@ article li { margin: 6px 0; }
 
 nav.toc { margin: 0 0 20px; font-size: 14px; }
 nav.toc a { margin-right: 14px; }
+
+/* Corbes de supervivència (entrada 8) i taules plegables */
+.km { display: block; width: 100%; height: auto; }
+details.table-card { margin: 16px 0; }
+details.table-card summary { padding: 2px 0; }
+details.table-card table { margin-top: 10px; }
+@media (max-width: 560px) { .km text { font-size: 18px; } .km .km-x { display: none; } }

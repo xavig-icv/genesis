@@ -18,6 +18,7 @@
     <a href="#entrada-5">Entrada 5</a>
     <a href="#entrada-6">Entrada 6</a>
     <a href="#entrada-7">Entrada 7</a>
+    <a href="#entrada-8">Entrada 8</a>
   </nav>
 
   <article id="entrada-1">
@@ -405,6 +406,7 @@
       <li>Si es confirma, ja no serà una pista: <strong>l'espai sol frena la vida, i una mica de barreja l'ajuda a néixer</strong>.</li>
     </ul>
     <p class="pending"><strong>Corregit (auditoria 2, AUD-35):</strong> la sèrie confirmatòria compara dos mons 2D, el quiet i el que té corrent. No pot dir res de "l'espai sol" respecte de la sopa barrejada. A més, el protocol nou (entrada 7) mesura quan la vida <em>s'estableix</em>, no quan apareix. Si es confirma, el que es podrà dir és que, en aquest món, un corrent feble canvia el ritme d'establiment de la vida. Tampoc no seran 40 llavors per condició, sinó dues etapes: 50, i 30 més si cal.</p>
+    <p class="pending"><strong>Afegit després de la sèrie confirmatòria (entrada 8):</strong> amb 80 llavors per condició, la vida s'ha establert en el 30 % dels mons quiets i en el 42,5 % dels mons amb corrent. La diferència no arriba al límit fixat abans de començar. La pista d'aquesta entrada, doncs, no s'ha confirmat, però tampoc no s'ha descartat.</p>
   </article>
 
   <article id="entrada-7">
@@ -450,6 +452,7 @@
       <li><strong>Els copiadors esporàdics: confirmat.</strong> Un dels auditors va fer un cens de totes les cel·les dels mons regenerats, no només d'una mostra, i el va repetir vuit vegades. Abans de l'establiment, no hi havia cap replicador hereditari. Però al món quiet de la llavor 9 n'hi havia una colònia de 27 cel·les a l'època 7.500, que la nostra mostra no havia vist. Quan n'apareix un, la vida s'estableix en totes vuit repeticions. La hipòtesi, doncs, s'ha invertit de debò, almenys per als replicadors que es copien sols. I una lliçó per al cens: "no detectat" no vol dir "absent".</li>
     </ul>
     </div>
+    <p class="pending"><strong>Afegit després de la sèrie confirmatòria (entrada 8):</strong> als 160 mons, la mediana entre el primer replicador hereditari detectat i l'establiment és de 250 èpoques, un sol cens, en totes dues condicions. Encaixa amb la hipòtesi invertida. Però també hi ha mons amb algun hereditari a la mostra on la vida no s'estableix mai: 14 de 38 en el món quiet i 7 de 41 amb corrent. Que n'aparegui un no n'assegura l'establiment. Són dades descriptives.</p>
 
     <h2>El nostre intèrpret i el de Google</h2>
     <p>L'auditor nou va assenyalar un punt cec que compartíem: l'intèrpret del llenguatge el comparàvem amb una versió de referència que també havíem escrit nosaltres. Ara l'hem comparat amb el <strong>codi original de cubff</strong>, compilat a la màquina virtual. En 200.000 cintes, el resultat és idèntic, byte a byte. També coincideix el nombre d'instruccions, fins i tot en les gairebé 7.000 que arriben al límit de passos. Sí que hi hem trobat una petita diferència: l'article diu que la taxa de mutació és del 0,024 %, i el codi de Google fa servir el 0,0244 %. Nosaltres fem servir la de l'article.</p>
@@ -459,6 +462,282 @@
       <li>Un <strong>protocol nou</strong> (<code>docs/protocol-estadistic.md</code>, versió 0.2). La mesura és l'<strong>establiment</strong> de la vida: almenys l'1 % de replicadors hereditaris en dos censos seguits. Cada món s'atura 1.000 èpoques després, i la sèrie es fa en dues etapes, de 50 llavors per condició i 30 més si cal.</li>
       <li>Una <strong>tercera auditoria</strong> dels dos auditors, només del protocol i de les eines noves, abans de llançar res.</li>
       <li>Després de la sèrie, <strong>provar la química</strong>: treure-li ingredients (la mutació, una de les instruccions de còpia...) per saber quins són imprescindibles perquè hi neixi vida.</li>
+    </ul>
+    <p class="pending"><strong>Afegit:</strong> la sèrie es va fer amb la versió 0.5 del protocol, després de tres auditories més. El resultat és a l'entrada 8.</p>
+  </article>
+
+  <article id="entrada-8">
+    <header>
+      <p class="date">Entrada 8 · 18 d'octubre de 2026</p>
+      <h1>Cent seixanta mons i un resultat no concloent</h1>
+      <p class="lede">Hem fet la comparació que havíem preparat durant quatre auditories: 80 mons quiets contra 80 mons amb un corrent feble, amb les regles escrites i segellades abans de començar. Amb el corrent, la vida s'ha establert una mica més sovint, però no prou per poder-ho afirmar. I, si s'hi mira de prop, una part d'aquesta vida de més no dura.</p>
+    </header>
+
+    <h2>Les regles, segellades abans de començar</h2>
+    <p>A l'entrada 6 vam trobar una pista: amb corrent, semblava que la vida naixia més sovint. Però aquella sèrie s'havia analitzat de moltes maneres, i només tenia 15 llavors per condició. Per saber si la pista era real, calia fer el que fa la ciència quan no es vol enganyar a si mateixa: <strong>escriure abans de començar què es mesurarà, quantes vegades i quina prova decidirà</strong>, i després no tocar-ho.</p>
+    <p>Ho vam escriure al protocol estadístic (<code>docs/protocol-estadistic.md</code>, versió 0.5). Dos auditors el van revisar al llarg de tres rondes, fins que tots dos el van aprovar. Un d'ells és un model d'intel·ligència artificial diferent de Claude. Després vam congelar el codi amb una etiqueta de git, <code>preregistre-llei2</code>. L'etiqueta porta les empremtes del protocol, de la llista de llavors i del programa que decideix, i aquest programa es nega a decidir si el codi no és exactament el de l'etiqueta.</p>
+    <div class="params">
+      <div class="param"><b>512 × 256</b><span>cel·les per món</span></div>
+      <div class="param"><b>16.000</b><span>èpoques com a màxim</span></div>
+      <div class="param"><b>0 i 0,01</b><span>corrent: món quiet i barreja feble</span></div>
+      <div class="param"><b>50 + 30</b><span>llavors per condició, en dues etapes</span></div>
+      <div class="param"><b>2.048</b><span>cel·les provades a cada cens</span></div>
+      <div class="param"><b>1 %</b><span>d'hereditaris, en dos censos seguits</span></div>
+    </div>
+    <p>La mesura és l'<strong>establiment</strong> de la vida, tal com el vam definir a l'entrada 7: almenys l'1 % de les cel·les provades han de ser replicadors hereditaris, en dos censos seguits. Es fa un cens cada 250 èpoques, i cada món s'atura 1.000 èpoques després de l'establiment. La prova és una de sola, el log-rank, que compara quantes vegades s'estableix la vida i quan. El pla era fer primer 50 llavors per condició i, si no n'hi havia prou per decidir, 30 més.</p>
+
+    <h2>El resultat</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left"></th><th style="text-align:left">S'hi estableix la vida</th><th style="text-align:left">Interval del 95 %</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Món quiet (<em>m</em> = 0)</td><td style="text-align:left"><strong>24 de 80</strong> (30,0 %)</td><td style="text-align:left">21–41 %</td></tr>
+          <tr><td style="text-align:left">Corrent 0,01</td><td style="text-align:left"><strong>34 de 80</strong> (42,5 %)</td><td style="text-align:left">32–53 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">Llavors 1001–1080 (món quiet) i 2001–2080 (corrent). Interval de Wilson.</p>
+    <p>A la primera etapa, amb 50 llavors per condició, no hi havia cap diferència: 19 establiments contra 18. Per això el programa va decidir que calia la segona etapa. Amb les 80 + 80 llavors, el log-rank dona <strong>Z = −1,83</strong>. Per afirmar que el corrent canvia el ritme d'establiment, el valor absolut de Z havia de superar 2,004, el límit fixat abans de començar. No l'ha superat.</p>
+    <p><strong>Aquesta sèrie no permet afirmar que un corrent feble canviï el ritme d'establiment de la vida.</strong></p>
+    <figure class="card figure">
+      <svg class="km" viewBox="0 0 640 300" role="img" aria-label="Proporció de mons amb vida establerta al llarg de les èpoques: món quiet 30,0 % i corrent 42,5 % a l'època 16.000">
+        <g font-size="12" fill="var(--text-2)"><line x1="48" x2="624" y1="264.0" y2="264.0" stroke="var(--grid)"/><text x="42" y="268.0" text-anchor="end">0 %</text><line x1="48" x2="624" y1="214.0" y2="214.0" stroke="var(--grid)"/><text x="42" y="218.0" text-anchor="end">10 %</text><line x1="48" x2="624" y1="164.0" y2="164.0" stroke="var(--grid)"/><text x="42" y="168.0" text-anchor="end">20 %</text><line x1="48" x2="624" y1="114.0" y2="114.0" stroke="var(--grid)"/><text x="42" y="118.0" text-anchor="end">30 %</text><line x1="48" x2="624" y1="64.0" y2="64.0" stroke="var(--grid)"/><text x="42" y="68.0" text-anchor="end">40 %</text><line x1="48" x2="624" y1="14.0" y2="14.0" stroke="var(--grid)"/><text x="42" y="18.0" text-anchor="end">50 %</text><text x="48.0" y="282" text-anchor="middle">0</text><text x="192.0" y="282" text-anchor="middle">4.000</text><text x="336.0" y="282" text-anchor="middle">8.000</text><text x="480.0" y="282" text-anchor="middle">12.000</text><text x="638" y="282" text-anchor="end">16.000</text><text class="km-x" x="336" y="296" text-anchor="middle">època</text></g>
+        <line x1="48" x2="624" y1="264" y2="264" stroke="var(--axis)"/>
+        <path d="M48.0,264.0 H93.0 V257.8 H129.0 V251.5 H192.0 V245.3 H201.0 V239.0 H219.0 V232.8 H273.0 V226.5 H318.0 V220.3 H336.0 V214.0 H372.0 V201.5 H390.0 V182.8 H417.0 V170.3 H426.0 V164.0 H471.0 V157.8 H489.0 V151.5 H498.0 V145.3 H570.0 V139.0 H588.0 V120.3 H615.0 V114.0 H624.0" fill="none" stroke="var(--series-1)" stroke-width="2.5"/>
+        <path d="M48.0,264.0 H57.0 V257.8 H66.0 V251.5 H102.0 V245.3 H120.0 V226.5 H174.0 V220.3 H210.0 V214.0 H219.0 V207.8 H228.0 V201.5 H237.0 V189.0 H255.0 V182.8 H291.0 V170.3 H300.0 V145.3 H309.0 V139.0 H363.0 V132.8 H390.0 V126.5 H417.0 V120.3 H435.0 V114.0 H444.0 V107.7 H453.0 V101.5 H471.0 V95.2 H489.0 V82.7 H516.0 V76.5 H543.0 V70.2 H552.0 V64.0 H579.0 V57.7 H597.0 V51.5 H624.0" fill="none" stroke="var(--op-loop)" stroke-width="2.5" stroke-dasharray="7 4"/>
+        <g font-size="13" font-weight="650">
+          <line x1="64" x2="92" y1="30" y2="30" stroke="var(--op-loop)" stroke-width="2.5" stroke-dasharray="7 4"/><text x="100" y="34" fill="var(--op-loop)">corrent 0,01 · 42,5 % a l'època 16.000</text>
+          <line x1="64" x2="92" y1="52" y2="52" stroke="var(--series-1)" stroke-width="2.5"/><text x="100" y="56" fill="var(--series-1)">món quiet · 30,0 %</text>
+        </g>
+      </svg>
+      <figcaption>Proporció de mons on la vida ja s'ha establert, època a època (1 − Kaplan–Meier). Línia contínua: món quiet; discontínua: corrent 0,01. Cada esglaó és un món on s'acaba d'establir la vida.</figcaption>
+    </figure>
+
+    <h2>No concloent no vol dir "no fa res"</h2>
+    <p>Amb corrent, la proporció de mons on s'ha establert la vida és 12,5 punts més alta. L'interval de confiança del 95 % d'aquesta diferència va de −2,3 a +27,3 punts. Inclou el zero, i per això no podem afirmar que el corrent hi tingui cap efecte. Però també inclou la diferència més petita que ens interessava detectar, la d'un 20 % contra un 40 %. Per això tampoc no podem dir que el corrent no faci res. A més, amb corrent la vida s'estableix una mica abans: la meitat dels mons amb corrent on s'ha establert ho han fet abans de l'època 7.000, mentre que en el món quiet la mediana és la 9.500.</p>
+    <p>Dues coses no han sortit com esperàvem. La primera és que el món quiet fa vida més sovint del que deia la sèrie exploratòria: un 30 %, no un 20 %. La segona és que la diferència és més petita que la que vam veure llavors: 12,5 punts, no 33. Aquella sèrie tenia 15 llavors per condició i comptava la vida amb un altre criteri, i era molt incerta. Les diferències entre totes dues sèries són compatibles amb l'atzar. Si l'efecte real fos d'uns 12 punts, per detectar-lo 8 vegades de cada 10 caldrien unes 250 llavors per condició, tres vegades més que en aquesta sèrie.</p>
+
+    <h2>Les altres maneres de comptar</h2>
+    <p>El protocol també demanava repetir la comparació amb altres criteris d'establiment, per veure si el resultat depèn de com definim la vida. Aquestes anàlisis són <strong>descriptives</strong>:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Criteri</th><th>Món quiet</th><th>Corrent</th><th><em>p</em> del log-rank</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Hereditaris ≥ 1 % (el principal)</td><td>24</td><td>34</td><td>0,067</td></tr>
+          <tr><td style="text-align:left">Herència demostrada sola ≥ 1 %</td><td>24</td><td>34</td><td>0,067</td></tr>
+          <tr><td style="text-align:left">Hereditaris ≥ 5 %</td><td>23</td><td>29</td><td>0,19</td></tr>
+          <tr><td style="text-align:left">Es copien ≥ 1 %, sense provar l'herència</td><td>24</td><td>36</td><td>0,035</td></tr>
+          <tr><td style="text-align:left">Territori de les famílies ≥ 1 %</td><td>24</td><td>36</td><td>0,031</td></tr>
+          <tr><td style="text-align:left">Entropia d'ordre superior &gt; 1 bit</td><td>24</td><td>37</td><td>0,021</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">Mons amb establiment segons cada criteri, de 80. Amb el llindar del 5 %, cinc mons amb corrent s'havien aturat abans de poder-lo complir, perquè la regla d'aturada depèn del criteri principal.</p>
+    <p>Tres d'aquests criteris donen una <em>p</em> per sota de 0,05. És la mateixa temptació que va fer que l'entrada 6 fos una sèrie exploratòria: si es miren sis criteris i es queda el que surt, la <em>p</em> deixa de voler dir el que diu. Per això el protocol en va fixar un de sol abans de començar, i diu explícitament que aquestes sensibilitats no són un resultat. Això sí, tots apunten en la mateixa direcció, i cap no la capgira.</p>
+
+    <h2>Dues meitats que no s'assemblen</h2>
+    <p>Les dues etapes han donat resultats molt diferents. A les primeres 50 llavors de cada condició, 19 establiments contra 18. A les 30 últimes, 5 contra 16. El codi, les màquines i el procediment van ser els mateixos, i la simulació és determinista: una llavor dona sempre la mateixa història. Si no hi ha cap diferència sistemàtica que se'ns escapi, el que separa les dues meitats és l'atzar de les llavors. És una lliçó sobre les sèries petites. Si només haguéssim fet les 30 últimes, semblaria un efecte enorme; si només haguéssim fet les 50 primeres, no n'hi hauria cap. Per això la prova es fa amb totes, i el límit es va fixar abans.</p>
+
+    <h2>Vida que no dura</h2>
+    <p>El protocol també demanava mirar què passa després de l'establiment, i aquí hi ha la dada més curiosa de la sèrie. Als mons quiets, la vida es mantenia 1.000 èpoques després de l'establiment en <strong>23 de 23</strong>. El que faltava per arribar a 24 es va establir massa tard per comprovar-ho. Als mons amb corrent, en canvi, es mantenia en <strong>26 de 33</strong>. En els altres 7, els replicadors hereditaris havien baixat de l'1 % de la mostra, i en quatre ja no n'hi quedava cap. Si només comptéssim la vida que dura, la diferència gairebé desapareixeria: 23 contra 26.</p>
+    <p>D'aquí en surt una hipòtesi: <strong>el corrent fa aparèixer vida més sovint, però una part d'aquesta vida és un esclat que no s'aguanta</strong>, com el de l'entrada 4. Encaixaria amb el que vam veure al riu de l'entrada 5: el moviment que escampa els replicadors també pot desfer les colònies. Però és una observació feta després de mirar les dades, i amb pocs casos. Si la volem comprovar, haurà de ser amb un protocol propi, escrit abans de començar.</p>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>160 mons en dos dies</strong>, la meitat a la màquina virtual i la meitat al PC, tres alhora a cada màquina. Totes dues donen proporcions semblants: al món quiet, 11 de 40 a la màquina virtual i 13 de 40 al PC; amb corrent, 16 de 40 i 18 de 40.</li>
+      <li><strong>Les decisions les ha pres el programa</strong>, des d'una còpia neta del codi congelat, després de comprovar que no s'hi havia tocat cap fitxer. La decisió de la primera etapa es va desar a git abans de començar la segona.</li>
+      <li><strong>Una comprovació creuada:</strong> en els 160 mons, l'època d'establiment que calcula el programa d'anàlisi coincideix amb la que va anotar el simulador mentre corria.</li>
+      <li><strong>Dues incidències, anotades a l'acta.</strong> La finestra del PC es va quedar bloquejada una hora, i no es va perdre cap dada. En diagnosticar-ho, vam veure abans d'hora com acabava un dels experiments. No va canviar res, perquè la decisió ja estava fixada.</li>
+      <li><strong>Totes les dades són a git</strong>, a <code>fase2/resultats/serie-llei2/</code>: els registres, les dades de cada cens i les dues decisions. Qualsevol pot tornar a prendre la decisió a partir de l'etiqueta.</li>
+    </ul>
+    <details class="card table-card">
+      <summary>Taula per llavor: món quiet (80 llavors)</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Llavor</th><th>Etapa</th><th>Màquina</th><th>Establiment</th><th>Primer hereditari</th><th>Final</th><th>Hereditaris al final</th><th>Es manté a <em>t</em> + 1.000</th></tr></thead>
+          <tbody>
+            <tr><td>1001</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1002</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1003</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1004</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1005</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1006</td><td>1</td><td>VM</td><td>2.250</td><td>2.250</td><td>3.250</td><td>21,0 %</td><td>sí</td></tr>
+            <tr><td>1007</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1008</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1009</td><td>1</td><td>VM</td><td>7.500</td><td>7.250</td><td>8.500</td><td>9,3 %</td><td>sí</td></tr>
+            <tr><td>1010</td><td>1</td><td>VM</td><td>6.250</td><td>6.000</td><td>7.250</td><td>18,1 %</td><td>sí</td></tr>
+            <tr><td>1011</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1012</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1013</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1014</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1015</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1016</td><td>1</td><td>VM</td><td>12.250</td><td>12.250</td><td>13.250</td><td>11,5 %</td><td>sí</td></tr>
+            <tr><td>1017</td><td>1</td><td>VM</td><td>12.500</td><td>12.250</td><td>13.500</td><td>48,4 %</td><td>sí</td></tr>
+            <tr><td>1018</td><td>1</td><td>VM</td><td>10.250</td><td>10.000</td><td>11.250</td><td>3,7 %</td><td>sí</td></tr>
+            <tr><td>1019</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1020</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1021</td><td>1</td><td>VM</td><td>9.500</td><td>9.250</td><td>10.500</td><td>18,1 %</td><td>sí</td></tr>
+            <tr><td>1022</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1023</td><td>1</td><td>VM</td><td>15.750</td><td>15.750</td><td>16.000</td><td>4,4 %</td><td>—</td></tr>
+            <tr><td>1024</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1025</td><td>1</td><td>VM</td><td>—</td><td>4.500</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1026</td><td>1</td><td>PC</td><td>8.000</td><td>8.000</td><td>9.000</td><td>83,1 %</td><td>sí</td></tr>
+            <tr><td>1027</td><td>1</td><td>PC</td><td>4.000</td><td>4.000</td><td>5.000</td><td>19,0 %</td><td>sí</td></tr>
+            <tr><td>1028</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1029</td><td>1</td><td>PC</td><td>1.250</td><td>1.000</td><td>2.250</td><td>46,5 %</td><td>sí</td></tr>
+            <tr><td>1030</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1031</td><td>1</td><td>PC</td><td>—</td><td>11.750</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1032</td><td>1</td><td>PC</td><td>—</td><td>10.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1033</td><td>1</td><td>PC</td><td>15.000</td><td>14.500</td><td>16.000</td><td>6,5 %</td><td>sí</td></tr>
+            <tr><td>1034</td><td>1</td><td>PC</td><td>—</td><td>5.250</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1035</td><td>1</td><td>PC</td><td>15.000</td><td>14.250</td><td>16.000</td><td>3,2 %</td><td>sí</td></tr>
+            <tr><td>1036</td><td>1</td><td>PC</td><td>4.750</td><td>4.750</td><td>5.750</td><td>36,0 %</td><td>sí</td></tr>
+            <tr><td>1037</td><td>1</td><td>PC</td><td>14.500</td><td>14.250</td><td>15.500</td><td>14,4 %</td><td>sí</td></tr>
+            <tr><td>1038</td><td>1</td><td>PC</td><td>—</td><td>10.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1039</td><td>1</td><td>PC</td><td>4.250</td><td>4.250</td><td>5.250</td><td>23,6 %</td><td>sí</td></tr>
+            <tr><td>1040</td><td>1</td><td>PC</td><td>—</td><td>12.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1041</td><td>1</td><td>PC</td><td>9.000</td><td>8.750</td><td>10.000</td><td>11,2 %</td><td>sí</td></tr>
+            <tr><td>1042</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1043</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1044</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1045</td><td>1</td><td>PC</td><td>9.500</td><td>9.500</td><td>10.500</td><td>12,1 %</td><td>sí</td></tr>
+            <tr><td>1046</td><td>1</td><td>PC</td><td>10.500</td><td>10.250</td><td>11.500</td><td>11,5 %</td><td>sí</td></tr>
+            <tr><td>1047</td><td>1</td><td>PC</td><td>—</td><td>2.750</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1048</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1049</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1050</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1051</td><td>2</td><td>VM</td><td>10.250</td><td>2.750</td><td>11.250</td><td>93,6 %</td><td>sí</td></tr>
+            <tr><td>1052</td><td>2</td><td>VM</td><td>—</td><td>3.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1053</td><td>2</td><td>VM</td><td>—</td><td>9.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1054</td><td>2</td><td>VM</td><td>15.000</td><td>14.750</td><td>16.000</td><td>13,2 %</td><td>sí</td></tr>
+            <tr><td>1055</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1056</td><td>2</td><td>VM</td><td>—</td><td>1.500</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1057</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1058</td><td>2</td><td>VM</td><td>—</td><td>15.750</td><td>16.000</td><td>1,7 %</td><td>—</td></tr>
+            <tr><td>1059</td><td>2</td><td>VM</td><td>11.750</td><td>2.750</td><td>12.750</td><td>16,9 %</td><td>sí</td></tr>
+            <tr><td>1060</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1061</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1062</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1063</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1064</td><td>2</td><td>VM</td><td>—</td><td>8.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1065</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1066</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1067</td><td>2</td><td>PC</td><td>—</td><td>10.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1068</td><td>2</td><td>PC</td><td>9.500</td><td>9.250</td><td>10.500</td><td>28,4 %</td><td>sí</td></tr>
+            <tr><td>1069</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1070</td><td>2</td><td>PC</td><td>9.000</td><td>9.000</td><td>10.000</td><td>18,4 %</td><td>sí</td></tr>
+            <tr><td>1071</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1072</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1073</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1074</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1075</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1076</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1077</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1078</td><td>2</td><td>PC</td><td>—</td><td>10.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1079</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>1080</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+    <details class="card table-card">
+      <summary>Taula per llavor: corrent 0,01 (80 llavors)</summary>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Llavor</th><th>Etapa</th><th>Màquina</th><th>Establiment</th><th>Primer hereditari</th><th>Final</th><th>Hereditaris al final</th><th>Es manté a <em>t</em> + 1.000</th></tr></thead>
+          <tbody>
+            <tr><td>2001</td><td>1</td><td>VM</td><td>5.000</td><td>5.000</td><td>6.000</td><td>96,8 %</td><td>sí</td></tr>
+            <tr><td>2002</td><td>1</td><td>VM</td><td>7.000</td><td>7.000</td><td>8.000</td><td>0,0 %</td><td><strong>no</strong> (0,0 %)</td></tr>
+            <tr><td>2003</td><td>1</td><td>VM</td><td>13.000</td><td>13.000</td><td>14.000</td><td>97,3 %</td><td>sí</td></tr>
+            <tr><td>2004</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2005</td><td>1</td><td>VM</td><td>5.250</td><td>5.000</td><td>6.250</td><td>80,7 %</td><td>sí</td></tr>
+            <tr><td>2006</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2007</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2008</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2009</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2010</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2011</td><td>1</td><td>VM</td><td>2.000</td><td>2.000</td><td>3.000</td><td>0,7 %</td><td><strong>no</strong> (0,7 %)</td></tr>
+            <tr><td>2012</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2013</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2014</td><td>1</td><td>VM</td><td>—</td><td>12.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2015</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2016</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2017</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2018</td><td>1</td><td>VM</td><td>—</td><td>8.750</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2019</td><td>1</td><td>VM</td><td>8.750</td><td>8.750</td><td>9.750</td><td>95,8 %</td><td>sí</td></tr>
+            <tr><td>2020</td><td>1</td><td>VM</td><td>—</td><td>750</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2021</td><td>1</td><td>VM</td><td>11.000</td><td>11.000</td><td>12.000</td><td>0,0 %</td><td><strong>no</strong> (0,0 %)</td></tr>
+            <tr><td>2022</td><td>1</td><td>VM</td><td>—</td><td>16.000</td><td>16.000</td><td>9,5 %</td><td>—</td></tr>
+            <tr><td>2023</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2024</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2025</td><td>1</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2026</td><td>1</td><td>PC</td><td>—</td><td>2.750</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2027</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2028</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2029</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2030</td><td>1</td><td>PC</td><td>14.000</td><td>13.500</td><td>15.000</td><td>7,2 %</td><td>sí</td></tr>
+            <tr><td>2031</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2032</td><td>1</td><td>PC</td><td>3.500</td><td>3.500</td><td>4.500</td><td>98,3 %</td><td>sí</td></tr>
+            <tr><td>2033</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2034</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2035</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2036</td><td>1</td><td>PC</td><td>12.250</td><td>12.250</td><td>13.250</td><td>23,4 %</td><td>sí</td></tr>
+            <tr><td>2037</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2038</td><td>1</td><td>PC</td><td>10.250</td><td>10.000</td><td>11.250</td><td>0,1 %</td><td><strong>no</strong> (0,1 %)</td></tr>
+            <tr><td>2039</td><td>1</td><td>PC</td><td>2.000</td><td>2.000</td><td>3.000</td><td>39,6 %</td><td>sí</td></tr>
+            <tr><td>2040</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2041</td><td>1</td><td>PC</td><td>10.750</td><td>10.500</td><td>11.750</td><td>28,8 %</td><td>sí</td></tr>
+            <tr><td>2042</td><td>1</td><td>PC</td><td>5.750</td><td>5.500</td><td>6.750</td><td>0,0 %</td><td><strong>no</strong> (0,0 %)</td></tr>
+            <tr><td>2043</td><td>1</td><td>PC</td><td>500</td><td>500</td><td>1.500</td><td>0,1 %</td><td><strong>no</strong> (0,1 %)</td></tr>
+            <tr><td>2044</td><td>1</td><td>PC</td><td>6.750</td><td>6.500</td><td>7.750</td><td>97,8 %</td><td>sí</td></tr>
+            <tr><td>2045</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2046</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2047</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2048</td><td>1</td><td>PC</td><td>4.500</td><td>4.250</td><td>5.500</td><td>8,1 %</td><td>sí</td></tr>
+            <tr><td>2049</td><td>1</td><td>PC</td><td>13.750</td><td>2.750</td><td>14.750</td><td>10,3 %</td><td>sí</td></tr>
+            <tr><td>2050</td><td>1</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2051</td><td>2</td><td>VM</td><td>7.000</td><td>7.000</td><td>8.000</td><td>25,6 %</td><td>sí</td></tr>
+            <tr><td>2052</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2053</td><td>2</td><td>VM</td><td>14.750</td><td>14.750</td><td>15.750</td><td>12,2 %</td><td>sí</td></tr>
+            <tr><td>2054</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2055</td><td>2</td><td>VM</td><td>250</td><td>250</td><td>1.250</td><td>86,3 %</td><td>sí</td></tr>
+            <tr><td>2056</td><td>2</td><td>VM</td><td>11.750</td><td>11.500</td><td>12.750</td><td>60,4 %</td><td>sí</td></tr>
+            <tr><td>2057</td><td>2</td><td>VM</td><td>2.000</td><td>2.000</td><td>3.000</td><td>52,1 %</td><td>sí</td></tr>
+            <tr><td>2058</td><td>2</td><td>VM</td><td>12.250</td><td>12.000</td><td>13.250</td><td>97,7 %</td><td>sí</td></tr>
+            <tr><td>2059</td><td>2</td><td>VM</td><td>—</td><td>14.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2060</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2061</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2062</td><td>2</td><td>VM</td><td>15.250</td><td>4.750</td><td>16.000</td><td>12,8 %</td><td>—</td></tr>
+            <tr><td>2063</td><td>2</td><td>VM</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2064</td><td>2</td><td>VM</td><td>9.500</td><td>9.000</td><td>10.500</td><td>30,0 %</td><td>sí</td></tr>
+            <tr><td>2065</td><td>2</td><td>VM</td><td>7.250</td><td>7.250</td><td>8.250</td><td>97,4 %</td><td>sí</td></tr>
+            <tr><td>2066</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2067</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2068</td><td>2</td><td>PC</td><td>—</td><td>11.000</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2069</td><td>2</td><td>PC</td><td>7.000</td><td>6.750</td><td>8.000</td><td>11,7 %</td><td>sí</td></tr>
+            <tr><td>2070</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2071</td><td>2</td><td>PC</td><td>6.750</td><td>6.500</td><td>7.750</td><td>0,0 %</td><td><strong>no</strong> (0,0 %)</td></tr>
+            <tr><td>2072</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2073</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2074</td><td>2</td><td>PC</td><td>5.250</td><td>5.000</td><td>6.250</td><td>78,8 %</td><td>sí</td></tr>
+            <tr><td>2075</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2076</td><td>2</td><td>PC</td><td>1.500</td><td>1.000</td><td>2.500</td><td>67,3 %</td><td>sí</td></tr>
+            <tr><td>2077</td><td>2</td><td>PC</td><td>—</td><td>—</td><td>16.000</td><td>0,0 %</td><td>—</td></tr>
+            <tr><td>2078</td><td>2</td><td>PC</td><td>4.750</td><td>4.500</td><td>5.750</td><td>97,2 %</td><td>sí</td></tr>
+            <tr><td>2079</td><td>2</td><td>PC</td><td>11.250</td><td>11.000</td><td>12.250</td><td>10,8 %</td><td>sí</td></tr>
+            <tr><td>2080</td><td>2</td><td>PC</td><td>7.000</td><td>7.000</td><td>8.000</td><td>96,4 %</td><td>sí</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+    <p class="sub">Establiment: l'època <em>t</em> del primer dels dos censos. Primer hereditari: el primer cens amb algun replicador hereditari a la mostra. Final: l'última època simulada, que és <em>t</em> + 1.000 si hi ha establiment i 16.000 si no n'hi ha. Hereditaris al final: la proporció a l'últim cens. Quan la vida no es manté, entre parèntesis hi ha els hereditaris a <em>t</em> + 1.000.</p>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li>Una <strong>auditoria de la sèrie</strong>: els dos auditors poden tornar a prendre la decisió amb les dades i el codi congelat.</li>
+      <li>Corregir al programa tres punts febles del control de còpia neta que els auditors van trobar abans del llançament. Aquesta vegada els vam cobrir amb comprovacions a mà.</li>
+      <li><strong>Provar la química</strong>: treure-li ingredients per saber quins calen perquè hi neixi vida.</li>
+      <li>Dues candidates a pregunta preregistrada: si el corrent fa que la vida duri menys, i com influeix la mida del món.</li>
     </ul>
   </article>
 
