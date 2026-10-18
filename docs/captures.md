@@ -26,14 +26,26 @@ les reprodueix (comprovat a l'auditoria 1, §7.1).
 
 Comprimides ocupen uns 48 MB en total, la meitat que sense comprimir (s'assemblen força a soroll).
 
-**On es guarda la còpia:** a la carpeta local `arxiu-captures/` i en un disc extern (còpia feta el 15-10-2026). La màquina
+## El banc de mons amb vida de la sèrie de la llei 2 (afegit el 18-10-2026)
+
+| Captures | Què són | Paràmetres | La fan servir |
+|---|---|---|---|
+| `fase2/resultats/serie-llei2/A/captures/*.bin` (72) i `fase2/resultats/serie-llei2/B/captures/*.bin` (99) | Per a cadascun dels **58 mons amb establiment** de la sèrie confirmatòria (24 del món quiet i 34 del corrent), els mons dels censos de *t*, *t* − 250 i *t* − 500, si són de l'època 250 o més tard. *t* és l'època d'establiment. En total, 171 captures | Món 512×256, radi 2, corrent 0 (A) o 0,01 (B), generador v2, cens v3, commit `8cd4449` (etiqueta `preregistre-llei2`). El nom de cada fitxer porta la llavor, *t* i l'època | El banc de mons amb vida (AUD-41). Les branques de B2 de la iteració 4, que comencen a *t*. L'estudi de l'origen abans de la detecció (protocol, §6.7) |
+
+- **D'on surten.** Les va escriure `sim.mjs --save-what event` durant la sèrie: al PC, les llavors A 1026–1050 i 1066–1080 i B 2026–2050 i 2066–2080; a la VM, la resta. El 18-10-2026 es van copiar a la còpia de treball de `main`, i les 171 còpies són iguals que els originals de cada màquina (SHA-256).
+- **Quins mons hi són.** Es va comprovar que cada món amb establiment té exactament les captures que li toquen, i que cap món sense establiment no en té. Quan *t* és 250 o 500, n'hi ha menys de tres.
+- **L'arxiu.** Aquestes captures gairebé no es comprimeixen, i l'arxiu `arxiu-captures/` passa a ocupar uns 1,2 GB.
+
+**On es guarda la còpia:** a la carpeta local `arxiu-captures/` i en un disc extern (còpia feta el 15-10-2026; la del banc de la sèrie de la llei 2, pendent). La màquina
 virtual no serveix de còpia de seguretat, perquè és al mateix disc que el PC.
 
 **Com es comprova una còpia:** `bash arxiva-captures.sh --verifica [carpeta]` descomprimeix cada `.gz` i
 en compara la suma amb `captures.sha256`, que és la de la captura sense comprimir. Per tornar-les a posar
 al seu lloc: `bash arxiva-captures.sh --restaura [carpeta]` (AU2-11 de l'auditoria externa 2).
 
-**Versions.** Totes aquestes captures i els registres de la sèrie exploratòria es van fer amb el
+**Versions.** Les 171 captures del banc de la sèrie de la llei 2 són del generador v2 i del cens v3, i
+es regeneren amb el commit `8cd4449` i l'ordre de la §3 del protocol. Les altres 12 captures i els
+registres de la sèrie exploratòria es van fer amb el
 generador v1 i el cens v2. Per regenerar-les cal `--rng v1 --census-version v2`. Els registres de les
 llavors 4–15 de la VM (`fase2/resultats/vm/`) no porten la capçalera `codi=` ni `rng=`, perquè es van fer
 amb codi anterior a la capçalera, del generador v1 (AUD-37 de l'auditoria 2).
