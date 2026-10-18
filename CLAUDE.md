@@ -11,7 +11,7 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   per a Node s'anomenen `.mjs` o depenen del `"type": "module"` del `package.json`.
 - Proves: `npm test` (intèrpret, món i cens, línia d'ordres, lots d'experiments, servidor, estadística,
   oracle de cubff i regressió del determinisme; necessita `bash`, Git Bash a Windows). **Abans de demanar
-  un merge, `bash prova-neta.sh`**, que les passa en una còpia neta del commit: no poden dependre de canvis
+  un merge, `bash eines/prova-neta.sh`**, que les passa en una còpia neta del commit: no poden dependre de canvis
   sense desar (AUD-58). GitHub també les passa a cada PR, amb Node 16 i 20 (`.github/workflows/proves.yml`). Han de passar totes abans de donar res per acabat. Les empremtes de
   `test/determinisme.mjs` no es toquen mai: si un canvi ha d'alterar les històries a propòsit, va darrere
   d'una opció nova. El mateix val per als valors del cens v2.
@@ -45,23 +45,26 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   concordança amb la història original. Mai no es fa servir amb els mons de la part `confirmacio` del
   repartiment (`fase2/resultats/b2/repartiment.json`): s'hi nega.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
-- Captures clau: `captures.sha256` i `docs/captures.md`; còpia amb `bash arxiva-captures.sh`.
-- Llistes d'experiments: `bash experiments.sh N carpeta < llista` (cada línia: `nom arguments-de-sim.mjs`).
-  Els lots llargs es llancen amb `bash llanca-lot.sh N carpeta llista`, que escriu el progrés només a
+- Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
+  captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
+  cada imatge ha de dir d'on surt (quina captura, quina llavor, quina època).
+- Captures clau: `docs/captures.sha256` i `docs/captures.md`; còpia amb `bash eines/arxiva-captures.sh`.
+- Llistes d'experiments: `bash eines/experiments.sh N carpeta < llista` (cada línia: `nom arguments-de-sim.mjs`).
+  Els lots llargs es llancen amb `bash eines/llanca-lot.sh N carpeta llista`, que escriu el progrés només a
   `carpeta/lot-<llista>.out`, mai a la consola. Una consola de Windows en mode de selecció atura el lot.
-  - **Separar-lo de la sessió:** a la VM, `(nohup bash llanca-lot.sh ... > /dev/null 2>&1 &)`; al PC,
-    `Start-Process -WindowStyle Hidden` amb `bash llanca-lot.sh ...`.
+  - **Separar-lo de la sessió:** a la VM, `(nohup bash eines/llanca-lot.sh ... > /dev/null 2>&1 &)`; al PC,
+    `Start-Process -WindowStyle Hidden` amb `bash eines/llanca-lot.sh ...`.
   - **Abans de començar,** el lot comprova la llista: almenys un experiment i cap nom repetit, amb 1 a 16
     experiments alhora. Si no, surt amb el codi 2. Un experiment amb `--json` només es dona per fet si
     el JSONL és complet (la línia d'inici, amb la llavor, i la final). La línia final del lot diu
     `lot acabat` o `lot interromput (codi N)`.
-  - **Seguiment:** `bash seguiment.sh [--agregat] carpeta` només compta experiments (l'últim estat de
+  - **Seguiment:** `bash eines/seguiment.sh [--agregat] carpeta` només compta experiments (l'últim estat de
     cadascun) i comprova que els registres siguin complets. Durant una sèrie no es miren resultats
     parcials. A les sèries confirmatòries, amb `--agregat` (sense noms) i amb noms opacs a les llistes
     (AUD-57).
   - **Experiments de branca:** `node sim.mjs ... --from captura.bin --start EPOCA` continua un món desat.
-- Màquina virtual de laboratori: `ssh -i ~/.ssh/claude_origins_vm claude@192.168.171.3` (Git Bash). Cada
-  commit desplegat és a `~/claude-origins-<commit>` (`~/claude-origins` és el desplegament antic, amb
+- Màquina virtual de laboratori: l'accés (adreça, usuari i clau) és a `CLAUDE.local.md` i a `eines/local.env`,
+  que no van a git. Cada commit desplegat és a `~/claude-origins-<commit>` (`~/claude-origins` és el desplegament antic, amb
   els resultats de la sèrie exploratòria). La VM no té `npm`: les proves s'hi executen una per una amb
   `node`, en l'ordre de `package.json`. Els lots es llancen amb `nohup`, entre parèntesis, perquè la
   sessió SSH no es quedi penjada. cubff (l'oracle de l'intèrpret) és a `~/cubff`: vegeu
@@ -71,7 +74,11 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 ## Git i traçabilitat
 
 - Repositori privat: `git@github.com:xavig-icv/genesis.git` (branca `main`), amb una clau de
-  desplegament pròpia (`~/.ssh/claude_origins_github`, configurada a `core.sshCommand`).
+  desplegament pròpia (configurada a `core.sshCommand`; vegeu `CLAUDE.local.md`).
+- **Dades internes, només en local.** Les adreces, els noms de les claus, els camins de la màquina i les
+  còpies de seguretat van a `CLAUDE.local.md` i a `eines/local.env` (a `.gitignore`), mai al repositori. Les
+  auditories (`../auditories/`) tampoc no es publiquen. Abans de cada commit que toqui documentació o eines,
+  comproveu-ho amb `git grep` de l'adreça de la VM.
 - Un commit per cada canvi amb sentit (una llei, una correcció, una entrada del quadern), amb missatges
   en català que expliquin el perquè.
 - Els canvis al simulador (`sim.mjs`, `fase1/bff.js`, `fase1/soup.js`, `fase2/world.js`) i a les eines
@@ -79,13 +86,13 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   documentació i els registres poden anar directament a `main`.
 - Cada registre d'experiment comença amb `codi=<commit>`: si diu `+canvis`, el codi no estava desat.
   Abans d'un experiment llarg, fes commit del codi.
-- La màquina virtual rep el codi amb `bash desplega-vm.sh`, que copia exactament el commit actual a
+- La màquina virtual rep el codi amb `bash eines/desplega-vm.sh`, que copia exactament el commit actual a
   `~/claude-origins-<commit>` i hi deixa el fitxer `VERSIO`. Un lot s'executa sempre des de la carpeta
   del seu commit.
 - Les captures `.bin` no van a git (vegeu `.gitignore`): es regeneren amb el mateix commit i llavor.
 - Llicència: Apache 2.0 per al codi (`LICENSE`, `NOTICE` amb els crèdits) i CC BY 4.0 per al quadern i la
-  documentació (`LICENSE-docs.md`). Abans de fer públic el repositori, cal treure-hi les
-  dades internes (IP de la màquina virtual, camins locals).
+  documentació (`LICENSE-docs.md`). Fer públic el repositori és decisió del responsable: la història de git
+  anterior a la reorganització encara conté l'adreça privada de la VM (vegeu `docs/disseny.md`).
 - Auditories externes iteratives a `../auditories/claude-origins/auditor1/auditN/`. En acabar cada grup
   de tasques, deixa-hi un `informe-de-traspas.md` (commits, estat de cada troballa AUD-xx, què cal
   revisar). Quan arribi l'informe de l'auditor, comprova'n les afirmacions amb dades i respon a

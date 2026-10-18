@@ -52,7 +52,7 @@ intents que la primera en cada paper.
 ## 3. Les 12 captures clau
 
 `node fase2/calibratge.mjs 2048` (cal restaurar abans les captures amb
-`bash arxiva-captures.sh --restaura`). Per a cada família, es posen a prova 500 cel·les del seu territori i
+`bash eines/arxiva-captures.sh --restaura`). Per a cada família, es posen a prova 500 cel·les del seu territori i
 500 de fora.
 
 Les xifres són de la v3 corregida (AU2-15). Amb la primera versió, que s'aturava al primer fill, els

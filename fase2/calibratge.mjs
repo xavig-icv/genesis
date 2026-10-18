@@ -2,7 +2,7 @@
 // territori de les famílies i els replicadors comprovats (AU2-01 de l'auditoria externa 2).
 //
 // Ús: node fase2/calibratge.mjs [mostra=2048] [captura.bin ...]
-//     Sense captures, fa servir les de captures.sha256 que hi hagi al disc (vegeu docs/captures.md).
+//     Sense captures, fa servir les de docs/captures.sha256 que hi hagi al disc (vegeu docs/captures.md).
 //     Els noms que contenen "mon<W>x<H>" són mons 2D; la resta, sopes barrejades.
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
@@ -20,7 +20,7 @@ if (!Number.isInteger(sample) || sample < 1) {
   console.error('Ús: node fase2/calibratge.mjs [mostra=2048] [captura.bin ...]');
   process.exit(2);
 }
-const files = given.length ? given : readFileSync(join(root, 'captures.sha256'), 'utf8').trim().split('\n')
+const files = given.length ? given : readFileSync(join(root, 'docs', 'captures.sha256'), 'utf8').trim().split('\n')
   .map((l) => join(root, l.split(/\s+\*?/)[1])).filter((f) => existsSync(f));
 
 const pct = (x, n) => `${((x / n) * 100).toFixed(1)} %`;

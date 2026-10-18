@@ -3,8 +3,8 @@
 Les captures (`.bin`) són l'estat complet d'un món o d'una sopa en una època: 64 bytes per programa,
 sense capçalera. No van a git perquè ocupen 8 MB cadascuna i, en principi, es poden regenerar amb el
 mateix commit, llavor i paràmetres. Però n'hi ha que són el **punt de partida d'altres experiments**
-o que **cita el quadern**, i regenerar-les pot trigar hores. Aquestes són a `captures.sha256`, amb la
-suma de comprovació, i se'n fa còpia amb `bash arxiva-captures.sh` (vegeu l'auditoria 1, AUD-10).
+o que **cita el quadern**, i regenerar-les pot trigar hores. Aquestes són a `docs/captures.sha256`, amb la
+suma de comprovació, i se'n fa còpia amb `bash eines/arxiva-captures.sh` (vegeu l'auditoria 1, AUD-10).
 
 Totes es van fer amb el generador v1 (mulberry32) i amb codi anterior al primer commit; el codi actual
 les reprodueix (comprovat a l'auditoria 1, §7.1).
@@ -36,12 +36,12 @@ Comprimides ocupen uns 48 MB en total, la meitat que sense comprimir (s'assemble
 - **Quins mons hi són.** Es va comprovar que cada món amb establiment té exactament les captures que li toquen, i que cap món sense establiment no en té. Quan *t* és 250 o 500, n'hi ha menys de tres.
 - **L'arxiu.** Aquestes captures gairebé no es comprimeixen, i l'arxiu `arxiu-captures/` passa a ocupar uns 1,2 GB.
 
-**On es guarda la còpia:** a la carpeta local `arxiu-captures/` i a `D:\abiogenesis-backup\arxiu-captures`. La primera còpia és del 15-10-2026, i el banc de la sèrie de la llei 2 s'hi va afegir el 18-10-2026 (`--verifica`: 183 correctes). `D:` és un segon disc físic, diferent del del sistema (`C:`): protegeix contra una avaria del disc del sistema, però no contra la pèrdua de tot l'ordinador. La màquina
+**On es guarda la còpia:** a la carpeta local `arxiu-captures/` i en una segona carpeta d'un altre disc (el camí és a `CLAUDE.local.md`, que no es publica). La primera còpia és del 15-10-2026, i el banc de la sèrie de la llei 2 s'hi va afegir el 18-10-2026 (`--verifica`: 183 correctes). Aquest segon disc és físicament diferent del del sistema: protegeix contra una avaria del disc del sistema, però no contra la pèrdua de tot l'ordinador. La màquina
 virtual no serveix de còpia de seguretat, perquè és al mateix disc que el PC.
 
-**Com es comprova una còpia:** `bash arxiva-captures.sh --verifica [carpeta]` descomprimeix cada `.gz` i
-en compara la suma amb `captures.sha256`, que és la de la captura sense comprimir. Per tornar-les a posar
-al seu lloc: `bash arxiva-captures.sh --restaura [carpeta]` (AU2-11 de l'auditoria externa 2).
+**Com es comprova una còpia:** `bash eines/arxiva-captures.sh --verifica [carpeta]` descomprimeix cada `.gz` i
+en compara la suma amb `docs/captures.sha256`, que és la de la captura sense comprimir. Per tornar-les a posar
+al seu lloc: `bash eines/arxiva-captures.sh --restaura [carpeta]` (AU2-11 de l'auditoria externa 2).
 
 **Versions.** Les 171 captures del banc de la sèrie de la llei 2 són del generador v2 i del cens v3, i
 es regeneren amb el commit `8cd4449` i l'ordre de la §3 del protocol. Les altres 12 captures i els

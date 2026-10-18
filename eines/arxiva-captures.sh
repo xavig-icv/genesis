@@ -2,16 +2,16 @@
 # Còpia de seguretat de les captures clau (AUD-10 de l'auditoria 1).
 #
 # Les captures .bin no van a git (8 MB cadascuna). Les que són el punt de partida d'altres
-# experiments, o les que cita el quadern, són a captures.sha256 amb la seva suma de comprovació;
+# experiments, o les que cita el quadern, són a docs/captures.sha256 amb la seva suma de comprovació;
 # què és cadascuna, a docs/captures.md.
 #
-#   bash arxiva-captures.sh [carpeta]            comprimeix les captures a la carpeta (per defecte
+#   bash eines/arxiva-captures.sh [carpeta]            comprimeix les captures a la carpeta (per defecte
 #                                                arxiu-captures/) i comprova les sumes
-#   bash arxiva-captures.sh --verifica [carpeta] comprova un arxiu ja fet (per exemple, una còpia
+#   bash eines/arxiva-captures.sh --verifica [carpeta] comprova un arxiu ja fet (per exemple, una còpia
 #                                                en un disc extern)
-#   bash arxiva-captures.sh --restaura [carpeta] torna a posar al seu lloc les captures que hi falten
+#   bash eines/arxiva-captures.sh --restaura [carpeta] torna a posar al seu lloc les captures que hi falten
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 MODE=arxiva
 if [[ "${1:-}" == --verifica || "${1:-}" == --restaura ]]; then MODE="${1#--}"; shift; fi
 DEST="${1:-arxiu-captures}"
@@ -39,7 +39,7 @@ while read -r sum path; do
       ;;
   esac
   ok=$((ok + 1))
-done < captures.sha256
+done < docs/captures.sha256
 
 echo "$MODE: $ok correctes, $bad amb problemes ($DEST)"
 [[ $bad -eq 0 ]]

@@ -17,10 +17,10 @@
 # Codis de sortida: 0 si s'han executat tots (encara que n'hagi fallat algun, cosa que queda escrita),
 # 2 si la llista o els arguments no són vàlids, i un altre si el lot s'ha interromput.
 # Ús:
-#   bash experiments.sh 3 fase3/resultats < llista.txt
-# Per a lots llargs, feu servir llanca-lot.sh, que escriu el progrés en un fitxer i no a la consola.
+#   bash eines/experiments.sh 3 fase3/resultats < llista.txt
+# Per a lots llargs, feu servir eines/llanca-lot.sh, que escriu el progrés en un fitxer i no a la consola.
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 PARALLEL="${1:-3}"
 export OUT="${2:-resultats}"
 if ! [[ "$PARALLEL" =~ ^[0-9]+$ ]] || (( PARALLEL < 1 || PARALLEL > 16 )); then

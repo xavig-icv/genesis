@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Com va un lot, sense mirar cap resultat (AU2-34 de l'auditoria externa 7).
-#   bash seguiment.sh [--agregat] carpeta
+#   bash eines/seguiment.sh [--agregat] carpeta
 #
 # Llegeix els fitxers lot-*.out de la carpeta, per ordre d'inici, i es queda amb l'últim estat de
 # cada experiment (AUD-56 i AU2-40 de l'auditoria 8): "comença:" vol dir en marxa; "acaba:" o "ja fet:",
@@ -17,9 +17,9 @@
 set -euo pipefail
 AGG=0
 if [[ "${1:-}" == --agregat ]]; then AGG=1; shift; fi
-if [[ $# -ne 1 ]]; then echo "ús: bash seguiment.sh [--agregat] carpeta" >&2; exit 2; fi
+if [[ $# -ne 1 ]]; then echo "ús: bash eines/seguiment.sh [--agregat] carpeta" >&2; exit 2; fi
 case "$1" in /*|[A-Za-z]:*) DIR="$1" ;; *) DIR="$PWD/$1" ;; esac
-cd "$(dirname "$0")"     # els camins dels JSONL (--json) són relatius al repositori
+cd "$(dirname "$0")/.."     # els camins dels JSONL (--json) són relatius al repositori
 shopt -s nullglob
 LOTS=("$DIR"/lot-*.out)
 [[ ${#LOTS[@]} -gt 0 ]] || { echo "no hi ha cap lot-*.out a $DIR" >&2; exit 1; }
