@@ -97,3 +97,5 @@ details.table-card { margin: 16px 0; }
 details.table-card summary { padding: 2px 0; }
 details.table-card table { margin-top: 10px; }
 @media (max-width: 560px) { .km text { font-size: 18px; } .km .km-x { display: none; } }
+/* Les seqüències de codi llargues (entrada 4) es parteixen en pantalles estretes */
+article p code, article li code { overflow-wrap: anywhere; }
