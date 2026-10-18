@@ -140,7 +140,8 @@ Dues propostes més, per després:
     de la llei 7. És una de les transicions evolutives majors (Maynard Smith i Szathmáry).
 
 **Full de ruta (16-10-2026, AUD-40 de l'auditoria 2, decidit pel responsable del projecte).**
-- **Primer, la sèrie confirmatòria de la llei 2.**
+- **Primer, la sèrie confirmatòria de la llei 2.** *Feta el 18-10-2026: no concloent (entrada 8; vegeu
+  §5 i §6).*
 - **Després, un eix de química:** ablacions a la sopa barrejada, que és barata i hi fa vida en milers
   d'èpoques, per saber quins ingredients són necessaris. Per exemple:
   - sense mutació (l'article diu que la vida hi apareix igualment);
@@ -192,6 +193,11 @@ Dues propostes més, per després:
 | 16-10-2026 | L'intèrpret es compara amb el codi original de cubff (oracle extern), compilat a la VM | La referència de les proves l'havíem escrita nosaltres (AU2-12). Coincideixen en 200.000 cintes. Es manté la mutació del 0,024 % (la de l'article; cubff fa servir 1/4.096) |
 | 16-10-2026 | La pregunta del projecte es reformula: condicions, establiment, evolució posterior i generalitat (§1) | AUD-39; decidit pel responsable del projecte |
 | 16-10-2026 | Després de la sèrie confirmatòria, ablacions de química a la sopa, abans de les lleis 4–8 (§4) | AUD-40; decidit pel responsable del projecte |
+| 16-10-2026 | El *merge* de la iteració 3 (`8cd4449`) és el preregistre de la sèrie de la llei 2, amb l'etiqueta anotada `preregistre-llei2` publicada abans de llançar res. Tres punts febles del control de còpia neta (AUD-51, AU2-31, AU2-32) no es corregeixen al programa: es cobreixen amb comprovacions a mà, anotades a l'acta de llançament (`../auditories/claude-origins/equip/acta-preregistre-llei2.md`) | Tots dos auditors van donar GO a l'auditoria 6 amb la condició de no tocar més el motor de decisió abans del *merge*. Es corregiran a la iteració 4 |
+| 16-10-2026 | Cada màquina (VM i PC) fa la meitat de cada grup de la sèrie, amb A i B alternats | Una interrupció afecta tots dos grups per igual, i les dues màquines donen resultats idèntics (`npm test`, les mateixes empremtes) |
+| 17-10-2026 | Durant l'execució no es tornen a repartir les llavors entre màquines, encara que una vagi més de pressa | No es toca un lot confirmatori en marxa: es podria repetir o saltar una llavor |
+| 18-10-2026 | **Resultat de la sèrie confirmatòria:** no es rebutja H0 (món quiet 24/80, corrent 0,01 34/80; log-rank Z = −1,83, límit 2,004). Es comunica com a "no concloent", amb la mida de l'efecte (+12,5 punts, IC 95 % −2,3 a 27,3) i sense presentar com a resultat les sensibilitats ni les observacions descriptives | La regla de comunicació del protocol (§10), escrita abans. L'interval inclou el zero i també la diferència mínima rellevant (20 % contra 40 %) |
+| 18-10-2026 | Els llançadors dels lots escriuran només a un fitxer, mai a la consola | Una finestra de consola en mode de selecció de Windows va aturar el lot del PC durant una hora (incidència 1 de l'acta) |
 
 ## 6. Estat i resultats principals
 
@@ -232,6 +238,14 @@ Resum. El detall és al quadern.
   - **Copiadors esporàdics:** en mons sense vida establerta, gairebé tots són no hereditaris.
   - **Fidelitat:** l'intèrpret coincideix amb cubff.
   - **Protocol v0.2:** a punt per a l'auditoria 3.
+- **Llei 2, sèrie confirmatòria (entrada 8, preregistrada, protocol v0.5):**
+  - **Resultat:** món quiet, 24 de 80 (30 %); corrent 0,01, 34 de 80 (42,5 %). Log-rank Z = −1,83: no
+    supera el límit, i **no es pot afirmar que el corrent canviï el ritme d'establiment**. Tampoc no es pot
+    descartar un efecte de la mida que ens interessava.
+  - **Descriptiu:** les dues etapes no s'assemblen (19/18 i 5/16). La vida establerta es manté
+    1.000 èpoques en 23 de 23 mons quiets i en 26 de 33 amb corrent. Si només es compta la vida que
+    dura, la diferència gairebé desapareix.
+  - **El món quiet fa vida en un 30 % dels mons,** més del que deia l'exploració (20 %, amb 15 llavors).
 - **Registre de famílies v2:** arregla els tres punts cecs de la v1. Sobre els mons desats de
   l'escombrat, ara troba el replicador que necessita parella (3,9 % del mapa), el palíndrom espaiat, i
   no s'inventa famílies en un món sense vida. Triga ~0,5 s per anàlisi en un món de 131.072 cel·les.
@@ -244,6 +258,11 @@ Resum. El detall és al quadern.
 - En un món amb espai, poden conviure diverses famílies de replicadors?
 - L'espai pur frena l'aparició de la vida? I si és així, quanta barreja (llei 2) cal perquè torni?
   (Pista de l'entrada 4: molt poca, un 0,1 % de cel·les per època. Cal confirmar-ho amb més llavors.)
+  (Entrada 8: el món quiet contra el corrent 0,01, amb 80 llavors cadascun, no és concloent. Per detectar
+  una diferència com l'observada, d'uns 12 punts, caldrien unes 250 llavors per condició.)
+- El corrent fa que la vida establerta duri menys? (Entrada 8, descriptiu: no es manté en 7 de 33 mons
+  amb corrent i en 0 de 23 sense corrent.) Seria una pregunta preregistrada pròpia, amb branques des de
+  les captures de l'establiment.
 - El replicador que necessita una parella pot sobreviure en un món que no s'enverini tan de pressa?
   És el camí natural cap a la reproducció entre dos. (Entrada 5: sí, amb prou renovació.)
 - Els mons amb riu i corrent afavoreixen que neixi vida? (Entrada 5: un cas en 750 èpoques.) Cal un
