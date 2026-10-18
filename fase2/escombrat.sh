@@ -2,7 +2,7 @@
 # Escombrat de la llei 2 (corrents): executa una llista d'experiments, N alhora.
 # Reprodueix la sèrie exploratòria de les entrades 4 i 6, que es va fer amb el generador v1 i el cens
 # v2: per això els fixa (AUD-29 de l'auditoria 2), i tots els registres amb aquest nom són de la
-# mateixa versió. Per a sèries noves, feu servir experiments.sh amb una llista pròpia.
+# mateixa versió. Per a sèries noves, feu servir eines/experiments.sh amb una llista pròpia.
 # Cada línia de la llista és "barreja llavor". Ús:
 #   bash fase2/escombrat.sh 3 <<'EOF'
 #   0.001 1

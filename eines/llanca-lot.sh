@@ -3,7 +3,7 @@
 # consola. Una consola de Windows en mode de selecció bloqueja tot el que hi escriu, i el 17-10-2026
 # va aturar el lot del PC durant una hora (incidència 1 de l'acta de la sèrie de la llei 2).
 #
-#   bash llanca-lot.sh N carpeta llista.txt
+#   bash eines/llanca-lot.sh N carpeta llista.txt
 #
 # La carpeta i la llista són relatives a la carpeta des d'on es crida l'script (AUD-59). Els camins de
 # dins de la llista són relatius a la carpeta del repositori.
@@ -17,14 +17,14 @@
 # complets i torna a fer els incomplets.
 #
 # El lot corre en primer pla. Per separar-lo de la sessió:
-#   VM (Linux):  (nohup bash llanca-lot.sh 3 carpeta llista.txt > /dev/null 2>&1 &)
-#   PC (Windows): Start-Process -WindowStyle Hidden bash -ArgumentList 'llanca-lot.sh', ...
-# Per veure com va sense mirar cap resultat: bash seguiment.sh [--agregat] carpeta
+#   VM (Linux):  (nohup bash eines/llanca-lot.sh 3 carpeta llista.txt > /dev/null 2>&1 &)
+#   PC (Windows): Start-Process -WindowStyle Hidden bash -ArgumentList 'eines/llanca-lot.sh', ...
+# Per veure com va sense mirar cap resultat: bash eines/seguiment.sh [--agregat] carpeta
 set -euo pipefail
-if [[ $# -ne 3 ]]; then echo "ús: bash llanca-lot.sh N carpeta llista.txt" >&2; exit 2; fi
+if [[ $# -ne 3 ]]; then echo "ús: bash eines/llanca-lot.sh N carpeta llista.txt" >&2; exit 2; fi
 abs() { case "$1" in /*|[A-Za-z]:*) printf '%s\n' "$1" ;; *) printf '%s\n' "$PWD/$1" ;; esac; }
 PARALLEL="$1"; DIR=$(abs "$2"); LIST=$(abs "$3")
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 if ! [[ "$PARALLEL" =~ ^[0-9]+$ ]] || (( PARALLEL < 1 || PARALLEL > 16 )); then
   echo "llanca-lot.sh: el nombre d'experiments alhora ha de ser un enter d'1 a 16 (és '$PARALLEL')" >&2; exit 2
 fi
@@ -45,7 +45,7 @@ fi
 echo "== lot començat $(date '+%Y-%m-%d %H:%M:%S') codi=$CODE llista=$LIST paral·lel=$PARALLEL" >> "$OUTFILE"
 FROM=$(wc -l < "$OUTFILE")
 rc=0
-bash experiments.sh "$PARALLEL" "$DIR" < "$LIST" >> "$OUTFILE" 2>&1 || rc=$?
+bash eines/experiments.sh "$PARALLEL" "$DIR" < "$LIST" >> "$OUTFILE" 2>&1 || rc=$?
 count() { tail -n +"$FROM" "$OUTFILE" | grep -c "^$1" || true; }
 SUMMARY="$(count 'acaba:') acabats, $(count 'falla:') fallats, $(count 'ja fet:') ja fets"
 if [[ $rc -eq 0 ]]; then

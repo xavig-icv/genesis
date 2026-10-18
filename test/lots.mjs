@@ -1,4 +1,4 @@
-// Proves dels lots d'experiments: experiments.sh, llanca-lot.sh i seguiment.sh (A6 del pla de la
+// Proves dels lots d'experiments: eines/experiments.sh, eines/llanca-lot.sh i eines/seguiment.sh (A6 del pla de la
 // iteració 4; correccions de l'auditoria 8: AU2-37 a AU2-40, AUD-56, AUD-57 i AUD-59).
 // Executa: node test/lots.mjs (necessita bash: Git Bash a Windows)
 import assert from 'assert';
@@ -9,7 +9,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const bash = (script, args = [], opts = {}) => spawnSync('bash', [join(root, script), ...args], { cwd: root, encoding: 'utf8', ...opts });
+const bash = (script, args = [], opts = {}) => spawnSync('bash', [join(root, 'eines', script), ...args], { cwd: root, encoding: 'utf8', ...opts });
 const slash = (p) => p.replace(/\\/g, '/');         // xargs llegeix les barres invertides com a escapament
 const lotOut = (dir, list = 'llista') => readFileSync(join(dir, `lot-${list}.out`), 'utf8');
 
@@ -96,7 +96,7 @@ const tests = {
       const r = bash('llanca-lot.sh', [p, dir, list]);
       assert.strictEqual(r.status, 2, `${p}: ${r.stderr}`);
       assert.match(r.stderr, /enter d'1 a 16/);
-      const e = spawnSync('bash', [join(root, 'experiments.sh'), p, dir], { input: LIST, encoding: 'utf8' });
+      const e = spawnSync('bash', [join(root, 'eines', 'experiments.sh'), p, dir], { input: LIST, encoding: 'utf8' });
       assert.strictEqual(e.status, 2, `experiments.sh ${p}`);
     }
     assert.ok(!existsSync(join(dir, 'lot-llista.out')));
@@ -110,7 +110,7 @@ const tests = {
       const r = bash('llanca-lot.sh', ['2', dir, list]);
       assert.strictEqual(r.status, 2, name);
       assert.match(r.stderr, /no té cap experiment/);
-      const e = spawnSync('bash', [join(root, 'experiments.sh'), '2', dir], { input: content, encoding: 'utf8' });
+      const e = spawnSync('bash', [join(root, 'eines', 'experiments.sh'), '2', dir], { input: content, encoding: 'utf8' });
       assert.strictEqual(e.status, 2, `experiments.sh, llista ${name}`);
     }
     assert.deepStrictEqual(readdirSync(dir).filter((f) => f.endsWith('.log') || f.endsWith('.out')), []);
@@ -199,14 +199,15 @@ const tests = {
   "el codi del lot: còpia neta de git, còpia amb canvis i sense git (VERSIO)": () => withBatch((dir, list) => {
     const copy = join(dir, 'copia');
     mkdirSync(copy);
-    for (const f of ['llanca-lot.sh', 'experiments.sh', 'sim.mjs', 'package.json']) copyFileSync(join(root, f), join(copy, f));
+    mkdirSync(join(copy, 'eines'));
+    for (const f of ['eines/llanca-lot.sh', 'eines/experiments.sh', 'sim.mjs', 'package.json']) copyFileSync(join(root, f), join(copy, f));
     for (const d of ['fase1', 'fase2']) {
       mkdirSync(join(copy, d));
       for (const f of readdirSync(join(root, d)).filter((f) => /\.m?js$/.test(f))) copyFileSync(join(root, d, f), join(copy, d, f));
     }
     const run = (cmd) => spawnSync('bash', ['-c', cmd], { cwd: copy, encoding: 'utf8' });
     const launch = () => {
-      const r = spawnSync('bash', ['llanca-lot.sh', '1', 'lot', list], { cwd: copy, encoding: 'utf8' });
+      const r = spawnSync('bash', ['eines/llanca-lot.sh', '1', 'lot', list], { cwd: copy, encoding: 'utf8' });
       assert.strictEqual(r.status, 0, r.stderr);
       const out = readFileSync(join(copy, 'lot', 'lot-llista.out'), 'utf8');
       rmSync(join(copy, 'lot'), { recursive: true });

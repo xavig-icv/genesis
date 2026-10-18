@@ -8,9 +8,9 @@
 # carpeta del seu commit, i un commit ja desplegat no es torna a copiar. També hi van les proves, el
 # servidor, la portada i el quadern, perquè npm test hi passi sencer (la VM no té npm: les proves
 # s'hi executen una per una amb node, en el mateix ordre que a package.json).
-# Ús: bash desplega-vm.sh
+# Ús: bash eines/desplega-vm.sh
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 HOST="${VM:-claude@192.168.171.3}"
 KEY="${VM_KEY:-$HOME/.ssh/claude_origins_vm}"
 if [[ -n "$(git status --porcelain -- '*.js' '*.mjs' '*.sh' 'test/fixtures')" ]]; then
@@ -28,5 +28,5 @@ if ssh -i "$KEY" -o BatchMode=yes "$HOST" "test -e ~/$DIR"; then
   echo "~/$DIR existeix però no té VERSIO $HASH (un desplegament interromput?): esborreu-la i torneu-ho a provar" >&2
   exit 1
 fi
-git archive HEAD package.json sim.mjs server.mjs index.html experiments.sh llanca-lot.sh seguiment.sh fase1 fase2 quadern test eines \
+git archive HEAD package.json sim.mjs server.mjs index.html fase1 fase2 quadern test eines \
   | ssh -i "$KEY" -o BatchMode=yes "$HOST" "mkdir ~/$DIR && tar xf - -C ~/$DIR && echo $HASH > ~/$DIR/VERSIO && echo desplegat a ~/$DIR"

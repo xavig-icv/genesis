@@ -29,10 +29,10 @@ Edge o un altre navegador basat en Chromium (és amb el que s'ha comprovat la re
 | `fase2/` | El món 2D i les lleis 1 (espai), 2 (corrents) i 3 (flux), el registre de famílies i les eines d'anàlisi. |
 | `fase3/` | Llistes i registres dels experiments de la llei 3 (el codi és a `fase2/`). |
 | `sim.mjs` | Simulació sense gràfics per a experiments llargs, de la sopa o del món 2D (`node sim.mjs --help`). |
-| `experiments.sh` | Executa una llista d'experiments, uns quants alhora, i anota els que fallen. |
-| `llanca-lot.sh` | Llança un lot d'`experiments.sh` i n'escriu el progrés només en un fitxer, mai a la consola. |
-| `seguiment.sh` | Diu com va un lot (començats, acabats, fallats, en marxa) sense mostrar cap resultat. |
-| `prova-neta.sh` | Passa `npm test` en una còpia neta d'un commit, abans de demanar un *merge*. |
+| `eines/experiments.sh` | Executa una llista d'experiments, uns quants alhora, i anota els que fallen. |
+| `eines/llanca-lot.sh` | Llança un lot d'`eines/experiments.sh` i n'escriu el progrés només en un fitxer, mai a la consola. |
+| `eines/seguiment.sh` | Diu com va un lot (començats, acabats, fallats, en marxa) sense mostrar cap resultat. |
+| `eines/prova-neta.sh` | Passa `npm test` en una còpia neta d'un commit, abans de demanar un *merge*. |
 | `test/` | Proves de la línia d'ordres, dels lots d'experiments, del servidor, de l'estadística, de l'oracle de cubff i de regressió del determinisme. `test/fixtures/` té dos retalls petits de mons amb vida. |
 | `*/resultats/` | Registres dels experiments llargs (les captures `.bin` no són a git). |
 
