@@ -1,0 +1,45 @@
+Decisió confirmatòria de l'etapa 2 (final) · sèrie de la llei 2 (protocol estadístic v0.5)
+
+Data: 18-10-2026 08:25:20 CEST
+Des de: un git worktree nou de l'etiqueta preregistre-llei2, HEAD 8cd444927f5c3024aa1162abb859e48273c2f535
+Comprovacions abans de decidir (acta de llançament, AUD-51, AU2-31, AU2-32):
+  - git cat-file -t refs/tags/preregistre-llei2 = tag; preregistre-llei2^{commit} = 8cd4449…; publicada (git ls-remote)
+  - git status --porcelain complet: buit; git ls-files -v: cap fitxer amb assume-unchanged ni skip-worktree
+  - git hash-object = etiqueta a docs/protocol-estadistic.md, fase2/serie-llei2.json, fase2/estadistica.mjs,
+    fase2/census.js, fase2/replication.js, fase2/families.js, fase1/soup.js i fase1/bff.js
+  - SHA-256 del protocol, del manifest i d'estadistica.mjs iguals que al missatge de l'etiqueta
+Dades: fase2/resultats/serie-llei2/A i B, 80 + 80. Etapa 1 al commit 44d8999. Etapa 2: A 1051-1065 i B 2051-2065,
+  de la VM (Node 20.19.2); A 1066-1080 i B 2066-2080, del PC (Node 16.15.1). Totes les còpies, verificades per
+  SHA-256 amb els originals (320 fitxers, també els de l'etapa 1).
+Ordre: node fase2/estadistica.mjs --etapa 2 fase2/resultats/serie-llei2/A fase2/resultats/serie-llei2/B
+  (des del worktree, amb els camins de les carpetes de dades de la còpia de main)
+Codi de sortida: 0
+----
+Etapa 1 recalculada sobre les seves llavors: Z1 = 0.0685 (límit |Z| > 2.479178635)
+Commit del preregistre: 8cd444927f5c3024aa1162abb859e48273c2f535 (etiqueta de git preregistre-llei2; manifest i programa d'aquest commit)
+Sèrie validada: etapa 2, 80 + 80 experiments, commit 8cd4449
+Empremta dels fitxers (SHA-256): 0809992ecd14be5d0d3b16884db03052c26cdd45ea9603ec8cf228836f21d207
+Log-rank: Z = -1.8306; límit de l'etapa 2: |Z| > 2.004268879
+DECISIÓ: no es rebutja H0: la sèrie no permet afirmar que el corrent canviï el ritme d'establiment
+
+món quiet (m = 0): 80 experiments, 24 amb establiment (30.0 %; Wilson 95 % 21.1 %–40.8 %); codi 8cd4449
+corrent 0,01: 80 experiments, 34 amb establiment (42.5 %; Wilson 95 % 32.3 %–53.4 %); codi 8cd4449
+Log-rank bilateral: Z = -1.831, khi quadrat = 3.351, p = 0.0672
+Fisher bilateral (descriptiu): p = 0.1385
+Diferència d'incidència acumulada a l'època 16000 (corrent 0,01 − món quiet (m = 0)): 12.5 % (IC 95 % -2.3 % a 27.3 %)
+RMST fins a l'època 16000: món quiet (m = 0) 14044 ± 417, corrent 0,01 12444 ± 557 (diferència -1600 ± 696)
+Kaplan-Meier món quiet (m = 0): 1250:0.988  2250:0.975  4000:0.963  4250:0.950  4750:0.938  6250:0.925  7500:0.913  8000:0.900  9000:0.875  9500:0.838  10250:0.813  10500:0.800  11750:0.788  12250:0.775  12500:0.763  14500:0.750  15000:0.713  15750:0.700
+Kaplan-Meier corrent 0,01: 250:0.988  500:0.975  1500:0.963  2000:0.925  3500:0.913  4500:0.900  4750:0.888  5000:0.875  5250:0.850  5750:0.838  6750:0.813  7000:0.763  7250:0.750  8750:0.738  9500:0.725  10250:0.713  10750:0.700  11000:0.687  11250:0.675  11750:0.662  12250:0.637  13000:0.625  13750:0.612  14000:0.600  14750:0.587  15250:0.575
+Interaccions món quiet (m = 0): 49289 parelles per època de mitjana
+Interaccions corrent 0,01: 49289 parelles per època de mitjana
+
+Sensibilitats (descriptives; entre parèntesis, els experiments aturats per l'establiment principal abans de complir el criteri, que hi queden censurats):
+  sense herència (es copien ≥ 1 %): 24/80 (0) contra 36/80 (0), log-rank p = 0.0353
+  llindar del 5 %: 23/80 (0) contra 29/80 (5), log-rank p = 0.1911
+  herència sola (≥ 1 %): 24/80 (0) contra 34/80 (0), log-rank p = 0.0672
+  famílies, unió del territori ≥ 1 % (v0.1): 24/80 (0) contra 36/80 (0), log-rank p = 0.0313
+  HOE > 1: 24/80 (0) contra 37/80 (0), log-rank p = 0.0214
+
+Origen i manteniment (descriptius):
+  món quiet (m = 0): amb algun hereditari 38/80 (primer, mediana: època 9250); amb algun copiador 80/80; del primer hereditari a l'establiment, mediana 250 èpoques; mantinguts a t + 1.000: 23 de 23
+  corrent 0,01: amb algun hereditari 41/80 (primer, mediana: època 7000); amb algun copiador 80/80; del primer hereditari a l'establiment, mediana 250 èpoques; mantinguts a t + 1.000: 26 de 33
