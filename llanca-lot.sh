@@ -20,7 +20,9 @@ PARALLEL="$1"; DIR="$2"; LIST="$3"
 mkdir -p "$DIR"
 OUTFILE="$DIR/lot-$(basename "${LIST%.*}").out"
 if git rev-parse --short HEAD > /dev/null 2>&1; then
-  CODE="$(git rev-parse --short HEAD)$([[ -n "$(git status --porcelain -- '*.js' '*.mjs' '*.sh')" ]] && echo '+canvis')"
+  # (sense "&&" dins de la substitució: amb set -e, una còpia neta aturava l'script)
+  CODE="$(git rev-parse --short HEAD)"
+  if [[ -n "$(git status --porcelain -- '*.js' '*.mjs' '*.sh')" ]]; then CODE+="+canvis"; fi
 else
   CODE="$(cat VERSIO 2> /dev/null || echo desconegut)"
 fi

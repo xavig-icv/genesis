@@ -2,7 +2,7 @@
 // iteració 4). Executa: node test/lots.mjs (necessita bash: Git Bash a Windows)
 import assert from 'assert';
 import { spawnSync } from 'child_process';
-import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, existsSync } from 'fs';
+import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, existsSync, copyFileSync, readdirSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
@@ -88,6 +88,43 @@ const tests = {
     assert.match(r.stdout, /en marxa: A\/1002, sense escriure fa \d+ min/);
     assert.match(r.stdout, /en marxa: B\/2002, encara sense registre/);
     assert.ok(!r.stdout.includes('1234abcd'));
+  }),
+  // Abans, una còpia neta de git aturava llanca-lot.sh sense escriure res (set -e i un "&&" dins de la
+  // substitució del codi). Les proves d'abans no ho veien perquè el repositori tenia canvis sense desar.
+  // Aquí es prova en una còpia mínima del simulador, en els tres casos.
+  "el codi del lot: còpia neta de git, còpia amb canvis i sense git (VERSIO)": () => withBatch((dir, list) => {
+    const copy = join(dir, 'copia');
+    mkdirSync(copy);
+    for (const f of ['llanca-lot.sh', 'experiments.sh', 'sim.mjs', 'package.json']) copyFileSync(join(root, f), join(copy, f));
+    for (const d of ['fase1', 'fase2']) {
+      mkdirSync(join(copy, d));
+      for (const f of readdirSync(join(root, d)).filter((f) => /\.m?js$/.test(f))) copyFileSync(join(root, d, f), join(copy, d, f));
+    }
+    const run = (cmd) => spawnSync('bash', ['-c', cmd], { cwd: copy, encoding: 'utf8' });
+    const launch = () => {
+      const r = spawnSync('bash', ['llanca-lot.sh', '1', 'lot', list], { cwd: copy, encoding: 'utf8' });
+      assert.strictEqual(r.status, 0, r.stderr);
+      const out = readFileSync(join(copy, 'lot', 'lot-llista.out'), 'utf8');
+      rmSync(join(copy, 'lot'), { recursive: true });
+      return out;
+    };
+    // sense git: el codi és el de VERSIO
+    writeFileSync(join(copy, 'VERSIO'), 'abc1234\n');
+    let out = launch();
+    assert.match(out, /^== lot començat .* codi=abc1234 /m);
+    assert.match(out, /^acaba: {3}bo$/m);
+    assert.match(out, /^== lot acabat .*: 1 acabats, 1 fallats/m);
+    // còpia neta de git: el commit, sense +canvis
+    const git = 'git -c user.name=prova -c user.email=prova@exemple.invalid';
+    assert.strictEqual(run(`${git} init -q && ${git} add -A && ${git} commit -q -m prova`).status, 0);
+    const hash = run('git rev-parse --short HEAD').stdout.trim();
+    out = launch();
+    assert.match(out, new RegExp(`^== lot començat .* codi=${hash} `, 'm'));
+    assert.match(out, /^acaba: {3}bo$/m);
+    // amb un canvi al codi: +canvis
+    writeFileSync(join(copy, 'fase1', 'bff.js'), readFileSync(join(copy, 'fase1', 'bff.js'), 'utf8') + '\n// canvi\n');
+    out = launch();
+    assert.match(out, new RegExp(`^== lot començat .* codi=${hash}\\+canvis `, 'm'));
   }),
   'llanca-lot.sh rebutja els arguments incorrectes': () => {
     assert.strictEqual(bash('llanca-lot.sh', '2').status, 2);
