@@ -49,6 +49,16 @@ comparació.
 | Ordre | `node sim.mjs --world 512x256 --seed S --mixing M --epochs 16000 --every 100 --census 250 --census-version v3 --stop-after-event 1000 --rng v2 --json serie-llei2/G/S.jsonl --save serie-llei2/G/captures --save-what event > serie-llei2/G/S.log` (G = A o B) |
 | Dades | Un registre de text i un JSONL per experiment. El JSONL té una línia per cens i per mesura, amb tots els valors sense arrodonir, el commit i les versions. Amb `--save-what event`, quan hi ha establiment, es desen els mons dels censos de *t*, *t* − 250 i *t* − 500 (24 MB). Serviran de banc de mons amb vida (AUD-41) i per estudiar l'origen abans de la detecció (§6.7) |
 
+> **Corregit el 18-10-2026, després de l'execució (AUD-55, auditoria 7).** La fila "Entorn" diu que les
+> dues màquines "donen resultats idèntics". Les històries dels mons sí que són idèntiques: l'empremta del
+> món, els censos sencers, l'establiment, les operacions i H0. L'auditor 1 ho va comprovar tornant a
+> executar llavors de totes dues màquines. Però l'HOE de les mesures difereix lleugerament, fins a
+> 1,1 × 10⁻³ bits per byte, perquè zlib 1.2.11 (Node 16) i 1.3.1 (Node 20) no comprimeixen igual el
+> mateix món. Per exemple, el món de la llavor 2030 a l'època 14.000 ocupa 2.965.692 bytes contra
+> 2.966.230. No afecta la mesura principal ni la decisió. Només podria afectar la sensibilitat
+> descriptiva "HOE > 1" en un món que quedés molt a prop del llindar. La versió preregistrada d'aquest
+> document és la de l'etiqueta `preregistre-llei2`; aquesta nota no hi canvia res.
+
 ## 4. Mesura principal: el moment de l'establiment
 
 **Cens** (`fase2/census.js`, versió 3), cada 250 èpoques:

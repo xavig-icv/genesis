@@ -130,6 +130,9 @@ Dues propostes més, per després:
     copiar-se. Seria un hipercicle (Eigen).
   - **L'espai protegeix aquestes cooperacions dels paràsits** (Boerlijst i Hogeweg, 1991), cosa que
     connecta amb la llei 1.
+- **La vida que dura poc també és vida** (conversa del 18-10-2026). Una població que s'estableix i
+  desapareix ha viscut un temps, com qualsevol ésser viu. El que cal mesurar és quant viu, no
+  excloure-la. Vegeu la decisió del 18-10-2026.
 - **Organismes dins d'organismes.** Els humans i molts animals porten microorganismes vius a dins i a
   fora.
   - **Ja es pot buscar.** Un replicador curt, dins d'un programa de 64 bytes, es podria endur un altre
@@ -194,10 +197,15 @@ Dues propostes més, per després:
 | 16-10-2026 | La pregunta del projecte es reformula: condicions, establiment, evolució posterior i generalitat (§1) | AUD-39; decidit pel responsable del projecte |
 | 16-10-2026 | Després de la sèrie confirmatòria, ablacions de química a la sopa, abans de les lleis 4–8 (§4) | AUD-40; decidit pel responsable del projecte |
 | 16-10-2026 | El *merge* de la iteració 3 (`8cd4449`) és el preregistre de la sèrie de la llei 2, amb l'etiqueta anotada `preregistre-llei2` publicada abans de llançar res. Tres punts febles del control de còpia neta (AUD-51, AU2-31, AU2-32) no es corregeixen al programa: es cobreixen amb comprovacions a mà, anotades a l'acta de llançament (`../auditories/claude-origins/equip/acta-preregistre-llei2.md`) | Tots dos auditors van donar GO a l'auditoria 6 amb la condició de no tocar més el motor de decisió abans del *merge*. Es corregiran a la iteració 4 |
-| 16-10-2026 | Cada màquina (VM i PC) fa la meitat de cada grup de la sèrie, amb A i B alternats | Una interrupció afecta tots dos grups per igual, i les dues màquines donen resultats idèntics (`npm test`, les mateixes empremtes) |
+| 16-10-2026 | Cada màquina (VM i PC) fa la meitat de cada grup de la sèrie, amb A i B alternats | Una interrupció afecta tots dos grups per igual, i les dues màquines donen resultats idèntics (`npm test`, les mateixes empremtes). **Precisat (auditoria 7, AUD-55):** les històries dels mons són idèntiques, però l'HOE difereix lleugerament (fins a 1,1 × 10⁻³) perquè zlib 1.2.11 i 1.3.1 no comprimeixen igual |
 | 17-10-2026 | Durant l'execució no es tornen a repartir les llavors entre màquines, encara que una vagi més de pressa | No es toca un lot confirmatori en marxa: es podria repetir o saltar una llavor |
 | 18-10-2026 | **Resultat de la sèrie confirmatòria:** no es rebutja H0 (món quiet 24/80, corrent 0,01 34/80; log-rank Z = −1,83, límit 2,004). Es comunica com a "no concloent", amb la mida de l'efecte (+12,5 punts, IC 95 % −2,3 a 27,3) i sense presentar com a resultat les sensibilitats ni les observacions descriptives | La regla de comunicació del protocol (§10), escrita abans. L'interval inclou el zero i també la diferència mínima rellevant (20 % contra 40 %) |
 | 18-10-2026 | Els llançadors dels lots escriuran només a un fitxer, mai a la consola | Una finestra de consola en mode de selecció de Windows va aturar el lot del PC durant una hora (incidència 1 de l'acta) |
+| 18-10-2026 | **Una vida que apareix i desapareix és vida, amb una vida curta.** No es canvia la definició d'establiment. S'hi afegeix la **durada** de la vida establerta com a mesura pròpia, amb el temps fins que deixa de complir el criteri | El responsable del projecte: "és una vida, però ha viscut X temps, com fan els éssers vius". Ho fa compatible amb la sèrie feta, i converteix la "vida que no dura" en una mesura, no en un criteri d'exclusió |
+| 18-10-2026 | Iteració 4: primer B2 (la durada de la vida establerta, amb branques aparellades des de les captures de l'establiment), i després les ablacions (B1) | Decidit pel responsable del projecte. És barat i aprofita el banc de captures. Els mons d'origen es reparteixen a l'atzar entre exploració i confirmació, i el repartiment es desa a git abans de mirar res. Les llavors de continuació d'un mateix món no són rèpliques independents (AUD-54 i recomanació de l'auditor 2) |
+| 18-10-2026 | La mida del món es prova de manera progressiva: primer mons petits, i després més grans | Decidit pel responsable del projecte. Amb les correccions de l'auditoria 7 (AUD-53): el que escala amb l'àrea és el risc, no la proporció de mons amb vida, i cal un llindar absolut o un cens complet perquè la mesura no depengui de la mida |
+| 18-10-2026 | A les sèries futures, les llavors es repartiran a l'atzar entre les condicions, i es preregistrarà una comprovació de coherència entre blocs | L'heterogeneïtat entre les dues etapes de la sèrie de la llei 2 (AU2-33) no té cap causa coneguda, però la sèrie feia servir blocs de llavors seguits per a cada condició |
+| 18-10-2026 | Les propostes del responsable del projecte es valoren internament i també amb els auditors. Hi haurà rondes en què els auditors també facin propostes sobre les preguntes obertes, no només revisions | Demanat pel responsable del projecte. Dos models diferents i una persona veuen coses diferents |
 
 ## 6. Estat i resultats principals
 
@@ -244,7 +252,9 @@ Resum. El detall és al quadern.
     descartar un efecte de la mida que ens interessava.
   - **Descriptiu:** les dues etapes no s'assemblen (19/18 i 5/16). La vida establerta es manté
     1.000 èpoques en 23 de 23 mons quiets i en 26 de 33 amb corrent. Si només es compta la vida que
-    dura, la diferència gairebé desapareix.
+    dura, la diferència gairebé desapareix. **Corregit (auditoria 7):** només a la sèrie sencera. Per
+    etapes, la vida que dura queda 18 contra 12 i 5 contra 14, i l'excés de la segona etapa no són
+    esclats.
   - **El món quiet fa vida en un 30 % dels mons,** més del que deia l'exploració (20 %, amb 15 llavors).
 - **Registre de famílies v2:** arregla els tres punts cecs de la v1. Sobre els mons desats de
   l'escombrat, ara troba el replicador que necessita parella (3,9 % del mapa), el palíndrom espaiat, i
@@ -262,7 +272,10 @@ Resum. El detall és al quadern.
   una diferència com l'observada, d'uns 12 punts, caldrien unes 250 llavors per condició.)
 - El corrent fa que la vida establerta duri menys? (Entrada 8, descriptiu: no es manté en 7 de 33 mons
   amb corrent i en 0 de 23 sense corrent.) Seria una pregunta preregistrada pròpia, amb branques des de
-  les captures de l'establiment.
+  les captures de l'establiment. (Auditoria 7: 6 dels 7 casos són de la primera etapa, i a la segona
+  la vida que dura queda 5 contra 14. Els indicis són més febles del que semblava.)
+- Per què les dues etapes de la sèrie de la llei 2 donen resultats tan diferents (19/18 i 5/16)?
+  (AU2-33: el mateix patró a totes dues màquines; cap causa coneguda.)
 - El replicador que necessita una parella pot sobreviure en un món que no s'enverini tan de pressa?
   És el camí natural cap a la reproducció entre dos. (Entrada 5: sí, amb prou renovació.)
 - Els mons amb riu i corrent afavoreixen que neixi vida? (Entrada 5: un cas en 750 èpoques.) Cal un
