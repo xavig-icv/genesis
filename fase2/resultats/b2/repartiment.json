@@ -1,0 +1,530 @@
+{
+ "description": "Repartiment dels mons amb establiment de la sèrie de la llei 2 entre l'exploració i la confirmació de B2. Fet abans de mirar cap branca.",
+ "seed": 20261018,
+ "rng": "v2",
+ "method": "Per a cada grup (A, B), les llavors amb establiment ordenades de menor a major, barrejades amb Fisher–Yates (i de n-1 a 1, j = floor(rng() * (i + 1))) amb un sol generador makeRng(20261018, 'v2') per als dos grups, primer A i després B. La primera meitat de l'ordre barrejat és l'exploració.",
+ "worlds": [
+  {
+   "group": "A",
+   "seed": 1006,
+   "mixing": 0,
+   "t": 2250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1006-mon512x256-r2-establiment2250-epoca2250.bin",
+   "sha256": "be6ea4e56aaaa5ac7b25a8afa4cadcd5b577f1e3f52016ce08985b3a0f357ba5"
+  },
+  {
+   "group": "A",
+   "seed": 1009,
+   "mixing": 0,
+   "t": 7500,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1009-mon512x256-r2-establiment7500-epoca7500.bin",
+   "sha256": "f8052ddef13faafed2bfc657af8a549512b3455eb2878b925effa5d3e081b71e"
+  },
+  {
+   "group": "A",
+   "seed": 1010,
+   "mixing": 0,
+   "t": 6250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1010-mon512x256-r2-establiment6250-epoca6250.bin",
+   "sha256": "7c0fc3d0c93ba553db0f7efdaae13e45f0b3c8b50455a027329c95ace2f97646"
+  },
+  {
+   "group": "A",
+   "seed": 1016,
+   "mixing": 0,
+   "t": 12250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1016-mon512x256-r2-establiment12250-epoca12250.bin",
+   "sha256": "aa81771a6542cd5cc01ac69fedeeedb4ee12e1a652d23212bd32a9876594b8a5"
+  },
+  {
+   "group": "A",
+   "seed": 1017,
+   "mixing": 0,
+   "t": 12500,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1017-mon512x256-r2-establiment12500-epoca12500.bin",
+   "sha256": "6911e307bbb751a4aa94825ddd519be531777e3c402c5a2d429a9d4e798f81e7"
+  },
+  {
+   "group": "A",
+   "seed": 1018,
+   "mixing": 0,
+   "t": 10250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1018-mon512x256-r2-establiment10250-epoca10250.bin",
+   "sha256": "6b5d477f83b679809b672daaf0bc19c51aacca358fffdaadb7861efc56628a3f"
+  },
+  {
+   "group": "A",
+   "seed": 1021,
+   "mixing": 0,
+   "t": 9500,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1021-mon512x256-r2-establiment9500-epoca9500.bin",
+   "sha256": "ce6321599ae4d222afcd1c0a1ab007477288841b490c1b2a3d25f5cf01e8615e"
+  },
+  {
+   "group": "A",
+   "seed": 1023,
+   "mixing": 0,
+   "t": 15750,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1023-mon512x256-r2-establiment15750-epoca15750.bin",
+   "sha256": "f35f16b3ae3cde04cbda6953268374d3b919f9425393666eddef2b2862b6eefb"
+  },
+  {
+   "group": "A",
+   "seed": 1026,
+   "mixing": 0,
+   "t": 8000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1026-mon512x256-r2-establiment8000-epoca8000.bin",
+   "sha256": "6f984842e54b1c431edaa3d4cda2ae04b1e22818eb84245fc8e206a6e8180158"
+  },
+  {
+   "group": "A",
+   "seed": 1027,
+   "mixing": 0,
+   "t": 4000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1027-mon512x256-r2-establiment4000-epoca4000.bin",
+   "sha256": "af154d7c2861cc5b0689baec3e034af9a8ee051cfa14a404ef367f227edfc1d8"
+  },
+  {
+   "group": "A",
+   "seed": 1029,
+   "mixing": 0,
+   "t": 1250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1029-mon512x256-r2-establiment1250-epoca1250.bin",
+   "sha256": "5cfad24002845527881bae5cc737b7b7e7d5e217621dcd9acd5c173e0138a9f2"
+  },
+  {
+   "group": "A",
+   "seed": 1033,
+   "mixing": 0,
+   "t": 15000,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1033-mon512x256-r2-establiment15000-epoca15000.bin",
+   "sha256": "5b0a11690f55ee928a97b48cc042bc4568a13c94ce83115284ec6af18bebe73a"
+  },
+  {
+   "group": "A",
+   "seed": 1035,
+   "mixing": 0,
+   "t": 15000,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1035-mon512x256-r2-establiment15000-epoca15000.bin",
+   "sha256": "c45d4d2b07cb6dc963dfafdd7b450c6d5b0320e15865aec9c9ef0bc2b3537df3"
+  },
+  {
+   "group": "A",
+   "seed": 1036,
+   "mixing": 0,
+   "t": 4750,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1036-mon512x256-r2-establiment4750-epoca4750.bin",
+   "sha256": "0f52524332a4ee1c2fc88d66d65acb290177a68514c1009aafff92b2278986d2"
+  },
+  {
+   "group": "A",
+   "seed": 1037,
+   "mixing": 0,
+   "t": 14500,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1037-mon512x256-r2-establiment14500-epoca14500.bin",
+   "sha256": "df0110b698122f5f356469265efa026b5e94ada0bfce6497f235950732a41503"
+  },
+  {
+   "group": "A",
+   "seed": 1039,
+   "mixing": 0,
+   "t": 4250,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1039-mon512x256-r2-establiment4250-epoca4250.bin",
+   "sha256": "420152a0299216adca542182f79e61d469b90ad33d4fa6cb82600ee3da4e1a55"
+  },
+  {
+   "group": "A",
+   "seed": 1041,
+   "mixing": 0,
+   "t": 9000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1041-mon512x256-r2-establiment9000-epoca9000.bin",
+   "sha256": "0fab75fbb9cdf639c9a70e9303e9a0af86edb58149de4dcaad4e2fccd0a98e9f"
+  },
+  {
+   "group": "A",
+   "seed": 1045,
+   "mixing": 0,
+   "t": 9500,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1045-mon512x256-r2-establiment9500-epoca9500.bin",
+   "sha256": "89c47dd24b8e6da6344c83c56eba5d1de386604f4ec8f1c4bef7731d69e6a911"
+  },
+  {
+   "group": "A",
+   "seed": 1046,
+   "mixing": 0,
+   "t": 10500,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1046-mon512x256-r2-establiment10500-epoca10500.bin",
+   "sha256": "75305edf7d829d6320185ba8aa6012f7a94b68bd2fdb5ca4e262826391353678"
+  },
+  {
+   "group": "A",
+   "seed": 1051,
+   "mixing": 0,
+   "t": 10250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1051-mon512x256-r2-establiment10250-epoca10250.bin",
+   "sha256": "047ef4886be389c17cce6ce08ca11be8733b19da06fdb48181d70223013008ea"
+  },
+  {
+   "group": "A",
+   "seed": 1054,
+   "mixing": 0,
+   "t": 15000,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1054-mon512x256-r2-establiment15000-epoca15000.bin",
+   "sha256": "1ec144f8074c228aa2215bdec8ce8d8dbc121c0b5b8596b62440a45c4c7cca94"
+  },
+  {
+   "group": "A",
+   "seed": 1059,
+   "mixing": 0,
+   "t": 11750,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1059-mon512x256-r2-establiment11750-epoca11750.bin",
+   "sha256": "ba43cfac55627c11e3a2979bf74d5729e8bce03c35215fd80b45309a0aad44c8"
+  },
+  {
+   "group": "A",
+   "seed": 1068,
+   "mixing": 0,
+   "t": 9500,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1068-mon512x256-r2-establiment9500-epoca9500.bin",
+   "sha256": "f02df529357b481c389e9810f98e93ab69900bbf63bec3c837908ebdabc93c26"
+  },
+  {
+   "group": "A",
+   "seed": 1070,
+   "mixing": 0,
+   "t": 9000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1070-mon512x256-r2-establiment9000-epoca9000.bin",
+   "sha256": "e4234823cc64ffb179929d0ea2027cc78a8f18552411202b44e8325ccd84660c"
+  },
+  {
+   "group": "B",
+   "seed": 2001,
+   "mixing": 0.01,
+   "t": 5000,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2001-mon512x256-r2-m0.01-establiment5000-epoca5000.bin",
+   "sha256": "aefb27cef7818299ced5afe8af84330bee20a0122c7fca75c7457a7a931bbc52"
+  },
+  {
+   "group": "B",
+   "seed": 2002,
+   "mixing": 0.01,
+   "t": 7000,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2002-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "sha256": "678656eb829683961d9734618a8a4113f1a47115ca157213c54aad173d6d10df"
+  },
+  {
+   "group": "B",
+   "seed": 2003,
+   "mixing": 0.01,
+   "t": 13000,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2003-mon512x256-r2-m0.01-establiment13000-epoca13000.bin",
+   "sha256": "f5c6f13744c1c09e19738ce5121c18545bffa15abae773c74f72d029a197f748"
+  },
+  {
+   "group": "B",
+   "seed": 2005,
+   "mixing": 0.01,
+   "t": 5250,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2005-mon512x256-r2-m0.01-establiment5250-epoca5250.bin",
+   "sha256": "8568ddc92e6bb68b4da9cf3d3134b484c3afde0d7658fea4dee0d695580704f4"
+  },
+  {
+   "group": "B",
+   "seed": 2011,
+   "mixing": 0.01,
+   "t": 2000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2011-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "sha256": "eaab89b759b026c1ea497b2725a41c05803d70426026089a0e033ba390ae06c1"
+  },
+  {
+   "group": "B",
+   "seed": 2019,
+   "mixing": 0.01,
+   "t": 8750,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2019-mon512x256-r2-m0.01-establiment8750-epoca8750.bin",
+   "sha256": "1aa77723fb6d3a6671300d9f7662387a3b83814bf1eab755f238cc8fef962940"
+  },
+  {
+   "group": "B",
+   "seed": 2021,
+   "mixing": 0.01,
+   "t": 11000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2021-mon512x256-r2-m0.01-establiment11000-epoca11000.bin",
+   "sha256": "d66c745a3af9f3d432e6c4b03b73778a0e047eeccc075d7caec2ed30d9980e03"
+  },
+  {
+   "group": "B",
+   "seed": 2030,
+   "mixing": 0.01,
+   "t": 14000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2030-mon512x256-r2-m0.01-establiment14000-epoca14000.bin",
+   "sha256": "82b24deacc85bded22a00dfe7086a7d327c3ce7dd39209558a3abfeda2d94510"
+  },
+  {
+   "group": "B",
+   "seed": 2032,
+   "mixing": 0.01,
+   "t": 3500,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2032-mon512x256-r2-m0.01-establiment3500-epoca3500.bin",
+   "sha256": "1354b79045a36146c4531a243b3af3d76accc55fb0941750c1ef7f75c31dfbef"
+  },
+  {
+   "group": "B",
+   "seed": 2036,
+   "mixing": 0.01,
+   "t": 12250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2036-mon512x256-r2-m0.01-establiment12250-epoca12250.bin",
+   "sha256": "50090597c89c4ab1f6dea5147927d702a9e3a5644a6d2d5272f17f8b3827ac9e"
+  },
+  {
+   "group": "B",
+   "seed": 2038,
+   "mixing": 0.01,
+   "t": 10250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2038-mon512x256-r2-m0.01-establiment10250-epoca10250.bin",
+   "sha256": "0cdd3ebda3ca94c125b37d1921e91413d74fef3c9b306b4c6e5a727df27242a8"
+  },
+  {
+   "group": "B",
+   "seed": 2039,
+   "mixing": 0.01,
+   "t": 2000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2039-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "sha256": "4ed9eec8489dc8bace0e64da7411c2459e2ab1e86969b52fa7690cb40f837f3f"
+  },
+  {
+   "group": "B",
+   "seed": 2041,
+   "mixing": 0.01,
+   "t": 10750,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2041-mon512x256-r2-m0.01-establiment10750-epoca10750.bin",
+   "sha256": "d8af7480a6493c14da00318d24ba5873f5e0bd937578398f9fcfc168564061e1"
+  },
+  {
+   "group": "B",
+   "seed": 2042,
+   "mixing": 0.01,
+   "t": 5750,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2042-mon512x256-r2-m0.01-establiment5750-epoca5750.bin",
+   "sha256": "1945fa5752ea17f6bec50a00da628504d3cbfa845cbcd633b9527d075a93f1c0"
+  },
+  {
+   "group": "B",
+   "seed": 2043,
+   "mixing": 0.01,
+   "t": 500,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2043-mon512x256-r2-m0.01-establiment500-epoca500.bin",
+   "sha256": "199dee1661a7df3dec49658afacdcf81f92b71e46d3e1525ae283efb40adcd01"
+  },
+  {
+   "group": "B",
+   "seed": 2044,
+   "mixing": 0.01,
+   "t": 6750,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2044-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+   "sha256": "a9bef30536724974bc525db3cdc7d9017958da168b9a97c90df7e96b768d591a"
+  },
+  {
+   "group": "B",
+   "seed": 2048,
+   "mixing": 0.01,
+   "t": 4500,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2048-mon512x256-r2-m0.01-establiment4500-epoca4500.bin",
+   "sha256": "1c6e562028110d51fc2da834a7f3e9109cc98fc23cdd6e067402696b98229ca6"
+  },
+  {
+   "group": "B",
+   "seed": 2049,
+   "mixing": 0.01,
+   "t": 13750,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2049-mon512x256-r2-m0.01-establiment13750-epoca13750.bin",
+   "sha256": "643dbe0190ca46c85833e3391e6ac8c47e75ad47fad2876625c405c5f3c8739a"
+  },
+  {
+   "group": "B",
+   "seed": 2051,
+   "mixing": 0.01,
+   "t": 7000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2051-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "sha256": "a4ab79f4d16064243ee742db6f1d2824fd5e1b67843389f1e700c4ebe5d206a8"
+  },
+  {
+   "group": "B",
+   "seed": 2053,
+   "mixing": 0.01,
+   "t": 14750,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2053-mon512x256-r2-m0.01-establiment14750-epoca14750.bin",
+   "sha256": "371c52e4ec99022b718e31fbd26803378beca0f518ed78e182cffb7b3055ce19"
+  },
+  {
+   "group": "B",
+   "seed": 2055,
+   "mixing": 0.01,
+   "t": 250,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2055-mon512x256-r2-m0.01-establiment250-epoca250.bin",
+   "sha256": "3656a4ffb7513ed80e594c151f1a56831fff3cb7a0470b50b725003e0ff37c71"
+  },
+  {
+   "group": "B",
+   "seed": 2056,
+   "mixing": 0.01,
+   "t": 11750,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2056-mon512x256-r2-m0.01-establiment11750-epoca11750.bin",
+   "sha256": "91e28a3e1fb255849679aed8c6ac81101174dc10814a2c29ec2e1bf62d7d081c"
+  },
+  {
+   "group": "B",
+   "seed": 2057,
+   "mixing": 0.01,
+   "t": 2000,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2057-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "sha256": "2f2f4ffe96d9042d25afaa58891872a5b1c7ea9602602f8fd9ad0d909ae145df"
+  },
+  {
+   "group": "B",
+   "seed": 2058,
+   "mixing": 0.01,
+   "t": 12250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2058-mon512x256-r2-m0.01-establiment12250-epoca12250.bin",
+   "sha256": "fa1b088b41dfb4357e039b4a25c5aa644119f84333e48b0c717e919bafa6124b"
+  },
+  {
+   "group": "B",
+   "seed": 2062,
+   "mixing": 0.01,
+   "t": 15250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2062-mon512x256-r2-m0.01-establiment15250-epoca15250.bin",
+   "sha256": "cbd61e8dea9b3c6659d547c364f1bf37de27143cf115702cd166c9cca4532e5a"
+  },
+  {
+   "group": "B",
+   "seed": 2064,
+   "mixing": 0.01,
+   "t": 9500,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2064-mon512x256-r2-m0.01-establiment9500-epoca9500.bin",
+   "sha256": "a855486772977ad0f4daeae10b0b9c502d0472068eed856174d5219ef836e175"
+  },
+  {
+   "group": "B",
+   "seed": 2065,
+   "mixing": 0.01,
+   "t": 7250,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2065-mon512x256-r2-m0.01-establiment7250-epoca7250.bin",
+   "sha256": "327c27fad870ee62bc93b7648c645e6c9192163168a5ff20c9c6be2e726ee1a2"
+  },
+  {
+   "group": "B",
+   "seed": 2069,
+   "mixing": 0.01,
+   "t": 7000,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2069-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "sha256": "a7e958f00170a03984f95a7c47e69b20d42cd68137f2b3007b8b1fa12bdd16e4"
+  },
+  {
+   "group": "B",
+   "seed": 2071,
+   "mixing": 0.01,
+   "t": 6750,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2071-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+   "sha256": "8082d9c5cb2b8e26881d766c499cb3e4d08c0b2fab0b63c0a6748bf8ab604914"
+  },
+  {
+   "group": "B",
+   "seed": 2074,
+   "mixing": 0.01,
+   "t": 5250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2074-mon512x256-r2-m0.01-establiment5250-epoca5250.bin",
+   "sha256": "cb79c7a3d0927e749f294e526f2cc4db97914b93b2f07007a7f8b171044911e7"
+  },
+  {
+   "group": "B",
+   "seed": 2076,
+   "mixing": 0.01,
+   "t": 1500,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2076-mon512x256-r2-m0.01-establiment1500-epoca1500.bin",
+   "sha256": "e5b79b984de21261ae04cfd1694c68fc814dc035fd1ae429f928c9c8ccf4a1c0"
+  },
+  {
+   "group": "B",
+   "seed": 2078,
+   "mixing": 0.01,
+   "t": 4750,
+   "part": "confirmacio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2078-mon512x256-r2-m0.01-establiment4750-epoca4750.bin",
+   "sha256": "8419a708df7cdfc7f89cc7ddd2cc7294f27c5eb91976c96347db9f297cbc1b77"
+  },
+  {
+   "group": "B",
+   "seed": 2079,
+   "mixing": 0.01,
+   "t": 11250,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2079-mon512x256-r2-m0.01-establiment11250-epoca11250.bin",
+   "sha256": "9c3db0bcd55f5596039afd707f1f9daad33166d5cf9682dd0d9ef0791c42f2e2"
+  },
+  {
+   "group": "B",
+   "seed": 2080,
+   "mixing": 0.01,
+   "t": 7000,
+   "part": "exploracio",
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2080-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "sha256": "6c01453b7bc5029d896105f360637805dde14505d3c6b73631d6c1e696c82410"
+  }
+ ]
+}
