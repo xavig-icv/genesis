@@ -51,7 +51,8 @@ Edge o un altre navegador basat en Chromium (és amb el que s'ha comprovat la re
 - `families.js`: el registre de famílies de replicadors (descriptiu: el mapa i les històries).
 - `analitza.mjs`: anàlisi d'una captura (`node fase2/analitza.mjs fitxer.bin`).
 - `calibratge.mjs`: el cens sobre les captures clau.
-- `estadistica.mjs`: l'anàlisi estadística de les sèries (log-rank, Kaplan–Meier, dues etapes, sensibilitats), amb la validació de la sèrie contra el manifest `serie-llei2.json` i la decisió de cada etapa (`--etapa`).
+- `estadistica.mjs`: l'anàlisi estadística de les sèries (log-rank, Kaplan–Meier, dues etapes, sensibilitats), amb la validació de la sèrie contra el manifest `serie-llei2.json` i la decisió de cada etapa (`--etapa`), que només es pren des d'una còpia idèntica a l'etiqueta del preregistre.
+- `quadern-serie.mjs`: les taules per llavor i la corba de Kaplan–Meier d'una sèrie, en HTML, per al quadern.
 - `main.js`, `analysis-worker.js`, `style.css`: el mapa, amb zoom des dels territoris fins al codi.
 
 ## Proves i experiments

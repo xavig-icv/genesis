@@ -1,10 +1,12 @@
 // Anàlisi estadística de les sèries d'experiments (protocol estadístic, docs/protocol-estadistic.md).
 //
 // Ús:
-//   node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B
+//   node fase2/estadistica.mjs --etapa 1|2 [--serie manifest.json] carpeta-A carpeta-B
 //        la decisió confirmatòria. Només es pot prendre des d'una còpia neta del commit de l'etiqueta de
-//        git preregistre-llei2: el commit de referència és el de l'etiqueta, i el manifest es llegeix
-//        d'aquest commit (AUD-50, AU2-29). Valida que els fitxers siguin exactament els preregistrats
+//        git del preregistre (la que declara el manifest, "tag"; per defecte, preregistre-llei2 i el
+//        manifest fase2/serie-llei2.json): el commit de referència és el de l'etiqueta, i el manifest es
+//        llegeix d'aquest commit (AUD-50, AU2-29). La còpia ha de ser idèntica a l'etiqueta en tots els
+//        fitxers seguits (vegeu preregistration). Valida que els fitxers siguin exactament els preregistrats
 //        (llavors, paràmetres, commit, censos i mesures complets, ordre de les línies, final coherent)
 //        i, si ho són, aplica la decisió de l'etapa amb el límit preregistrat. Si hi ha qualsevol
 //        anomalia, no decideix (codi de sortida 1). L'etapa 2 comprova, a més, que l'etapa 1 no rebutjava H0
@@ -22,7 +24,7 @@
 // executar.
 //
 // Totes les funcions estadístiques s'exporten i tenen proves (test/estadistica.mjs).
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync, existsSync } from 'fs';
 import { createHash } from 'crypto';
 import { execFileSync } from 'child_process';
 import { basename, join } from 'path';
@@ -362,20 +364,64 @@ export function stageOneCheck(A, B, manifest) {
   return { z1, rejected1: Math.abs(z1) > manifest.stages[1].bound };
 }
 
-// El preregistre (AUD-46, AUD-50, AU2-23, AU2-29): el commit de l'etiqueta de git preregistre-llei2 i el
-// manifest d'aquest commit. A més, el programa que decideix ha de ser el d'aquest commit: la còpia de
-// treball ha de ser-hi, sense canvis al codi ni al manifest. Retorna { commit, manifest, problem }
-export function preregistration() {
+// El preregistre (AUD-46, AUD-50, AU2-23, AU2-29): el commit de l'etiqueta de git del preregistre i el
+// manifest d'aquest commit. El programa que decideix ha de ser el d'aquest commit. Comprovacions de la
+// iteració 4 (auditories 6 a 8: AUD-51, AU2-31, AU2-32, AUD-66; X-004 i X-007/X-010 del xat):
+//  - res no pot carregar codi sense tocar cap fitxer seguit: ni NODE_OPTIONS ni opcions de node;
+//  - l'etiqueta ha de ser anotada, i la còpia de treball, al seu commit;
+//  - cap fitxer seguit amb assume-unchanged ni skip-worktree;
+//  - el contingut de TOTS els fitxers seguits ha de ser el de l'etiqueta (git hash-object contra git
+//    ls-tree), i no hi pot haver fitxers de codi nous no seguits;
+//  - les SHA-256 del missatge de l'etiqueta han de coincidir amb els fitxers del commit, i hi han de ser
+//    les del manifest i del programa d'estadística. L'arbre de l'etiqueta és la referència; el missatge,
+//    un segon control.
+// El manifest és manifestPath (per defecte el de la llei 2), i l'etiqueta, la que hi declara ("tag"), o
+// preregistre-llei2 si no en declara cap. Retorna { commit, tag, tagObject, manifest, problem }
+export function preregistration({ manifestPath = 'fase2/serie-llei2.json', env = process.env, execArgv = process.execArgv } = {}) {
   const root = fileURLToPath(new URL('..', import.meta.url));
-  const git = (...a) => execFileSync('git', a, { cwd: root, stdio: ['ignore', 'pipe', 'ignore'] }).toString();
-  let commit;
-  try { commit = git('rev-parse', 'preregistre-llei2^{commit}').trim(); }
-  catch { return { problem: "no hi ha l'etiqueta de git preregistre-llei2" }; }
+  const run = (args, input) => execFileSync('git', args, { cwd: root, input, maxBuffer: 1 << 28, stdio: ['pipe', 'pipe', 'ignore'] });
+  const git = (...a) => run(a).toString();
+  if ((env.NODE_OPTIONS ?? '').trim()) return { problem: `NODE_OPTIONS no és buit (${env.NODE_OPTIONS}): podria carregar codi que no és a l'etiqueta` };
+  if (execArgv.length) return { problem: `node s'ha executat amb opcions (${execArgv.join(' ')}): podrien carregar codi que no és a l'etiqueta` };
+  let declared;
+  try { declared = JSON.parse(readFileSync(join(root, manifestPath), 'utf8')); }
+  catch { return { problem: `no es pot llegir el manifest ${manifestPath}` }; }
+  const tag = declared.tag ?? 'preregistre-llei2';
+  let commit, tagObject;
   try {
+    tagObject = git('rev-parse', '--verify', `refs/tags/${tag}`).trim();
+    commit = git('rev-parse', `${tag}^{commit}`).trim();
+  } catch { return { problem: `no hi ha l'etiqueta de git ${tag}` }; }
+  try {
+    if (git('cat-file', '-t', tagObject).trim() !== 'tag') return { problem: `l'etiqueta ${tag} no és anotada` };
     const head = git('rev-parse', 'HEAD').trim();
     if (head !== commit) return { problem: `la còpia de treball és al commit ${head}, no al del preregistre (${commit})` };
-    if (git('status', '--porcelain', '--', '*.js', '*.mjs', '*.json').trim()) return { problem: 'la còpia de treball té canvis al codi o al manifest' };
-    return { commit, manifest: JSON.parse(git('show', `${commit}:fase2/serie-llei2.json`)) };
+    const list = (paths) => paths.slice(0, 5).join(', ') + (paths.length > 5 ? ` i ${paths.length - 5} més` : '');
+    const flagged = git('ls-files', '-v').split('\n').filter((l) => /^[a-zS] /.test(l)).map((l) => l.slice(2));
+    if (flagged.length) return { problem: `hi ha fitxers marcats amb assume-unchanged o skip-worktree: ${list(flagged)}` };
+    const tree = git('ls-tree', '-r', '-z', commit).split('\0').filter(Boolean).map((l) => {
+      const [meta, path] = l.split('\t');
+      const [, type, hash] = meta.split(' ');
+      return { type, hash, path };
+    }).filter((e) => e.type === 'blob');
+    const missing = tree.filter((e) => !existsSync(join(root, e.path))).map((e) => e.path);
+    if (missing.length) return { problem: `falten fitxers de l'etiqueta: ${list(missing)}` };
+    const hashes = run(['hash-object', '--stdin-paths'], tree.map((e) => e.path).join('\n') + '\n').toString().trim().split('\n');
+    const changed = tree.filter((e, i) => hashes[i] !== e.hash).map((e) => e.path);
+    if (changed.length) return { problem: `hi ha fitxers diferents dels de l'etiqueta: ${list(changed)}` };
+    const extra = git('ls-files', '--others', '--exclude-standard', '--', '*.js', '*.mjs', '*.cjs', '*.json').trim().split('\n').filter(Boolean);
+    if (extra.length) return { problem: `hi ha fitxers de codi que no són a l'etiqueta: ${list(extra)}` };
+    const message = git('cat-file', '-p', tagObject);
+    const listed = [...message.matchAll(/^([0-9a-f]{64})\s+(\S+)/gm)].map((m) => ({ sha: m[1], path: m[2] }));
+    for (const needed of [manifestPath, 'fase2/estadistica.mjs']) {
+      if (!listed.some((l) => l.path === needed)) return { problem: `el missatge de l'etiqueta no porta la SHA-256 de ${needed}` };
+    }
+    for (const { sha, path } of listed) {
+      let bytes;
+      try { bytes = run(['show', `${commit}:${path}`]); } catch { return { problem: `el missatge de l'etiqueta cita ${path}, que no és al commit` }; }
+      if (createHash('sha256').update(bytes).digest('hex') !== sha) return { problem: `la SHA-256 de ${path} no és la del missatge de l'etiqueta` };
+    }
+    return { commit, tag, tagObject, manifest: JSON.parse(git('show', `${commit}:${manifestPath}`)) };
   } catch (e) {
     return { problem: `no es pot llegir el preregistre amb git (${e.message})` };
   }
@@ -463,7 +509,9 @@ export function readLegacyLog(file, criterion = 'hoe') {
 
 // ---- Informe de dues condicions
 
-export function report(A, B, { horizon = null, labelA = 'A', labelB = 'B' } = {}) {
+// sensitivities: els noms de SENSITIVITY que es calculen (per defecte, tots). Una sèrie futura els pot
+// triar al manifest; per exemple, sense "HOE > 1", que depèn de la versió de zlib (AUD-55, A8)
+export function report(A, B, { horizon = null, labelA = 'A', labelB = 'B', sensitivities = null } = {}) {
   const lines = [];
   const pct = (x) => `${(x * 100).toFixed(1)} %`;
   // L'horitzó és el dels experiments (--epochs): més enllà no hi ha dades
@@ -494,7 +542,9 @@ export function report(A, B, { horizon = null, labelA = 'A', labelB = 'B' } = {}
     if (runs[1]) lines.push(`Interaccions ${label}: ${(runs[0] / runs[1]).toFixed(0)} parelles per època de mitjana`);
   }
   lines.push('', "Sensibilitats (descriptives; entre parèntesis, els experiments aturats per l'establiment principal abans de complir el criteri, que hi queden censurats):");
-  for (const [name, criterion] of Object.entries(SENSITIVITY)) {
+  for (const name of sensitivities ?? Object.keys(SENSITIVITY)) {
+    const criterion = SENSITIVITY[name];
+    if (!criterion) { lines.push(`  ${name}: sensibilitat desconeguda`); continue; }
     const a = withCriterion(A, criterion), b = withCriterion(B, criterion);
     const cut = (g) => g.filter((x) => !x.event && x.end < x.horizon).length;
     lines.push(`  ${name}: ${a.filter((x) => x.event).length}/${a.length} (${cut(a)}) contra ${b.filter((x) => x.event).length}/${b.length} (${cut(b)}), log-rank p = ${logrank(a, b).p.toFixed(4)}`);
@@ -526,7 +576,7 @@ const isMain = process.argv[1] && fileURLToPath(import.meta.url) === process.arg
 if (isMain) {
   const args = process.argv.slice(2);
   const usage = () => {
-    console.error('Ús: node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B\n' +
+    console.error('Ús: node fase2/estadistica.mjs --etapa 1|2 [--serie manifest.json] carpeta-A carpeta-B\n' +
       '     node fase2/estadistica.mjs --etapa 1|2 --prova --commit HASH --manifest fitxer carpeta-A carpeta-B\n' +
       '     node fase2/estadistica.mjs carpeta-A carpeta-B\n     node fase2/estadistica.mjs --potencia [rèpliques]');
     process.exit(2);
@@ -542,11 +592,14 @@ if (isMain) {
     }
   } else if (args[0] === '--etapa') {
     const stage = args[1];
-    let rest = args.slice(2), manifestFile = null, explicitCommit = null, test = false;
+    let rest = args.slice(2), manifestFile = null, explicitCommit = null, test = false, series = 'fase2/serie-llei2.json';
     for (;;) {
       if (rest[0] === '--manifest') { manifestFile = rest[1]; rest = rest.slice(2); }
       else if (rest[0] === '--commit') { explicitCommit = rest[1]; rest = rest.slice(2); }
       else if (rest[0] === '--prova') { test = true; rest = rest.slice(1); }
+      // El manifest d'una sèrie futura (A4 de la iteració 4): un camí del repositori, que ha de ser a
+      // l'arbre de l'etiqueta que declara, amb la seva SHA-256 al missatge de l'etiqueta
+      else if (rest[0] === '--serie' && rest[1]) { series = rest[1]; rest = rest.slice(2); }
       else break;
     }
     if (!['1', '2'].includes(stage) || rest.length !== 2) usage();
@@ -564,13 +617,13 @@ if (isMain) {
       manifest = JSON.parse(readFileSync(manifestFile, 'utf8'));
       source = `PROVA, NO CONFIRMATÒRIA: --commit i --manifest ${manifestFile}`;
     } else {
-      const pre = preregistration();
+      const pre = preregistration({ manifestPath: series });
       if (pre.problem) {
         console.log(`No es pot prendre la decisió confirmatòria: ${pre.problem}.`);
         process.exit(1);
       }
       ({ commit, manifest } = pre);
-      source = "etiqueta de git preregistre-llei2; manifest i programa d'aquest commit";
+      source = `etiqueta de git ${pre.tag} (objecte ${pre.tagObject}); manifest ${series} i programa d'aquest commit`;
     }
     const { A, B, errors, code } = validateSeries(rest[0], rest[1], manifest, stage, { commit });
     if (errors.length) {
@@ -598,7 +651,7 @@ if (isMain) {
     console.log(`${label}: ${decision}`);
     if (Math.abs(lr.z) > bound && stage === '1') console.log("(Amb aturada a l'etapa 1, la mida de l'efecte és descriptiva: en un disseny seqüencial tendeix a sobreestimar-se.)");
     console.log('');
-    console.log(report(A, B, { labelA: manifest.groups.A.label, labelB: manifest.groups.B.label }));
+    console.log(report(A, B, { labelA: manifest.groups.A.label, labelB: manifest.groups.B.label, sensitivities: manifest.sensitivities ?? null }));
   } else if (args.length === 2) {
     console.log("Informe descriptiu, sense validació ni decisió (per a la sèrie confirmatòria, feu servir --etapa).\n");
     console.log(report(readSeries(args[0]), readSeries(args[1]), { labelA: basename(args[0]), labelB: basename(args[1]) }));

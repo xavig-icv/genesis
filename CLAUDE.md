@@ -24,10 +24,22 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   reproduir-los, `--rng v1 --census-version v2` (les llistes antigues ja ho porten).
 - Prova de replicació: només la de `fase2/replication.js`, amb la de segona generació (`heredity`). No
   n'escriguis cap altra (AUD-02). El criteri d'establiment de la vida és només a `fase2/census.js`.
-- Estadística de la sèrie confirmatòria: `node fase2/estadistica.mjs --etapa 1|2 carpeta-A carpeta-B`, que valida
-  els JSONL contra el manifest `fase2/serie-llei2.json` i aplica la decisió; sense `--etapa`, informe descriptiu.
-  El manifest, el criteri d'establiment i els límits no es toquen després del preregistre.
-  Protocol: `docs/protocol-estadistic.md`.
+- Estadística de la sèrie confirmatòria: `node fase2/estadistica.mjs --etapa 1|2 [--serie manifest.json] carpeta-A
+  carpeta-B`, que valida els JSONL contra el manifest (per defecte `fase2/serie-llei2.json`) i aplica la decisió;
+  sense `--etapa`, informe descriptiu. El manifest, el criteri d'establiment i els límits no es toquen després del
+  preregistre. Protocol: `docs/protocol-estadistic.md`.
+  - **La decisió confirmatòria** només es pren des d'una còpia del commit de l'etiqueta que declara el manifest
+    (`"tag"`; per defecte, `preregistre-llei2`).
+    - L'etiqueta ha de ser anotada, amb les SHA-256 del manifest i d'`estadistica.mjs` al missatge.
+    - Tots els fitxers seguits han de ser idèntics als de l'etiqueta, sense `assume-unchanged` ni `skip-worktree`.
+    - No hi pot haver fitxers de codi nous, ni `NODE_OPTIONS`, ni opcions de `node`.
+  - **La sortida** es desa tal com surt (`> etapaN-sortida.txt`), i la capçalera, si cal, en un fitxer a part (AUD-52).
+  - **Les sensibilitats** que es calculen les pot triar el manifest (`"sensitivities"`). A les sèries noves, sense
+    l'HOE, que depèn de la versió de zlib (AUD-55).
+  - **La sèrie de la llei 2 es decideix amb el programa de la seva etiqueta (`8cd4449`).** `test/estadistica.mjs`
+    comprova que el programa d'ara en treu la mateixa decisió.
+- Taules i corba d'una sèrie per al quadern: `node fase2/quadern-serie.mjs carpeta-A carpeta-B sortida`
+  (`test/quadern.mjs` comprova que reprodueix les de l'entrada 8).
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Captures clau: `captures.sha256` i `docs/captures.md`; còpia amb `bash arxiva-captures.sh`.
 - Llistes d'experiments: `bash experiments.sh N carpeta < llista` (cada línia: `nom arguments-de-sim.mjs`).

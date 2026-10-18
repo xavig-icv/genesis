@@ -4,8 +4,9 @@
 // manuals de supervivència), de dues implementacions independents (la de l'equip i la de l'auditor 1)
 // o de càlculs a mà que s'indiquen.
 import assert from 'assert';
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'fs';
 import { spawnSync } from 'child_process';
+import { createHash } from 'crypto';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
@@ -304,6 +305,22 @@ tests['el validador accepta els JSONL reals de sim.mjs, amb establiment i sense'
     if (c.group === 'B') assert.ok(x.event && x.time === 5, 'el retall del punt té establiment al primer cens');
   }
 });
+// Iteració 4: els canvis del programa no poden canviar la decisió de la sèrie de la llei 2. Amb les dades
+// reals (fase2/resultats/serie-llei2), el manifest preregistrat i el commit de l'etiqueta, en surt la
+// mateixa decisió que el 18-10-2026, amb la mateixa Z i la mateixa empremta dels fitxers.
+tests["la sèrie de la llei 2 es torna a decidir igual amb el programa d'ara"] = () => {
+  const manifest = JSON.parse(readFileSync(join(root, 'fase2', 'serie-llei2.json'), 'utf8'));
+  const dir = join(root, 'fase2', 'resultats', 'serie-llei2');
+  const v = validateSeries(join(dir, 'A'), join(dir, 'B'), manifest, '2', { commit: '8cd444927f5c3024aa1162abb859e48273c2f535' });
+  assert.deepStrictEqual(v.errors, []);
+  assert.strictEqual(v.A.length + v.B.length, 160);
+  const z = logrank(v.A, v.B).z;
+  assert.strictEqual(z.toFixed(4), '-1.8306');
+  assert.strictEqual(stageOneCheck(v.A, v.B, manifest).z1.toFixed(4), '0.0685');
+  assert.match(decide('2', z, manifest).decision, /^no es rebutja H0: la sèrie no permet afirmar/);
+  const all = createHash('sha256').update([...v.A, ...v.B].map((x) => x.hash).join('\n')).digest('hex');
+  assert.strictEqual(all, '0809992ecd14be5d0d3b16884db03052c26cdd45ea9603ec8cf228836f21d207');
+};
 tests['decisió de cada etapa, amb els límits preregistrats'] = () => {
   assert.match(decide('1', 2.5, MANIFEST).decision, /es rebutja H0 a l'etapa 1/);
   assert.match(decide('1', -2.48, MANIFEST).decision, /es rebutja/);
