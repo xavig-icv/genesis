@@ -21,8 +21,8 @@ va quedar obert: si la vida es pot mantenir, adaptar, formar ecosistemes i repro
 
 **La pregunta, reformulada (16-10-2026, AUD-39 de l'auditoria 2).** "La vida pot néixer sola?" ja té
 resposta en substrats com aquest. Ho va mostrar *Computational Life*, ho hem reproduït a la Fase 1, i ja
-hi havia precedents en altres químiques artificials: Coreworld (1990), AlChemy (1994) i Amoeba (1996). La
-detallarà un estat de la qüestió, amb les referències comprovades. Les preguntes d'aquest projecte són
+hi havia precedents en altres químiques artificials: Coreworld (1990), AlChemy (1994) i Amoeba (1996). L'estat de la
+qüestió és a `docs/estat-questio.md` (18-10-2026), amb les referències comprovades. Les preguntes d'aquest projecte són
 les que queden obertes:
 
 1. **Quines propietats** de la química i de l'entorn calen perquè la vida aparegui.

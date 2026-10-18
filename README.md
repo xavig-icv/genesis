@@ -22,6 +22,7 @@ Edge o un altre navegador basat en Chromium (és amb el que s'ha comprovat la re
 | `docs/captures.md` | Les captures clau dels mons, i com fer-ne còpia. |
 | `docs/protocol-estadistic.md` | El protocol (preregistre) de la sèrie confirmatòria. |
 | `docs/calibratge.md` | Què detecta el cens de la vida, i què no. |
+| `docs/estat-questio.md` | L'estat de la qüestió: què s'ha fet abans en abiogènesi digital, amb les referències comprovades. |
 | `eines/cubff/` | La comparació de l'intèrpret amb cubff, l'implementació original de l'article. |
 | `quadern/` | El quadern de laboratori: què hem fet, què hem trobat i les preguntes obertes. |
 | `fase1/` | La sopa primordial: reproducció de l'experiment BFF de *Computational Life* (Agüera y Arcas et al., 2024), i el nucli que fan servir totes les fases (intèrpret, generadors aleatoris, mesures). |
