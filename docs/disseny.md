@@ -291,6 +291,16 @@ Resum. El detall és al quadern.
   la vida que dura queda 5 contra 14. Els indicis són més febles del que semblava.)
 - Un corrent que canvia amb el temps, entre la calma i el temporal, fa més vida que un de constant
   amb la mateixa mitjana? (Proposta del responsable del projecte, 18-10-2026; §4.)
+- **La corba dosi-resposta del corrent** (auditoria 8, auditor 1). La llei 2 pregunta quanta barreja
+  necessita la vida, però només se n'han provat dos punts, 0 i 0,01. Si la incidència passa del 30 % al
+  42 % i s'acosta al 100 % a la sopa barrejada, l'efecte més fort és a la corba. Candidata per a una sèrie
+  futura: 5 o 6 nivells (0, 0,003, 0,01, 0,03, 0,1 i 1), amb una prova de tendència.
+- **Quant temps necessita una línia hereditària per diversificar-se i resistir un canvi de l'entorn**
+  abans d'extingir-se? (Auditoria 8, auditor 2.) Es pot mesurar amb branques aparellades i pertorbacions
+  controlades.
+- **El ritme d'establiment depèn de l'edat del món** (auditoria 8, AUD-64, descriptiu). Al món quiet de la
+  sèrie de la llei 2, és unes tres vegades més alt a la segona meitat que a les primeres 4.000 èpoques.
+  Abans que hi pugui aparèixer un replicador, la sopa ha de "madurar"? Afecta el disseny de B3.
 - Per què les dues etapes de la sèrie de la llei 2 donen resultats tan diferents (19/18 i 5/16)?
   (AU2-33: el mateix patró a totes dues màquines; cap causa coneguda.)
 - El replicador que necessita una parella pot sobreviure en un món que no s'enverini tan de pressa?
