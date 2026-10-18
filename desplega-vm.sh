@@ -28,5 +28,5 @@ if ssh -i "$KEY" -o BatchMode=yes "$HOST" "test -e ~/$DIR"; then
   echo "~/$DIR existeix però no té VERSIO $HASH (un desplegament interromput?): esborreu-la i torneu-ho a provar" >&2
   exit 1
 fi
-git archive HEAD package.json sim.mjs server.mjs index.html experiments.sh fase1 fase2 quadern test eines \
+git archive HEAD package.json sim.mjs server.mjs index.html experiments.sh llanca-lot.sh seguiment.sh fase1 fase2 quadern test eines \
   | ssh -i "$KEY" -o BatchMode=yes "$HOST" "mkdir ~/$DIR && tar xf - -C ~/$DIR && echo $HASH > ~/$DIR/VERSIO && echo desplegat a ~/$DIR"
