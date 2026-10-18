@@ -9,8 +9,8 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   els identificadors del codi, en anglès.
 - JavaScript amb mòduls ES, sense dependències ni pas de compilació. Node 16 a Windows: els scripts
   per a Node s'anomenen `.mjs` o depenen del `"type": "module"` del `package.json`.
-- Proves: `npm test` (intèrpret, món i cens, línia d'ordres, servidor, estadística, oracle de cubff i
-  regressió del determinisme). Han de passar totes abans de donar res per acabat. Les empremtes de
+- Proves: `npm test` (intèrpret, món i cens, línia d'ordres, lots d'experiments, servidor, estadística,
+  oracle de cubff i regressió del determinisme; necessita `bash`, Git Bash a Windows). Han de passar totes abans de donar res per acabat. Les empremtes de
   `test/determinisme.mjs` no es toquen mai: si un canvi ha d'alterar les històries a propòsit, va darrere
   d'una opció nova. El mateix val per als valors del cens v2.
 - Experiments llargs sense gràfics: `node sim.mjs` (sopa) o `node sim.mjs --world 512x256` (món 2D).
@@ -29,7 +29,13 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Captures clau: `captures.sha256` i `docs/captures.md`; còpia amb `bash arxiva-captures.sh`.
 - Llistes d'experiments: `bash experiments.sh N carpeta < llista` (cada línia: `nom arguments-de-sim.mjs`).
-  Experiments de branca: `node sim.mjs ... --from captura.bin --start EPOCA` continua un món desat.
+  Els lots llargs es llancen amb `bash llanca-lot.sh N carpeta llista`, que escriu el progrés només a
+  `carpeta/lot-<llista>.out`, mai a la consola. Una consola de Windows en mode de selecció atura el lot.
+  - **Separar-lo de la sessió:** a la VM, `(nohup bash llanca-lot.sh ... > /dev/null 2>&1 &)`; al PC,
+    `Start-Process -WindowStyle Hidden` amb `bash llanca-lot.sh ...`.
+  - **Seguiment:** `bash seguiment.sh carpeta` només compta experiments i comprova que els registres
+    siguin complets. Durant una sèrie no es miren resultats parcials.
+  - **Experiments de branca:** `node sim.mjs ... --from captura.bin --start EPOCA` continua un món desat.
 - Màquina virtual de laboratori: `ssh -i ~/.ssh/claude_origins_vm claude@192.168.171.3` (Git Bash). Cada
   commit desplegat és a `~/claude-origins-<commit>` (`~/claude-origins` és el desplegament antic, amb
   els resultats de la sèrie exploratòria). La VM no té `npm`: les proves s'hi executen una per una amb
