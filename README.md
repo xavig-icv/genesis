@@ -53,6 +53,7 @@ Edge o un altre navegador basat en Chromium (és amb el que s'ha comprovat la re
 - `calibratge.mjs`: el cens sobre les captures clau.
 - `estadistica.mjs`: l'anàlisi estadística de les sèries (log-rank, Kaplan–Meier, dues etapes, sensibilitats), amb la validació de la sèrie contra el manifest `serie-llei2.json` i la decisió de cada etapa (`--etapa`), que només es pren des d'una còpia idèntica a l'etiqueta del preregistre.
 - `quadern-serie.mjs`: les taules per llavor i la corba de Kaplan–Meier d'una sèrie, en HTML, per al quadern.
+- `b2-analisi.mjs`: l'anàlisi exploratòria de B2 (quant dura la vida establerta), amb les branques aparellades pel món.
 - `main.js`, `analysis-worker.js`, `style.css`: el mapa, amb zoom des dels territoris fins al codi.
 
 ## Proves i experiments

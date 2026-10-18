@@ -40,6 +40,10 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
     comprova que el programa d'ara en treu la mateixa decisió.
 - Taules i corba d'una sèrie per al quadern: `node fase2/quadern-serie.mjs carpeta-A carpeta-B sortida`
   (`test/quadern.mjs` comprova que reprodueix les de l'entrada 8).
+- B2 (quant dura la vida establerta): `node fase2/b2-analisi.mjs` és l'anàlisi **exploratòria** de les branques
+  de `fase2/resultats/b2/exploracio`, amb tres regles de "mort", les morts falses, l'aparellament pel món i la
+  concordança amb la història original. Mai no es fa servir amb els mons de la part `confirmacio` del
+  repartiment (`fase2/resultats/b2/repartiment.json`): s'hi nega.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Captures clau: `captures.sha256` i `docs/captures.md`; còpia amb `bash arxiva-captures.sh`.
 - Llistes d'experiments: `bash experiments.sh N carpeta < llista` (cada línia: `nom arguments-de-sim.mjs`).
