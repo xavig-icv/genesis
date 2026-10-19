@@ -12,7 +12,7 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 - Proves: `npm test` (intèrpret, món i cens, línia d'ordres, lots d'experiments, servidor, estadística,
   oracle de cubff i regressió del determinisme; necessita `bash`, Git Bash a Windows). **Abans de demanar
   un merge, `bash eines/prova-neta.sh`**, que les passa en una còpia neta del commit: no poden dependre de canvis
-  sense desar (AUD-58). GitHub també les passa a cada PR, amb Node 16 i 20 (`.github/workflows/proves.yml`). Han de passar totes abans de donar res per acabat. Les empremtes de
+  sense desar (AUD-58). GitHub també les passa a cada PR, amb Node 16, 20, 22 i 24 (`.github/workflows/proves.yml`). Han de passar totes abans de donar res per acabat. Les empremtes de
   `test/determinisme.mjs` no es toquen mai: si un canvi ha d'alterar les històries a propòsit, va darrere
   d'una opció nova. El mateix val per als valors del cens v2.
 - Experiments llargs sense gràfics: `node sim.mjs` (sopa) o `node sim.mjs --world 512x256` (món 2D).
@@ -47,7 +47,13 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
   captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
-  cada imatge ha de dir d'on surt (quina captura, quina llavor, quina època).
+  cada imatge ha de dir d'on surt (quina captura, quina llavor, quina època), a `docs/imatges/README.md`.
+  - **Els exemples:** quan una imatge compara condicions, es trien a l'atzar amb una llavor declarada
+    (`node eines/tria.mjs LLAVOR N elements...`), no els que es veuen bé.
+  - **Les afirmacions dels peus** es comproven amb dades abans de publicar-les.
+- Documents per a qui arriba de fora: `README.en.md` (cal posar-lo al dia quan canviï el README), `docs/reproduir.md`
+  (receptes comprovades), `docs/glossari.md`, `CITATION.cff`, `CONTRIBUTING.md` i `LICENSE-data.md`. Al
+  README, la revisió és "de dos auditors d'IA", mai "externa" sense dir-ho.
 - Captures clau: `docs/captures.sha256` i `docs/captures.md`; còpia amb `bash eines/arxiva-captures.sh`.
 - Llistes d'experiments: `bash eines/experiments.sh N carpeta < llista` (cada línia: `nom arguments-de-sim.mjs`).
   Els lots llargs es llancen amb `bash eines/llanca-lot.sh N carpeta llista`, que escriu el progrés només a
@@ -96,7 +102,8 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 - Auditories externes iteratives a `../auditories/claude-origins/auditor1/auditN/`. En acabar cada grup
   de tasques, deixa-hi un `informe-de-traspas.md` (commits, estat de cada troballa AUD-xx, què cal
   revisar). Quan arribi l'informe de l'auditor, comprova'n les afirmacions amb dades i respon a
-  `resposta-equip.md`. Les troballes conserven l'identificador entre auditories.
+  `resposta-equip.md`. Les troballes conserven l'identificador entre auditories. Cada troballa nova, amb una
+  línia i la resolució, va a l'índex públic `docs/auditories.md`, sense cap dada interna.
 - El protocol de la sèrie confirmatòria (`docs/protocol-estadistic.md`) no es llança fins que l'auditoria
   l'hagi revisat.
 

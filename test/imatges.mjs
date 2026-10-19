@@ -1,4 +1,4 @@
-// Proves de les imatges (eines/png.mjs i eines/imatges.mjs). Executa: node test/imatges.mjs
+// Proves de les imatges (eines/png.mjs, eines/imatges.mjs i eines/tria.mjs). Executa: node test/imatges.mjs
 import assert from 'assert';
 import { inflateSync } from 'zlib';
 import { spawnSync } from 'child_process';
@@ -7,7 +7,8 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { encodePng, encodeApng } from '../eines/png.mjs';
-import { soupImage, worldImage, codeImage, row, COLORS, WORLD, THEMES } from '../eines/imatges.mjs';
+import { soupImage, worldImage, codeImage, row, grid, label, thousands, COLORS, WORLD, THEMES } from '../eines/imatges.mjs';
+import { pick } from '../eines/tria.mjs';
 import { randomSoup, makeRng } from '../fase1/soup.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -103,6 +104,62 @@ const tests = {
       const expected = soupImage(randomSoup(131072, makeRng(5, 'v1')), { programs: 4 });
       assert.ok(readFileSync(out('v1.png')).equals(encodePng(expected.rgb, expected.width, expected.height)));
       assert.ok(!readFileSync(out('v1.png')).equals(readFileSync(out('v2.png'))));
+    } finally { rmSync(tmp, { recursive: true, force: true }); }
+  },
+  "un APNG amb una imatge per defecte que no forma part de l'animació (AUD-75)": () => {
+    const f = (v) => new Uint8Array(3 * 4).fill(v);
+    const cs = chunks(encodeApng([f(1), f(2)], 2, 2, { delayMs: 50, cover: f(9) }));
+    // la imatge per defecte va a l'IDAT, abans del primer fcTL; els fotogrames, tots a fdAT
+    assert.deepStrictEqual(cs.map((c) => c.type), ['IHDR', 'acTL', 'IDAT', 'fcTL', 'fdAT', 'fcTL', 'fdAT', 'IEND']);
+    assert.strictEqual(cs[1].data.readUInt32BE(0), 2);
+    assert.deepStrictEqual([...inflateSync(cs[2].data)].slice(1, 4), [9, 9, 9]);
+    const seqs = cs.filter((c) => c.type === 'fcTL' || c.type === 'fdAT').map((c) => c.data.readUInt32BE(0));
+    assert.deepStrictEqual(seqs, [0, 1, 2, 3]);
+    assert.deepStrictEqual([...inflateSync(cs[4].data.subarray(4))].slice(1, 4), [1, 1, 1]);
+  },
+  "l'època a la cantonada: les xifres, el punt dels milers i el requadre": () => {
+    assert.strictEqual(thousands(1500), '1.500');
+    assert.strictEqual(thousands(16000), '16.000');
+    assert.strictEqual(thousands(250), '250');
+    const im = { rgb: new Uint8Array(40 * 20 * 3), width: 40, height: 20 };
+    label(im, '1', { x: 4, y: 4, s: 1, color: [255, 255, 255], background: [7, 7, 7] });
+    const px = (x, y) => [...im.rgb.subarray((y * 40 + x) * 3, (y * 40 + x) * 3 + 3)];
+    // el "1": 010 / 110 / 010 / 010 / 111
+    assert.deepStrictEqual(px(5, 4), [255, 255, 255]);
+    assert.deepStrictEqual(px(4, 4), [7, 7, 7]);
+    assert.deepStrictEqual(px(4, 5), [255, 255, 255]);
+    assert.deepStrictEqual(px(6, 8), [255, 255, 255]);
+    assert.deepStrictEqual(px(30, 15), [0, 0, 0]);                 // fora del requadre, no toca res
+  },
+  'una graella: les imatges per files, amb marge': () => {
+    const sq = (v) => ({ rgb: new Uint8Array(3).fill(v), width: 1, height: 1 });
+    const g = grid([sq(1), sq(2), sq(3)], 2, 1, [0, 0, 0]);
+    assert.deepStrictEqual([g.width, g.height], [3, 3]);
+    const px = (x, y) => g.rgb[(y * g.width + x) * 3];
+    assert.deepStrictEqual([px(0, 0), px(2, 0), px(0, 2), px(2, 2)], [1, 2, 3, 0]);
+  },
+  "una tria a l'atzar amb llavor: sempre la mateixa, sense repetir, i en l'ordre de la llista": () => {
+    const items = Array.from({ length: 30 }, (_, i) => `m${i}`);
+    const a = pick(20261019, 4, items), b = pick(20261019, 4, items);
+    assert.deepStrictEqual(a, b);
+    assert.strictEqual(new Set(a).size, 4);
+    assert.deepStrictEqual(a, [...a].sort((x, y) => items.indexOf(x) - items.indexOf(y)));
+    assert.notDeepStrictEqual(pick(1, 4, items), a);
+    assert.deepStrictEqual(pick(5, 3, ['x', 'y', 'z']), ['x', 'y', 'z']);
+    assert.throws(() => pick(1, 4, ['x']), /N ha de ser/);
+    const r = spawnSync(process.execPath, [join(root, 'eines', 'tria.mjs'), '20261019', '4', ...items], { encoding: 'utf8' });
+    assert.strictEqual(r.stdout.trim(), a.join(' '));
+  },
+  'la corba de Kaplan–Meier en mode fosc': () => {
+    const tmp = mkdtempSync(join(tmpdir(), 'imatges-'));
+    try {
+      const dir = join(root, 'fase2', 'resultats', 'serie-llei2'), out = join(tmp, 'km.svg');
+      const r = spawnSync(process.execPath, [join(root, 'eines', 'imatges.mjs'), 'km', join(dir, 'A'), join(dir, 'B'), out, '--tema', 'fosc'], { encoding: 'utf8' });
+      assert.strictEqual(r.status, 0, r.stderr);
+      const svg = readFileSync(out, 'utf8');
+      assert.ok(!svg.includes('var(--'));
+      assert.match(svg, /<rect width="640" height="300" fill="#0d0d0d"\/>/);
+      assert.ok(!svg.includes('#52514e'));                         // cap color del mode clar
     } finally { rmSync(tmp, { recursive: true, force: true }); }
   },
   'diverses imatges en fila, amb marge': () => {

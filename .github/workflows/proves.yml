@@ -1,6 +1,6 @@
 # Proves automàtiques a cada pull request i a cada commit de main (AUD-58 de l'auditoria 8): npm test
 # en una còpia neta del commit, amb les versions de Node de les dues màquines del projecte (el PC fa
-# servir Node 16 i la VM, Node 20).
+# servir Node 16 i la VM, Node 20) i amb les dues que encara tenen manteniment, 22 i 24 (AU2-47).
 name: Proves
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [16, 20]
+        node: [16, 20, 22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

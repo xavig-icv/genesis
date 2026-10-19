@@ -1,5 +1,14 @@
 # Protocol estadístic · sèrie confirmatòria de la llei 2
 
+> **Nota de situació (19-10-2026, AUD-72 i AU2-45).** Aquest és el text preregistrat de la sèrie de la llei
+> 2: l'etiqueta anotada `preregistre-llei2`, al commit `8cd4449`.
+> - **El que diu en futur** ("esborrany", "no s'ha llançat cap experiment") era cert quan es va escriure.
+> - **La sèrie:** es va fer després, i es va decidir el 18-10-2026. El resultat és a l'entrada 8 del quadern,
+>   i les sortides de la decisió, a `fase2/resultats/serie-llei2/`.
+> - **El text de sota** és el de l'etiqueta. Només s'hi han afegit notes datades, que es distingeixen pel
+>   format i per la data.
+> - **Com es repeteix la decisió:** `docs/reproduir.md`, §3.
+
 **Estat: esborrany v0.5 (16-10-2026).** Incorpora les correccions que van demanar tots dos auditors a
 les auditories 3, 4 i 5, abans del *merge*. No s'ha llançat cap experiment d'aquesta sèrie. Quan el protocol
 estigui aprovat, el commit del *merge* farà de preregistre: qualsevol canvi posterior s'haurà de

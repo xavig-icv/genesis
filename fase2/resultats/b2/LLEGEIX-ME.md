@@ -1,5 +1,12 @@
 # B2 · Repartiment dels mons entre l'exploració i la confirmació
 
+> **Nota (19-10-2026, AUD-72).** La recepta de més avall es va escriure per al commit `e6be331`, quan
+> `captures.sha256` era a l'arrel. Des de la reorganització (`e35a78c`) és a `docs/captures.sha256`.
+> - **Per refer-la tal com es va fer:** executeu-la sobre una còpia d'`e6be331`.
+> - **Des de `main`:** canvieu `join(repo, 'captures.sha256')` per `join(repo, 'docs', 'captures.sha256')`.
+>
+> El repartiment no en canvia: depèn de la llavor i de la llista de mons, no del camí del fitxer.
+
 **Què és.** La pregunta de B2 (pla de la iteració 4) és quant dura la vida establerta, i si el corrent hi
 influeix. Es respon amb branques aparellades: cada món, continuat des de la captura de la seva època
 d'establiment *t*, amb *m* = 0 i amb *m* = 0,01.
