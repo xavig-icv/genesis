@@ -21,10 +21,10 @@ Bash).
 
 | Què | Temps |
 |---|---|
-| La prova ràpida (§1) | uns 15 segons |
+| La prova ràpida (§1) | de 10 a 15 segons |
 | `npm test` | uns minuts |
 | La decisió de la llei 2 (§3) | segons |
-| Una sopa de la Fase 1 fins a la transició (§2) | minuts |
+| Una sopa de la Fase 1 (§2) | uns minuts fins a la transició (època 200); de 15 a 35 minuts fins a l'època 750, segons la càrrega de la màquina |
 | Un món de la sèrie de la llei 2, fins a 16.000 èpoques o fins a 1.000 èpoques després de l'establiment | de 6 minuts a 3,3 hores, amb una mediana d'una hora |
 | La sèrie de la llei 2 sencera (160 mons) | unes 170 hores de càlcul: més d'un dia amb sis processos alhora |
 
@@ -78,7 +78,11 @@ cd ../claude-origins && git worktree remove ../preregistre
 - **La sortida** ha de ser idèntica a la desada.
 - **Una excepció possible:** la línia de sensibilitat de l'HOE pot canviar si la vostra versió de Node porta
   un altre zlib. La decisió no en depèn.
-- **Comprovat el 19-10-2026** amb Node 16: la sortida és idèntica byte a byte.
+- **Comprovat el 19-10-2026** amb Node 16: la sortida és idèntica byte a byte. Els dos auditors ho van refer a
+  l'auditoria 9.
+- **Qui decideix:** la decisió la pren el programa de l'etiqueta (`8cd4449`), no el de `main` (AUD-87).
+  - **Les comprovacions noves** del preregistre (PR #6) protegeixen les sèries futures.
+  - **La de la llei 2** es va protegir amb les comprovacions a mà de l'acta del llançament.
 
 **Sense `--etapa`**, des de `main`, `node fase2/estadistica.mjs carpeta-A carpeta-B` en fa l'informe
 descriptiu.
@@ -95,8 +99,12 @@ head -1 fase2/resultats/serie-llei2/A/1006.jsonl
 - **Les rutes:** canvieu les de `--json` i de `--save` per una carpeta vostra.
 - **La comprovació:** compareu els censos dels dos JSONL (les línies `"type":"census"`). Han de ser
   idèntics.
-- **El codi:** el commit era el `8cd4449`, i qualsevol commit posterior fa la mateixa història, perquè les
-  empremtes de determinisme no es toquen mai.
+- **El codi:** feu servir el commit que diu el registre (`codi=8cd4449`, a la línia d'inici del JSONL), amb
+  `git worktree add`, com a la §3 (AU2-63).
+  - **Els commits posteriors** han mantingut les històries dels casos de regressió
+    (`test/determinisme.mjs`), i a l'auditoria 9 dues llavors de la sèrie refetes amb el codi de `f821f4d` van
+    donar la mateixa història.
+  - **Però la garantia és el commit del registre,** no un de posterior.
 
 ## 5. Les imatges
 

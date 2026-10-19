@@ -132,7 +132,7 @@ Open <http://localhost:8420> to see the soup, the 2D world (with zoom from terri
 notebook. It needs module workers and `CompressionStream` with `deflate-raw`. Chromium-based browsers (Chrome,
 Edge) are the ones reproducibility was checked with.
 
-A quick run without graphics, of about 15 seconds:
+A quick run without graphics, of about 10–15 seconds:
 
 ```bash
 node sim.mjs --world 64x64 --seed 1 --epochs 300 --census 100

@@ -206,7 +206,7 @@ quadern.
 - **Els navegadors provats:** Chrome, Edge i els altres basats en Chromium. Amb aquests s'ha comprovat la
   reproduïbilitat.
 
-Una prova ràpida sense gràfics, d'uns 15 segons:
+Una prova ràpida sense gràfics, d'uns 10–15 segons:
 
 ```bash
 node sim.mjs --world 64x64 --seed 1 --epochs 300 --census 100

@@ -8,7 +8,7 @@ Els documents del projecte citen troballes de les auditories (AUD-xx, de l'audit
 - **Resolució:** l'estat més recent que consta a les respostes de l'equip, als traspassos i a la història de git, amb el commit o la PR quan n'hi ha.
   - **PR R1** és la PR de les correccions de la revisió del repositori (19-10-2026).
   - Cada troballa nova s'hi afegeix quan l'equip en respon l'informe.
-  - Les correccions posteriors a l'auditoria 8 les ha de verificar l'auditoria 9.
+  - Les correccions posteriors a l'auditoria 8 les va verificar l'auditoria 9 (19-10-2026), i ho diu la resolució de cadascuna.
 
 ## Auditor 1 (AUD-xx)
 
@@ -29,12 +29,12 @@ Els documents del projecte citen troballes de les auditories (AUD-xx, de l'audit
 | AUD-13 | 1 | Baixa | La prova en context del registre feia servir sempre el radi 2, fos quin fos el del món. | El radi arriba a la prova com a paràmetre (`15958ef`, PR #1). Tancada a l'auditoria 2. |
 | AUD-14 | 1 | Baixa | Les famílies "extingides" barrejaven extincions reals i famílies que es deixaven de seguir. | `untracked` separat d'`extinct` (`465b760`). Tancada a l'auditoria 3. |
 | AUD-15 | 1 | Baixa | `Math.log` pot variar entre motors de JavaScript, i la compressió entre el navegador i Node. | Limitació documentada (V8) i `deflate-raw` (`293f25c`). Tancada a l'auditoria 3 com a limitació. |
-| AUD-16 | 1 | Baixa | `npm test` només provava la Fase 1, sense integració contínua ni proves de regressió del determinisme. | Proves de regressió (`e356ca9`, PR #1) i integració contínua a GitHub (`a8d21cc`, PR #5). |
+| AUD-16 | 1 | Baixa | `npm test` només provava la Fase 1, sense integració contínua ni proves de regressió del determinisme. | Proves de regressió (`e356ca9`, PR #1) i integració contínua a GitHub (`a8d21cc`, PR #5). Verificada a l'auditoria 9. |
 | AUD-17 | 1 | Baixa | Codi duplicat entre les interfícies i les eines. | Oberta: els mòduls compartits i `stepWorld()` estan ajornats. |
 | AUD-18 | 1 | Baixa | El codi s'organitza per fases, i la Fase 3 no està definida al disseny. | Scripts a `eines/` (`e35a78c`). Els noms es mantenen per traçabilitat, amb un mapa al README (PR R1). |
 | AUD-19 | 1 | Baixa | El README i la portada estaven desactualitzats; 190 contra 195 èpoques. | README, portada i nota 190/195 al quadern (`293f25c`, `9618c95`). Tancada a l'auditoria 2. |
 | AUD-20 | 1 | Baixa | Registres amb BOM, noms inconsistents i sense format estructurat. | Parcial: el cens i les mesures ja són en JSONL; els registres continuen sent de text. |
-| AUD-21 | 1 | Baixa | Les sèries i les taules del quadern s'escrivien a mà. | Les taules i la corba de l'entrada 8 surten de `fase2/quadern-serie.mjs`, amb prova (`6366aa0`, PR #6). |
+| AUD-21 | 1 | Baixa | Les sèries i les taules del quadern s'escrivien a mà. | Les taules i la corba de l'entrada 8 surten de `fase2/quadern-serie.mjs`, amb prova (`6366aa0`, PR #6). Verificada a l'auditoria 9. |
 | AUD-22 | 1 | Baixa | El desplegament a la màquina virtual deixava fitxers antics i no mirava si hi havia un lot en marxa. | Una carpeta per commit (`618c873`). Tancada a l'auditoria 3, amb una nota que es va corregir després (`6bd4877`). |
 | AUD-23 | 1 | Baixa | `analitza.mjs` sense arguments acabava amb una traça d'error. | Missatge d'ús (`15958ef`, PR #1). Tancada a l'auditoria 2. |
 | AUD-24 | 1 | Baixa | La interfície no registra els canvis de paràmetres, i el mapa no es pot fer servir amb el teclat. | Oberta. El teclat es revisarà amb AU2-52 (PR R2). |
@@ -52,7 +52,7 @@ Els documents del projecte citen troballes de les auditories (AUD-xx, de l'audit
 | AUD-36 | 2 | Baixa | Les proves de determinisme no cobrien les mesures, el radi ni el navegador. | Proves de referència del cens v2 i v3 i empremtes noves (`c0065b1`). Tancada a l'auditoria 3; `stepWorld()` va amb AUD-17. |
 | AUD-37 | 2 | Baixa | Els registres de la sèrie exploratòria no portaven el commit ni el generador. | Anotat a l'entrada 6 i a `docs/captures.md`. Tancada a l'auditoria 3. |
 | AUD-38 | 2 | Baixa | Calia matisar `NOTICE` i l'origen de la funció de referència. | Comentari d'origen i matís a `NOTICE` (`e81b1cd`). Tancada a l'auditoria 3. |
-| AUD-39 | 2 | Mitjana (estratègica) | Reformular la pregunta del projecte i escriure l'estat de la qüestió. | Pregunta reformulada a `docs/disseny.md`, i estat de la qüestió a `docs/estat-questio.md` (`f538512`). |
+| AUD-39 | 2 | Mitjana (estratègica) | Reformular la pregunta del projecte i escriure l'estat de la qüestió. | Pregunta reformulada a `docs/disseny.md`, i estat de la qüestió a `docs/estat-questio.md` (`f538512`). Verificada a l'auditoria 9. |
 | AUD-40 | 2 | Mitjana (estratègica) | Fer un eix de química (ablacions a la sopa) abans de les lleis 4 a 7. | El responsable fixa el full de ruta: primer la sèrie i després les ablacions (B1). Tancada a l'auditoria 3. |
 | AUD-41 | 2 | Mitjana (estratègica) | Dissenys eficients: un banc de mons amb vida, branques aparellades i assaigs d'establiment. | Banc de captures dels 58 mons amb vida, arxivat i verificat (`3cf2089`, `c745fb3`). Tancada a l'auditoria 8. |
 | AUD-42 | 3 | Mitjana | La prova d'herència en context donava falsos positius amb programes lectors. | Herència sola i en context per separat, i sensibilitat redefinida (`9e7c539`). Tancada a l'auditoria 4. |
@@ -64,36 +64,43 @@ Els documents del projecte citen troballes de les auditories (AUD-xx, de l'audit
 | AUD-48 | 4 | Informativa | Les tres formes de risc sota H0 de la simulació no són tres proves de robustesa. | Explicat al protocol v0.4 (`fc2ac3f`). Tancada a l'auditoria 5. |
 | AUD-49 | 4 | Baixa | El protocol no fixava l'estructura de carpetes que necessita `--etapa`. | Carpetes A i B al protocol v0.4 (`fc2ac3f`). Tancada a l'auditoria 5. |
 | AUD-50 | 5 | Baixa | `--commit` acceptava qualsevol prefix, fins i tot massa curt. | `--commit` només en mode de prova i amb un hash complet (`92fac37`, `c7e5519`). Tancada a l'auditoria 6. |
-| AUD-51 | 6 | Baixa | La comprovació de còpia neta es podia saltar amb `assume-unchanged`. | Fitxers seguits comparats amb l'etiqueta, sense `assume-unchanged` ni `skip-worktree` (`6366aa0`, PR #6). |
+| AUD-51 | 6 | Baixa | La comprovació de còpia neta es podia saltar amb `assume-unchanged`. | Fitxers seguits comparats amb l'etiqueta, sense `assume-unchanged` ni `skip-worktree` (`6366aa0`, PR #6). Verificada a l'auditoria 9. |
 | AUD-52 | 7 | Baixa | Les sortides de decisió desades portaven una capçalera escrita a mà. | Sortides pures desades (`75e1218`). Tancada a l'auditoria 8. |
 | AUD-53 | 7 | Baixa | Al pla de B3, la predicció confonia el costat amb l'àrea, i la mesura depenia de la mida. | Tancada al pla a l'auditoria 8; AUD-64 n'amplia l'abast. |
 | AUD-54 | 7 | Informativa | Al pla de B2, calia reservar mons per a la confirmació abans d'explorar. | Mons repartits a l'atzar abans de mirar cap branca (`e6be331`). Tancada a l'auditoria 8. |
-| AUD-55 | 7 | Baixa | L'HOE difereix entre Node 16 i Node 20 per la versió de zlib. | Nota datada al protocol i al disseny (`52d1780`), i sèries noves sense l'HOE a les sensibilitats (`6366aa0`). |
-| AUD-56 | 8 | Baixa | `seguiment.sh` comptava malament després d'un rellançament. | L'últim estat de cada nom, amb proves de rellançament (`3865d9c`, PR #5). |
-| AUD-57 | 8 | Baixa | El ritme i l'ordre d'acabament dels experiments poden revelar el resultat durant una sèrie. | Seguiment només agregat (`3865d9c`, PR #5) i noms opacs a les sèries confirmatòries futures. |
-| AUD-58 | 8 | Baixa | Les proves d'una PR es van passar en una còpia amb canvis sense desar. | Proves en una còpia neta abans de cada merge i a GitHub, amb Node 16 i 20 (`a8d21cc`, PR #5). |
-| AUD-59 | 8 | Informativa | Rutes relatives mal resoltes, i l'empremta s'escriu abans de la línia final del JSONL. | Camins resolts abans del `cd`, i un experiment només és fet amb el JSONL complet (`3865d9c`, PR #5). |
-| AUD-60 | 8 | Baixa | La "mort" de B2 feia servir el llindar d'establiment, sense marge. | Tres regles candidates a l'eina exploratòria de B2 (`971394e`, PR #7). La definició es fixarà al protocol de B2. |
+| AUD-55 | 7 | Baixa | L'HOE difereix entre Node 16 i Node 20 per la versió de zlib. | Nota datada al protocol i al disseny (`52d1780`), i sèries noves sense l'HOE a les sensibilitats (`6366aa0`). Verificada a l'auditoria 9. |
+| AUD-56 | 8 | Baixa | `seguiment.sh` comptava malament després d'un rellançament. | L'últim estat de cada nom, amb proves de rellançament (`3865d9c`, PR #5). Verificada a l'auditoria 9. |
+| AUD-57 | 8 | Baixa | El ritme i l'ordre d'acabament dels experiments poden revelar el resultat durant una sèrie. | Seguiment només agregat (`3865d9c`, PR #5) i noms opacs a les sèries confirmatòries futures. Verificada a l'auditoria 9. |
+| AUD-58 | 8 | Baixa | Les proves d'una PR es van passar en una còpia amb canvis sense desar. | Proves en una còpia neta abans de cada merge i a GitHub, amb Node 16 i 20 (`a8d21cc`, PR #5). Verificada a l'auditoria 9. |
+| AUD-59 | 8 | Informativa | Rutes relatives mal resoltes, i l'empremta s'escriu abans de la línia final del JSONL. | Camins resolts abans del `cd`, i un experiment només és fet amb el JSONL complet (`3865d9c`, PR #5). Verificada a l'auditoria 9. |
+| AUD-60 | 8 | Baixa | La "mort" de B2 feia servir el llindar d'establiment, sense marge. | Tancada: el protocol de B2 fa servir la regla R2 (5 o menys de 2.048), amb R1 i R3 com a sensibilitats (auditoria 9). |
 | AUD-61 | 8 | Mitjana | Amb una sola llavor per condició, l'exploració no pot dir quantes llavors calen. | Concordança amb la història original a l'eina de B2 (`971394e`, PR #7). Segona llavor i potència, abans de preregistrar. |
 | AUD-62 | 8 | Informativa | Una part de l'exploració de B2 no es va llançar amb el llançador documentat. | Acceptada: una acta de l'exploració, a la documentació interna de l'equip. |
-| AUD-63 | 8 | Baixa | Error de l'auditor a l'auditoria 7 sobre el soroll al voltant del llindar. | Nota nova a l'entrada 8 del quadern (`573c0ec`). |
+| AUD-63 | 8 | Baixa | Error de l'auditor a l'auditoria 7 sobre el soroll al voltant del llindar. | Nota nova a l'entrada 8 del quadern (`573c0ec`). Verificada a l'auditoria 9. |
 | AUD-64 | 8 | Mitjana | A B3, igualar cel·les × èpoques barreja la mida del món amb la seva edat. | Acceptada: B3 es redissenya per comparar a la mateixa edat. Pendent. |
 | AUD-65 | 8 | Informativa | A les ablacions de B1, el cens ha de fer servir la mateixa química que el món. | Acceptada, amb una prova. Pendent, fins que es facin les ablacions. |
-| AUD-66 | 8 | Baixa | La decisió confirmatòria no mirava `NODE_OPTIONS` ni les opcions de `node`. | La decisió s'hi nega si en troba (`6366aa0`, PR #6). |
-| AUD-67 | 8 | Informativa | La meitat de confirmació de B2 no és cega respecte a la història original. | Acceptada: el protocol de B2 ho dirà i n'exclourà aquestes històries. Pendent. |
+| AUD-66 | 8 | Baixa | La decisió confirmatòria no mirava `NODE_OPTIONS` ni les opcions de `node`. | La decisió s'hi nega si en troba (`6366aa0`, PR #6). Verificada a l'auditoria 9. |
+| AUD-67 | 8 | Informativa | La meitat de confirmació de B2 no és cega respecte a la història original. | Tancada: el protocol de B2 ho declara com a limitació, i l'anàlisi no fa servir aquesta història (auditoria 9). |
 | AUD-68 | Revisió | Mitjana | El resum en anglès no deia que els auditors són models d'IA, ni que un és el mateix model que desenvolupa. | El README, en català i en anglès, diu que la revisió és d'IA i no humana (`f23154d`, PR R1). |
 | AUD-69 | Revisió | Mitjana | GitHub mostra el quadern com a codi HTML, no com a pàgina. | GitHub Pages és viable. Publicar-lo és una decisió pendent del responsable (D4). |
 | AUD-70 | Revisió | Baixa | Cinc frases del README deien més que el quadern. | Frases ajustades al quadern (`f23154d`, PR R1). |
-| AUD-71 | Revisió | Baixa | Una imatge generalitzava a partir d'un sol món per condició, i el color era el territori, no la vida. | Quatre mons per condició triats a l'atzar, amb el territori i el cens al peu (`27e063a`, `f23154d`, PR R1). |
-| AUD-72 | Revisió | Baixa | El protocol de `main` s'obria com un esborrany, i la recepta de B2 citava una ruta antiga. | Notes datades, sense tocar els textos congelats (`b90b08f`, PR R1). |
-| AUD-73 | Revisió | Baixa | GitHub no mostra els `LLEGEIX-ME.md` en obrir una carpeta. | Un `README.md` a les carpetes de les imatges i de B2 (`27e063a`, `b90b08f`, PR R1). |
+| AUD-71 | Revisió | Baixa | Una imatge generalitzava a partir d'un sol món per condició, i el color era el territori, no la vida. | Quatre mons per condició triats a l'atzar, amb el territori i el cens al peu (`27e063a`, `f23154d`, PR R1). Verificada a l'auditoria 9. |
+| AUD-72 | Revisió | Baixa | El protocol de `main` s'obria com un esborrany, i la recepta de B2 citava una ruta antiga. | Notes datades, sense tocar els textos congelats (`b90b08f`, PR R1). Verificada a l'auditoria 9. |
+| AUD-73 | Revisió | Baixa | GitHub no mostra els `LLEGEIX-ME.md` en obrir una carpeta. | Un `README.md` a les carpetes de les imatges i de B2 (`27e063a`, `b90b08f`, PR R1). Verificada a l'auditoria 9. |
 | AUD-74 | Revisió | Baixa | Amb alguns tipus de daltonisme, els colors de les instruccions es confonen. | Pendent: canviar els colors de la interfície és una decisió del responsable, i aniria a la PR R2. |
-| AUD-75 | Revisió | Baixa | L'animació començava amb un fotograma fosc i sense època, i la documentació deia 500 èpoques en lloc de 300. | Imatge de reserva, època, xifra corregida i una ordre que no depèn de l'HOE (`4c63be8`, `27e063a`, PR R1). |
-| AUD-76 | Revisió | Baixa | En mode fosc, la corba del resultat principal era un bloc blanc, i no tenia peu. | Versió fosca i un peu amb la *n*, la prova i l'interval (`4c63be8`, `27e063a`, `f23154d`, PR R1). |
+| AUD-75 | Revisió | Baixa | L'animació començava amb un fotograma fosc i sense època, i la documentació deia 500 èpoques en lloc de 300. | Imatge de reserva, època, xifra corregida i una ordre que no depèn de l'HOE (`4c63be8`, `27e063a`, PR R1). Verificada a l'auditoria 9. |
+| AUD-76 | Revisió | Baixa | En mode fosc, la corba del resultat principal era un bloc blanc, i no tenia peu. | Versió fosca i un peu amb la *n*, la prova i l'interval (`4c63be8`, `27e063a`, `f23154d`, PR R1). Verificada a l'auditoria 9. |
 | AUD-77 | Revisió | Mitjana | Un tercer no pot verificar en el temps el preregistre de la llei 2. | El README diu què es pot verificar i què no (`f23154d`, PR R1). Un segell extern per a les sèries futures és la decisió D4. |
 | AUD-78 | Revisió | Baixa | La història de git conté dades internes de la infraestructura. | Inventari de tota la història: cap secret. La decisió sobre la història (D1) és pendent, i el repositori continua privat. |
 | AUD-79 | Revisió | Informativa | Els documents citen identificadors d'auditories que no són públiques. | Aquest índex (decisió D2). Els informes sencers no es publiquen. |
 | AUD-80 | Revisió | Baixa | Per defecte, la sopa del navegador no reprodueix l'entrada 1 (fils i generador). | Pendent: un botó per reproduir l'entrada 1, a la PR R2. |
+| AUD-81 | 9 | Baixa | El motor de la decisió es pot saltar a propòsit: amb un filtre de git o amb `git replace` decideix amb codi modificat. | Confirmada amb el contraexemple de l'auditor. La correcció i tres proves, en una PR, abans de `preregistre-b2`. |
+| AUD-82 | 9 | Mitjana | Protocol de B2: l'estimand barreja la vida que continua en el seu món amb la que en canvia, que a l'exploració mor més (5 contra 1). | Confirmada. El responsable fa principal la vida en el seu món, i el canvi de règim n'és l'única prova confirmatòria. |
+| AUD-83 | 9 | Mitjana | Protocol de B2: l'afirmació "S(H) > 0,5" es compliria gairebé sempre, i no posa res a prova. | Confirmada per simulació. L'afirmació se suprimeix, i la durada només s'estima. |
+| AUD-84 | 9 | Baixa | Protocol de B2: amb 29 mons, l'interval per *bootstrap* percentil cobreix menys del 95 %. | Confirmada per simulació. El protocol v0.2 farà servir un interval calibrat. |
+| AUD-85 | 9 | Baixa | Protocol de B2: el cost per època de les branques vives creix amb el temps, i el cost de la sèrie estava subestimat. | Confirmada amb les dades. Una prolongació pilot abans de fixar H i K. |
+| AUD-86 | 9 | Informativa | Protocol de B2: hi falten la successió de famílies, la llavor comuna del cens, les morts a l'últim cens i la regla de les màquines. | Confirmada. S'afegeixen al protocol v0.2. |
+| AUD-87 | 9 | Informativa | Detalls de documentació: la citació no deia "de vegades", el temps de la sopa era curt i la guia no deia qui pren la decisió de la llei 2. | Corregits a `main`. |
 
 ## Auditor 2 (AU2-xx)
 
@@ -129,17 +136,17 @@ Els documents del projecte citen troballes de les auditories (AUD-xx, de l'audit
 | AU2-28 | 4 | Baixa | La regla per interpretar l'herència en context quedava oberta. | Regla explícita al protocol v0.4 (`fc2ac3f`). Tancada documentalment a l'auditoria 5. |
 | AU2-29 | 5 | Mitjana | `--commit` i `--manifest` podien substituir l'ancoratge del preregistre. | Només en mode de prova i amb un hash complet (`92fac37`, `c7e5519`). Tancada a l'auditoria 6. |
 | AU2-30 | 5 | Baixa | L'ordre global de les línies del JSONL no era canònic. | Tipus de línia en llista blanca i ordre global (`92fac37`, `c7e5519`). Tancada a l'auditoria 6. |
-| AU2-31 | 6 | Baixa | La comprovació de còpia neta no mirava el document del protocol. | Tots els fitxers seguits han de ser idèntics als de l'etiqueta (`6366aa0`, PR #6). |
-| AU2-32 | 6 | Baixa | El programa no distingia una etiqueta anotada d'una de lleugera. | Exigeix una etiqueta anotada, amb les SHA-256 al missatge (`6366aa0`, PR #6). |
+| AU2-31 | 6 | Baixa | La comprovació de còpia neta no mirava el document del protocol. | Tots els fitxers seguits han de ser idèntics als de l'etiqueta (`6366aa0`, PR #6). Verificada a l'auditoria 9. |
+| AU2-32 | 6 | Baixa | El programa no distingia una etiqueta anotada d'una de lleugera. | Exigeix una etiqueta anotada, amb les SHA-256 al missatge (`6366aa0`, PR #6). Verificada a l'auditoria 9. |
 | AU2-33 | 7 | Mitjana | Heterogeneïtat no explicada de l'efecte entre les dues etapes de la sèrie de la llei 2. | Exploració amb particions declarades abans (`ef30154`): cap indici de causa sistemàtica. Oberta com a pregunta. |
 | AU2-34 | 7 | Baixa | Exposició parcial i accidental a dades abans d'acabar l'etapa 2. | Declarada a l'acta. Seguiment sense xifres (PR #3) i només agregat (`3865d9c`, PR #5). Mitigada. |
 | AU2-35 | 7 | Baixa | El commit del traspàs no coincidia amb el del paquet auditat. | Diferencial lliurat, i el paquet surt del mateix commit que el traspàs. Tancada a l'auditoria 8. |
 | AU2-36 | 7 | Informativa | Les simulacions llargues no s'han reproduït de manera independent. | Manifest de 171 captures (`3cf2089`, `c745fb3`). Parcial: les captures no s'han lliurat a l'auditor. |
-| AU2-37 | 8 | Alta | En rellançar un lot, es saltaven experiments que no tenien el JSONL. | Un experiment només és fet amb el JSONL complet (`3865d9c`, PR #5). |
-| AU2-38 | 8 | Mitjana | El llançador absorbia un error fatal i retornava èxit. | Paràmetres validats i error propagat (`3865d9c`, PR #5). |
-| AU2-39 | 8 | Mitjana | Una llista sense experiments podia llançar una simulació sense arguments. | Llista buida rebutjada (`3865d9c`, PR #5). |
-| AU2-40 | 8 | Baixa | El seguiment comptava dues vegades els registres complets. | Com AUD-56: l'últim estat de cada nom (`3865d9c`, PR #5). |
-| AU2-41 | 8 | Mitjana | La "mort" de B2 és perdre el llindar del cens, no una extinció demostrada. | Acceptada: es mesura la primera pèrdua sostinguda del criteri, i es fixarà al protocol de B2. |
+| AU2-37 | 8 | Alta | En rellançar un lot, es saltaven experiments que no tenien el JSONL. | Un experiment només és fet amb el JSONL complet (`3865d9c`, PR #5). Verificada a l'auditoria 9. |
+| AU2-38 | 8 | Mitjana | El llançador absorbia un error fatal i retornava èxit. | Paràmetres validats i error propagat (`3865d9c`, PR #5). Verificada a l'auditoria 9. |
+| AU2-39 | 8 | Mitjana | Una llista sense experiments podia llançar una simulació sense arguments. | Llista buida rebutjada (`3865d9c`, PR #5). Verificada a l'auditoria 9. |
+| AU2-40 | 8 | Baixa | El seguiment comptava dues vegades els registres complets. | Com AUD-56: l'últim estat de cada nom (`3865d9c`, PR #5). Verificada a l'auditoria 9. |
+| AU2-41 | 8 | Mitjana | La "mort" de B2 és perdre el llindar del cens, no una extinció demostrada. | Parcial: el protocol de B2 v0.2 separarà la primera pèrdua sostinguda de l'estat al cens final (AU2-57). |
 | AU2-42 | Revisió | Alta | Publicar la història de git pot exposar dades internes, i no s'havia inventariat. | Inventari de tota la història: cap secret. La decisió sobre la història (D1) és pendent, i el repositori continua privat. |
 | AU2-43 | Revisió | Alta | La verificació pública del preregistre depèn d'una història que pot quedar privada. | Com AUD-77: el README diu què es pot verificar (`f23154d`, PR R1). Segell extern futur: decisió D4. |
 | AU2-44 | Revisió | Mitjana | El README deia "sense codi copiat", i `NOTICE` declara una adaptació de cubff. | Crèdits coherents amb `NOTICE` (`f23154d`, PR R1). |
@@ -154,3 +161,11 @@ Els documents del projecte citen troballes de les auditories (AUD-xx, de l'audit
 | AU2-53 | Revisió | Baixa | Un nouvingut no tenia camins clars per reproduir, citar o contribuir. | `docs/reproduir.md`, `CONTRIBUTING.md`, `CITATION.cff` i una prova ràpida (`f23154d`, PR R1). |
 | AU2-54 | Revisió | Baixa | Els noms històrics de les fases poden confondre. | Un mapa de carpetes al README, sense moure res (`f23154d`, PR R1). |
 | AU2-55 | Revisió | Baixa | Calia precisar el grau d'independència de les auditories i si són públiques. | Com AUD-68 (`f23154d`, PR R1), i aquest índex (decisió D2). |
+| AU2-56 | 9 | Mitjana | El llançador dona per fet un experiment amb el mateix nom i llavor encara que n'hagin canviat els paràmetres. | Confirmada amb el contraexemple de l'auditor. El llançador compararà l'ordre desada, en una PR, amb proves. |
+| AU2-57 | 9 | Alta | Protocol de B2: confonia no haver patit cap pèrdua amb ser viu al final; una branca perd la vida i després es recupera. | Confirmada. El protocol v0.2 separa les dues mesures. |
+| AU2-58 | 9 | Alta | Protocol de B2: l'estimand i el *bootstrap* no estaven prou especificats. | Confirmada. *Bootstrap* estratificat per origen i agrupat per món, especificat i calibrat al protocol v0.2. |
+| AU2-59 | 9 | Mitjana | Protocol de B2: la població objectiu no estava definida. | Confirmada. El protocol v0.2 la defineix: els mons on la vida es va establir a la sèrie de la llei 2. |
+| AU2-60 | 9 | Mitjana | Protocol de B2: el programa de la sèrie i les seves proves encara no existien. | Confirmada. Es farà amb la matriu de proves de l'auditor, i es revisarà abans de l'etiqueta. |
+| AU2-61 | 9 | Mitjana | Protocol de B2: l'horitzó i la precisió no estaven prou justificats. | Confirmada. Una prolongació pilot i un càlcul de potència abans de fixar H i K. |
+| AU2-62 | 9 | Baixa | Protocol de B2: el no cegament de la història original és una declaració, i l'origen dels mons no és a l'atzar. | Confirmada. S'afegeix a les limitacions del protocol v0.2. |
+| AU2-63 | 9 | Baixa | La guia de reproducció deia que qualsevol commit posterior fa la mateixa història. | Corregida a `main`: cal el commit del registre. |
