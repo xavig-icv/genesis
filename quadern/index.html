@@ -19,6 +19,7 @@
     <a href="#entrada-6">Entrada 6</a>
     <a href="#entrada-7">Entrada 7</a>
     <a href="#entrada-8">Entrada 8</a>
+    <a href="#entrada-9">Entrada 9</a>
   </nav>
 
   <article id="entrada-1">
@@ -745,6 +746,119 @@
       <li>Corregir al programa tres punts febles del control de còpia neta que els auditors van trobar abans del llançament. Aquesta vegada els vam cobrir amb comprovacions a mà.</li>
       <li><strong>Provar la química</strong>: treure-li ingredients per saber quins calen perquè hi neixi vida.</li>
       <li>Dues candidates a pregunta preregistrada: si el corrent fa que la vida duri menys, i com influeix la mida del món.</li>
+    </ul>
+  </article>
+
+  <article id="entrada-9">
+    <header>
+      <p class="date">Entrada 9 · 19 d'octubre de 2026</p>
+      <h1>Quant dura la vida establerta: una exploració</h1>
+      <p class="lede">Hem tornat a fer córrer 29 mons des del moment que s'hi va establir la vida, cadascun dues vegades: sense corrent i amb corrent, 2.000 èpoques més. En gairebé tots, la vida ha aguantat. En cap no ha desaparegut del tot. És una exploració per dissenyar la sèrie preregistrada, i no en traiem cap conclusió.</p>
+    </header>
+
+    <h2>Per què ho mirem</h2>
+    <p>L'entrada 8 va deixar una pregunta oberta: el corrent desfà la vida que ja s'ha establert? Als mons amb corrent, la vida es mantenia 1.000 èpoques després de l'establiment en 26 de 33, i als quiets, en 23 de 23. Però era una observació feta després de mirar les dades, i les correccions de les auditories 7 i 8 en van rebaixar molt els indicis.</p>
+    <p>Per respondre-la bé, fem <strong>branques aparellades</strong>. Cada món es torna a engegar des de la captura de l'època de l'establiment, una vegada sense corrent i una altra amb corrent. Així, les dues condicions comencen exactament amb la mateixa vida.</p>
+    <p>Abans de fer cap branca, els 58 mons amb vida de la sèrie es van repartir a l'atzar en dues meitats:</p>
+    <ul>
+      <li><strong>29 per explorar,</strong> els d'aquesta entrada: 12 quiets i 17 amb corrent;</li>
+      <li><strong>29 reservats</strong> per a la sèrie preregistrada, que no s'han tocat.</li>
+    </ul>
+    <div class="params">
+      <div class="param"><b>29</b><span>mons, cadascun amb dues branques</span></div>
+      <div class="param"><b>0 i 0,01</b><span>corrent a la branca</span></div>
+      <div class="param"><b>2.000</b><span>èpoques des de l'establiment</span></div>
+      <div class="param"><b>8</b><span>censos per branca, un cada 250 èpoques</span></div>
+      <div class="param"><b>3</b><span>regles de "mort", en dos censos seguits</span></div>
+    </div>
+    <p><strong>Les tres regles de "mort",</strong> que vam preparar abans de fer les branques:</p>
+    <ul>
+      <li><strong>R1:</strong> menys de l'1 % de replicadors hereditaris a la mostra, el mateix llindar que l'establiment;</li>
+      <li><strong>R2:</strong> 5 hereditaris o menys en una mostra de 2.048, és a dir, menys del 0,25 %;</li>
+      <li><strong>R3:</strong> cap hereditari.</li>
+    </ul>
+    <p>Totes tres demanen dos censos seguits. Una mort és <strong>falsa</strong> si després la vida torna a passar de l'1 % abans del final.</p>
+
+    <h2>El resultat</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Origen del món</th><th style="text-align:left">Branca</th><th style="text-align:left">R1 · &lt; 1 %</th><th style="text-align:left">R2 · ≤ 5 de 2.048</th><th style="text-align:left">R3 · cap</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Quiet (12 mons)</td><td style="text-align:left">sense corrent</td><td style="text-align:left">0</td><td style="text-align:left">0</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">Quiet (12 mons)</td><td style="text-align:left">amb corrent</td><td style="text-align:left">3 (2 falses)</td><td style="text-align:left">2 (1 falsa)</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">Amb corrent (17 mons)</td><td style="text-align:left">sense corrent</td><td style="text-align:left">5 (1 falsa)</td><td style="text-align:left">3</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">Amb corrent (17 mons)</td><td style="text-align:left">amb corrent</td><td style="text-align:left">5 (4 falses)</td><td style="text-align:left">1</td><td style="text-align:left">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">Morts en 2.000 èpoques, amb cada regla. L'origen és la condició en què la vida es va establir a la sèrie de la llei 2. La branca és la condició des de l'establiment.</p>
+
+    <h2>Què en traiem, de moment</h2>
+    <ul>
+      <li><strong>La vida establerta és duradora.</strong>
+        <ul>
+          <li>En cap de les 58 branques no s'ha quedat sense cap replicador hereditari a la mostra.</li>
+          <li>Només 6 han baixat a 5 o menys de 2.048, i una d'aquestes va tornar a pujar.</li>
+          <li>Que s'acabi la còpia (menys de l'1 % de cel·les que es copien) també és rar: 3 de 29 branques sense corrent i 2 de 29 amb corrent.</li>
+        </ul>
+      </li>
+      <li><strong>L'1 % no serveix per dir que la vida s'ha mort.</strong>
+        <ul>
+          <li>De les 13 "morts" que dona la regla R1, 7 eren falses, perquè la vida va tornar a pujar.</li>
+          <li>Amb corrent, ho eren 6 de 8.</li>
+          <li>La vida fluctua al voltant d'aquest llindar. És el que havia advertit l'auditor 1 (AUD-60), i és un motiu per triar una regla amb marge, com la R2.</li>
+        </ul>
+      </li>
+      <li><strong>Amb la regla R2, el corrent no sembla escurçar la vida.</strong>
+        <ul>
+          <li>Hi ha 3 morts sense corrent i 3 amb corrent.</li>
+          <li>Comparant les dues branques de cada món, en 3 mons la vida dura més sense corrent, en 3 dura més amb corrent, i en 23 igual.</li>
+          <li>Amb R1, en canvi, en 7 mons la vida es manté per sobre de l'1 % més temps sense corrent, i només en 1 al revés. Però gairebé sempre és una baixada que es recupera.</li>
+          <li>Si de cas, doncs, el corrent fa fluctuar la vida, més que no pas matar-la. És una lectura exploratòria, amb pocs casos.</li>
+        </ul>
+      </li>
+      <li><strong>El destí d'un món no queda fixat a l'establiment.</strong>
+        <ul>
+          <li>La branca amb la mateixa condició que la història original és una segona realització d'aquella història, amb una altra llavor.</li>
+          <li>A <em>t</em> + 1.000, totes dues coincideixen en 23 de 27 mons. En els altres 4, la vida s'hi manté en una i no en l'altra. En els 2 que falten, la història original no arriba a <em>t</em> + 1.000 abans de l'època 16.000.</li>
+          <li>Per saber què fa el corrent, doncs, caldrà més d'una llavor de continuació per món (AUD-61).</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>Què vol dir per a la sèrie preregistrada</h2>
+    <p>La sèrie preregistrada de B2 es farà amb els 29 mons reservats. L'exploració hi suggereix tres coses, que valorarem amb els dos auditors a l'auditoria 9 abans d'escriure'n el protocol definitiu:</p>
+    <ul>
+      <li><strong>La regla R2</strong> com a definició principal de mort, i R1 i R3 com a sensibilitats.</li>
+      <li><strong>Diverses llavors de continuació per món,</strong> amb el món com a unitat de l'anàlisi.</li>
+      <li><strong>Pensar bé la pregunta.</strong>
+        <ul>
+          <li>Les morts són rares: 6 de 58 branques en 2.000 èpoques.</li>
+          <li>Per detectar una diferència entre condicions caldria un horitzó molt més llarg, o molts més mons. Una branca sense mort costa uns 111 minuts de càlcul en 2.000 èpoques, i una amb mort, 42.</li>
+          <li>Potser la pregunta útil ja no és si el corrent escurça la vida, sinó quant dura la vida establerta i quina part es manté.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>58 branques, tres o quatre alhora,</strong> al PC i a la màquina virtual.
+        <ul>
+          <li><strong>El codi:</strong> el commit <code>b3e0631</code>, sense canvis.</li>
+          <li><strong>La llavor de continuació:</strong> la del món + 100.000.</li>
+          <li><strong>Un incident:</strong> un reinici de Windows Update va aturar els lots, i les branques a mitges es van tornar a fer des del principi.</li>
+          <li><strong>El detall:</strong> és a <code>fase2/resultats/b2/exploracio/execucio.md</code>.</li>
+        </ul>
+      </li>
+      <li><strong>Tres branques es van fer a totes dues màquines</strong> (Node 16 i Node 20), i donen els mateixos censos i la mateixa empremta del món.</li>
+      <li><strong>L'anàlisi:</strong> és la de <code>fase2/b2-analisi.mjs</code>, escrita i revisada abans que acabessin les branques. També l'hem refeta pel nostre compte, branca per branca, i en dona els mateixos recomptes.</li>
+      <li><strong>Les dades:</strong> totes són a git, a <code>fase2/resultats/b2/exploracio/</code>, amb les sumes SHA-256.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>L'auditoria 9:</strong> les correccions de l'auditoria 8, aquesta exploració i l'esborrany del protocol de B2.</li>
+      <li><strong>Després, la sèrie preregistrada de B2,</strong> amb els 29 mons reservats.</li>
     </ul>
   </article>
 
