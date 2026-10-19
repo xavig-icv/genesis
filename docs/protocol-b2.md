@@ -1,169 +1,251 @@
 # Protocol de B2 · quant dura la vida establerta
 
-**Estat: esborrany v0.1 (19-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
-- **Les marques:** **[PROPOSTA]** és una tria que pot canviar, i **[OBERT]** és una pregunta per als
-  auditors.
+**Estat: esborrany v0.2 (19-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
+- **D'on surt:** incorpora l'auditoria 9 i les decisions del responsable (`docs/disseny.md`).
+- **Les marques:** **[PILOT]** és un valor que es fixarà amb la prolongació pilot (`fase2/resultats/b2/pilot/`),
+  i **[OBERT]**, una pregunta per a l'auditoria 10.
 - **El procediment:**
-  1. es revisa a l'auditoria 9;
-  2. s'hi incorporen les correccions;
-  3. el *merge* de la versió aprovada farà de preregistre, amb l'etiqueta anotada `preregistre-b2`.
-- **Després del preregistre,** cap canvi no es fa sense justificar-lo aquí, amb data i motiu, abans de mirar
-  cap resultat.
+  1. es revisa a l'auditoria 10, amb el programa de la sèrie i les seves proves;
+  2. el *merge* de la versió aprovada farà de preregistre, amb l'etiqueta anotada `preregistre-b2` i un segell
+     d'OpenTimestamps abans de la primera branca (§9);
+  3. després, cap canvi no es fa sense justificar-lo aquí, amb data i motiu, abans de mirar cap resultat.
 
-## 1. La pregunta
+## 1. Les preguntes
 
-**La principal: quant dura la vida un cop s'ha establert?**
-- Ho va decidir el responsable del projecte el 19-10-2026, després de veure l'exploració (entrada 9 del
-  quadern).
-- Una vida que s'estableix i després es mor ha viscut un temps, com qualsevol ésser viu. La durada és la
-  mesura, i no s'exclou cap vida.
+**La principal, que només s'estima: quant dura la vida establerta en el seu món?**
+- És la durada de la vida quan el món continua amb la mateixa condició en què es va establir: quiet, si era
+  quiet, i amb corrent, si en tenia.
+- Una vida que s'estableix i després es perd ha viscut un temps, i no s'exclou (decisió del responsable,
+  auditoria 7).
+- No hi ha cap llindar ni cap afirmació confirmatòria sobre la durada (AUD-83).
 
-**La secundària: el corrent hi influeix?** Era la pregunta inicial de B2 (entrada 8), però l'exploració hi
-dona molt pocs casos. Per això passa a ser secundària, i sense cap afirmació confirmatòria.
+**L'única confirmatòria: la vida dura menys quan el seu món canvia de condició?** És el **canvi de règim**: un
+món quiet que passa a tenir corrent, o un món amb corrent que passa a ser quiet.
+- **D'on ve:** a l'exploració, les branques que canvien de condició perden la vida en 5 de 29 mons, i les que
+  la mantenen, en 1 de 29 (AUD-82). És una hipòtesi que surt de les dades, i per això es posa a prova amb mons
+  nous.
+- **La decisió:** la va prendre el responsable el 19-10-2026, després de l'auditoria 9.
+
+**Una de descriptiva: el corrent com a tal.** Si el corrent desfà la vida, les branques amb corrent la perdran
+més als dos orígens. El disseny 2 × 2 (§4) separa aquest efecte del canvi de règim.
 
 ## 2. El que en sabem: l'exploració
 
-L'exploració es va fer amb els 29 mons de la part `exploracio` del repartiment, amb una branca per món i
-condició, durant 2.000 èpoques (entrada 9; `fase2/resultats/b2/exploracio/`):
-- **Amb la regla R2** (§5), 6 de 58 branques es moren, i 1 d'aquestes es recupera.
-- **Amb la regla R3,** cap.
-- **La regla R1** (l'1 %) dona 13 morts, de les quals 7 són falses: la vida fluctua al voltant d'aquest
-  llindar.
-- **Amb R2,** 3 morts sense corrent i 3 amb corrent.
-- **El destí d'un món no queda fixat a *t*:** la mateixa vida, amb una altra llavor, acaba diferent en 4 de 27
-  mons a *t* + 1.000.
+Amb els 29 mons de la part `exploracio`, una branca per món i condició, 2.000 èpoques (entrada 9 i auditoria 9):
+- **Amb la regla R2** (§5), 6 de 58 branques perden la vida, a *t* + 750, 1.000, 1.250, 1.250, 1.500 i 1.750.
+  Una es recupera: A1009-m0.01 acaba amb 1.825 hereditaris de 2.048 (AU2-57).
+- **Les que la perden:** 1 de les 29 que continuen en la seva condició, i 5 de les 29 que la canvien (AUD-82).
+- **Amb R3, cap. Amb R1,** 13, de les quals 7 es recuperen.
+- **El destí d'un món no queda fixat a *t*:** amb una altra llavor, acaba diferent en 4 de 27 mons a *t* +
+  1.000.
+- **El cost per època d'una branca viva creix amb el temps:** d'1,1 s de 0 a 500 èpoques a 5,0 s de 1.500 a
+  2.000 (AUD-85).
 
-## 3. Els mons
+## 3. Els mons i la població
 
-- **Quins:** els 29 de la part `confirmacio` de `fase2/resultats/b2/repartiment.json`, 12 del món quiet
-  (A) i 17 del corrent (B).
-  - El repartiment es va fer el 18-10-2026 a l'atzar, amb la llavor 20261018, abans de fer cap branca
-    (`e6be331`).
-  - Ningú no ha fet cap branca d'aquests mons.
-- **El punt de partida:** la captura de l'època *t* de l'establiment de cada món, amb la SHA-256 de
-  `repartiment.json`. Es comprova abans de llançar.
-- **El que no és cec (AUD-67):** la història original d'aquests mons, de *t* a *t* + 1.000, és a la sèrie de la
-  llei 2, i ja és pública.
+- **Quins:** els 29 de la part `confirmacio` de `fase2/resultats/b2/repartiment.json`, 12 del món quiet (A) i
+  17 del corrent (B).
+  - Es van repartir a l'atzar el 18-10-2026, amb la llavor 20261018 (`e6be331`).
+  - Ningú no n'ha fet cap branca.
+- **El punt de partida:** la captura de l'època *t* de l'establiment, amb la SHA-256 de `repartiment.json`. Es
+  comprova a les dues màquines abans de llançar.
+- **La població** (AU2-59): els mons de 512 × 256 on la vida es va establir a la sèrie de la llei 2, quiets o
+  amb corrent 0,01, continuats des del moment de l'establiment.
+  - No són tots els mons possibles.
+  - **L'origen** (A o B) no és a l'atzar: és la història de cada món (AU2-62). No se'n treu cap conclusió
+    causal.
+- **El que no és cec** (AUD-67, AU2-62): la història original d'aquests mons, de *t* a *t* + 1.000, és a la
+  sèrie de la llei 2, i és pública.
   - L'anàlisi no la fa servir.
-  - Ningú no l'ha mirada per dissenyar aquest protocol: els paràmetres surten de l'exploració.
+  - Ningú no l'ha mirada per dissenyar aquest protocol. És una declaració de procediment, no un cegament que es
+    pugui comprovar.
 
 ## 4. Les branques
 
-**Per cada món:**
-- **dues condicions:** *m* = 0 i *m* = 0,01;
-- ***K* llavors de continuació [PROPOSTA: *K* = 2]:**
-  - la del món + 200.000 i la del món + 300.000, diferents de la de l'exploració (+ 100.000);
-  - cada llavor es fa servir a totes dues condicions, i les dues branques comparteixen el mateix atzar
-    inicial, com a l'exploració.
-- **en total, 29 × 2 × 2 = 116 branques.**
+**Per cada món, dues condicions:**
+- **la d'origen:** *m* = 0 als mons A, i *m* = 0,01 als B;
+- **la de canvi:** l'altra.
 
-**L'ordre**, la mateixa de l'exploració, amb un horitzó *H* [PROPOSTA: *H* = 5.000 èpoques]:
+**Les llavors de continuació:** *K* llavors **[PILOT]**, la del món + 200.000, + 300.000... Són diferents de la
+de l'exploració (+ 100.000), i cada llavor es fa servir a totes dues condicions.
+
+**L'horitzó *H*, i el disseny [PILOT].** Es triarà entre aquests dos amb el pilot (el cost i les morts
+tardanes) i amb el càlcul de potència de la prova del canvi de règim, abans de l'etiqueta:
+- **(i)** totes les branques, amb *H* = 5.000 i *K* = 2: 116 branques;
+- **(ii)** la condició d'origen amb *H* = 6.000 i *K* = 2, i la de canvi amb *H* = 4.000 i *K* = 1: 87 branques.
+  La prova del canvi de règim es restringeix llavors a 4.000 (§6.2).
+
+**L'ordre**, la de l'exploració, desant el món final (`--save`) per estudiar després quina vida hi ha:
 
 ```
-NOM --world 512x256 --seed LLAVOR --mixing M --from CAPTURA --start T --epochs T+H --every 100 --census 250 --census-version v3 --rng v2 --json CARPETA/NOM.jsonl
+NOM --world 512x256 --seed LLAVOR --mixing M --from CAPTURA --start T --epochs T+H --every 100 --census 250 --census-version v3 --rng v2 --json CARPETA/NOM.jsonl --save CARPETA/captures
 ```
 
-**El cost.** A l'exploració, una branca tarda 2,9 segons per època de mitjana, amb 6 o 7 branques alhora
-entre les dues màquines.
+## 5. Les mesures
 
-| *H* | *K* | Branques | Hores de càlcul | Dies, amb 7 alhora |
-|---|---|---|---|---|
-| 4.000 | 2 | 116 | 379 | 2,3 |
-| **5.000** | **2** | **116** | **473** | **2,8** |
-| 6.000 | 2 | 116 | 568 | 3,4 |
-| 8.000 | 1 | 58 | 379 | 2,3 |
+**La primera pèrdua sostinguda (regla R2)** (AU2-57, AUD-60).
+- **Quan hi ha pèrdua:** és el primer parell de censos seguits, a 250 èpoques l'un de l'altre, amb 5
+  hereditaris o menys en una mostra de 2.048 a cadascun.
+- **Com es data:** la pèrdua es confirma al segon cens, i el temps *T* s'assigna al primer.
+- **Què no és:** no és una extinció. És la pèrdua sostinguda del llindar de detecció.
+- **Quan es detecta:** fins a *t* + *H* − 250 (AUD-86). Si el primer cens baix és a *t* + *H*, no hi ha segon
+  cens que la confirmi, i la branca es censura a *H*.
+- **La censura:** sense cap pèrdua confirmada, la branca es censura a *H*. És una censura administrativa, no
+  una durada observada.
+- **Els registres incomplets:** un registre que s'acaba abans, o al qual li falta un cens, és un **error de la
+  sèrie**, no una censura.
 
-**[OBERT] Horitzó o llavors?**
-- **Un horitzó més llarg** veu més morts, i per tant més durada.
-- **Més llavors** separen el destí del món de l'atzar de la continuació (AUD-61).
-- **La proposta,** *H* = 5.000 i *K* = 2, és un compromís.
+**Les recuperacions:** un cens posterior a la pèrdua amb 21 hereditaris o més (l'1 %). Es compten a part, i no
+anul·len la pèrdua.
 
-## 5. La mesura: la durada
+**L'estat al cens final:** dues mesures diferents de *T*, que no se'n poden fer servir com a sinònim:
+- `viu_1pct(H)`: 21 hereditaris o més al cens de *t* + *H*;
+- `viu_R2(H)`: més de 5.
 
-- **La mort (regla R2):** el primer de dos censos seguits amb 5 hereditaris o menys en una mostra de 2.048
-  (menys del 0,25 %). Té marge respecte de l'1 % de l'establiment, i a l'exploració és la que dona menys
-  morts falses (AUD-60, AU2-41).
-- **La durada *L*:** l'època de la mort menys *t*. Si no n'hi ha cap abans de *t* + *H*, es censura a *H*.
-- **Les recuperacions:** si, després de la mort, la vida torna a passar de l'1 %, la mort compta igualment.
-  És la primera pèrdua sostinguda. Les recuperacions es comptaran a part.
-- **Les sensibilitats,** descriptives:
-  - R1, menys de l'1 %;
-  - R3, cap hereditari;
-  - R2 sense recuperació fins a *H*;
-  - la mort de la còpia, amb menys de l'1 % de cel·les que es copien.
+**Les sensibilitats,** descriptives:
+- R1 (menys de l'1 %);
+- R3 (cap hereditari);
+- R2 sense recuperació fins a *H*;
+- la pèrdua de la còpia (menys de l'1 % de cel·les que es copien);
+- l'estat al cens final.
 
-## 6. Què s'estima
+**La successió de famílies,** descriptiva (AUD-86): la família dominant a *t* + *H*, i si és una de registrada
+després de *t*. La durada compta qualsevol hereditari, no la vida que es va establir.
 
-La unitat de l'anàlisi és el **món**. En cada condició, el valor d'un món és la mitjana de les seves *K*
-branques.
+## 6. L'anàlisi
 
-**Principals**, totes amb un interval del 95 % per *bootstrap* de mons (10.000 rèpliques i una llavor
-declarada al manifest):
-- **S(*H*):** la proporció de branques vives a *t* + *H*, per condició, per origen (A, B) i amb tot junt.
-- **La corba de supervivència** (Kaplan–Meier) per condició, amb la censura a *H*, i la mediana si s'hi
-  arriba.
-- **La durada mitjana restringida (RMST) fins a *H*.**
+La unitat és el **món** (AU2-58). En cada condició, el valor d'un món és la mitjana de les seves *K* branques.
+Les branques d'un món no són rèpliques independents.
 
-**[PROPOSTA] Una afirmació confirmatòria.**
-- **L'afirmació:** "la vida establerta dura": més de la meitat de les vides establertes encara viuen a
-  *t* + *H*, amb tots els mons i les dues condicions junts.
-- **Quan es farà:** només si el límit inferior de l'interval del 95 % de S(*H*) és per sobre de 0,5.
-- **Si no hi arriba:** no es farà, i es dirà.
-- **El que en diu l'exploració:** dona S(2.000) ≈ 0,9 amb R2, però no sabem què passa després.
-- **[OBERT]** Té sentit aquesta afirmació, o n'hi ha prou amb les estimacions?
+### 6.1 La principal: la durada en el seu món (estimació)
 
-**Secundàries,** descriptives:
-- **El corrent:** a cada món, *D* = *L*(0) − *L*(0,01), amb les durades restringides a *H* i la mitjana de
-  les *K* llavors. Es dona la mitjana de *D* amb l'interval per *bootstrap*, i una prova de signes.
-  - **Què se'n dirà:** cap afirmació sobre el corrent, en cap cas. Si l'interval exclou el zero, es dirà
-    que és una pista per a una sèrie pròpia.
-- **L'atzar de la continuació** (AUD-61): en quina proporció de mons i condicions les *K* llavors coincideixen
-  a dir si la vida és viva a *t* + *H*.
-- **L'origen:** els mons nascuts amb corrent (B) contra els quiets (A). L'exploració hi suggereix més morts
-  als B, amb pocs casos.
+Amb les branques de la condició d'origen:
+- **S_orig(*H*)** = (1/29) Σ_i mitjana_k [ *T_ik* > *H* ]: la proporció sense pèrdua fins a *H*, amb el mateix
+  pes per món;
+- **la corba de supervivència** (Kaplan–Meier) de *T*, amb la censura a *H*, i la mediana si s'hi arriba (pot
+  quedar sense estimar);
+- **la durada mitjana restringida, RMST_orig(*H*)** = (1/29) Σ_i mitjana_k min(*T_ik*, *H*). És una durada
+  restringida a *H*, no la durada mitjana de la vida;
+- **per origen** (A i B), i amb tot junt.
+
+**Els intervals del 95 %:**
+- **El *bootstrap*:** estratificat per origen i agrupat per món. Cada rèplica reextreu, amb reemplaçament, 12
+  mons A i 17 mons B, i cada món s'hi emporta totes les seves branques. Es fan 10.000 rèpliques, i la llavor
+  és al manifest.
+- **El tipus d'interval [OBERT]:** BCa, o percentil a l'escala logit. Es triarà, abans de l'etiqueta, el que
+  doni una cobertura més a prop del 95 % en la simulació (§8), perquè el percentil normal es queda curt amb 29
+  mons (AUD-84).
+- **Si totes les branques donen el mateix** (totes sense pèrdua), l'interval que dona el mètode triat; mai un
+  NaN.
+
+### 6.2 La confirmatòria: el canvi de règim
+
+- **A cada món:** *D_i* = mitjana_k min(*T*_i,canvi,k, *H'*) − mitjana_k min(*T*_i,orig,k, *H'*).
+  - *H'* és l'horitzó de la condició de canvi: *H* en el disseny (i), i 4.000 en el (ii).
+  - Si el disseny és el (ii), es fa servir la primera llavor de la condició d'origen, per comparar amb el mateix
+    nombre de llavors. **[OBERT]**
+- **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0. **[OBERT]**: unilateral amb α = 0,025,
+  o bilateral amb α = 0,05?
+- **La hipòtesi:** H₀, la vida dura igual si el món canvia de condició; H₁, dura menys.
+- **La decisió:** una sola. Es rebutja H₀ si *p* < α; si no, es diu que la sèrie no ho permet afirmar. No es
+  tria després cap variant de la prova, ni subgrups ni sensibilitats.
+- **La potència** es calcularà abans de l'etiqueta. S'hi faran servir les taxes de l'exploració i del pilot, i
+  la probabilitat d'empat de cada disseny. Si és molt baixa, es dirà al protocol abans de llançar.
+
+### 6.3 Les descriptives
+
+- **El 2 × 2** (l'origen per *m*): la proporció sense pèrdua i la RMST a les quatre cel·les. Si el corrent
+  desfà la vida, les branques amb *m* = 0,01 la perden més als dos orígens; si el que la desfà és el canvi, la
+  perden més les que canvien.
+- **L'atzar de la continuació** (AUD-61): en quina proporció de mons les *K* llavors coincideixen.
+- **Les recuperacions, l'estat al cens final i la successió de famílies.**
+- **El cost** per època i per tram.
 
 ## 7. L'execució
 
-- **El codi:** el de l'etiqueta `preregistre-b2`, desplegat a les dues màquines per commit (`eines/desplega-vm.sh`).
-- **El llançament:** amb `eines/llanca-lot.sh`. Un experiment només es dona per fet si el JSONL és complet.
-- **Els noms, opacs** (AUD-57). Els noms de les branques de les llistes no diuen ni el món ni la condició. La
-  correspondència és al manifest.
-- **El seguiment, només agregat:** `eines/seguiment.sh --agregat`. Durant la sèrie no es mira cap
-  resultat.
+- **El codi:** el de l'etiqueta `preregistre-b2`, desplegat a totes dues màquines (`eines/desplega-vm.sh`). El
+  llançador ha de portar la correcció d'AU2-56.
 - **Les màquines:**
-  - les branques es reparteixen a l'atzar en blocs equilibrats entre el PC i la màquina virtual, amb una
-    llavor declarada (X-003);
-  - la història no depèn de la màquina, com s'ha comprovat a l'exploració;
-  - **[OBERT]** si les quatre branques d'un món van a la mateixa màquina.
-- **Abans de llançar,** cal pausar les actualitzacions de Windows, perquè un reinici aturaria els dos lots
-  (incidència de l'exploració). Ho fa el responsable.
+  - totes les branques d'un món van a la mateixa màquina;
+  - els mons es reparteixen en blocs equilibrats per origen, amb una llavor declarada al manifest.
+- **Si una màquina s'atura o cal repartir la cua:**
+  - es mouen mons sencers, mai branques soltes;
+  - val la còpia de la màquina assignada;
+  - qualsevol branca duplicada es compara, i ha de tenir els mateixos censos i la mateixa empremta (AUD-86).
+- **Els noms, opacs** (AUD-57): les llistes es generen a partir del manifest, i el nom no diu ni el món ni la
+  condició.
+- **El seguiment, només agregat:** `eines/seguiment.sh --agregat`. Durant la sèrie no es mira cap resultat.
+- **Abans de llançar,** cal pausar les actualitzacions de Windows. Ho fa el responsable.
 
-## 8. L'anàlisi
+## 8. El programa de la sèrie
 
-- **El programa:** un de nou, `fase2/b2-confirmacio.mjs`, amb el seu manifest, `fase2/serie-b2.json`.
-  - **El manifest** declara els mons, les llavors, les condicions, *H*, *K*, la regla, la llavor del
-    *bootstrap* i l'etiqueta.
-  - **El programa** valida els JSONL contra el manifest, comprova el preregistre com `fase2/estadistica.mjs`,
-    i calcula el que diu la §6.
-- **El calendari:**
-  1. s'escriurà i es provarà amb dades sintètiques abans de llançar;
-  2. es revisarà a l'auditoria 9 o a la 10;
-  3. només llavors es crearà l'etiqueta.
-- **[OBERT]** *Bootstrap* de mons, o un altre interval?
+- **El programa:** un de nou, `fase2/b2-confirmacio.mjs`, amb el manifest `fase2/serie-b2.json` (AU2-60).
+  - **El manifest** declara els mons, les captures amb la SHA-256, les condicions, les llavors, *H*, *K*, els
+    noms opacs, el repartiment de les màquines, la llavor del *bootstrap* i l'etiqueta.
+- **Primer, la comprovació del preregistre.** El fitxer d'entrada només farà servir mòduls de Node: comprovarà
+  l'etiqueta i la còpia, i després carregarà la resta del programa. Així, el codi del projecte no s'executa
+  abans de la comprovació (la limitació que deixa AUD-81 a `fase2/estadistica.mjs`).
+- **La validació:** totes les branques, 29 × 2 × *K*, contra el manifest. Es comprova:
+  - l'ordre de cada branca;
+  - la llavor, la versió, la captura i el commit;
+  - els censos, sense forats;
+  - la línia final, a *t* + *H*;
+  - cap fitxer de més ni de menys.
+
+  Qualsevol diferència és un error, i el programa no calcula res.
+- **Les proves,** amb dades sintètiques, que cobreixen almenys la matriu de l'auditor 2 (auditoria 9):
+  - dos censos baixos seguits;
+  - un de baix i el següent no;
+  - un forat;
+  - la parella a *H* − 250 i *H*, i un sol cens baix a *H*;
+  - la recuperació;
+  - una línia final anticipada;
+  - una branca que falta;
+  - una llavor o una condició equivocades;
+  - un commit, una etiqueta o una captura diferents;
+  - fitxers duplicats o aliens;
+  - el *bootstrap*, que no ha de reextreure branques soltes;
+  - 29 mons sense cap pèrdua.
+- **La simulació de cobertura:** la cobertura de l'interval i la taxa de falsos positius de la prova
+  confirmatòria, amb mons sintètics correlacionats, i l'atzar de la continuació.
+- **Abans de l'etiqueta,** es revisa a l'auditoria 10.
 
 ## 9. El preregistre
 
-- **L'etiqueta:** `preregistre-b2`, anotada, amb les SHA-256 del protocol, del manifest i del programa
-  d'anàlisi al missatge.
-- **[OBERT, decisió D4 del responsable]** **Un segell de temps extern** de l'etiqueta abans de llançar
-  (OpenTimestamps, o un dipòsit amb DOI), perquè un tercer pugui comprovar-ne la data (AUD-77).
+- **L'etiqueta:** `preregistre-b2`, anotada, amb les SHA-256 del protocol, del manifest i del programa al
+  missatge.
+- **El segell extern** (decisió del responsable, 19-10-2026; AUD-77):
+  - abans de la primera branca, l'objecte de l'etiqueta es segella amb OpenTimestamps;
+  - només s'hi envia el hash, i el repositori pot continuar privat;
+  - el fitxer de la prova (`.ots`) es desa al repositori.
+- **El manifest i les empremtes** es publiquen després de la decisió, amb el codi exacte.
 
 ## 10. Limitacions conegudes
 
+- **La població:** són mons condicionats a haver-se establert. L'origen és històric, no a l'atzar.
 - **La història original no és cega** (§3).
-- **La mort es mesura en una mostra de 2.048 cel·les.** La regla R2 hi deixa marge, però una vida molt
-  escassa es pot perdre per mostreig. Les sensibilitats R1 i R3 ho acoten.
-- **Un horitzó finit:** el que passa després de *H* queda censurat.
-- **L'abast:** un sol nivell de corrent (0,01), mons de 512 × 256, i les vides que es van establir a la sèrie
-  de la llei 2, que no són una mostra de totes les vides possibles.
-- **Vint-i-nou mons:** les estimacions per origen (12 i 17 mons) són poc precises.
+- **La mort es mesura en una mostra de 2.048 cel·les.**
+  - Una vida molt escassa es pot perdre per mostreig. La regla R2 hi deixa marge, i R1 i R3 ho acoten.
+  - **La llavor del cens** és la mateixa a totes les branques (20261016): les branques d'un món es mesuren
+    a les mateixes posicions a cada cens. No és cap biaix, però sí una correlació de mesura (AUD-86).
+- **Un horitzó finit:** el que passa després de *H* queda censurat, i la mediana pot quedar sense estimar.
+- **La successió de famílies:** la vida que sobreviu pot ser una família nova (§5).
+- **Les màquines:** totes dues són el mateix ordinador físic. La història no en depèn, com s'ha comprovat a
+  l'exploració.
+- **L'abast:** un sol nivell de corrent (0,01), mons de 512 × 256, i 29 mons. Les estimacions per origen (12 i
+  17 mons) són poc precises.
+
+## 11. Canvis respecte de la v0.1
+
+| Què | Per què |
+|---|---|
+| La principal és la durada en el seu món, i només s'estima | AUD-82; decisió del responsable |
+| L'única prova confirmatòria és el canvi de règim | AUD-82, AUD-83; decisió del responsable |
+| Fora l'afirmació "S(*H*) > 0,5" | AUD-83, AU2-59 |
+| La primera pèrdua sostinguda i l'estat al cens final, separats i amb noms diferents | AU2-57 |
+| El *bootstrap* estratificat per origen i agrupat per món, i l'interval triat per la cobertura | AU2-58, AUD-84 |
+| La població, definida | AU2-59 |
+| *H* i *K* es fixen amb el pilot i amb la potència | AUD-85, AU2-61; decisió del responsable |
+| La detecció fins a *H* − 250, els registres incomplets com a error, la llavor del cens, la successió de famílies i la regla de les màquines | AUD-86 |
+| El programa: primer la comprovació, i després la resta, amb la matriu de proves | AU2-60, AUD-81 |
+| El segell d'OpenTimestamps | AUD-77; decisió del responsable |
