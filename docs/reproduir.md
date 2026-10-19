@@ -49,7 +49,8 @@ node sim.mjs --seed 1 --chunks 7 --rng v1 --epochs 750 --after 1000 --save fase1
 - **La transició:** arriba a l'època 200.
 - **Per què `--after 1000`:** sense aquesta opció, la simulació s'atura 300 èpoques després de la transició.
 - **La comprovació:** les captures de les èpoques 250, 500 i 750 han de tenir les SHA-256 de
-  `docs/captures.sha256` (`fase1/resultats/llavor1-fils7-epoca*.bin`).
+  `docs/captures.sha256` (`fase1/resultats/llavor1-fils7-epoca*.bin`). Comprovat el 19-10-2026 amb Node 16:
+  coincideixen totes tres.
 
 ```bash
 cd fase1-llavor1 && sha256sum llavor1-fils7-epoca250.bin llavor1-fils7-epoca500.bin llavor1-fils7-epoca750.bin; cd ..
