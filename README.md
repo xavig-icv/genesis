@@ -68,8 +68,10 @@ còpies d'un replicador que ningú no havia escrit.*
 - **Al projecte:** també passa en unes sí i en d'altres no.
 
 Hem reproduït el resultat de 2024, i n'hem seguit la història:
-- **Els primers replicadors s'enverinen.** Cada còpia deixa zeros, i els zeros aturen les còpies. És
-  l'explicació que encaixa amb les dades, però no l'hem demostrat amb cap intervenció.
+- **Els primers replicadors s'enverinen.** Cada còpia deixa zeros, i els zeros aturen les còpies. L'article
+  de 2024 ja descriu aquest enverinament i el successor que ve després (la seva figura 2); nosaltres l'hem
+  trobat a les nostres sopes i l'hem mesurat. És l'explicació que encaixa amb les dades, però no l'hem
+  demostrat amb cap intervenció.
 - **Un successor resistent.** En una sopa, un replicador nou converteix els zeros en 255 i hi continua
   copiant-se en un 83–96 % dels intents.
 - **Palíndroms.** Els tres primers replicadors que hem trobat són palíndroms que es copien al revés, amb el

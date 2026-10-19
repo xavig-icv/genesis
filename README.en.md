@@ -49,8 +49,10 @@ The main rule: **we design the laws, never the organisms.**
 - **What happens:** in some soups, after hundreds or thousands of epochs, a program appears that copies
   itself into others and takes over. This reproduces the 2024 result.
 - **What we followed:**
-  - **The first replicators poison themselves.** Each copy leaves zeros behind, and zeros stop copying. This
-    explanation fits all the data, but no intervention experiment has proven it.
+  - **The first replicators poison themselves.** Each copy leaves zeros behind, and zeros stop copying. The
+    2024 paper already describes this "zero-poisoning" and the successor that follows (its figure 2); we
+    found it in our soups and measured it. This explanation fits all the data, but no intervention experiment
+    has proven it.
   - **A resistant successor.** In one soup, a successor replicator turns the zeros into 255 and keeps copying
     in 83–96% of attempts.
   - **Palindromes.** The first three replicators we found are palindromes that copy themselves backwards,

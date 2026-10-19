@@ -4,6 +4,14 @@
 nostres experiments. Respon a AUD-39 de l'auditoria 2 i a B4 del pla de la iteració 4. Data:
 18-10-2026.
 
+**Revisat el 19-10-2026** amb una revisió de novetat de les candidates a resultat (X-020; §11). Els articles
+de 2024 i de Knierim, Cicala i Jha (2026) s'han tornat a llegir sencers. S'hi han corregit cinc coses:
+- l'enverinament per zeros ja és a l'article de 2024 (§1 i §3);
+- el 40 % de 2024 és de la transició, no de l'aparició (§1);
+- què compara Knierim i altres amb la sopa (§1 i §2);
+- l'ablació de LDIR de Cicala i altres (§2);
+- la CNP de Cicala i altres és el mateix mecanisme que el nostre corrent (§4).
+
 **Com s'ha fet.** Les referències s'han comprovat una per una al registre del DOI (Crossref), a PubMed, a
 la pàgina d'arXiv o a la pàgina dels autors.
 - Les que porten **(parcial)** tenen les dades bibliogràfiques comprovades, però el contingut surt de
@@ -38,8 +46,11 @@ l'evolució. Tot i així, n'ha sortit molt coneixement útil:
 - l'èxit d'un replicador mínim depèn molt d'on és a l'espai de programes (C G i altres, 2017).
 
 **BFF.** El punt de partida directe és *Computational Life* (Agüera y Arcas i altres, 2024):
-- en una sopa de 2¹⁷ programes de 64 bytes, sense cap ancestre, els replicadors apareixen en un 40 % de
-  les sopes en 16.000 èpoques, sobretot per automodificació;
+- en una sopa de 2¹⁷ programes de 64 bytes, sense cap ancestre, els replicadors apareixen, sobretot per
+  automodificació. En un 40 % de les sopes hi ha, en 16.000 èpoques, una transició d'estat: els replicadors
+  prenen la sopa. El 40 % és de la transició, no de la primera aparició;
+- la seva figura 2 ja descriu l'enverinament per zeros. Un primer replicador que no tolera els zeros
+  (*non-zero-tolerant*) passa per un període de *zero-poisoning*, i després una família nova pren la sopa;
 - en una versió en 2D (240 × 135), també apareixen, però s'escampen com una ona i diverses variants hi
   conviuen;
 - Forth, Z80 i 8080 també fan replicadors; SUBLEQ, no.
@@ -50,9 +61,16 @@ La Fase 1 del projecte reprodueix aquest resultat.
 - **Mathis i altres (2024)** han refet AlChemy amb ordinadors d'ara. Les organitzacions estables hi
   apareixen més sovint del que es pensava, però no es combinen fàcilment en organitzacions d'ordre
   superior.
-- **Knierim i altres (2026), preprint,** sostenen que buscar a l'atzar, amb una bona distribució de bytes,
-  troba replicadors BFF almenys tan fàcilment com la sopa. També mostren que, si es limita com es
-  combinen els programes, els replicadors continuen apareixent però ja no envaeixen la sopa.
+- **Knierim i altres (2026), preprint,** sostenen que una cerca a l'atzar, amb una bona distribució de bytes,
+  explica l'aparició dels replicadors BFF. També mostren que, si es limita com es combinen els programes,
+  els replicadors continuen apareixent però ja no envaeixen la sopa.
+  - **La comparació concreta** (la seva taula 1, amb la variant `bff_selfmove`): la sopa troba un replicador
+    cada ~5·10⁶ programes.
+  - **La mutació a l'atzar,** amb l'histograma de bytes de la mateixa sopa i a un ritme de canvi semblant,
+    en necessita 1,0–1,9·10⁷, 2 a 4 vegades més.
+  - **Només superen la sopa** el remostreig complet de cada cinta i les distribucions fetes a mà (CUST i
+    CUST64).
+  - **L'histograma de la sopa** es va mesurar poc abans que un replicador la prengués, és a dir, ja madur.
 - **Cicala i altres (2026), preprint,** fan sopes de programes Z80 de 32 bytes, repartides en nínxols. Hi
   la replicació i la resolució de tasques evolucionen juntes, i la pressió per calcular afavoreix els
   replicadors compactes, que deixen memòria lliure.
@@ -68,13 +86,19 @@ La Fase 1 del projecte reprodueix aquest resultat.
   i els autors creuen que la mida mínima d'un replicador és decisiva (Agüera y Arcas i altres, 2024).
 
 **El que sembla decidir-ho és com de curts i com d'abundants són els replicadors a l'espai de
-programes.** Knierim i altres (2026) troben que el ritme d'aparició depèn sobretot de tres coses:
-- la proporció d'instruccions respecte de bytes sense efecte;
-- que els dos caps puguin començar alineats;
-- que hi hagi operacions que facilitin la còpia.
+programes.** Knierim i altres (2026) proven dues distribucions de bytes fetes a mà, que fan més fàcil trobar
+replicadors:
+- CUST: la meitat dels bytes, instruccions, i l'altra meitat, bytes sense efecte;
+- CUST64: a més, el byte 64, perquè els dos caps puguin començar a 64 posicions l'un de l'altre.
 
-**Les instruccions de còpia compten.** Si a Z80 es treu la família d'instruccions de còpia en bloc (LDIR),
-els replicadors tarden més a aparèixer i només ho fan amb pressió de tasques (Cicala i altres, 2026). A
+Fan servir la variant `bff_selfmove`, que només té una operació de còpia. *(Corregit el 19-10-2026: dèiem
+que el ritme depenia "sobretot de tres coses", i la tercera, les operacions que faciliten la còpia, no
+l'estudien.)*
+
+**Les instruccions de còpia compten.** Si a Z80 es treu la família d'instruccions de còpia en bloc (LDIR), la
+transició des dels primers replicadors (Load–Push) cap a un de compacte (LDD) és molt lenta. Sense pressió de
+tasques, no s'acaba en 10⁷ èpoques; amb pressió de tasques, sí (Cicala i altres, 2026). *(Corregit el
+19-10-2026: dèiem que els replicadors tardaven més a aparèixer.)* A
 Avida, la majoria de canvis al joc d'instruccions no tenen cap efecte consistent. Ajuden els que fan més
 flexibles les interaccions entre instruccions (Bryson i Ofria, 2013).
 
@@ -82,7 +106,8 @@ flexibles les interaccions entre instruccions (Bryson i Ofria, 2013).
 - Knierim i altres ja apunten quines propietats importen. Les nostres ablacions haurien d'incloure
   variants de la densitat d'instruccions i de l'alineació dels caps, a més de les de la taula de
   l'auditoria 8.
-- Com que la cerca a l'atzar sembla trobar replicadors tan bé com la sopa, convé separar dues coses:
+- Com que la cerca a l'atzar amb una bona distribució troba replicadors (encara que, amb l'histograma de la
+  sopa i al seu ritme de canvi, 2 a 4 vegades més a poc a poc que la sopa), convé separar dues coses:
   quines propietats fan que un replicador **existeixi i sigui curt**, i quines fan que, un cop
   aparegut, **s'estableixi**.
 
@@ -100,7 +125,11 @@ flexibles les interaccions entre instruccions (Bryson i Ofria, 2013).
 - El replicador sembrat a Coreworld es va extingir (parcial).
 - Els de Kruszewski i Mikolov eren transitoris.
 - A BFF, n'hi ha que s'extingeixen abans d'envair la sopa (Knierim i altres, 2026).
-- Les famílies se succeeixen, a Z80 i a BFF, on els zeros enverinen la sopa. Ho vam veure a l'entrada 2.
+- Les famílies se succeeixen, a Z80 i a BFF, on els zeros enverinen la sopa. Ho descriu l'article de 2024
+  (fig. 2), i ho vam retrobar a l'entrada 2. *(Corregit el 19-10-2026: no citàvem l'article de 2024.)*
+- **La història d'un llinatge** en condiciona el destí: si se'n sembra un 1 % en una sopa nova, la fixació
+  depèn de la història evolutiva. Els llinatges evolucionats en sopes ben barrejades i amb molta energia
+  s'hi desfan (Jha i altres, 2026, apèndix A.2).
 
 **L'espai protegeix dels paràsits.**
 - En un autòmat cel·lular, els hipercicles s'organitzen en espirals, i els paràsits en queden fora
@@ -126,9 +155,12 @@ A la literatura, la barreja no té un efecte en una sola direcció:
   simbiosi digital (Vostinar i Ofria, 2018).
 - **En sopes de programes:**
   - en 2D, els replicadors tarden més a envair-ho tot i les variants conviuen (Agüera y Arcas i altres,
-    2024);
+    2024). En una sopa ben barrejada, un replicador en pren la meitat en unes log *n* èpoques, i en 2D, en
+    un temps proporcional al costat de la graella;
   - amb nínxols, un ritme intermedi d'aparellaments entre nínxols resol més tasques que no barrejar-los
-    gens o barrejar-los molt (Cicala i altres, 2026).
+    gens o barrejar-los molt (Cicala i altres, 2026). La seva "pol·linització entre nínxols" (CNP) és el
+    mateix mecanisme que el nostre corrent: amb una probabilitat de 0,05, el company s'escull a l'atzar en
+    tota la població. Però no en mesuren l'expansió, només les tasques.
 
 **Què vol dir per al projecte.** Que la barreja tingui un efecte no monòton és coherent amb el resultat no
 concloent de la sèrie de la llei 2, i dona força a la proposta de l'auditor 1 de fer una **corba
@@ -229,15 +261,63 @@ de detalls concrets de BFF dins d'aquesta família de químiques. És el que han
 2. **B3 també:** la dependència de la mida no s'ha estudiat de manera sistemàtica. Knierim i altres donen
    una predicció (el nombre d'execucions), i la nostra observació de la maduració (AUD-64) n'apunta una
    altra.
-3. **B1 es pot afinar** amb el que ja han trobat Knierim i altres: la densitat d'instruccions, l'alineació
-   dels caps i les operacions que faciliten la còpia. Convé llegir-ne l'article sencer abans de definir
-   les ablacions.
+3. **B1 es pot afinar** amb el que ja han trobat Knierim i altres: la densitat d'instruccions i l'alineació
+   dels caps. *(Corregit el 19-10-2026: n'hem tret "les operacions que faciliten la còpia", que no
+   estudien. L'article ja s'ha llegit sencer.)*
 4. **La corba dosi-resposta del corrent** té el suport d'una literatura en què la barreja té efectes no
    monòtons.
 5. **El temps variable** és nou en aquests sistemes, i té bons referents.
 6. **Una precaució.** Els treballs del 2026 són preprints, i alguns resultats (per exemple, que la cerca a
-   l'atzar trobi replicadors almenys tan fàcilment com la sopa) caldria que els comprovéssim nosaltres
-   abans de recolzar-nos-hi.
+   l'atzar expliqui l'aparició) caldria que els comprovéssim nosaltres abans de recolzar-nos-hi.
+
+## 11. La novetat de les candidates (19-10-2026)
+
+**Per a què serveix.** Per fer públic el projecte, el responsable demana un descobriment nou, encara que sigui
+petit (X-020). Els dos auditors demanen comprovar abans la novetat de cada candidata, amb les fonts (X-021,
+X-022). La revisió es va fer el 19-10-2026. Les afirmacions clau s'han comprovat al text de 2024 i al de
+Knierim, Cicala i Jha (2026).
+
+**1. L'enverinament per zeros i el successor resistent: conegut.**
+- **Què ja se sap:** l'article de 2024 en descriu el fenomen i el relleu (fig. 2, §1). A Z80 hi ha
+  successions semblants, però les atribueixen a la robustesa i a l'espai lliure (Cicala i altres, 2026).
+- **Què seria nou:** la prova causal amb una intervenció des d'una mateixa captura, amb un control simulat, i
+  la freqüència del fenomen entre mons, en 2D. Seria una nota curta, no un descobriment.
+
+**2. La maduració de la sopa, o el mostreig: hi ha lloc per a un resultat nou.**
+- **Què ja se sap:**
+  - la idea d'una fase prèvia en què la sopa s'organitza (Greenbaum i Pargellis, 2017);
+  - que la distribució de bytes importa (Knierim i altres, 2026).
+- **Què no hem trobat enlloc:** cap prova a una edat fixada, que continuï, barregi o reiniciï la sopa, ni cap
+  estimació del risc d'aparició segons l'edat.
+- **Per què hi ha lloc:** les dades de Knierim i altres ho permeten. Amb el seu propi histograma, ja madur, i al
+  seu ritme de canvi, la mutació a l'atzar és 2 a 4 vegades més lenta que la sopa (§1). Aquesta diferència
+  podria ser l'estructura que la sopa ha acumulat.
+- **La prova que la separaria:** a una edat fixada, en mons sense replicadors, fer branques que continuïn, que
+  barregin els bytes (amb el mateix histograma) o que reiniciïn la sopa.
+- **El que hi tenim:** un indici feble, només als mons quiets de la llei 2. El ritme d'aparició passa de 2,8 a
+  5,3 per 100.000 mon-èpoques, de la primera meitat a la segona (*p* ≈ 0,06). Als mons amb corrent no canvia.
+
+**3. El corrent accelera l'expansió: conegut.**
+- **Què ja se sap:**
+  - és el que preveu la teoria dels fronts amb dispersió a distància (Fisher, 1937; Shigesada, Kawasaki i
+    Takeda, 1995; Kot, Lewis i van den Driessche, 1996; Hallatschek i Fisher, 2014);
+  - el cas extrem, ben barrejat contra 2D, ja és a l'article de 2024 (§4);
+  - la CNP de Cicala i altres (2026) és el mateix mecanisme, tot i que no en mesuren l'expansió.
+- **Què hi aporta B2:** la segona prova de la sèrie (`docs/protocol-b2.md`, §6.3) en mesura la mida, de manera
+  preregistrada i aparellada. És una confirmació, no un descobriment.
+
+**4. La persistència i el canvi de llei: en part, un buit.**
+- **El buit, confirmat:** no hem trobat distribucions publicades de la durada de la vida BFF espontània (§3).
+- **La dependència de la història** sí que té un precedent, amb trasplantaments de llinatges sembrats (Jha i
+  altres, 2026, A.2).
+- **El que no hem trobat:** cap prova que canviar la llei del món, després que la vida s'hi hagi establert,
+  n'alteri la persistència.
+
+**El que no hem pogut comprovar nosaltres.** La revisió també apunta coses que encara no hem llegit a la font, i
+que no s'han incorporat:
+- el text sencer de Greenbaum i Pargellis (2017) i el de Chou i Reggia (1997);
+- les inundacions periòdiques d'Hutton (2002), un precedent de lleis que canvien amb el temps;
+- que els *evoloops* de Sayama (1999) són sembrats.
 
 ---
 
@@ -251,6 +331,7 @@ de detalls concrets de BFF dins d'aquesta família de químiques. És el que han
 - Fontana W, Buss LW (1994). "The arrival of the fittest": toward a theory of biological organization. *Bull. Math. Biol.* 56:1–64. doi:10.1007/BF02458289
 - Fontana W, Buss LW (1994). What would be conserved if "the tape were played twice"? *PNAS* 91:757–761. doi:10.1073/pnas.91.2.757
 - Pargellis AN (1996). The spontaneous generation of digital "life". *Physica D* 91:86–96. doi:10.1016/0167-2789(95)00268-5 (parcial)
+- Pargellis AN (1996). The evolution of self-replicating computer organisms. *Physica D* 98:111–127. doi:10.1016/0167-2789(96)00089-9 (parcial)
 - Pargellis AN (2001). Digital life behavior in the Amoeba world. *Artificial Life* 7:63–75. doi:10.1162/106454601300328025
 - Greenbaum B, Pargellis AN (2017). Self-replicators emerge from a self-organizing prebiotic computer world. *Artificial Life* 23:318–342. doi:10.1162/artl_a_00234
 - Ray TS (1991). An approach to the synthesis of life. *Artificial Life II*, SFI vol. XI, pp. 371–408.
@@ -293,6 +374,12 @@ de detalls concrets de BFF dins d'aquesta família de químiques. És el que han
 - Szabó P, Scheuring I, Czárán T, Szathmáry E (2002). In silico simulations reveal that replicators with limited dispersal evolve towards higher efficiency and fidelity. *Nature* 420:340–343. doi:10.1038/nature01187
 - Takeuchi N, Hogeweg P (2009). Multilevel selection in models of prebiotic evolution II. *PLoS Comput. Biol.* 5:e1000542. doi:10.1371/journal.pcbi.1000542
 - Vostinar AE, Ofria C (2018). Spatial structure can decrease symbiotic cooperation. *Artificial Life* 24:229–249. doi:10.1162/artl_a_00273
+
+**Fronts d'invasió i dispersió a distància**
+- Fisher RA (1937). The wave of advance of advantageous genes. *Ann. Eugen.* 7:355–369. doi:10.1111/j.1469-1809.1937.tb02153.x (parcial)
+- Shigesada N, Kawasaki K, Takeda Y (1995). Modeling stratified diffusion in biological invasions. *Am. Nat.* 146:229–251. doi:10.1086/285796 (parcial)
+- Kot M, Lewis MA, van den Driessche P (1996). Dispersal data and the spread of invading organisms. *Ecology* 77:2027–2042. doi:10.2307/2265698 (parcial)
+- Hallatschek O, Fisher DS (2014). Acceleration of evolutionary spread by long-range dispersal. *PNAS* 111:E4911–E4919. doi:10.1073/pnas.1404663111 (parcial)
 
 **Entorns variables**
 - Kashtan N, Alon U (2005). Spontaneous evolution of modularity and network motifs. *PNAS* 102:13773–13778. doi:10.1073/pnas.0503610102
