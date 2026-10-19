@@ -42,7 +42,10 @@ else
   CODE="$(cat VERSIO 2> /dev/null || echo desconegut)"
 fi
 
-echo "== lot començat $(date '+%Y-%m-%d %H:%M:%S') codi=$CODE llista=$LIST paral·lel=$PARALLEL" >> "$OUTFILE"
+# Dins del repositori, el camí de la llista s'escriu relatiu a l'arrel: un camí absolut porta el nom de
+# l'usuari i les carpetes de la màquina, que no han d'anar als registres
+SHOWN="${LIST#"$PWD/"}"
+echo "== lot començat $(date '+%Y-%m-%d %H:%M:%S') codi=$CODE llista=$SHOWN paral·lel=$PARALLEL" >> "$OUTFILE"
 FROM=$(wc -l < "$OUTFILE")
 rc=0
 bash eines/experiments.sh "$PARALLEL" "$DIR" < "$LIST" >> "$OUTFILE" 2>&1 || rc=$?

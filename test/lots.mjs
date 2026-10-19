@@ -91,6 +91,26 @@ const tests = {
     bash('llanca-lot.sh', ['1', dir, list]);
     assert.match(lotOut(dir), /^ja fet: petit$/m);
   }, withJson),
+  // AU2-56 de l'auditor 2 (auditoria 9): el mateix nom i la mateixa llavor no n'hi ha prou
+  "un experiment amb el mateix nom i llavor però una altra ordre es torna a fer (AU2-56)": () => withDir((dir) => {
+    const json = slash(join(dir, 'petit.jsonl'));
+    const base = `petit --world 32x32 --seed 7 --epochs 2 --census 250 --json ${json}`;
+    const list = join(dir, 'llista.txt');
+    const launch = (line) => { writeFileSync(list, line + '\n'); assert.strictEqual(bash('llanca-lot.sh', ['1', dir, list]).status, 0); };
+    launch(base);
+    // cada canvi de l'ordre, amb el mateix nom i la mateixa llavor: un altre horitzó, un altre corrent, una opció més
+    const changes = [base.replace('--epochs 2', '--epochs 3'), `${base} --mixing 0.5`, `${base} --every 50`];
+    for (const line of changes) launch(line);
+    const out = lotOut(dir);
+    assert.doesNotMatch(out, /^ja fet: petit$/m);
+    assert.strictEqual(out.match(/^acaba: {3}petit$/gm).length, 1 + changes.length);
+    // el JSONL és el de l'última ordre
+    const start = JSON.parse(readFileSync(join(dir, 'petit.jsonl'), 'utf8').split('\n')[0]);
+    assert.strictEqual(start.command, `node sim.mjs ${changes[changes.length - 1].replace(/^petit /, '')}`);
+    // i amb la mateixa ordre, sí que se salta
+    launch(changes[changes.length - 1]);
+    assert.match(lotOut(dir), /^ja fet: petit$/m);
+  }),
   // A6-03 de l'auditor 2 (AU2-38)
   "un nombre d'experiments alhora incorrecte es rebutja abans de començar, amb el codi 2": () => withBatch((dir, list) => {
     for (const p of ['INVALID', '0', '17', '-1', '2.5']) {
@@ -226,6 +246,12 @@ const tests = {
     writeFileSync(join(copy, 'fase1', 'bff.js'), readFileSync(join(copy, 'fase1', 'bff.js'), 'utf8') + '\n// canvi\n');
     out = launch();
     assert.match(out, new RegExp(`^== lot començat .* codi=${hash}\\+canvis `, 'm'));
+    // una llista de dins del repositori surt amb el camí relatiu a l'arrel, sense les carpetes de la màquina
+    mkdirSync(join(copy, 'llistes'));
+    copyFileSync(list, join(copy, 'llistes', 'llista.txt'));
+    const r = spawnSync('bash', ['eines/llanca-lot.sh', '1', 'lot', 'llistes/llista.txt'], { cwd: copy, encoding: 'utf8' });
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.match(readFileSync(join(copy, 'lot', 'lot-llista.out'), 'utf8'), /^== lot començat .* llista=llistes\/llista\.txt paral·lel=1$/m);
   }),
   "desplega-vm.sh: l'adreça de la VM surt d'eines/local.env o de VM i VM_KEY, i sense cap de les dues s'atura": () => withDir((dir) => {
     mkdirSync(join(dir, 'eines'));
