@@ -51,7 +51,7 @@ anglès; la segona columna és la paraula que s'hi correspon.
 | preregistre, etiqueta | preregistration, tag | El protocol i el codi fixats en una etiqueta anotada de git abans de llançar la sèrie. |
 | etapa | stage | La sèrie de la llei 2 es decidia en dues etapes, amb límits d'O'Brien–Fleming. |
 | auditor, auditoria | auditor, audit | Revisions fetes per dos models d'IA, en sessions separades. No és cap revisió per experts humans. |
-| troballa (AUD-xx, AU2-xx) | finding | Un problema que troba un auditor. AUD-xx són de l'auditor 1, i AU2-xx, de l'auditor 2. Conserven el número entre auditories. |
+| troballa (AUD-xx, AU2-xx) | finding | Un problema que troba un auditor. AUD-xx són de l'auditor 1, i AU2-xx, de l'auditor 2. Conserven el número entre auditories. Totes són a `docs/auditories.md`. |
 | quadern | lab notebook | `quadern/index.html`: els resultats, en ordre, amb les correccions datades. |
 
 ## Les carpetes

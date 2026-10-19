@@ -94,7 +94,8 @@ established more often, with a protocol written and tagged before starting.
   - **Who they are:** one is another instance of Claude, the same model that develops the project; the other
     is a different model.
   - **How it is sealed:** each seals its report before reading the other's.
-  - **What we check:** we verify every finding with data.
+  - **What we check:** we verify every finding with data. The [audit index](docs/auditories.md), in
+    Catalan, lists every finding and how it was resolved.
 
   **This is not human peer review.**
 - **Mistakes are corrected without deleting.** The notebook keeps what we said, and adds a dated correction.

@@ -166,7 +166,8 @@ Vegeu l'[entrada 8](quadern/index.html#entrada-8).
   - **Qui són:** l'un és una altra instància de Claude, el mateix model que desenvolupa; l'altre és un model
     diferent.
   - **El segellat:** cadascú segella el seu informe abans de llegir el de l'altre.
-  - **La verificació:** l'equip comprova cada troballa amb dades.
+  - **La verificació:** l'equip comprova cada troballa amb dades. Les troballes i com es van resoldre són a
+    l'[índex de les auditories](docs/auditories.md).
 
   No és cap revisió per experts humans.
 - **Les errades es corregeixen sense esborrar.** El quadern conserva el que vam dir i hi afegeix la

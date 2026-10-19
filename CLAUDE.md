@@ -102,7 +102,8 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
 - Auditories externes iteratives a `../auditories/claude-origins/auditor1/auditN/`. En acabar cada grup
   de tasques, deixa-hi un `informe-de-traspas.md` (commits, estat de cada troballa AUD-xx, què cal
   revisar). Quan arribi l'informe de l'auditor, comprova'n les afirmacions amb dades i respon a
-  `resposta-equip.md`. Les troballes conserven l'identificador entre auditories.
+  `resposta-equip.md`. Les troballes conserven l'identificador entre auditories. Cada troballa nova, amb una
+  línia i la resolució, va a l'índex públic `docs/auditories.md`, sense cap dada interna.
 - El protocol de la sèrie confirmatòria (`docs/protocol-estadistic.md`) no es llança fins que l'auditoria
   l'hagi revisat.
 
