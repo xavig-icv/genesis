@@ -42,9 +42,12 @@ export function encodePng(rgb, width, height) {
   return Buffer.concat([SIGNATURE, ihdr(width, height), chunk('IDAT', pixels(rgb, width, height)), chunk('IEND', Buffer.alloc(0))]);
 }
 
-// Un APNG amb totes les imatges de la mateixa mida. delayMs: el temps de cada imatge; lastMs: el de l'última
-export function encodeApng(frames, width, height, { delayMs = 100, lastMs = delayMs, loops = 0 } = {}) {
+// Un APNG amb totes les imatges de la mateixa mida. delayMs: el temps de cada imatge; lastMs: el de l'última.
+// cover: una imatge per defecte que no forma part de l'animació (la que mostren els visors que no animen, com
+// les previsualitzacions); sense cover, és el primer fotograma.
+export function encodeApng(frames, width, height, { delayMs = 100, lastMs = delayMs, loops = 0, cover = null } = {}) {
   const parts = [SIGNATURE, ihdr(width, height), chunk('acTL', u32(frames.length, loops))];
+  if (cover) parts.push(chunk('IDAT', pixels(cover, width, height)));
   let seq = 0;
   frames.forEach((rgb, i) => {
     const ms = i === frames.length - 1 ? lastMs : delayMs;
@@ -55,7 +58,7 @@ export function encodeApng(frames, width, height, { delayMs = 100, lastMs = dela
     fctl[24] = 0; fctl[25] = 0; // sense esborrar; substitueix
     parts.push(chunk('fcTL', fctl));
     const data = pixels(rgb, width, height);
-    parts.push(i === 0 ? chunk('IDAT', data) : chunk('fdAT', Buffer.concat([u32(seq++), data])));
+    parts.push(i === 0 && !cover ? chunk('IDAT', data) : chunk('fdAT', Buffer.concat([u32(seq++), data])));
   });
   parts.push(chunk('IEND', Buffer.alloc(0)));
   return Buffer.concat(parts);

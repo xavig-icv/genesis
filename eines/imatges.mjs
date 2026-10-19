@@ -84,6 +84,42 @@ export function row(images, gap = 12, color = [255, 255, 255]) {
   return { rgb, width, height };
 }
 
+// Diverses imatges en una graella de cols columnes, de dalt a baix i d'esquerra a dreta
+export function grid(images, cols, gap = 12, color = [255, 255, 255]) {
+  const rows = [];
+  for (let i = 0; i < images.length; i += cols) rows.push(row(images.slice(i, i + cols), gap, color));
+  const width = Math.max(...rows.map((r) => r.width));
+  const height = rows.reduce((s, r) => s + r.height, 0) + gap * (rows.length - 1);
+  const rgb = blank(width, height, color);
+  let y0 = 0;
+  for (const r of rows) {
+    for (let y = 0; y < r.height; y++) rgb.set(r.rgb.subarray(y * r.width * 3, (y + 1) * r.width * 3), ((y0 + y) * width) * 3);
+    y0 += r.height + gap;
+  }
+  return { rgb, width, height };
+}
+
+// Una lletra de 3 × 5 per a les xifres i el punt dels milers (cada fila, 3 bits d'esquerra a dreta)
+const GLYPHS = {
+  0: [7, 5, 5, 5, 7], 1: [2, 6, 2, 2, 7], 2: [7, 1, 7, 4, 7], 3: [7, 1, 7, 1, 7], 4: [5, 5, 7, 1, 1],
+  5: [7, 4, 7, 1, 7], 6: [7, 4, 7, 5, 7], 7: [7, 1, 1, 1, 1], 8: [7, 5, 7, 5, 7], 9: [7, 5, 7, 1, 7],
+  '.': [0, 0, 0, 0, 2],
+};
+// Escriu un text de xifres a (x, y), amb píxels de s × s, sobre un requadre del color del fons
+export function label(im, text, { x = 8, y = 8, s = 3, color = [255, 255, 255], background = [0, 0, 0] } = {}) {
+  const chars = [...String(text)].filter((c) => GLYPHS[c]);
+  const w = chars.length * 4 * s - s, h = 5 * s, pad = 2 * s;
+  for (let yy = y - pad; yy < y + h + pad; yy++) for (let xx = x - pad; xx < x + w + pad; xx++) {
+    if (xx >= 0 && yy >= 0 && xx < im.width && yy < im.height) im.rgb.set(background, (yy * im.width + xx) * 3);
+  }
+  chars.forEach((c, i) => GLYPHS[c].forEach((bits, r) => {
+    for (let b = 0; b < 3; b++) if (bits & (4 >> b)) square(im.rgb, im.width, x + (i * 4 + b) * s, y + r * s, s, color);
+  }));
+  return im;
+}
+// 1500 → "1.500", com a la resta del projecte
+export const thousands = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
 // Una tira de programes: { rgb, width, height }
 export function soupImage(soup, { first = 0, programs = 128, scale = 3, theme = THEMES.clar } = {}) {
   const width = PROGRAM_SIZE * scale, height = programs * scale;
@@ -187,7 +223,11 @@ if (isMain) {
   const opt = (name, def) => { const i = args.indexOf(name); if (i < 0) return def; const v = args[i + 1]; args.splice(i, 2); return v; };
   const flag = (name) => { const i = args.indexOf(name); if (i < 0) return false; args.splice(i, 1); return true; };
   const scale = Number(opt('--escala', 0)) || undefined;
-  const simple = flag('--simple'), grid = flag('--graella');
+  const simple = flag('--simple'), gridLines = flag('--graella'), perImage = flag('--registre-per-imatge');
+  const withEpoch = flag('--amb-epoca');
+  const columns = Number(opt('--columnes', 0)) || 0;
+  const cover = opt('--portada');
+  if (cover !== undefined && cover !== 'darrer') throw new Error('--portada només pot ser "darrer" (l\'últim fotograma)');
   const theme = THEMES[opt('--tema', 'clar')];
   if (!theme) throw new Error('--tema ha de ser clar o fosc');
   const regionArg = opt('--regio');
@@ -205,10 +245,13 @@ if (isMain) {
   } else if (cmd === 'mon') {
     const [wh, out, ...srcs] = args.slice(1);
     const [W, H] = size(wh);
-    const tracker = createFamilyTracker();
-    const imgs = srcs.map((s, i) => worldImage(readSoup(s), W, H, { scale: scale ?? 2, tracker, epoch: i, simple, region, grid, mark, theme }));
+    // Amb un registre comú, les famílies conserven el color d'una imatge a l'altra, però el territori d'una
+    // captura depèn de quantes s'han analitzat abans (el registre fa servir un generador amb llavor)
+    const shared = perImage ? null : createFamilyTracker();
+    const imgs = srcs.map((s, i) => worldImage(readSoup(s), W, H,
+      { scale: scale ?? 2, tracker: shared ?? createFamilyTracker(), epoch: shared ? i : 0, simple, region, grid: gridLines, mark, theme }));
     imgs.forEach((im, i) => console.log(`${srcs[i]}:\n${report(im.families) || '  (cap família)'}`));
-    const img = row(imgs, 12, gapColor);
+    const img = columns ? grid(imgs, columns, 12, gapColor) : row(imgs, 12, gapColor);
     writeFileSync(out, encodePng(img.rgb, img.width, img.height));
   } else if (cmd === 'codi') {
     const [wh, out, ...srcs] = args.slice(1);
@@ -223,19 +266,31 @@ if (isMain) {
     const [wh, out, ...files] = args.slice(1);
     const [W, H] = size(wh);
     const tracker = createFamilyTracker();
-    const frames = files.map((f, i) => worldImage(readSoup(f), W, H, { scale: scale ?? 1, tracker, epoch: i, simple, region, grid, theme }));
-    writeFileSync(out, encodeApng(frames.map((f) => f.rgb), frames[0].width, frames[0].height, { delayMs: delay, lastMs: delay * 12 }));
+    const frames = files.map((f, i) => worldImage(readSoup(f), W, H, { scale: scale ?? 1, tracker, epoch: i, simple, region, grid: gridLines, theme }));
+    // El número d'època, del nom de cada captura (…-epocaN.bin), a la cantonada de dalt a l'esquerra
+    if (withEpoch) {
+      frames.forEach((im, i) => {
+        const m = /epoca(\d+)/.exec(files[i]);
+        if (!m) throw new Error(`${files[i]}: el nom no diu l'època (…-epocaN.bin)`);
+        label(im, thousands(m[1]), { color: theme.ink, background: theme.page });
+      });
+    }
+    writeFileSync(out, encodeApng(frames.map((f) => f.rgb), frames[0].width, frames[0].height,
+      { delayMs: delay, lastMs: delay * 12, cover: cover === 'darrer' ? frames[frames.length - 1].rgb : null }));
   } else if (cmd === 'km') {
     const labels = opt('--etiquetes', 'món quiet|corrent 0,01').split('|');
     const [dirA, dirB, out] = args.slice(1);
     const { kmSvg } = await import('../fase2/quadern-serie.mjs');
     const { readSeries } = await import('../fase2/estadistica.mjs');
     let svg = kmSvg(readSeries(dirA), readSeries(dirB), { labelA: labels[0], labelB: labels[1] });
-    // Colors fixos en lloc de les variables del quadern, i un fons blanc
-    const vars = { '--text-2': '#52514e', '--grid': '#e1e0d9', '--axis': '#c3c2b7', '--series-1': '#2a78d6', '--op-loop': '#eb6834' };
+    // Colors fixos en lloc de les variables del quadern (els del tema clar o els del fosc), i el fons
+    const dark = theme === THEMES.fosc;
+    const vars = dark
+      ? { '--text-2': '#c3c2b7', '--grid': '#2c2c2a', '--axis': '#383835', '--series-1': '#3987e5', '--op-loop': '#d95926' }
+      : { '--text-2': '#52514e', '--grid': '#e1e0d9', '--axis': '#c3c2b7', '--series-1': '#2a78d6', '--op-loop': '#eb6834' };
     for (const [k, v] of Object.entries(vars)) svg = svg.split(`var(${k})`).join(v);
     svg = svg.replace('<svg class="km" ', '<svg xmlns="http://www.w3.org/2000/svg" font-family="system-ui, sans-serif" ')
-      .replace(/(<svg[^>]*>)/, '$1\n  <rect width="640" height="300" fill="#ffffff"/>');
+      .replace(/(<svg[^>]*>)/, `$1\n  <rect width="640" height="300" fill="${dark ? '#0d0d0d' : '#ffffff'}"/>`);
     writeFileSync(out, svg + '\n');
   } else {
     console.error('Ús: node eines/imatges.mjs sopa|mon|codi|animacio|km ... (vegeu la capçalera del fitxer)');
