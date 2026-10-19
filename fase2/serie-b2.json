@@ -25,18 +25,33 @@
   "lossMax": 5,
   "recoverMin": 21
  },
- "test": {
-  "horizon": 5000,
-  "seedsOrigin": [
-   0,
-   1
-  ],
-  "seedsSwitch": [
-   0,
-   1
-  ],
-  "sided": "unilateral",
-  "alpha": 0.025
+ "tests": {
+  "method": "holm",
+  "alpha": 0.025,
+  "regime": {
+   "horizon": 5000,
+   "seedsOrigin": [
+    0,
+    1
+   ],
+   "seedsSwitch": [
+    0,
+    1
+   ],
+   "sided": "unilateral"
+  },
+  "spread": {
+   "censuses": 8,
+   "seedsOrigin": [
+    0,
+    1
+   ],
+   "seedsSwitch": [
+    0,
+    1
+   ],
+   "sided": "unilateral"
+  }
  },
  "bootstrap": {
   "reps": 10000,

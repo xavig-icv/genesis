@@ -1,7 +1,8 @@
-// La sèrie preregistrada de B2: quant dura la vida establerta (docs/protocol-b2.md, v0.2). Funcions pures:
+// La sèrie preregistrada de B2: quant dura la vida establerta (docs/protocol-b2.md, v0.3). Funcions pures:
 // la validació de les branques contra el manifest, la primera pèrdua sostinguda, les estimacions amb el
-// bootstrap de mons, la prova del canvi de règim i els descriptius. El programa que decideix és
-// fase2/b2-confirmacio.mjs, que comprova el preregistre abans de carregar aquest mòdul.
+// bootstrap de mons, les dues proves confirmatòries (el canvi de règim i l'expansió amb corrent, amb la
+// correcció de Holm) i els descriptius. El programa que decideix és fase2/b2-confirmacio.mjs, que comprova el
+// preregistre abans de carregar aquest mòdul.
 import { readFileSync, readdirSync } from 'fs';
 import { join, basename } from 'path';
 import { makeRng } from '../fase1/soup.js';
@@ -111,6 +112,7 @@ export function readSeries(dir, manifest, { commit = null } = {}) {
     if (bad.length) { problems.push(...bad); continue; }
     const censuses = records.filter((r) => r.type === 'census');
     const result = { name: b.name, k: b.k, H: b.H, ...lossTime(censuses, w.t, b.H, manifest.rule) };
+    result.shares = censuses.map((c) => c.heritable / c.sample);                   // per a l'expansió (§6.3)
     const last = censuses[censuses.length - 1];
     const fams = last.families ?? [];
     const top = fams.length ? fams.reduce((a, c) => (c.share > a.share ? c : a)) : null;
@@ -118,6 +120,8 @@ export function readSeries(dir, manifest, { commit = null } = {}) {
     result.costs = costsByWindow(records, w.t);
     worlds.get(b.world)[b.cond][b.k] = result;
   }
+  const n = manifest.tests.spread.censuses;
+  if (manifest.branches.some((b) => b.H / manifest.params.census.every < n)) problems.push(`el manifest té branques amb menys de ${n} censos, els de la prova de l'expansió`);
   for (const w of worlds.values()) {
     const want = manifest.branches.filter((b) => b.world === w.id);
     for (const cond of ['origen', 'canvi']) {
@@ -226,23 +230,49 @@ export function interval(worlds, stat, { reps, seed, method, level = 0.95 }) {
   throw new Error(`mètode d'interval desconegut: ${method}`);
 }
 
-// ---- La prova confirmatòria (protocol §6.2): el canvi de règim
+// ---- Les proves confirmatòries (protocol §6.2 i §6.3)
 
-// D_i = durada restringida a Hr de la condició de canvi − la de la condició d'origen, amb les llavors del manifest
+// El canvi de règim: D_i = durada restringida a Hr de la condició de canvi − la de la condició d'origen, amb les
+// llavors del manifest. H₁: la vida dura menys quan el món canvia (D < 0)
 export function regimeDiffs(worlds, test, every = 250) {
   return worlds.map((w) => worldMean(w, 'canvi', (r) => restricted(r, test.horizon, every), test.seedsSwitch)
     - worldMean(w, 'origen', (r) => restricted(r, test.horizon, every), test.seedsOrigin));
 }
+// L'expansió amb corrent: la mesura d'una branca és la mitjana de la proporció d'hereditaris als n primers censos.
+// D_i = la de la condició amb corrent − la de la condició sense corrent: als mons A, el corrent és el canvi, i als B,
+// l'origen. H₁: amb corrent hi ha més vida als primers censos (D > 0)
+export const withCurrent = (group) => (conditionMixing(group, 'origen') > 0 ? 'origen' : 'canvi');
+export function spreadDiffs(worlds, spread) {
+  const seeds = (cond) => (cond === 'origen' ? spread.seedsOrigin : spread.seedsSwitch);
+  const value = (w, cond) => worldMean(w, cond, (r) => mean(r.shares.slice(0, spread.censuses)), seeds(cond));
+  return worlds.map((w) => {
+    const yes = withCurrent(w.group), no = yes === 'origen' ? 'canvi' : 'origen';
+    return value(w, yes) - value(w, no);
+  });
+}
 const binom = (n, k) => { let r = 1; for (let i = 0; i < k; i++) r = (r * (n - i)) / (i + 1); return r; };
-// La prova de signes exacta sobre els mons amb D ≠ 0. H₁: la vida dura menys quan el món canvia (D < 0)
-export function signTest(diffs, sided) {
+// La prova de signes exacta sobre els mons amb D ≠ 0. Unilateral: expect diu el signe de D que espera H₁
+export function signTest(diffs, sided, { expect = 'negatiu' } = {}) {
   const neg = diffs.filter((d) => d < 0).length, pos = diffs.filter((d) => d > 0).length, n = neg + pos;
   const tail = (x) => { let s = 0; for (let k = x; k <= n; k++) s += binom(n, k); return s / 2 ** n; };   // P(X ≥ x)
-  const p = n === 0 ? 1 : sided === 'unilateral' ? tail(neg) : Math.min(1, 2 * Math.min(tail(neg), tail(pos)));
+  const p = n === 0 ? 1 : sided === 'unilateral' ? tail(expect === 'negatiu' ? neg : pos) : Math.min(1, 2 * Math.min(tail(neg), tail(pos)));
   return { neg, pos, ties: diffs.length - n, p };
 }
+// La correcció de Holm: les p, de la més petita a la més gran, es comparen amb α/m, α/(m − 1)... i en el primer
+// que no es rebutja s'atura. Retorna, per a cada prova, si es rebutja H₀ i el llindar amb què s'ha comparat
+export function holm(ps, alpha) {
+  const order = ps.map((p, i) => i).sort((a, b) => ps[a] - ps[b] || a - b);
+  const out = ps.map(() => ({ rejected: false, threshold: null }));
+  for (let j = 0; j < order.length; j++) {
+    const i = order[j], threshold = alpha / (order.length - j);
+    out[i].threshold = threshold;
+    if (ps[i] > threshold) break;
+    out[i].rejected = true;
+  }
+  return out;
+}
 
-// ---- Els descriptius (protocol §6.3)
+// ---- Els descriptius (protocol §6.5)
 
 export function describe(worlds, test, every = 250) {
   const cell = (g, cond) => {
@@ -270,8 +300,9 @@ export function describe(worlds, test, every = 250) {
 // ---- L'informe
 
 const pct = (x) => `${(100 * x).toFixed(1)} %`;
+const medianOf = (xs) => { const s = [...xs].sort((a, b) => a - b), h = s.length >> 1; return s.length % 2 ? s[h] : (s[h - 1] + s[h]) / 2; };
 export function analyse(worlds, manifest) {
-  const { bootstrap: bs, test } = manifest, every = manifest.params.census.every;
+  const { bootstrap: bs, tests } = manifest, test = tests.regime, every = manifest.params.census.every;
   const lines = [];
   const S = interval(worlds, (ws) => survival(ws, 'origen'), { reps: bs.reps, seed: bs.seed, method: bs.interval, level: bs.level });
   const R = interval(worlds, (ws) => rmstShare(ws, 'origen'), { reps: bs.reps, seed: bs.seed + 1, method: bs.interval, level: bs.level });
@@ -286,10 +317,22 @@ export function analyse(worlds, manifest) {
     const ws = worlds.filter((w) => w.group === g);
     if (ws.length) lines.push(`  origen ${g} (${ws.length} mons): sense pèrdua ${pct(survival(ws, 'origen'))}`);
   }
-  const diffs = regimeDiffs(worlds, test, every);
-  const st = signTest(diffs, test.sided);
-  lines.push('', `El canvi de règim (horitzó ${test.horizon}, prova de signes ${test.sided}, α = ${test.alpha}):`);
+  const st = signTest(regimeDiffs(worlds, test, every), test.sided, { expect: 'negatiu' });
+  lines.push('', `Prova 1, el canvi de règim (horitzó ${test.horizon}, prova de signes ${test.sided}):`);
   lines.push(`  mons on la vida dura menys amb el canvi: ${st.neg}; més: ${st.pos}; igual: ${st.ties}; p = ${st.p.toFixed(4)}`);
+  const sp = tests.spread, sd = spreadDiffs(worlds, sp);
+  const ss = signTest(sd, sp.sided, { expect: 'positiu' });
+  lines.push('', `Prova 2, l'expansió amb corrent (els ${sp.censuses} primers censos, prova de signes ${sp.sided}):`);
+  lines.push(`  mons amb més vida amb corrent: ${ss.pos}; menys: ${ss.neg}; igual: ${ss.ties}; p = ${ss.p.toFixed(4)}`);
+  lines.push(`  diferència mediana: ${(100 * medianOf(sd)).toFixed(1)} punts`);
+  for (const g of ['A', 'B']) {
+    const idx = worlds.map((w, i) => (w.group === g ? i : -1)).filter((i) => i >= 0);
+    if (idx.length) lines.push(`  origen ${g} (el corrent és ${withCurrent(g) === 'canvi' ? 'el canvi' : "l'origen"}): més vida amb corrent a ${idx.filter((i) => sd[i] > 0).length} de ${idx.length}`);
+  }
+  const [h1, h2] = holm([st.p, ss.p], tests.alpha);
+  const verdict = (h) => (h.threshold === null ? 'no es rebutja H₀ (no s\'hi arriba: la de la p més petita no s\'ha rebutjat)'
+    : `${h.rejected ? 'es rebutja' : 'no es rebutja'} H₀ (llindar ${h.threshold})`);
+  lines.push('', `La correcció de Holm (α = ${tests.alpha}): prova 1, ${verdict(h1)}; prova 2, ${verdict(h2)}`);
   const d = describe(worlds, test, every);
   lines.push('', 'Descriptius:');
   for (const g of ['A', 'B']) for (const c of ['origen', 'canvi']) {
@@ -300,5 +343,5 @@ export function analyse(worlds, manifest) {
   lines.push(`  al cens final: ${d.final1pct} amb l'1 % o més, ${d.finalR2} amb més de ${manifest.rule.lossMax}; la família dominant és nova a ${d.successors}`);
   if (d.concordance !== null) lines.push(`  les llavors coincideixen (pèrdua o no) en ${pct(d.concordance)} dels mons i condicions`);
   if (d.costs.length) lines.push(`  segons per època, per trams de 500: ${d.costs.map((x) => x.toFixed(2)).join(' ')}`);
-  return { lines, S, R, signTest: st, rejected: st.p < test.alpha };
+  return { lines, S, R, tests: { regime: { ...st, ...h1 }, spread: { ...ss, ...h2, median: medianOf(sd) } } };
 }

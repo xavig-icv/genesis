@@ -10,7 +10,7 @@ import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import {
   lossTime, restricted, validateBranch, readSeries, survival, rmstShare, survivalCurve, bootstrap, interval,
-  regimeDiffs, signTest, branchCommand, conditionMixing, analyse,
+  regimeDiffs, spreadDiffs, signTest, holm, branchCommand, conditionMixing, analyse,
 } from '../fase2/b2-serie.mjs';
 import { buildManifest } from '../eines/b2-manifest.mjs';
 import { calibrate } from '../eines/b2-cobertura.mjs';
@@ -32,7 +32,12 @@ function smallManifest(extra = {}) {
   return {
     name: 'prova', estat: 'final', tag: 'preregistre-b2', protocol: 'docs/protocol-b2.md', dir: 'fase2/resultats/b2/confirmacio', design: 'prova',
     params: { world: [512, 256], radius: 2, rng: 'v2', every: 100, mutation: 0.00024, census: { version: 'v3', every: 250, sample: 2048, seed: 20261016 } },
-    rule: RULE, test: { horizon: 1000, seedsOrigin: [0, 1], seedsSwitch: [0, 1], sided: 'unilateral', alpha: 0.025 },
+    rule: RULE,
+    tests: {
+      method: 'holm', alpha: 0.025,
+      regime: { horizon: 1000, seedsOrigin: [0, 1], seedsSwitch: [0, 1], sided: 'unilateral' },
+      spread: { censuses: 4, seedsOrigin: [0, 1], seedsSwitch: [0, 1], sided: 'unilateral' },
+    },
     bootstrap: { reps: 300, seed: 7, interval: 'percentil', level: 0.95 }, machines: { names: ['pc', 'vm'], seed: 1 }, names: { seed: 2 },
     worlds, branches, ...extra,
   };
@@ -163,17 +168,54 @@ const tests = {
     const m = smallManifest();
     writeSeries(tmp, m, (b) => (b.cond === 'canvi' && b.world !== 'B2' ? [3, 2, 1, 0] : ALIVE));
     const { worlds } = readSeries(tmp, m);
-    const d = regimeDiffs(worlds, m.test);
+    const d = regimeDiffs(worlds, m.tests.regime);
     assert.deepStrictEqual(d.map((x) => Math.sign(x)), [-1, -1, -1, 0]);
     assert.deepStrictEqual(signTest(d, 'unilateral'), { neg: 3, pos: 0, ties: 1, p: 1 / 8 });
     assert.strictEqual(signTest(d, 'bilateral').p, 1 / 4);
     const res = analyse(worlds, m);
-    assert.strictEqual(res.rejected, false);                         // amb 3 mons, p = 0,125 > 0,025
+    assert.strictEqual(res.tests.regime.rejected, false);            // amb 3 mons, p = 0,125 > 0,025
   }),
+  // ---- La prova de l'expansió amb corrent (protocol §6.3)
+  "l'expansió: el corrent és el canvi als mons A i l'origen als B, amb la mitjana dels primers censos": () => withTmp((tmp) => {
+    const m = smallManifest();
+    // amb corrent, més hereditaris a A1, A2 i B1; a B2, menys
+    const more = [600, 700, 800, 900], less = [300, 300, 300, 300];
+    writeSeries(tmp, m, (b, w) => {
+      const current = b.mixing > 0;
+      if (w.id === 'B2') return current ? less : more;
+      return current ? more : less;
+    });
+    const { worlds } = readSeries(tmp, m);
+    const d = spreadDiffs(worlds, m.tests.spread);
+    assert.deepStrictEqual(d.map((x) => Math.sign(x)), [1, 1, 1, -1]);
+    assert.ok(Math.abs(d[0] - (750 - 300) / 2048) < 1e-12);
+    assert.deepStrictEqual(signTest(d, 'unilateral', { expect: 'positiu' }), { neg: 1, pos: 3, ties: 0, p: 5 / 16 });
+    assert.strictEqual(signTest(d, 'unilateral').p, 15 / 16);          // l'altra cua
+    // només els n primers censos: amb 2, la mitjana de 600 i 700 contra 300
+    assert.ok(Math.abs(spreadDiffs(worlds, { ...m.tests.spread, censuses: 2 })[0] - (650 - 300) / 2048) < 1e-12);
+    const res = analyse(worlds, m);
+    assert.deepStrictEqual([res.tests.spread.pos, res.tests.spread.rejected], [3, false]);
+  }),
+  'un manifest amb menys censos que els de la prova de l\'expansió: la sèrie no es calcula': () => withTmp((tmp) => {
+    const m = smallManifest();
+    writeSeries(tmp, m, () => ALIVE);
+    const bad = { ...m, tests: { ...m.tests, spread: { ...m.tests.spread, censuses: 5 } } };
+    assert.match(readSeries(tmp, bad).problems.join(), /menys de 5 censos/);
+  }),
+  'Holm: la p més petita amb α/2, i l\'altra amb α només si la primera es rebutja': () => {
+    const pick = (r) => r.map((x) => [x.rejected, x.threshold]);
+    assert.deepStrictEqual(pick(holm([0.01, 0.02], 0.025)), [[true, 0.0125], [true, 0.025]]);
+    assert.deepStrictEqual(pick(holm([0.02, 0.001], 0.025)), [[true, 0.025], [true, 0.0125]]);
+    assert.deepStrictEqual(pick(holm([0.03, 0.001], 0.025)), [[false, 0.025], [true, 0.0125]]);
+    assert.deepStrictEqual(pick(holm([0.013, 0.02], 0.025)), [[false, 0.0125], [false, null]]);
+  },
   "l'eina de calibratge dona la cobertura i la potència, sense NaN": () => {
     const lines = calibrate({ sims: 4, reps: 30, rrs: [1, 5], rho: 0 });
     assert.ok(lines.some((l) => /percentil .* bca .* logit/.test(l)));
     assert.ok(lines.some((l) => /disseny \(i\): RR 1: .* RR 5: /.test(l)));
+    // a 29 mons, la prova de l'expansió demana 21 de 29 tant amb α com amb α/2 (Holm no li costa res)
+    assert.ok(lines.some((l) => /^  α = 0\.025: calen 21 de 29; .*q 0\.76: 75\.\d %/.test(l)), lines.join('\n'));
+    assert.ok(lines.some((l) => /^  α = 0\.0125: calen 21 de 29;/.test(l)));
     assert.ok(!lines.join('\n').includes('NaN'));
   },
   // ---- El manifest
@@ -190,6 +232,10 @@ const tests = {
       }
       assert.strictEqual(new Set(m.branches.map((b) => b.name)).size, m.branches.length);
       assert.strictEqual(m.branches.length, design === 'i' ? 116 : 87);
+      // les dues proves, amb Holm; l'expansió, amb tots els censos que necessita a totes les branques
+      assert.deepStrictEqual([m.tests.method, m.tests.alpha, m.tests.spread.censuses], ['holm', 0.025, 8]);
+      assert.ok(m.branches.every((b) => b.H / m.params.census.every >= m.tests.spread.censuses));
+      assert.deepStrictEqual(m.tests.spread.seedsSwitch, design === 'i' ? [0, 1] : [0]);
       assert.deepStrictEqual(buildManifest({ design }), m);           // sempre el mateix
     }
   },
@@ -233,7 +279,8 @@ const tests = {
     const decide = () => spawnSync(process.execPath, ['fase2/b2-confirmacio.mjs', '--decideix', join(tmp, 'dades')], { cwd: repo, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '' } });
     let r = decide();
     assert.strictEqual(r.status, 0, r.stdout + r.stderr);
-    assert.match(r.stdout, /^DECISIÓ: no es rebutja H0/m);
+    assert.match(r.stdout, /^DECISIÓ 1 \(el canvi de règim\): no es rebutja H0/m);
+    assert.match(r.stdout, /^DECISIÓ 2 \(l'expansió amb corrent\): no es rebutja H0/m);
     appendFileSync(join(repo, 'fase2', 'b2-serie.mjs'), "\nconsole.log('CODI MODIFICAT');\n");
     r = decide();
     assert.strictEqual(r.status, 1);
