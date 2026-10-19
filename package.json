@@ -9,7 +9,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "test": "node fase1/test-bff.mjs && node fase2/test-world.mjs && node test/sim-cli.mjs && node test/lots.mjs && node test/servidor.mjs && node test/estadistica.mjs && node test/preregistre.mjs && node test/quadern.mjs && node test/b2-analisi.mjs && node test/imatges.mjs && node test/oracle-cubff.mjs && node test/determinisme.mjs",
+    "test": "node fase1/test-bff.mjs && node fase2/test-world.mjs && node test/sim-cli.mjs && node test/lots.mjs && node test/servidor.mjs && node test/estadistica.mjs && node test/preregistre.mjs && node test/quadern.mjs && node test/b2-analisi.mjs && node test/b2-confirmacio.mjs && node test/imatges.mjs && node test/oracle-cubff.mjs && node test/determinisme.mjs",
     "serve": "node server.mjs",
     "sim": "node sim.mjs"
   }
