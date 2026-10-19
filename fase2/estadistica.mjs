@@ -372,6 +372,14 @@ export function stageOneCheck(A, B, manifest) {
 //  - cap fitxer seguit amb assume-unchanged ni skip-worktree;
 //  - el contingut de TOTS els fitxers seguits ha de ser el de l'etiqueta (git hash-object contra git
 //    ls-tree), i no hi pot haver fitxers de codi nous no seguits;
+//  - git s'executa amb un entorn net (AUD-81, auditoria 9): sense cap variable GIT_* heretada (com
+//    GIT_CONFIG_COUNT, que pot configurar un filtre), sense la configuració global ni la del sistema, i sense
+//    objectes de substitució (git replace). I hash-object, sense filtres: un filtre "clean" podria tornar el
+//    contingut de l'etiqueta per a un fitxer que al disc és diferent;
+//  - un límit (auditoria 10): aquest mòdul importa census.js i soup.js abans de fer cap comprovació. Si
+//    algú els canvia, el codi nou s'executa igualment, i des de dins podria falsejar-la. La comprovació
+//    impedeix decidir amb codi canviat per error o amagat a git, no una trampa feta a consciència. Davant
+//    d'això, la protecció és que un tercer pugui refer la decisió des d'una còpia de l'etiqueta;
 //  - les SHA-256 del missatge de l'etiqueta han de coincidir amb els fitxers del commit, i hi han de ser
 //    les del manifest i del programa d'estadística. L'arbre de l'etiqueta és la referència; el missatge,
 //    un segon control.
@@ -379,7 +387,10 @@ export function stageOneCheck(A, B, manifest) {
 // preregistre-llei2 si no en declara cap. Retorna { commit, tag, tagObject, manifest, problem }
 export function preregistration({ manifestPath = 'fase2/serie-llei2.json', env = process.env, execArgv = process.execArgv } = {}) {
   const root = fileURLToPath(new URL('..', import.meta.url));
-  const run = (args, input) => execFileSync('git', args, { cwd: root, input, maxBuffer: 1 << 28, stdio: ['pipe', 'pipe', 'ignore'] });
+  const gitEnv = Object.fromEntries(Object.entries(process.env).filter(([k]) => !/^GIT_/i.test(k)));
+  // (/dev/null també a Windows: git l'entén, i en canvi no accepta el camí que dona os.devNull)
+  Object.assign(gitEnv, { GIT_NO_REPLACE_OBJECTS: '1', GIT_CONFIG_NOSYSTEM: '1', GIT_CONFIG_GLOBAL: '/dev/null' });
+  const run = (args, input) => execFileSync('git', args, { cwd: root, input, env: gitEnv, maxBuffer: 1 << 28, stdio: ['pipe', 'pipe', 'ignore'] });
   const git = (...a) => run(a).toString();
   if ((env.NODE_OPTIONS ?? '').trim()) return { problem: `NODE_OPTIONS no és buit (${env.NODE_OPTIONS}): podria carregar codi que no és a l'etiqueta` };
   if (execArgv.length) return { problem: `node s'ha executat amb opcions (${execArgv.join(' ')}): podrien carregar codi que no és a l'etiqueta` };
@@ -406,7 +417,7 @@ export function preregistration({ manifestPath = 'fase2/serie-llei2.json', env =
     }).filter((e) => e.type === 'blob');
     const missing = tree.filter((e) => !existsSync(join(root, e.path))).map((e) => e.path);
     if (missing.length) return { problem: `falten fitxers de l'etiqueta: ${list(missing)}` };
-    const hashes = run(['hash-object', '--stdin-paths'], tree.map((e) => e.path).join('\n') + '\n').toString().trim().split('\n');
+    const hashes = run(['hash-object', '--no-filters', '--stdin-paths'], tree.map((e) => e.path).join('\n') + '\n').toString().trim().split('\n');
     const changed = tree.filter((e, i) => hashes[i] !== e.hash).map((e) => e.path);
     if (changed.length) return { problem: `hi ha fitxers diferents dels de l'etiqueta: ${list(changed)}` };
     const extra = git('ls-files', '--others', '--exclude-standard', '--', '*.js', '*.mjs', '*.cjs', '*.json').trim().split('\n').filter(Boolean);

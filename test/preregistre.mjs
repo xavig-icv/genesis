@@ -1,6 +1,6 @@
 // Proves del camí confirmatori de fase2/estadistica.mjs amb un repositori de git de veritat: una còpia
 // mínima del programa, una etiqueta anotada i una sèrie sintètica. Comprovacions de la iteració 4 (A1–A4;
-// AUD-51, AU2-31, AU2-32, AUD-66 i X-004 del xat de les auditories). Executa: node test/preregistre.mjs
+// AUD-51, AU2-31, AU2-32, AUD-66 i X-004 del xat de les auditories; AUD-81 de l'auditoria 9). Executa: node test/preregistre.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
 import { createHash } from 'crypto';
@@ -140,6 +140,41 @@ const tests = {
     // (una opció vàlida i inofensiva: el programa no ha de mirar què fa, sinó que no n'hi hagi cap)
     refused(decide([], { env: { NODE_OPTIONS: '--max-old-space-size=4096' } }), /NODE_OPTIONS no és buit/);
     refused(decide([], { node: ['--no-warnings'] }), /node s'ha executat amb opcions \(--no-warnings\)/);
+  }),
+  // AUD-81 (auditoria 9): tres maneres deliberades de fer que git vegi el contingut de l'etiqueta en un fitxer
+  // que al disc és diferent. A totes tres, census.js porta codi nou, i el programa no ha de decidir. (El codi
+  // nou s'executa igualment en importar-lo, abans de la comprovació: la comprovació impedeix la decisió, no
+  // l'execució. Vegeu la nota de preregistration() a fase2/estadistica.mjs.)
+  "un filtre clean de git configurat amb variables d'entorn no amaga un canvi (AUD-81)": () => withRepo(({ repo, decide }) => {
+    const original = join(repo, '..', 'census-original.js');
+    copyFileSync(join(repo, 'fase2', 'census.js'), original);
+    appendFileSync(join(repo, 'fase2', 'census.js'), "\nconsole.log('CODI MODIFICAT');\n");
+    const attrs = join(repo, '..', 'attributes');
+    writeFileSync(attrs, 'fase2/census.js filter=amaga\n');
+    const r = decide([], { env: {
+      GIT_CONFIG_COUNT: '2', GIT_CONFIG_KEY_0: 'core.attributesFile', GIT_CONFIG_VALUE_0: attrs.replace(/\\/g, '/'),
+      GIT_CONFIG_KEY_1: 'filter.amaga.clean', GIT_CONFIG_VALUE_1: `sh -c 'cat > /dev/null; cat "${original.replace(/\\/g, '/')}"'`,
+    } });
+    refused(r, /fitxers diferents dels de l'etiqueta: fase2\/census\.js/);
+  }),
+  "el mateix filtre dins de .git tampoc no amaga el canvi (AUD-81)": () => withRepo(({ repo, git, decide }) => {
+    const original = join(repo, '..', 'census-original.js');
+    copyFileSync(join(repo, 'fase2', 'census.js'), original);
+    appendFileSync(join(repo, 'fase2', 'census.js'), "\nconsole.log('CODI MODIFICAT');\n");
+    writeFileSync(join(repo, '.git', 'info', 'attributes'), 'fase2/census.js filter=amaga\n');
+    git('config', 'filter.amaga.clean', `sh -c 'cat > /dev/null; cat "${original.replace(/\\/g, '/')}"'`);
+    const r = decide();
+    refused(r, /fitxers diferents dels de l'etiqueta: fase2\/census\.js/);
+  }),
+  "git replace de l'arbre de l'etiqueta no amaga el canvi (AUD-81)": () => withRepo(({ repo, git, commit, decide }) => {
+    appendFileSync(join(repo, 'fase2', 'census.js'), "\nconsole.log('CODI MODIFICAT');\n");
+    const before = git('rev-parse', `${commit}^{tree}`);
+    git('add', 'fase2/census.js');
+    const after = git('write-tree');
+    git('reset', '-q');
+    git('replace', before, after);
+    const r = decide();
+    refused(r, /fitxers diferents dels de l'etiqueta: fase2\/census\.js/);
   }),
   "una còpia en un altre commit no decideix": () => withRepo(({ repo, git, decide }) => {
     writeFileSync(join(repo, 'NOTES.md'), 'una nota\n');

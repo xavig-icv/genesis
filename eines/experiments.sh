@@ -10,7 +10,10 @@
 # Un experiment complet se salta ("ja fet"). Complet vol dir que el registre té l'empremta del món i,
 # si l'ordre porta --json, que el JSONL existeix, comença amb la línia d'inici (amb la mateixa llavor
 # que --seed, si n'hi ha) i acaba amb la línia final. Si no, es torna a fer des del principi (AU2-37;
-# AUD-59: sim.mjs escriu l'empremta abans de la línia final del JSONL).
+# AUD-59: sim.mjs escriu l'empremta abans de la línia final del JSONL). A més, l'ordre que la línia
+# d'inici diu que el va fer ("command") ha de ser exactament la de la llista: amb el mateix nom i la
+# mateixa llavor, però un altre corrent, un altre horitzó o una altra captura, es torna a fer (AU2-56,
+# auditoria 9).
 #
 # Per a cada experiment escriu "comença:" i, en acabar, "acaba:" o, si sim.mjs surt amb error,
 # "falla:" amb el codi de sortida.
@@ -37,7 +40,8 @@ mkdir -p "$OUT"
 complete() {
   local log="$1"; shift
   { [[ -s "$log" ]] && grep -q "empremta del món" "$log"; } || return 1
-  local json="" seed=""
+  # l'ordre, com l'escriu sim.mjs a la línia d'inici (abans que el bucle es mengi els arguments)
+  local json="" seed="" command="node sim.mjs $*"
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --json) json="${2:-}"; shift ;;
@@ -49,6 +53,8 @@ complete() {
   [[ -s "$json" ]] || return 1
   head -n 1 "$json" | grep -q '"type":"start"' || return 1
   if [[ -n "$seed" ]]; then head -n 1 "$json" | grep -q "\"seed\":$seed[,}]" || return 1; fi
+  # la mateixa ordre: sim.mjs hi escriu "node sim.mjs" i els seus arguments, separats per un espai
+  node -e 'const l = require("fs").readFileSync(process.argv[1], "utf8").split("\n")[0]; let s; try { s = JSON.parse(l); } catch { process.exit(1); } process.exit(s.command === process.argv[2] ? 0 : 1);' "$json" "$command" || return 1
   tail -n 1 "$json" | grep -q '"type":"end"'
 }
 
