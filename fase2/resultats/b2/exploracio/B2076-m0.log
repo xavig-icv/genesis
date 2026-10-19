@@ -1,0 +1,41 @@
+codi=b3e0631  rng=v2  node=v20.19.2  zlib=1.3.1  ordre=node sim.mjs --world 512x256 --seed 102076 --mixing 0 --from fase2/resultats/serie-llei2/B/captures/llavor2076-mon512x256-r2-m0.01-establiment1500-epoca1500.bin --start 1500 --epochs 3500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/b2/exploracio/B2076-m0.jsonl
+llavor=102076 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/serie-llei2/B/captures/llavor2076-mon512x256-r2-m0.01-establiment1500-epoca1500.bin (època 1500; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048
+època 1600  H0=7.532  HOE=2.303  ops/execució=350.2  parelles=75%  bytes #55:2.6% >:2.3% #59:2.2%  fragments <·····[{··.> (1.4%)  >.··{[·····< (1.0%)  [[[[[[[[[[[[ (0.2%)  129s
+època 1700  H0=7.127  HOE=2.911  ops/execució=584.3  parelles=75%  bytes #55:3.7% #59:3.1% >:3.1%  fragments <·····[{··.> (1.7%)  >.··{[·····< (1.4%)  [{··.>····.> (0.3%)  345s
+*** PRIMERA FAMÍLIA a l'època 1750 ***
+cens 1750  mostra=2048  hereditaris=21.5% (sols 21.5%, només en context 0.0%)  es repliquen=22.3% (sols 22.1%, en context 0.4%)  famílies=1  #1:20.91%([{.>]])
+època 1800  H0=6.726  HOE=3.386  ops/execució=820.8  parelles=75%  bytes #55:4.6% #59:3.7% >:3.6%  fragments <·····[{··.> (2.0%)  >.··{[·····< (1.8%)  [{··.>····.> (0.5%)  677s
+època 1900  H0=6.456  HOE=3.698  ops/execució=1035.6  parelles=75%  bytes #55:5.0% #59:3.9% >:3.9%  fragments <·····[{··.> (1.7%)  >.··{[·····< (1.5%)  [{··.>····.> (0.5%)  1074s
+cens 2000  mostra=2048  hereditaris=33.8% (sols 33.8%, només en context 0.0%)  es repliquen=34.2% (sols 34.0%, en context 0.4%)  famílies=1  #1:31.75%([{.>]])
+*** ESTABLIMENT DE LA VIDA a l'època 1750 (confirmat al cens 2000) ***
+època 2000  H0=6.343  HOE=3.804  ops/execució=1176.5  parelles=75%  bytes #55:5.2% >:3.9% #59:3.9%  fragments <·····[{··.> (1.3%)  >.··{[·····< (1.2%)  [{··.>····.> (0.5%)  1538s
+època 2100  H0=6.312  HOE=3.944  ops/execució=1283.5  parelles=75%  bytes #55:5.2% #107:4.1% #75:4.0%  fragments <·····[{··.> (1.2%)  >.··{[·····, (1.1%)  [{··.>····.> (0.5%)  2035s
+època 2200  H0=6.297  HOE=4.086  ops/execució=1387.6  parelles=75%  bytes #55:5.2% #107:4.3% #75:4.2%  fragments >.··{[·····, (1.3%)  ,·····[{··.> (1.2%)  [{··.>····.> (0.4%)  2489s
+cens 2250  mostra=2048  hereditaris=42.5% (sols 42.4%, només en context 0.1%)  es repliquen=42.9% (sols 42.5%, en context 0.4%)  famílies=1  #1:38.56%([{.>]])
+època 2300  H0=6.310  HOE=4.139  ops/execució=1452.0  parelles=75%  bytes #55:5.2% #75:4.3% #107:4.3%  fragments >.··{[·····, (1.2%)  ,·····[{··.> (0.8%)  +,-·······[{ (0.4%)  2935s
+època 2400  H0=6.363  HOE=4.161  ops/execució=1497.9  parelles=75%  bytes #55:5.0% #75:4.2% #107:4.2%  fragments >.··{[·····, (1.4%)  ,·····[{··.> (1.2%)  [{··.>····.> (0.4%)  3393s
+cens 2500  mostra=2048  hereditaris=45.5% (sols 45.4%, només en context 0.1%)  es repliquen=45.7% (sols 45.6%, en context 0.1%)  famílies=2  #1:39.73%([{.>]]) #6:0.46%(,]>.{[)
+època 2500  H0=6.410  HOE=4.168  ops/execució=1515.3  parelles=75%  bytes #55:4.8% #75:4.2% #107:4.2%  fragments >.··{[·····, (1.7%)  ,·····[{··.> (1.5%)  >.····>.··{[ (0.3%)  3863s
+època 2600  H0=6.453  HOE=4.266  ops/execució=1534.1  parelles=75%  bytes #55:4.6% #220:4.1% #75:4.1%  fragments >.··{[·····, (1.4%)  ,·····[{··.> (1.2%)  .···-·[{··.> (0.3%)  4357s
+època 2700  H0=6.501  HOE=4.387  ops/execució=1592.8  parelles=75%  bytes #55:4.5% #220:4.2% #75:4.1%  fragments ,·····[{··.> (1.2%)  >.··{[·····, (1.2%)  >.··{[·-···. (0.5%)  4822s
+cens 2750  mostra=2048  hereditaris=49.5% (sols 49.5%, només en context 0.0%)  es repliquen=49.9% (sols 49.8%, en context 0.1%)  famílies=3  #1:44.02%([{.>]]) #6:0.57%(],]>.{) #7:0.29%(.]>.{[)
+època 2800  H0=6.557  HOE=4.465  ops/execució=1589.2  parelles=75%  bytes #55:4.4% #220:4.1% #75:4.0%  fragments >.··{[·····, (1.1%)  ,·····[{··.> (0.9%)  [{··.>····.> (0.4%)  5279s
+època 2900  H0=6.610  HOE=4.523  ops/execució=1601.1  parelles=75%  bytes #55:4.2% #220:4.0% #75:3.8%  fragments >.··{[·····, (0.8%)  ,·····[{··.> (0.6%)  [{··.>····.> (0.4%)  5749s
+cens 3000  mostra=2048  hereditaris=48.8% (sols 48.8%, només en context 0.0%)  es repliquen=49.4% (sols 49.3%, en context 0.2%)  famílies=3  #1:42.35%([{.>]]) #6:0.60%(,]>.{[) #7:0.28%(].]>.{)
+època 3000  H0=6.654  HOE=4.531  ops/execució=1604.2  parelles=75%  bytes #55:4.1% #220:4.0% #75:3.7%  fragments >.··{[·····, (1.2%)  ,·····[{··.> (1.1%)  .···-·[{··.> (0.4%)  6244s
+època 3100  H0=6.688  HOE=4.573  ops/execució=1602.2  parelles=75%  bytes #55:4.0% #220:3.9% #75:3.7%  fragments >.··{[·····, (1.4%)  ,·····[{··.> (1.3%)  >.··{[·-···. (0.4%)  6735s
+època 3200  H0=6.717  HOE=4.585  ops/execució=1609.7  parelles=75%  bytes #220:3.9% #55:3.9% #75:3.6%  fragments ,·····[{··.> (1.3%)  >.··{[·····, (1.3%)  >.····>.··{[ (0.3%)  7229s
+cens 3250  mostra=2048  hereditaris=56.1% (sols 56.1%, només en context 0.0%)  es repliquen=56.3% (sols 56.2%, en context 0.1%)  famílies=3  #1:51.83%([{.>]]) #6:0.16%([{.>]{) #7:0.40%(.]>.{[)
+època 3300  H0=6.746  HOE=4.642  ops/execució=1613.2  parelles=75%  bytes #220:3.9% #55:3.9% #75:3.6%  fragments ,·····[{··.> (1.7%)  >.··{[·····, (1.7%)  +,······-·[{ (0.5%)  7735s
+època 3400  H0=6.767  HOE=4.733  ops/execució=1648.8  parelles=75%  bytes #220:3.9% #55:3.8% #75:3.7%  fragments >.··{[·····, (1.4%)  ,·····[{··.> (1.4%)  +,······-·[{ (0.6%)  8283s
+cens 3500  mostra=2048  hereditaris=59.4% (sols 59.4%, només en context 0.0%)  es repliquen=59.8% (sols 59.8%, en context 0.1%)  famílies=2  #1:56.38%([{.>]]) #7:0.69%(.]>.{[)
+època 3500  H0=6.798  HOE=4.792  ops/execució=1696.3  parelles=75%  bytes #220:3.8% #55:3.7% #75:3.7%  fragments ,·····[{··.> (1.8%)  >.··{[·····, (1.6%)  {[·-······,+ (0.7%)  8856s
+
+empremta del món: a9e60c3b
+
+programes diferents: 72820 de 131072
+     69  |          [{  .>  ]    <   [    ]              ]  >.  {[        |
+     67  |        [{  .>  ]              ]    [   <    ]  >.  {[          |
+     62  |          [{  .>                ]]       ,     ]  >.  {[ +     -|
+     61  |-     + [{  .>  ]     ,       ]]                >.  {[          |
+     57  |          [{  .>                ]]      }      ]  >.  {[        |
