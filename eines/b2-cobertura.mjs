@@ -1,6 +1,6 @@
 // Calibratge de la sèrie de B2 abans del preregistre (protocol §6 i §8; AUD-84, AU2-58, AU2-61): la cobertura dels
-// intervals de S(H) i la potència de la prova del canvi de règim, amb mons sintètics. Fa servir les mateixes
-// funcions que el programa de la sèrie (fase2/b2-serie.mjs).
+// intervals de S(H) i la potència de la prova del canvi de règim, amb mons sintètics, i la de la prova de
+// l'expansió amb corrent, exacta. Fa servir les mateixes funcions que el programa de la sèrie (fase2/b2-serie.mjs).
 //
 //   node eines/b2-cobertura.mjs [--sims N] [--reps B] [--risc-origen h] [--rr r1,r2,...] [--icc rho]
 //
@@ -72,25 +72,43 @@ export function calibrate({ sims = 400, reps = 1000, h = 1 / 29 / 7, rrs = [1, 2
     }
     lines.push(`  risc per cens ${hh.toFixed(4)} (S veritable ${truth.toFixed(3)}): ${Object.entries(hits).map(([m, n]) => `${m} ${(100 * n / sims).toFixed(1)} %`).join(', ')}`);
   }
-  // 2. La potència de la prova del canvi de règim, unilateral amb α = 0,025, als dos dissenys
+  // 2. La potència de la prova del canvi de règim, unilateral amb α = 0,025, als dos dissenys. Amb Holm, es prova
+  //    amb α si la de l'expansió es rebutja, i amb α/2 si no: entre parèntesis, la potència amb α/2
   const designs = {
     i: { K: 2, Ks: 2, H: 5000, Hs: 5000, test: { horizon: 5000, seedsOrigin: [0, 1], seedsSwitch: [0, 1] } },
     ii: { K: 2, Ks: 1, H: 6000, Hs: 4000, test: { horizon: 4000, seedsOrigin: [0], seedsSwitch: [0] } },
   };
-  lines.push('', `La prova del canvi de règim (signes, unilateral, α = 0,025), risc d'origen ${h.toFixed(4)} per cens, rho = ${rho}:`);
+  lines.push('', `La prova del canvi de règim (signes, unilateral, α = 0,025; entre parèntesis, amb α/2), risc d'origen ${h.toFixed(4)} per cens, rho = ${rho}:`);
   for (const [name, D] of Object.entries(designs)) {
     const row = rrs.map((rr) => {
-      let rej = 0;
+      let rej = 0, half = 0;
       for (let k = 0; k < sims; k++) {
         const worlds = syntheticSeries(u, { h, rr, rho, ...D });
-        if (signTest(regimeDiffs(worlds, D.test), 'unilateral').p < 0.025) rej++;
+        const p = signTest(regimeDiffs(worlds, D.test), 'unilateral').p;
+        if (p <= 0.025) rej++;
+        if (p <= 0.0125) half++;
       }
-      return `RR ${rr}: ${(100 * rej / sims).toFixed(1)} %`;
+      return `RR ${rr}: ${(100 * rej / sims).toFixed(1)} % (${(100 * half / sims).toFixed(1)} %)`;
     });
     lines.push(`  disseny (${name}): ${row.join(', ')}  (RR 1 = la taxa de falsos positius)`);
   }
+  // 3. La potència de la prova de l'expansió amb corrent (signes, unilateral), exacta: si una proporció q dels mons
+  //    té més vida amb corrent. A l'exploració, q = 22/29 = 0,76, amb una llavor per condició
+  lines.push('', 'La prova de l\'expansió amb corrent (signes, unilateral, 29 mons), si una proporció q dels mons en té més amb corrent:');
+  for (const alpha of [0.025, 0.0125]) {
+    const k = signCritical(29, alpha);
+    lines.push(`  α = ${alpha}: calen ${k} de 29; ${[0.6, 0.65, 0.7, 0.76, 0.8].map((q) => `q ${q}: ${(100 * binomialTail(29, k, q)).toFixed(1)} %`).join(', ')}`);
+  }
   return lines;
 }
+
+// P(X ≥ k) per a X ~ Binomial(n, q), i el menor k amb P(X ≥ k | q = 1/2) ≤ α
+export function binomialTail(n, k, q) {
+  let s = 0, c = 1;
+  for (let i = 0; i <= n; i++) { if (i >= k) s += c * q ** i * (1 - q) ** (n - i); c = (c * (n - i)) / (i + 1); }
+  return s;
+}
+export const signCritical = (n, alpha) => { let k = 0; while (binomialTail(n, k, 0.5) > alpha) k++; return k; };
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const args = process.argv.slice(2);

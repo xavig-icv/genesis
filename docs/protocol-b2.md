@@ -1,7 +1,8 @@
 # Protocol de B2 · quant dura la vida establerta
 
-**Estat: esborrany v0.2 (19-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
-- **D'on surt:** incorpora l'auditoria 9 i les decisions del responsable (`docs/disseny.md`).
+**Estat: esborrany v0.3 (19-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
+- **D'on surt:** incorpora l'auditoria 9, la segona prova confirmatòria (X-020 a X-022) i les decisions del
+  responsable (`docs/disseny.md`).
 - **Les marques:** **[PILOT]** és un valor que es fixarà amb la prolongació pilot (`fase2/resultats/b2/pilot/`),
   i **[OBERT]**, una pregunta per a l'auditoria 10.
 - **El procediment:**
@@ -19,15 +20,25 @@
   auditoria 7).
 - No hi ha cap llindar ni cap afirmació confirmatòria sobre la durada (AUD-83).
 
-**L'única confirmatòria: la vida dura menys quan el seu món canvia de condició?** És el **canvi de règim**: un
-món quiet que passa a tenir corrent, o un món amb corrent que passa a ser quiet.
-- **D'on ve:** a l'exploració, les branques que canvien de condició perden la vida en 5 de 29 mons, i les que
-  la mantenen, en 1 de 29 (AUD-82). És una hipòtesi que surt de les dades, i per això es posa a prova amb mons
-  nous.
-- **La decisió:** la va prendre el responsable el 19-10-2026, després de l'auditoria 9.
+**Dues confirmatòries, amb la correcció de Holm (§6.4):**
+1. **El canvi de règim: la vida dura menys quan el seu món canvia de condició?** El canvi és un món quiet que
+   passa a tenir corrent, o un món amb corrent que passa a ser quiet.
+   - **D'on ve:** a l'exploració, les branques que canvien de condició perden la vida en 5 de 29 mons, i les
+     que la mantenen, en 1 de 29 (AUD-82). És una hipòtesi que surt de les dades, i per això es posa a prova
+     amb mons nous.
+   - **La decisió:** la va prendre el responsable el 19-10-2026, després de l'auditoria 9.
+2. **L'expansió amb corrent: amb corrent, la vida establerta s'escampa més de pressa?** Es compara la vida dels
+   primers censos de la condició amb corrent amb la de la condició sense corrent, món a món.
+   - **D'on ve:** és una candidata de l'auditor 1 (X-021) que surt de l'exploració. La branca amb corrent té
+     més vida en 22 dels 29 mons (§2).
+   - **La decisió:** la va prendre el responsable el 19-10-2026 (X-020 a X-022). Amb només 6 morts, la del canvi
+     de règim té poca potència, i aquesta té una mesura contínua.
+   - **Què no és:** no és una prova de quant dura la vida. Com a idea, segurament no és nova: la teoria dels
+     fronts d'invasió ja preveu que la dispersió a distància els accelera. La prova en mesura la mida en aquest
+     sistema, preregistrada i aparellada.
 
-**Una de descriptiva: el corrent com a tal.** Si el corrent desfà la vida, les branques amb corrent la perdran
-més als dos orígens. El disseny 2 × 2 (§4) separa aquest efecte del canvi de règim.
+**Una de descriptiva: el corrent com a tal en les pèrdues.** Si el corrent desfà la vida, les branques amb
+corrent la perdran més als dos orígens. El disseny 2 × 2 (§4) separa aquest efecte del canvi de règim.
 
 ## 2. El que en sabem: l'exploració
 
@@ -35,6 +46,14 @@ Amb els 29 mons de la part `exploracio`, una branca per món i condició, 2.000 
 - **Amb la regla R2** (§5), 6 de 58 branques perden la vida, a *t* + 750, 1.000, 1.250, 1.250, 1.500 i 1.750.
   Una es recupera: A1009-m0.01 acaba amb 1.825 hereditaris de 2.048 (AU2-57).
 - **Les que la perden:** 1 de les 29 que continuen en la seva condició, i 5 de les 29 que la canvien (AUD-82).
+  - **El canvi és en totes dues direccions:** 2 dels mons A, que hi guanyen corrent, i 3 dels B, que el perden.
+  - **Amb corrent i sense, el mateix:** 3 de les 6 pèrdues són amb corrent, i 3 sense.
+- **L'expansió** (X-021, comprovat). La mesura és la mitjana de la proporció d'hereditaris als 8 censos de cada
+  branca.
+  - **El resultat:** la branca amb corrent en té més en 22 de 29 mons (*p* = 0,004 unilateral, 0,008
+    bilateral), amb una diferència mediana de 14,9 punts.
+  - **Per origen:** afegir corrent als mons A en dona més en 10 de 12, i treure'l als B en dona menys en 12 de 17.
+  - **A *t* + 2.000,** la diferència s'escurça: 19 de 29.
 - **Amb R3, cap. Amb R1,** 13, de les quals 7 es recuperen.
 - **El destí d'un món no queda fixat a *t*:** amb una altra llavor, acaba diferent en 4 de 27 mons a *t* +
   1.000.
@@ -59,6 +78,11 @@ Amb els 29 mons de la part `exploracio`, una branca per món i condició, 2.000 
   - L'anàlisi no la fa servir.
   - Ningú no l'ha mirada per dissenyar aquest protocol. És una declaració de procediment, no un cegament que es
     pugui comprovar.
+  - **Per a la prova de l'expansió:** la hipòtesi surt només dels mons de l'exploració. El càlcul de l'auditor 1
+    (`calculs-x020.mjs`, a les auditories) només llegeix `fase2/resultats/b2/exploracio`.
+    - L'entrada 8 del quadern sí que va mirar tots els mons establerts, aquests 29 inclosos, però només si la
+      vida es mantenia a *t* + 1.000.
+    - És una altra mesura, i només de la condició d'origen.
 
 ## 4. Les branques
 
@@ -112,6 +136,12 @@ anul·len la pèrdua.
 **La successió de famílies,** descriptiva (AUD-86): la família dominant a *t* + *H*, i si és una de registrada
 després de *t*. La durada compta qualsevol hereditari, no la vida que es va establir.
 
+**L'expansió**, per a la segona prova (§6.3).
+- **La mesura:** *E* és la mitjana de la proporció d'hereditaris, de 2.048, als 8 primers censos de la branca,
+  de *t* + 250 a *t* + 2.000. És la mesura de l'exploració.
+- **Què compta:** qualsevol hereditari, igual que la durada.
+- **Quines branques:** totes en tenen els 8 censos, amb tots dos dissenys.
+
 ## 6. L'anàlisi
 
 La unitat és el **món** (AU2-58). En cada condició, el valor d'un món és la mitjana de les seves *K* branques.
@@ -138,25 +168,59 @@ Amb les branques de la condició d'origen:
 - **Si totes les branques donen el mateix** (totes sense pèrdua), l'interval que dona el mètode triat; mai un
   NaN.
 
-### 6.2 La confirmatòria: el canvi de règim
+### 6.2 La primera confirmatòria: el canvi de règim
 
 - **A cada món:** *D_i* = mitjana_k min(*T*_i,canvi,k, *H'*) − mitjana_k min(*T*_i,orig,k, *H'*).
   - *H'* és l'horitzó de la condició de canvi: *H* en el disseny (i), i 4.000 en el (ii).
   - Si el disseny és el (ii), es fa servir la primera llavor de la condició d'origen, per comparar amb el mateix
     nombre de llavors. **[OBERT]**
 - **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0. **[OBERT]**: unilateral amb α = 0,025,
-  o bilateral amb α = 0,05?
+  o bilateral amb α = 0,05? La resposta val per a totes dues proves.
 - **La hipòtesi:** H₀, la vida dura igual si el món canvia de condició; H₁, dura menys.
-- **La decisió:** una sola. Es rebutja H₀ si *p* < α; si no, es diu que la sèrie no ho permet afirmar. No es
-  tria després cap variant de la prova, ni subgrups ni sensibilitats.
 - **La potència** es calcularà abans de l'etiqueta. S'hi faran servir les taxes de l'exploració i del pilot, i
   la probabilitat d'empat de cada disseny. Si és molt baixa, es dirà al protocol abans de llançar.
+  - **Amb el model de l'eina de calibratge** (`eines/b2-cobertura.mjs`) i el disseny (i), amb un risc 5 vegades
+    més alt quan el món canvia: un 87 % amb α, i un 79 % amb α/2, si les branques d'un món són independents
+    (ρ = 0). Amb ρ = 0,05, un 29 % i un 17 %.
 
-### 6.3 Les descriptives
+### 6.3 La segona confirmatòria: l'expansió amb corrent
+
+- **A cada món:** *D_i* = mitjana_k *E*_i,amb corrent,k − mitjana_k *E*_i,sense corrent,k (§5).
+  - **La condició amb corrent** és la de canvi als mons A i la d'origen als B.
+  - **Les llavors:** totes les de cada condició, és a dir, 2 i 2 en el disseny (i), i 2 i 1 en el (ii).
+- **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0, unilateral. **[OBERT]**: la de signes o
+  la de Wilcoxon? La de Wilcoxon té més potència, però suposa que, sota H₀, les diferències són simètriques.
+  - Ara és la de signes, com la primera, perquè l'origen de cada món no és a l'atzar (AU2-62).
+- **La hipòtesi:** H₀, la vida dels primers censos és igual amb corrent i sense; H₁, amb corrent n'hi ha més.
+- **Com s'interpreta, decidit abans:** per origen, la proporció de mons amb *D_i* > 0 és descriptiva.
+  - **Si és més gran que la meitat als dos orígens,** l'efecte s'atribueix al corrent.
+  - **Si només ho és als mons B,** pot ser el canvi, i no el corrent. Als B, la condició amb corrent és la que no
+    canvia, i hi ha més mons B (17) que A (12).
+- **La potència** (exacta, `eines/b2-cobertura.mjs`).
+  - **El llindar:** calen 21 mons de 29, tant amb α = 0,025 com amb α/2.
+  - **Amb l'efecte de l'exploració** (*q* = 0,76): un 75 %. Amb *q* = 0,70, un 48 %; amb *q* = 0,80, un 89 %.
+  - **Amb *K* = 2,** la mitjana de les dues llavors fa la mesura de cada món menys sorollosa, però no se n'ha
+    calculat l'efecte.
+
+### 6.4 Les dues decisions, amb la correcció de Holm
+
+- **La regla:**
+  1. La prova amb la *p* més petita es compara amb α/2.
+  2. Si es rebutja, l'altra es compara amb α.
+  3. Si no es rebutja, no es rebutja cap de les dues.
+- **El programa** escriu les dues decisions per separat, cadascuna amb el seu llindar.
+- **Si no es rebutja H₀,** es diu que la sèrie no ho permet afirmar. No es tria després cap variant de les
+  proves, ni subgrups ni sensibilitats.
+- **El que costa Holm:**
+  - **A l'expansió, res.** Amb 29 mons, el llindar de 21 de 29 és el mateix amb α i amb α/2.
+  - **Al canvi de règim, poc.** Si l'expansió es rebutja, es prova amb α. Si no, amb α/2.
+
+### 6.5 Les descriptives
 
 - **El 2 × 2** (l'origen per *m*): la proporció sense pèrdua i la RMST a les quatre cel·les. Si el corrent
   desfà la vida, les branques amb *m* = 0,01 la perden més als dos orígens; si el que la desfà és el canvi, la
   perden més les que canvien.
+- **L'expansió per origen,** i la diferència mediana de *D_i* (§6.3).
 - **L'atzar de la continuació** (AUD-61): en quina proporció de mons les *K* llavors coincideixen.
 - **Les recuperacions, l'estat al cens final i la successió de famílies.**
 - **El cost** per època i per tram.
@@ -205,9 +269,13 @@ Amb les branques de la condició d'origen:
   - un commit, una etiqueta o una captura diferents;
   - fitxers duplicats o aliens;
   - el *bootstrap*, que no ha de reextreure branques soltes;
-  - 29 mons sense cap pèrdua.
-- **La simulació de cobertura:** la cobertura de l'interval i la taxa de falsos positius de la prova
-  confirmatòria, amb mons sintètics correlacionats, i l'atzar de la continuació.
+  - 29 mons sense cap pèrdua;
+  - l'expansió: quina condició té corrent a cada origen, i només els 8 primers censos;
+  - un manifest amb menys censos que els de l'expansió;
+  - la correcció de Holm, amb les quatre combinacions.
+- **La simulació de cobertura:** la cobertura de l'interval i la taxa de falsos positius de la prova del canvi
+  de règim, amb mons sintètics correlacionats, i l'atzar de la continuació. La potència de la de l'expansió és
+  exacta.
 - **Abans de l'etiqueta,** es revisa a l'auditoria 10.
 
 ## 9. El preregistre
@@ -234,6 +302,12 @@ Amb les branques de la condició d'origen:
   l'exploració.
 - **L'abast:** un sol nivell de corrent (0,01), mons de 512 × 256, i 29 mons. Les estimacions per origen (12 i
   17 mons) són poc precises.
+- **L'expansió i el canvi van junts a cada origen.**
+  - Als mons A, la condició amb corrent és també la que canvia; als B, és la que no canvia.
+  - Un efecte del canvi, sense cap efecte del corrent, sortiria a la prova com a més vida amb corrent als B i
+    menys als A. Amb 17 mons B i 12 A, no s'anul·laria del tot.
+  - Per això la lectura per origen (§6.3) es fixa abans.
+- **L'expansió no és la durada.** Mesura la vida de les primeres 2.000 èpoques de la branca, no si la vida dura.
 
 ## 11. Canvis respecte de la v0.1
 
@@ -249,3 +323,12 @@ Amb les branques de la condició d'origen:
 | La detecció fins a *H* − 250, els registres incomplets com a error, la llavor del cens, la successió de famílies i la regla de les màquines | AUD-86 |
 | El programa: primer la comprovació, i després la resta, amb la matriu de proves | AU2-60, AUD-81 |
 | El segell d'OpenTimestamps | AUD-77; decisió del responsable |
+
+## 12. Canvis respecte de la v0.2
+
+| Què | Per què |
+|---|---|
+| Una segona prova confirmatòria, l'expansió amb corrent (§1, §5, §6.3), amb la seva lectura per origen fixada abans | X-020 a X-022; decisió del responsable, 19-10-2026. La del canvi de règim es recolza en 6 morts |
+| Les dues proves, amb la correcció de Holm (§6.4) | Dues afirmacions confirmatòries. A 29 mons, a l'expansió no li costa res |
+| El que se sap de les pèrdues de l'exploració, per direcció del canvi i per corrent (§2) | Comprovat amb les dades de l'exploració el 19-10-2026 |
+| La part que no és cega, per a l'expansió (§3) | AUD-67, AU2-62 |

@@ -7,8 +7,9 @@
 //
 // Els dissenys (protocol §4):
 //   i:  totes les branques amb H = 5.000 i K = 2; la prova del canvi de règim, amb les dues llavors a 5.000
-//   ii: la condició d'origen amb H = 6.000 i K = 2, la de canvi amb H = 4.000 i K = 1; la prova, a 4.000 amb la
-//       primera llavor de cada condició
+//   ii: la condició d'origen amb H = 6.000 i K = 2, la de canvi amb H = 4.000 i K = 1; la prova del canvi de
+//       règim, a 4.000 amb la primera llavor de cada condició
+// Les dues proves confirmatòries (el canvi de règim i l'expansió amb corrent) es corregeixen amb Holm.
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
@@ -17,9 +18,10 @@ import { makeRng } from '../fase1/soup.js';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const SEEDS = { machines: 20261021, names: 20261023, bootstrap: 20261022 };
 const OFFSETS = [200000, 300000];
+// La prova de l'expansió fa servir totes les llavors de cada condició, i els 8 primers censos (t + 250 a t + 2.000)
 const DESIGNS = {
-  i: { origen: { H: 5000, K: 2 }, canvi: { H: 5000, K: 2 }, test: { horizon: 5000, seedsOrigin: [0, 1], seedsSwitch: [0, 1] } },
-  ii: { origen: { H: 6000, K: 2 }, canvi: { H: 4000, K: 1 }, test: { horizon: 4000, seedsOrigin: [0], seedsSwitch: [0] } },
+  i: { origen: { H: 5000, K: 2 }, canvi: { H: 5000, K: 2 }, regime: { horizon: 5000, seedsOrigin: [0, 1], seedsSwitch: [0, 1] }, spread: { seedsOrigin: [0, 1], seedsSwitch: [0, 1] } },
+  ii: { origen: { H: 6000, K: 2 }, canvi: { H: 4000, K: 1 }, regime: { horizon: 4000, seedsOrigin: [0], seedsSwitch: [0] }, spread: { seedsOrigin: [0, 1], seedsSwitch: [0] } },
 };
 const ORIGIN_MIXING = { A: 0, B: 0.01 };
 
@@ -53,7 +55,11 @@ export function buildManifest({ design = 'i', estat = 'esborrany' } = {}) {
     estat, tag: 'preregistre-b2', protocol: 'docs/protocol-b2.md', dir: 'fase2/resultats/b2/confirmacio', design,
     params: { world: [512, 256], radius: 2, rng: 'v2', every: 100, mutation: 0.00024, census: { version: 'v3', every: 250, sample: 2048, seed: 20261016 } },
     rule: { lossMax: 5, recoverMin: 21 },
-    test: { ...D.test, sided: 'unilateral', alpha: 0.025 },
+    tests: {
+      method: 'holm', alpha: 0.025,
+      regime: { ...D.regime, sided: 'unilateral' },
+      spread: { censuses: 8, ...D.spread, sided: 'unilateral' },
+    },
     bootstrap: { reps: 10000, seed: SEEDS.bootstrap, interval: 'bca', level: 0.95 },
     machines: { names: ['pc', 'vm'], seed: SEEDS.machines },
     names: { seed: SEEDS.names },
