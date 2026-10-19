@@ -1,0 +1,1366 @@
+{
+ "name": "B2 · quant dura la vida establerta",
+ "estat": "esborrany",
+ "tag": "preregistre-b2",
+ "protocol": "docs/protocol-b2.md",
+ "dir": "fase2/resultats/b2/confirmacio",
+ "design": "i",
+ "params": {
+  "world": [
+   512,
+   256
+  ],
+  "radius": 2,
+  "rng": "v2",
+  "every": 100,
+  "mutation": 0.00024,
+  "census": {
+   "version": "v3",
+   "every": 250,
+   "sample": 2048,
+   "seed": 20261016
+  }
+ },
+ "rule": {
+  "lossMax": 5,
+  "recoverMin": 21
+ },
+ "test": {
+  "horizon": 5000,
+  "seedsOrigin": [
+   0,
+   1
+  ],
+  "seedsSwitch": [
+   0,
+   1
+  ],
+  "sided": "unilateral",
+  "alpha": 0.025
+ },
+ "bootstrap": {
+  "reps": 10000,
+  "seed": 20261022,
+  "interval": "bca",
+  "level": 0.95
+ },
+ "machines": {
+  "names": [
+   "pc",
+   "vm"
+  ],
+  "seed": 20261021
+ },
+ "names": {
+  "seed": 20261023
+ },
+ "worlds": [
+  {
+   "id": "A1017",
+   "group": "A",
+   "seed": 1017,
+   "t": 12500,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1017-mon512x256-r2-establiment12500-epoca12500.bin",
+   "sha256": "6911e307bbb751a4aa94825ddd519be531777e3c402c5a2d429a9d4e798f81e7",
+   "machine": "vm"
+  },
+  {
+   "id": "A1021",
+   "group": "A",
+   "seed": 1021,
+   "t": 9500,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1021-mon512x256-r2-establiment9500-epoca9500.bin",
+   "sha256": "ce6321599ae4d222afcd1c0a1ab007477288841b490c1b2a3d25f5cf01e8615e",
+   "machine": "vm"
+  },
+  {
+   "id": "A1026",
+   "group": "A",
+   "seed": 1026,
+   "t": 8000,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1026-mon512x256-r2-establiment8000-epoca8000.bin",
+   "sha256": "6f984842e54b1c431edaa3d4cda2ae04b1e22818eb84245fc8e206a6e8180158",
+   "machine": "pc"
+  },
+  {
+   "id": "A1027",
+   "group": "A",
+   "seed": 1027,
+   "t": 4000,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1027-mon512x256-r2-establiment4000-epoca4000.bin",
+   "sha256": "af154d7c2861cc5b0689baec3e034af9a8ee051cfa14a404ef367f227edfc1d8",
+   "machine": "pc"
+  },
+  {
+   "id": "A1036",
+   "group": "A",
+   "seed": 1036,
+   "t": 4750,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1036-mon512x256-r2-establiment4750-epoca4750.bin",
+   "sha256": "0f52524332a4ee1c2fc88d66d65acb290177a68514c1009aafff92b2278986d2",
+   "machine": "vm"
+  },
+  {
+   "id": "A1037",
+   "group": "A",
+   "seed": 1037,
+   "t": 14500,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1037-mon512x256-r2-establiment14500-epoca14500.bin",
+   "sha256": "df0110b698122f5f356469265efa026b5e94ada0bfce6497f235950732a41503",
+   "machine": "pc"
+  },
+  {
+   "id": "A1039",
+   "group": "A",
+   "seed": 1039,
+   "t": 4250,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1039-mon512x256-r2-establiment4250-epoca4250.bin",
+   "sha256": "420152a0299216adca542182f79e61d469b90ad33d4fa6cb82600ee3da4e1a55",
+   "machine": "pc"
+  },
+  {
+   "id": "A1041",
+   "group": "A",
+   "seed": 1041,
+   "t": 9000,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1041-mon512x256-r2-establiment9000-epoca9000.bin",
+   "sha256": "0fab75fbb9cdf639c9a70e9303e9a0af86edb58149de4dcaad4e2fccd0a98e9f",
+   "machine": "pc"
+  },
+  {
+   "id": "A1045",
+   "group": "A",
+   "seed": 1045,
+   "t": 9500,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1045-mon512x256-r2-establiment9500-epoca9500.bin",
+   "sha256": "89c47dd24b8e6da6344c83c56eba5d1de386604f4ec8f1c4bef7731d69e6a911",
+   "machine": "vm"
+  },
+  {
+   "id": "A1059",
+   "group": "A",
+   "seed": 1059,
+   "t": 11750,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1059-mon512x256-r2-establiment11750-epoca11750.bin",
+   "sha256": "ba43cfac55627c11e3a2979bf74d5729e8bce03c35215fd80b45309a0aad44c8",
+   "machine": "pc"
+  },
+  {
+   "id": "A1068",
+   "group": "A",
+   "seed": 1068,
+   "t": 9500,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1068-mon512x256-r2-establiment9500-epoca9500.bin",
+   "sha256": "f02df529357b481c389e9810f98e93ab69900bbf63bec3c837908ebdabc93c26",
+   "machine": "vm"
+  },
+  {
+   "id": "A1070",
+   "group": "A",
+   "seed": 1070,
+   "t": 9000,
+   "capture": "fase2/resultats/serie-llei2/A/captures/llavor1070-mon512x256-r2-establiment9000-epoca9000.bin",
+   "sha256": "e4234823cc64ffb179929d0ea2027cc78a8f18552411202b44e8325ccd84660c",
+   "machine": "vm"
+  },
+  {
+   "id": "B2005",
+   "group": "B",
+   "seed": 2005,
+   "t": 5250,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2005-mon512x256-r2-m0.01-establiment5250-epoca5250.bin",
+   "sha256": "8568ddc92e6bb68b4da9cf3d3134b484c3afde0d7658fea4dee0d695580704f4",
+   "machine": "vm"
+  },
+  {
+   "id": "B2011",
+   "group": "B",
+   "seed": 2011,
+   "t": 2000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2011-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "sha256": "eaab89b759b026c1ea497b2725a41c05803d70426026089a0e033ba390ae06c1",
+   "machine": "vm"
+  },
+  {
+   "id": "B2021",
+   "group": "B",
+   "seed": 2021,
+   "t": 11000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2021-mon512x256-r2-m0.01-establiment11000-epoca11000.bin",
+   "sha256": "d66c745a3af9f3d432e6c4b03b73778a0e047eeccc075d7caec2ed30d9980e03",
+   "machine": "pc"
+  },
+  {
+   "id": "B2030",
+   "group": "B",
+   "seed": 2030,
+   "t": 14000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2030-mon512x256-r2-m0.01-establiment14000-epoca14000.bin",
+   "sha256": "82b24deacc85bded22a00dfe7086a7d327c3ce7dd39209558a3abfeda2d94510",
+   "machine": "pc"
+  },
+  {
+   "id": "B2032",
+   "group": "B",
+   "seed": 2032,
+   "t": 3500,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2032-mon512x256-r2-m0.01-establiment3500-epoca3500.bin",
+   "sha256": "1354b79045a36146c4531a243b3af3d76accc55fb0941750c1ef7f75c31dfbef",
+   "machine": "vm"
+  },
+  {
+   "id": "B2039",
+   "group": "B",
+   "seed": 2039,
+   "t": 2000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2039-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "sha256": "4ed9eec8489dc8bace0e64da7411c2459e2ab1e86969b52fa7690cb40f837f3f",
+   "machine": "pc"
+  },
+  {
+   "id": "B2044",
+   "group": "B",
+   "seed": 2044,
+   "t": 6750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2044-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+   "sha256": "a9bef30536724974bc525db3cdc7d9017958da168b9a97c90df7e96b768d591a",
+   "machine": "vm"
+  },
+  {
+   "id": "B2048",
+   "group": "B",
+   "seed": 2048,
+   "t": 4500,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2048-mon512x256-r2-m0.01-establiment4500-epoca4500.bin",
+   "sha256": "1c6e562028110d51fc2da834a7f3e9109cc98fc23cdd6e067402696b98229ca6",
+   "machine": "vm"
+  },
+  {
+   "id": "B2049",
+   "group": "B",
+   "seed": 2049,
+   "t": 13750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2049-mon512x256-r2-m0.01-establiment13750-epoca13750.bin",
+   "sha256": "643dbe0190ca46c85833e3391e6ac8c47e75ad47fad2876625c405c5f3c8739a",
+   "machine": "vm"
+  },
+  {
+   "id": "B2051",
+   "group": "B",
+   "seed": 2051,
+   "t": 7000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2051-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "sha256": "a4ab79f4d16064243ee742db6f1d2824fd5e1b67843389f1e700c4ebe5d206a8",
+   "machine": "pc"
+  },
+  {
+   "id": "B2055",
+   "group": "B",
+   "seed": 2055,
+   "t": 250,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2055-mon512x256-r2-m0.01-establiment250-epoca250.bin",
+   "sha256": "3656a4ffb7513ed80e594c151f1a56831fff3cb7a0470b50b725003e0ff37c71",
+   "machine": "vm"
+  },
+  {
+   "id": "B2056",
+   "group": "B",
+   "seed": 2056,
+   "t": 11750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2056-mon512x256-r2-m0.01-establiment11750-epoca11750.bin",
+   "sha256": "91e28a3e1fb255849679aed8c6ac81101174dc10814a2c29ec2e1bf62d7d081c",
+   "machine": "vm"
+  },
+  {
+   "id": "B2057",
+   "group": "B",
+   "seed": 2057,
+   "t": 2000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2057-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "sha256": "2f2f4ffe96d9042d25afaa58891872a5b1c7ea9602602f8fd9ad0d909ae145df",
+   "machine": "pc"
+  },
+  {
+   "id": "B2064",
+   "group": "B",
+   "seed": 2064,
+   "t": 9500,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2064-mon512x256-r2-m0.01-establiment9500-epoca9500.bin",
+   "sha256": "a855486772977ad0f4daeae10b0b9c502d0472068eed856174d5219ef836e175",
+   "machine": "pc"
+  },
+  {
+   "id": "B2065",
+   "group": "B",
+   "seed": 2065,
+   "t": 7250,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2065-mon512x256-r2-m0.01-establiment7250-epoca7250.bin",
+   "sha256": "327c27fad870ee62bc93b7648c645e6c9192163168a5ff20c9c6be2e726ee1a2",
+   "machine": "pc"
+  },
+  {
+   "id": "B2071",
+   "group": "B",
+   "seed": 2071,
+   "t": 6750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2071-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+   "sha256": "8082d9c5cb2b8e26881d766c499cb3e4d08c0b2fab0b63c0a6748bf8ab604914",
+   "machine": "pc"
+  },
+  {
+   "id": "B2078",
+   "group": "B",
+   "seed": 2078,
+   "t": 4750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2078-mon512x256-r2-m0.01-establiment4750-epoca4750.bin",
+   "sha256": "8419a708df7cdfc7f89cc7ddd2cc7294f27c5eb91976c96347db9f297cbc1b77",
+   "machine": "pc"
+  }
+ ],
+ "branches": [
+  {
+   "world": "B2078",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302078,
+   "H": 5000,
+   "name": "b001"
+  },
+  {
+   "world": "A1059",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301059,
+   "H": 5000,
+   "name": "b002"
+  },
+  {
+   "world": "B2078",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302078,
+   "H": 5000,
+   "name": "b003"
+  },
+  {
+   "world": "B2030",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202030,
+   "H": 5000,
+   "name": "b004"
+  },
+  {
+   "world": "A1027",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201027,
+   "H": 5000,
+   "name": "b005"
+  },
+  {
+   "world": "B2021",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202021,
+   "H": 5000,
+   "name": "b006"
+  },
+  {
+   "world": "B2005",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202005,
+   "H": 5000,
+   "name": "b007"
+  },
+  {
+   "world": "B2039",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302039,
+   "H": 5000,
+   "name": "b008"
+  },
+  {
+   "world": "B2030",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202030,
+   "H": 5000,
+   "name": "b009"
+  },
+  {
+   "world": "B2021",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202021,
+   "H": 5000,
+   "name": "b010"
+  },
+  {
+   "world": "A1037",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301037,
+   "H": 5000,
+   "name": "b011"
+  },
+  {
+   "world": "B2049",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302049,
+   "H": 5000,
+   "name": "b012"
+  },
+  {
+   "world": "A1039",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301039,
+   "H": 5000,
+   "name": "b013"
+  },
+  {
+   "world": "B2064",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202064,
+   "H": 5000,
+   "name": "b014"
+  },
+  {
+   "world": "B2032",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202032,
+   "H": 5000,
+   "name": "b015"
+  },
+  {
+   "world": "B2048",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302048,
+   "H": 5000,
+   "name": "b016"
+  },
+  {
+   "world": "B2005",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302005,
+   "H": 5000,
+   "name": "b017"
+  },
+  {
+   "world": "B2039",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202039,
+   "H": 5000,
+   "name": "b018"
+  },
+  {
+   "world": "A1017",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201017,
+   "H": 5000,
+   "name": "b019"
+  },
+  {
+   "world": "B2049",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202049,
+   "H": 5000,
+   "name": "b020"
+  },
+  {
+   "world": "B2064",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302064,
+   "H": 5000,
+   "name": "b021"
+  },
+  {
+   "world": "B2057",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202057,
+   "H": 5000,
+   "name": "b022"
+  },
+  {
+   "world": "B2044",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302044,
+   "H": 5000,
+   "name": "b023"
+  },
+  {
+   "world": "B2005",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302005,
+   "H": 5000,
+   "name": "b024"
+  },
+  {
+   "world": "A1021",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301021,
+   "H": 5000,
+   "name": "b025"
+  },
+  {
+   "world": "B2039",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302039,
+   "H": 5000,
+   "name": "b026"
+  },
+  {
+   "world": "B2057",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302057,
+   "H": 5000,
+   "name": "b027"
+  },
+  {
+   "world": "A1068",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301068,
+   "H": 5000,
+   "name": "b028"
+  },
+  {
+   "world": "B2021",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302021,
+   "H": 5000,
+   "name": "b029"
+  },
+  {
+   "world": "B2071",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202071,
+   "H": 5000,
+   "name": "b030"
+  },
+  {
+   "world": "A1036",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301036,
+   "H": 5000,
+   "name": "b031"
+  },
+  {
+   "world": "B2032",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202032,
+   "H": 5000,
+   "name": "b032"
+  },
+  {
+   "world": "B2030",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302030,
+   "H": 5000,
+   "name": "b033"
+  },
+  {
+   "world": "B2021",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302021,
+   "H": 5000,
+   "name": "b034"
+  },
+  {
+   "world": "B2039",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202039,
+   "H": 5000,
+   "name": "b035"
+  },
+  {
+   "world": "A1026",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201026,
+   "H": 5000,
+   "name": "b036"
+  },
+  {
+   "world": "B2064",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202064,
+   "H": 5000,
+   "name": "b037"
+  },
+  {
+   "world": "A1037",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201037,
+   "H": 5000,
+   "name": "b038"
+  },
+  {
+   "world": "A1037",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201037,
+   "H": 5000,
+   "name": "b039"
+  },
+  {
+   "world": "B2065",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302065,
+   "H": 5000,
+   "name": "b040"
+  },
+  {
+   "world": "B2056",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302056,
+   "H": 5000,
+   "name": "b041"
+  },
+  {
+   "world": "B2078",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202078,
+   "H": 5000,
+   "name": "b042"
+  },
+  {
+   "world": "A1059",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301059,
+   "H": 5000,
+   "name": "b043"
+  },
+  {
+   "world": "A1070",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201070,
+   "H": 5000,
+   "name": "b044"
+  },
+  {
+   "world": "A1045",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301045,
+   "H": 5000,
+   "name": "b045"
+  },
+  {
+   "world": "A1070",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301070,
+   "H": 5000,
+   "name": "b046"
+  },
+  {
+   "world": "A1026",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201026,
+   "H": 5000,
+   "name": "b047"
+  },
+  {
+   "world": "A1045",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201045,
+   "H": 5000,
+   "name": "b048"
+  },
+  {
+   "world": "B2051",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302051,
+   "H": 5000,
+   "name": "b049"
+  },
+  {
+   "world": "B2064",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302064,
+   "H": 5000,
+   "name": "b050"
+  },
+  {
+   "world": "B2065",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202065,
+   "H": 5000,
+   "name": "b051"
+  },
+  {
+   "world": "B2049",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302049,
+   "H": 5000,
+   "name": "b052"
+  },
+  {
+   "world": "B2057",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202057,
+   "H": 5000,
+   "name": "b053"
+  },
+  {
+   "world": "A1017",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301017,
+   "H": 5000,
+   "name": "b054"
+  },
+  {
+   "world": "B2065",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202065,
+   "H": 5000,
+   "name": "b055"
+  },
+  {
+   "world": "B2055",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202055,
+   "H": 5000,
+   "name": "b056"
+  },
+  {
+   "world": "A1021",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301021,
+   "H": 5000,
+   "name": "b057"
+  },
+  {
+   "world": "B2071",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302071,
+   "H": 5000,
+   "name": "b058"
+  },
+  {
+   "world": "B2071",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202071,
+   "H": 5000,
+   "name": "b059"
+  },
+  {
+   "world": "B2048",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202048,
+   "H": 5000,
+   "name": "b060"
+  },
+  {
+   "world": "A1036",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201036,
+   "H": 5000,
+   "name": "b061"
+  },
+  {
+   "world": "A1027",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301027,
+   "H": 5000,
+   "name": "b062"
+  },
+  {
+   "world": "B2071",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302071,
+   "H": 5000,
+   "name": "b063"
+  },
+  {
+   "world": "A1026",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301026,
+   "H": 5000,
+   "name": "b064"
+  },
+  {
+   "world": "B2048",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202048,
+   "H": 5000,
+   "name": "b065"
+  },
+  {
+   "world": "A1037",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301037,
+   "H": 5000,
+   "name": "b066"
+  },
+  {
+   "world": "A1068",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201068,
+   "H": 5000,
+   "name": "b067"
+  },
+  {
+   "world": "B2011",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202011,
+   "H": 5000,
+   "name": "b068"
+  },
+  {
+   "world": "A1045",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201045,
+   "H": 5000,
+   "name": "b069"
+  },
+  {
+   "world": "A1041",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201041,
+   "H": 5000,
+   "name": "b070"
+  },
+  {
+   "world": "B2078",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202078,
+   "H": 5000,
+   "name": "b071"
+  },
+  {
+   "world": "A1017",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301017,
+   "H": 5000,
+   "name": "b072"
+  },
+  {
+   "world": "B2055",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302055,
+   "H": 5000,
+   "name": "b073"
+  },
+  {
+   "world": "A1036",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201036,
+   "H": 5000,
+   "name": "b074"
+  },
+  {
+   "world": "B2005",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202005,
+   "H": 5000,
+   "name": "b075"
+  },
+  {
+   "world": "A1039",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301039,
+   "H": 5000,
+   "name": "b076"
+  },
+  {
+   "world": "B2056",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302056,
+   "H": 5000,
+   "name": "b077"
+  },
+  {
+   "world": "A1059",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201059,
+   "H": 5000,
+   "name": "b078"
+  },
+  {
+   "world": "A1027",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201027,
+   "H": 5000,
+   "name": "b079"
+  },
+  {
+   "world": "B2056",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202056,
+   "H": 5000,
+   "name": "b080"
+  },
+  {
+   "world": "B2057",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302057,
+   "H": 5000,
+   "name": "b081"
+  },
+  {
+   "world": "B2065",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302065,
+   "H": 5000,
+   "name": "b082"
+  },
+  {
+   "world": "B2032",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302032,
+   "H": 5000,
+   "name": "b083"
+  },
+  {
+   "world": "A1070",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201070,
+   "H": 5000,
+   "name": "b084"
+  },
+  {
+   "world": "A1026",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301026,
+   "H": 5000,
+   "name": "b085"
+  },
+  {
+   "world": "A1041",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201041,
+   "H": 5000,
+   "name": "b086"
+  },
+  {
+   "world": "A1027",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301027,
+   "H": 5000,
+   "name": "b087"
+  },
+  {
+   "world": "B2051",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202051,
+   "H": 5000,
+   "name": "b088"
+  },
+  {
+   "world": "B2056",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202056,
+   "H": 5000,
+   "name": "b089"
+  },
+  {
+   "world": "B2011",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302011,
+   "H": 5000,
+   "name": "b090"
+  },
+  {
+   "world": "B2044",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302044,
+   "H": 5000,
+   "name": "b091"
+  },
+  {
+   "world": "B2051",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302051,
+   "H": 5000,
+   "name": "b092"
+  },
+  {
+   "world": "B2044",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202044,
+   "H": 5000,
+   "name": "b093"
+  },
+  {
+   "world": "A1021",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201021,
+   "H": 5000,
+   "name": "b094"
+  },
+  {
+   "world": "B2011",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202011,
+   "H": 5000,
+   "name": "b095"
+  },
+  {
+   "world": "B2011",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302011,
+   "H": 5000,
+   "name": "b096"
+  },
+  {
+   "world": "A1045",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301045,
+   "H": 5000,
+   "name": "b097"
+  },
+  {
+   "world": "A1039",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201039,
+   "H": 5000,
+   "name": "b098"
+  },
+  {
+   "world": "A1041",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301041,
+   "H": 5000,
+   "name": "b099"
+  },
+  {
+   "world": "A1039",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201039,
+   "H": 5000,
+   "name": "b100"
+  },
+  {
+   "world": "B2044",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202044,
+   "H": 5000,
+   "name": "b101"
+  },
+  {
+   "world": "A1059",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201059,
+   "H": 5000,
+   "name": "b102"
+  },
+  {
+   "world": "B2051",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 202051,
+   "H": 5000,
+   "name": "b103"
+  },
+  {
+   "world": "B2049",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202049,
+   "H": 5000,
+   "name": "b104"
+  },
+  {
+   "world": "A1021",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201021,
+   "H": 5000,
+   "name": "b105"
+  },
+  {
+   "world": "A1070",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301070,
+   "H": 5000,
+   "name": "b106"
+  },
+  {
+   "world": "B2048",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302048,
+   "H": 5000,
+   "name": "b107"
+  },
+  {
+   "world": "A1068",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 0,
+   "seed": 201068,
+   "H": 5000,
+   "name": "b108"
+  },
+  {
+   "world": "B2032",
+   "cond": "origen",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 302032,
+   "H": 5000,
+   "name": "b109"
+  },
+  {
+   "world": "B2055",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302055,
+   "H": 5000,
+   "name": "b110"
+  },
+  {
+   "world": "A1036",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301036,
+   "H": 5000,
+   "name": "b111"
+  },
+  {
+   "world": "A1068",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 1,
+   "seed": 301068,
+   "H": 5000,
+   "name": "b112"
+  },
+  {
+   "world": "A1041",
+   "cond": "canvi",
+   "mixing": 0.01,
+   "k": 1,
+   "seed": 301041,
+   "H": 5000,
+   "name": "b113"
+  },
+  {
+   "world": "B2030",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 1,
+   "seed": 302030,
+   "H": 5000,
+   "name": "b114"
+  },
+  {
+   "world": "B2055",
+   "cond": "canvi",
+   "mixing": 0,
+   "k": 0,
+   "seed": 202055,
+   "H": 5000,
+   "name": "b115"
+  },
+  {
+   "world": "A1017",
+   "cond": "origen",
+   "mixing": 0,
+   "k": 0,
+   "seed": 201017,
+   "H": 5000,
+   "name": "b116"
+  }
+ ]
+}

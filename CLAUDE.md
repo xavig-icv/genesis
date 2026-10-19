@@ -44,6 +44,15 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   de `fase2/resultats/b2/exploracio`, amb tres regles de "mort", les morts falses, l'aparellament pel món i la
   concordança amb la història original. Mai no es fa servir amb els mons de la part `confirmacio` del
   repartiment (`fase2/resultats/b2/repartiment.json`): s'hi nega.
+- La sèrie preregistrada de B2 (`docs/protocol-b2.md`): `node fase2/b2-confirmacio.mjs --decideix|--prova COMMIT|--llistes
+  [--serie manifest.json] carpeta`, amb el manifest `fase2/serie-b2.json`.
+  - **El manifest** el genera `node eines/b2-manifest.mjs --disseny i|ii --estat esborrany|final`, amb els noms opacs
+    i les màquines.
+  - **La cobertura dels intervals i la potència:** `node eines/b2-cobertura.mjs`.
+  - **La lectura de resultats:** `--prova` no llegeix mai la carpeta de la sèrie de veritat. Els resultats només es
+    miren amb `--decideix`.
+  - **Els programes confirmatoris nous** comproven el preregistre (`fase2/preregistre.mjs`, només mòduls de Node)
+    abans de carregar res més del projecte (AUD-81).
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
   captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
