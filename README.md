@@ -149,8 +149,11 @@ Vegeu l'[entrada 8](quadern/index.html#entrada-8).
 
 ### El que estudiem ara
 
-- **Quant dura la vida establerta,** i si el corrent la desfà. Fem servir branques aparellades a partir dels
-  58 mons amb vida de la sèrie, i la meitat dels mons es reserva per a una sèrie preregistrada.
+- **Quant dura la vida establerta.**
+  - **L'exploració** ([entrada 9](quadern/index.html#entrada-9)) suggereix que dura: en 2.000 èpoques,
+    gairebé cap no es mor, amb corrent o sense.
+  - **La sèrie preregistrada** en mesurarà la durada amb un horitzó més llarg, amb els 29 mons reservats
+    ([esborrany del protocol](docs/protocol-b2.md)).
 - **La mida del món,** començant pels mons petits.
 - **Els ingredients de la química:** treure-li instruccions o capacitats per saber quines calen.
 - **Un temps que canvia:** un corrent que alterna la calma i el temporal.

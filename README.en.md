@@ -78,7 +78,11 @@ established more often, with a protocol written and tagged before starting.
 </picture>
 
 **What we study now:**
-- **How long established life lasts,** and whether the current breaks it up.
+- **How long established life lasts.**
+  - **The exploration** (notebook entry 9) suggests it lasts: in 2,000 epochs almost none dies, with or
+    without a current.
+  - **A preregistered series** will measure its lifespan over a longer horizon
+    ([draft protocol](docs/protocol-b2.md), in Catalan).
 - **World size.**
 - **Chemistry ablations.**
 - **A changing weather,** with a current that alternates calm and storm.
