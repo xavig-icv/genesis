@@ -272,7 +272,7 @@ if (isMain) {
       frames.forEach((im, i) => {
         const m = /epoca(\d+)/.exec(files[i]);
         if (!m) throw new Error(`${files[i]}: el nom no diu l'època (…-epocaN.bin)`);
-        label(im, thousands(m[1]), { color: theme.ink, background: theme.page });
+        label(im, thousands(m[1]), { s: 4, x: 10, y: 10, color: theme.ink, background: theme.page });
       });
     }
     writeFileSync(out, encodeApng(frames.map((f) => f.rgb), frames[0].width, frames[0].height,
