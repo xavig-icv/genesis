@@ -58,9 +58,11 @@ export function buildManifest({ design = 'i', estat = 'esborrany' } = {}) {
     tests: {
       method: 'holm', alpha: 0.025,
       regime: { ...D.regime, sided: 'unilateral' },
-      spread: { censuses: 8, ...D.spread, sided: 'unilateral' },
+      // la regla conjunta: a més de Holm, més de la meitat dels mons de cada origen (protocol §6.3, AU2-65)
+      spread: { censuses: 8, ...D.spread, sided: 'unilateral', byOrigin: 'majoria' },
     },
-    bootstrap: { reps: 10000, seed: SEEDS.bootstrap, interval: 'bca', level: 0.95 },
+    // el logit, conservador: el BCa es queda curt en 3 de 9 escenaris del calibratge (AU2-68, auditoria 10)
+    bootstrap: { reps: 10000, seed: SEEDS.bootstrap, interval: 'logit', level: 0.95 },
     machines: { names: ['pc', 'vm'], seed: SEEDS.machines },
     names: { seed: SEEDS.names },
     worlds,

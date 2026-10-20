@@ -4,7 +4,7 @@
 import assert from 'assert';
 import { spawnSync } from 'child_process';
 import { createHash } from 'crypto';
-import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, copyFileSync, readdirSync, appendFileSync } from 'fs';
+import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, copyFileSync, readdirSync, appendFileSync, symlinkSync, cpSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
@@ -175,6 +175,25 @@ const tests = {
     git('replace', before, after);
     const r = decide();
     refused(r, /fitxers diferents dels de l'etiqueta: fase2\/census\.js/);
+  }),
+  // AUD-88 (auditoria 10): un fitxer seguit, o la seva carpeta, convertit en un enllaç simbòlic a una còpia idèntica
+  // en una altra carpeta, on els mòduls que importa són diferents. A Windows, crear enllaços demana permisos: si no
+  // es pot, la prova ho diu i se salta (a GitHub, amb Linux, s'executa).
+  "un enllaç simbòlic a una còpia idèntica, o una carpeta enllaçada, atura la decisió (AUD-88)": () => withRepo(({ repo, decide }) => {
+    const other = join(repo, '..', 'altre');
+    for (const d of ['fase1', 'fase2']) cpSync(join(repo, d), join(other, d), { recursive: true });   // els mòduls que importa
+    try { symlinkSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.enllac-prova.js'), 'file'); }
+    catch (e) { console.log(`        (omesa: no es poden crear enllaços simbòlics en aquest sistema, ${e.code})`); return; }
+    rmSync(join(repo, 'fase2', 'census.enllac-prova.js'));
+    rmSync(join(repo, 'fase2', 'census.js'));
+    symlinkSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.js'), 'file');
+    refused(decide(), /enllaços simbòlics, o dins d'una carpeta que ho és, i a l'etiqueta no: fase2\/census\.js/);
+    // la carpeta sencera
+    rmSync(join(repo, 'fase2', 'census.js'));
+    copyFileSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.js'));
+    rmSync(join(repo, 'fase1'), { recursive: true });
+    symlinkSync(join(other, 'fase1'), join(repo, 'fase1'), 'dir');
+    refused(decide(), /enllaços simbòlics, o dins d'una carpeta que ho és, i a l'etiqueta no: fase1\//);
   }),
   "una còpia en un altre commit no decideix": () => withRepo(({ repo, git, decide }) => {
     writeFileSync(join(repo, 'NOTES.md'), 'una nota\n');

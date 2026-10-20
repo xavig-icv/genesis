@@ -34,7 +34,7 @@ const tests = {
   "l'anàlisi del pilot reprodueix el LLEGEIX-ME: la mateixa història, 2 pèrdues i cap de tardana, i el cost": () => {
     const r = pilot();
     assert.deepStrictEqual([r.same, r.branches, r.losses, r.late], [14, 14, 2, 0]);
-    assert.deepStrictEqual([4000, 5000, 6000].map((H) => r.hours(H).toFixed(1)), ['4.3', '5.6', '7.0']);
+    assert.deepStrictEqual([4000, 5000, 6000].map((H) => r.hours(H).toFixed(1)), ['4.1', '5.5', '7.0']);   // corregit a l'auditoria 10
     assert.ok(r.lines.some((l) => /^1\. La mateixa història: 14 de 14 .*HOE difereix com a molt 1\.7e-3/.test(l)), r.lines[0]);
   },
   "una branca: grup, llavor d'origen, t i horitzó": () => withTmp((tmp) => {

@@ -51,6 +51,8 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   - **La cobertura dels intervals i la potència:** `node eines/b2-cobertura.mjs`.
   - **La prolongació pilot** (descriptiva, per fixar H i K): `node eines/b2-pilot.mjs`, amb els registres de
     `fase2/resultats/b2/pilot`.
+  - **Abans de llançar la sèrie,** a cada màquina i des de la carpeta del commit de l'etiqueta:
+    `node eines/b2-captures.mjs --maquina pc|vm`, que comprova la SHA-256 de les captures d'origen (AU2-66).
   - **La lectura de resultats:** `--prova` no llegeix mai la carpeta de la sèrie de veritat. Els resultats només es
     miren amb `--decideix`.
   - **Els programes confirmatoris nous** comproven el preregistre (`fase2/preregistre.mjs`, només mòduls de Node)

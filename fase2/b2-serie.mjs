@@ -1,4 +1,4 @@
-// La sèrie preregistrada de B2: quant dura la vida establerta (docs/protocol-b2.md, v0.3). Funcions pures:
+// La sèrie preregistrada de B2: quant dura la vida establerta (docs/protocol-b2.md, v0.5). Funcions pures:
 // la validació de les branques contra el manifest, la primera pèrdua sostinguda, les estimacions amb el
 // bootstrap de mons, les dues proves confirmatòries (el canvi de règim i l'expansió amb corrent, amb la
 // correcció de Holm) i els descriptius. El programa que decideix és fase2/b2-confirmacio.mjs, que comprova el
@@ -63,9 +63,85 @@ export function validateBranch(records, branch, world, manifest, { commit = null
   const want = Array.from({ length: n }, (_, j) => world.t + every * (j + 1));
   if (!same(epochs, want)) p(`els censos no són exactament els de ${want[0]} a ${want[want.length - 1]}, cada ${every} èpoques`);
   for (const c of censuses) {
-    if (c.sample !== P.census.sample || !Number.isInteger(c.heritable) || c.heritable < 0 || c.heritable > c.sample) { p(`el cens de l'època ${c.epoch} no és vàlid`); break; }
+    const bad = censusProblem(c, P.census);
+    if (bad) { p(`el cens de l'època ${c.epoch} no és vàlid: ${bad}`); break; }
   }
+  problems.push(...structureProblems(records, world.t, branch.H, P).map((m) => `${branch.name}: ${m}`));
   return problems;
+}
+
+// ---- L'estructura sencera del registre (AU2-64, auditoria 10): els tipus i els camps de cada línia, l'ordre en què
+// les escriu sim.mjs, totes les mesures i els seus valors. Una línia de més, de menys o fora de lloc és un error.
+//   - a cada època, sim.mjs escriu el cens (si l'època és múltiple de 250), l'establiment (si es confirma en
+//     aquest cens) i la mesura (si és múltiple de 100); les èpoques són absolutes, no comptades des de t;
+//   - la línia final porta els segons totals, i l'època de l'establiment, si n'hi ha hagut.
+const KEYS = {
+  census: 'context,epoch,extinct,families,familySample,heritable,heritableContext,heritableSolo,replicating,sample,solo,type,untracked,version',
+  measure: 'epoch,epochs,h0,hoe,ops,runs,seconds,type',
+  event: 'confirmed,epoch,type',
+  end: 'epoch,event,fingerprint,hoeTransition,reason,seconds,type',
+};
+const isCount = (x, max) => Number.isInteger(x) && x >= 0 && x <= max;
+
+// Els comptadors d'un cens v3, amb les relacions que garanteix fase2/census.js: l'herència sola i la de context
+// s'exclouen (heritable = heritableSolo + heritableContext), cada una implica la replicació del mateix tipus, i
+// una cel·la pot replicar-se sola i en context alhora (max(solo, context) ≤ replicating ≤ solo + context)
+export function censusProblem(c, cfg) {
+  if (Object.keys(c).sort().join(',') !== KEYS.census) return 'els camps no són els del cens v3';
+  if (c.version !== cfg.version || c.sample !== cfg.sample) return 'la versió o la mostra no són les del manifest';
+  const S = c.sample;
+  for (const k of ['replicating', 'solo', 'context', 'heritable', 'heritableSolo', 'heritableContext']) {
+    if (!Number.isInteger(c[k]) || c[k] < 0) return `${k} no és un enter no negatiu`;
+  }
+  for (const k of ['replicating', 'solo', 'context', 'heritable']) if (c[k] > S) return `${k} és més gran que la mostra`;
+  if (c.heritable !== c.heritableSolo + c.heritableContext) return 'heritable ≠ heritableSolo + heritableContext';
+  if (c.heritableSolo > c.solo || c.heritableContext > c.context) return 'hi ha més hereditaris que replicadors del mateix tipus';
+  if (c.replicating < Math.max(c.solo, c.context) || c.replicating > c.solo + c.context) return 'replicating no quadra amb solo i context';
+  if (c.heritable > c.replicating) return 'hi ha més hereditaris que replicadors';
+  if (!(c.familySample >= 0 && c.familySample <= 1)) return 'familySample no és una proporció';
+  if (!Array.isArray(c.families) || !Array.isArray(c.extinct) || !Array.isArray(c.untracked)) return 'les famílies no són llistes';
+  return null;
+}
+
+export function structureProblems(records, t, H, P) {
+  const out = [], q = (m) => out.push(m);
+  const rank = { census: 0, event: 1, measure: 2 };
+  let prev = null, lastSeconds = 0, event = null, measures = 0;
+  const firstMeasure = (Math.floor(t / P.every) + 1) * P.every;
+  const wantMeasures = Math.max(0, Math.floor((t + H - firstMeasure) / P.every) + 1);
+  for (let i = 1; i < records.length - 1; i++) {
+    const r = records[i];
+    if (!(r.type in rank)) { q(`la línia ${i + 1} és d'un tipus que no hi pot ser (${JSON.stringify(r.type)})`); continue; }
+    if (Object.keys(r).sort().join(',') !== KEYS[r.type]) { q(`la línia ${i + 1} (${r.type}) no té els camps esperats`); continue; }
+    const at = r.type === 'event' ? r.confirmed : r.epoch;       // l'establiment s'escriu al cens que el confirma
+    if (!Number.isInteger(at) || at <= t || at > t + H) { q(`la línia ${i + 1} (${r.type}) és fora de l'interval de la branca`); continue; }
+    if (prev && (at < prev.at || (at === prev.at && rank[r.type] <= rank[prev.type]))) q(`la línia ${i + 1} (${r.type}, època ${at}) no és en l'ordre de sim.mjs`);
+    prev = { at, type: r.type };
+    if (r.type === 'measure') {
+      if (r.epoch !== firstMeasure + measures * P.every) q(`la mesura de la línia ${i + 1} no és a l'època que toca (${firstMeasure + measures * P.every})`);
+      measures++;
+      if (r.epochs !== P.every) q(`la mesura de l'època ${r.epoch} no és de ${P.every} èpoques`);
+      // l'HOE pot ser lleugerament negatiu: és una diferència d'estimacions de l'entropia
+      for (const k of ['h0', 'hoe', 'seconds']) if (!Number.isFinite(r[k])) q(`la mesura de l'època ${r.epoch} té ${k} = ${r[k]}`);
+      if (!(r.h0 >= 0 && r.h0 <= 8)) q(`la mesura de l'època ${r.epoch} té una entropia impossible`);
+      if (!(r.seconds >= 0)) q(`la mesura de l'època ${r.epoch} té uns segons negatius`);
+      for (const k of ['ops', 'runs']) if (!Number.isInteger(r[k]) || r[k] < 0) q(`la mesura de l'època ${r.epoch} té ${k} = ${r[k]}`);
+      if (r.seconds < lastSeconds) q(`els segons baixen a la mesura de l'època ${r.epoch}`);
+      lastSeconds = Math.max(lastSeconds, Number.isFinite(r.seconds) ? r.seconds : 0);
+    } else if (r.type === 'event') {
+      if (event) q('hi ha més d\'un establiment');
+      if (!Number.isInteger(r.epoch) || r.epoch > r.confirmed || (r.confirmed - r.epoch) % P.census.every) q(`l'establiment de la línia ${i + 1} no és coherent amb els censos`);
+      event = r;
+    }
+  }
+  if (measures !== wantMeasures) q(`té ${measures} mesures, i n'hi han de ser ${wantMeasures} (cada ${P.every} èpoques)`);
+  const end = records[records.length - 1];
+  if (end.type === 'end') {
+    if (Object.keys(end).sort().join(',') !== KEYS.end) q('la línia final no té els camps esperats');
+    if (!Number.isFinite(end.seconds) || end.seconds < lastSeconds - 1) q('els segons de la línia final no quadren amb els de les mesures');
+    if ((end.event ?? null) !== (event ? event.epoch : null)) q('l\'establiment de la línia final no és el del registre');
+  }
+  return out;
 }
 
 // ---- La mesura (protocol §5): la primera pèrdua sostinguda amb la regla R2
@@ -132,16 +208,22 @@ export function readSeries(dir, manifest, { commit = null } = {}) {
   return { worlds: [...worlds.values()], problems };
 }
 
-// El cost: segons per època per trams de 500 èpoques des de t (les mesures porten els segons acumulats)
-function costsByWindow(records, t, width = 500) {
-  const m = records.filter((r) => r.type === 'measure');
-  const at = (e) => m.find((r) => r.epoch === e);
+// El cost: segons per època per trams de 500 èpoques des de t. Les mesures porten els segons acumulats des de t, i
+// són als múltiples de 100 absoluts: si t no ho és, els segons a l'inici i al final de cada tram s'interpolen entre
+// les mesures que l'envolten. La línia final porta els segons totals. (Corregit a l'auditoria 10: abans es buscava
+// la mesura exactament a t + 500, ..., i les branques amb una t que no és múltiple de 100 quedaven sense cost.)
+export function costsByWindow(records, t, width = 500) {
+  const end = records[records.length - 1];
+  const pts = [{ epoch: t, seconds: 0 }, ...records.filter((r) => r.type === 'measure'), ...(end.type === 'end' ? [end] : [])];
+  const sec = (e) => {
+    const j = pts.findIndex((p) => p.epoch >= e);
+    if (j < 0) return null;
+    if (j === 0) return pts[0].seconds;
+    const a = pts[j - 1], b = pts[j];
+    return a.seconds + (b.seconds - a.seconds) * (e - a.epoch) / (b.epoch - a.epoch);
+  };
   const out = [];
-  for (let a = 0; ; a += width) {
-    const x = a === 0 ? { seconds: 0 } : at(t + a), y = at(t + a + width);
-    if (!x || !y) break;
-    out.push((y.seconds - x.seconds) / width);
-  }
+  for (let a = 0; t + a + width <= pts[pts.length - 1].epoch; a += width) out.push((sec(t + a + width) - sec(t + a)) / width);
   return out;
 }
 
@@ -258,6 +340,17 @@ export function signTest(diffs, sided, { expect = 'negatiu' } = {}) {
   const p = n === 0 ? 1 : sided === 'unilateral' ? tail(expect === 'negatiu' ? neg : pos) : Math.min(1, 2 * Math.min(tail(neg), tail(pos)));
   return { neg, pos, ties: diffs.length - n, p };
 }
+// L'expansió per origen: quants mons de cada origen tenen més vida amb corrent (D > 0), i la p de signes de
+// l'origen (unilateral), només descriptiva. La regla conjunta (protocol §6.3, AU2-65) demana que siguin més de la
+// meitat dels mons de cada origen, comptant els empats com a no favorables.
+export function spreadByOrigin(worlds, diffs) {
+  const out = {};
+  for (const g of ['A', 'B']) {
+    const d = diffs.filter((_, i) => worlds[i].group === g);
+    out[g] = { n: d.length, pos: d.filter((x) => x > 0).length, p: signTest(d, 'unilateral', { expect: 'positiu' }).p };
+  }
+  return out;
+}
 // La correcció de Holm: les p, de la més petita a la més gran, es comparen amb α/m, α/(m − 1)... i en el primer
 // que no es rebutja s'atura. Retorna, per a cada prova, si es rebutja H₀ i el llindar amb què s'ha comparat
 export function holm(ps, alpha) {
@@ -310,6 +403,10 @@ export function analyse(worlds, manifest) {
   const { curve, median } = survivalCurve(worlds, 'origen', every);
   lines.push(`La durada en el seu món (condició d'origen, ${worlds.length} mons, H = ${Ho}):`);
   lines.push(`  sense pèrdua fins a H: ${pct(S.theta)} (IC ${bs.level * 100} %: ${pct(S.lo)}–${pct(S.hi)}, ${S.method})`);
+  if (bs.interval !== 'bca') {   // el BCa, com a sensibilitat descriptiva (AU2-68, auditoria 10)
+    const B = interval(worlds, (ws) => survival(ws, 'origen'), { reps: bs.reps, seed: bs.seed, method: 'bca', level: bs.level });
+    lines.push(`  (sensibilitat, descriptiva: l'interval BCa, ${pct(B.lo)}–${pct(B.hi)})`);
+  }
   lines.push(`  durada mitjana restringida: ${(R.theta * Ho).toFixed(0)} èpoques de ${Ho} (IC: ${(R.lo * Ho).toFixed(0)}–${(R.hi * Ho).toFixed(0)})`);
   lines.push(`  mediana: ${median === null ? 'no assolida' : `${median} èpoques`}`);
   lines.push(`  corba: ${curve.map((c) => `${c.tau}:${c.s.toFixed(3)}`).join(' ')}`);
@@ -325,14 +422,17 @@ export function analyse(worlds, manifest) {
   lines.push('', `Prova 2, l'expansió amb corrent (els ${sp.censuses} primers censos, prova de signes ${sp.sided}):`);
   lines.push(`  mons amb més vida amb corrent: ${ss.pos}; menys: ${ss.neg}; igual: ${ss.ties}; p = ${ss.p.toFixed(4)}`);
   lines.push(`  diferència mediana: ${(100 * medianOf(sd)).toFixed(1)} punts`);
+  const byOrigin = spreadByOrigin(worlds, sd);
   for (const g of ['A', 'B']) {
-    const idx = worlds.map((w, i) => (w.group === g ? i : -1)).filter((i) => i >= 0);
-    if (idx.length) lines.push(`  origen ${g} (el corrent és ${withCurrent(g) === 'canvi' ? 'el canvi' : "l'origen"}): més vida amb corrent a ${idx.filter((i) => sd[i] > 0).length} de ${idx.length}`);
+    const o = byOrigin[g];
+    if (o.n) lines.push(`  origen ${g} (el corrent és ${withCurrent(g) === 'canvi' ? 'el canvi' : "l'origen"}): més vida amb corrent a ${o.pos} de ${o.n} (cal més de la meitat); p de signes de l'origen = ${o.p.toFixed(4)}, descriptiva`);
   }
+  const coherent = sp.byOrigin !== 'majoria' || ['A', 'B'].every((g) => byOrigin[g].n === 0 || byOrigin[g].pos > byOrigin[g].n / 2);
   const [h1, h2] = holm([st.p, ss.p], tests.alpha);
   const verdict = (h) => (h.threshold === null ? 'no es rebutja H₀ (no s\'hi arriba: la de la p més petita no s\'ha rebutjat)'
     : `${h.rejected ? 'es rebutja' : 'no es rebutja'} H₀ (llindar ${h.threshold})`);
   lines.push('', `La correcció de Holm (α = ${tests.alpha}): prova 1, ${verdict(h1)}; prova 2, ${verdict(h2)}`);
+  if (sp.byOrigin === 'majoria') lines.push(`La regla conjunta de la prova 2 (protocol §6.3): ${coherent ? 'el corrent dona més vida a més de la meitat dels mons de tots dos orígens' : 'el corrent NO dona més vida a més de la meitat dels mons de tots dos orígens'}`);
   const d = describe(worlds, test, every);
   lines.push('', 'Descriptius:');
   for (const g of ['A', 'B']) for (const c of ['origen', 'canvi']) {
@@ -343,5 +443,13 @@ export function analyse(worlds, manifest) {
   lines.push(`  al cens final: ${d.final1pct} amb l'1 % o més, ${d.finalR2} amb més de ${manifest.rule.lossMax}; la família dominant és nova a ${d.successors}`);
   if (d.concordance !== null) lines.push(`  les llavors coincideixen (pèrdua o no) en ${pct(d.concordance)} dels mons i condicions`);
   if (d.costs.length) lines.push(`  segons per època, per trams de 500: ${d.costs.map((x) => x.toFixed(2)).join(' ')}`);
-  return { lines, S, R, tests: { regime: { ...st, ...h1 }, spread: { ...ss, ...h2, median: medianOf(sd) } } };
+  // La prova 2 es rebutja només si Holm la rebutja i la regla conjunta es compleix (AU2-65). Rebutjar-ne menys que
+  // Holm no en trenca el control de l'error de família, i la prova 1 conserva el llindar que li dona Holm.
+  return {
+    lines, S, R,
+    tests: {
+      regime: { ...st, ...h1 },
+      spread: { ...ss, ...h2, holmRejected: h2.rejected, coherent, byOrigin, rejected: h2.rejected && coherent, median: medianOf(sd) },
+    },
+  };
 }

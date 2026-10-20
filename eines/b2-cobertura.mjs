@@ -99,7 +99,29 @@ export function calibrate({ sims = 400, reps = 1000, h = 1 / 29 / 7, rrs = [1, 2
     const k = signCritical(29, alpha);
     lines.push(`  α = ${alpha}: calen ${k} de 29; ${[0.6, 0.65, 0.7, 0.76, 0.8].map((q) => `q ${q}: ${(100 * binomialTail(29, k, q)).toFixed(1)} %`).join(', ')}`);
   }
+  // 4. La potència realista de l'expansió (auditoria 10): D_i ~ Normal(δ, σ_b² + σ_e²/K), amb el soroll de la
+  //    continuació σ_e i la variació entre mons σ_b de l'exploració (l'annex de l'auditor 1, comprovat: la
+  //    desviació de D amb K = 1 és de 21,0 punts, i la de la continuació, de 13,9). Amb la regla global i amb la
+  //    conjunta (més de la meitat dels 12 mons A i dels 17 B, protocol §6.3)
+  lines.push('', 'La prova de l\'expansió amb el soroll de la continuació (σ_b = 15,7 i σ_e = 13,9 punts; regla global / regla conjunta):');
+  for (const K of [1, 2]) {
+    const row = [7, 10, 14.6].map((d) => { const { global, conjunct } = spreadPower(d, { K }); return `δ ${d}: ${(100 * global).toFixed(0)} % / ${(100 * conjunct).toFixed(0)} %`; });
+    lines.push(`  K = ${K}: ${row.join(', ')}`);
+  }
   return lines;
+}
+
+const Phi = (z) => { const t = 1 / (1 + 0.2316419 * Math.abs(z)), d = 0.3989423 * Math.exp(-z * z / 2);
+  const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274)))); return z > 0 ? 1 - p : p; };
+const pmf = (n, q) => { const r = []; let c = 1; for (let k = 0; k <= n; k++) { r.push(c * q ** k * (1 - q) ** (n - k)); c = (c * (n - k)) / (k + 1); } return r; };
+// La potència de la prova de signes de l'expansió amb un efecte δ (en punts), amb la regla global (21 de 29) i amb la
+// conjunta: a més, més de 6 dels 12 mons A i més de 8 dels 17 B
+export function spreadPower(delta, { K, sb = 15.7, se = 13.9, nA = 12, nB = 17, alpha = 0.025 }) {
+  const q = Phi(delta / Math.sqrt(sb ** 2 + se ** 2 / K)), k = signCritical(nA + nB, alpha);
+  const a = pmf(nA, q), b = pmf(nB, q);
+  let global = 0, conjunct = 0;
+  for (let i = 0; i <= nA; i++) for (let j = 0; j <= nB; j++) if (i + j >= k) { global += a[i] * b[j]; if (i > nA / 2 && j > nB / 2) conjunct += a[i] * b[j]; }
+  return { q, global, conjunct };
 }
 
 // P(X ≥ k) per a X ~ Binomial(n, q), i el menor k amb P(X ≥ k | q = 1/2) ≤ α
