@@ -177,25 +177,28 @@ const tests = {
     refused(r, /fitxers diferents dels de l'etiqueta: fase2\/census\.js/);
   }),
   // AUD-88 (auditoria 10): un fitxer seguit, o la seva carpeta, convertit en un enllaç simbòlic a una còpia idèntica
-  // en una altra carpeta, on els mòduls que importa són diferents. A Windows, crear enllaços demana permisos: si no
-  // es pot, la prova ho diu i se salta (a GitHub, amb Linux, s'executa).
+  // en una altra carpeta, on els mòduls que importa són diferents. A Windows, crear un enllaç de fitxer demana
+  // permisos: si no es pot, aquest cas ho diu i se salta (a GitHub, amb Linux, s'executa). El de la carpeta s'hi fa
+  // amb una unió (junction), que no en demana (AUD-99, auditoria 11).
   "un enllaç simbòlic a una còpia idèntica, o una carpeta enllaçada, atura la decisió (AUD-88)": () => withRepo(({ repo, decide }) => {
     const other = join(repo, '..', 'altre');
     for (const d of ['fase1', 'fase2']) cpSync(join(repo, d), join(other, d), { recursive: true });   // els mòduls que importa
     // i el package.json ("type": "module"): sense, Node 16 llegeix els .js de l'altra carpeta com a CommonJS i el
     // programa cau abans de la comprovació (Node 20 detecta la sintaxi tot sol). Un atac de debò el copiaria
     copyFileSync(join(repo, 'package.json'), join(other, 'package.json'));
-    try { symlinkSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.enllac-prova.js'), 'file'); }
-    catch (e) { console.log(`        (omesa: no es poden crear enllaços simbòlics en aquest sistema, ${e.code})`); return; }
-    rmSync(join(repo, 'fase2', 'census.enllac-prova.js'));
-    rmSync(join(repo, 'fase2', 'census.js'));
-    symlinkSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.js'), 'file');
-    refused(decide(), /enllaços simbòlics, o dins d'una carpeta que ho és, i a l'etiqueta no: fase2\/census\.js/);
-    // la carpeta sencera
-    rmSync(join(repo, 'fase2', 'census.js'));
-    copyFileSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.js'));
+    let fileLinks = true;
+    try { symlinkSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.enllac-prova.js'), 'file'); rmSync(join(repo, 'fase2', 'census.enllac-prova.js')); }
+    catch (e) { fileLinks = false; console.log(`        (l'enllaç de fitxer, omès: no se'n poden crear en aquest sistema, ${e.code})`); }
+    if (fileLinks) {
+      rmSync(join(repo, 'fase2', 'census.js'));
+      symlinkSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.js'), 'file');
+      refused(decide(), /enllaços simbòlics, o dins d'una carpeta que ho és, i a l'etiqueta no: fase2\/census\.js/);
+      rmSync(join(repo, 'fase2', 'census.js'));
+      copyFileSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.js'));
+    }
+    // la carpeta sencera (a Windows, una unió)
     rmSync(join(repo, 'fase1'), { recursive: true });
-    symlinkSync(join(other, 'fase1'), join(repo, 'fase1'), 'dir');
+    symlinkSync(join(other, 'fase1'), join(repo, 'fase1'), process.platform === 'win32' ? 'junction' : 'dir');
     refused(decide(), /enllaços simbòlics, o dins d'una carpeta que ho és, i a l'etiqueta no: fase1\//);
   }),
   "una còpia en un altre commit no decideix": () => withRepo(({ repo, git, decide }) => {

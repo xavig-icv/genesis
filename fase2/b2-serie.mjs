@@ -1,4 +1,4 @@
-// La sèrie preregistrada de B2: quant dura la vida establerta (docs/protocol-b2.md, v0.5). Funcions pures:
+// La sèrie preregistrada de B2: quant dura la vida establerta (docs/protocol-b2.md, v0.6). Funcions pures:
 // la validació de les branques contra el manifest, la primera pèrdua sostinguda, les estimacions amb el
 // bootstrap de mons, les dues proves confirmatòries (el canvi de règim i l'expansió amb corrent, amb la
 // correcció de Holm) i els descriptius. El programa que decideix és fase2/b2-confirmacio.mjs, que comprova el
@@ -6,6 +6,7 @@
 import { readFileSync, readdirSync } from 'fs';
 import { join, basename } from 'path';
 import { makeRng } from '../fase1/soup.js';
+import { establishment, EVENT_SHARE, EVENT_CENSUSES } from './census.js';
 
 // ---- Les branques del manifest
 
@@ -40,6 +41,7 @@ const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 export function validateBranch(records, branch, world, manifest, { commit = null } = {}) {
   const problems = [];
   const p = (msg) => problems.push(`${branch.name}: ${msg}`);
+  const p2 = (msgs) => msgs.forEach(p);
   if (!records.length || records[0].type !== 'start') { p('no comença amb la línia d\'inici'); return problems; }
   const s = records[0], P = manifest.params;
   if (commit && !(s.code && !s.code.includes('+') && commit.startsWith(s.code) && s.code.length >= 7)) p(`el codi és ${s.code}, no el del preregistre`);
@@ -51,6 +53,7 @@ export function validateBranch(records, branch, world, manifest, { commit = null
   for (const k of ['version', 'every', 'sample', 'seed']) {
     if (!s.census || s.census[k] !== P.census[k]) p(`el cens (${k}) no és el del manifest`);
   }
+  p2(startProblems(s, P));
   if (s.command !== `node sim.mjs ${branchCommand(branch, world, manifest).split(' ').slice(1).join(' ')}`) p('l\'ordre no és la del manifest');
   const end = records[records.length - 1];
   if (end.type !== 'end') p('no acaba amb la línia final');
@@ -81,7 +84,20 @@ const KEYS = {
   event: 'confirmed,epoch,type',
   end: 'epoch,event,fingerprint,hoeTransition,reason,seconds,type',
 };
-const isCount = (x, max) => Number.isInteger(x) && x >= 0 && x <= max;
+const START_KEYS = 'census,code,command,diffusion,epochs,event,every,flow,from,mixing,mutation,node,programs,radius,renewal,rng,seed,start,type,world,zlib';
+
+// La capçalera (AU2-72, auditoria 11): els camps exactes que escriu sim.mjs, la mida del món, el cens i el criteri
+// d'establiment (el de fase2/census.js). Els valors de cada branca (llavor, corrent, captura...) els compara
+// validateBranch amb el manifest.
+export function startProblems(s, P) {
+  const out = [];
+  if (Object.keys(s).sort().join(',') !== START_KEYS) out.push('la línia d\'inici no té els camps esperats');
+  if (!Array.isArray(P.world) || s.programs !== P.world[0] * P.world[1]) out.push(`programs és ${s.programs}, i el món de ${P.world.join(' × ')} en té ${P.world[0] * P.world[1]}`);
+  if (!s.census || Object.keys(s.census).sort().join(',') !== 'every,sample,seed,version') out.push('el cens de la línia d\'inici no té els camps esperats');
+  if (!same(s.event, { share: EVENT_SHARE, censuses: EVENT_CENSUSES, stopAfter: null })) out.push('el criteri d\'establiment de la línia d\'inici no és el de fase2/census.js');
+  for (const k of ['code', 'node', 'zlib', 'command', 'from']) if (typeof s[k] !== 'string' || !s[k]) out.push(`${k} no és un text`);
+  return out;
+}
 
 // Els comptadors d'un cens v3, amb les relacions que garanteix fase2/census.js: l'herència sola i la de context
 // s'exclouen (heritable = heritableSolo + heritableContext), cada una implica la replicació del mateix tipus, i
@@ -106,7 +122,8 @@ export function censusProblem(c, cfg) {
 export function structureProblems(records, t, H, P) {
   const out = [], q = (m) => out.push(m);
   const rank = { census: 0, event: 1, measure: 2 };
-  let prev = null, lastSeconds = 0, event = null, measures = 0;
+  let prev = null, lastSeconds = 0, event = null, events = 0, measures = 0;
+  const censuses = [];
   const firstMeasure = (Math.floor(t / P.every) + 1) * P.every;
   const wantMeasures = Math.max(0, Math.floor((t + H - firstMeasure) / P.every) + 1);
   for (let i = 1; i < records.length - 1; i++) {
@@ -117,6 +134,7 @@ export function structureProblems(records, t, H, P) {
     if (!Number.isInteger(at) || at <= t || at > t + H) { q(`la línia ${i + 1} (${r.type}) és fora de l'interval de la branca`); continue; }
     if (prev && (at < prev.at || (at === prev.at && rank[r.type] <= rank[prev.type]))) q(`la línia ${i + 1} (${r.type}, època ${at}) no és en l'ordre de sim.mjs`);
     prev = { at, type: r.type };
+    if (r.type === 'census') censuses.push(r);
     if (r.type === 'measure') {
       if (r.epoch !== firstMeasure + measures * P.every) q(`la mesura de la línia ${i + 1} no és a l'època que toca (${firstMeasure + measures * P.every})`);
       measures++;
@@ -129,17 +147,28 @@ export function structureProblems(records, t, H, P) {
       if (r.seconds < lastSeconds) q(`els segons baixen a la mesura de l'època ${r.epoch}`);
       lastSeconds = Math.max(lastSeconds, Number.isFinite(r.seconds) ? r.seconds : 0);
     } else if (r.type === 'event') {
-      if (event) q('hi ha més d\'un establiment');
-      if (!Number.isInteger(r.epoch) || r.epoch > r.confirmed || (r.confirmed - r.epoch) % P.census.every) q(`l'establiment de la línia ${i + 1} no és coherent amb els censos`);
-      event = r;
+      events++;
+      if (!event) event = r;
     }
+  }
+  // L'establiment (AU2-71, auditoria 11): es recalcula amb els censos i el criteri de fase2/census.js, com fa
+  // sim.mjs. Ha de ser-hi si i només si els censos el donen, una sola vegada, a la mateixa època, confirmat al
+  // cens que toca, i la línia final ha de dir el mateix
+  const every = P.census.every, expected = censuses.length ? establishment(censuses, every) : null;
+  if (events > 1) q('hi ha més d\'un establiment');
+  if (expected === null && event) q(`hi ha un establiment a l'època ${event.epoch}, però els censos no en donen cap`);
+  if (expected !== null && !event) q(`els censos donen un establiment a l'època ${expected}, i el registre no el té`);
+  if (expected !== null && event && (event.epoch !== expected || event.confirmed !== expected + (EVENT_CENSUSES - 1) * every)) {
+    q(`l'establiment és a l'època ${event.epoch} (confirmat a ${event.confirmed}), i els censos el donen a ${expected} (confirmat a ${expected + (EVENT_CENSUSES - 1) * every})`);
   }
   if (measures !== wantMeasures) q(`té ${measures} mesures, i n'hi han de ser ${wantMeasures} (cada ${P.every} èpoques)`);
   const end = records[records.length - 1];
   if (end.type === 'end') {
     if (Object.keys(end).sort().join(',') !== KEYS.end) q('la línia final no té els camps esperats');
     if (!Number.isFinite(end.seconds) || end.seconds < lastSeconds - 1) q('els segons de la línia final no quadren amb els de les mesures');
-    if ((end.event ?? null) !== (event ? event.epoch : null)) q('l\'establiment de la línia final no és el del registre');
+    if ((end.event ?? null) !== expected) q('l\'establiment de la línia final no és el que donen els censos');
+    if (typeof end.fingerprint !== 'string' || !/^[0-9a-f]{1,8}$/.test(end.fingerprint)) q('l\'empremta del món de la línia final no és una empremta (FNV-1a, en hexadecimal)');
+    if (end.hoeTransition !== null && !(Number.isInteger(end.hoeTransition) && end.hoeTransition > t && end.hoeTransition <= t + H)) q('la transició de l\'HOE de la línia final no és una època de la branca');
   }
   return out;
 }
