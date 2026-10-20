@@ -182,6 +182,9 @@ const tests = {
   "un enllaç simbòlic a una còpia idèntica, o una carpeta enllaçada, atura la decisió (AUD-88)": () => withRepo(({ repo, decide }) => {
     const other = join(repo, '..', 'altre');
     for (const d of ['fase1', 'fase2']) cpSync(join(repo, d), join(other, d), { recursive: true });   // els mòduls que importa
+    // i el package.json ("type": "module"): sense, Node 16 llegeix els .js de l'altra carpeta com a CommonJS i el
+    // programa cau abans de la comprovació (Node 20 detecta la sintaxi tot sol). Un atac de debò el copiaria
+    copyFileSync(join(repo, 'package.json'), join(other, 'package.json'));
     try { symlinkSync(join(other, 'fase2', 'census.js'), join(repo, 'fase2', 'census.enllac-prova.js'), 'file'); }
     catch (e) { console.log(`        (omesa: no es poden crear enllaços simbòlics en aquest sistema, ${e.code})`); return; }
     rmSync(join(repo, 'fase2', 'census.enllac-prova.js'));
