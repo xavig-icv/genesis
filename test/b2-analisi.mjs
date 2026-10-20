@@ -1,4 +1,5 @@
-// Proves de l'anàlisi exploratòria de B2 (fase2/b2-analisi.mjs), amb branques sintètiques.
+// Proves de l'anàlisi exploratòria de B2 (fase2/b2-analisi.mjs), amb branques sintètiques, i de la del pilot
+// (eines/b2-pilot.mjs), amb els registres de git.
 // Executa: node test/b2-analisi.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
@@ -7,6 +8,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { readBranch, death, lifespan, signTest, analyse, RULES } from '../fase2/b2-analisi.mjs';
+import { pilot } from '../eines/b2-pilot.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const census = { version: 'v3', every: 250, sample: 2048, seed: 20261016 };
@@ -28,6 +30,13 @@ function branch(file, { group, seed, mixing, t, heritable, replicating = heritab
 function withTmp(fn) { const tmp = mkdtempSync(join(tmpdir(), 'b2-')); try { return fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
 
 const tests = {
+  // L'anàlisi del pilot (eines/b2-pilot.mjs), amb els registres de git: el que diu fase2/resultats/b2/pilot/LLEGEIX-ME.md
+  "l'anàlisi del pilot reprodueix el LLEGEIX-ME: la mateixa història, 2 pèrdues i cap de tardana, i el cost": () => {
+    const r = pilot();
+    assert.deepStrictEqual([r.same, r.branches, r.losses, r.late], [14, 14, 2, 0]);
+    assert.deepStrictEqual([4000, 5000, 6000].map((H) => r.hours(H).toFixed(1)), ['4.3', '5.6', '7.0']);
+    assert.ok(r.lines.some((l) => /^1\. La mateixa història: 14 de 14 .*HOE difereix com a molt 1\.7e-3/.test(l)), r.lines[0]);
+  },
   "una branca: grup, llavor d'origen, t i horitzó": () => withTmp((tmp) => {
     const b = readBranch(branch(join(tmp, 'B2002-m0.jsonl'), { group: 'B', seed: 2002, mixing: 0, t: 7000, heritable: [50, 50, 50, 50, 50, 50, 50, 50] }));
     assert.deepStrictEqual([b.group, b.originSeed, b.mixing, b.t, b.horizon, b.complete], ['B', 2002, 0, 7000, 2000, true]);

@@ -215,6 +215,17 @@ const tests = {
     const r = bash('seguiment.sh', [dir]);
     assert.match(r.stdout, /registres complets dels acabats: 0 de 1 {3}INCOMPLETS: petit/);
   }, withJson),
+  "seguiment.sh: si no troba el JSONL d'un acabat, ho diu a part i no el compta com a incomplet": () => withBatch((dir, list) => {
+    bash('llanca-lot.sh', ['1', dir, list]);
+    rmSync(join(dir, 'petit.jsonl'));            // com si el seguiment s'executés des d'una altra còpia
+    let r = bash('seguiment.sh', [dir]);
+    assert.match(r.stdout, /registres complets dels acabats: 0 de 1 {3}SENSE JSONL: petit$/m);
+    assert.doesNotMatch(r.stdout, /INCOMPLETS/);
+    assert.match(r.stdout, /no es troben els JSONL de 1 acabats: .*executa el seguiment des d'aquella còpia/);
+    r = bash('seguiment.sh', ['--agregat', dir]);
+    assert.match(r.stdout, /no es troben els JSONL de 1 acabats/);
+    assert.doesNotMatch(r.stdout, /petit/);
+  }, withJson),
   // Abans, una còpia neta de git aturava llanca-lot.sh sense escriure res (set -e i un "&&" dins de la
   // substitució del codi). Es prova en una còpia mínima del simulador, en els tres casos.
   "el codi del lot: còpia neta de git, còpia amb canvis i sense git (VERSIO)": () => withBatch((dir, list) => {
