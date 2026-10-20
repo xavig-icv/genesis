@@ -68,6 +68,9 @@ La Fase 1 del projecte reprodueix aquest resultat.
     cada ~5·10⁶ programes.
   - **La mutació a l'atzar,** amb l'histograma de bytes de la mateixa sopa i a un ritme de canvi semblant,
     en necessita 1,0–1,9·10⁷, 2 a 4 vegades més.
+  - **Aquest factor el calculem nosaltres:** l'article no el dona. Comparem programes provats amb programes
+    provats: els de la taula 1 amb els ~5·10⁶ de l'experiment 3.1, que l'article també dona com a ~2,5·10⁶
+    interaccions de dos programes (AUD-92).
   - **Només superen la sopa** el remostreig complet de cada cinta i les distribucions fetes a mà (CUST i
     CUST64).
   - **L'histograma de la sopa** es va mesurar poc abans que un replicador la prengués, és a dir, ja madur.
@@ -277,6 +280,12 @@ petit (X-020). Els dos auditors demanen comprovar abans la novetat de cada candi
 X-022). La revisió es va fer el 19-10-2026. Les afirmacions clau s'han comprovat al text de 2024 i al de
 Knierim, Cicala i Jha (2026).
 
+**Què vol dir "no l'hem trobat"** (AU2-69, auditoria 10). Vol dir que no surt a les fonts que hem revisat; no
+demostra que no existeixi. No és una revisió sistemàtica. Abans de cap afirmació pública de novetat, cal fer una
+matriu comparativa amb els textos originals i una revisió humana especialitzada. Dos antecedents ja limiten les
+formulacions generals: la fase d'autoorganització prèvia de Greenbaum i Pargellis (2017) i la independència de la
+mida que diuen Chou i Reggia (1997) (§5).
+
 **1. L'enverinament per zeros i el successor resistent: conegut.**
 - **Què ja se sap:** l'article de 2024 en descriu el fenomen i el relleu (fig. 2, §1). A Z80 hi ha
   successions semblants, però les atribueixen a la robustesa i a l'espai lliure (Cicala i altres, 2026).
@@ -290,8 +299,8 @@ Knierim, Cicala i Jha (2026).
 - **Què no hem trobat enlloc:** cap prova a una edat fixada, que continuï, barregi o reiniciï la sopa, ni cap
   estimació del risc d'aparició segons l'edat.
 - **Per què hi ha lloc:** les dades de Knierim i altres ho permeten. Amb el seu propi histograma, ja madur, i al
-  seu ritme de canvi, la mutació a l'atzar és 2 a 4 vegades més lenta que la sopa (§1). Aquesta diferència
-  podria ser l'estructura que la sopa ha acumulat.
+  seu ritme de canvi, la mutació a l'atzar és 2 a 4 vegades més lenta que la sopa, segons un càlcul nostre (§1).
+  Aquesta diferència podria ser l'estructura que la sopa ha acumulat.
 - **La prova que la separaria:** a una edat fixada, en mons sense replicadors, fer branques que continuïn, que
   barregin els bytes (amb el mateix histograma) o que reiniciïn la sopa.
 - **El que hi tenim:** un indici feble, només als mons quiets de la llei 2. El ritme d'aparició passa de 2,8 a
@@ -308,8 +317,8 @@ Knierim, Cicala i Jha (2026).
 
 **4. La persistència i el canvi de llei: en part, un buit.**
 - **El buit, confirmat:** no hem trobat distribucions publicades de la durada de la vida BFF espontània (§3).
-- **La dependència de la història** sí que té un precedent, amb trasplantaments de llinatges sembrats (Jha i
-  altres, 2026, A.2).
+- **La dependència de la història** sí que té un precedent, amb proves d'invasió: replicadors de llinatges
+  evolucionats, sembrats a l'1 % en una sopa nova (Jha i altres, 2026, A.2).
 - **El que no hem trobat:** cap prova que canviar la llei del món, després que la vida s'hi hagi establert,
   n'alteri la persistència.
 
