@@ -8,8 +8,9 @@
 # surt a dos lots compta una sola vegada.
 #
 # Dels acabats, comprova que el registre sigui complet: la línia "empremta del món" (sense mostrar-ne el
-# valor) i, si l'ordre del registre porta --json, que el JSONL acabi amb la línia final. Dels que són en
-# marxa, diu quanta estona fa que no escriuen. No mostra mai cap xifra dels registres ni dels JSONL.
+# valor) i, si l'ordre del registre porta --json, que el JSONL acabi amb la línia final. Si no troba el JSONL,
+# ho diu a part, perquè sol voler dir que el seguiment s'executa des d'una altra còpia del repositori. Dels que
+# són en marxa, diu quanta estona fa que no escriuen. No mostra mai cap xifra dels registres ni dels JSONL.
 #
 # Amb --agregat no escriu cap nom, només els recomptes i el temps màxim sense escriure. És per a les
 # sèries confirmatòries: l'ordre en què acaben els experiments pot revelar-ne el resultat, perquè un
@@ -38,15 +39,23 @@ names() { [[ -z "$STATES" ]] || awk -v st="$1" '$2 == st { print $1 }' <<< "$STA
 DONE=$(names acabat); FAILED=$(names fallat); RUNNING=$(names marxa)
 n() { if [[ -z "$1" ]]; then echo 0; else wc -l <<< "$1"; fi; }
 
+# 0: complet; 1: incomplet; 2: no es troba el JSONL. Els camins de --json són relatius a la còpia del repositori
+# on corre el lot: si el seguiment s'executa des d'una altra còpia, no els troba, i no vol dir que siguin incomplets.
 complete() {
   local log="$DIR/$1.log" json
   grep -q "empremta del món" "$log" 2> /dev/null || return 1
   json=$(head -n 1 "$log" | grep -o -- '--json [^ ]*' | cut -d' ' -f2 || true)
   [[ -z "$json" ]] && return 0
+  [[ -e "$json" ]] || return 2
   [[ -s "$json" ]] && tail -n 1 "$json" | grep -q '"type":"end"'
 }
-ok=0; incomplete=""
-for name in $DONE; do if complete "$name"; then ok=$((ok + 1)); else incomplete+=" $name"; fi; done
+ok=0; incomplete=""; missing=""
+for name in $DONE; do
+  rc=0; complete "$name" || rc=$?
+  case $rc in 0) ok=$((ok + 1)) ;; 2) missing+=" $name" ;; *) incomplete+=" $name" ;; esac
+done
+nmissing=$(n "$(tr ' ' '\n' <<< "$missing" | sed '/^$/d')")
+hint="no es troben els JSONL de $nmissing acabats: els camins de --json són relatius a la còpia on corre el lot; executa el seguiment des d'aquella còpia"
 
 echo "lots: ${#LOTS[@]}"
 for f in "${LOTS[@]}"; do
@@ -66,9 +75,11 @@ for name in $RUNNING; do
 done
 if [[ $AGG -eq 1 ]]; then
   echo "registres complets dels acabats: $ok de $(n "$DONE")"
+  if [[ -n "$missing" ]]; then echo "$hint"; fi
   if [[ -n "$RUNNING" ]]; then echo "el que fa més estona que no escriu: $max min"; fi
 else
-  echo "registres complets dels acabats: $ok de $(n "$DONE")$([[ -n "$incomplete" ]] && echo "   INCOMPLETS:$incomplete")"
+  echo "registres complets dels acabats: $ok de $(n "$DONE")$([[ -n "$incomplete" ]] && echo "   INCOMPLETS:$incomplete")$([[ -n "$missing" ]] && echo "   SENSE JSONL:$missing")"
+  if [[ -n "$missing" ]]; then echo "$hint"; fi
   if [[ -n "$FAILED" ]]; then echo "fallats: $(echo $FAILED)"; fi
   printf '%s' "$lines"
 fi

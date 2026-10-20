@@ -49,6 +49,8 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   - **El manifest** el genera `node eines/b2-manifest.mjs --disseny i|ii --estat esborrany|final`, amb els noms opacs
     i les màquines.
   - **La cobertura dels intervals i la potència:** `node eines/b2-cobertura.mjs`.
+  - **La prolongació pilot** (descriptiva, per fixar H i K): `node eines/b2-pilot.mjs`, amb els registres de
+    `fase2/resultats/b2/pilot`.
   - **La lectura de resultats:** `--prova` no llegeix mai la carpeta de la sèrie de veritat. Els resultats només es
     miren amb `--decideix`.
   - **Els programes confirmatoris nous** comproven el preregistre (`fase2/preregistre.mjs`, només mòduls de Node)
