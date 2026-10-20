@@ -10,7 +10,7 @@ import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import {
   lossTime, restricted, validateBranch, readSeries, survival, rmstShare, survivalCurve, bootstrap, interval,
-  regimeDiffs, spreadDiffs, signTest, holm, branchCommand, conditionMixing, analyse, costsByWindow,
+  regimeDiffs, spreadDiffs, signTest, holm, branchCommand, conditionMixing, analyse, costsByWindow, decisionLines,
 } from '../fase2/b2-serie.mjs';
 import { buildManifest } from '../eines/b2-manifest.mjs';
 import { calibrate, spreadPower } from '../eines/b2-cobertura.mjs';
@@ -314,6 +314,28 @@ const tests = {
     const r = (d, K) => spreadPower(d, { K });
     assert.deepStrictEqual([r(14.6, 1).global, r(14.6, 2).global, r(10, 2).global].map((x) => Math.round(100 * x)), [74, 85, 50]);
     for (const [d, K] of [[7, 1], [10, 2], [14.6, 2]]) assert.ok(r(d, K).global - r(d, K).conjunct < 0.02);
+  },
+  // AU2-74 (auditoria 12): amb 7 mons a favor, cap en contra i 22 empats, la prova 1 es rebutja, però la frase no pot
+  // dir "la majoria dels mons"
+  'la frase de la decisió 1 parla dels mons amb una diferència de durada, no de tots (AU2-74)': () => {
+    const m = smallManifest();
+    m.bootstrap = { ...m.bootstrap, reps: 50 };
+    const alive = { H: 1000, T: 1000, event: false, recovered: false, final1pct: true, finalR2: true, shares: [0.5, 0.5, 0.5, 0.5], costs: [], successor: false };
+    const dead = { ...alive, T: 250, event: true, final1pct: false, finalR2: false };
+    const worlds = Array.from({ length: 29 }, (_, i) => ({ id: `w${i}`, group: i < 12 ? 'A' : 'B', origen: [alive, alive], canvi: i < 7 ? [dead, dead] : [alive, alive] }));
+    const res = analyse(worlds, m);
+    assert.deepStrictEqual([res.tests.regime.neg, res.tests.regime.pos, res.tests.regime.ties, res.tests.regime.p, res.tests.regime.rejected], [7, 0, 22, 1 / 128, true]);
+    const [one, two] = decisionLines(res, m);
+    assert.match(one, /^DECISIÓ 1 \(el canvi de règim\): es rebutja H0: entre els mons amb una diferència de durada, predominen/);
+    assert.match(one, /més curta: 7, més llarga: 0, iguals: 22/);
+    assert.doesNotMatch(one, /majoria/);
+    assert.match(two, /^DECISIÓ 2 \(l'expansió amb corrent\): no es rebutja H0: no concloent/);
+  },
+  "una transició de l'HOE a la línia final d'una branca: error, perquè sim.mjs no en detecta mai cap (AUD-101)": () => {
+    const m = smallManifest(), b = m.branches[0], w = m.worlds.find((x) => x.id === b.world);
+    const ok = records(b, w, m, ALIVE);
+    const bad = [...ok.slice(0, -1), { ...ok[ok.length - 1], hoeTransition: w.t + 500 }];
+    assert.match(validateBranch(bad, b, w, m).join(), /transició de l'HOE/);
   },
   'Holm: la p més petita amb α/2, i l\'altra amb α només si la primera es rebutja': () => {
     const pick = (r) => r.map((x) => [x.rejected, x.threshold]);

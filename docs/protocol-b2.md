@@ -1,14 +1,14 @@
 # Protocol de B2 · quant dura la vida establerta
 
-**Versió preregistrada: v0.6 (20-10-2026).** És la que porta l'etiqueta anotada `preregistre-b2`, amb el
+**Versió preregistrada: v0.7 (20-10-2026).** És la que porta l'etiqueta anotada `preregistre-b2`, amb el
 manifest `fase2/serie-b2.json` en estat `final` (AUD-97). No s'ha llançat cap branca d'aquesta sèrie.
-- **D'on surt:** incorpora les auditories 9, 10 i 11, la segona prova confirmatòria (X-020 a X-022), la
+- **D'on surt:** incorpora les auditories 9 a 12, la segona prova confirmatòria (X-020 a X-022), la
   prolongació pilot (`fase2/resultats/b2/pilot/`) i les decisions del responsable (`docs/disseny.md`).
 - **Els valors són tots fixats.** El disseny, l'interval, les proves, la regla per origen i com es comuniquen
-  els resultats ja no tenen cap marca de "pilot" ni d'"obert" (§14, §15).
+  els resultats ja no tenen cap marca de "pilot" ni d'"obert" (§14 a §16).
 - **El procediment:**
-  1. l'auditoria 11 va revisar les correccions de l'auditoria 10, i els dos auditors revisen el diferencial de
-     les seves (§15) abans de l'etiqueta;
+  1. les auditories 11 i 12 van revisar les correccions de les anteriors, i els dos auditors comproven les frases de
+     la §16 abans de l'etiqueta;
   2. si tots dos hi donen el vistiplau, aquest commit fa de preregistre, amb l'etiqueta anotada
      `preregistre-b2` i un segell d'OpenTimestamps abans de la primera branca (§9);
   3. després, cap canvi no es fa sense justificar-lo aquí, amb data i motiu, abans de mirar cap resultat.
@@ -183,8 +183,8 @@ Amb les branques de la condició d'origen:
     (§5), i 0 si es censura a *H*.
   - **El temps observat** és *T_ik*: el de la pèrdua, o *H* si es censura. *(Corregit a l'auditoria 11, AUD-95 i
     AU2-73: la v0.5 escrivia [*T_ik* > *H*], que val 0 a totes les branques, perquè la censura dona *T* = *H*.)*
-- **la corba de supervivència en els censos,** S(τ) = (1/29) Σ_i (1/*K*) Σ_k [no hi ha pèrdua confirmada fins a
-  τ], amb el mateix pes per món, i la mediana si s'hi arriba (pot quedar sense estimar).
+- **la corba de supervivència en els censos,** S(τ) = (1/29) Σ_i (1/*K*) Σ_k [*T_ik* > τ o la branca no té cap
+  pèrdua], és a dir, sense cap pèrdua datada a τ o abans (AUD-102), amb el mateix pes per món, i la mediana si s'hi arriba (pot quedar sense estimar).
   - **Què és:** com que tota la censura és a *H*, és el mateix que un Kaplan–Meier ponderat per món.
   - **Què no és:** un Kaplan–Meier de branques. *(Corregit a l'auditoria 11, AUD-95: la v0.5 deia
     "Kaplan–Meier".)*
@@ -303,8 +303,13 @@ Amb les branques de la condició d'origen:
   - **Per què és correcte:** Holm és una prova tancada. La hipòtesi conjunta (cap dels dos efectes) es rebutja
     quan la *p* més petita passa d'α/2, i el programa fa un subconjunt dels rebuigs que faria Holm.
 - **Què diuen les decisions:** exactament el que posen a prova les hipòtesis operatives (AUD-96).
-  - **La prova 1:** "en la majoria dels mons, la vida dura menys quan el món canvia de condició".
-  - **La prova 2:** "en la majoria dels mons, i en més de la meitat dels de cada origen, la vida establerta té
+  - **La prova 1:** "entre els mons amb una diferència de durada, predominen els que la tenen més curta quan el món
+    canvia de condició", amb quants n'hi ha de més curts, de més llargs i d'iguals. La prova de signes no compta els
+    empats, i per tant no diu res de la majoria de tots els mons. *(Corregit a l'auditoria 12, AU2-74: la v0.6
+    deia "en la majoria dels mons". Amb 7 mons a favor, cap en contra i 22 empats, la prova es rebutja, i la frase
+    seria falsa.)*
+  - **La prova 2:** aquesta sí que parla de tots els mons, perquè la regla conjunta en demana més de la meitat a
+    cada origen: "en la majoria dels mons, i en més de la meitat dels de cada origen, la vida establerta té
     més hereditaris als 8 primers censos amb corrent que sense".
   - **El que no diuen:** res de la durada mitjana ni de la mida mitjana de l'efecte (§10).
 - **El programa** escriu les dues decisions per separat, cadascuna amb el seu llindar. La de l'expansió també
@@ -386,7 +391,7 @@ Amb les branques de la condició d'origen:
       època, confirmada al cens que toca, i la línia final ha de dir el mateix;
     - **la capçalera i la línia final** (AU2-72): els camps exactes, `programs` igual a la mida del món, el
       criteri d'establiment de `fase2/census.js`, una empremta del món en hexadecimal i una transició de l'HOE
-      que, si n'hi ha, és dins de la branca.
+      nul·la, perquè `sim.mjs` no la detecta mai en una branca (AUD-101).
 
   Qualsevol diferència és un error, i el programa no calcula res.
 - **La comprovació del preregistre** també rebutja els enllaços simbòlics que no siguin a l'etiqueta, i els
@@ -533,3 +538,12 @@ dues proves confirmatòries (§12), i les decisions finals són a la §14 (AU2-7
 | "Versió preregistrada", en lloc d'"esborrany" | AUD-97 |
 | Les 29 captures, a totes dues màquines, abans de la primera branca i abans de decidir (§7) | AUD-98 |
 | El cas de la carpeta de la prova d'AUD-88, també a Windows (§8) | AUD-99 |
+
+## 16. Canvis respecte de la v0.6 (auditoria 12)
+
+| Què | Per què |
+|---|---|
+| La frase de la decisió 1 parla dels mons amb una diferència de durada, no de tots, i en diu els recomptes (§6.4) | AU2-74: amb molts empats, la prova es rebutja sense que la majoria de tots els mons tingui l'efecte |
+| Les frases de les decisions surten d'una funció del programa, `decisionLines()`, amb una prova | AU2-74 |
+| La transició de l'HOE, nul·la a totes les branques (§8) | AUD-101 |
+| La corba: "sense cap pèrdua datada a τ o abans" (§6.1) | AUD-102 |

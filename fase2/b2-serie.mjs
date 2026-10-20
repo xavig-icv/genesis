@@ -1,4 +1,4 @@
-// La sèrie preregistrada de B2: quant dura la vida establerta (docs/protocol-b2.md, v0.6). Funcions pures:
+// La sèrie preregistrada de B2: quant dura la vida establerta (docs/protocol-b2.md, v0.7). Funcions pures:
 // la validació de les branques contra el manifest, la primera pèrdua sostinguda, les estimacions amb el
 // bootstrap de mons, les dues proves confirmatòries (el canvi de règim i l'expansió amb corrent, amb la
 // correcció de Holm) i els descriptius. El programa que decideix és fase2/b2-confirmacio.mjs, que comprova el
@@ -168,7 +168,8 @@ export function structureProblems(records, t, H, P) {
     if (!Number.isFinite(end.seconds) || end.seconds < lastSeconds - 1) q('els segons de la línia final no quadren amb els de les mesures');
     if ((end.event ?? null) !== expected) q('l\'establiment de la línia final no és el que donen els censos');
     if (typeof end.fingerprint !== 'string' || !/^[0-9a-f]{1,8}$/.test(end.fingerprint)) q('l\'empremta del món de la línia final no és una empremta (FNV-1a, en hexadecimal)');
-    if (end.hoeTransition !== null && !(Number.isInteger(end.hoeTransition) && end.hoeTransition > t && end.hoeTransition <= t + H)) q('la transició de l\'HOE de la línia final no és una època de la branca');
+    // a una branca (--from), sim.mjs no detecta mai la transició de l'HOE: sempre és nul·la (AUD-101, auditoria 12)
+    if (end.hoeTransition !== null && (records[0].from || !(Number.isInteger(end.hoeTransition) && end.hoeTransition > t && end.hoeTransition <= t + H))) q('la transició de l\'HOE de la línia final no és nul·la, i en una branca sempre ho és');
   }
   return out;
 }
@@ -481,4 +482,25 @@ export function analyse(worlds, manifest) {
       spread: { ...ss, ...h2, holmRejected: h2.rejected, coherent, byOrigin, rejected: h2.rejected && coherent, median: medianOf(sd) },
     },
   };
+}
+
+// ---- Les dues decisions, en text (protocol §6.4)
+
+// La prova 1 compara els signes només entre els mons amb una diferència de durada: els empats no hi compten. La
+// frase parla, doncs, d'aquests mons, no de tots (AU2-74, auditoria 12: amb 7 mons a favor, cap en contra i 22
+// empats, la prova es rebutja, i "la majoria dels mons" seria fals). La prova 2 sí que pot parlar de la majoria de
+// tots, perquè la regla conjunta demana més de la meitat dels mons de cada origen. Un no-rebuig és no concloent.
+export function decisionLines(result, manifest) {
+  const { regime, spread } = result.tests, n = manifest.tests.spread.censuses;
+  const p = (t) => `p = ${t.p.toFixed(4)}${t.threshold === null ? '; no s\'hi arriba amb Holm' : `, llindar de Holm ${t.threshold}`}`;
+  const counts = `més curta: ${regime.neg}, més llarga: ${regime.pos}, iguals: ${regime.ties}`;
+  const origins = `A: ${spread.byOrigin.A.pos} de ${spread.byOrigin.A.n}; B: ${spread.byOrigin.B.pos} de ${spread.byOrigin.B.n}`;
+  const one = regime.rejected
+    ? `DECISIÓ 1 (el canvi de règim): es rebutja H0: entre els mons amb una diferència de durada, predominen els que la tenen més curta quan el món canvia de condició (${counts}; ${p(regime)})`
+    : `DECISIÓ 1 (el canvi de règim): no es rebutja H0: no concloent; la sèrie no permet afirmar que, entre els mons amb una diferència de durada, predominin els que la tenen més curta quan el món canvia de condició, i la potència era baixa (protocol §6.2) (${counts}; ${p(regime)})`;
+  let two;
+  if (spread.rejected) two = `DECISIÓ 2 (l'expansió amb corrent): es rebutja H0: en la majoria dels mons, i en més de la meitat dels de cada origen, la vida establerta té més hereditaris als ${n} primers censos amb corrent que sense (${origins}; ${p(spread)})`;
+  else if (spread.holmRejected) two = `DECISIÓ 2 (l'expansió amb corrent): no es rebutja H0: la prova global surt, però el corrent no dona més vida a més de la meitat dels mons de tots dos orígens (${origins}), i no es pot atribuir al corrent (protocol §6.3) (${p(spread)})`;
+  else two = `DECISIÓ 2 (l'expansió amb corrent): no es rebutja H0: no concloent; la sèrie no permet afirmar que, en la majoria dels mons, la vida establerta tingui més hereditaris als ${n} primers censos amb corrent que sense (${origins}; ${p(spread)})`;
+  return [one, two];
 }
