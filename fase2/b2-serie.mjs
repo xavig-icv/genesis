@@ -414,13 +414,13 @@ export function analyse(worlds, manifest) {
     const ws = worlds.filter((w) => w.group === g);
     if (ws.length) lines.push(`  origen ${g} (${ws.length} mons): sense pèrdua ${pct(survival(ws, 'origen'))}`);
   }
-  const st = signTest(regimeDiffs(worlds, test, every), test.sided, { expect: 'negatiu' });
+  const rd = regimeDiffs(worlds, test, every), st = signTest(rd, test.sided, { expect: 'negatiu' });
   lines.push('', `Prova 1, el canvi de règim (horitzó ${test.horizon}, prova de signes ${test.sided}):`);
-  lines.push(`  mons on la vida dura menys amb el canvi: ${st.neg}; més: ${st.pos}; igual: ${st.ties}; p = ${st.p.toFixed(4)}`);
+  lines.push(`  mons on la vida dura menys amb el canvi: ${st.neg}; més: ${st.pos}; igual: ${st.ties}; p = ${st.p.toFixed(4)} (bilateral, descriptiva: ${signTest(rd, 'bilateral').p.toFixed(4)})`);
   const sp = tests.spread, sd = spreadDiffs(worlds, sp);
   const ss = signTest(sd, sp.sided, { expect: 'positiu' });
   lines.push('', `Prova 2, l'expansió amb corrent (els ${sp.censuses} primers censos, prova de signes ${sp.sided}):`);
-  lines.push(`  mons amb més vida amb corrent: ${ss.pos}; menys: ${ss.neg}; igual: ${ss.ties}; p = ${ss.p.toFixed(4)}`);
+  lines.push(`  mons amb més vida amb corrent: ${ss.pos}; menys: ${ss.neg}; igual: ${ss.ties}; p = ${ss.p.toFixed(4)} (bilateral, descriptiva: ${signTest(sd, 'bilateral').p.toFixed(4)})`);
   lines.push(`  diferència mediana: ${(100 * medianOf(sd)).toFixed(1)} punts`);
   const byOrigin = spreadByOrigin(worlds, sd);
   for (const g of ['A', 'B']) {
