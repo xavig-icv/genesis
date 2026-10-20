@@ -1,14 +1,16 @@
 # Protocol de B2 · quant dura la vida establerta
 
-**Estat: esborrany v0.5 (20-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
-- **D'on surt:** incorpora les auditories 9 i 10, la segona prova confirmatòria (X-020 a X-022), la prolongació
-  pilot (`fase2/resultats/b2/pilot/`) i les decisions del responsable (`docs/disseny.md`).
+**Versió preregistrada: v0.6 (20-10-2026).** És la que porta l'etiqueta anotada `preregistre-b2`, amb el
+manifest `fase2/serie-b2.json` en estat `final` (AUD-97). No s'ha llançat cap branca d'aquesta sèrie.
+- **D'on surt:** incorpora les auditories 9, 10 i 11, la segona prova confirmatòria (X-020 a X-022), la
+  prolongació pilot (`fase2/resultats/b2/pilot/`) i les decisions del responsable (`docs/disseny.md`).
 - **Els valors són tots fixats.** El disseny, l'interval, les proves, la regla per origen i com es comuniquen
-  els resultats ja no tenen cap marca de "pilot" ni d'"obert" (§14).
+  els resultats ja no tenen cap marca de "pilot" ni d'"obert" (§14, §15).
 - **El procediment:**
-  1. una auditoria 11 curta revisa les correccions de l'auditoria 10 (decisió del responsable, 20-10-2026);
-  2. si tots dos auditors hi donen el vistiplau, el *merge* de la versió aprovada farà de preregistre, amb
-     l'etiqueta anotada `preregistre-b2` i un segell d'OpenTimestamps abans de la primera branca (§9);
+  1. l'auditoria 11 va revisar les correccions de l'auditoria 10, i els dos auditors revisen el diferencial de
+     les seves (§15) abans de l'etiqueta;
+  2. si tots dos hi donen el vistiplau, aquest commit fa de preregistre, amb l'etiqueta anotada
+     `preregistre-b2` i un segell d'OpenTimestamps abans de la primera branca (§9);
   3. després, cap canvi no es fa sense justificar-lo aquí, amb data i motiu, abans de mirar cap resultat.
 
 ## 1. Les preguntes
@@ -175,10 +177,17 @@ Les branques d'un món no són rèpliques independents.
 ### 6.1 La principal: la durada en el seu món (estimació)
 
 Amb les branques de la condició d'origen:
-- **S_orig(*H*)** = (1/29) Σ_i mitjana_k [ *T_ik* > *H* ]: la proporció sense pèrdua fins a *H*, amb el mateix
-  pes per món;
-- **la corba de supervivència** (Kaplan–Meier) de *T*, amb la censura a *H*, i la mediana si s'hi arriba (pot
-  quedar sense estimar);
+- **S_orig(*H*)** = (1/29) Σ_i (1/*K*) Σ_k (1 − δ_ik): la proporció de branques **sense cap pèrdua confirmada**
+  fins a *H*, amb el mateix pes per món.
+  - **δ_ik** val 1 si la branca *k* del món *i* té una primera pèrdua sostinguda confirmada dins de l'horitzó
+    (§5), i 0 si es censura a *H*.
+  - **El temps observat** és *T_ik*: el de la pèrdua, o *H* si es censura. *(Corregit a l'auditoria 11, AUD-95 i
+    AU2-73: la v0.5 escrivia [*T_ik* > *H*], que val 0 a totes les branques, perquè la censura dona *T* = *H*.)*
+- **la corba de supervivència en els censos,** S(τ) = (1/29) Σ_i (1/*K*) Σ_k [no hi ha pèrdua confirmada fins a
+  τ], amb el mateix pes per món, i la mediana si s'hi arriba (pot quedar sense estimar).
+  - **Què és:** com que tota la censura és a *H*, és el mateix que un Kaplan–Meier ponderat per món.
+  - **Què no és:** un Kaplan–Meier de branques. *(Corregit a l'auditoria 11, AUD-95: la v0.5 deia
+    "Kaplan–Meier".)*
 - **la durada mitjana restringida, RMST_orig(*H*)** = (1/29) Σ_i mitjana_k min(*T_ik*, *H*). És una durada
   restringida a *H*, no la durada mitjana de la vida;
 - **per origen** (A i B), i amb tot junt.
@@ -206,8 +215,14 @@ Amb les branques de la condició d'origen:
     La diferència entre tots dos és dins de l'error de la simulació (±1,1 punts).
   - **El que no garanteix:** les simulacions fan servir un sol model de riscos. L'interval no és una garantia
     exacta del 95 %.
-- **Si totes les branques donen el mateix** (totes sense pèrdua), l'interval que dona el mètode triat; mai un
-  NaN.
+- **Si tots els mons donen el mateix valor,** el *bootstrap* no té variació, i el programa no fa servir el logit
+  (AU2-73).
+  - **Si S = 1** (cap pèrdua): el límit inferior exacte de Clopper–Pearson amb els mons com a unitats,
+    (α/2)^(1/29) = 0,881.
+  - **Si S = 0:** el límit superior, 1 − 0,881.
+  - **Si tots els mons tenen el mateix valor intermedi** (per exemple, una de les dues llavors amb pèrdua a tots):
+    el valor, sense interval, i el programa diu "cap variació".
+  - **En cap cas** no dona un NaN.
 
 ### 6.2 La primera confirmatòria: el canvi de règim
 
@@ -278,8 +293,20 @@ Amb les branques de la condició d'origen:
 
 - **La regla:**
   1. La prova amb la *p* més petita es compara amb α/2.
-  2. Si es rebutja, l'altra es compara amb α.
-  3. Si no es rebutja, no es rebutja cap de les dues.
+  2. Si la *p* hi passa, l'altra es compara amb α.
+  3. Si no hi passa, no es rebutja cap de les dues.
+- **Amb la regla conjunta de l'expansió** (§6.3), "passar el llindar de Holm" i "rebutjar H₀" no són el mateix
+  (AUD-96).
+  - **El llindar:** el decideix només la *p*. Si la de l'expansió passa el llindar de Holm, la del canvi de
+    règim es compara amb α, tant si es compleix la regla conjunta com si no.
+  - **El rebuig:** l'expansió només es rebutja si a més es compleix la regla.
+  - **Per què és correcte:** Holm és una prova tancada. La hipòtesi conjunta (cap dels dos efectes) es rebutja
+    quan la *p* més petita passa d'α/2, i el programa fa un subconjunt dels rebuigs que faria Holm.
+- **Què diuen les decisions:** exactament el que posen a prova les hipòtesis operatives (AUD-96).
+  - **La prova 1:** "en la majoria dels mons, la vida dura menys quan el món canvia de condició".
+  - **La prova 2:** "en la majoria dels mons, i en més de la meitat dels de cada origen, la vida establerta té
+    més hereditaris als 8 primers censos amb corrent que sense".
+  - **El que no diuen:** res de la durada mitjana ni de la mida mitjana de l'efecte (§10).
 - **El programa** escriu les dues decisions per separat, cadascuna amb el seu llindar. La de l'expansió també
   diu quants mons de cada origen són a favor.
 - **Si no es rebutja H₀,** es diu que la sèrie no ho permet afirmar. No es tria després cap variant de les
@@ -320,8 +347,11 @@ Amb les branques de la condició d'origen:
   - **Per això,** durant la sèrie ningú no obre les llistes ni els registres.
 - **El seguiment, només agregat:** `eines/seguiment.sh --agregat`. Durant la sèrie no es mira cap resultat.
 - **L'acta de la sèrie** (a `fase2/resultats/b2/confirmacio/`), abans de la primera branca:
-  - **Les captures** (AU2-66): `node eines/b2-captures.mjs --maquina pc > captures-pc.txt` al PC, i el mateix
-    amb `vm` a la màquina virtual, des de la carpeta del commit de l'etiqueta. Totes han de ser correctes.
+  - **Les captures** (AU2-66, AUD-98): `node eines/b2-captures.mjs > captures-pc.txt` al PC, i el mateix, amb
+    `captures-vm.txt`, a la màquina virtual, des de la carpeta del commit de l'etiqueta.
+    - **Totes 29, a totes dues màquines,** sense `--maquina`. Així es pot moure un món sencer d'una màquina a
+      l'altra sense tornar a comprovar res.
+    - Totes han de ser correctes.
   - **El segell:** l'objecte de l'etiqueta, segellat amb OpenTimestamps (§9).
   - **Les actualitzacions de Windows,** pausades. Ho fa el responsable.
 - **L'acta, abans de `--decideix`** (AUD-89):
@@ -329,6 +359,9 @@ Amb les branques de la condició d'origen:
     contra el missatge de l'etiqueta. Aquests dos fitxers s'executen abans de qualsevol comprovació, i no es
     poden comprovar a si mateixos.
   - **El segell:** que l'objecte de l'etiqueta sigui el que es va segellar.
+  - **Les captures, una altra vegada** (AUD-98): `node eines/b2-captures.mjs > captures-decisio.txt` a la màquina
+    on es decideix. És l'únic lligam entre el contingut de les captures i el resultat, perquè el validador només
+    en compara el camí.
 
 ## 8. El programa de la sèrie
 
@@ -348,7 +381,12 @@ Amb les branques de la condició d'origen:
     - només els tipus de línia que escriu `sim.mjs`, amb els seus camps, i en el seu ordre;
     - totes les mesures, a les èpoques que toquen, amb valors finits i uns segons que no baixen;
     - els comptadors de cada cens, amb les relacions que garanteix el cens v3;
-    - l'establiment, si n'hi ha, coherent amb els censos i amb la línia final.
+    - **l'establiment** (AU2-71, AUD-94, auditoria 11): es recalcula amb els censos i el criteri de
+      `fase2/census.js`, com fa `sim.mjs`. La línia hi ha de ser si i només si els censos el donen, a la mateixa
+      època, confirmada al cens que toca, i la línia final ha de dir el mateix;
+    - **la capçalera i la línia final** (AU2-72): els camps exactes, `programs` igual a la mida del món, el
+      criteri d'establiment de `fase2/census.js`, una empremta del món en hexadecimal i una transició de l'HOE
+      que, si n'hi ha, és dins de la branca.
 
   Qualsevol diferència és un error, i el programa no calcula res.
 - **La comprovació del preregistre** també rebutja els enllaços simbòlics que no siguin a l'etiqueta, i els
@@ -379,7 +417,14 @@ Amb les branques de la condició d'origen:
   - la regla conjunta, amb el contraexemple de l'auditor 2 (4 de 12 als A i 17 de 17 als B, que no es rebutja);
   - el cost, quan *t* no és múltiple de 100;
   - les captures (una de bona, una de diferent i una que falta);
-  - un enllaç simbòlic, a Linux.
+  - un enllaç simbòlic: a Linux, el d'un fitxer i el d'una carpeta; a Windows, el d'una carpeta amb una unió
+    (AUD-99);
+  - els casos de l'auditor 2 a l'auditoria 11, sobre un registre real del pilot:
+    - un establiment suprimit, o canviat de data;
+    - dos censos convertits en una pèrdua, amb l'establiment original;
+    - `programs` fals, i un camp de més a la capçalera;
+    - un altre criteri d'establiment;
+    - una empremta que no és hexadecimal, i una transició de l'HOE fora de la branca.
 - **La simulació de cobertura:** la cobertura de l'interval i la taxa de falsos positius de la prova del canvi
   de règim, amb mons sintètics correlacionats, i l'atzar de la continuació. La potència de la de l'expansió és
   exacta.
@@ -475,3 +520,16 @@ dues proves confirmatòries (§12), i les decisions finals són a la §14 (AU2-7
 | El cost del pilot, corregit, i el repartiment de les màquines, que es manté (§2, §4, §7) | Una errada de Claude; AUD-90 no es confirma |
 | Les limitacions noves (§10) | Auditors 1 i 2 |
 | Les decisions, sense marques de "pilot" ni d'"obert" | Criteri d'acceptació de l'auditor 2 |
+
+## 15. Canvis respecte de la v0.5 (auditoria 11)
+
+| Què | Per què |
+|---|---|
+| L'establiment es recalcula amb els censos, al validador (§8) | AU2-71 (auditor 2) i AUD-94 (auditor 1) |
+| La capçalera i la línia final, amb l'esquema sencer (§8) | AU2-72 |
+| La fórmula de S_orig(*H*), amb δ_ik, i la corba amb el mateix pes per món, no un Kaplan–Meier de branques (§6.1) | AUD-95, AU2-73 |
+| El cas sense variació de l'interval: el límit exacte de Clopper–Pearson (§6.1) | AU2-73 |
+| Les frases de les decisions, en termes de la majoria dels mons, i el §6.4 amb la regla conjunta (§6.4) | AUD-96 |
+| "Versió preregistrada", en lloc d'"esborrany" | AUD-97 |
+| Les 29 captures, a totes dues màquines, abans de la primera branca i abans de decidir (§7) | AUD-98 |
+| El cas de la carpeta de la prova d'AUD-88, també a Windows (§8) | AUD-99 |

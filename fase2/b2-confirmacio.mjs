@@ -75,9 +75,9 @@ if (pre) {
   const origins = `A: ${spread.byOrigin.A.pos} de ${spread.byOrigin.A.n}; B: ${spread.byOrigin.B.pos} de ${spread.byOrigin.B.n}`;
   console.log('');
   console.log(regime.rejected
-    ? `DECISIÓ 1 (el canvi de règim): es rebutja H0: la vida dura menys quan el seu món canvia de condició (${p(regime)})`
-    : `DECISIÓ 1 (el canvi de règim): no es rebutja H0: no concloent; la sèrie no permet afirmar que la vida duri menys quan el seu món canvia de condició, i la potència era baixa (protocol §6.2) (${p(regime)})`);
-  if (spread.rejected) console.log(`DECISIÓ 2 (l'expansió amb corrent): es rebutja H0: amb corrent, la vida establerta té més hereditaris als ${n} primers censos, als dos orígens (${origins}; ${p(spread)})`);
+    ? `DECISIÓ 1 (el canvi de règim): es rebutja H0: en la majoria dels mons, la vida dura menys quan el món canvia de condició (${p(regime)})`
+    : `DECISIÓ 1 (el canvi de règim): no es rebutja H0: no concloent; la sèrie no permet afirmar que, en la majoria dels mons, la vida duri menys quan el món canvia de condició, i la potència era baixa (protocol §6.2) (${p(regime)})`);
+  if (spread.rejected) console.log(`DECISIÓ 2 (l'expansió amb corrent): es rebutja H0: en la majoria dels mons, i en més de la meitat dels de cada origen, la vida establerta té més hereditaris als ${n} primers censos amb corrent que sense (${origins}; ${p(spread)})`);
   else if (spread.holmRejected) console.log(`DECISIÓ 2 (l'expansió amb corrent): no es rebutja H0: la prova global surt, però el corrent no dona més vida a més de la meitat dels mons de tots dos orígens (${origins}), i no es pot atribuir al corrent (protocol §6.3) (${p(spread)})`);
-  else console.log(`DECISIÓ 2 (l'expansió amb corrent): no es rebutja H0: no concloent; la sèrie no permet afirmar que, amb corrent, la vida establerta tingui més hereditaris als ${n} primers censos (${origins}; ${p(spread)})`);
+  else console.log(`DECISIÓ 2 (l'expansió amb corrent): no es rebutja H0: no concloent; la sèrie no permet afirmar que, en la majoria dels mons, la vida establerta tingui més hereditaris als ${n} primers censos amb corrent que sense (${origins}; ${p(spread)})`);
 }

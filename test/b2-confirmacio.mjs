@@ -14,6 +14,7 @@ import {
 } from '../fase2/b2-serie.mjs';
 import { buildManifest } from '../eines/b2-manifest.mjs';
 import { calibrate, spreadPower } from '../eines/b2-cobertura.mjs';
+import { establishment } from '../fase2/census.js';
 import { checkCaptures } from '../eines/b2-captures.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -49,17 +50,23 @@ function records(b, w, m, heritables, { code = 'abcdef1' } = {}) {
     type: 'start', code, rng: 'v2', node: 'v16', zlib: 'x', command: `node sim.mjs ${branchCommand(b, w, m).split(' ').slice(1).join(' ')}`,
     seed: b.seed, programs: 131072, world: [512, 256], radius: 2, mixing: b.mixing, diffusion: 0, flow: 0, renewal: 0, mutation: 0.00024,
     from: w.capture, start: w.t, epochs: w.t + b.H, every: 100, census: { version: 'v3', every: 250, sample: 2048, seed: 20261016 },
+    event: { share: 0.01, censuses: 2, stopAfter: null },
   }];
-  // com sim.mjs: a cada època, el cens (múltiples de 250) i després la mesura (múltiples de 100 absoluts)
+  // com sim.mjs: a cada època, el cens (múltiples de 250), l'establiment si aquest cens el confirma, i després la
+  // mesura (múltiples de 100 absoluts)
   const fam = [{ id: 1, born: w.t + 250, share: 0.1 }];
+  const seen = [];
+  let event = null;
   for (let e = w.t + 1; e <= w.t + b.H; e++) {
     if (e % 250 === 0) {
       const h = heritables[(e - w.t) / 250 - 1], rep = Math.min(2048, h + 10);
-      rec.push({ type: 'census', version: 'v3', epoch: e, families: fam, extinct: [], untracked: [], familySample: 0.1, sample: 2048, replicating: rep, solo: rep, context: 0, heritable: h, heritableSolo: h, heritableContext: 0 });
+      const c = { type: 'census', version: 'v3', epoch: e, families: fam, extinct: [], untracked: [], familySample: 0.1, sample: 2048, replicating: rep, solo: rep, context: 0, heritable: h, heritableSolo: h, heritableContext: 0 };
+      rec.push(c); seen.push(c);
+      if (event === null) { const t = establishment(seen, 250); if (t !== null) { event = t; rec.push({ type: 'event', epoch: t, confirmed: e }); } }
     }
     if (e % 100 === 0) rec.push({ type: 'measure', epoch: e, h0: 5, hoe: 1, ops: 1000, runs: 100, epochs: 100, seconds: (e - w.t) * 2 });
   }
-  rec.push({ type: 'end', epoch: w.t + b.H, reason: 'horitzó', fingerprint: 'abcd1234', hoeTransition: null, event: null, seconds: b.H * 2 });
+  rec.push({ type: 'end', epoch: w.t + b.H, reason: 'horitzó', fingerprint: 'abcd1234', hoeTransition: null, event, seconds: b.H * 2 });
   return rec;
 }
 // Escriu una sèrie sintètica: fate(branca) dona els hereditaris dels 4 censos
@@ -224,11 +231,36 @@ const tests = {
     bad('replicating = 0 amb hereditaris', ok.map((r) => (r.type === 'census' ? { ...r, replicating: 0 } : r)), /replicating no quadra|més hereditaris/);
     bad('heritable sense desglossament', ok.map((r) => (r.type === 'census' ? { ...r, heritableSolo: 0 } : r)), /heritableSolo \+ heritableContext/);
     bad('tots els censos abans de les mesures', [ok[0], ...ok.filter((r) => r.type === 'census'), ...ok.filter((r) => r.type === 'measure'), ok[ok.length - 1]], /ordre de sim\.mjs/);
-    bad('un establiment que no quadra', [...ok.slice(0, -1), { type: 'event', epoch: 1100, confirmed: 1250 }, ok[ok.length - 1]], /establiment/);
-    // un establiment ben fet, al seu lloc (després del cens que el confirma) i a la línia final, és vàlid
-    const i = ok.findIndex((r) => r.type === 'census' && r.epoch === 1250);
-    const withEvent = [...ok.slice(0, i + 1), { type: 'event', epoch: 1000, confirmed: 1250 }, ...ok.slice(i + 1, -1), { ...ok[ok.length - 1], event: 1000 }];
-    assert.deepStrictEqual(validateBranch(withEvent, b, w, m), []);
+    // l'establiment que donen els censos és a t + 250 = 1.000, confirmat a 1.250 (AU2-71, auditoria 11)
+    assert.deepStrictEqual(ok.filter((r) => r.type === 'event'), [{ type: 'event', epoch: 1000, confirmed: 1250 }]);
+    bad('un establiment que no quadra', ok.map((r) => (r.type === 'event' ? { ...r, epoch: 1250, confirmed: 1500 } : r)), /els censos el donen a 1000/);
+  },
+  // AU2-71 i AU2-72 (auditoria 11): els casos de l'auditor 2, sobre un registre real del pilot (P-B2062-m0.01)
+  "l'establiment es recalcula amb els censos, i la capçalera i la línia final tenen l'esquema sencer (AU2-71, AU2-72)": () => {
+    const data = readFileSync(join(root, 'fase2', 'resultats', 'b2', 'pilot', 'P-B2062-m0.01.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+    const s = data[0], b = { name: 'P-B2062-m0.01', seed: s.seed, mixing: s.mixing, H: s.epochs - s.start }, w = { t: s.start, capture: s.from };
+    const m = { dir: 'fase2/resultats/b2/pilot', params: { world: s.world, radius: s.radius, rng: s.rng, every: s.every, mutation: s.mutation, census: s.census } };
+    const clone = () => JSON.parse(JSON.stringify(data));
+    const errors = (rec) => validateBranch(rec, b, w, m).join(' | ');
+    assert.strictEqual(errors(data), '');
+    const bad = (label, rec, re) => assert.match(errors(rec), re, label);
+    let r = clone().filter((x) => x.type !== 'event'); r[r.length - 1].event = null;
+    bad("l'establiment suprimit, i la línia final ajustada", r, /els censos donen un establiment a l'època 15500, i el registre no el té/);
+    r = clone(); const e = r.find((x) => x.type === 'event'); e.epoch += 250; r[r.length - 1].event = e.epoch;
+    bad("l'establiment canviat de data", r, /els censos el donen a 15500/);
+    r = clone(); let k = 0;
+    for (const x of r) if (x.type === 'census' && k++ < 2) for (const f of ['replicating', 'solo', 'context', 'heritable', 'heritableSolo', 'heritableContext']) x[f] = 0;
+    bad('dos censos convertits en una pèrdua, amb l\'establiment original', r, /els censos el donen a 16000/);
+    r = clone(); r[0].programs = 1;
+    bad('programs fals', r, /programs és 1/);
+    r = clone(); r[0].extra = 1;
+    bad('un camp de més a la capçalera', r, /línia d'inici no té els camps esperats/);
+    r = clone(); r[0].event = { ...r[0].event, share: 0.02 };
+    bad('un altre criteri d\'establiment', r, /criteri d'establiment/);
+    r = clone(); r[r.length - 1].fingerprint = 'NO-ES-HASH';
+    bad('una empremta que no és hexadecimal', r, /empremta del món/);
+    r = clone(); r[r.length - 1].hoeTransition = 3;
+    bad('una transició de l\'HOE fora de la branca', r, /transició de l'HOE/);
   },
   'una sèrie amb un sol registre mutat no es calcula, i el programa no decideix res (AU2-64)': () => withTmp((tmp) => {
     const m = smallManifest();
