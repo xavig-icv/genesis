@@ -63,7 +63,7 @@ registres complets.
 
 **La mateixa història.** Les 14 branques són idèntiques a l'exploració fins a *t* + 2.000: els 8 censos i les
 20 mesures.
-- **L'única diferència és l'HOE,** com a molt de 7,7·10⁻⁴. Sis branques es van fer amb Node 16 i les de
+- **L'única diferència és l'HOE,** com a molt d'1,7·10⁻³ (corregit el mateix dia: hi dèiem 7,7·10⁻⁴, que era el d'una sola branca). Sis branques es van fer amb Node 16 i les de
   l'exploració amb Node 20, i l'HOE depèn de la versió de zlib (AUD-55).
 - **La resta és igual:** *h*₀ i les operacions coincideixen.
 
