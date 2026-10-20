@@ -67,17 +67,9 @@ if (problems.length) {
 if (pre) console.log(`Commit del preregistre: ${pre.commit} (etiqueta de git ${pre.tag} (objecte ${pre.tagObject}); manifest ${manifestPath})`);
 const result = lib.analyse(worlds, manifest);
 for (const l of result.lines) console.log(l);
-// Dues decisions, amb la correcció de Holm (protocol §6.4). La segona, amb la regla conjunta per origen (§6.3,
-// AU2-65). Un no-rebuig es comunica com a no concloent, amb la potència del protocol (AUD-89, AU2-67)
+// Dues decisions, amb la correcció de Holm (protocol §6.4). Les frases surten de decisionLines() (b2-serie.mjs),
+// perquè es puguin provar (AU2-74, auditoria 12)
 if (pre) {
-  const { regime, spread } = result.tests, n = manifest.tests.spread.censuses;
-  const p = (t) => `p = ${t.p.toFixed(4)}${t.threshold === null ? '; no s\'hi arriba amb Holm' : `, llindar de Holm ${t.threshold}`}`;
-  const origins = `A: ${spread.byOrigin.A.pos} de ${spread.byOrigin.A.n}; B: ${spread.byOrigin.B.pos} de ${spread.byOrigin.B.n}`;
   console.log('');
-  console.log(regime.rejected
-    ? `DECISIÓ 1 (el canvi de règim): es rebutja H0: en la majoria dels mons, la vida dura menys quan el món canvia de condició (${p(regime)})`
-    : `DECISIÓ 1 (el canvi de règim): no es rebutja H0: no concloent; la sèrie no permet afirmar que, en la majoria dels mons, la vida duri menys quan el món canvia de condició, i la potència era baixa (protocol §6.2) (${p(regime)})`);
-  if (spread.rejected) console.log(`DECISIÓ 2 (l'expansió amb corrent): es rebutja H0: en la majoria dels mons, i en més de la meitat dels de cada origen, la vida establerta té més hereditaris als ${n} primers censos amb corrent que sense (${origins}; ${p(spread)})`);
-  else if (spread.holmRejected) console.log(`DECISIÓ 2 (l'expansió amb corrent): no es rebutja H0: la prova global surt, però el corrent no dona més vida a més de la meitat dels mons de tots dos orígens (${origins}), i no es pot atribuir al corrent (protocol §6.3) (${p(spread)})`);
-  else console.log(`DECISIÓ 2 (l'expansió amb corrent): no es rebutja H0: no concloent; la sèrie no permet afirmar que, en la majoria dels mons, la vida establerta tingui més hereditaris als ${n} primers censos amb corrent que sense (${origins}; ${p(spread)})`);
+  for (const l of lib.decisionLines(result, manifest)) console.log(l);
 }
