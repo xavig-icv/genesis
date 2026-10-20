@@ -51,3 +51,56 @@ Es mirarà en acabar, i serà descriptiu:
   baixa.
 - **El canvi de règim** (AUD-82), només com a descripció. Amb 7 mons no es pot provar res, i la prova és per a
   la sèrie preregistrada.
+
+## Què n'ha sortit (20-10-2026)
+
+Les 14 branques van acabar entre el 19-10 a les 15:13 i el 20-10 a les 07:35, sense cap fallada i amb els
+registres complets.
+- **Els registres:** les capçaleres dels dos lots (`lot-llista-*.out`) portaven el camí absolut de la
+  llista. S'ha canviat per un de relatiu (`fase2/resultats/b2/pilot/llista-*.txt`), i la resta és com va
+  sortir.
+- **Què no se'n treu:** com deia més amunt, res d'això no és cap conclusió. Serveix per fixar el disseny.
+
+**La mateixa història.** Les 14 branques són idèntiques a l'exploració fins a *t* + 2.000: els 8 censos i les
+20 mesures.
+- **L'única diferència és l'HOE,** com a molt de 7,7·10⁻⁴. Sis branques es van fer amb Node 16 i les de
+  l'exploració amb Node 20, i l'HOE depèn de la versió de zlib (AUD-55).
+- **La resta és igual:** *h*₀ i les operacions coincideixen.
+
+**Les pèrdues R2 fins a *t* + 6.000: 2 de 14, les mateixes de l'exploració.**
+- **Quines:** B2002-m0, a *t* + 1.000, i B2038-m0, a *t* + 1.750. Totes dues són branques de canvi: mons B que
+  perden el corrent.
+- **Cap de tardana:** cap branca no perd la vida després de *t* + 2.000.
+- **Com acaben:**
+  - B2002-m0 torna a 22 hereditaris al cens final, i per tant compta com a recuperada (21 o més);
+  - B2038-m0 acaba amb 17.
+- **Per condició:** d'origen, 0 de 7; de canvi, 2 de 7.
+
+**Si la vida envelleix: no s'hi veu.**
+- **Com acaben les 12 branques que no la perden:** entre el 90 % i el 100 % del seu màxim, i totes amb 1.540
+  hereditaris o més de 2.048 a *t* + 6.000.
+- **Les baixades més grans:**
+  - B2043-m0, de 1.942 a 1.757;
+  - B2036-m0.01 i B2062-m0, un 8 %.
+- **Alguns mons triguen a omplir-se.** A1046-m0 i les dues branques de B2062 tenen 134–304 hereditaris a
+  *t* + 2.000, i 1.540–1.768 a *t* + 6.000.
+
+**El cost.** La mitjana de les 12 branques vives, en segons per època i per trams de 500 èpoques:
+
+| Tram (des de *t*) | 0 | 500 | 1.000 | 1.500 | 2.000 | 2.500 | 3.000 | 3.500 | 4.000 | 4.500 | 5.000 | 5.500 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| s/època | 1,0 | 1,6 | 3,2 | 4,4 | 5,0 | 5,1 | 5,4 | 5,0 | 5,0 | 4,9 | 4,8 | 4,7 |
+
+- **Com evoluciona:** creix fins a *t* + 2.000, i després s'estabilitza al voltant de 5 s.
+- **Per màquina, amb 4 branques alhora a cadascuna:**
+  - al PC, amb Node 16, 4,5–4,9 s;
+  - a la màquina virtual, amb Node 20, un pic de 9,4 s i després ~6,2 s.
+- **Per branca viva:** 4,3 h amb *H* = 4.000, 5,6 h amb 5.000 i 7,0 h amb 6.000.
+- **Per a la sèrie:**
+  - el disseny (i) són ~655 h de càlcul;
+  - el (ii), ~528 h.
+
+**El canvi de règim,** només com a descripció.
+- **Els 6 mons B:** la branca d'origen, amb corrent, no perd la vida a cap; la de canvi, sense corrent, la
+  perd a 2.
+- **A1046:** les dues branques continuen vives.
