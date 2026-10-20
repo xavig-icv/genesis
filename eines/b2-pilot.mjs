@@ -13,7 +13,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
-import { lossTime } from '../fase2/b2-serie.mjs';
+import { lossTime, costsByWindow } from '../fase2/b2-serie.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const RULE = { lossMax: 5, recoverMin: 21 };
@@ -27,10 +27,8 @@ export function pilot(dir = join(root, 'fase2', 'resultats', 'b2', 'pilot')) {
   for (const machine of ['pc', 'vm']) {
     for (const name of readFileSync(join(dir, `llista-${machine}.txt`), 'utf8').trim().split('\n').map((l) => l.split(' ')[0])) {
       const r = read(join(dir, `${name}.jsonl`)), s = r[0], t = s.start, H = s.epochs - t;
-      const cs = r.filter((x) => x.type === 'census'), ms = r.filter((x) => x.type === 'measure');
-      const at = (e) => (e === 0 ? 0 : ms.find((m) => m.epoch === t + e)?.seconds ?? null);
-      const cost = [];
-      for (let a = 0; a < H; a += 500) { const x = at(a), y = at(a + 500); cost.push(x !== null && y !== null ? (y - x) / 500 : null); }
+      const cs = r.filter((x) => x.type === 'census');
+      const cost = costsByWindow(r, t);     // amb les mesures interpolades si t no és múltiple de 100 (auditoria 10)
       branches.push({
         name, machine, world: name.slice(2, 7), mixing: s.mixing, node: s.node, t, H, records: r, cs, cost,
         cond: (name[2] === 'A') === (s.mixing === 0) ? 'origen' : 'canvi',
@@ -67,7 +65,7 @@ export function pilot(dir = join(root, 'fase2', 'resultats', 'b2', 'pilot')) {
   const ratios = alive.map((b) => b.cs[b.cs.length - 1].heritable / max(b));
   lines.push('', `3. Les ${alive.length} branques que no perden la vida acaben entre el ${(100 * Math.min(...ratios)).toFixed(0)} % i el ${(100 * Math.max(...ratios)).toFixed(0)} % del seu màxim; el mínim al cens final és ${Math.min(...alive.map((b) => b.cs[b.cs.length - 1].heritable))} de 2.048`);
   // 4. El cost
-  const row = (bs) => bs[0].cost.map((_, i) => mean(bs.map((b) => b.cost[i]).filter((v) => v !== null)));
+  const row = (bs) => bs[0].cost.map((_, i) => mean(bs.map((b) => b.cost[i]).filter((v) => v !== undefined)));
   const all = row(alive);
   lines.push('', '4. El cost: segons per època per trams de 500 èpoques, a les branques vives');
   for (const m of ['pc', 'vm']) {

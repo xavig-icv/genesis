@@ -50,13 +50,14 @@
     0,
     1
    ],
-   "sided": "unilateral"
+   "sided": "unilateral",
+   "byOrigin": "majoria"
   }
  },
  "bootstrap": {
   "reps": 10000,
   "seed": 20261022,
-  "interval": "bca",
+  "interval": "logit",
   "level": 0.95
  },
  "machines": {

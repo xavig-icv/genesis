@@ -1,16 +1,14 @@
 # Protocol de B2 · quant dura la vida establerta
 
-**Estat: esborrany v0.4 (20-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
-- **D'on surt:** incorpora l'auditoria 9, la segona prova confirmatòria (X-020 a X-022), la prolongació pilot
-  (`fase2/resultats/b2/pilot/`) i les decisions del responsable (`docs/disseny.md`).
-- **Les marques:**
-  - **[PILOT]** marca els valors que s'han fixat amb el pilot: *H*, *K* i el disseny (§4), i l'interval
-    (§6.1). Són una proposta per a l'auditoria 10.
-  - **[OBERT]** marca una pregunta per a l'auditoria 10.
+**Estat: esborrany v0.5 (20-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
+- **D'on surt:** incorpora les auditories 9 i 10, la segona prova confirmatòria (X-020 a X-022), la prolongació
+  pilot (`fase2/resultats/b2/pilot/`) i les decisions del responsable (`docs/disseny.md`).
+- **Els valors són tots fixats.** El disseny, l'interval, les proves, la regla per origen i com es comuniquen
+  els resultats ja no tenen cap marca de "pilot" ni d'"obert" (§14).
 - **El procediment:**
-  1. es revisa a l'auditoria 10, amb el programa de la sèrie i les seves proves;
-  2. el *merge* de la versió aprovada farà de preregistre, amb l'etiqueta anotada `preregistre-b2` i un segell
-     d'OpenTimestamps abans de la primera branca (§9);
+  1. una auditoria 11 curta revisa les correccions de l'auditoria 10 (decisió del responsable, 20-10-2026);
+  2. si tots dos auditors hi donen el vistiplau, el *merge* de la versió aprovada farà de preregistre, amb
+     l'etiqueta anotada `preregistre-b2` i un segell d'OpenTimestamps abans de la primera branca (§9);
   3. després, cap canvi no es fa sense justificar-lo aquí, amb data i motiu, abans de mirar cap resultat.
 
 ## 1. Les preguntes
@@ -29,8 +27,9 @@
      que la mantenen, en 1 de 29 (AUD-82). És una hipòtesi que surt de les dades, i per això es posa a prova
      amb mons nous.
    - **La decisió:** la va prendre el responsable el 19-10-2026, després de l'auditoria 9.
-2. **L'expansió amb corrent: amb corrent, la vida establerta s'escampa més de pressa?** Es compara la vida dels
-   primers censos de la condició amb corrent amb la de la condició sense corrent, món a món.
+2. **L'expansió amb corrent: amb corrent, la vida establerta s'escampa més de pressa, als dos orígens?** Es
+   compara la vida dels primers censos de la condició amb corrent amb la de la condició sense corrent, món a món.
+   Només es rebutja H₀ si l'efecte surt també a cada origen per separat (§6.3).
    - **D'on ve:** és una candidata de l'auditor 1 (X-021) que surt de l'exploració. La branca amb corrent té
      més vida en 22 dels 29 mons (§2).
    - **La decisió:** la va prendre el responsable el 19-10-2026 (X-020 a X-022). Amb només 6 morts, la del canvi
@@ -73,7 +72,9 @@ Amb els 29 mons de la part `exploracio`, una branca per món i condició, 2.000 
   - **La vida no s'hi veu envellir.** Les 12 branques vives acaben entre el 90 % i el 100 % del seu màxim, amb
     1.540 hereditaris o més. Alguns mons triguen fins a *t* + 4.000 o 5.000 a omplir-se.
   - **El cost:** creix fins a *t* + 2.000, i després s'estabilitza al voltant de 5 s per època. Una branca viva
-    costa 4,3 h fins a *H* = 4.000, 5,6 h fins a 5.000 i 7,0 h fins a 6.000.
+    costa 4,1 h fins a *H* = 4.000, 5,5 h fins a 5.000 i 7,0 h fins a 6.000, i el mateix al PC (5,4 h) que a la
+    màquina virtual (5,6 h). *(Corregit a l'auditoria 10: la v0.4 deia 4,3, 5,6 i 7,0 h, perquè el càlcul només
+    comptava 7 de les 12 branques vives.)*
 
 ## 3. Els mons i la població
 
@@ -105,23 +106,23 @@ Amb els 29 mons de la part `exploracio`, una branca per món i condició, 2.000 
 - **la d'origen:** *m* = 0 als mons A, i *m* = 0,01 als B;
 - **la de canvi:** l'altra.
 
-**Les llavors de continuació:** *K* = 2 llavors **[PILOT]**, la del món + 200.000 i la del món + 300.000. Són
-diferents de la de l'exploració (+ 100.000), i cada llavor es fa servir a totes dues condicions.
+**Les llavors de continuació:** *K* = 2 llavors, la del món + 200.000 i la del món + 300.000. Són diferents de
+la de l'exploració (+ 100.000), i cada llavor es fa servir a totes dues condicions.
 
-**L'horitzó *H*, i el disseny [PILOT]: el (i).** Es triava entre aquests dos amb el pilot (el cost i les
-morts tardanes) i amb el càlcul de potència de la prova del canvi de règim:
+**L'horitzó *H*, i el disseny: el (i).** Es triava entre aquests dos amb el pilot (el cost i les morts tardanes)
+i amb el càlcul de potència de la prova del canvi de règim:
 - **(i)** totes les branques, amb *H* = 5.000 i *K* = 2: 116 branques;
 - **(ii)** la condició d'origen amb *H* = 6.000 i *K* = 2, i la de canvi amb *H* = 4.000 i *K* = 1: 87 branques.
   La prova del canvi de règim es restringia llavors a 4.000.
 
-**Per què el (i)** (20-10-2026; és una proposta per a l'auditoria 10):
+**Per què el (i)** (20-10-2026; tots dos auditors hi estan d'acord a l'auditoria 10):
 - **Que el (ii) allargués la condició d'origen fins a 6.000 hi aportaria poc.** Al pilot no hi ha cap pèrdua
   després de *t* + 2.000, ni cap envelliment.
 - **El (ii) perdria una llavor a la condició de canvi**, i amb ella, potència a totes dues proves.
   - Amb el model de calibratge, el risc del pilot i ρ = 0, la del canvi de règim baixa del 73 % al 33 % (§6.2).
   - La de l'expansió passaria a tenir una sola llavor de canvi per món.
-- **El cost és semblant:** ~655 h de càlcul el (i), i ~528 h el (ii). Amb totes dues màquines, són 4 dies,
-  més o menys.
+- **El cost és semblant:** ~639 h de càlcul el (i), i ~522 h el (ii). Amb 4 branques alhora a cada màquina, són
+  uns 3–4 dies. *(Corregit a l'auditoria 10: la v0.4 deia ~655 i ~528 h.)*
 
 **L'ordre**, la de l'exploració, desant el món final (`--save`) per estudiar després quina vida hi ha:
 
@@ -186,17 +187,25 @@ Amb les branques de la condició d'origen:
 - **El *bootstrap*:** estratificat per origen i agrupat per món. Cada rèplica reextreu, amb reemplaçament, 12
   mons A i 17 mons B, i cada món s'hi emporta totes les seves branques. Es fan 10.000 rèpliques, i la llavor
   és al manifest.
-- **El tipus d'interval [PILOT]: BCa.** La regla escrita abans era triar el que donés la cobertura més a prop
-  del 95 % a la simulació (§8), perquè el percentil normal es queda curt amb 29 mons (AUD-84).
+- **El tipus d'interval: el logit** (el percentil a l'escala logit). El BCa s'hi dona com a sensibilitat,
+  descriptiva.
+  - **Per què el logit** (auditoria 10, AU2-68): tots dos auditors el prefereixen, i Claude també.
+    - La regla escrita abans, la cobertura més a prop del 95 %, donava el BCa per 0,2 punts, que és menys que
+      l'error de la simulació.
+    - El BCa, però, es queda curt en 3 de 9 escenaris, i el logit no baixa mai del 96 %.
+    - Per a una proporció que serà a prop d'1, un interval massa estret enganya més que un de lleugerament ample.
+  - **La regla anterior** era triar el que donés la cobertura més a prop del 95 % a la simulació (§8), perquè el
+    percentil normal es queda curt amb 29 mons (AUD-84).
   - **La simulació** (20-10-2026): `node eines/b2-cobertura.mjs --sims 400 --reps 1000 --risc-origen 0.00317`,
     amb ρ = 0, 0,05 i 0,3.
     - El risc per cens d'origen surt de l'exploració i del pilot junts: 1 pèrdua en 29 × 7 + 7 × 16 censos.
     - Es proven tres riscos: 0,0032, 0,0063 i 0,0127.
   - **El resultat:** la distància mitjana al 95 % en les 9 cel·les és de 2,5 punts amb BCa, 2,7 amb logit i
     4,6 amb el percentil.
-  - **Un matís [OBERT]:** BCa es queda curt en 3 cel·les (92,8–93,5 %), i logit no baixa mai del 96 %. La
-    diferència entre tots dos és dins de l'error de la simulació (±1,1 punts). Si l'auditoria 10 prefereix un
-    interval conservador, seria el logit.
+  - **El matís que ho decideix:** BCa es queda curt en 3 cel·les (92,8–93,5 %), i logit no baixa mai del 96 %.
+    La diferència entre tots dos és dins de l'error de la simulació (±1,1 punts).
+  - **El que no garanteix:** les simulacions fan servir un sol model de riscos. L'interval no és una garantia
+    exacta del 95 %.
 - **Si totes les branques donen el mateix** (totes sense pèrdua), l'interval que dona el mètode triat; mai un
   NaN.
 
@@ -204,9 +213,13 @@ Amb les branques de la condició d'origen:
 
 - **A cada món:** *D_i* = mitjana_k min(*T*_i,canvi,k, *H*) − mitjana_k min(*T*_i,orig,k, *H*), amb les dues
   llavors de cada condició i *H* = 5.000 (el disseny (i), §4).
-- **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0. **[OBERT]**: unilateral amb α = 0,025,
-  o bilateral amb α = 0,05? La resposta val per a totes dues proves.
-- **La hipòtesi:** H₀, la vida dura igual si el món canvia de condició; H₁, dura menys.
+- **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0, unilateral, amb α = 0,025 per a la
+  família de totes dues proves (§6.4). Tots dos auditors hi estan d'acord. La *p* bilateral es dona com a
+  descriptiva.
+- **La hipòtesi, operativa** (AU2-67): entre els mons amb *D_i* ≠ 0, H₀ diu que la probabilitat que *D_i* < 0
+  és 1/2; H₁, que és més gran.
+  - Els mons amb *D_i* = 0 (empats) no hi compten.
+  - No és una prova sobre la durada mitjana, sinó sobre el signe de la diferència a cada món.
 - **La potència** es calcularà abans de l'etiqueta. S'hi faran servir les taxes de l'exploració i del pilot, i
   la probabilitat d'empat de cada disseny. Si és molt baixa, es dirà al protocol abans de llançar.
   - **Amb el model de l'eina de calibratge** (`eines/b2-cobertura.mjs`) i el disseny (i), amb un risc 5 vegades
@@ -221,25 +234,45 @@ Amb les branques de la condició d'origen:
       depèn.
     - **El model és optimista:** suposa un risc constant, mentre que les pèrdues de l'exploració i del pilot
       arriben totes abans de *t* + 2.000.
+- **Com es comunica, decidit abans** (auditoria 10):
+  - **Si no es rebutja H₀,** el resultat és **no concloent per falta de potència**: la potència era del 13–73 %
+    segons la correlació entre les branques d'un món.
+  - **Un no-rebuig no és cap prova que l'efecte no hi sigui.**
 
 ### 6.3 La segona confirmatòria: l'expansió amb corrent
 
 - **A cada món:** *D_i* = mitjana_k *E*_i,amb corrent,k − mitjana_k *E*_i,sense corrent,k (§5).
   - **La condició amb corrent** és la de canvi als mons A i la d'origen als B.
   - **Les llavors:** les dues de cada condició.
-- **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0, unilateral. **[OBERT]**: la de signes o
-  la de Wilcoxon? La de Wilcoxon té més potència, però suposa que, sota H₀, les diferències són simètriques.
-  - Ara és la de signes, com la primera, perquè l'origen de cada món no és a l'atzar (AU2-62).
-- **La hipòtesi:** H₀, la vida dels primers censos és igual amb corrent i sense; H₁, amb corrent n'hi ha més.
-- **Com s'interpreta, decidit abans:** per origen, la proporció de mons amb *D_i* > 0 és descriptiva.
-  - **Si és més gran que la meitat als dos orígens,** l'efecte s'atribueix al corrent.
-  - **Si només ho és als mons B,** pot ser el canvi, i no el corrent. Als B, la condició amb corrent és la que no
-    canvia, i hi ha més mons B (17) que A (12).
-- **La potència** (exacta, `eines/b2-cobertura.mjs`).
+- **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0, unilateral. Tots dos auditors hi estan
+  d'acord.
+  - **Per què no la de Wilcoxon:** suposa que, sota H₀, les diferències són simètriques, i amb dos orígens que fan
+    papers oposats no hi ha cap raó per suposar-ho.
+- **La hipòtesi, operativa** (AU2-67): entre els mons amb *D_i* ≠ 0, H₀ diu que la probabilitat que *D_i* > 0
+  és 1/2; H₁, que és més gran. Els empats no hi compten.
+- **La regla conjunta per origen** (AU2-65; decisió del responsable, 20-10-2026). Es rebutja H₀ **només** si
+  es compleixen totes tres condicions:
+  1. Holm la rebutja (§6.4);
+  2. el corrent dona més vida a més de la meitat dels mons A, és a dir, 7 de 12 o més;
+  3. i també a més de la meitat dels mons B, és a dir, 9 de 17 o més.
+  - **Els empats,** a cada origen, compten com a no favorables.
+  - **Per què:** als B, la condició amb corrent és la que no canvia. Un efecte que només sortís als B podria ser
+    del canvi i no del corrent, i hi ha més mons B (17) que A (12).
+  - **Si la prova global surt però la regla conjunta no,** el programa diu que no es rebutja H₀ i que no es pot
+    atribuir al corrent.
+  - **La *p* de signes de cada origen** es dona com a descriptiva.
+  - **El control de l'error:** la regla rebutja menys hipòtesis que Holm sol, i per tant no n'afecta el control
+    de l'error de família. La prova 1 conserva el llindar que li dona Holm.
+- **La potència.**
   - **El llindar:** calen 21 mons de 29, tant amb α = 0,025 com amb α/2.
-  - **Amb l'efecte de l'exploració** (*q* = 0,76): un 75 %. Amb *q* = 0,70, un 48 %; amb *q* = 0,80, un 89 %.
-  - **Amb *K* = 2,** la mitjana de les dues llavors fa la mesura de cada món menys sorollosa, però no se n'ha
-    calculat l'efecte.
+  - **El model:** el soroll de la continuació s'estima amb l'exploració (auditoria 10, l'annex de l'auditor 1,
+    comprovat). La variació entre mons és de 15,7 punts, i la de la continuació, de 13,9 punts amb una llavor
+    (`eines/b2-cobertura.mjs`).
+  - **Amb *K* = 2 i l'efecte de l'exploració** (14,6 punts): un 85 %. Si l'efecte real és més petit, com sol
+    passar amb un efecte trobat explorant: un 50 % amb 10 punts, i un 25 % amb 7.
+  - **La potència realista, doncs,** és entre el 50 % i el 85 %.
+  - **El que hi costa la regla conjunta:** com a molt 1 punt, si l'efecte és el mateix als dos orígens.
+- **Com es comunica:** si no es rebutja H₀, el resultat és no concloent, amb aquesta potència.
 
 ### 6.4 Les dues decisions, amb la correcció de Holm
 
@@ -247,7 +280,8 @@ Amb les branques de la condició d'origen:
   1. La prova amb la *p* més petita es compara amb α/2.
   2. Si es rebutja, l'altra es compara amb α.
   3. Si no es rebutja, no es rebutja cap de les dues.
-- **El programa** escriu les dues decisions per separat, cadascuna amb el seu llindar.
+- **El programa** escriu les dues decisions per separat, cadascuna amb el seu llindar. La de l'expansió també
+  diu quants mons de cada origen són a favor.
 - **Si no es rebutja H₀,** es diu que la sèrie no ho permet afirmar. No es tria després cap variant de les
   proves, ni subgrups ni sensibilitats.
 - **El que costa Holm:**
@@ -275,10 +309,26 @@ Amb les branques de la condició d'origen:
   - es mouen mons sencers, mai branques soltes;
   - val la còpia de la màquina assignada;
   - qualsevol branca duplicada es compara, i ha de tenir els mateixos censos i la mateixa empremta (AUD-86).
+- **El repartiment de les màquines:** 60 branques al PC i 56 a la màquina virtual, en blocs equilibrats per origen.
+  - **L'AUD-90 no es confirma:** al pilot, una branca viva costa el mateix a totes dues màquines (5,4 i 5,6 h fins
+    a 5.000).
+  - **D'on venia:** de la taula de cost de la v0.4, que només comptava una branca de la màquina virtual (§2).
 - **Els noms, opacs** (AUD-57): les llistes es generen a partir del manifest, i el nom no diu ni el món ni la
   condició.
+  - **Què protegeixen** (AUD-93): el progrés del lot i el seguiment, però no les llistes. Les llistes i la
+    primera línia de cada registre porten l'ordre sencera, amb la captura (el món) i el corrent.
+  - **Per això,** durant la sèrie ningú no obre les llistes ni els registres.
 - **El seguiment, només agregat:** `eines/seguiment.sh --agregat`. Durant la sèrie no es mira cap resultat.
-- **Abans de llançar,** cal pausar les actualitzacions de Windows. Ho fa el responsable.
+- **L'acta de la sèrie** (a `fase2/resultats/b2/confirmacio/`), abans de la primera branca:
+  - **Les captures** (AU2-66): `node eines/b2-captures.mjs --maquina pc > captures-pc.txt` al PC, i el mateix
+    amb `vm` a la màquina virtual, des de la carpeta del commit de l'etiqueta. Totes han de ser correctes.
+  - **El segell:** l'objecte de l'etiqueta, segellat amb OpenTimestamps (§9).
+  - **Les actualitzacions de Windows,** pausades. Ho fa el responsable.
+- **L'acta, abans de `--decideix`** (AUD-89):
+  - **La comprovació a mà:** `sha256sum fase2/b2-confirmacio.mjs fase2/preregistre.mjs`, amb l'eina del sistema,
+    contra el missatge de l'etiqueta. Aquests dos fitxers s'executen abans de qualsevol comprovació, i no es
+    poden comprovar a si mateixos.
+  - **El segell:** que l'objecte de l'etiqueta sigui el que es va segellar.
 
 ## 8. El programa de la sèrie
 
@@ -294,8 +344,15 @@ Amb les branques de la condició d'origen:
   - els censos, sense forats;
   - la línia final, a *t* + *H*;
   - cap fitxer de més ni de menys.
+  - **L'estructura sencera del registre** (AU2-64, auditoria 10):
+    - només els tipus de línia que escriu `sim.mjs`, amb els seus camps, i en el seu ordre;
+    - totes les mesures, a les èpoques que toquen, amb valors finits i uns segons que no baixen;
+    - els comptadors de cada cens, amb les relacions que garanteix el cens v3;
+    - l'establiment, si n'hi ha, coherent amb els censos i amb la línia final.
 
   Qualsevol diferència és un error, i el programa no calcula res.
+- **La comprovació del preregistre** també rebutja els enllaços simbòlics que no siguin a l'etiqueta, i els
+  fitxers dins d'una carpeta enllaçada (AUD-88, auditoria 10). Comprovat a Linux.
 - **Les proves,** amb dades sintètiques, que cobreixen almenys la matriu de l'auditor 2 (auditoria 9):
   - dos censos baixos seguits;
   - un de baix i el següent no;
@@ -311,11 +368,22 @@ Amb les branques de la condició d'origen:
   - 29 mons sense cap pèrdua;
   - l'expansió: quina condició té corrent a cada origen, i només els 8 primers censos;
   - un manifest amb menys censos que els de l'expansió;
-  - la correcció de Holm, amb les quatre combinacions.
+  - la correcció de Holm, amb les quatre combinacions;
+  - les mutacions de l'auditor 2 i unes quantes més:
+    - sense mesures, o amb una de menys;
+    - uns segons negatius, o que baixen;
+    - un tipus de línia inventat, o un camp de més;
+    - uns comptadors impossibles;
+    - les línies desordenades;
+    - un establiment que no quadra;
+  - la regla conjunta, amb el contraexemple de l'auditor 2 (4 de 12 als A i 17 de 17 als B, que no es rebutja);
+  - el cost, quan *t* no és múltiple de 100;
+  - les captures (una de bona, una de diferent i una que falta);
+  - un enllaç simbòlic, a Linux.
 - **La simulació de cobertura:** la cobertura de l'interval i la taxa de falsos positius de la prova del canvi
   de règim, amb mons sintètics correlacionats, i l'atzar de la continuació. La potència de la de l'expansió és
   exacta.
-- **Abans de l'etiqueta,** es revisa a l'auditoria 10.
+- **Abans de l'etiqueta,** el va revisar l'auditoria 10, i les correccions es revisen a l'auditoria 11.
 
 ## 9. El preregistre
 
@@ -347,8 +415,19 @@ Amb les branques de la condició d'origen:
     menys als A. Amb 17 mons B i 12 A, no s'anul·laria del tot.
   - Per això la lectura per origen (§6.3) es fixa abans.
 - **L'expansió no és la durada.** Mesura la vida de les primeres 2.000 èpoques de la branca, no si la vida dura.
+- **El pilot no és equilibrat:** 1 món A i 6 de B. No demostra que no hi hagi envelliment ni pèrdues tardanes;
+  només que, en aquests 7 mons, no n'hi ha.
+- **La prova del canvi de règim pot tenir molt poca potència** si les pèrdues es concentren en pocs mons (§6.2).
+- **Les proves de signes** parlen del signe de la diferència a cada món, no de la mida mitjana de l'efecte.
+- **La base de confiança del programa** (AUD-89): el fitxer d'entrada i el comprovador s'executen abans de
+  comprovar res. Per això es comproven a mà a l'acta (§7).
+- **Les captures no van al paquet dels auditors** (8 MB cadascuna). Es comproven a cada màquina amb la seva
+  SHA-256, abans de llançar (§7).
 
-## 11. Canvis respecte de la v0.1
+## 11. Canvis respecte de la v0.1 (estat històric)
+
+*Aquesta taula és la de la v0.2, i es deixa com estava. Les taules que segueixen n'actualitzen l'estat: ara hi ha
+dues proves confirmatòries (§12), i les decisions finals són a la §14 (AU2-70).*
 
 | Què | Per què |
 |---|---|
@@ -380,3 +459,19 @@ Amb les branques de la condició d'origen:
 | *K* = 2 i el disseny (i), *H* = 5.000 (§4) | No hi ha pèrdues tardanes. El (ii) perdria potència a totes dues proves per allargar un horitzó que no aporta gaire. Proposta per a l'auditoria 10 |
 | L'interval, BCa (§6.1) | La regla escrita abans, amb el calibratge del 20-10-2026. El matís del logit, obert per a l'auditoria 10 |
 | La potència del canvi de règim, amb el risc del pilot, i l'avís que pot ser molt baixa (§6.2) | El que el protocol demanava dir abans de llançar |
+
+## 14. Canvis respecte de la v0.4 (auditoria 10)
+
+| Què | Per què |
+|---|---|
+| L'interval: el logit, i el BCa com a sensibilitat (§6.1) | AU2-68; tots dos auditors i Claude. El BCa es queda curt en 3 de 9 escenaris |
+| La prova de l'expansió: només es rebutja si també surt a cada origen per separat (§6.3) | AU2-65; decisió del responsable, 20-10-2026. Hi costa com a molt 1 punt de potència |
+| La prova de signes, unilateral, amb α = 0,025 per a la família, i les hipòtesis en termes del signe a cada món (§6.2, §6.3) | AU2-67; tots dos auditors |
+| Com es comunica un no-rebuig: no concloent, amb la potència (§6.2, §6.3) | AUD-89 (auditor 1) i AU2-67 |
+| La potència realista de l'expansió, amb el soroll de la continuació: del 50 al 85 % (§6.3) | Auditor 1, comprovat |
+| La validació sencera dels registres (§8) | AU2-64 |
+| Els enllaços simbòlics, a la comprovació del preregistre (§8) | AUD-88, comprovada a Linux |
+| L'acta: la SHA-256 de les captures a cada màquina, la comprovació a mà dels dos fitxers de base, i que ningú no obre les llistes (§7) | AU2-66, AUD-89, AUD-93 |
+| El cost del pilot, corregit, i el repartiment de les màquines, que es manté (§2, §4, §7) | Una errada de Claude; AUD-90 no es confirma |
+| Les limitacions noves (§10) | Auditors 1 i 2 |
+| Les decisions, sense marques de "pilot" ni d'"obert" | Criteri d'acceptació de l'auditor 2 |

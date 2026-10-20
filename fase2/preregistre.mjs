@@ -14,14 +14,17 @@
 //    (git replace). hash-object, sense filtres: un filtre "clean" podria tornar el contingut de l'etiqueta per a
 //    un fitxer que al disc és diferent;
 //  - les SHA-256 del missatge de l'etiqueta han de coincidir amb els fitxers del commit, i hi han de ser les
-//    dels fitxers de `required`. L'arbre de l'etiqueta és la referència; el missatge, un segon control.
+//    dels fitxers de `required`. L'arbre de l'etiqueta és la referència; el missatge, un segon control;
+//  - cap fitxer seguit no pot ser un enllaç simbòlic, ni ser dins d'una carpeta que ho sigui, si l'etiqueta no
+//    hi té un enllaç (AUD-88, auditoria 10): hash-object segueix l'enllaç i veu el contingut d'una còpia idèntica,
+//    però Node carregaria els mòduls que aquesta importa des de l'altra carpeta.
 // Un límit: la comprovació impedeix decidir amb codi canviat per error o amagat a git. Si el programa que la
 // crida ja ha carregat codi del projecte canviat, aquest codi s'ha executat abans. Per això un programa nou
 // l'ha de cridar abans de carregar res del projecte, com fa b2-confirmacio.mjs.
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, lstatSync, readlinkSync, realpathSync } from 'fs';
 import { createHash } from 'crypto';
 import { execFileSync } from 'child_process';
-import { join } from 'path';
+import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 
 export const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -54,11 +57,19 @@ export function checkPreregistration({ manifestPath, defaultTag, required, root 
     if (flagged.length) return { problem: `hi ha fitxers marcats amb assume-unchanged o skip-worktree: ${list(flagged)}` };
     const tree = git('ls-tree', '-r', '-z', commit).split('\0').filter(Boolean).map((l) => {
       const [meta, path] = l.split('\t');
-      const [, type, hash] = meta.split(' ');
-      return { type, hash, path };
+      const [mode, type, hash] = meta.split(' ');
+      return { mode, type, hash, path };
     }).filter((e) => e.type === 'blob');
     const missing = tree.filter((e) => !existsSync(join(root, e.path))).map((e) => e.path);
     if (missing.length) return { problem: `falten fitxers de l'etiqueta: ${list(missing)}` };
+    // AUD-88: cada fitxer ha de ser un fitxer normal al seu lloc, o el mateix enllaç que a l'etiqueta
+    const realRoot = realpathSync(root);
+    const linked = tree.filter((e) => {
+      const f = join(root, e.path), st = lstatSync(f);
+      if (e.mode === '120000') return !st.isSymbolicLink() || readlinkSync(f) !== run(['cat-file', 'blob', e.hash]).toString();
+      return !st.isFile() || relative(realRoot, realpathSync(f)).split('\\').join('/') !== e.path;
+    }).map((e) => e.path);
+    if (linked.length) return { problem: `hi ha fitxers que són enllaços simbòlics, o dins d'una carpeta que ho és, i a l'etiqueta no: ${list(linked)}` };
     const hashes = run(['hash-object', '--no-filters', '--stdin-paths'], tree.map((e) => e.path).join('\n') + '\n').toString().trim().split('\n');
     const changed = tree.filter((e, i) => hashes[i] !== e.hash).map((e) => e.path);
     if (changed.length) return { problem: `hi ha fitxers diferents dels de l'etiqueta: ${list(changed)}` };

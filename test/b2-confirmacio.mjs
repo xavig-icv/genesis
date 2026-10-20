@@ -10,10 +10,11 @@ import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import {
   lossTime, restricted, validateBranch, readSeries, survival, rmstShare, survivalCurve, bootstrap, interval,
-  regimeDiffs, spreadDiffs, signTest, holm, branchCommand, conditionMixing, analyse,
+  regimeDiffs, spreadDiffs, signTest, holm, branchCommand, conditionMixing, analyse, costsByWindow,
 } from '../fase2/b2-serie.mjs';
 import { buildManifest } from '../eines/b2-manifest.mjs';
-import { calibrate } from '../eines/b2-cobertura.mjs';
+import { calibrate, spreadPower } from '../eines/b2-cobertura.mjs';
+import { checkCaptures } from '../eines/b2-captures.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const RULE = { lossMax: 5, recoverMin: 21 };
@@ -49,10 +50,16 @@ function records(b, w, m, heritables, { code = 'abcdef1' } = {}) {
     seed: b.seed, programs: 131072, world: [512, 256], radius: 2, mixing: b.mixing, diffusion: 0, flow: 0, renewal: 0, mutation: 0.00024,
     from: w.capture, start: w.t, epochs: w.t + b.H, every: 100, census: { version: 'v3', every: 250, sample: 2048, seed: 20261016 },
   }];
-  for (let e = 100; e <= b.H; e += 100) rec.push({ type: 'measure', epoch: w.t + e, seconds: e * 2 });
+  // com sim.mjs: a cada època, el cens (múltiples de 250) i després la mesura (múltiples de 100 absoluts)
   const fam = [{ id: 1, born: w.t + 250, share: 0.1 }];
-  rec.push(...cs(w.t, heritables).map((c) => ({ ...c, families: fam })));
-  rec.push({ type: 'end', epoch: w.t + b.H, reason: 'horitzó' });
+  for (let e = w.t + 1; e <= w.t + b.H; e++) {
+    if (e % 250 === 0) {
+      const h = heritables[(e - w.t) / 250 - 1], rep = Math.min(2048, h + 10);
+      rec.push({ type: 'census', version: 'v3', epoch: e, families: fam, extinct: [], untracked: [], familySample: 0.1, sample: 2048, replicating: rep, solo: rep, context: 0, heritable: h, heritableSolo: h, heritableContext: 0 });
+    }
+    if (e % 100 === 0) rec.push({ type: 'measure', epoch: e, h0: 5, hoe: 1, ops: 1000, runs: 100, epochs: 100, seconds: (e - w.t) * 2 });
+  }
+  rec.push({ type: 'end', epoch: w.t + b.H, reason: 'horitzó', fingerprint: 'abcd1234', hoeTransition: null, event: null, seconds: b.H * 2 });
   return rec;
 }
 // Escriu una sèrie sintètica: fate(branca) dona els hereditaris dels 4 censos
@@ -202,6 +209,80 @@ const tests = {
     const bad = { ...m, tests: { ...m.tests, spread: { ...m.tests.spread, censuses: 5 } } };
     assert.match(readSeries(tmp, bad).problems.join(), /menys de 5 censos/);
   }),
+  // AU2-64 (auditoria 10): les mutacions de l'auditor 2 i unes quantes més, sobre un registre complet
+  'el validador rebutja un registre sense mesures, amb segons negatius, línies alienes o comptadors impossibles (AU2-64)': () => {
+    const m = smallManifest(), b = m.branches.find((x) => x.world === 'B2'), w = m.worlds.find((x) => x.id === 'B2');   // t = 750
+    const ok = records(b, w, m, ALIVE);
+    assert.deepStrictEqual(validateBranch(ok, b, w, m), []);
+    const bad = (label, rec, re) => { const e = validateBranch(rec, b, w, m).join(' | '); assert.match(e, re, `${label}: ${e || 'cap error'}`); };
+    bad('sense mesures', ok.filter((r) => r.type !== 'measure'), /0 mesures/);
+    bad('una mesura de menys', ok.filter((r) => !(r.type === 'measure' && r.epoch === 1200)), /mesur/);
+    bad('segons negatius', ok.map((r) => (r.type === 'measure' ? { ...r, seconds: -500 } : r)), /segons negatius/);
+    bad('segons que baixen', ok.map((r) => (r.type === 'measure' && r.epoch === 1500 ? { ...r, seconds: 1 } : r)), /segons baixen/);
+    bad('una línia d\'un tipus inventat', [...ok.slice(0, -1), { type: 'INVENTAT', epoch: 1750 }, ok[ok.length - 1]], /tipus que no hi pot ser/);
+    bad('un camp de més', ok.map((r) => (r.type === 'measure' && r.epoch === 900 ? { ...r, extra: 1 } : r)), /camps esperats/);
+    bad('replicating = 0 amb hereditaris', ok.map((r) => (r.type === 'census' ? { ...r, replicating: 0 } : r)), /replicating no quadra|més hereditaris/);
+    bad('heritable sense desglossament', ok.map((r) => (r.type === 'census' ? { ...r, heritableSolo: 0 } : r)), /heritableSolo \+ heritableContext/);
+    bad('tots els censos abans de les mesures', [ok[0], ...ok.filter((r) => r.type === 'census'), ...ok.filter((r) => r.type === 'measure'), ok[ok.length - 1]], /ordre de sim\.mjs/);
+    bad('un establiment que no quadra', [...ok.slice(0, -1), { type: 'event', epoch: 1100, confirmed: 1250 }, ok[ok.length - 1]], /establiment/);
+    // un establiment ben fet, al seu lloc (després del cens que el confirma) i a la línia final, és vàlid
+    const i = ok.findIndex((r) => r.type === 'census' && r.epoch === 1250);
+    const withEvent = [...ok.slice(0, i + 1), { type: 'event', epoch: 1000, confirmed: 1250 }, ...ok.slice(i + 1, -1), { ...ok[ok.length - 1], event: 1000 }];
+    assert.deepStrictEqual(validateBranch(withEvent, b, w, m), []);
+  },
+  'una sèrie amb un sol registre mutat no es calcula, i el programa no decideix res (AU2-64)': () => withTmp((tmp) => {
+    const m = smallManifest();
+    writeSeries(tmp, m, () => ALIVE);
+    const f = join(tmp, 'b005.jsonl');
+    writeFileSync(f, readFileSync(f, 'utf8').split('\n').filter((l) => !l.includes('"measure"')).join('\n'));
+    const { problems } = readSeries(tmp, m);
+    assert.ok(problems.some((p) => /b005: té 0 mesures/.test(p)), problems.join('\n'));
+  }),
+  'el cost per trams, també si t no és múltiple de 100 (corregit a l\'auditoria 10)': () => {
+    const m = smallManifest(), b = m.branches.find((x) => x.world === 'B2'), w = m.worlds.find((x) => x.id === 'B2');
+    assert.strictEqual(w.t % 100, 50);
+    assert.deepStrictEqual(costsByWindow(records(b, w, m, ALIVE), w.t), [2, 2]);       // 2 s per època, 1.000 èpoques
+  },
+  // AU2-65 (auditoria 10): la regla conjunta per origen, amb el contraexemple de l'auditor 2
+  'l\'expansió es rebutja només si, a més de Holm, el corrent guanya a més de la meitat dels mons de cada origen (AU2-65)': () => {
+    const m = smallManifest();
+    m.tests.spread = { ...m.tests.spread, censuses: 4, byOrigin: 'majoria' };
+    m.bootstrap = { ...m.bootstrap, reps: 50 };
+    const branch = (v) => ({ H: 1000, T: 1000, event: false, recovered: false, final1pct: true, finalR2: true, shares: [v, v, v, v], costs: [], successor: false });
+    const series = (plusA, plusB) => Array.from({ length: 29 }, (_, i) => {
+      const group = i < 12 ? 'A' : 'B', plus = group === 'A' ? i < plusA : i - 12 < plusB;
+      const yes = branch(plus ? 0.8 : 0.2), no = branch(plus ? 0.2 : 0.8);       // yes: la condició amb corrent
+      return { id: `w${i}`, group, origen: group === 'B' ? [yes, yes] : [no, no], canvi: group === 'A' ? [yes, yes] : [no, no] };
+    });
+    let r = analyse(series(4, 17), m).tests.spread;                                // 21 de 29, però només 4 de 12 als A
+    assert.deepStrictEqual([r.pos, r.holmRejected, r.coherent, r.rejected], [21, true, false, false]);
+    assert.deepStrictEqual([r.byOrigin.A.pos, r.byOrigin.B.pos], [4, 17]);
+    r = analyse(series(10, 12), m).tests.spread;                                   // 22 de 29, coherent: 10 de 12 i 12 de 17
+    assert.deepStrictEqual([r.pos, r.holmRejected, r.coherent, r.rejected], [22, true, true, true]);
+    r = analyse(series(6, 15), m).tests.spread;                                    // 21 de 29, i 6 de 12 als A: no n'hi ha prou (cal més de la meitat)
+    assert.deepStrictEqual([r.holmRejected, r.coherent, r.rejected], [true, false, false]);
+    // sense la regla (un manifest antic), mana només Holm
+    const old = { ...m, tests: { ...m.tests, spread: { ...m.tests.spread, byOrigin: undefined } } };
+    assert.strictEqual(analyse(series(4, 17), old).tests.spread.rejected, true);
+  },
+  // AU2-66 (auditoria 10): la SHA-256 de les captures d'origen, a cada màquina, abans de llançar
+  'la comprovació de les captures: una de bona, una de diferent i una que falta (AU2-66)': () => withTmp((tmp) => {
+    const put = (name, text) => { writeFileSync(join(tmp, name), text); return createHash('sha256').update(text).digest('hex'); };
+    const shaA = put('a.bin', 'captura A'), shaB = put('b.bin', 'captura B');
+    const m = { worlds: [
+      { id: 'A1', machine: 'pc', capture: join(tmp, 'a.bin'), sha256: shaA },
+      { id: 'B1', machine: 'vm', capture: join(tmp, 'b.bin'), sha256: shaA },
+      { id: 'B2', machine: 'vm', capture: join(tmp, 'c.bin'), sha256: shaB },
+    ] };
+    assert.deepStrictEqual(checkCaptures(m).bad, ['B1', 'B2']);
+    assert.deepStrictEqual(checkCaptures(m, { machine: 'pc' }), { lines: [`ok        A1  ${join(tmp, 'a.bin')}  ${shaA}`], bad: [], n: 1 });
+    assert.match(checkCaptures(m, { machine: 'vm' }).lines.join('\n'), /DIFERENT  B1[\s\S]*FALTA     B2/);
+  }),
+  'la potència realista de l\'expansió: la de l\'auditor 1, i la regla conjunta hi costa poc (auditoria 10)': () => {
+    const r = (d, K) => spreadPower(d, { K });
+    assert.deepStrictEqual([r(14.6, 1).global, r(14.6, 2).global, r(10, 2).global].map((x) => Math.round(100 * x)), [74, 85, 50]);
+    for (const [d, K] of [[7, 1], [10, 2], [14.6, 2]]) assert.ok(r(d, K).global - r(d, K).conjunct < 0.02);
+  },
   'Holm: la p més petita amb α/2, i l\'altra amb α només si la primera es rebutja': () => {
     const pick = (r) => r.map((x) => [x.rejected, x.threshold]);
     assert.deepStrictEqual(pick(holm([0.01, 0.02], 0.025)), [[true, 0.0125], [true, 0.025]]);

@@ -100,6 +100,26 @@ registres complets.
   - el disseny (i) són ~655 h de càlcul;
   - el (ii), ~528 h.
 
+**Corregit (20-10-2026, auditoria 10): el cost de dalt només comptava 7 de les 12 branques vives.**
+- **L'error:** les mesures són als múltiples de 100 absoluts, i el càlcul les buscava a *t* + 500, *t* + 1.000...
+  Les branques amb una *t* que no és múltiple de 100 (B2036, B2038 i B2062) quedaven fora, sense cap avís. De la
+  màquina virtual només hi comptava B2002-m0.01, la més lenta de totes.
+- **Amb totes 12** (`eines/b2-pilot.mjs`, ara amb les mesures interpolades):
+
+| Tram (des de *t*) | 0 | 500 | 1.000 | 1.500 | 2.000 | 2.500 | 3.000 | 3.500 | 4.000 | 4.500 | 5.000 | 5.500 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| s/època | 1,1 | 1,7 | 3,4 | 4,2 | 4,6 | 4,7 | 5,0 | 4,9 | 5,0 | 5,2 | 5,3 | 5,2 |
+
+- **Per màquina:** una branca viva fins a *t* + 5.000 costa 5,4 h al PC i 5,6 h a la màquina virtual. La màquina
+  virtual no és més lenta: el "pic de 9,4 s" era d'una sola branca. Per tant, la troballa AUD-90 de l'auditoria
+  10, que s'hi basava, no es confirma.
+- **Per branca viva:** 4,1 h amb *H* = 4.000, 5,5 h amb 5.000 i 7,0 h amb 6.000.
+- **Per a la sèrie:** el disseny (i) són ~639 h de càlcul, i el (ii), ~522 h.
+- **El text de dalt** es deixa com estava.
+- **Les sumes:** `sha256.txt` té les SHA-256 dels registres, de les llistes i dels lots, tal com són al
+  repositori. Les capçaleres dels dos lots porten el camí relatiu (més amunt), i la còpia de la màquina
+  virtual es va comprovar amb les seves sumes abans de canviar-la (AUD-91).
+
 **El canvi de règim,** només com a descripció.
 - **Els 6 mons B:** la branca d'origen, amb corrent, no perd la vida a cap; la de canvi, sense corrent, la
   perd a 2.
