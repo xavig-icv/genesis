@@ -1,10 +1,12 @@
 # Protocol de B2 · quant dura la vida establerta
 
-**Estat: esborrany v0.3 (19-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
-- **D'on surt:** incorpora l'auditoria 9, la segona prova confirmatòria (X-020 a X-022) i les decisions del
-  responsable (`docs/disseny.md`).
-- **Les marques:** **[PILOT]** és un valor que es fixarà amb la prolongació pilot (`fase2/resultats/b2/pilot/`),
-  i **[OBERT]**, una pregunta per a l'auditoria 10.
+**Estat: esborrany v0.4 (20-10-2026).** No s'ha llançat cap branca d'aquesta sèrie.
+- **D'on surt:** incorpora l'auditoria 9, la segona prova confirmatòria (X-020 a X-022), la prolongació pilot
+  (`fase2/resultats/b2/pilot/`) i les decisions del responsable (`docs/disseny.md`).
+- **Les marques:**
+  - **[PILOT]** marca els valors que s'han fixat amb el pilot: *H*, *K* i el disseny (§4), i l'interval
+    (§6.1). Són una proposta per a l'auditoria 10.
+  - **[OBERT]** marca una pregunta per a l'auditoria 10.
 - **El procediment:**
   1. es revisa a l'auditoria 10, amb el programa de la sèrie i les seves proves;
   2. el *merge* de la versió aprovada farà de preregistre, amb l'etiqueta anotada `preregistre-b2` i un segell
@@ -40,7 +42,7 @@
 **Una de descriptiva: el corrent com a tal en les pèrdues.** Si el corrent desfà la vida, les branques amb
 corrent la perdran més als dos orígens. El disseny 2 × 2 (§4) separa aquest efecte del canvi de règim.
 
-## 2. El que en sabem: l'exploració
+## 2. El que en sabem: l'exploració i el pilot
 
 Amb els 29 mons de la part `exploracio`, una branca per món i condició, 2.000 èpoques (entrada 9 i auditoria 9):
 - **Amb la regla R2** (§5), 6 de 58 branques perden la vida, a *t* + 750, 1.000, 1.250, 1.250, 1.500 i 1.750.
@@ -59,6 +61,19 @@ Amb els 29 mons de la part `exploracio`, una branca per món i condició, 2.000 
   1.000.
 - **El cost per època d'una branca viva creix amb el temps:** d'1,1 s de 0 a 500 èpoques a 5,0 s de 1.500 a
   2.000 (AUD-85).
+
+**La prolongació pilot** (20-10-2026; `fase2/resultats/b2/pilot/LLEGEIX-ME.md` i `node eines/b2-pilot.mjs`).
+- **Què és:** 7 mons de l'exploració triats a l'atzar (A1046 i sis de B), amb totes dues condicions, fins a
+  *t* + 6.000.
+- **Què se'n fa servir:** només serveix per fixar el disseny.
+- **El que en surt:**
+  - **La mateixa història:** les 14 branques són idèntiques a l'exploració fins a *t* + 2.000.
+  - **Cap pèrdua tardana.** Les dues pèrdues R2 són les de l'exploració, a *t* + 1.000 i 1.750, totes dues de
+    branques de canvi. Les d'origen no en tenen cap fins a *t* + 6.000.
+  - **La vida no s'hi veu envellir.** Les 12 branques vives acaben entre el 90 % i el 100 % del seu màxim, amb
+    1.540 hereditaris o més. Alguns mons triguen fins a *t* + 4.000 o 5.000 a omplir-se.
+  - **El cost:** creix fins a *t* + 2.000, i després s'estabilitza al voltant de 5 s per època. Una branca viva
+    costa 4,3 h fins a *H* = 4.000, 5,6 h fins a 5.000 i 7,0 h fins a 6.000.
 
 ## 3. Els mons i la població
 
@@ -90,14 +105,23 @@ Amb els 29 mons de la part `exploracio`, una branca per món i condició, 2.000 
 - **la d'origen:** *m* = 0 als mons A, i *m* = 0,01 als B;
 - **la de canvi:** l'altra.
 
-**Les llavors de continuació:** *K* llavors **[PILOT]**, la del món + 200.000, + 300.000... Són diferents de la
-de l'exploració (+ 100.000), i cada llavor es fa servir a totes dues condicions.
+**Les llavors de continuació:** *K* = 2 llavors **[PILOT]**, la del món + 200.000 i la del món + 300.000. Són
+diferents de la de l'exploració (+ 100.000), i cada llavor es fa servir a totes dues condicions.
 
-**L'horitzó *H*, i el disseny [PILOT].** Es triarà entre aquests dos amb el pilot (el cost i les morts
-tardanes) i amb el càlcul de potència de la prova del canvi de règim, abans de l'etiqueta:
+**L'horitzó *H*, i el disseny [PILOT]: el (i).** Es triava entre aquests dos amb el pilot (el cost i les
+morts tardanes) i amb el càlcul de potència de la prova del canvi de règim:
 - **(i)** totes les branques, amb *H* = 5.000 i *K* = 2: 116 branques;
 - **(ii)** la condició d'origen amb *H* = 6.000 i *K* = 2, i la de canvi amb *H* = 4.000 i *K* = 1: 87 branques.
-  La prova del canvi de règim es restringeix llavors a 4.000 (§6.2).
+  La prova del canvi de règim es restringia llavors a 4.000.
+
+**Per què el (i)** (20-10-2026; és una proposta per a l'auditoria 10):
+- **Que el (ii) allargués la condició d'origen fins a 6.000 hi aportaria poc.** Al pilot no hi ha cap pèrdua
+  després de *t* + 2.000, ni cap envelliment.
+- **El (ii) perdria una llavor a la condició de canvi**, i amb ella, potència a totes dues proves.
+  - Amb el model de calibratge, el risc del pilot i ρ = 0, la del canvi de règim baixa del 73 % al 33 % (§6.2).
+  - La de l'expansió passaria a tenir una sola llavor de canvi per món.
+- **El cost és semblant:** ~655 h de càlcul el (i), i ~528 h el (ii). Amb totes dues màquines, són 4 dies,
+  més o menys.
 
 **L'ordre**, la de l'exploració, desant el món final (`--save`) per estudiar després quina vida hi ha:
 
@@ -140,7 +164,7 @@ després de *t*. La durada compta qualsevol hereditari, no la vida que es va est
 - **La mesura:** *E* és la mitjana de la proporció d'hereditaris, de 2.048, als 8 primers censos de la branca,
   de *t* + 250 a *t* + 2.000. És la mesura de l'exploració.
 - **Què compta:** qualsevol hereditari, igual que la durada.
-- **Quines branques:** totes en tenen els 8 censos, amb tots dos dissenys.
+- **Quines branques:** totes en tenen els 8 censos, amb *H* = 5.000.
 
 ## 6. L'anàlisi
 
@@ -162,18 +186,24 @@ Amb les branques de la condició d'origen:
 - **El *bootstrap*:** estratificat per origen i agrupat per món. Cada rèplica reextreu, amb reemplaçament, 12
   mons A i 17 mons B, i cada món s'hi emporta totes les seves branques. Es fan 10.000 rèpliques, i la llavor
   és al manifest.
-- **El tipus d'interval [OBERT]:** BCa, o percentil a l'escala logit. Es triarà, abans de l'etiqueta, el que
-  doni una cobertura més a prop del 95 % en la simulació (§8), perquè el percentil normal es queda curt amb 29
-  mons (AUD-84).
+- **El tipus d'interval [PILOT]: BCa.** La regla escrita abans era triar el que donés la cobertura més a prop
+  del 95 % a la simulació (§8), perquè el percentil normal es queda curt amb 29 mons (AUD-84).
+  - **La simulació** (20-10-2026): `node eines/b2-cobertura.mjs --sims 400 --reps 1000 --risc-origen 0.00317`,
+    amb ρ = 0, 0,05 i 0,3.
+    - El risc per cens d'origen surt de l'exploració i del pilot junts: 1 pèrdua en 29 × 7 + 7 × 16 censos.
+    - Es proven tres riscos: 0,0032, 0,0063 i 0,0127.
+  - **El resultat:** la distància mitjana al 95 % en les 9 cel·les és de 2,5 punts amb BCa, 2,7 amb logit i
+    4,6 amb el percentil.
+  - **Un matís [OBERT]:** BCa es queda curt en 3 cel·les (92,8–93,5 %), i logit no baixa mai del 96 %. La
+    diferència entre tots dos és dins de l'error de la simulació (±1,1 punts). Si l'auditoria 10 prefereix un
+    interval conservador, seria el logit.
 - **Si totes les branques donen el mateix** (totes sense pèrdua), l'interval que dona el mètode triat; mai un
   NaN.
 
 ### 6.2 La primera confirmatòria: el canvi de règim
 
-- **A cada món:** *D_i* = mitjana_k min(*T*_i,canvi,k, *H'*) − mitjana_k min(*T*_i,orig,k, *H'*).
-  - *H'* és l'horitzó de la condició de canvi: *H* en el disseny (i), i 4.000 en el (ii).
-  - Si el disseny és el (ii), es fa servir la primera llavor de la condició d'origen, per comparar amb el mateix
-    nombre de llavors. **[OBERT]**
+- **A cada món:** *D_i* = mitjana_k min(*T*_i,canvi,k, *H*) − mitjana_k min(*T*_i,orig,k, *H*), amb les dues
+  llavors de cada condició i *H* = 5.000 (el disseny (i), §4).
 - **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0. **[OBERT]**: unilateral amb α = 0,025,
   o bilateral amb α = 0,05? La resposta val per a totes dues proves.
 - **La hipòtesi:** H₀, la vida dura igual si el món canvia de condició; H₁, dura menys.
@@ -182,12 +212,21 @@ Amb les branques de la condició d'origen:
   - **Amb el model de l'eina de calibratge** (`eines/b2-cobertura.mjs`) i el disseny (i), amb un risc 5 vegades
     més alt quan el món canvia: un 87 % amb α, i un 79 % amb α/2, si les branques d'un món són independents
     (ρ = 0). Amb ρ = 0,05, un 29 % i un 17 %.
+  - **Amb el risc del pilot** (20-10-2026). El risc d'origen és més baix, 0,0032 per cens, de manera que hi ha
+    menys pèrdues.
+    - **Amb un risc 5 vegades més alt quan el món canvia:** un 73 % amb α, i un 63 % amb α/2, si ρ = 0. Amb
+      ρ = 0,05, un 13 % i un 4 %. Amb ρ = 0,3, cap.
+    - **Ho diem abans de llançar:** si les pèrdues es concentren en pocs mons, aquesta prova té molt poca
+      potència. Pot acabar sense rebutjar H₀ encara que l'efecte hi sigui. La prova de l'expansió (§6.3) no en
+      depèn.
+    - **El model és optimista:** suposa un risc constant, mentre que les pèrdues de l'exploració i del pilot
+      arriben totes abans de *t* + 2.000.
 
 ### 6.3 La segona confirmatòria: l'expansió amb corrent
 
 - **A cada món:** *D_i* = mitjana_k *E*_i,amb corrent,k − mitjana_k *E*_i,sense corrent,k (§5).
   - **La condició amb corrent** és la de canvi als mons A i la d'origen als B.
-  - **Les llavors:** totes les de cada condició, és a dir, 2 i 2 en el disseny (i), i 2 i 1 en el (ii).
+  - **Les llavors:** les dues de cada condició.
 - **La prova:** la prova de signes exacta sobre els mons amb *D_i* ≠ 0, unilateral. **[OBERT]**: la de signes o
   la de Wilcoxon? La de Wilcoxon té més potència, però suposa que, sota H₀, les diferències són simètriques.
   - Ara és la de signes, com la primera, perquè l'origen de cada món no és a l'atzar (AU2-62).
@@ -332,3 +371,12 @@ Amb les branques de la condició d'origen:
 | Les dues proves, amb la correcció de Holm (§6.4) | Dues afirmacions confirmatòries. A 29 mons, a l'expansió no li costa res |
 | El que se sap de les pèrdues de l'exploració, per direcció del canvi i per corrent (§2) | Comprovat amb les dades de l'exploració el 19-10-2026 |
 | La part que no és cega, per a l'expansió (§3) | AUD-67, AU2-62 |
+
+## 13. Canvis respecte de la v0.3
+
+| Què | Per què |
+|---|---|
+| El que en sabem del pilot (§2) | La prolongació pilot, acabada el 20-10-2026 |
+| *K* = 2 i el disseny (i), *H* = 5.000 (§4) | No hi ha pèrdues tardanes. El (ii) perdria potència a totes dues proves per allargar un horitzó que no aporta gaire. Proposta per a l'auditoria 10 |
+| L'interval, BCa (§6.1) | La regla escrita abans, amb el calibratge del 20-10-2026. El matís del logit, obert per a l'auditoria 10 |
+| La potència del canvi de règim, amb el risc del pilot, i l'avís que pot ser molt baixa (§6.2) | El que el protocol demanava dir abans de llançar |
