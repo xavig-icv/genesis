@@ -15,8 +15,25 @@ programa (`docs/protocol-b2.md`, §9).
   - **Qui va respondre:** dos calendaris, `b.pool.opentimestamps.org` i `ots.btc.catallaxy.com`. Els altres dos de la
     llista per defecte tenien el certificat caducat.
   - **Què s'hi va enviar:** només un hash, el del fitxer amb un nonce aleatori.
-  - **Si és completa:** de moment, les atestacions estan pendents. Quan Bitcoin les confirmi, es completa la prova
-    (`ots upgrade`) i es torna a desar.
+  - **Si és completa:** sí. El 21-10-2026 es va completar amb les atestacions de Bitcoin, l'equivalent d'`ots upgrade`.
+    - **El bloc 972.374,** del 20-10-2026 a les 20:25:42 UTC (via `bob.btc.calendar.opentimestamps.org`).
+    - **El bloc 972.387,** de les 22:39:20 UTC (via `btc.calendar.catallaxy.com`).
+    - **La comprovació:** l'arrel de Merkle de tots dos blocs coincideix amb el missatge atestat (comprovat amb
+      blockstream.info).
+
+**El que demostra, hora a hora (UTC), i una precisió:**
+- **19:48:** el segell s'envia als calendaris.
+- **20:19:42:** comença la primera branca de la sèrie, a la màquina virtual. La del PC comença a les 20:20:11.
+- **20:25:42:** el bloc 972.374 l'ancora.
+- **Què demostra cadascun:**
+  - **Bitcoin,** sense confiar en ningú, demostra que l'etiqueta existia abans de les 20:25:42, **6 minuts després**
+    de començar la primera branca.
+  - **Que el segell es va enviar 31 minuts abans del llançament** ho registren els calendaris, i per creure-ho cal
+    confiar en ells.
+- **Per què a la pràctica no hi afecta:** en aquests 6 minuts cap branca no havia pogut donar cap resultat que
+  algú mirés.
+- **D'on ve:** el protocol (§9) deia "abans de la primera branca", i es va llegir com "enviar-lo". A les sèries
+  següents, s'esperarà l'ancoratge a Bitcoin abans de llançar.
 
 **Com es comprova:**
 1. **Que el fitxer és l'objecte de l'etiqueta:** `git cat-file tag preregistre-b2 | sha256sum` ha de donar
