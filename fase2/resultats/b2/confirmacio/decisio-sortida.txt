@@ -1,0 +1,34 @@
+Commit del preregistre: 67fe2f608e3d15424be0b321c17e1e19e1f0daa2 (etiqueta de git preregistre-b2 (objecte b5778b99b2c624d3de9349415f69d48c27e2395c); manifest fase2/serie-b2.json)
+La durada en el seu món (condició d'origen, 29 mons, H = 5000):
+  sense pèrdua fins a H: 93.1 % (IC 95 %: 73.8 %–98.5 %, logit)
+  (sensibilitat, descriptiva: l'interval BCa, 81.0 %–98.3 %)
+  durada mitjana restringida: 4724 èpoques de 5000 (IC: 3973–4935)
+  mediana: no assolida
+  corba: 250:1.000 500:0.983 750:0.983 1000:0.948 1250:0.948 1500:0.931 1750:0.931 2000:0.931 2250:0.931 2500:0.931 2750:0.931 3000:0.931 3250:0.931 3500:0.931 3750:0.931 4000:0.931 4250:0.931 4500:0.931 4750:0.931 5000:0.931
+  origen A (12 mons): sense pèrdua 100.0 %
+  origen B (17 mons): sense pèrdua 88.2 %
+
+Prova 1, el canvi de règim (horitzó 5000, prova de signes unilateral):
+  mons on la vida dura menys amb el canvi: 3; més: 3; igual: 23; p = 0.6563 (bilateral, descriptiva: 1.0000)
+
+Prova 2, l'expansió amb corrent (els 8 primers censos, prova de signes unilateral):
+  mons amb més vida amb corrent: 22; menys: 7; igual: 0; p = 0.0041 (bilateral, descriptiva: 0.0081)
+  diferència mediana: 9.9 punts
+  origen A (el corrent és el canvi): més vida amb corrent a 10 de 12 (cal més de la meitat); p de signes de l'origen = 0.0193, descriptiva
+  origen B (el corrent és l'origen): més vida amb corrent a 12 de 17 (cal més de la meitat); p de signes de l'origen = 0.0717, descriptiva
+
+La correcció de Holm (α = 0.025): prova 1, no es rebutja H₀ (llindar 0.025); prova 2, es rebutja H₀ (llindar 0.0125)
+La regla conjunta de la prova 2 (protocol §6.3): el corrent dona més vida a més de la meitat dels mons de tots dos orígens
+
+Descriptius:
+  A, origen (m = 0): sense pèrdua fins a 5000 100.0 %, durada restringida 5000
+  A, canvi (m = 0.01): sense pèrdua fins a 5000 87.5 %, durada restringida 4635
+  B, origen (m = 0.01): sense pèrdua fins a 5000 88.2 %, durada restringida 4529
+  B, canvi (m = 0): sense pèrdua fins a 5000 88.2 %, durada restringida 4596
+  pèrdues: 11 de 116 branques, de les quals es recuperen 9
+  al cens final: 113 amb l'1 % o més, 114 amb més de 5; la família dominant és nova a 22
+  les llavors coincideixen (pèrdua o no) en 91.4 % dels mons i condicions
+  segons per època, per trams de 500: 2.47 3.24 3.75 4.26 4.68 4.99 5.31 5.52 5.72 5.98
+
+DECISIÓ 1 (el canvi de règim): no es rebutja H0: no concloent; la sèrie no permet afirmar que, entre els mons amb una diferència de durada, predominin els que la tenen més curta quan el món canvia de condició, i la potència era baixa (protocol §6.2) (més curta: 3, més llarga: 3, iguals: 23; p = 0.6563, llindar de Holm 0.025)
+DECISIÓ 2 (l'expansió amb corrent): es rebutja H0: en la majoria dels mons, i en més de la meitat dels de cada origen, la vida establerta té més hereditaris als 8 primers censos amb corrent que sense (A: 10 de 12; B: 12 de 17; p = 0.0041, llindar de Holm 0.0125)
