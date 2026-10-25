@@ -4,7 +4,7 @@
 first organism.
 
 *This is the English version of the [Catalan README](README.md), which is the main one. It is shorter, and
-was last synchronised on 19 October 2026. The lab notebook and most of the documentation are in Catalan; the
+was last synchronised on 25 October 2026. The lab notebook and most of the documentation are in Catalan; the
 [glossary](docs/glossari.md) gives the English term for each Catalan one.*
 
 ![Animation: a colony of replicators appears and grows in a 2D world](docs/imatges/colonia-animada.png)
@@ -79,12 +79,25 @@ established more often, with a protocol written and tagged before starting.
   <img alt="Share of worlds where life has become established, epoch by epoch, quiet vs. current" src="docs/imatges/llei2-km.svg">
 </picture>
 
+**The second preregistered series: established life lasts.** We continued 29 worlds from the moment life
+became established, in their original condition and in the other one, with two seeds per condition and 5,000
+more epochs: 116 branches ([protocol](docs/protocol-b2.md), in Catalan).
+- **In its own world, life lasts.** 93.1% of branches never lose it within 5,000 epochs (95% CI:
+  73.8–98.5%).
+  - The few losses come early, by *t* + 1,500.
+  - All of them climb back above 1%.
+- **A current makes it spread faster:** confirmed, in 22 of 29 worlds and in both origins (p = 0.004, with
+  Holm's correction).
+  - **Not a discovery:** front-invasion theory predicts it. The series measures its size.
+- **Whether life lasts less when its world changes condition:** inconclusive (3 worlds for, 3 against and 23
+  ties). Losses are rare and concentrated in a few worlds, and the test had little power, as the protocol
+  warned.
+
+See notebook entry 10, in Catalan.
+
 **What we study now:**
-- **How long established life lasts.**
-  - **The exploration** (notebook entry 9) suggests it lasts: in 2,000 epochs almost none dies, with or
-    without a current.
-  - **A preregistered series** will measure its lifespan over a longer horizon
-    ([draft protocol](docs/protocol-b2.md), in Catalan).
+- **A new line,** to be chosen after audit 14. The candidate with the most room for a new result is how the
+  soup matures before life appears ([state of the art](docs/estat-questio.md), §11, in Catalan).
 - **World size.**
 - **Chemistry ablations.**
 - **A changing weather,** with a current that alternates calm and storm.
@@ -92,8 +105,8 @@ established more often, with a protocol written and tagged before starting.
 ## How we work
 
 - **Preregistration.** Confirmatory series have a protocol written before starting
-  ([law-2 protocol](docs/protocol-estadistic.md), in Catalan). The deciding program only decides from a copy
-  identical to the git tag of the preregistration.
+  ([law-2 protocol](docs/protocol-estadistic.md) and [B2 protocol](docs/protocol-b2.md), in Catalan). The
+  deciding program only decides from a copy identical to the git tag of the preregistration.
 - **Two auditors, both AI.**
   - **What they do:** at each iteration, two models review the code, the methods and the results, in
     separate sessions.
@@ -118,6 +131,10 @@ established more often, with a protocol written and tagged before starting.
 - **The law-2 preregistration** is the git tag `preregistre-llei2`.
   - **What can be checked:** the commit and the file fingerprints.
   - **What cannot:** the date, because git does not certify it and the repository was private.
+- **The B2 preregistration** is the git tag `preregistre-b2`, with an OpenTimestamps proof anchored in
+  Bitcoin ([`docs/preregistre-b2/`](docs/preregistre-b2/), in Catalan).
+  - **What it proves:** that the tag existed before 20:25:42 UTC on 20 October 2026, 6 minutes after the
+    first branch started. Nobody had looked at any result in those 6 minutes.
 - **How to cite it:** [`CITATION.cff`](CITATION.cff). **How to take part:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## How to run it

@@ -23,7 +23,10 @@ de la llei 2, i s'ha triat perquè la colònia s'hi veu bé: és un exemple, no 
 > heritable self-replicators sometimes emerge with no designed ancestor and no reward for copying. We design
 > the laws of the world — space, currents, flow — never the organisms. The first preregistered series (160
 > worlds, quiet vs. weak mixing) was **inconclusive**: life became established in 24/80 vs. 34/80 worlds
-> (log-rank p = 0.067; the preregistered bound was not reached). The code is written by Claude (Anthropic)
+> (log-rank p = 0.067; the preregistered bound was not reached). The second one (29 worlds, 116 paired
+> branches of 5,000 epochs) found that **established life lasts**: in their original condition, 93.1% of
+> branches never lose it within 5,000 epochs. A weak current makes it spread faster (22/29 worlds), as front-invasion theory
+> predicts; whether changing a world's condition shortens life remains open. The code is written by Claude (Anthropic)
 > under the direction of a human project owner, and reviewed by **two AI auditors**. **This is not human peer
 > review.** [Full English README](README.en.md).
 
@@ -149,13 +152,27 @@ començar.
 
 Vegeu l'[entrada 8](quadern/index.html#entrada-8).
 
+### La segona sèrie preregistrada: la vida establerta dura
+
+Hem continuat 29 mons des del moment que s'hi va establir la vida, en la seva condició i en l'altra, amb dues
+llavors per condició i 5.000 èpoques més: 116 branques ([protocol](docs/protocol-b2.md)).
+- **En el seu món, la vida dura.** El 93,1 % de les branques no la perden en cap moment (IC del 95 %:
+  73,8–98,5 %).
+  - Les poques pèrdues són d'hora, fins a *t* + 1.500.
+  - Totes tornen a passar de l'1 %.
+- **El corrent l'escampa més de pressa:** confirmat, en 22 de 29 mons i als dos orígens (*p* = 0,004, amb la
+  correcció de Holm).
+  - **No és un descobriment:** la teoria dels fronts d'invasió ja ho preveu. La sèrie en mesura la mida.
+- **Si la vida dura menys quan el món canvia de condició:** no concloent (3 mons a favor, 3 en contra i 23
+  iguals). Les pèrdues són rares i es concentren en pocs mons, i la prova tenia poca potència, com ja deia el
+  protocol.
+
+Vegeu l'[entrada 10](quadern/index.html#entrada-10).
+
 ### El que estudiem ara
 
-- **Quant dura la vida establerta.**
-  - **L'exploració** ([entrada 9](quadern/index.html#entrada-9)) suggereix que dura: en 2.000 èpoques,
-    gairebé cap no es mor, amb corrent o sense.
-  - **La sèrie preregistrada** en mesurarà la durada amb un horitzó més llarg, amb els 29 mons reservats
-    ([esborrany del protocol](docs/protocol-b2.md)).
+- **Una línia nova,** que triarem després de l'auditoria 14. La que té més lloc per a un resultat nou és la
+  maduració de la sopa abans que hi aparegui la vida ([estat de la qüestió](docs/estat-questio.md), §11).
 - **La mida del món,** començant pels mons petits.
 - **Els ingredients de la química:** treure-li instruccions o capacitats per saber quines calen.
 - **Un temps que canvia:** un corrent que alterna la calma i el temporal.
@@ -163,8 +180,8 @@ Vegeu l'[entrada 8](quadern/index.html#entrada-8).
 ## Com es treballa
 
 - **Preregistre.** Les sèries confirmatòries tenen un protocol escrit abans de començar
-  ([protocol de la llei 2](docs/protocol-estadistic.md)). El programa que decideix només ho fa des d'una
-  còpia idèntica a l'etiqueta de git del preregistre.
+  ([protocol de la llei 2](docs/protocol-estadistic.md) i [de B2](docs/protocol-b2.md)). El programa que
+  decideix només ho fa des d'una còpia idèntica a l'etiqueta de git del preregistre.
 - **Dos auditors, tots dos d'IA.**
   - **Què revisen:** a cada iteració, dos models revisen el codi, els mètodes i els resultats, en sessions
     separades.
@@ -190,6 +207,10 @@ Vegeu l'[entrada 8](quadern/index.html#entrada-8).
 - **El preregistre de la llei 2** és l'etiqueta `preregistre-llei2`.
   - **Què se'n pot comprovar:** el commit i les empremtes dels fitxers.
   - **Què no:** la data, perquè git no la certifica i el repositori era privat.
+- **El preregistre de B2** és l'etiqueta `preregistre-b2`, amb un segell d'OpenTimestamps ancorat a Bitcoin
+  ([`docs/preregistre-b2/`](docs/preregistre-b2/)).
+  - **Què demostra:** que l'etiqueta existia abans de les 20:25:42 UTC del 20-10-2026, 6 minuts després que
+    comencés la primera branca. En aquests 6 minuts, ningú no havia mirat cap resultat.
 - **Com citar-ho:** [`CITATION.cff`](CITATION.cff). **Com participar-hi:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Com obrir-ho
