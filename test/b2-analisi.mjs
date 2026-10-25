@@ -1,5 +1,5 @@
 // Proves de l'anàlisi exploratòria de B2 (fase2/b2-analisi.mjs), amb branques sintètiques, i de la del pilot
-// (eines/b2-pilot.mjs), amb els registres de git.
+// (eines/b2-pilot.mjs), amb els registres de git, i les funcions de l'exploració de la fragilitat (eines/fragilitat.mjs).
 // Executa: node test/b2-analisi.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
@@ -9,6 +9,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { readBranch, death, lifespan, signTest, analyse, RULES } from '../fase2/b2-analisi.mjs';
 import { pilot } from '../eines/b2-pilot.mjs';
+import { mannWhitney, mechanism } from '../eines/fragilitat.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const census = { version: 'v3', every: 250, sample: 2048, seed: 20261016 };
@@ -58,6 +59,18 @@ const tests = {
     const c = readBranch(branch(join(tmp, 'c.jsonl'), { group: 'A', seed: 3, mixing: 0, t: 1000, heritable: [100, 0, 100, 0, 100, 0, 100, 0] }));
     assert.strictEqual(death(c, RULES['R3 · cap hereditari']), null);
   }),
+  'la fragilitat del món: la prova de Mann–Whitney exacta i el mecanisme (eines/fragilitat.mjs)': () => {
+    // separació completa amb 2 i 2: de les 6 maneres de triar el grup, 2 són tan extremes
+    assert.strictEqual(mannWhitney([3, 4], [1, 2]), 2 / 6);
+    assert.strictEqual(mannWhitney([5], [1, 2, 3]), 2 / 4);
+    // tot empatat: cap diferència
+    assert.strictEqual(mannWhitney([1, 1], [1, 1]), 1);
+    assert.strictEqual(mechanism('<[},<]'), 'coma');
+    assert.strictEqual(mechanism('.{>'), 'punt');
+    assert.strictEqual(mechanism(',[[[[['), 'altre: ,[[[[[');
+    assert.strictEqual(mechanism(',<}.{>'), 'altre: ,<}.{>');
+    assert.strictEqual(mechanism(undefined), 'cap família');
+  },
   'prova de signes exacta': () => {
     assert.strictEqual(signTest(4, 0), 0.125);
     assert.strictEqual(signTest(6, 0), 0.03125);
