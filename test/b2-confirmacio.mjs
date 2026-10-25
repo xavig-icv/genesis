@@ -79,6 +79,20 @@ function writeSeries(dir, m, fate, opts = {}) {
 }
 const ALIVE = [300, 400, 500, 600];
 function withTmp(fn) { const tmp = mkdtempSync(join(tmpdir(), 'b2c-')); try { fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
+// Un repositori de prova amb el programa i un manifest petit, en un sol commit i sense cap etiqueta
+function testRepo(tmp) {
+  const repo = join(tmp, 'repo');
+  for (const d of ['fase1', 'fase2', 'docs']) mkdirSync(join(repo, d), { recursive: true });
+  copyFileSync(join(root, 'package.json'), join(repo, 'package.json'));
+  for (const d of ['fase1', 'fase2']) for (const f of readdirSync(join(root, d)).filter((f) => /\.m?js$/.test(f))) copyFileSync(join(root, d, f), join(repo, d, f));
+  writeFileSync(join(repo, 'docs', 'protocol-b2.md'), '# Protocol de prova\n');
+  const m = smallManifest();
+  writeFileSync(join(repo, 'fase2', 'serie-b2.json'), JSON.stringify(m, null, 1) + '\n');
+  const GIT = ['-c', 'user.name=prova', '-c', 'user.email=prova@exemple.invalid', '-c', 'core.autocrlf=false'];
+  const git = (...a) => { const r = spawnSync('git', [...GIT, ...a], { cwd: repo, encoding: 'utf8' }); if (r.status) throw new Error(r.stderr); return r.stdout.trim(); };
+  git('init', '-q'); git('add', '-A'); git('commit', '-q', '-m', 'preregistre de prova');
+  return { repo, git, m };
+}
 
 const tests = {
   // ---- La mesura (AU2-57; la matriu de l'auditor 2)
@@ -390,22 +404,16 @@ const tests = {
     assert.strictEqual(r.status, 2);
     assert.match(r.stdout, /no llegeix la carpeta de la sèrie/);
   }),
-  '--decideix sense l\'etiqueta preregistre-b2 es nega a decidir': () => {
-    const r = spawnSync(process.execPath, [join(root, 'fase2', 'b2-confirmacio.mjs'), '--decideix', tmpdir()], { cwd: root, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '' } });
+  // En un repositori de prova: al de veritat, l'etiqueta existeix des del 20-10-2026, i el programa s'hi nega per
+  // una altra raó, perquè la còpia no és al commit de l'etiqueta.
+  '--decideix sense l\'etiqueta preregistre-b2 es nega a decidir': () => withTmp((tmp) => {
+    const { repo } = testRepo(tmp);
+    const r = spawnSync(process.execPath, ['fase2/b2-confirmacio.mjs', '--decideix', tmp], { cwd: repo, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '' } });
     assert.strictEqual(r.status, 1);
     assert.match(r.stdout, /No es pot prendre la decisió confirmatòria: no hi ha l'etiqueta de git preregistre-b2/);
-  },
+  }),
   'amb l\'etiqueta decideix; i amb b2-serie.mjs canviat es nega, sense executar-ne el codi (AUD-81)': () => withTmp((tmp) => {
-    const repo = join(tmp, 'repo');
-    for (const d of ['fase1', 'fase2', 'docs']) mkdirSync(join(repo, d), { recursive: true });
-    copyFileSync(join(root, 'package.json'), join(repo, 'package.json'));
-    for (const d of ['fase1', 'fase2']) for (const f of readdirSync(join(root, d)).filter((f) => /\.m?js$/.test(f))) copyFileSync(join(root, d, f), join(repo, d, f));
-    writeFileSync(join(repo, 'docs', 'protocol-b2.md'), '# Protocol de prova\n');
-    const m = smallManifest();
-    writeFileSync(join(repo, 'fase2', 'serie-b2.json'), JSON.stringify(m, null, 1) + '\n');
-    const GIT = ['-c', 'user.name=prova', '-c', 'user.email=prova@exemple.invalid', '-c', 'core.autocrlf=false'];
-    const git = (...a) => { const r = spawnSync('git', [...GIT, ...a], { cwd: repo, encoding: 'utf8' }); if (r.status) throw new Error(r.stderr); return r.stdout.trim(); };
-    git('init', '-q'); git('add', '-A'); git('commit', '-q', '-m', 'preregistre de prova');
+    const { repo, git, m } = testRepo(tmp);
     const sha = (f) => createHash('sha256').update(readFileSync(join(repo, f))).digest('hex');
     const files = ['fase2/serie-b2.json', 'docs/protocol-b2.md', 'fase2/b2-confirmacio.mjs', 'fase2/b2-serie.mjs', 'fase2/preregistre.mjs'];
     git('tag', '-a', 'preregistre-b2', '-m', 'Preregistre de prova\n\n' + files.map((f) => `${sha(f)}  ${f}`).join('\n'));
