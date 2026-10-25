@@ -1,0 +1,32 @@
+{
+ "tool": "eines/transforma.mjs",
+ "code": "4fa032b",
+ "node": "v16.15.1",
+ "from": "fase2/resultats/serie-llei2/B/captures/llavor2038-mon512x256-r2-m0.01-establiment10250-epoca10250.bin",
+ "fromSha256": "0cdd3ebda3ca94c125b37d1921e91413d74fef3c9b306b4c6e5a727df27242a8",
+ "kind": "placebo-cell",
+ "seed": 602038,
+ "width": 512,
+ "radius": 2,
+ "out": "fase2/resultats/zeros/serie/alicuotes/B2038/placebo-cell.bin",
+ "outSha256": "1db71a59fc267c0d27f4bacdfa9a7dd3ed0ea3932ed72c0d23391dd2d599c4df",
+ "changed": 1097582,
+ "scope": {
+  "cells": 115557,
+  "replicating": 15515,
+  "zeros": 1107108,
+  "zerosProtected": 158312,
+  "maskSha256": "48386c620931616a899eee842969229e347248ddca8d6645834180119172d951",
+  "placebo": 1097582,
+  "shortfall": 9526,
+  "saturated": {
+   "cells": 427,
+   "zeros": 16205
+  }
+ },
+ "zeros": {
+  "before": 1265420,
+  "after": 1265420
+ },
+ "invariants": "correctes"
+}

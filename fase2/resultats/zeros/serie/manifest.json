@@ -1,0 +1,2375 @@
+{
+ "pilot": "zeros",
+ "design": "docs/protocol-zeros.md",
+ "code": "4fa032b",
+ "node": "v16.15.1",
+ "date": "2026-10-25T23:23:11.902Z",
+ "tag": "preregistre-zeros",
+ "dir": "fase2/resultats/zeros/serie/branques",
+ "test": {
+  "measure": "g = h₁ / h₀: els hereditaris del primer cens de la branca (t + 250) respecte dels del començament del braç",
+  "unit": "món",
+  "worlds": "prova",
+  "contrasts": [
+   [
+    "zeros-data",
+    "continue"
+   ],
+   [
+    "zeros-data",
+    "placebo-cell"
+   ]
+  ],
+  "method": "holm",
+  "alpha": 0.025,
+  "sided": "greater",
+  "descriptive": [
+   [
+    "zeros-inert",
+    "continue"
+   ],
+   [
+    "zeros-data",
+    "zeros-inert"
+   ],
+   [
+    "placebo-cell",
+    "continue"
+   ]
+  ]
+ },
+ "params": {
+  "arms": [
+   "continue",
+   "zeros-data",
+   "placebo-cell",
+   "zeros-inert"
+  ],
+  "horizon": 2000,
+  "mixing": 0.01,
+  "stopAfterEvent": null,
+  "age": null,
+  "transformOffset": 600000,
+  "continuation": [
+   [
+    "a",
+    400000
+   ],
+   [
+    "b",
+    500000
+   ],
+   [
+    "c",
+    700000
+   ]
+  ],
+  "world": [
+   512,
+   256
+  ],
+  "radius": 2,
+  "rng": "v2",
+  "every": 100,
+  "mutation": 0.00024,
+  "census": {
+   "version": "v3",
+   "every": 250,
+   "sample": 2048,
+   "seed": 20261016
+  }
+ },
+ "worlds": [
+  {
+   "world": "B2002",
+   "role": "prova",
+   "start": 7000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2002-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "included": true,
+   "captureSha256": "678656eb829683961d9734618a8a4113f1a47115ca157213c54aad173d6d10df",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2002/continue.bin",
+     "sha256": "678656eb829683961d9734618a8a4113f1a47115ca157213c54aad173d6d10df",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2002/continue.json",
+      "sha256": "622763c394fab9a9e9e59cdb2615235fdb6e0e973a5af8190ac954181a895072"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2002/continue-escaneig.json",
+      "sha256": "da1bd713aec354aab7b1a0466d821f2791570bdf004033a9fb97508080ea55a9",
+      "replicating": 20166,
+      "heritable": 14008,
+      "heritableSolo": 14008,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2002/zeros-data.bin",
+     "sha256": "2ec22deacbb9a7804ac1baa675f4f3a25cd6a7349d40ad9c98df1035cac76858",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2002/zeros-data.json",
+      "sha256": "0aea4db9b7bfe7a2b7944e4cf80fa107c5448164384a82669883de9083061c44"
+     },
+     "changed": 1241546,
+     "scope": {
+      "cells": 110911,
+      "replicating": 20161,
+      "zeros": 1241546,
+      "zerosProtected": 232555,
+      "maskSha256": "04587f4bc5c9c6b4dc2361cba95f4e6d4dd5969fa84c23bbb4d3054bfcadccab"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2002/zeros-data-escaneig.json",
+      "sha256": "19fb6c1ae6ca6c9a9d9fad4cd25ce26a4974e200d19f780124c4d83f74dead4f",
+      "replicating": 35699,
+      "heritable": 26258,
+      "heritableSolo": 26252,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2002/placebo-cell.bin",
+     "sha256": "ce9df0fb72f5931c85664a587c7febdda9bb8f5055f1e304e0b8302517f9f472",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2002/placebo-cell.json",
+      "sha256": "38b1cb8dc1e01c1ada14c933c9b09f7ce1db1128be2b64271362634bac1933a6"
+     },
+     "changed": 1226771,
+     "scope": {
+      "cells": 110911,
+      "replicating": 20161,
+      "zeros": 1241546,
+      "zerosProtected": 232555,
+      "maskSha256": "04587f4bc5c9c6b4dc2361cba95f4e6d4dd5969fa84c23bbb4d3054bfcadccab",
+      "placebo": 1226771,
+      "shortfall": 14775,
+      "saturated": {
+       "cells": 898,
+       "zeros": 30401
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2002/placebo-cell-escaneig.json",
+      "sha256": "2a1ab5f9dd9e5ffccfc573d21b1ae9abbc977829604497dd63eb0ac0888410c2",
+      "replicating": 20149,
+      "heritable": 13962,
+      "heritableSolo": 13962,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2002/zeros-inert.bin",
+     "sha256": "54723ea167e816102727adbce842f29e659829d9bfe01755870637b0a43f5462",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2002/zeros-inert.json",
+      "sha256": "6067c90432c94b79ce11c1989a260e3b67af66689ffc0e65f7003a95e2ece5f5"
+     },
+     "changed": 1036746,
+     "scope": {
+      "cells": 110911,
+      "replicating": 20161,
+      "zeros": 1241546,
+      "zerosProtected": 232555,
+      "maskSha256": "04587f4bc5c9c6b4dc2361cba95f4e6d4dd5969fa84c23bbb4d3054bfcadccab",
+      "inert": {
+       "cleaned": 94886,
+       "reverted": 15859,
+       "zerosLeft": 204800
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2002/zeros-inert-escaneig.json",
+      "sha256": "1e406ec39c5e8f0f79583996b58b3850d65cfaa784231d567ed9af6b20204936",
+      "replicating": 20701,
+      "heritable": 14029,
+      "heritableSolo": 14027,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2011",
+   "role": "prova",
+   "start": 2000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2011-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "included": true,
+   "captureSha256": "eaab89b759b026c1ea497b2725a41c05803d70426026089a0e033ba390ae06c1",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2011/continue.bin",
+     "sha256": "eaab89b759b026c1ea497b2725a41c05803d70426026089a0e033ba390ae06c1",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2011/continue.json",
+      "sha256": "756d45db77279535e13082274dba19b6fcb8c8a91fb17cbb84581b324ef7ac9e"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2011/continue-escaneig.json",
+      "sha256": "f4f21ed5c96fa948d5d61d38ac16b9b55354db104f6e9501c483473ae2272daf",
+      "replicating": 44676,
+      "heritable": 34669,
+      "heritableSolo": 34669,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2011/zeros-data.bin",
+     "sha256": "c514fd3cb98a335668481f110a857efca722ec3d238997b3d8984e14ea86cf57",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2011/zeros-data.json",
+      "sha256": "6f3f6d40e3326f89736afdc74e17d9a1d19eea7adb9df502091529fe91fcbd2e"
+     },
+     "changed": 656800,
+     "scope": {
+      "cells": 86394,
+      "replicating": 44678,
+      "zeros": 656800,
+      "zerosProtected": 484197,
+      "maskSha256": "4d5fef5c28365f0e2c25cc9b052968219f99695ae8213305f98323957b625b1e"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2011/zeros-data-escaneig.json",
+      "sha256": "3202a2c5ef3bfbf0048ba0e2e46fd9c4d69fd20813e0f8d119d818fca2babf95",
+      "replicating": 60402,
+      "heritable": 48935,
+      "heritableSolo": 48934,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2011/placebo-cell.bin",
+     "sha256": "8ec08ac7bc1e54c7671bc0f5777e38717613eb99e27c6e648d9c01a04ff57bad",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2011/placebo-cell.json",
+      "sha256": "74080f8157996ded37c225f71a123864508b5145e2599fea6ca652a58fe16450"
+     },
+     "changed": 649447,
+     "scope": {
+      "cells": 86394,
+      "replicating": 44678,
+      "zeros": 656800,
+      "zerosProtected": 484197,
+      "maskSha256": "4d5fef5c28365f0e2c25cc9b052968219f99695ae8213305f98323957b625b1e",
+      "placebo": 649447,
+      "shortfall": 7353,
+      "saturated": {
+       "cells": 317,
+       "zeros": 11954
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2011/placebo-cell-escaneig.json",
+      "sha256": "371aa3e1ad4d2fe84c1ce9b22a485a754d5d289c3f8a8b952614da3dfa907371",
+      "replicating": 44632,
+      "heritable": 34708,
+      "heritableSolo": 34708,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2011/zeros-inert.bin",
+     "sha256": "b25219d2ad88be049698f514a175d17c3c288c2fb0090e360534b17ae4a193c9",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2011/zeros-inert.json",
+      "sha256": "ed9367bd304e301fdcc5766509cf7631caa941653f781a5cabbe23dcdb604f7d"
+     },
+     "changed": 465696,
+     "scope": {
+      "cells": 86394,
+      "replicating": 44678,
+      "zeros": 656800,
+      "zerosProtected": 484197,
+      "maskSha256": "4d5fef5c28365f0e2c25cc9b052968219f99695ae8213305f98323957b625b1e",
+      "inert": {
+       "cleaned": 58510,
+       "reverted": 16051,
+       "zerosLeft": 191104
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2011/zeros-inert-escaneig.json",
+      "sha256": "ba0ca9752bcf5a34a8b08b7d0d5cca44685c801aabdb4030764c005c5e256d08",
+      "replicating": 44936,
+      "heritable": 34765,
+      "heritableSolo": 34765,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2021",
+   "role": "prova",
+   "start": 11000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2021-mon512x256-r2-m0.01-establiment11000-epoca11000.bin",
+   "included": true,
+   "captureSha256": "d66c745a3af9f3d432e6c4b03b73778a0e047eeccc075d7caec2ed30d9980e03",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2021/continue.bin",
+     "sha256": "d66c745a3af9f3d432e6c4b03b73778a0e047eeccc075d7caec2ed30d9980e03",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2021/continue.json",
+      "sha256": "ce4c525894fa208b24546a8aa0c2a999dfa918875be2471c13eb67a02be4d976"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2021/continue-escaneig.json",
+      "sha256": "ff37d506db093acb889ddbb2226a0e36cad74f3f803d97dbc254bee3bf9d7071",
+      "replicating": 46893,
+      "heritable": 19093,
+      "heritableSolo": 19093,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2021/zeros-data.bin",
+     "sha256": "b1e6f7d4c60db7f3fe4998f2d9b85b336aeb2984e4d5ca7000b40475a5e2853a",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2021/zeros-data.json",
+      "sha256": "75ddd7eba02370ce32d68b3995df7084e3716438f6a189337d576e7654d8f247"
+     },
+     "changed": 1313481,
+     "scope": {
+      "cells": 84240,
+      "replicating": 46832,
+      "zeros": 1313481,
+      "zerosProtected": 909643,
+      "maskSha256": "af4ee7582fd5e3a1814bfa39c29ded5706d769f9115e9f8ab5dc15e1380b8d87"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2021/zeros-data-escaneig.json",
+      "sha256": "ad263de67b93e79e52481374763f1a65861365feb8aa61a5bb5a13dcb3015159",
+      "replicating": 52774,
+      "heritable": 22550,
+      "heritableSolo": 22550,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2021/placebo-cell.bin",
+     "sha256": "f179e86edfe4470c40331942bd6d5d6041a291938ca20147fbb6ce5dc20f9d0c",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2021/placebo-cell.json",
+      "sha256": "ea4b980dbd48b8487b2aac4d7a3dce295b8c1898292ee7abaf9f497ab9203d3f"
+     },
+     "changed": 1247309,
+     "scope": {
+      "cells": 84240,
+      "replicating": 46832,
+      "zeros": 1313481,
+      "zerosProtected": 909643,
+      "maskSha256": "af4ee7582fd5e3a1814bfa39c29ded5706d769f9115e9f8ab5dc15e1380b8d87",
+      "placebo": 1247309,
+      "shortfall": 66172,
+      "saturated": {
+       "cells": 5043,
+       "zeros": 161339
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2021/placebo-cell-escaneig.json",
+      "sha256": "9255b1dcabb8654a9d7cd9ccc7bee371b9a970ef5ffb14de56a1151fa2b52fc2",
+      "replicating": 46855,
+      "heritable": 19113,
+      "heritableSolo": 19113,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2021/zeros-inert.bin",
+     "sha256": "8384863c7913eb927904d6af9efd016e668343e0cdbfc81811429ac1bed9b054",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2021/zeros-inert.json",
+      "sha256": "da3c2f60dd2f76a54ed25fd40d639137fa6b394a0542665c0252716dd13ef579"
+     },
+     "changed": 1185707,
+     "scope": {
+      "cells": 84240,
+      "replicating": 46832,
+      "zeros": 1313481,
+      "zerosProtected": 909643,
+      "maskSha256": "af4ee7582fd5e3a1814bfa39c29ded5706d769f9115e9f8ab5dc15e1380b8d87",
+      "inert": {
+       "cleaned": 77525,
+       "reverted": 6131,
+       "zerosLeft": 127774
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2021/zeros-inert-escaneig.json",
+      "sha256": "540a35173b55c5ef8a516490aee0dd1097c9abb53e2373dcba1b8f43d4fa8ab4",
+      "replicating": 46981,
+      "heritable": 19150,
+      "heritableSolo": 19149,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2038",
+   "role": "prova",
+   "start": 10250,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2038-mon512x256-r2-m0.01-establiment10250-epoca10250.bin",
+   "included": true,
+   "captureSha256": "0cdd3ebda3ca94c125b37d1921e91413d74fef3c9b306b4c6e5a727df27242a8",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2038/continue.bin",
+     "sha256": "0cdd3ebda3ca94c125b37d1921e91413d74fef3c9b306b4c6e5a727df27242a8",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2038/continue.json",
+      "sha256": "947ae718b6334e2575cb9239c471d4a16df4aedbd31e79f42b7fe8305b08e0ce"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2038/continue-escaneig.json",
+      "sha256": "fe5a5c9062a5dd565ad656d3039115e24ba751b79fe5db49f6d9531194444cdc",
+      "replicating": 15540,
+      "heritable": 10059,
+      "heritableSolo": 10059,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2038/zeros-data.bin",
+     "sha256": "cf6e23ddb270f2e5f504d4443bdd45a87839f44e2b598a01515d4b1c31152da1",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2038/zeros-data.json",
+      "sha256": "8e5df834d891c243783b94c592f06caddd7fad2deb664002fd69f774e55be869"
+     },
+     "changed": 1107108,
+     "scope": {
+      "cells": 115557,
+      "replicating": 15515,
+      "zeros": 1107108,
+      "zerosProtected": 158312,
+      "maskSha256": "48386c620931616a899eee842969229e347248ddca8d6645834180119172d951"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2038/zeros-data-escaneig.json",
+      "sha256": "5bfcd76d808a009a5d4c56b988b13dd7318c3669f4a53bd841213f6112c3db00",
+      "replicating": 26007,
+      "heritable": 17658,
+      "heritableSolo": 17656,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2038/placebo-cell.bin",
+     "sha256": "1db71a59fc267c0d27f4bacdfa9a7dd3ed0ea3932ed72c0d23391dd2d599c4df",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2038/placebo-cell.json",
+      "sha256": "39017cdd6faabd670ac5ce309487d46318dfb0b4bb6c5cb7df02d6dd0be14449"
+     },
+     "changed": 1097582,
+     "scope": {
+      "cells": 115557,
+      "replicating": 15515,
+      "zeros": 1107108,
+      "zerosProtected": 158312,
+      "maskSha256": "48386c620931616a899eee842969229e347248ddca8d6645834180119172d951",
+      "placebo": 1097582,
+      "shortfall": 9526,
+      "saturated": {
+       "cells": 427,
+       "zeros": 16205
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2038/placebo-cell-escaneig.json",
+      "sha256": "4b192c99bfa26c85552cc6faaa1e408766bb7f0d03d6d97b08e4473411a596db",
+      "replicating": 15544,
+      "heritable": 10015,
+      "heritableSolo": 10015,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2038/zeros-inert.bin",
+     "sha256": "1d5a89dde9ffb35eebbfd8b4f1f4e2dc292d1fb91628d5f74f7bd91cce764fd5",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2038/zeros-inert.json",
+      "sha256": "2efa348b2f9f40229346d3c88cf5ee24a57cc3352e7d57bb2c93322997e92856"
+     },
+     "changed": 989120,
+     "scope": {
+      "cells": 115557,
+      "replicating": 15515,
+      "zeros": 1107108,
+      "zerosProtected": 158312,
+      "maskSha256": "48386c620931616a899eee842969229e347248ddca8d6645834180119172d951",
+      "inert": {
+       "cleaned": 104646,
+       "reverted": 10730,
+       "zerosLeft": 117988
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2038/zeros-inert-escaneig.json",
+      "sha256": "6945bfc1f043342996c5ba3886e391ce8b432decc6677d19d20fd47ca98c3ead",
+      "replicating": 15885,
+      "heritable": 10094,
+      "heritableSolo": 10091,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2042",
+   "role": "prova",
+   "start": 5750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2042-mon512x256-r2-m0.01-establiment5750-epoca5750.bin",
+   "included": true,
+   "captureSha256": "1945fa5752ea17f6bec50a00da628504d3cbfa845cbcd633b9527d075a93f1c0",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2042/continue.bin",
+     "sha256": "1945fa5752ea17f6bec50a00da628504d3cbfa845cbcd633b9527d075a93f1c0",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2042/continue.json",
+      "sha256": "95f5d5135dad483e5c76304c270eac9a28f89ffa64e4700dfceeb00f0710893f"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2042/continue-escaneig.json",
+      "sha256": "e88079f6321cef1860b866c803869140fc8aa2c903d2d8684be8a2e362c948ff",
+      "replicating": 7368,
+      "heritable": 3456,
+      "heritableSolo": 3456,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2042/zeros-data.bin",
+     "sha256": "e8d574874cc4e64738abcf44179f6d3b96a0f8c988a0d57845ead3631b045e63",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2042/zeros-data.json",
+      "sha256": "09f469eb45f266cc15d0b0dd7da4c1fcb858501694fe134c6d97c0581ae7550a"
+     },
+     "changed": 1638504,
+     "scope": {
+      "cells": 123654,
+      "replicating": 7418,
+      "zeros": 1638504,
+      "zerosProtected": 131395,
+      "maskSha256": "4717bd8471cbb7c4340037b413dfdd03720960685303716ca85d539be2b67dcb"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2042/zeros-data-escaneig.json",
+      "sha256": "579224d3c0cb1d14b4124a50973b804ce34a8c91d22a588cc3fc6921a8852cfa",
+      "replicating": 10006,
+      "heritable": 4806,
+      "heritableSolo": 4803,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2042/placebo-cell.bin",
+     "sha256": "87375c8eb64eb107dad93076a0027f0d44f0a0af4990ff56fd9b7b838c69688e",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2042/placebo-cell.json",
+      "sha256": "94776e5def88140528c6e7245703ce38e9a865a330582afd51138c7e8f79c989"
+     },
+     "changed": 1591175,
+     "scope": {
+      "cells": 123654,
+      "replicating": 7418,
+      "zeros": 1638504,
+      "zerosProtected": 131395,
+      "maskSha256": "4717bd8471cbb7c4340037b413dfdd03720960685303716ca85d539be2b67dcb",
+      "placebo": 1591175,
+      "shortfall": 47329,
+      "saturated": {
+       "cells": 5559,
+       "zeros": 166793
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2042/placebo-cell-escaneig.json",
+      "sha256": "71891f3e1812902d55ef5683e9fc9292be054d44f9685704b79af46e617c07c3",
+      "replicating": 7357,
+      "heritable": 3450,
+      "heritableSolo": 3450,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2042/zeros-inert.bin",
+     "sha256": "5c6d17ebdfcab172627feac53606048fe90644389c5784f2423d3532c9bc0b7f",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2042/zeros-inert.json",
+      "sha256": "5d77d8e38885e1bddf68836f81c4827e4b3161ea9f99e2eb37902e8f22af8966"
+     },
+     "changed": 1584007,
+     "scope": {
+      "cells": 123654,
+      "replicating": 7418,
+      "zeros": 1638504,
+      "zerosProtected": 131395,
+      "maskSha256": "4717bd8471cbb7c4340037b413dfdd03720960685303716ca85d539be2b67dcb",
+      "inert": {
+       "cleaned": 119872,
+       "reverted": 3026,
+       "zerosLeft": 54497
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2042/zeros-inert-escaneig.json",
+      "sha256": "79326c4da594020e80c46fc90c09ed4f548203de8a474a9a1f47f8c71b2a06e1",
+      "replicating": 7848,
+      "heritable": 3462,
+      "heritableSolo": 3460,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2043",
+   "role": "prova",
+   "start": 500,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2043-mon512x256-r2-m0.01-establiment500-epoca500.bin",
+   "included": true,
+   "captureSha256": "199dee1661a7df3dec49658afacdcf81f92b71e46d3e1525ae283efb40adcd01",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2043/continue.bin",
+     "sha256": "199dee1661a7df3dec49658afacdcf81f92b71e46d3e1525ae283efb40adcd01",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2043/continue.json",
+      "sha256": "397e0a8504d883fb2b63c2adde90c68e83e03e01ca3a24d178f12817d369a953"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2043/continue-escaneig.json",
+      "sha256": "be4377336ba49111aa3e7733a40c3c276962502d7b0d142cfddfa7911e71ed75",
+      "replicating": 38100,
+      "heritable": 28052,
+      "heritableSolo": 28052,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2043/zeros-data.bin",
+     "sha256": "ccea46534b088c4aaed9953284e060f117bef4cb6f5b4f3845316c61c094681b",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2043/zeros-data.json",
+      "sha256": "af8d6c3824e2a96aaf91710d3bd29f3803f12b1856a520bf9a1825a15d399e80"
+     },
+     "changed": 454637,
+     "scope": {
+      "cells": 92951,
+      "replicating": 38121,
+      "zeros": 454637,
+      "zerosProtected": 229750,
+      "maskSha256": "f62e41c0d9534afe9c59764150767ddaf7952773036e13cc327b843aabf09311"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2043/zeros-data-escaneig.json",
+      "sha256": "46ec64edfdc60782a494256f096a65c857e02f41afbd8fa262182252ec9a9b93",
+      "replicating": 44572,
+      "heritable": 33012,
+      "heritableSolo": 33007,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2043/placebo-cell.bin",
+     "sha256": "1659cbf5ee9a581e9193d303800f8904cca92673b5d50d5f70646a3a695012b5",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2043/placebo-cell.json",
+      "sha256": "32444a15d98e075b12e46611ecf9cfedef643facc7e6fe4fe831e961eb5f2971"
+     },
+     "changed": 450910,
+     "scope": {
+      "cells": 92951,
+      "replicating": 38121,
+      "zeros": 454637,
+      "zerosProtected": 229750,
+      "maskSha256": "f62e41c0d9534afe9c59764150767ddaf7952773036e13cc327b843aabf09311",
+      "placebo": 450910,
+      "shortfall": 3727,
+      "saturated": {
+       "cells": 195,
+       "zeros": 7344
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2043/placebo-cell-escaneig.json",
+      "sha256": "45b180a6cc018ddc0d4dba47e4f6411aee203c08a816b4c1d0918d52cdd3b8f4",
+      "replicating": 38101,
+      "heritable": 28000,
+      "heritableSolo": 28000,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2043/zeros-inert.bin",
+     "sha256": "c119d6dc383dd170ab3bc558c5950f03d33be7e6f925bee9535e464d23707af7",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2043/zeros-inert.json",
+      "sha256": "01fcf6b25f64e520d42be1d655ed5e3628235e8323e6259c0eaa28deccae1dfc"
+     },
+     "changed": 408285,
+     "scope": {
+      "cells": 92951,
+      "replicating": 38121,
+      "zeros": 454637,
+      "zerosProtected": 229750,
+      "maskSha256": "f62e41c0d9534afe9c59764150767ddaf7952773036e13cc327b843aabf09311",
+      "inert": {
+       "cleaned": 85301,
+       "reverted": 6748,
+       "zerosLeft": 46352
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2043/zeros-inert-escaneig.json",
+      "sha256": "2475798e05183f96984a2297ec8184cb553ff3badc48822b7389b0b5140ebdfb",
+      "replicating": 38292,
+      "heritable": 28129,
+      "heritableSolo": 28128,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2078",
+   "role": "prova",
+   "start": 4750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2078-mon512x256-r2-m0.01-establiment4750-epoca4750.bin",
+   "included": true,
+   "captureSha256": "8419a708df7cdfc7f89cc7ddd2cc7294f27c5eb91976c96347db9f297cbc1b77",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2078/continue.bin",
+     "sha256": "8419a708df7cdfc7f89cc7ddd2cc7294f27c5eb91976c96347db9f297cbc1b77",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2078/continue.json",
+      "sha256": "bcf173fbb421cd84a2d541c62ce04240942e2c3cdc5a249e0bbf6a503637494c"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2078/continue-escaneig.json",
+      "sha256": "d3ae061ea6d103c134dc4c071baf3f7578ece326b3d450852ee4693049f954b5",
+      "replicating": 22053,
+      "heritable": 11134,
+      "heritableSolo": 11134,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2078/zeros-data.bin",
+     "sha256": "08b1a3d65a369e3dc399fd55ed6b96482ab57f95a128d0c41f54691169faa6c4",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2078/zeros-data.json",
+      "sha256": "dfe8cc7c2eed31cbeed88940d3870f245fb97f6ec078600bb676cfc08ba128d8"
+     },
+     "changed": 988804,
+     "scope": {
+      "cells": 108997,
+      "replicating": 22075,
+      "zeros": 988804,
+      "zerosProtected": 230683,
+      "maskSha256": "5bf97cc1641d3ea6e27df68fbe2266b01074cb9cb0dddf4c615dd4801ebf6873"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2078/zeros-data-escaneig.json",
+      "sha256": "f863b5364ee5e0c1a81f3a4d6ab21922b948a137f4244851d32fbc55f6584438",
+      "replicating": 26436,
+      "heritable": 13805,
+      "heritableSolo": 13801,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2078/placebo-cell.bin",
+     "sha256": "805005e53e3969bccbf1afcf4ff915811f2b4f999a70a356e073ebd1181eacc7",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2078/placebo-cell.json",
+      "sha256": "4057637657ba110e19f531af342d01bcfb77cb169b72d74c9a5ea670b6f2fd92"
+     },
+     "changed": 970196,
+     "scope": {
+      "cells": 108997,
+      "replicating": 22075,
+      "zeros": 988804,
+      "zerosProtected": 230683,
+      "maskSha256": "5bf97cc1641d3ea6e27df68fbe2266b01074cb9cb0dddf4c615dd4801ebf6873",
+      "placebo": 970196,
+      "shortfall": 18608,
+      "saturated": {
+       "cells": 1286,
+       "zeros": 37603
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2078/placebo-cell-escaneig.json",
+      "sha256": "c9d13eadcc1660d24a48d7bb2eba6a41d3adf5a88f40721f67e00076bf9175a4",
+      "replicating": 22051,
+      "heritable": 11194,
+      "heritableSolo": 11193,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2078/zeros-inert.bin",
+     "sha256": "f4a206b9ddbe9198842061b774e515f861cc1506bd7926f63bf6ddaadfe7ed2c",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2078/zeros-inert.json",
+      "sha256": "6a497970cf69b1abcceee960232441dd842e724376c86aa2b44d919a6d35cf6d"
+     },
+     "changed": 936506,
+     "scope": {
+      "cells": 108997,
+      "replicating": 22075,
+      "zeros": 988804,
+      "zerosProtected": 230683,
+      "maskSha256": "5bf97cc1641d3ea6e27df68fbe2266b01074cb9cb0dddf4c615dd4801ebf6873",
+      "inert": {
+       "cleaned": 103481,
+       "reverted": 4516,
+       "zerosLeft": 52298
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2078/zeros-inert-escaneig.json",
+      "sha256": "476581b885b9782552b25b2bcbd0268668649422e1e6020a8fa22c71fba174ce",
+      "replicating": 22325,
+      "heritable": 11210,
+      "heritableSolo": 11207,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2001",
+   "role": "prova",
+   "start": 5000,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2001-mon512x256-r2-m0.01-establiment5000-epoca5000.bin",
+   "included": true,
+   "captureSha256": "aefb27cef7818299ced5afe8af84330bee20a0122c7fca75c7457a7a931bbc52",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2001/continue.bin",
+     "sha256": "aefb27cef7818299ced5afe8af84330bee20a0122c7fca75c7457a7a931bbc52",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2001/continue.json",
+      "sha256": "42543dbdde6705f087576e6684d319a8e9bae8bdb8f2d2d83b2a64079b56e0f9"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2001/continue-escaneig.json",
+      "sha256": "c8e82e5d63ee28431c6beb6995dadad2c2efbd9e6327d51641dc13a68d87b2fd",
+      "replicating": 30200,
+      "heritable": 19375,
+      "heritableSolo": 19375,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2001/zeros-data.bin",
+     "sha256": "3a7d51d4fd62050247ff2dc3b413eb0255317eb98b8a225f9d9a1e787e334c1c",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2001/zeros-data.json",
+      "sha256": "44c9074f7339c4563f9a6369436f7a7dc04fd8191a80cf2658f95f2f9e011e9f"
+     },
+     "changed": 610040,
+     "scope": {
+      "cells": 100845,
+      "replicating": 30227,
+      "zeros": 610040,
+      "zerosProtected": 186973,
+      "maskSha256": "50bd5ea472366cce8cf5d3a494d4356755a287a35bbcb04183bd3b2ea911ba1d"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2001/zeros-data-escaneig.json",
+      "sha256": "ff116cd8267aada85c2f0a693c096a727fd0e9744082c37637e5f24ce8e84346",
+      "replicating": 32211,
+      "heritable": 20176,
+      "heritableSolo": 20169,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2001/placebo-cell.bin",
+     "sha256": "0cc9d09e41a10983939c63301a80004187dc4d6f193c141fa0bec42a48ba8915",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2001/placebo-cell.json",
+      "sha256": "fd9724b4e8b62db032162fcb3ba07ec48d409515e7adb7740cbdd6b5ba9cff15"
+     },
+     "changed": 606979,
+     "scope": {
+      "cells": 100845,
+      "replicating": 30227,
+      "zeros": 610040,
+      "zerosProtected": 186973,
+      "maskSha256": "50bd5ea472366cce8cf5d3a494d4356755a287a35bbcb04183bd3b2ea911ba1d",
+      "placebo": 606979,
+      "shortfall": 3061,
+      "saturated": {
+       "cells": 161,
+       "zeros": 5544
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2001/placebo-cell-escaneig.json",
+      "sha256": "f2c9c8c39f41c725b413a56435c0aa5f7f7f47bb265850745f576ea1580ec7b7",
+      "replicating": 30237,
+      "heritable": 19306,
+      "heritableSolo": 19306,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2001/zeros-inert.bin",
+     "sha256": "fd3c97029bc21c348d06162102144f1f83e5db66bd167b1cc8875447d4711052",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2001/zeros-inert.json",
+      "sha256": "b439b3c2ba814daccf0b4b0c08c78d735b68efa083be9a001df3eafc78fa6e35"
+     },
+     "changed": 594470,
+     "scope": {
+      "cells": 100845,
+      "replicating": 30227,
+      "zeros": 610040,
+      "zerosProtected": 186973,
+      "maskSha256": "50bd5ea472366cce8cf5d3a494d4356755a287a35bbcb04183bd3b2ea911ba1d",
+      "inert": {
+       "cleaned": 94144,
+       "reverted": 2225,
+       "zerosLeft": 15570
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2001/zeros-inert-escaneig.json",
+      "sha256": "080601fc6c6e5d6a16d9a3a561f8ea415739b47438c696cbf06e12fcbc6d302c",
+      "replicating": 30597,
+      "heritable": 19340,
+      "heritableSolo": 19336,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2071",
+   "role": "control negatiu",
+   "start": 6750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2071-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+   "included": true,
+   "captureSha256": "8082d9c5cb2b8e26881d766c499cb3e4d08c0b2fab0b63c0a6748bf8ab604914",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2071/continue.bin",
+     "sha256": "8082d9c5cb2b8e26881d766c499cb3e4d08c0b2fab0b63c0a6748bf8ab604914",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2071/continue.json",
+      "sha256": "397d5cc5e48009d142a8dabd2d5fe92dc21a743bf43b86efb3a1f189fd2b0e80"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2071/continue-escaneig.json",
+      "sha256": "9724461d83c563282692426a4c44143cc722365dae08bc3323b712394aa43e27",
+      "replicating": 21463,
+      "heritable": 9351,
+      "heritableSolo": 9351,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2071/zeros-data.bin",
+     "sha256": "d09ffd712ad8eb6d87563059185e3f03421030fa7729ec9344099d5116033530",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2071/zeros-data.json",
+      "sha256": "4ed511f7b3a9435d2a99608c33aa920fb3e55a449eca2c7d08ab6090ec392a2a"
+     },
+     "changed": 1319850,
+     "scope": {
+      "cells": 109603,
+      "replicating": 21469,
+      "zeros": 1319850,
+      "zerosProtected": 273000,
+      "maskSha256": "c4e852b0cba4b93f6df90c16172258dfd3c4a1225f9f4e07c0fed5f28902369b"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2071/zeros-data-escaneig.json",
+      "sha256": "fe536d3cb623c74761ace0cbb6d7cf15d933fbff6cecba83f5a75b4f0eacacaf",
+      "replicating": 25978,
+      "heritable": 11569,
+      "heritableSolo": 11564,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2071/placebo-cell.bin",
+     "sha256": "3ddaf801544b9aa664e63b059ca3917e1f962d738312b22b629120c5d969c8fe",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2071/placebo-cell.json",
+      "sha256": "34816a0d7c2b1b094fc689209f1a22df5c1cce64f763a91cbed6025bedef9f60"
+     },
+     "changed": 1305539,
+     "scope": {
+      "cells": 109603,
+      "replicating": 21469,
+      "zeros": 1319850,
+      "zerosProtected": 273000,
+      "maskSha256": "c4e852b0cba4b93f6df90c16172258dfd3c4a1225f9f4e07c0fed5f28902369b",
+      "placebo": 1305539,
+      "shortfall": 14311,
+      "saturated": {
+       "cells": 742,
+       "zeros": 26954
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2071/placebo-cell-escaneig.json",
+      "sha256": "d3f5cdf1148f5ca6f519ae0c8afb7452b330f57fd663185eb869d31fbae1978e",
+      "replicating": 21473,
+      "heritable": 9331,
+      "heritableSolo": 9331,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2071/zeros-inert.bin",
+     "sha256": "f7c833965fdbcf19bbf4673c15650ba4b3f8b7028ace78eae1b0c8ef61e3617c",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2071/zeros-inert.json",
+      "sha256": "c0429b17ac30931669de076185de45555d86649c22ce6314ca82604d08a634ea"
+     },
+     "changed": 1254321,
+     "scope": {
+      "cells": 109603,
+      "replicating": 21469,
+      "zeros": 1319850,
+      "zerosProtected": 273000,
+      "maskSha256": "c4e852b0cba4b93f6df90c16172258dfd3c4a1225f9f4e07c0fed5f28902369b",
+      "inert": {
+       "cleaned": 104493,
+       "reverted": 4709,
+       "zerosLeft": 65529
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2071/zeros-inert-escaneig.json",
+      "sha256": "dc6c101324b01899a925068a8fcc7d41b86cc6575a56b832ca4c57a57b03bc80",
+      "replicating": 21814,
+      "heritable": 9311,
+      "heritableSolo": 9309,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2044",
+   "role": "control negatiu",
+   "start": 6750,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2044-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+   "included": true,
+   "captureSha256": "a9bef30536724974bc525db3cdc7d9017958da168b9a97c90df7e96b768d591a",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2044/continue.bin",
+     "sha256": "a9bef30536724974bc525db3cdc7d9017958da168b9a97c90df7e96b768d591a",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2044/continue.json",
+      "sha256": "cfd09d2cd23eae0205d62701d4109ee8fca350b5aa1768e47d313001f10d036b"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2044/continue-escaneig.json",
+      "sha256": "2dae11e7f3218ebcd5c4d4786836c112ebd8fa3d8d030921fb9dd9e60ee61d81",
+      "replicating": 64064,
+      "heritable": 55814,
+      "heritableSolo": 55814,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2044/zeros-data.bin",
+     "sha256": "eb1ae144a9ea60ffe17fb234690c413c6929f8cd2d2b907173fd9debcb02a9d7",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2044/zeros-data.json",
+      "sha256": "e02fb931fac6ff69f908a77dd66bf6d4c296c478471b98faa49c520bbb1170d6"
+     },
+     "changed": 609535,
+     "scope": {
+      "cells": 66989,
+      "replicating": 64083,
+      "zeros": 609535,
+      "zerosProtected": 306983,
+      "maskSha256": "66030ac5466feb8cc193aa73634032e5ceeea05cdbb9ed5640459a98f90e7d8a"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2044/zeros-data-escaneig.json",
+      "sha256": "c00e7eb59ef5d3b31c65d29988bc438a23b4c5dfd3003abab2c2c23cbde49d47",
+      "replicating": 70873,
+      "heritable": 61504,
+      "heritableSolo": 61500,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2044/placebo-cell.bin",
+     "sha256": "0da4a3f3c046f14da12171b642842be0d5ee0dea87cfe4512767848ccb973702",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2044/placebo-cell.json",
+      "sha256": "fec8fbbc00bd27d03d815b20723e8b2bb408d1f3a64e9a1a901a363a178d5e0e"
+     },
+     "changed": 604098,
+     "scope": {
+      "cells": 66989,
+      "replicating": 64083,
+      "zeros": 609535,
+      "zerosProtected": 306983,
+      "maskSha256": "66030ac5466feb8cc193aa73634032e5ceeea05cdbb9ed5640459a98f90e7d8a",
+      "placebo": 604098,
+      "shortfall": 5437,
+      "saturated": {
+       "cells": 360,
+       "zeros": 12169
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2044/placebo-cell-escaneig.json",
+      "sha256": "66e0136f7b9a9fd4809261dc33c32ecab4f368cd13b69639b445021365856ed8",
+      "replicating": 64060,
+      "heritable": 55775,
+      "heritableSolo": 55772,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2044/zeros-inert.bin",
+     "sha256": "76bc7371213d87b13d0a580d6ffc6f021e1ddbce56c528e1c4cfef2762efd83b",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2044/zeros-inert.json",
+      "sha256": "216be6ae23c1769e0f29694920282d3001b166ee33a33df43ac7c38cb712b25e"
+     },
+     "changed": 530224,
+     "scope": {
+      "cells": 66989,
+      "replicating": 64083,
+      "zeros": 609535,
+      "zerosProtected": 306983,
+      "maskSha256": "66030ac5466feb8cc193aa73634032e5ceeea05cdbb9ed5640459a98f90e7d8a",
+      "inert": {
+       "cleaned": 53637,
+       "reverted": 7008,
+       "zerosLeft": 79311
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2044/zeros-inert-escaneig.json",
+      "sha256": "905e2d423d5dc0c2d0016b831bb1c73460bb726cc298fce4b238637cd721cffd",
+      "replicating": 64295,
+      "heritable": 55858,
+      "heritableSolo": 55856,
+      "cells": 131072
+     }
+    }
+   }
+  },
+  {
+   "world": "B2058",
+   "role": "control negatiu",
+   "start": 12250,
+   "capture": "fase2/resultats/serie-llei2/B/captures/llavor2058-mon512x256-r2-m0.01-establiment12250-epoca12250.bin",
+   "included": true,
+   "captureSha256": "fa1b088b41dfb4357e039b4a25c5aa644119f84333e48b0c717e919bafa6124b",
+   "arms": {
+    "continue": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2058/continue.bin",
+     "sha256": "fa1b088b41dfb4357e039b4a25c5aa644119f84333e48b0c717e919bafa6124b",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2058/continue.json",
+      "sha256": "744eb108f8ff155f35f7bd6cc9f9c0e579ab6d264c895f60215c30bf703a3cc5"
+     },
+     "changed": 0,
+     "scope": null,
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2058/continue-escaneig.json",
+      "sha256": "e88e8684ce9dc2e11d14de3a8dc217c0b677822f8ec9fe006d3004e4c33453cb",
+      "replicating": 63705,
+      "heritable": 37583,
+      "heritableSolo": 37583,
+      "cells": 131072
+     }
+    },
+    "zeros-data": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2058/zeros-data.bin",
+     "sha256": "3bf337597961653f604ec1a76dfaa255b333f8070f76404851d0811072a6a2f3",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2058/zeros-data.json",
+      "sha256": "480dd5985eaf670e7a1bd2f4e475e65aa66a4de1d5d7db7d64aa8e6a5962aacd"
+     },
+     "changed": 583359,
+     "scope": {
+      "cells": 67354,
+      "replicating": 63718,
+      "zeros": 583359,
+      "zerosProtected": 659044,
+      "maskSha256": "587babd13a1fcfce1a79bc6cb3472546be8504bce44077e24f97e00db43347f6"
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2058/zeros-data-escaneig.json",
+      "sha256": "5179d591eb2b9a3043780323d02b7086c6c53afd2a91982e581cc870d846874d",
+      "replicating": 72461,
+      "heritable": 43972,
+      "heritableSolo": 43971,
+      "cells": 131072
+     }
+    },
+    "placebo-cell": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2058/placebo-cell.bin",
+     "sha256": "8f993613309be9830b6b22978493975c7edb7f0fcf0b5f3c2740c4174c722a7f",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2058/placebo-cell.json",
+      "sha256": "513d374b9bfe5bf4ed164b7726af4f33532df2e5dbe378958a05b61f86c42106"
+     },
+     "changed": 576939,
+     "scope": {
+      "cells": 67354,
+      "replicating": 63718,
+      "zeros": 583359,
+      "zerosProtected": 659044,
+      "maskSha256": "587babd13a1fcfce1a79bc6cb3472546be8504bce44077e24f97e00db43347f6",
+      "placebo": 576939,
+      "shortfall": 6420,
+      "saturated": {
+       "cells": 248,
+       "zeros": 9918
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2058/placebo-cell-escaneig.json",
+      "sha256": "54948fc8b2330a146078d948af84331ccd1513494bc7716dda46a39f107a4c94",
+      "replicating": 63699,
+      "heritable": 37521,
+      "heritableSolo": 37520,
+      "cells": 131072
+     }
+    },
+    "zeros-inert": {
+     "file": "fase2/resultats/zeros/serie/alicuotes/B2058/zeros-inert.bin",
+     "sha256": "cd918b27fcaf626daba659efe0484ab3ab9f1c4905f09e2dabfcf2d4f52d4aa0",
+     "record": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2058/zeros-inert.json",
+      "sha256": "70c0c4f36de1f01b43f9e2a1d53ac2f9d216366f41071d13995265c37d1718ef"
+     },
+     "changed": 481185,
+     "scope": {
+      "cells": 67354,
+      "replicating": 63718,
+      "zeros": 583359,
+      "zerosProtected": 659044,
+      "maskSha256": "587babd13a1fcfce1a79bc6cb3472546be8504bce44077e24f97e00db43347f6",
+      "inert": {
+       "cleaned": 56472,
+       "reverted": 9107,
+       "zerosLeft": 102174
+      }
+     },
+     "scan": {
+      "file": "fase2/resultats/zeros/serie/alicuotes/B2058/zeros-inert-escaneig.json",
+      "sha256": "6062b3507ea79d5b871df504ac6de846003f737d6d29d0016d29cbbedadc2f93",
+      "replicating": 63856,
+      "heritable": 37561,
+      "heritableSolo": 37556,
+      "cells": 131072
+     }
+    }
+   }
+  }
+ ],
+ "branches": [
+  {
+   "id": "B2002-continue-a",
+   "world": "B2002",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402002,
+   "command": "node sim.mjs --world 512x256 --seed 402002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/continue.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-continue-a.jsonl"
+  },
+  {
+   "id": "B2002-continue-b",
+   "world": "B2002",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502002,
+   "command": "node sim.mjs --world 512x256 --seed 502002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/continue.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-continue-b.jsonl"
+  },
+  {
+   "id": "B2002-continue-c",
+   "world": "B2002",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702002,
+   "command": "node sim.mjs --world 512x256 --seed 702002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/continue.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-continue-c.jsonl"
+  },
+  {
+   "id": "B2002-zeros-data-a",
+   "world": "B2002",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402002,
+   "command": "node sim.mjs --world 512x256 --seed 402002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/zeros-data.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2002-zeros-data-b",
+   "world": "B2002",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502002,
+   "command": "node sim.mjs --world 512x256 --seed 502002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/zeros-data.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2002-zeros-data-c",
+   "world": "B2002",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702002,
+   "command": "node sim.mjs --world 512x256 --seed 702002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/zeros-data.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2002-placebo-cell-a",
+   "world": "B2002",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402002,
+   "command": "node sim.mjs --world 512x256 --seed 402002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/placebo-cell.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2002-placebo-cell-b",
+   "world": "B2002",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502002,
+   "command": "node sim.mjs --world 512x256 --seed 502002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/placebo-cell.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2002-placebo-cell-c",
+   "world": "B2002",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702002,
+   "command": "node sim.mjs --world 512x256 --seed 702002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/placebo-cell.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2002-zeros-inert-a",
+   "world": "B2002",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402002,
+   "command": "node sim.mjs --world 512x256 --seed 402002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/zeros-inert.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2002-zeros-inert-b",
+   "world": "B2002",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502002,
+   "command": "node sim.mjs --world 512x256 --seed 502002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/zeros-inert.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2002-zeros-inert-c",
+   "world": "B2002",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702002,
+   "command": "node sim.mjs --world 512x256 --seed 702002 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2002/zeros-inert.bin --start 7000 --epochs 9000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2002-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2011-continue-a",
+   "world": "B2011",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402011,
+   "command": "node sim.mjs --world 512x256 --seed 402011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/continue.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-continue-a.jsonl"
+  },
+  {
+   "id": "B2011-continue-b",
+   "world": "B2011",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502011,
+   "command": "node sim.mjs --world 512x256 --seed 502011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/continue.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-continue-b.jsonl"
+  },
+  {
+   "id": "B2011-continue-c",
+   "world": "B2011",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702011,
+   "command": "node sim.mjs --world 512x256 --seed 702011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/continue.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-continue-c.jsonl"
+  },
+  {
+   "id": "B2011-zeros-data-a",
+   "world": "B2011",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402011,
+   "command": "node sim.mjs --world 512x256 --seed 402011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/zeros-data.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2011-zeros-data-b",
+   "world": "B2011",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502011,
+   "command": "node sim.mjs --world 512x256 --seed 502011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/zeros-data.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2011-zeros-data-c",
+   "world": "B2011",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702011,
+   "command": "node sim.mjs --world 512x256 --seed 702011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/zeros-data.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2011-placebo-cell-a",
+   "world": "B2011",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402011,
+   "command": "node sim.mjs --world 512x256 --seed 402011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/placebo-cell.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2011-placebo-cell-b",
+   "world": "B2011",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502011,
+   "command": "node sim.mjs --world 512x256 --seed 502011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/placebo-cell.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2011-placebo-cell-c",
+   "world": "B2011",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702011,
+   "command": "node sim.mjs --world 512x256 --seed 702011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/placebo-cell.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2011-zeros-inert-a",
+   "world": "B2011",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402011,
+   "command": "node sim.mjs --world 512x256 --seed 402011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/zeros-inert.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2011-zeros-inert-b",
+   "world": "B2011",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502011,
+   "command": "node sim.mjs --world 512x256 --seed 502011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/zeros-inert.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2011-zeros-inert-c",
+   "world": "B2011",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702011,
+   "command": "node sim.mjs --world 512x256 --seed 702011 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2011/zeros-inert.bin --start 2000 --epochs 4000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2011-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2021-continue-a",
+   "world": "B2021",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402021,
+   "command": "node sim.mjs --world 512x256 --seed 402021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/continue.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-continue-a.jsonl"
+  },
+  {
+   "id": "B2021-continue-b",
+   "world": "B2021",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502021,
+   "command": "node sim.mjs --world 512x256 --seed 502021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/continue.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-continue-b.jsonl"
+  },
+  {
+   "id": "B2021-continue-c",
+   "world": "B2021",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702021,
+   "command": "node sim.mjs --world 512x256 --seed 702021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/continue.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-continue-c.jsonl"
+  },
+  {
+   "id": "B2021-zeros-data-a",
+   "world": "B2021",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402021,
+   "command": "node sim.mjs --world 512x256 --seed 402021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/zeros-data.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2021-zeros-data-b",
+   "world": "B2021",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502021,
+   "command": "node sim.mjs --world 512x256 --seed 502021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/zeros-data.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2021-zeros-data-c",
+   "world": "B2021",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702021,
+   "command": "node sim.mjs --world 512x256 --seed 702021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/zeros-data.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2021-placebo-cell-a",
+   "world": "B2021",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402021,
+   "command": "node sim.mjs --world 512x256 --seed 402021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/placebo-cell.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2021-placebo-cell-b",
+   "world": "B2021",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502021,
+   "command": "node sim.mjs --world 512x256 --seed 502021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/placebo-cell.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2021-placebo-cell-c",
+   "world": "B2021",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702021,
+   "command": "node sim.mjs --world 512x256 --seed 702021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/placebo-cell.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2021-zeros-inert-a",
+   "world": "B2021",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402021,
+   "command": "node sim.mjs --world 512x256 --seed 402021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/zeros-inert.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2021-zeros-inert-b",
+   "world": "B2021",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502021,
+   "command": "node sim.mjs --world 512x256 --seed 502021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/zeros-inert.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2021-zeros-inert-c",
+   "world": "B2021",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702021,
+   "command": "node sim.mjs --world 512x256 --seed 702021 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2021/zeros-inert.bin --start 11000 --epochs 13000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2021-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2038-continue-a",
+   "world": "B2038",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402038,
+   "command": "node sim.mjs --world 512x256 --seed 402038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/continue.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-continue-a.jsonl"
+  },
+  {
+   "id": "B2038-continue-b",
+   "world": "B2038",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502038,
+   "command": "node sim.mjs --world 512x256 --seed 502038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/continue.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-continue-b.jsonl"
+  },
+  {
+   "id": "B2038-continue-c",
+   "world": "B2038",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702038,
+   "command": "node sim.mjs --world 512x256 --seed 702038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/continue.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-continue-c.jsonl"
+  },
+  {
+   "id": "B2038-zeros-data-a",
+   "world": "B2038",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402038,
+   "command": "node sim.mjs --world 512x256 --seed 402038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/zeros-data.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2038-zeros-data-b",
+   "world": "B2038",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502038,
+   "command": "node sim.mjs --world 512x256 --seed 502038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/zeros-data.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2038-zeros-data-c",
+   "world": "B2038",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702038,
+   "command": "node sim.mjs --world 512x256 --seed 702038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/zeros-data.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2038-placebo-cell-a",
+   "world": "B2038",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402038,
+   "command": "node sim.mjs --world 512x256 --seed 402038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/placebo-cell.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2038-placebo-cell-b",
+   "world": "B2038",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502038,
+   "command": "node sim.mjs --world 512x256 --seed 502038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/placebo-cell.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2038-placebo-cell-c",
+   "world": "B2038",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702038,
+   "command": "node sim.mjs --world 512x256 --seed 702038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/placebo-cell.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2038-zeros-inert-a",
+   "world": "B2038",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402038,
+   "command": "node sim.mjs --world 512x256 --seed 402038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/zeros-inert.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2038-zeros-inert-b",
+   "world": "B2038",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502038,
+   "command": "node sim.mjs --world 512x256 --seed 502038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/zeros-inert.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2038-zeros-inert-c",
+   "world": "B2038",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702038,
+   "command": "node sim.mjs --world 512x256 --seed 702038 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2038/zeros-inert.bin --start 10250 --epochs 12250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2038-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2042-continue-a",
+   "world": "B2042",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402042,
+   "command": "node sim.mjs --world 512x256 --seed 402042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/continue.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-continue-a.jsonl"
+  },
+  {
+   "id": "B2042-continue-b",
+   "world": "B2042",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502042,
+   "command": "node sim.mjs --world 512x256 --seed 502042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/continue.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-continue-b.jsonl"
+  },
+  {
+   "id": "B2042-continue-c",
+   "world": "B2042",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702042,
+   "command": "node sim.mjs --world 512x256 --seed 702042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/continue.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-continue-c.jsonl"
+  },
+  {
+   "id": "B2042-zeros-data-a",
+   "world": "B2042",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402042,
+   "command": "node sim.mjs --world 512x256 --seed 402042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/zeros-data.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2042-zeros-data-b",
+   "world": "B2042",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502042,
+   "command": "node sim.mjs --world 512x256 --seed 502042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/zeros-data.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2042-zeros-data-c",
+   "world": "B2042",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702042,
+   "command": "node sim.mjs --world 512x256 --seed 702042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/zeros-data.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2042-placebo-cell-a",
+   "world": "B2042",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402042,
+   "command": "node sim.mjs --world 512x256 --seed 402042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/placebo-cell.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2042-placebo-cell-b",
+   "world": "B2042",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502042,
+   "command": "node sim.mjs --world 512x256 --seed 502042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/placebo-cell.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2042-placebo-cell-c",
+   "world": "B2042",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702042,
+   "command": "node sim.mjs --world 512x256 --seed 702042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/placebo-cell.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2042-zeros-inert-a",
+   "world": "B2042",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402042,
+   "command": "node sim.mjs --world 512x256 --seed 402042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/zeros-inert.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2042-zeros-inert-b",
+   "world": "B2042",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502042,
+   "command": "node sim.mjs --world 512x256 --seed 502042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/zeros-inert.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2042-zeros-inert-c",
+   "world": "B2042",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702042,
+   "command": "node sim.mjs --world 512x256 --seed 702042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/zeros-inert.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2043-continue-a",
+   "world": "B2043",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402043,
+   "command": "node sim.mjs --world 512x256 --seed 402043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/continue.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-continue-a.jsonl"
+  },
+  {
+   "id": "B2043-continue-b",
+   "world": "B2043",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502043,
+   "command": "node sim.mjs --world 512x256 --seed 502043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/continue.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-continue-b.jsonl"
+  },
+  {
+   "id": "B2043-continue-c",
+   "world": "B2043",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702043,
+   "command": "node sim.mjs --world 512x256 --seed 702043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/continue.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-continue-c.jsonl"
+  },
+  {
+   "id": "B2043-zeros-data-a",
+   "world": "B2043",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402043,
+   "command": "node sim.mjs --world 512x256 --seed 402043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/zeros-data.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2043-zeros-data-b",
+   "world": "B2043",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502043,
+   "command": "node sim.mjs --world 512x256 --seed 502043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/zeros-data.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2043-zeros-data-c",
+   "world": "B2043",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702043,
+   "command": "node sim.mjs --world 512x256 --seed 702043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/zeros-data.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2043-placebo-cell-a",
+   "world": "B2043",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402043,
+   "command": "node sim.mjs --world 512x256 --seed 402043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/placebo-cell.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2043-placebo-cell-b",
+   "world": "B2043",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502043,
+   "command": "node sim.mjs --world 512x256 --seed 502043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/placebo-cell.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2043-placebo-cell-c",
+   "world": "B2043",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702043,
+   "command": "node sim.mjs --world 512x256 --seed 702043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/placebo-cell.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2043-zeros-inert-a",
+   "world": "B2043",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402043,
+   "command": "node sim.mjs --world 512x256 --seed 402043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/zeros-inert.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2043-zeros-inert-b",
+   "world": "B2043",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502043,
+   "command": "node sim.mjs --world 512x256 --seed 502043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/zeros-inert.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2043-zeros-inert-c",
+   "world": "B2043",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702043,
+   "command": "node sim.mjs --world 512x256 --seed 702043 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2043/zeros-inert.bin --start 500 --epochs 2500 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2043-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2078-continue-a",
+   "world": "B2078",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402078,
+   "command": "node sim.mjs --world 512x256 --seed 402078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/continue.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-continue-a.jsonl"
+  },
+  {
+   "id": "B2078-continue-b",
+   "world": "B2078",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502078,
+   "command": "node sim.mjs --world 512x256 --seed 502078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/continue.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-continue-b.jsonl"
+  },
+  {
+   "id": "B2078-continue-c",
+   "world": "B2078",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702078,
+   "command": "node sim.mjs --world 512x256 --seed 702078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/continue.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-continue-c.jsonl"
+  },
+  {
+   "id": "B2078-zeros-data-a",
+   "world": "B2078",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402078,
+   "command": "node sim.mjs --world 512x256 --seed 402078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/zeros-data.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2078-zeros-data-b",
+   "world": "B2078",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502078,
+   "command": "node sim.mjs --world 512x256 --seed 502078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/zeros-data.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2078-zeros-data-c",
+   "world": "B2078",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702078,
+   "command": "node sim.mjs --world 512x256 --seed 702078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/zeros-data.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2078-placebo-cell-a",
+   "world": "B2078",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402078,
+   "command": "node sim.mjs --world 512x256 --seed 402078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/placebo-cell.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2078-placebo-cell-b",
+   "world": "B2078",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502078,
+   "command": "node sim.mjs --world 512x256 --seed 502078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/placebo-cell.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2078-placebo-cell-c",
+   "world": "B2078",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702078,
+   "command": "node sim.mjs --world 512x256 --seed 702078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/placebo-cell.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2078-zeros-inert-a",
+   "world": "B2078",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402078,
+   "command": "node sim.mjs --world 512x256 --seed 402078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/zeros-inert.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2078-zeros-inert-b",
+   "world": "B2078",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502078,
+   "command": "node sim.mjs --world 512x256 --seed 502078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/zeros-inert.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2078-zeros-inert-c",
+   "world": "B2078",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702078,
+   "command": "node sim.mjs --world 512x256 --seed 702078 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2078/zeros-inert.bin --start 4750 --epochs 6750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2078-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2001-continue-a",
+   "world": "B2001",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402001,
+   "command": "node sim.mjs --world 512x256 --seed 402001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/continue.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-continue-a.jsonl"
+  },
+  {
+   "id": "B2001-continue-b",
+   "world": "B2001",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502001,
+   "command": "node sim.mjs --world 512x256 --seed 502001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/continue.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-continue-b.jsonl"
+  },
+  {
+   "id": "B2001-continue-c",
+   "world": "B2001",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702001,
+   "command": "node sim.mjs --world 512x256 --seed 702001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/continue.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-continue-c.jsonl"
+  },
+  {
+   "id": "B2001-zeros-data-a",
+   "world": "B2001",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402001,
+   "command": "node sim.mjs --world 512x256 --seed 402001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/zeros-data.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2001-zeros-data-b",
+   "world": "B2001",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502001,
+   "command": "node sim.mjs --world 512x256 --seed 502001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/zeros-data.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2001-zeros-data-c",
+   "world": "B2001",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702001,
+   "command": "node sim.mjs --world 512x256 --seed 702001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/zeros-data.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2001-placebo-cell-a",
+   "world": "B2001",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402001,
+   "command": "node sim.mjs --world 512x256 --seed 402001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/placebo-cell.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2001-placebo-cell-b",
+   "world": "B2001",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502001,
+   "command": "node sim.mjs --world 512x256 --seed 502001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/placebo-cell.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2001-placebo-cell-c",
+   "world": "B2001",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702001,
+   "command": "node sim.mjs --world 512x256 --seed 702001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/placebo-cell.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2001-zeros-inert-a",
+   "world": "B2001",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402001,
+   "command": "node sim.mjs --world 512x256 --seed 402001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/zeros-inert.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2001-zeros-inert-b",
+   "world": "B2001",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502001,
+   "command": "node sim.mjs --world 512x256 --seed 502001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/zeros-inert.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2001-zeros-inert-c",
+   "world": "B2001",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702001,
+   "command": "node sim.mjs --world 512x256 --seed 702001 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2001/zeros-inert.bin --start 5000 --epochs 7000 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2001-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2071-continue-a",
+   "world": "B2071",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402071,
+   "command": "node sim.mjs --world 512x256 --seed 402071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/continue.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-continue-a.jsonl"
+  },
+  {
+   "id": "B2071-continue-b",
+   "world": "B2071",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502071,
+   "command": "node sim.mjs --world 512x256 --seed 502071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/continue.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-continue-b.jsonl"
+  },
+  {
+   "id": "B2071-continue-c",
+   "world": "B2071",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702071,
+   "command": "node sim.mjs --world 512x256 --seed 702071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/continue.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-continue-c.jsonl"
+  },
+  {
+   "id": "B2071-zeros-data-a",
+   "world": "B2071",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402071,
+   "command": "node sim.mjs --world 512x256 --seed 402071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/zeros-data.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2071-zeros-data-b",
+   "world": "B2071",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502071,
+   "command": "node sim.mjs --world 512x256 --seed 502071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/zeros-data.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2071-zeros-data-c",
+   "world": "B2071",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702071,
+   "command": "node sim.mjs --world 512x256 --seed 702071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/zeros-data.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2071-placebo-cell-a",
+   "world": "B2071",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402071,
+   "command": "node sim.mjs --world 512x256 --seed 402071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/placebo-cell.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2071-placebo-cell-b",
+   "world": "B2071",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502071,
+   "command": "node sim.mjs --world 512x256 --seed 502071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/placebo-cell.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2071-placebo-cell-c",
+   "world": "B2071",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702071,
+   "command": "node sim.mjs --world 512x256 --seed 702071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/placebo-cell.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2071-zeros-inert-a",
+   "world": "B2071",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402071,
+   "command": "node sim.mjs --world 512x256 --seed 402071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/zeros-inert.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2071-zeros-inert-b",
+   "world": "B2071",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502071,
+   "command": "node sim.mjs --world 512x256 --seed 502071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/zeros-inert.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2071-zeros-inert-c",
+   "world": "B2071",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702071,
+   "command": "node sim.mjs --world 512x256 --seed 702071 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2071/zeros-inert.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2071-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2044-continue-a",
+   "world": "B2044",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402044,
+   "command": "node sim.mjs --world 512x256 --seed 402044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/continue.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-continue-a.jsonl"
+  },
+  {
+   "id": "B2044-continue-b",
+   "world": "B2044",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502044,
+   "command": "node sim.mjs --world 512x256 --seed 502044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/continue.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-continue-b.jsonl"
+  },
+  {
+   "id": "B2044-continue-c",
+   "world": "B2044",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702044,
+   "command": "node sim.mjs --world 512x256 --seed 702044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/continue.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-continue-c.jsonl"
+  },
+  {
+   "id": "B2044-zeros-data-a",
+   "world": "B2044",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402044,
+   "command": "node sim.mjs --world 512x256 --seed 402044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/zeros-data.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2044-zeros-data-b",
+   "world": "B2044",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502044,
+   "command": "node sim.mjs --world 512x256 --seed 502044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/zeros-data.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2044-zeros-data-c",
+   "world": "B2044",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702044,
+   "command": "node sim.mjs --world 512x256 --seed 702044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/zeros-data.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2044-placebo-cell-a",
+   "world": "B2044",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402044,
+   "command": "node sim.mjs --world 512x256 --seed 402044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/placebo-cell.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2044-placebo-cell-b",
+   "world": "B2044",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502044,
+   "command": "node sim.mjs --world 512x256 --seed 502044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/placebo-cell.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2044-placebo-cell-c",
+   "world": "B2044",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702044,
+   "command": "node sim.mjs --world 512x256 --seed 702044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/placebo-cell.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2044-zeros-inert-a",
+   "world": "B2044",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402044,
+   "command": "node sim.mjs --world 512x256 --seed 402044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/zeros-inert.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2044-zeros-inert-b",
+   "world": "B2044",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502044,
+   "command": "node sim.mjs --world 512x256 --seed 502044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/zeros-inert.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2044-zeros-inert-c",
+   "world": "B2044",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702044,
+   "command": "node sim.mjs --world 512x256 --seed 702044 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2044/zeros-inert.bin --start 6750 --epochs 8750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2044-zeros-inert-c.jsonl"
+  },
+  {
+   "id": "B2058-continue-a",
+   "world": "B2058",
+   "arm": "continue",
+   "tag": "a",
+   "seed": 402058,
+   "command": "node sim.mjs --world 512x256 --seed 402058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/continue.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-continue-a.jsonl"
+  },
+  {
+   "id": "B2058-continue-b",
+   "world": "B2058",
+   "arm": "continue",
+   "tag": "b",
+   "seed": 502058,
+   "command": "node sim.mjs --world 512x256 --seed 502058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/continue.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-continue-b.jsonl"
+  },
+  {
+   "id": "B2058-continue-c",
+   "world": "B2058",
+   "arm": "continue",
+   "tag": "c",
+   "seed": 702058,
+   "command": "node sim.mjs --world 512x256 --seed 702058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/continue.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-continue-c.jsonl"
+  },
+  {
+   "id": "B2058-zeros-data-a",
+   "world": "B2058",
+   "arm": "zeros-data",
+   "tag": "a",
+   "seed": 402058,
+   "command": "node sim.mjs --world 512x256 --seed 402058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/zeros-data.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-zeros-data-a.jsonl"
+  },
+  {
+   "id": "B2058-zeros-data-b",
+   "world": "B2058",
+   "arm": "zeros-data",
+   "tag": "b",
+   "seed": 502058,
+   "command": "node sim.mjs --world 512x256 --seed 502058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/zeros-data.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-zeros-data-b.jsonl"
+  },
+  {
+   "id": "B2058-zeros-data-c",
+   "world": "B2058",
+   "arm": "zeros-data",
+   "tag": "c",
+   "seed": 702058,
+   "command": "node sim.mjs --world 512x256 --seed 702058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/zeros-data.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-zeros-data-c.jsonl"
+  },
+  {
+   "id": "B2058-placebo-cell-a",
+   "world": "B2058",
+   "arm": "placebo-cell",
+   "tag": "a",
+   "seed": 402058,
+   "command": "node sim.mjs --world 512x256 --seed 402058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/placebo-cell.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-placebo-cell-a.jsonl"
+  },
+  {
+   "id": "B2058-placebo-cell-b",
+   "world": "B2058",
+   "arm": "placebo-cell",
+   "tag": "b",
+   "seed": 502058,
+   "command": "node sim.mjs --world 512x256 --seed 502058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/placebo-cell.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-placebo-cell-b.jsonl"
+  },
+  {
+   "id": "B2058-placebo-cell-c",
+   "world": "B2058",
+   "arm": "placebo-cell",
+   "tag": "c",
+   "seed": 702058,
+   "command": "node sim.mjs --world 512x256 --seed 702058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/placebo-cell.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-placebo-cell-c.jsonl"
+  },
+  {
+   "id": "B2058-zeros-inert-a",
+   "world": "B2058",
+   "arm": "zeros-inert",
+   "tag": "a",
+   "seed": 402058,
+   "command": "node sim.mjs --world 512x256 --seed 402058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/zeros-inert.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-zeros-inert-a.jsonl"
+  },
+  {
+   "id": "B2058-zeros-inert-b",
+   "world": "B2058",
+   "arm": "zeros-inert",
+   "tag": "b",
+   "seed": 502058,
+   "command": "node sim.mjs --world 512x256 --seed 502058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/zeros-inert.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-zeros-inert-b.jsonl"
+  },
+  {
+   "id": "B2058-zeros-inert-c",
+   "world": "B2058",
+   "arm": "zeros-inert",
+   "tag": "c",
+   "seed": 702058,
+   "command": "node sim.mjs --world 512x256 --seed 702058 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2058/zeros-inert.bin --start 12250 --epochs 14250 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2058-zeros-inert-c.jsonl"
+  }
+ ],
+ "lists": {
+  "pc": {
+   "file": "fase2/resultats/zeros/serie/llista-pc.txt",
+   "sha256": "f919fc0b2ef5577caea0500cb38644cc760e67133cd2322fb32fe96794a5d85d",
+   "branches": 72
+  },
+  "vm": {
+   "file": "fase2/resultats/zeros/serie/llista-vm.txt",
+   "sha256": "61d97c011b4cc62efe99c01ec4015753c7567a1ac3145ccedd1419afe106b1e2",
+   "branches": 60
+  }
+ }
+}

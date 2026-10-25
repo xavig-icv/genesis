@@ -1,0 +1,31 @@
+{
+ "tool": "eines/transforma.mjs",
+ "code": "4fa032b",
+ "node": "v16.15.1",
+ "from": "fase2/resultats/serie-llei2/B/captures/llavor2071-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+ "fromSha256": "8082d9c5cb2b8e26881d766c499cb3e4d08c0b2fab0b63c0a6748bf8ab604914",
+ "kind": "zeros-inert",
+ "seed": 602071,
+ "width": 512,
+ "radius": 2,
+ "out": "fase2/resultats/zeros/serie/alicuotes/B2071/zeros-inert.bin",
+ "outSha256": "f7c833965fdbcf19bbf4673c15650ba4b3f8b7028ace78eae1b0c8ef61e3617c",
+ "changed": 1254321,
+ "scope": {
+  "cells": 109603,
+  "replicating": 21469,
+  "zeros": 1319850,
+  "zerosProtected": 273000,
+  "maskSha256": "c4e852b0cba4b93f6df90c16172258dfd3c4a1225f9f4e07c0fed5f28902369b",
+  "inert": {
+   "cleaned": 104493,
+   "reverted": 4709,
+   "zerosLeft": 65529
+  }
+ },
+ "zeros": {
+  "before": 1592850,
+  "after": 338529
+ },
+ "invariants": "correctes"
+}
