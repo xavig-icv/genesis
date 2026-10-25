@@ -20,6 +20,7 @@
     <a href="#entrada-7">Entrada 7</a>
     <a href="#entrada-8">Entrada 8</a>
     <a href="#entrada-9">Entrada 9</a>
+    <a href="#entrada-10">Entrada 10</a>
   </nav>
 
   <article id="entrada-1">
@@ -861,6 +862,160 @@
     <ul>
       <li><strong>L'auditoria 9:</strong> les correccions de l'auditoria 8, aquesta exploració i l'esborrany del protocol de B2.</li>
       <li><strong>Després, la sèrie preregistrada de B2,</strong> amb els 29 mons reservats.</li>
+    </ul>
+  </article>
+
+  <article id="entrada-10">
+    <header>
+      <p class="date">Entrada 10 · 25 d'octubre de 2026</p>
+      <h1>Quant dura la vida establerta: la sèrie preregistrada</h1>
+      <p class="lede">Hem continuat 29 mons nous des del moment que s'hi va establir la vida, amb dues llavors per condició, 5.000 èpoques més. Si el món no canvia de condició, el 93 % de les branques no perden la vida en cap moment. El corrent fa que la vida s'escampi més de pressa: la sèrie ho confirma, però la teoria ja ho preveia. Si la vida dura menys quan el món canvia de condició, la sèrie no ho permet dir.</p>
+    </header>
+
+    <h2>Què volíem saber</h2>
+    <p>L'entrada 9 era una exploració amb 29 mons. Amb el que en vam aprendre, vam escriure el protocol d'una sèrie amb els altres 29, els reservats, que ningú no havia tocat (<code>docs/protocol-b2.md</code>). Els dos auditors el van revisar en cinc auditories, de la 9 a la 13. Abans de la primera branca, el vam fixar amb una etiqueta de git, <code>preregistre-b2</code>, i un segell d'OpenTimestamps.</p>
+    <p>Cada món es torna a engegar des de la captura de l'època de l'establiment, en dues condicions:</p>
+    <ul>
+      <li><strong>la d'origen,</strong> la mateixa en què es va establir la vida: quiet als 12 mons A, i amb corrent als 17 mons B;</li>
+      <li><strong>la de canvi,</strong> l'altra: els mons A hi guanyen corrent, i els B el perden.</li>
+    </ul>
+    <p>Hi havia tres preguntes, fixades abans de començar:</p>
+    <ul>
+      <li><strong>La principal, que només s'estima:</strong> quant dura la vida en el seu món, és a dir, a la condició d'origen.</li>
+      <li><strong>La primera prova:</strong> la vida dura menys quan el món canvia de condició?</li>
+      <li><strong>La segona prova:</strong> amb corrent, la vida s'escampa més de pressa, als dos orígens? Es mesura amb la proporció mitjana de replicadors hereditaris als 8 primers censos, de <em>t</em> + 250 a <em>t</em> + 2.000.</li>
+    </ul>
+    <p>La vida es dona per perduda quan dos censos seguits tenen 5 replicadors hereditaris o menys en una mostra de 2.048 cel·les (la regla R2 de l'entrada 9). Totes dues proves són de signes, món a món, amb la correcció de Holm.</p>
+    <div class="params">
+      <div class="param"><b>29</b><span>mons nous: 12 quiets i 17 amb corrent</span></div>
+      <div class="param"><b>116</b><span>branques: 2 condicions i 2 llavors per món</span></div>
+      <div class="param"><b>5.000</b><span>èpoques des de l'establiment</span></div>
+      <div class="param"><b>20</b><span>censos per branca, un cada 250 èpoques</span></div>
+      <div class="param"><b>740 h</b><span>de càlcul, en 4 dies</span></div>
+    </div>
+
+    <h2>Quant dura la vida en el seu món</h2>
+    <ul>
+      <li><strong>El 93,1 % de les branques d'origen no perden mai la vida</strong> en 5.000 èpoques. Cada món hi pesa igual. L'interval de confiança del 95 % va del 73,8 % al 98,5 %.</li>
+      <li><strong>La durada restringida a 5.000 èpoques:</strong> 4.724 de mitjana, amb un interval de 3.973 a 4.935. La mediana no s'hi arriba a estimar, perquè la vida no es perd ni a la meitat de les branques.</li>
+      <li><strong>Les pèrdues són d'hora.</strong> Només 4 de les 58 branques d'origen la perden, totes en mons B, i totes a <em>t</em> + 1.500 o abans. A partir d'aquí, la proporció ja no baixa fins a 5.000.</li>
+      <li><strong>No són extincions.</strong> Totes quatre tornen a passar de l'1 % més endavant. Al final, les 58 branques d'origen tenen més de 5 hereditaris al cens.</li>
+      <li><strong>Per origen:</strong> el 100 % als 12 mons A, i el 88,2 % als 17 mons B. Amb tan pocs mons, la diferència no vol dir gaire.</li>
+    </ul>
+
+    <h2>La primera prova: el canvi de condició</h2>
+    <p><strong>No concloent.</strong> En 3 mons la vida dura menys quan el món canvia de condició, en 3 en dura més, i en 23 igual. La prova de signes dona <em>p</em> = 0,66.</p>
+    <ul>
+      <li><strong>Era el risc que el protocol va dir abans de començar.</strong> Si les pèrdues es concentraven en pocs mons, aquesta prova tindria molt poca potència: segons la correlació entre les branques d'un mateix món, d'un 13 a un 73 %.</li>
+      <li><strong>S'hi han concentrat.</strong> Les 11 pèrdues de tota la sèrie són en 6 mons.
+        <ul>
+          <li>Un sol món, el B2021, en té 4: la perd a totes quatre branques.</li>
+          <li>En un altre, l'A1041, les dues branques de canvi la perden al mateix cens, a <em>t</em> + 2.250.</li>
+        </ul>
+      </li>
+      <li><strong>Què no vol dir:</strong> no és cap prova que el canvi no hi influeixi. Només que aquesta sèrie no permet dir-ho.</li>
+    </ul>
+
+    <h2>La segona prova: el corrent escampa la vida</h2>
+    <p><strong>Es confirma.</strong> Amb corrent, la vida establerta té més hereditaris als 8 primers censos en 22 dels 29 mons, i menys en 7. La prova de signes dona <em>p</em> = 0,004, per sota del llindar de Holm (0,0125).</p>
+    <ul>
+      <li><strong>Als dos orígens,</strong> com demanava el protocol: als mons A, afegir corrent en dona més en 10 de 12; als B, treure'l en dona menys en 12 de 17. Calia més de la meitat a cadascun.
+        <ul>
+          <li>És important, perquè als B la condició amb corrent és la que no canvia. Un efecte que només sortís als B podria ser del canvi, i no del corrent.</li>
+        </ul>
+      </li>
+      <li><strong>La mida:</strong> una diferència mediana de 9,9 punts de proporció d'hereditaris.
+        <ul>
+          <li>A l'exploració era de 14,9. Un efecte trobat explorant sol sortir més petit quan es torna a mesurar, i per això el protocol ja calculava la potència amb efectes de 7 a 14,6 punts.</li>
+        </ul>
+      </li>
+      <li><strong>No és un descobriment.</strong> És el que preveu la teoria dels fronts d'invasió amb dispersió a distància, i l'article de BFF de 2024 ja en mostra el cas extrem, la sopa ben barrejada contra el món 2D (<code>docs/estat-questio.md</code>, §11). El que hi aporta la sèrie és la mida de l'efecte en aquest sistema, mesurada amb un protocol preregistrat i amb les dues condicions de cada món partint de la mateixa vida.</li>
+    </ul>
+
+    <h2>Una coincidència, comprovada</h2>
+    <p>Els recomptes de la segona prova són exactament els de l'exploració: 22 de 29, 10 de 12 i 12 de 17. Per això hem comprovat que les dades són les que han de ser:</p>
+    <ul>
+      <li>els registres són dels 29 mons de la confirmació, i cap no és de l'exploració;</li>
+      <li>les llavors són les 58 del manifest, la del món + 200.000 i + 300.000, i no la de l'exploració (+ 100.000);</li>
+      <li>un script independent, que no fa servir cap funció del programa, en treu els mateixos recomptes;</li>
+      <li>la mida de l'efecte sí que és diferent: 9,9 punts, i no 14,9.</li>
+    </ul>
+    <p>A la primera prova també surten 3, 3 i 23, com en una comparació de l'entrada 9. Però aquella era una altra comparació: amb corrent i sense, i no canvi i origen.</p>
+
+    <h2>El que s'hi veu, sense provar-ho</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Origen del món</th><th style="text-align:left">Branca</th><th style="text-align:left">Corrent</th><th style="text-align:left">Branques amb pèrdua</th><th style="text-align:left">Sense pèrdua</th><th style="text-align:left">Durada restringida</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Quiet (12 mons)</td><td style="text-align:left">origen</td><td style="text-align:left">0</td><td style="text-align:left">0 de 24</td><td style="text-align:left">100 %</td><td style="text-align:left">5.000</td></tr>
+          <tr><td style="text-align:left">Quiet (12 mons)</td><td style="text-align:left">canvi</td><td style="text-align:left">0,01</td><td style="text-align:left">3 de 24</td><td style="text-align:left">87,5 %</td><td style="text-align:left">4.635</td></tr>
+          <tr><td style="text-align:left">Amb corrent (17 mons)</td><td style="text-align:left">origen</td><td style="text-align:left">0,01</td><td style="text-align:left">4 de 34</td><td style="text-align:left">88,2 %</td><td style="text-align:left">4.529</td></tr>
+          <tr><td style="text-align:left">Amb corrent (17 mons)</td><td style="text-align:left">canvi</td><td style="text-align:left">0</td><td style="text-align:left">4 de 34</td><td style="text-align:left">88,2 %</td><td style="text-align:left">4.596</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">Pèrdues en 5.000 èpoques, amb la regla R2. "Sense pèrdua" i la durada restringida són mitjanes per món, de les dues llavors.</p>
+    <ul>
+      <li><strong>Als mons quiets,</strong> només perden la vida les branques a què s'afegeix corrent. Als mons amb corrent, el mateix amb corrent que sense. Amb 11 pèrdues en 6 mons, no se'n pot dir res més.</li>
+      <li><strong>Gairebé totes es recuperen:</strong> 9 d'11 tornen a passar de l'1 %. Les dues que no, són de mons B que perden el corrent, i acaben sense cap hereditari a la mostra.</li>
+      <li><strong>Hi ha pèrdues tardanes:</strong> 3, a <em>t</em> + 2.250, 2.250 i 2.500, totes de branques de canvi. La prolongació pilot, amb 7 mons, no n'havia trobat cap després de <em>t</em> + 2.000.</li>
+      <li><strong>Al cens final,</strong> 113 de les 116 branques tenen l'1 % d'hereditaris o més.</li>
+      <li><strong>La vida que dura no sempre és la mateixa:</strong> a 22 de les 116 branques, la família dominant al final és una que el registre de famílies va trobar per primer cop després de l'establiment.</li>
+      <li><strong>Les dues llavors d'una condició</strong> coincideixen, en si es perd la vida o no, en el 91,4 % de les parelles de món i condició (53 de 58).</li>
+      <li><strong>El cost per època creix</strong> de 2,5 s a les primeres 500 èpoques a 6,0 s a les últimes. El pilot suggeria que s'estabilitzava cap a 5 s, i el protocol n'estimava unes 639 h en total. N'han estat 740.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>En aquests mons, la vida establerta dura.</strong> En la seva condició, la perd poc més d'una branca de cada 15, sempre d'hora, i sempre torna a passar de l'1 %.</li>
+      <li><strong>El corrent l'escampa més de pressa,</strong> com preveu la teoria. Ara en sabem la mida en aquest sistema.</li>
+      <li><strong>Si el canvi de condició l'escurça, continua obert.</strong> Per saber-ho, caldrien molts més mons, perquè les pèrdues són rares i es concentren en pocs.</li>
+      <li><strong>Cap d'aquests resultats no és, de moment, un descobriment nou.</strong></li>
+    </ul>
+    <p><strong>Els límits</strong> (<code>docs/protocol-b2.md</code>, §10):</p>
+    <ul>
+      <li>Els mons són els que ja tenien vida establerta, i l'origen de cada món ve de la seva història, no de l'atzar.</li>
+      <li>Hi ha un sol nivell de corrent (0,01), una sola mida de món (512 × 256) i 29 mons.</li>
+      <li>La pèrdua es mesura en una mostra de 2.048 cel·les, i és la pèrdua sostinguda del llindar de detecció, no una extinció.</li>
+      <li>Les proves de signes parlen del signe de la diferència a cada món, no de la mida mitjana de l'efecte.</li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>El preregistre:</strong> l'etiqueta <code>preregistre-b2</code>, sobre el commit <code>67fe2f6</code>, amb les SHA-256 del manifest, del protocol (v0.7) i del programa. Es va crear el 20-10-2026, després del vistiplau dels dos auditors.</li>
+      <li><strong>El segell, i una precisió sobre l'hora.</strong> Es va enviar als calendaris d'OpenTimestamps 31 minuts abans de la primera branca, i Bitcoin el va ancorar al bloc 972.374.
+        <ul>
+          <li><strong>El que demostra Bitcoin</strong> és que l'etiqueta existia abans de les 20:25:42 UTC, 6 minuts després que comencés la primera branca.</li>
+          <li><strong>Que es va enviar abans,</strong> ho registren els calendaris.</li>
+          <li><strong>Per què no hi afecta:</strong> en 6 minuts, cap branca no havia donat res que algú mirés.</li>
+          <li><strong>A les sèries següents,</strong> esperarem l'ancoratge abans de llançar.</li>
+        </ul>
+        El detall és a <code>docs/preregistre-b2/</code>.
+      </li>
+      <li><strong>L'execució:</strong> del 20 al 25 d'octubre, quatre branques alhora al PC i quatre a la màquina virtual, amb el codi de l'etiqueta.
+        <ul>
+          <li>Cap branca no ha fallat.</li>
+          <li>Durant la sèrie, ningú no va mirar cap resultat, només el recompte de branques acabades.</li>
+          <li>Abans del llançament, Claude va mostrar per error la primera línia d'una de les llistes, que diu de quin món i condició és la primera branca. No és cap resultat, i és a l'acta.</li>
+        </ul>
+      </li>
+      <li><strong>La decisió:</strong> el 25-10-2026, amb <code>node fase2/b2-confirmacio.mjs --decideix</code>, des d'una còpia idèntica a l'etiqueta.
+        <ul>
+          <li>Abans, es van tornar a comprovar les SHA-256 del programa i de les 29 captures d'origen.</li>
+          <li>La sortida es va desar tal com va sortir, a <code>decisio-sortida.txt</code>.</li>
+        </ul>
+      </li>
+      <li><strong>Les dades:</strong> a <code>fase2/resultats/b2/confirmacio/</code>, amb l'acta i les sumes SHA-256.
+        <ul>
+          <li>Les 352 captures dels mons finals no van a git. Les seves SHA-256 són a <code>captures-sha256-pc.txt</code> i <code>captures-sha256-vm.txt</code>.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>L'auditoria 14:</strong> els dos auditors en revisaran l'execució, la decisió i com la comuniquem.</li>
+      <li><strong>Després, una línia nova.</strong> La triarem amb l'auditoria. De les candidates revisades, la que té més lloc per a un resultat nou és la maduració de la sopa abans que hi aparegui la vida (<code>docs/estat-questio.md</code>, §11).</li>
     </ul>
   </article>
 
