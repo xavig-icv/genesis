@@ -59,7 +59,11 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
     abans de carregar res més del projecte (AUD-81).
 - Les alíquotes (els pilots de la maduració i dels zeros, `docs/pilot-maduracio.md`): `node eines/transforma.mjs --from
   captura.bin --kind TIPUS --seed N --out sortida.bin`, que escriu la captura transformada i el seu registre `.json`, amb
-  els invariants comprovats. L'atzar de la transformació és independent del de la continuació.
+  els invariants comprovats; mai no sobreescriu cap fitxer. L'atzar de la transformació és independent del de la
+  continuació. `--scan` compta les cel·les que es repliquen i les hereditàries.
+  - **Els pilots:** `node eines/pilot.mjs maduracio|zeros --envelliment|--prepara|--comprova` (les llistes, el manifest
+    congelat i la comprovació prèvia, abans de llançar cap branca).
+  - **La potència de la sèrie de la maduració:** `node eines/potencia-maduracio.mjs`, amb el món com a unitat.
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).

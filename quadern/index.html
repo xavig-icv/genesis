@@ -1078,7 +1078,7 @@
     <header>
       <p class="date">Entrada 11 · 25 d'octubre de 2026</p>
       <h1>La fragilitat del món: una pista als zeros</h1>
-      <p class="lede">En alguns mons, la vida establerta es perd una vegada i una altra, encara que el món es torni a fer córrer des del mateix punt. Hem mirat què tenen d'especial en el moment que s'hi estableix la vida. La diferència més gran és als bytes zero: els mons fràgils en tenen moltes més cel·les. És una exploració, i caldrà confirmar-la.</p>
+      <p class="lede">En alguns mons, la vida establerta es perd una vegada i una altra, encara que el món es torni a fer córrer des del mateix punt. Hem mirat què tenen d'especial en el moment que s'hi estableix la vida. La diferència més gran és als bytes zero: als mons fràgils, la proporció de bytes zero és molt més alta. I no hi eren abans de la vida: apareixen en les 250 èpoques en què el replicador s'escampa. És una exploració, i caldrà confirmar-la.</p>
     </header>
 
     <h2>D'on surt</h2>
@@ -1099,23 +1099,27 @@
     <ul>
       <li><strong>Els bytes zero</strong> separen els mons fràgils dels altres molt més que cap altra propietat. Ja eren al pla, pel que vam veure a la fase 1: el palíndrom de la coma deixa zeros al company quan s'hi copia, i els zeros aturen les còpies (entrada 2). L'article de 2024 en descriu el mateix fenomen.</li>
       <li><strong>No és només el tipus de replicador.</strong> Els 7 mons fràgils són del palíndrom de la coma. Si només es comparen els mons d'aquest replicador, la diferència es manté (<em>p</em> = 1,7·10⁻⁴). Els 9 mons amb corrent del palíndrom del punt no tenen gairebé zeros (com a molt, el 0,9 %), i cap no és fràgil.</li>
-      <li><strong>La resta no hi diu gaire.</strong> La part del mapa de la família dominant és més gran als fràgils (<em>p</em> = 0,03), i l'entropia, més baixa, però això ja ve dels zeros. Ni la quantitat de vida a <em>t</em>, ni l'edat, ni el nombre de famílies, ni com creixia la vida abans no s'hi diferencien.</li>
+      <li><strong>La resta no hi diu gaire.</strong> La part del mapa de la família dominant és més gran als fràgils (<em>p</em> = 0,03). L'entropia, més baixa, sí que ve dels zeros. Ni la quantitat de vida a <em>t</em>, ni l'edat, ni el nombre de famílies, ni com creixia la vida abans no s'hi diferencien.</li>
+      <li><strong>Els zeros no hi eren abans de la vida</strong> (auditoria 15, AUD-109). A <em>t</em> − 500 i <em>t</em> − 250, tots els mons amb corrent, fràgils inclosos, en tenen el mateix 0,5 %, com una sopa a l'atzar. En les 250 èpoques en què el replicador s'escampa, salten al 8–26 %. Van amb la part del mapa de la família dominant: segurament vénen de la família mateixa, del seu codi i de les seves còpies trencades.</li>
       <li><strong>Hi ha encavalcament.</strong> Quatre mons no fràgils tenen més zeros que el fràgil que en té menys (el 8,2 %). Amb un llindar del 8 %, triat després de veure les dades, hi ha 7 fràgils d'11 per sobre, i 0 de 22 per sota.</li>
     </ul>
 
     <h2>Què vol dir, i què no</h2>
     <ul>
       <li><strong>És una pista forta, però és una exploració.</strong> La relació de partida es va trobar mirant les dades, hi ha 7 casos, i el llindar s'ha triat després.</li>
-      <li><strong>No demostra que els zeros matin la vida.</strong> Podrien ser el senyal d'una altra cosa, per exemple, de quant havia treballat el replicador abans de l'establiment.</li>
+      <li><strong>No demostra que els zeros matin la vida.</strong> Podrien ser només la marca de les còpies trencades, que podrien fer mal per si soles.</li>
+      <li><strong>La hipòtesi que en surt</strong> és un autoenverinament: en uns mons, el replicador s'escampa deixant moltes còpies trencades plenes de zeros, i aquestes deixalles aturen les còpies següents.</li>
       <li><strong>Si es confirmés,</strong> l'enverinament per zeros, que fins ara coneixíem en sopes concretes, explicaria per què la vida es perd en uns mons i en uns altres no, i es podria predir quan s'estableix.</li>
     </ul>
 
     <h2>El que ve</h2>
-    <p>Hi ha dues maneres de confirmar-ho, i les valoraran els auditors abans de fer córrer res (<code>fase2/resultats/b2/fragilitat/LLEGEIX-ME.md</code>):</p>
+    <p>Hi ha dues maneres de confirmar-ho, i les valoraran els auditors abans de fer córrer res (<code>fase2/resultats/b2/fragilitat/LLEGEIX-ME.md</code>). El disseny de la primera, corregit a l'auditoria 15, és a <code>docs/pilot-maduracio.md</code>.</p>
     <ul>
       <li><strong>Una intervenció des de la mateixa captura.</strong> En els mons amb molts zeros, una branca amb els zeros canviats per bytes a l'atzar, i una de control amb el mateix nombre de bytes no zero canviats, amb el mateix atzar de continuació. Si els zeros enverinen, a la primera la vida s'hauria de perdre menys. És el disseny de les alíquotes que farem servir a la maduració.</li>
       <li><strong>Una predicció amb mons nous,</strong> preregistrada: des de la captura de l'establiment, dir quins mons perdran la vida. És més cara, perquè cal fer córrer mons fins que s'hi estableixi la vida.</li>
     </ul>
+
+    <p class="pending"><strong>Corregit (auditoria 15, 25-10-2026):</strong> l'entrada deia que els mons fràgils tenen "moltes més cel·les" amb bytes zero: és la proporció de bytes, no de cel·les. Deia que la part del mapa de la família dominant "ja ve dels zeros": la direcció és, com a mínim, la inversa. I deia que els zeros podien ser el senyal "de quant havia treballat el replicador abans de l'establiment": abans no n'hi havia cap rastre. El pla ja preveia mirar les captures de <em>t</em> − 250 i <em>t</em> − 500, i no ho vam fer; ho va fer l'auditor 1. A més, el braç dels zeros de la intervenció ara els canvia per bytes de dades, amb un placebo aparellat cel·la per cel·la.</p>
   </article>
 
   <script type="module" src="quadern.js"></script>

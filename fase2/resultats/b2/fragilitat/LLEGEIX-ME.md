@@ -35,7 +35,7 @@ El detall de cada món és a `propietats.jsonl`, i la sortida, a `sortida.txt`.
 
 ## Què en llegim, amb prudència
 
-- **La pista: els bytes zero.** Quan la vida s'estableix, els mons fràgils tenen moltes més cel·les amb bytes zero:
+- **La pista: els bytes zero.** Quan la vida s'estableix, els mons fràgils tenen una proporció de bytes zero molt més alta:
   - una mediana del 17,6 %, contra el 0,4 %;
   - *p* = 1,4·10⁻⁵. Amb les 13 comparacions, i la correcció de Bonferroni, encara seria d'1,8·10⁻⁴;
   - **dins dels mons del palíndrom de la coma,** *p* = 1,7·10⁻⁴, de manera que no és només el mecanisme.
@@ -50,8 +50,28 @@ El detall de cada món és a `propietats.jsonl`, i la sortida, a `sortida.txt`.
   - Amb un llindar del 8 %, triat **després** de veure les dades, hi ha 7 fràgils d'11 per sobre i 0 de 22 per sota.
   - Les pèrdues a les branques noves de B2 hi van igual: 7 d'11 per sobre i 1 de 22 per sota. Una de les de per sobre
     és del B2078, que no és fràgil.
-- **Que els zeros causin la pèrdua no es pot dir.** Podrien ser un senyal d'una altra cosa, per exemple, de quant ha
-  treballat el palíndrom de la coma abans de l'establiment.
+- **Que els zeros causin la pèrdua no es pot dir.** Podrien ser només la marca de les còpies trencades, que podrien fer
+  mal per si soles.
+
+## Corregit a l'auditoria 15 (25-10-2026)
+
+- **Els zeros no hi eren abans de la vida** (AUD-109).
+  - **Què faltava:** el pla preveia llegir les captures de *t* − 250 i *t* − 500, i l'eina no en va calcular els zeros. Ho
+    va fer l'auditor 1 (`../auditories/claude-origins/auditor1/audit15/annexos/zeros-abans-de-t.mjs`), i ho hem comprovat.
+  - **Les dades:** a *t* − 500 i *t* − 250, tots els mons B tenen un 0,4–0,6 % de zeros (fràgils, 0,5 %; altres, 0,5 %;
+    *p* = 0,83 i 0,72). A *t*, els fràgils en tenen del 8 al 26 %.
+  - **Què vol dir:** apareixen en les 250 èpoques en què el replicador s'escampa, i van amb la part del mapa de la
+    família dominant (Spearman 0,54), no amb la proporció d'hereditaris (0,04).
+  - **El que ja no es pot dir:** la frase d'abans, que els zeros podien ser un senyal "de quant ha treballat el palíndrom
+    de la coma abans de l'establiment", no és certa. Abans no n'hi havia cap rastre.
+  - **La hipòtesi que en surt** és un autoenverinament: en uns mons, el replicador s'escampa deixant moltes còpies
+    trencades plenes de zeros, i aquestes deixalles aturen les còpies següents.
+- **"Moltes més cel·les"** era "una proporció de bytes zero molt més alta": es mesura per bytes.
+- **Continuar és una decisió posterior al pla** (AUD-114).
+  - **Què deia el pla:** es proposaria una confirmació si alguna propietat separava clarament els fràgils, "per exemple,
+    sense encavalcament". Els zeros s'encavalquen.
+  - **Per què continuem igualment:** la diferència és molt gran (*p* = 1,4·10⁻⁵), hi ha un mecanisme conegut
+    (l'enverinament per zeros de l'entrada 2), i una intervenció des de la mateixa captura és barata i causal.
 
 ## Què proposem
 
@@ -59,7 +79,9 @@ La relació és prou forta per mirar de confirmar-la. Hi ha dues maneres, que va
 responsable:
 1. **Una intervenció des de la mateixa captura** (causal, i el disseny de les alíquotes de la maduració):
    - **La idea:** en els mons amb molts zeros, una branca amb els zeros canviats per bytes a l'atzar, i una de control
-     amb el mateix nombre de bytes no zero canviats a l'atzar, amb el mateix atzar de continuació.
+     amb el mateix nombre de bytes no zero canviats a l'atzar, amb el mateix atzar de continuació. *(Corregit a
+     l'auditoria 15: ara els zeros passen a bytes de dades, i el control és un placebo aparellat cel·la per cel·la;
+     `docs/pilot-maduracio.md`, §4.)*
    - **La predicció:** si els zeros enverinen, la vida es perd menys a la primera.
    - **El cost:** fa servir captures que ja tenim, i l'eina per transformar captures és la mateixa que necessita la
      maduració.

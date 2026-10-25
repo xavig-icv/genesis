@@ -1,15 +1,24 @@
 # Els pilots de la maduració de la sopa i de la intervenció dels zeros · disseny
 
-**Estat: esborrany per a l'auditoria 15 (25-10-2026).** No s'ha fet córrer cap branca de cap dels dos pilots.
-- **D'on surt:** la decisió del responsable després de l'auditoria 14 (`docs/disseny.md`). La síntesi, amb les
-  propostes dels dos auditors i la de Claude, és a `../auditories/claude-origins/equip/sintesi-audit14.md`.
-- **L'eina:** `eines/transforma.mjs`, amb les proves a `test/transforma.mjs`.
+**Estat: esborrany v2 (25-10-2026), amb les correccions de l'auditoria 15.** No s'ha fet córrer cap branca de cap dels dos
+pilots.
+- **Els veredictes de la v1:**
+  - **L'auditor 1:** GO per als dos pilots, amb canvis.
+  - **L'auditor 2:** GO condicionat per a la maduració, i NO-GO per al dels zeros tal com era.
+  - **La síntesi,** amb les tres recomanacions una al costat de l'altra: `../auditories/claude-origins/equip/sintesi-audit15.md`.
+- **El que ha canviat de la v1** és a la §7.
+- **Les eines:**
+  - `eines/transforma.mjs`, per transformar les captures;
+  - `eines/pilot.mjs`, per a les llistes, el manifest i la comprovació prèvia;
+  - `eines/potencia-maduracio.mjs`, per a la potència.
 
 **Què és un pilot:** serveix per fixar el disseny d'una sèrie: l'edat, l'horitzó, el nombre de mons, el cost i la
 potència. Com a l'exploració de B2:
 - no en surt cap conclusió;
 - els resultats del pilot no es fan servir mai com a prova;
 - els mons del pilot no entren a la sèrie.
+
+**Una excepció possible,** al pilot dels zeros, que decideix el responsable abans de llançar-lo (§4.4).
 
 ## 1. Les preguntes
 
@@ -21,9 +30,12 @@ si se'n desfà l'estructura conservant-ne la composició? I quina capa és la qu
 - **l'ordre dels bytes dins del programa;**
 - **la disposició dels programes a l'espai?**
 
-**Els zeros.** Als mons amb molts zeros quan s'hi estableix la vida (entrada 11), es treuen els zeros de les cel·les que
-no es repliquen. La pregunta: després, la vida es perd menys que en un control que canvia el mateix nombre de bytes no
-zero?
+Un resultat de `continue` contra `shuffle-all` no diu per si sol quina capa explica la diferència. El patró dels cinc
+braços serveix per triar els contrastos d'una sèrie, no per provar una cadena de mediacions (auditor 2).
+
+**Els zeros.** Als mons amb molts zeros quan s'hi estableix la vida (entrada 11), es canvien els zeros de les cel·les que
+no es repliquen per bytes de dades. La pregunta: això evita que la vida baixi just després de l'establiment, com hi baixa
+sense tocar res?
 
 ## 2. El que ja en sabem
 
@@ -39,102 +51,185 @@ zero?
 
 - **La pista de la maduració** (AUD-64, `docs/estat-questio.md`, §11.2): un món de 8.000 èpoques sense vida s'estableix
   en 8.000 èpoques més el doble de sovint que un de nou (22 % contra 10 %). Són dades mirades després, i poques.
-- **A l'edat 8.000,** 71 dels 72 mons sense establiment no tenen cap hereditari al cens.
+  - **Una dada a favor** (auditor 1): l'augment va en contra de la selecció. Els mons que arriben a l'època 8.000 sense
+    vida són, si de cas, els més lents.
+- **A l'edat 8.000,** el cens (una mostra de 2.048 cel·les, l'1,6 % del món) veu algun replicador a 24 dels 72 mons, i
+  algun hereditari a 1 (el A1064). Tots per sota de l'1 % (AUD-111).
 - **El cost d'un món sense vida:** de 0,21 a 0,25 s per època al PC. Fins a l'època 8.000, uns 30 minuts.
 
-### El que diu el codi (comprovat a `test/transforma.mjs`)
+### El que diu el codi (comprovat a `test/transforma.mjs`, i per tots dos auditors)
 
 - **El mateix atzar dona les mateixes tirades a tots els braços.** La BFF no fa servir l'atzar, i el món (els corrents,
   l'ordre, les parelles i les mutacions) en fa un nombre que no depèn del contingut de les cel·les.
   - **Per tant,** amb la mateixa `--seed` de continuació, tots els braços d'un món tenen exactament les mateixes
     parelles i les mateixes mutacions, també amb corrent.
-  - **La prova** compara les tirades de mons diferents (barrejats o nous), amb corrent i sense, i comprova que
-    `worldEpoch` de `sim.mjs` no canviï.
-  - **Respon a la condició de l'auditor 2** (el generador no pot dependre del nombre de crides).
-- **El cens té el seu atzar propi,** i les proves de replicació en consumeixen segons el contingut. Les cel·les de la
-  mostra només coincideixen entre braços al primer cens. És soroll de mesura independent, no un biaix.
+  - **El que no vol dir:** que les trajectòries s'assemblin, perquè la dinàmica de la BFF és caòtica. No es compta amb
+    aquesta correlació per a la potència.
+- **El cens** té una llavor fixa. La mostra del **primer cens** és, doncs, la mateixa a tots els braços, i és una mesura
+  aparellada perfecta. Després, les proves de replicació consumeixen l'atzar segons el contingut, i les mostres
+  divergeixen.
 
-### Els zeros (l'exploració de l'entrada 11 i les proves de l'eina)
+### Els zeros (entrada 11, i auditoria 15)
 
-- **Els replicadors porten molts zeros al seu codi:** uns 19 per programa al B2021 i 18 al B2042. Treure tots els zeros
-  del món, doncs, també els desfaria a ells.
-- **Les cel·les que no es repliquen** en porten de 13 a 16 per programa (en una sopa a l'atzar, 0,25):
-  - al B2042, el 93 % dels zeros;
-  - al B2021, el 59 %.
-- **El cost:** una prova de 20 èpoques des del B2042 sense els zeros de fora dels replicadors va uns 3 cops més a poc a
-  poc que el control: 0,6 s per època, contra 0,2. Sense zeros, els bucles s'aturen menys.
+- **Els zeros no hi eren abans de la vida** (AUD-109).
+  - A *t* − 500 i *t* − 250, tots els mons B, fràgils inclosos, en tenen un 0,4–0,6 %, com una sopa a l'atzar.
+  - En les 250 èpoques en què el replicador s'escampa, salten al 8–26 %.
+  - Van amb la part del mapa de la família dominant (Spearman 0,54), però no amb la proporció d'hereditaris.
+  - **La hipòtesi que en surt** és un autoenverinament: en uns mons, el replicador s'escampa deixant moltes còpies
+    trencades plenes de zeros, i aquestes deixalles aturen les còpies següents.
+- **Els replicadors porten molts zeros al seu codi:** uns 18–19 per programa. Treure tots els zeros del món, doncs, també
+  els desfaria a ells.
+- **Les cel·les que no es repliquen** en porten de 13 a 16 per programa, i hi ha del 47 al 93 % dels zeros, segons el món.
+- **La baixada just després de *t*** (AUD-110):
+  - **Les dades:** a les branques de B2, la vida baixa del cens de *t* al primer cens de la branca (*t* + 250) a 18 de
+    20 branques dels mons fràgils, i a 0 de 70 dels mons quiets.
+  - **Amb corrent, és previsible món a món:** baixa a totes les branques de 8 mons, i a cap dels altres 3.
+- **La pèrdua R2 en 2.000 èpoques, amb corrent, és rara:** 3 de 10 branques als mons fràgils, perquè sovint un successor
+  ocupa el món.
+- **El cost:** sense els zeros de fora dels replicadors, el món va uns 3 cops més a poc a poc. Els bucles s'aturen menys.
 
 ## 3. El pilot de la maduració
 
 | Element | Proposta | Per què |
 |---|---|---|
 | **Els mons** | 24 mons quiets nous: llavors 5001–5024, 512 × 256, radi 2, corrent 0, generador v2, cens v3 | Els de la llei 2 ja tenen una història coneguda. Les llavors no coincideixen amb cap de les anteriors |
-| **L'envelliment** | `node sim.mjs --world 512x256 --seed S --mixing 0 --epochs 8000 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json ... --save ...` | Els mons que s'estableixen abans de l'època 8.000 s'aturen i queden fora. Se n'esperen 2 o 3 de 24 |
-| **L'edat** | *a* = 8.000 | La segona meitat del rang de la llei 2 (auditor 1); el ritme hi és més alt; i *a* + *H* = 16.000, l'horitzó de la llei 2 |
-| **Els braços** | `continue`, `shuffle-programs`, `shuffle-within`, `shuffle-all` i `reinit` | El nucli comú dels dos auditors (`continue`, `shuffle-within` i `shuffle-all`), i els dos d'un sol auditor: `shuffle-programs` (auditor 2) i `reinit` (auditor 1) |
-| **L'atzar de la transformació** | La llavor del món + 600.000, la mateixa als quatre braços que en fan servir | Independent del de la continuació (auditor 2) |
-| **La continuació** | *K* = 2 llavors, la del món + 400.000 i + 500.000, les mateixes a tots els braços. *H* = 8.000, fins a l'època 16.000, i `--stop-after-event 0` | Els mateixos nombres aleatoris en tots els braços (els dos auditors). L'aturada en confirmar l'establiment estalvia càlcul |
-| **La mesura principal** | L'establiment dins de *H*, amb el criteri de la llei 2 (`fase2/census.js`) | El criteri que ja coneixem |
-| **Les descriptives** | El temps fins a l'establiment; el primer cens amb algun hereditari; la concordança entre les dues llavors i entre els braços | Per triar la mesura de la sèrie i calcular-ne la potència |
-| **La mida** | 24 × 5 × 2 = 240 branques | — |
-| **El cost** | Unes 12 h d'envelliment i com a molt unes 135 h de branques (unes 33 min cadascuna), unes 145 h en total: un dia, amb 6 branques alhora al PC i 4 a la màquina virtual | — |
+| **L'envelliment** | `node eines/pilot.mjs maduracio --envelliment`: fins a l'època 8.000, amb `--stop-after-event 0` | Els mons que s'estableixen abans s'aturen, i queden fora |
+| **La cohort** (AU2-82) | Els **mons sense establiment detectat fins a l'època 8.000**. Es desa el cens de l'època 8.000 de cadascun | La definició exacta del que s'estudia |
+| **L'exclusió per vida ja present** (AUD-111) | Una prova de replicació i d'herència de **totes** les cel·les de cada món a l'època 8.000 (`eines/transforma.mjs --scan`). S'exclou el món si hi ha alguna cel·la hereditària. Els replicadors no hereditaris no s'exclouen: es desen, com a covariable | `continue` i `shuffle-programs` conserven els replicadors, i els altres braços els destrueixen. Amb vida ja present, el contrast principal donaria "l'estructura importa" per una raó trivial |
+| **L'edat** | *a* = 8.000 | La segona meitat del rang de la llei 2, on el ritme és més alt; i *a* + *H* = 16.000, l'horitzó de la llei 2. Tots dos auditors hi estan d'acord |
+| **Els braços** | `continue`, `shuffle-programs`, `shuffle-within`, `shuffle-all` i `reinit` | Els cinc, tots dos auditors hi estan d'acord. `reinit` fa de control positiu de l'edat |
+| **L'atzar de la transformació** | La llavor del món + 600.000 | Independent del de la continuació |
+| **La continuació** | *K* = 2 llavors, la del món + 400.000 i + 500.000, les mateixes a tots els braços. *H* = 8.000, fins a l'època 16.000, i `--stop-after-event 0` | Els mateixos nombres aleatoris a tots els braços. L'aturada estalvia càlcul |
+| **La mesura principal** | L'establiment dins de *H*, amb el criteri de la llei 2, **estimat per món** (les dues llavors, una mitjana) | El criteri que ja coneixem. El món és la unitat |
+| **Les descriptives** | El temps fins a l'establiment (RMST), el primer cens amb algun hereditari, la concordança entre llavors i entre braços, i el cost | Per triar la mesura de la sèrie i calcular-ne la potència |
+| **La mida i el cost** | 240 branques com a molt. Unes 12 h d'envelliment, uns 40 min d'escanejos, i com a molt unes 135 h de branques: unes 145 h, un dia amb 6 branques alhora al PC i 4 a la màquina virtual | — |
 
 **Què se'n traurà:**
-- la proporció d'establiments a cada braç (unes 44 branques per braç);
-- la concordança entre llavors i entre braços d'un mateix món;
+- la proporció d'establiments a cada braç, per món (uns 22 mons per braç);
+- la concordança entre llavors i entre braços d'un mateix món (la correlació *rho* de la potència);
 - el cost real.
 
-Amb el ritme de la llei 2, s'hi esperen uns 10 establiments a `continue` i uns 4 a `reinit`. Només un efecte gran s'hi
-veuria. **No es decideix res amb aquestes xifres:** serveixen per a la potència de la sèrie.
+**Què no se'n traurà:** cap conclusió. Amb unes 44 branques per braç, l'interval de cada ritme anirà, per exemple, del 7
+al 30 %. No podrà distingir un 11 % d'un 15 %.
 
-**Una potència orientativa de la sèrie** (mons independents, *K* = 2, prova de signes unilateral amb α = 0,025, sobre
-el contrast `continue` contra `shuffle-all`):
+**La potència orientativa de la sèrie** (AUD-113, corregida): `node eines/potencia-maduracio.mjs`, amb el món com a unitat,
+*K* = 2, la prova de signes exacta unilateral amb α = 0,025 i el contrast `continue` contra `shuffle-all`.
 
-| `continue` | `shuffle-all` | 40 mons | 80 | 120 | 160 | 240 |
-|---|---|---|---|---|---|---|
-| 22 % | 11 % | 42 % | 73 % | 90 % | 98 % | 100 % |
-| 22 % | 15 % | 17 % | 32 % | 48 % | 62 % | 82 % |
+| `continue` | `shuffle-all` | *rho* | 40 mons | 80 | 120 | 160 | 240 |
+|---|---|---|---|---|---|---|---|
+| 22 % | 11 % | 0 | 36 % | 67 % | 86 % | 95 % | 99 % |
+| 22 % | 11 % | 0,3 | 29 % | 57 % | 78 % | 89 % | 98 % |
+| 22 % | 15 % | 0 | 14 % | 28 % | 43 % | 55 % | 75 % |
 
-Amb 120 mons, a unes 2,7 h de càlcul cadascun (l'envelliment i 4 branques), serien uns 320 h: uns dos dies. El pilot ho
-ha de confirmar.
+- **Corregit a l'auditoria 15 (AUD-113):** la v1 deia un 90 % amb 120 mons, i un 17–82 % a la segona fila. La simulació
+  ràpida d'aleshores feia servir un generador de poca qualitat, i no es va desar.
+- **La sèrie es dimensionarà per l'efecte que valgui la pena detectar,** fixat abans, i no per l'estimació del pilot.
 
 ## 4. El pilot dels zeros
 
+### 4.1 El disseny
+
 | Element | Proposta | Per què |
 |---|---|---|
-| **Els mons** | Els 11 mons B amb el 8 % de zeros o més a *t*: els 7 fràgils (B2002, B2011, B2021, B2038, B2042, B2043 i B2071), i B2001, B2044, B2058 i B2078 | És un pilot. El llindar del 8 % és posterior a les dades: una sèrie en necessitaria un de fixat abans |
+| **Els mons, amb el seu paper escrit abans** | **8 de prova** (B2002, B2011, B2021, B2038, B2042, B2043, B2078 i B2001): la vida baixa al primer cens a totes les seves branques de B2 amb corrent. **3 controls negatius** (B2071, B2044 i B2058): no hi baixa | Tots dos auditors volen els 11. Els controls negatius mostren si la intervenció fa alguna cosa més que treure l'enverinament |
 | **La captura** | La de l'establiment, *t* (`fase2/resultats/b2/repartiment.json`) | El punt de partida de B2 |
-| **Els braços** | `continue`, `zeros-outside` i `control-outside` | Treure tots els zeros (`zeros-all`) també desfaria els replicadors (§2) |
-| **L'atzar de la transformació** | La llavor del món + 600.000, la mateixa a `zeros-outside` i `control-outside` | Així totes dues fan servir exactament les mateixes cel·les |
-| **La continuació** | Corrent 0,01 (la condició d'origen), *K* = 2, la llavor del món + 400.000 i + 500.000, i *H* = 2.000 | Als mons fràgils, la vida es perd entre *t* + 500 i *t* + 2.500 (B2), i a la història original, abans de *t* + 1.000 |
-| **La mesura principal** | La pèrdua sostinguda R2 dins de *H* | La de B2 |
-| **Les descriptives** | La proporció d'hereditaris de cada cens; si la vida es recupera; els zeros al llarg del temps, pels bytes més freqüents del registre de text (cada 100 èpoques) | Per saber si els zeros tornen, i a quin ritme |
-| **La mida** | 11 × 3 × 2 = 66 branques | — |
-| **El cost** | Amb vida, de 2,5 a 3 s per època, i el braç sense zeros pot anar més lent: de 2 a 5 h per branca, i de 150 a 250 h en total | — |
+| **Els braços** | `continue`; **`zeros-data`**, en què els zeros de fora dels replicadors detectats passen a bytes de dades; **`placebo-cell`**, en què a cada cel·la tants bytes de dades com zeros té passen a un altre byte de dades | §4.2 |
+| **L'atzar de la transformació** | La llavor del món + 600.000, la mateixa als braços amb abast | Així fan servir exactament les mateixes cel·les |
+| **La continuació** | Corrent 0,01 (la condició d'origen), *K* = 2, la llavor del món + 400.000 i + 500.000, i *H* = 2.000, fix | La mesura principal és a *t* + 250. Les 2.000 èpoques deixen veure també la pèrdua, la recuperació i la successió |
+| **La mesura principal** (AUD-110) | **La proporció d'hereditaris al primer cens (*t* + 250), aparellada per món i llavor contra `continue`** | És la predicció directa de la hipòtesi; passa abans que els zeros tornin; i al primer cens la mostra és la mateixa a tots els braços |
+| **Les secundàries** (AU2-81) | La mitjana dels censos 2 a 4; el temps fins a la pèrdua R2, amb censura a *H*; la pèrdua R2 i la recuperació; la successió; els zeros al llarg del temps (els bytes més freqüents del registre de text, cada 100 èpoques, i la captura final) | Per entendre què passa després, i si els zeros tornen |
+| **La mida i el cost** | 11 × 3 × 2 = 66 branques; de 2 a 5 h per branca, de 150 a 250 h en total | — |
 
-**Una limitació, dita abans:** el replicador continua deixant zeros. Si el món es torna a enverinar de pressa, la
-intervenció pot fer poc efecte encara que els zeros siguin la causa. Per això el pilot segueix els zeros al llarg del
-temps.
+### 4.2 Els braços, i per què han canviat
 
-## 5. Les decisions obertes, per a l'auditoria 15
+- **El braç dels zeros: zeros → bytes de dades** (AUD-112).
+  - **Què canvia:** els zeros de fora dels replicadors detectats passen a un dels 245 valors que no són ni 0 ni cap
+    instrucció.
+  - **Què no canvia:** el mapa d'instruccions del món és idèntic, i només canvia que aquells bytes ja no són zero.
+  - **Per què:** a la v1 hi posava qualsevol valor d'1 a 255, i afegia un 2–5 % d'instruccions a les deixalles.
+- **El placebo, aparellat cel·la per cel·la** (AU2-78).
+  - **Què canvia:** a cada cel·la de l'abast, tants bytes de dades com zeros té passen a un altre byte de dades.
+  - **Què no canvia:** els zeros i el mapa d'instruccions.
+  - **Si una cel·la té més zeros que bytes de dades,** els canvia tots, i el registre en diu la diferència (al B2042, el
+    2,9 %).
+  - **Per què:** a la v1, el control canviava el mateix nombre global de bytes, però no a les mateixes cel·les. A més,
+    desfeia codi de les deixalles (un 6–28 % de les seves instruccions).
+- **Els contrastos:**
+  - **El principal:** `zeros-data` contra `continue`, és a dir, l'efecte total de treure els zeros, amb tot el mapa
+    d'instruccions igual.
+  - **El de control:** `placebo-cell` contra `continue`, és a dir, si canviar valors de dades per si sol hi fa alguna cosa.
+  - **El mecanístic:** `zeros-data` contra `placebo-cell`, amb la diferència d'aparellament que diu el registre.
+- **El control antic (`control-outside`)** desfà codi de les deixalles. Respon una altra pregunta: si les deixalles fan mal
+  per si mateixes, i no pels seus zeros. Es pot afegir com a quart braç, llegit contra `continue`: el responsable ho
+  decideix (§4.4).
 
-| Decisió | La proposta de Claude | Alternatives |
-|---|---|---|
-| L'edat i l'horitzó de la maduració | *a* = 8.000, *H* = 8.000 | *a* = 4.000 o 6.000; *H* més llarg |
-| Els braços del pilot de la maduració | Tots cinc | Només el nucli de tres (`continue`, `shuffle-within` i `shuffle-all`) |
-| La mesura de la sèrie de la maduració | L'establiment dins de *H* | El temps fins a l'establiment (log-rank aparellat); el primer hereditari |
-| Els mons del pilot dels zeros | Els 11 per sobre del 8 % | Tots els 33 mons B, o només els 7 fràgils |
-| El braç dels zeros | Només els de fora dels replicadors | També `zeros-all`, com a descriptiu |
-| La mostra del cens | Com ara: comuna entre braços només al primer cens | Un cens amb la mostra comuna a tots els censos. Seria una opció nova de `sim.mjs`, perquè les empremtes del determinisme no es toquen |
+### 4.3 La màscara dels replicadors detectats (AU2-80)
+
+- **Què és:** les cel·les que passen la prova de replicació, sola o en context, provades totes una per una. És una prova
+  finita, no una garantia que no hi hagi cap replicador més.
+- **Per què n'hi ha prou:** és conservadora, perquè protegeix també els replicadors no hereditaris.
+- **Què en desa el registre de cada captura transformada:**
+  - la SHA-256 de la màscara;
+  - les cel·les protegides;
+  - els zeros protegits i els de l'abast.
+- **La comprovació de l'efecte immediat:** el primer cens de cada braç té la mateixa mostra, i diu si la intervenció hi ha
+  canviat la proporció d'hereditaris.
+
+### 4.4 Pilot o prova? Ho decideix el responsable abans de llançar-lo
+
+L'auditor 1 hi fa notar que la intervenció és nova i l'atzar també, de manera que no hi ha dades ja vistes.
+- **Com a pilot:** com la maduració. No en surt cap conclusió, i la confirmació necessitaria mons B nous, que són cars.
+- **Com a prova preregistrada dins d'aquests 11 mons:** abans de llançar, s'escriuen la prova i les exclusions, es
+  revisen breument, i es fixen amb una etiqueta i un segell (esperant l'ancoratge a Bitcoin).
+  - **La prova:** per exemple, la de signes per mons, unilateral, als 8 mons de prova, amb *K* = 2.
+  - **El que en sortiria:** una afirmació causal sobre aquests mons ("treure'ls els zeros evita la baixada"), no sobre
+    mons nous.
+
+## 5. Com s'executa (AU2-79, auditor 2: el manifest congelat i la comprovació prèvia)
+
+1. **El codi,** en un commit de `main`, desplegat a la màquina virtual amb `eines/desplega-vm.sh`. Les actualitzacions de
+   Windows, pausades. L'espai: unes 2 GB de captures noves a la carpeta del repositori.
+2. **La maduració, l'envelliment:** `node eines/pilot.mjs maduracio --envelliment > llista`, i el lot.
+3. **La preparació:** `node eines/pilot.mjs PILOT --prepara`.
+   - **Què comprova:** l'envelliment (la maduració).
+   - **Què fa:** l'escaneig i les exclusions (la maduració), i totes les transformacions.
+   - **Què escriu:** el manifest (`manifest.json`, amb les SHA-256 de les captures d'origen i transformades) i les llistes
+     de les dues màquines.
+   - **Què no fa:** no sobreescriu res, i el manifest va a git abans de la primera branca.
+4. **La comprovació prèvia,** a cada màquina: `node eines/pilot.mjs PILOT --comprova`.
+   - **Que cada captura transformada** tingui la SHA-256 del manifest i del seu registre, i vingui de la captura d'origen.
+   - **Que cap camí** no es repeteixi.
+   - **Que les llistes** siguin les del manifest.
+   - **Que cap branca** no hagi començat.
+5. **El lot de les branques,** amb `eines/llanca-lot.sh`, des de la carpeta del commit.
+
+**L'eina de les transformacions no sobreescriu mai cap fitxer:**
+- si la sortida o el seu registre ja existeixen, s'atura;
+- escriu a un fitxer temporal que canvia de nom al final;
+- comprova que l'entrada no hagi canviat.
 
 ## 6. La traçabilitat
 
 - **Les captures transformades** no van a git, però es poden regenerar exactament amb la mateixa captura, el tipus i la
   llavor.
-  - **El registre de cada una** (el `.json` que escriu l'eina) diu la SHA-256 de l'entrada i de la sortida, el tipus,
-    la llavor, el commit i què ha canviat.
-  - **Aquests registres** van a git amb els de les branques.
+  - **El registre de cada una** (el `.json` de l'eina) diu les SHA-256, el tipus, la llavor, el commit i què ha canviat.
+  - **Aquests registres, i el manifest,** van a git.
 - **Les captures envellides** també es regeneren amb la llavor i el commit.
-- **Les branques:** cada registre comença amb `codi=<commit>`, com sempre, i es llancen amb `eines/llanca-lot.sh` des de
-  la carpeta del commit.
-- **Abans de llançar,** el codi en un commit de `main`, i les actualitzacions de Windows pausades.
+- **Cada registre de branca** comença amb `codi=<commit>`, com sempre.
+
+## 7. Canvis respecte de la v1 (auditoria 15)
+
+| Troballa | Què canvia |
+|---|---|
+| AUD-109 | Els zeros, mirats abans de *t*: la hipòtesi de l'autoenverinament (§2) |
+| AUD-110 | La mesura principal dels zeros: el primer cens, i no la pèrdua R2 (§4.1) |
+| AUD-111 | L'escaneig d'herència de totes les cel·les a l'edat 8.000, i l'exclusió (§3) |
+| AUD-112 | Els zeros passen a bytes de dades; el control antic, com a braç a part opcional (§4.2) |
+| AUD-113 | La taula de potència, refeta amb el món com a unitat i desada en un script (§3) |
+| AUD-115 | `reinit` té un invariant: ha de ser la sopa a l'atzar de la seva llavor |
+| AU2-78 | El placebo, aparellat cel·la per cel·la (§4.2) |
+| AU2-79 | L'eina no sobreescriu mai cap fitxer; el manifest congelat i la comprovació prèvia (§5) |
+| AU2-80 | La màscara dels replicadors detectats: el nom, i el que en desa el registre (§4.3) |
+| AU2-81 | Les mesures secundàries dels zeros, i *H* fix (§4.1) |
+| AU2-82 | La definició de la cohort de la maduració (§3) |
+| Els 11 mons | El paper de cadascun, escrit abans: 8 de prova i 3 controls negatius (§4.1) |
