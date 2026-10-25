@@ -12,6 +12,7 @@ import { fileURLToPath } from 'url';
 import { KINDS, transform, checkInvariants, replicatingCells } from '../eines/transforma.mjs';
 import { PROGRAM_SIZE, TAPE_SIZE, runPairs } from '../fase1/bff.js';
 import { makeRng, randomSoup, shuffle, gather, scatter, mutate } from '../fase1/soup.js';
+import { replicationTest } from '../fase2/replication.js';
 import { pairNeighbors, applyCurrents, applyFlow } from '../fase2/world.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -122,6 +123,34 @@ const tests = {
     }
     assert.ok(shortfall >= 64, 'la cel·la plena de zeros no hi compta');
     assert.strictEqual(pl.info.scope.shortfall, shortfall);
+  },
+  // El quart braç de la prova dels zeros (auditoria 16, AUD-116). Les quatre còpies "adormides" de la fixture són programes
+  // reals del B2002 a l'establiment (llavor2002-...-establiment7000-epoca7000.bin, SHA-256 678656eb…, cel·les 147, 154, 203
+  // i 273): amb els seus zeros no es repliquen, i amb els zeros canviats per dades, sí. zeros-data les desperta, i
+  // zeros-inert les deixa com eren i neteja la resta de l'abast.
+  'zeros-inert neteja els companys sense despertar les còpies adormides, i zeros-data les desperta': () => {
+    const dormant = new Uint8Array(readFileSync(join(root, 'test', 'fixtures', 'adormides-b2002.bin')));
+    const soup = world(), cells = [40, 44, 72, 108];
+    cells.forEach((c, i) => soup.set(dormant.subarray(i * PROGRAM_SIZE, (i + 1) * PROGRAM_SIZE), c * PROGRAM_SIZE));
+    const span = (b, c) => Array.from(b.subarray(c * PROGRAM_SIZE, (c + 1) * PROGRAM_SIZE));
+    const replicates = (b, c) => [1, 2, 3].filter((s) => replicationTest(b, c, makeRng(s, 'v2'), { width: W, radius: 2, complete: true, heredity: false }).solo).length;
+    for (const c of cells) assert.strictEqual(replicates(soup, c), 0, `la còpia de la cel·la ${c} no és adormida`);
+    const zd = transform(soup, 'zeros-data', 5, { width: W }), zi = transform(soup, 'zeros-inert', 5, { width: W });
+    assert.deepStrictEqual(checkInvariants(soup, zi.out, zi.info), []);
+    assert.deepStrictEqual(zi.info.mask, zd.info.mask, 'les màscares han de ser la mateixa');
+    for (const c of cells) {
+      assert.ok(replicates(zd.out, c) >= 2, `zeros-data no desperta la còpia de la cel·la ${c}`);
+      assert.deepStrictEqual(span(zi.out, c), span(soup, c), `zeros-inert ha tocat la còpia adormida de la cel·la ${c}`);
+    }
+    assert.ok(zi.info.scope.inert.reverted >= cells.length);
+    // la resta de l'abast, neta; el mapa d'instruccions, igual
+    const cleaned = [...Array(N).keys()].filter((c) => !zi.info.mask[c] && span(soup, c).includes(0) && !span(zi.out, c).includes(0)).length;
+    assert.strictEqual(cleaned, zi.info.scope.inert.cleaned);
+    assert.ok(cleaned > 0);
+    // una cel·la netejada només en part és un error
+    const k = [...Array(N).keys()].find((c) => !zi.info.mask[c] && span(soup, c).filter((v) => v === 0).length >= 2 && !span(zi.out, c).includes(0));
+    const bad = Uint8Array.from(zi.out); bad[k * PROGRAM_SIZE + span(soup, k).indexOf(0)] = 0;
+    assert.match(checkInvariants(soup, bad, zi.info).join(' '), /només en part|registre diu|ha canviat/);
   },
   "l'eina no sobreescriu mai cap fitxer, ni l'entrada (AU2-79)": () => withTmp((tmp) => {
     const from = join(tmp, 'llavor1-mon16x8-r2-final.bin');

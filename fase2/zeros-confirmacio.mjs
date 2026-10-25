@@ -12,7 +12,8 @@ import { readFileSync } from 'fs';
 import { resolve, relative, isAbsolute } from 'path';
 import { checkPreregistration, ROOT } from './preregistre.mjs';
 
-const PROGRAM_FILES = ['docs/protocol-zeros.md', 'fase2/zeros-confirmacio.mjs', 'fase2/zeros-serie.mjs', 'fase2/preregistre.mjs', 'eines/transforma.mjs', 'eines/pilot.mjs'];
+// els fitxers del programa i els que carrega (la validació de B2 i el criteri d'establiment), i les eines dels braços
+const PROGRAM_FILES = ['docs/protocol-zeros.md', 'fase2/zeros-confirmacio.mjs', 'fase2/zeros-serie.mjs', 'fase2/b2-serie.mjs', 'fase2/census.js', 'fase2/preregistre.mjs', 'eines/transforma.mjs', 'eines/pilot.mjs'];
 const fail = (msg, code = 1) => { console.log(msg); process.exit(code); };
 
 const args = process.argv.slice(2);

@@ -61,8 +61,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   captura.bin --kind TIPUS --seed N --out sortida.bin`, que escriu la captura transformada i el seu registre `.json`, amb
   els invariants comprovats; mai no sobreescriu cap fitxer. L'atzar de la transformació és independent del de la
   continuació. `--scan` compta les cel·les que es repliquen i les hereditàries.
-  - **Els pilots:** `node eines/pilot.mjs maduracio|zeros --envelliment|--prepara|--comprova` (les llistes, el manifest
-    congelat i la comprovació prèvia, abans de llançar cap branca).
+  - **Els experiments:** `node eines/pilot.mjs maduracio|zeros --envelliment|--prepara|--comprova|--comprova-captures`
+    (les llistes, el manifest congelat i contrastat amb el disseny, i les comprovacions abans de llançar i abans de decidir).
+    La preparació valida l'envelliment sencer i escaneja totes les captures, el punt de partida de cada braç.
   - **La potència de la sèrie de la maduració:** `node eines/potencia-maduracio.mjs`, amb el món com a unitat.
 - La prova preregistrada dels zeros (`docs/protocol-zeros.md`): `node fase2/zeros-confirmacio.mjs --decideix|--prova COMMIT
   [--serie manifest.json] carpeta`, amb el manifest de `node eines/pilot.mjs zeros --prepara`. Com a B2, la decisió només es
