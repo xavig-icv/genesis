@@ -64,6 +64,10 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   - **Els pilots:** `node eines/pilot.mjs maduracio|zeros --envelliment|--prepara|--comprova` (les llistes, el manifest
     congelat i la comprovació prèvia, abans de llançar cap branca).
   - **La potència de la sèrie de la maduració:** `node eines/potencia-maduracio.mjs`, amb el món com a unitat.
+- La prova preregistrada dels zeros (`docs/protocol-zeros.md`): `node fase2/zeros-confirmacio.mjs --decideix|--prova COMMIT
+  [--serie manifest.json] carpeta`, amb el manifest de `node eines/pilot.mjs zeros --prepara`. Com a B2, la decisió només es
+  pren des d'una còpia del commit de l'etiqueta (`preregistre-zeros`), i cap branca no es llança abans de l'ancoratge del
+  segell a Bitcoin.
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).

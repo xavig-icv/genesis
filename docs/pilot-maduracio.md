@@ -18,7 +18,8 @@ potència. Com a l'exploració de B2:
 - els resultats del pilot no es fan servir mai com a prova;
 - els mons del pilot no entren a la sèrie.
 
-**Una excepció possible,** al pilot dels zeros, que decideix el responsable abans de llançar-lo (§4.4).
+**Una excepció:** la intervenció dels zeros ja no és un pilot. El responsable va decidir fer-ne una prova preregistrada dins
+dels 11 mons (§4.4). El seu protocol és a `docs/protocol-zeros.md`, i mana sobre la §4 d'aquest document.
 
 ## 1. Les preguntes
 
@@ -135,10 +136,10 @@ al 30 %. No podrà distingir un 11 % d'un 15 %.
 | **La captura** | La de l'establiment, *t* (`fase2/resultats/b2/repartiment.json`) | El punt de partida de B2 |
 | **Els braços** | `continue`; **`zeros-data`**, en què els zeros de fora dels replicadors detectats passen a bytes de dades; **`placebo-cell`**, en què a cada cel·la tants bytes de dades com zeros té passen a un altre byte de dades | §4.2 |
 | **L'atzar de la transformació** | La llavor del món + 600.000, la mateixa als braços amb abast | Així fan servir exactament les mateixes cel·les |
-| **La continuació** | Corrent 0,01 (la condició d'origen), *K* = 2, la llavor del món + 400.000 i + 500.000, i *H* = 2.000, fix | La mesura principal és a *t* + 250. Les 2.000 èpoques deixen veure també la pèrdua, la recuperació i la successió |
+| **La continuació** | Corrent 0,01 (la condició d'origen), *K* = 3, la llavor del món + 400.000, + 500.000 i + 700.000, i *H* = 2.000, fix | La mesura principal és a *t* + 250. Les 2.000 èpoques deixen veure també la pèrdua, la recuperació i la successió |
 | **La mesura principal** (AUD-110) | **La proporció d'hereditaris al primer cens (*t* + 250), aparellada per món i llavor contra `continue`** | És la predicció directa de la hipòtesi; passa abans que els zeros tornin; i al primer cens la mostra és la mateixa a tots els braços |
 | **Les secundàries** (AU2-81) | La mitjana dels censos 2 a 4; el temps fins a la pèrdua R2, amb censura a *H*; la pèrdua R2 i la recuperació; la successió; els zeros al llarg del temps (els bytes més freqüents del registre de text, cada 100 èpoques, i la captura final) | Per entendre què passa després, i si els zeros tornen |
-| **La mida i el cost** | 11 × 3 × 2 = 66 branques; de 2 a 5 h per branca, de 150 a 250 h en total | — |
+| **La mida i el cost** | 11 × 3 × 3 = 99 branques; de 2 a 5 h per branca, de 200 a 500 h en total | Amb 8 mons, la prova només es rebutja si tots els mons amb una diferència la tenen a favor, i una tercera llavor en redueix el soroll (`docs/protocol-zeros.md`, §4) |
 
 ### 4.2 Els braços, i per què han canviat
 
@@ -175,7 +176,11 @@ al 30 %. No podrà distingir un 11 % d'un 15 %.
 - **La comprovació de l'efecte immediat:** el primer cens de cada braç té la mateixa mostra, i diu si la intervenció hi ha
   canviat la proporció d'hereditaris.
 
-### 4.4 Pilot o prova? Ho decideix el responsable abans de llançar-lo
+### 4.4 Pilot o prova? Decidit: una prova preregistrada
+
+**La decisió** (el responsable, 25-10-2026): una prova preregistrada dins dels 11 mons, amb tres braços. El protocol és a
+`docs/protocol-zeros.md`. El que segueix és el raonament d'abans de la decisió.
+
 
 L'auditor 1 hi fa notar que la intervenció és nova i l'atzar també, de manera que no hi ha dades ja vistes.
 - **Com a pilot:** com la maduració. No en surt cap conclusió, i la confirmació necessitaria mons B nous, que són cars.

@@ -1,5 +1,6 @@
-// Els pilots d'alíquotes (docs/pilot-maduracio.md): les llistes, el manifest congelat i la comprovació prèvia que va
-// demanar l'auditoria 15 (AU2-79, AU2-82, AUD-111). Cap resultat no es llegeix: només els registres de l'envelliment,
+// Els experiments d'alíquotes: el pilot de la maduració (docs/pilot-maduracio.md) i la prova preregistrada dels zeros
+// (docs/protocol-zeros.md). Les llistes, el manifest congelat i la comprovació prèvia que va demanar l'auditoria 15
+// (AU2-79, AU2-82, AUD-111). Cap resultat no es llegeix: només els registres de l'envelliment,
 // per saber quins mons hi entren, i les captures, per transformar-les.
 //
 //   node eines/pilot.mjs maduracio --envelliment     la llista de l'envelliment dels mons nous (a la sortida)
@@ -30,18 +31,25 @@ export const PILOTS = {
     worlds: Array.from({ length: 24 }, (_, i) => String(5001 + i)),
     age: 8000, horizon: 8000, mixing: 0, stopAfterEvent: 0, saveEvents: true,
     arms: ['continue', 'shuffle-programs', 'shuffle-within', 'shuffle-all', 'reinit'],
+    continuation: [['a', 400000], ['b', 500000]],
   },
+  // la prova preregistrada dels zeros (docs/protocol-zeros.md): el manifest porta l'etiqueta i la prova
   zeros: {
-    folder: 'fase2/resultats/zeros/pilot',
+    folder: 'fase2/resultats/zeros/serie',
     // els 8 mons on la vida baixa al primer cens a totes les branques de B2 amb corrent, i els 3 controls negatius (AUD-110)
     worlds: ['B2002', 'B2011', 'B2021', 'B2038', 'B2042', 'B2043', 'B2078', 'B2001', 'B2071', 'B2044', 'B2058'],
     roles: { B2071: 'control negatiu', B2044: 'control negatiu', B2058: 'control negatiu' },
     horizon: 2000, mixing: 0.01, stopAfterEvent: null, saveEvents: false,
     arms: ['continue', 'zeros-data', 'placebo-cell'],
+    continuation: [['a', 400000], ['b', 500000], ['c', 700000]],
+    tag: 'preregistre-zeros', protocol: 'docs/protocol-zeros.md',
+    test: {
+      measure: "la proporció d'hereditaris al primer cens de la branca (t + 250)", unit: 'món', worlds: 'prova',
+      contrasts: [['zeros-data', 'continue'], ['zeros-data', 'placebo-cell']], method: 'holm', alpha: 0.025, sided: 'greater',
+    },
   },
 };
 export const TRANSFORM_OFFSET = 600000;
-export const CONTINUATION = [['a', 400000], ['b', 500000]];
 const CENSUS = '--every 100 --census 250 --census-version v3 --rng v2';
 
 const seedOf = (world) => Number(world.replace(/^[AB]/, ''));
@@ -69,7 +77,7 @@ export function branchLines(name, entry) {
   const p = PILOTS[name];
   const lines = [];
   for (const arm of p.arms) {
-    for (const [tag, offset] of CONTINUATION) {
+    for (const [tag, offset] of p.continuation) {
       const id = `${entry.world}-${arm}-${tag}`;
       lines.push(`${id} --world 512x256 --seed ${seedOf(entry.world) + offset} --mixing ${p.mixing} --from ${armPath(p, entry.world, arm)} --start ${entry.start} --epochs ${entry.start + p.horizon} ${CENSUS}` +
         (p.stopAfterEvent !== null ? ` --stop-after-event ${p.stopAfterEvent}` : '') +
@@ -134,8 +142,9 @@ function prepare(name) {
   }
   const included = worlds.filter((w) => w.included);
   const manifest = {
-    pilot: name, design: 'docs/pilot-maduracio.md', code: codeVersion(), node: process.version, date: new Date().toISOString(),
-    params: { arms: p.arms, horizon: p.horizon, mixing: p.mixing, stopAfterEvent: p.stopAfterEvent, age: p.age ?? null, transformOffset: TRANSFORM_OFFSET, continuation: CONTINUATION, census: CENSUS },
+    pilot: name, design: p.protocol ?? 'docs/pilot-maduracio.md', code: codeVersion(), node: process.version, date: new Date().toISOString(),
+    ...(p.tag ? { tag: p.tag, dir: `${p.folder}/branques`, test: p.test } : {}),
+    params: { arms: p.arms, horizon: p.horizon, mixing: p.mixing, stopAfterEvent: p.stopAfterEvent, age: p.age ?? null, transformOffset: TRANSFORM_OFFSET, continuation: p.continuation, census: CENSUS },
     worlds,
   };
   writeFileSync(join(root, manifestPath), JSON.stringify(manifest, null, 1) + '\n', { flag: 'wx' });
@@ -144,7 +153,7 @@ function prepare(name) {
     const lines = included.filter((_, i) => i % 2 === parity).flatMap((w) => branchLines(name, w));
     writeFileSync(join(root, p.folder, `llista-${machine}.txt`), lines.join('\n') + '\n', { flag: 'wx' });
   }
-  console.log(`manifest: ${manifestPath}; ${included.length} mons inclosos de ${worlds.length}, ${included.length * p.arms.length * CONTINUATION.length} branques`);
+  console.log(`manifest: ${manifestPath}; ${included.length} mons inclosos de ${worlds.length}, ${included.length * p.arms.length * p.continuation.length} branques`);
 }
 
 // Retorna la llista de problemes (buida si tot és correcte)

@@ -9,7 +9,7 @@ import { mkdtempSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
-import { PILOTS, agingLine, branchLines, preflight, CONTINUATION } from '../eines/pilot.mjs';
+import { PILOTS, agingLine, branchLines, preflight } from '../eines/pilot.mjs';
 import { critical, power } from '../eines/potencia-maduracio.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -32,8 +32,8 @@ const tests = {
   'les branques: els mateixos nombres aleatoris de continuació a tots els braços d\'un món, i cada braç la seva captura': () => {
     for (const [name, entry] of [['maduracio', { world: '5007', start: 8000 }], ['zeros', { world: 'B2042', start: 5750 }]]) {
       const p = PILOTS[name], lines = branchLines(name, entry);
-      assert.strictEqual(lines.length, p.arms.length * CONTINUATION.length);
-      for (const [tag, offset] of CONTINUATION) {
+      assert.strictEqual(lines.length, p.arms.length * p.continuation.length);
+      for (const [tag, offset] of p.continuation) {
         const mine = lines.filter((l) => l.split(' ')[0].endsWith(`-${tag}`));
         assert.strictEqual(mine.length, p.arms.length);
         assert.ok(mine.every((l) => Number(opt(l, 'seed')) === Number(entry.world.replace(/^[AB]/, '')) + offset), `${name}: les llavors de ${tag} no són comunes`);
