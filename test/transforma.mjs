@@ -39,7 +39,7 @@ const tests = {
       assert.deepStrictEqual(transform(soup, kind, 7, { width: W }).out, a.out, `${kind} no és determinista`);
       if (kind !== 'continue') assert.ok(a.info.changed > 0, `${kind} no ha canviat res`);
     }
-    for (const kind of ['shuffle-programs', 'shuffle-within', 'shuffle-all', 'reinit', 'zeros-all', 'control-all']) {
+    for (const kind of ['shuffle-programs', 'shuffle-within', 'shuffle-all', 'reinit', 'zeros-data', 'placebo-cell', 'zeros-all', 'control-all']) {
       assert.notDeepStrictEqual(transform(soup, kind, 7, { width: W }).out, transform(soup, kind, 8, { width: W }).out, `${kind} no depèn de la llavor`);
     }
   },
@@ -75,14 +75,91 @@ const tests = {
   },
   'el comprovador d\'invariants detecta una transformació espatllada': () => {
     const soup = world();
-    for (const kind of ['continue', 'shuffle-programs', 'shuffle-within', 'shuffle-all', 'zeros-outside', 'control-outside']) {
+    for (const kind of ['continue', 'shuffle-programs', 'shuffle-within', 'shuffle-all', 'reinit', 'zeros-data', 'placebo-cell', 'zeros-outside', 'control-outside']) {
       const { out, info } = transform(soup, kind, 2, { width: W });
       const bad = Uint8Array.from(out);
       // un byte més de la cel·la del replicador (fora de l'abast dels zeros) passa a valer 0 o 1
       bad[20 * PROGRAM_SIZE + 4] = bad[20 * PROGRAM_SIZE + 4] === 1 ? 2 : 1;
       assert.ok(checkInvariants(soup, bad, info).length > 0, `no detecta l'error a ${kind}`);
     }
+    // zeros-data que hi posa una instrucció, i un placebo amb un canvi de menys en una cel·la
+    const z = transform(soup, 'zeros-data', 2, { width: W });
+    const i = z.out.findIndex((v, k) => v !== soup[k]);
+    const badZ = Uint8Array.from(z.out); badZ[i] = 91; // '['
+    assert.match(checkInvariants(soup, badZ, z.info).join(' '), /mapa d'instruccions/);
+    const pl = transform(soup, 'placebo-cell', 2, { width: W });
+    const j = pl.out.findIndex((v, k) => v !== soup[k]);
+    const badP = Uint8Array.from(pl.out); badP[j] = soup[j];
+    assert.match(checkInvariants(soup, badP, pl.info).join(' '), /placebo-cell ha canviat \d+ bytes a la cel·la/);
   },
+  // El braç dels zeros de l'auditoria 15 (AUD-112): els zeros passen a bytes de dades, i el mapa d'instruccions no canvia.
+  // El placebo (AU2-78): a cada cel·la, tants bytes de dades com zeros té, també en un mapa advers amb els zeros concentrats.
+  'zeros-data i placebo-cell: el mapa d\'instruccions no canvia, i el placebo s\'aparella cel·la per cel·la': () => {
+    const soup = world();
+    soup.fill(0, 5 * PROGRAM_SIZE, 6 * PROGRAM_SIZE); // una cel·la plena de zeros: cap byte de dades per aparellar
+    const isData = (v) => v !== 0 && !'<>{}-+.,[]'.includes(String.fromCharCode(v));
+    const isOp = (v) => '<>{}-+.,[]'.includes(String.fromCharCode(v));
+    const z = transform(soup, 'zeros-data', 5, { width: W }), pl = transform(soup, 'placebo-cell', 5, { width: W });
+    assert.deepStrictEqual(checkInvariants(soup, z.out, z.info), []);
+    assert.deepStrictEqual(checkInvariants(soup, pl.out, pl.info), []);
+    assert.deepStrictEqual(pl.info.mask, z.info.mask, 'les dues màscares han de ser la mateixa');
+    assert.strictEqual(z.info.scope.maskSha256, pl.info.scope.maskSha256);
+    for (let k = 0; k < soup.length; k++) {
+      assert.strictEqual(isOp(z.out[k]), isOp(soup[k]), 'zeros-data ha canviat el mapa d\'instruccions');
+      assert.strictEqual(isOp(pl.out[k]), isOp(soup[k]), 'placebo-cell ha canviat el mapa d\'instruccions');
+      if (z.out[k] !== soup[k]) assert.ok(soup[k] === 0 && isData(z.out[k]));
+    }
+    let shortfall = 0;
+    for (let c = 0; c < N; c++) {
+      if (z.info.mask[c]) continue;
+      const span = (b) => Array.from(b.subarray(c * PROGRAM_SIZE, (c + 1) * PROGRAM_SIZE));
+      const zc = span(soup).filter((v) => v === 0).length, dc = span(soup).filter(isData).length;
+      const changed = (b) => span(b).filter((v, k) => v !== soup[c * PROGRAM_SIZE + k]).length;
+      assert.strictEqual(changed(z.out), zc, `zeros-data, cel·la ${c}`);
+      assert.strictEqual(changed(pl.out), Math.min(zc, dc), `placebo-cell, cel·la ${c}`);
+      assert.strictEqual(span(pl.out).filter((v) => v === 0).length, zc, 'el placebo ha canviat els zeros');
+      shortfall += zc - Math.min(zc, dc);
+    }
+    assert.ok(shortfall >= 64, 'la cel·la plena de zeros no hi compta');
+    assert.strictEqual(pl.info.scope.shortfall, shortfall);
+  },
+  "l'eina no sobreescriu mai cap fitxer, ni l'entrada (AU2-79)": () => withTmp((tmp) => {
+    const from = join(tmp, 'llavor1-mon16x8-r2-final.bin');
+    writeFileSync(from, world());
+    const sha = (f) => createHash('sha256').update(readFileSync(f)).digest('hex');
+    const before = sha(from);
+    const run = (...a) => spawnSync(process.execPath, [join(root, 'eines', 'transforma.mjs'), ...a], { encoding: 'utf8' });
+    let r = run('--from', from, '--kind', 'shuffle-all', '--seed', '1', '--out', from);
+    assert.strictEqual(r.status, 2); assert.match(r.stderr, /ja existeix/);
+    assert.strictEqual(sha(from), before, "l'entrada ha canviat");
+    r = run('--from', from, '--kind', 'shuffle-all', '--seed', '1', '--out', join(tmp, 'x.bin'));
+    assert.strictEqual(r.status, 0, r.stderr);
+    const x = sha(join(tmp, 'x.bin'));
+    r = run('--from', from, '--kind', 'reinit', '--seed', '2', '--out', join(tmp, 'x.bin'));
+    assert.strictEqual(r.status, 2, 'ha sobreescrit una sortida que ja hi era');
+    assert.strictEqual(sha(join(tmp, 'x.bin')), x);
+    writeFileSync(join(tmp, 'y.json'), '{}');
+    r = run('--from', from, '--kind', 'reinit', '--seed', '2', '--out', join(tmp, 'y.bin'));
+    assert.strictEqual(r.status, 2, 'ha sobreescrit un registre que ja hi era');
+    assert.ok(!existsSync(join(tmp, 'y.bin')));
+    assert.strictEqual(sha(from), before, "l'entrada ha canviat");
+  }),
+  "l'escaneig compta les cel·les que es repliquen i les hereditàries, i no transforma res (AUD-111)": () => withTmp((tmp) => {
+    const from = join(tmp, 'llavor1-mon16x8-r2-final.bin');
+    writeFileSync(from, world());
+    const run = (...a) => spawnSync(process.execPath, [join(root, 'eines', 'transforma.mjs'), ...a], { encoding: 'utf8' });
+    let r = run('--scan', '--from', from, '--seed', '3', '--out', join(tmp, 'e.json'));
+    assert.strictEqual(r.status, 0, r.stderr);
+    const e = JSON.parse(readFileSync(join(tmp, 'e.json'), 'utf8'));
+    assert.strictEqual(e.cells, N);
+    assert.ok(e.replicating >= 2 && e.heritable >= 1, `els replicadors plantats no surten: ${JSON.stringify(e)}`);
+    writeFileSync(join(tmp, 'net.bin'), randomSoup(N, makeRng(11, 'v2')));
+    r = run('--scan', '--from', join(tmp, 'net.bin'), '--seed', '3', '--width', '16', '--out', join(tmp, 'f.json'));
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.strictEqual(JSON.parse(readFileSync(join(tmp, 'f.json'), 'utf8')).heritable, 0);
+    r = run('--scan', '--from', from, '--kind', 'continue', '--seed', '3', '--out', join(tmp, 'g.json'));
+    assert.strictEqual(r.status, 2);
+  }),
   "la línia d'ordres escriu la captura i el registre, i rebutja les opcions incorrectes": () => withTmp((tmp) => {
     const from = join(tmp, 'llavor1-mon16x8-r2-final.bin');
     writeFileSync(from, world());
@@ -97,6 +174,8 @@ const tests = {
     assert.strictEqual(rec.width, 16);
     assert.strictEqual(rec.invariants, 'correctes');
     assert.strictEqual(rec.zeros.after, rec.zeros.before - rec.scope.zeros);
+    assert.match(rec.scope.maskSha256, /^[0-9a-f]{64}$/);
+    assert.strictEqual(rec.scope.zerosProtected + rec.scope.zeros, rec.zeros.before);
     r = run('--from', from, '--kind', 'barreja', '--seed', '5', '--out', join(tmp, 'c.bin'));
     assert.strictEqual(r.status, 2); assert.ok(!existsSync(join(tmp, 'c.bin')));
     r = run('--from', from, '--kind', 'reinit', '--seed', '-1', '--out', join(tmp, 'c.bin'));
