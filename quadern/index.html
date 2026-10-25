@@ -21,6 +21,7 @@
     <a href="#entrada-8">Entrada 8</a>
     <a href="#entrada-9">Entrada 9</a>
     <a href="#entrada-10">Entrada 10</a>
+    <a href="#entrada-11">Entrada 11</a>
   </nav>
 
   <article id="entrada-1">
@@ -1064,6 +1065,50 @@
         <li><strong>Els tres descriptius</strong> de "Tres coses que hem mirat després de la decisió" són nous, de l'auditor 1 (AUD-107 i AUD-108).</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-11">
+    <header>
+      <p class="date">Entrada 11 · 25 d'octubre de 2026</p>
+      <h1>La fragilitat del món: una pista als zeros</h1>
+      <p class="lede">En alguns mons, la vida establerta es perd una vegada i una altra, encara que el món es torni a fer córrer des del mateix punt. Hem mirat què tenen d'especial en el moment que s'hi estableix la vida. La diferència més gran és als bytes zero: els mons fràgils en tenen moltes més cel·les. És una exploració, i caldrà confirmar-la.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>A l'auditoria 14, l'auditor 1 va trobar una relació mirant les dades de B2 després de la decisió (AUD-107).</p>
+    <ul>
+      <li><strong>Els mons fràgils:</strong> en 7 dels 58 mons del banc, la vida es va perdre a la història original de la llei 2. A <em>t</em> + 1.000 en tenien menys de l'1 %, i tots 7 són mons amb corrent.</li>
+      <li><strong>La relació:</strong> en 6 d'aquests 7, alguna branca nova de B2 la torna a perdre. Als altres 26 mons amb corrent, en 2 (entrada 10).</li>
+    </ul>
+    <p>Si el destí de la vida queda en bona part fixat quan s'estableix, la captura d'aquell moment ho hauria de mostrar. Abans de calcular res, vam escriure i desar el pla, amb totes les propietats que miraríem i el perquè de cadascuna (<code>fase2/resultats/b2/fragilitat/PLA.md</code>). No s'ha simulat res: només s'han llegit les captures i els registres que ja teníem.</p>
+
+    <h2>El que surt</h2>
+    <div class="params">
+      <div class="param"><b>17,6 %</b><span>de bytes zero, mediana dels 7 mons fràgils</span></div>
+      <div class="param"><b>0,4 %</b><span>als altres 26 mons amb corrent</span></div>
+      <div class="param"><b>0,5 %</b><span>als 23 mons quiets</span></div>
+      <div class="param"><b>1,4·10⁻⁵</b><span><em>p</em>, prova exacta, una de 13 comparacions</span></div>
+    </div>
+    <ul>
+      <li><strong>Els bytes zero</strong> separen els mons fràgils dels altres molt més que cap altra propietat. Ja eren al pla, pel que vam veure a la fase 1: el palíndrom de la coma deixa zeros al company quan s'hi copia, i els zeros aturen les còpies (entrada 2). L'article de 2024 en descriu el mateix fenomen.</li>
+      <li><strong>No és només el tipus de replicador.</strong> Els 7 mons fràgils són del palíndrom de la coma. Si només es comparen els mons d'aquest replicador, la diferència es manté (<em>p</em> = 1,7·10⁻⁴). Els 9 mons amb corrent del palíndrom del punt no tenen gairebé zeros (com a molt, el 0,9 %), i cap no és fràgil.</li>
+      <li><strong>La resta no hi diu gaire.</strong> La part del mapa de la família dominant és més gran als fràgils (<em>p</em> = 0,03), i l'entropia, més baixa, però això ja ve dels zeros. Ni la quantitat de vida a <em>t</em>, ni l'edat, ni el nombre de famílies, ni com creixia la vida abans no s'hi diferencien.</li>
+      <li><strong>Hi ha encavalcament.</strong> Quatre mons no fràgils tenen més zeros que el fràgil que en té menys (el 8,2 %). Amb un llindar del 8 %, triat després de veure les dades, hi ha 7 fràgils d'11 per sobre, i 0 de 22 per sota.</li>
+    </ul>
+
+    <h2>Què vol dir, i què no</h2>
+    <ul>
+      <li><strong>És una pista forta, però és una exploració.</strong> La relació de partida es va trobar mirant les dades, hi ha 7 casos, i el llindar s'ha triat després.</li>
+      <li><strong>No demostra que els zeros matin la vida.</strong> Podrien ser el senyal d'una altra cosa, per exemple, de quant havia treballat el replicador abans de l'establiment.</li>
+      <li><strong>Si es confirmés,</strong> l'enverinament per zeros, que fins ara coneixíem en sopes concretes, explicaria per què la vida es perd en uns mons i en uns altres no, i es podria predir quan s'estableix.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <p>Hi ha dues maneres de confirmar-ho, i les valoraran els auditors abans de fer córrer res (<code>fase2/resultats/b2/fragilitat/LLEGEIX-ME.md</code>):</p>
+    <ul>
+      <li><strong>Una intervenció des de la mateixa captura.</strong> En els mons amb molts zeros, una branca amb els zeros canviats per bytes a l'atzar, i una de control amb el mateix nombre de bytes no zero canviats, amb el mateix atzar de continuació. Si els zeros enverinen, a la primera la vida s'hauria de perdre menys. És el disseny de les alíquotes que farem servir a la maduració.</li>
+      <li><strong>Una predicció amb mons nous,</strong> preregistrada: des de la captura de l'establiment, dir quins mons perdran la vida. És més cara, perquè cal fer córrer mons fins que s'hi estableixi la vida.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>
