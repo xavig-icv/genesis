@@ -25,8 +25,8 @@ de la llei 2, i s'ha triat perquè la colònia s'hi veu bé: és un exemple, no 
 > worlds, quiet vs. weak mixing) was **inconclusive**: life became established in 24/80 vs. 34/80 worlds
 > (log-rank p = 0.067; the preregistered bound was not reached). The second one (29 worlds, 116 paired
 > branches of 5,000 epochs) found that **established life lasts**: in their original condition, 93.1% of
-> branches show no sustained loss within 5,000 epochs. With a weak current, life occupies a larger share of the
-> world during the first 2,000 epochs (22/29 worlds), as expected; whether changing a world's condition shortens
+> branches show no sustained loss within 5,000 epochs. With a weak current, life occupies on average a larger share
+> of the world during the first 2,000 epochs (22/29 worlds), as expected; whether changing a world's condition shortens
 > life remains open. The code is written by Claude (Anthropic)
 > under the direction of a human project owner, and reviewed by **two AI auditors**. **This is not human peer
 > review.** [Full English README](README.en.md).
@@ -161,10 +161,11 @@ llavors per condició i 5.000 èpoques més: 116 branques ([protocol](docs/proto
   (IC del 95 %: 73,8–98,5 %).
   - Les 4 pèrdues d'aquesta condició són d'hora, fins a *t* + 1.500.
   - Totes quatre tornen a passar de l'1 %.
-- **Amb corrent, la vida ocupa més part del món** durant les primeres 2.000 èpoques: confirmat, en 22 de 29 mons i
-  als dos orígens (*p* = 0,004, amb la correcció de Holm).
-  - **Al final, amb corrent i sense, arriba al mateix nivell** (descriptiu, mirat després). El corrent fa que la
-    vida ocupi el món abans, no que n'ocupi més.
+- **Amb corrent, la vida ocupa de mitjana més part del món** durant les primeres 2.000 èpoques: confirmat, en 22 de
+  29 mons i als dos orígens (*p* = 0,004, amb la correcció de Holm).
+  - **Al final, amb corrent i sense, arriba a nivells molt semblants:** el 70,6 % i el 70,7 % als últims 8 censos
+    (descriptiu, mirat després, no una prova d'equivalència). Sembla que el corrent fa que la vida ocupi el món
+    abans, més que no pas que n'ocupi més.
   - **No és un descobriment:** és el que s'espera de la teoria dels fronts d'invasió. La sèrie en mesura la mida,
     però no la velocitat de cap front.
 - **Si la vida dura menys quan el món canvia de condició:** no concloent (3 mons a favor, 3 en contra i 23
@@ -175,8 +176,10 @@ Vegeu l'[entrada 10](quadern/index.html#entrada-10).
 
 ### El que estudiem ara
 
-- **Una línia nova,** que triarem després de l'auditoria 14. La que té més lloc per a un resultat nou és la
-  maduració de la sopa abans que hi aparegui la vida ([estat de la qüestió](docs/estat-questio.md), §11).
+- **La maduració de la sopa abans que hi aparegui la vida,** la línia que vam triar després de l'auditoria 14:
+  branques des d'una mateixa captura, que continuen la sopa o en barregen els bytes. Primer, un pilot.
+- **Una pista per confirmar: els bytes zero.** Als mons on la vida es torna a perdre, quan s'hi estableix ja hi
+  ha molts més bytes zero (exploratori; [entrada 11](quadern/index.html#entrada-11)).
 - **La mida del món,** començant pels mons petits.
 - **Els ingredients de la química:** treure-li instruccions o capacitats per saber quines calen.
 - **Un temps que canvia:** un corrent que alterna la calma i el temporal.

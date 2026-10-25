@@ -86,10 +86,11 @@ more epochs: 116 branches ([protocol](docs/protocol-b2.md), in Catalan).
   73.8–98.5%).
   - The 4 losses in this condition come early, by *t* + 1,500.
   - All four climb back above 1%.
-- **With a current, life occupies a larger share of the world** during the first 2,000 epochs: confirmed, in
-  22 of 29 worlds and in both origins (p = 0.004, with Holm's correction).
-  - **In the end, both conditions reach the same level** (descriptive, looked at afterwards). The current makes
-    life fill the world sooner, not fill more of it.
+- **With a current, life occupies on average a larger share of the world** during the first 2,000 epochs:
+  confirmed, in 22 of 29 worlds and in both origins (p = 0.004, with Holm's correction).
+  - **In the end, both conditions reach very similar levels:** 70.6% and 70.7% over the last 8 censuses
+    (descriptive, looked at afterwards, not an equivalence test). The current seems to make life fill the world
+    sooner, rather than fill more of it.
   - **Not a discovery:** it is what front-invasion theory leads one to expect. The series measures its size,
     not the speed of any front.
 - **Whether life lasts less when its world changes condition:** inconclusive (3 worlds for, 3 against and 23
@@ -99,8 +100,10 @@ more epochs: 116 branches ([protocol](docs/protocol-b2.md), in Catalan).
 See notebook entry 10, in Catalan.
 
 **What we study now:**
-- **A new line,** to be chosen after audit 14. The candidate with the most room for a new result is how the
-  soup matures before life appears ([state of the art](docs/estat-questio.md), §11, in Catalan).
+- **How the soup matures before life appears,** the line chosen after audit 14: branches from the same
+  snapshot that either continue the soup or shuffle its bytes. A pilot comes first.
+- **A lead to confirm: zero bytes.** In the worlds where life is lost again and again, there are many more
+  zero bytes when it becomes established (exploratory; notebook entry 11, in Catalan).
 - **World size.**
 - **Chemistry ablations.**
 - **A changing weather,** with a current that alternates calm and storm.
