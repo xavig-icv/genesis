@@ -82,13 +82,16 @@ established more often, with a protocol written and tagged before starting.
 **The second preregistered series: established life lasts.** We continued 29 worlds from the moment life
 became established, in their original condition and in the other one, with two seeds per condition and 5,000
 more epochs: 116 branches ([protocol](docs/protocol-b2.md), in Catalan).
-- **In its own world, life lasts.** 93.1% of branches never lose it within 5,000 epochs (95% CI:
+- **In its own world, life lasts.** 93.1% of branches show no sustained loss within 5,000 epochs (95% CI:
   73.8–98.5%).
-  - The few losses come early, by *t* + 1,500.
-  - All of them climb back above 1%.
-- **A current makes it spread faster:** confirmed, in 22 of 29 worlds and in both origins (p = 0.004, with
-  Holm's correction).
-  - **Not a discovery:** front-invasion theory predicts it. The series measures its size.
+  - The 4 losses in this condition come early, by *t* + 1,500.
+  - All four climb back above 1%.
+- **With a current, life occupies a larger share of the world** during the first 2,000 epochs: confirmed, in
+  22 of 29 worlds and in both origins (p = 0.004, with Holm's correction).
+  - **In the end, both conditions reach the same level** (descriptive, looked at afterwards). The current makes
+    life fill the world sooner, not fill more of it.
+  - **Not a discovery:** it is what front-invasion theory leads one to expect. The series measures its size,
+    not the speed of any front.
 - **Whether life lasts less when its world changes condition:** inconclusive (3 worlds for, 3 against and 23
   ties). Losses are rare and concentrated in a few worlds, and the test had little power, as the protocol
   warned.
@@ -133,8 +136,10 @@ See notebook entry 10, in Catalan.
   - **What cannot:** the date, because git does not certify it and the repository was private.
 - **The B2 preregistration** is the git tag `preregistre-b2`, with an OpenTimestamps proof anchored in
   Bitcoin ([`docs/preregistre-b2/`](docs/preregistre-b2/), in Catalan).
-  - **What it proves:** that the tag existed before 20:25:42 UTC on 20 October 2026, 6 minutes after the
-    first branch started. Nobody had looked at any result in those 6 minutes.
+  - **What Bitcoin proves:** that the tag existed when block 972,374 was mined (20:25:42 UTC on 20 October
+    2026), about 6 minutes after the first branch started.
+  - **What it does not prove:** that the stamp was sent 31 minutes earlier is recorded by the calendars, and
+    that nobody looked at any result is stated in the run log.
 - **How to cite it:** [`CITATION.cff`](CITATION.cff). **How to take part:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## How to run it

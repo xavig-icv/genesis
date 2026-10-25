@@ -26,12 +26,19 @@ programa (`docs/protocol-b2.md`, §9).
 - **20:19:42:** comença la primera branca de la sèrie, a la màquina virtual. La del PC comença a les 20:20:11.
 - **20:25:42:** el bloc 972.374 l'ancora.
 - **Què demostra cadascun:**
-  - **Bitcoin,** sense confiar en ningú, demostra que l'etiqueta existia abans de les 20:25:42, **6 minuts després**
-    de començar la primera branca.
+  - **Bitcoin,** sense confiar en ningú, demostra que l'etiqueta existia quan es va minar el bloc 972.374, que porta
+    l'hora 20:25:42, **uns 6 minuts després** de començar la primera branca.
+    - **L'hora del bloc** la posa qui el mina, i el consens només la fita a grans trets. A l'escala de minuts,
+      Bitcoin no ordena l'ancoratge i el llançament: l'ordre el donen els calendaris (auditoria 14).
   - **Que el segell es va enviar 31 minuts abans del llançament** ho registren els calendaris, i per creure-ho cal
     confiar en ells.
-- **Per què a la pràctica no hi afecta:** en aquests 6 minuts cap branca no havia pogut donar cap resultat que
-  algú mirés.
+- **Què hi havia escrit abans de l'ancoratge** (AUD-104, AU2-76): les primeres mesures de les branques que corrien,
+  i el primer cens de dues branques del PC, b002 (a uns 158 s) i b004 (a uns 289 s). Cap no tenia el segon cens, i
+  per tant cap no podia mostrar una pèrdua R2.
+- **Per què a la pràctica no hi afecta:** ningú no va intervenir en cap branca, i la decisió es va prendre 4 dies
+  després amb el programa de l'etiqueta. Que ningú no va mirar cap registre ho diu l'acta, no Bitcoin.
+  *(Corregit a l'auditoria 14: deia que "en aquests 6 minuts cap branca no havia pogut donar cap resultat que algú
+  mirés".)*
 - **D'on ve:** el protocol (§9) deia "abans de la primera branca", i es va llegir com "enviar-lo". A les sèries
   següents, s'esperarà l'ancoratge a Bitcoin abans de llançar.
 

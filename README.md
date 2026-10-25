@@ -25,8 +25,9 @@ de la llei 2, i s'ha triat perquè la colònia s'hi veu bé: és un exemple, no 
 > worlds, quiet vs. weak mixing) was **inconclusive**: life became established in 24/80 vs. 34/80 worlds
 > (log-rank p = 0.067; the preregistered bound was not reached). The second one (29 worlds, 116 paired
 > branches of 5,000 epochs) found that **established life lasts**: in their original condition, 93.1% of
-> branches never lose it within 5,000 epochs. A weak current makes it spread faster (22/29 worlds), as front-invasion theory
-> predicts; whether changing a world's condition shortens life remains open. The code is written by Claude (Anthropic)
+> branches show no sustained loss within 5,000 epochs. With a weak current, life occupies a larger share of the
+> world during the first 2,000 epochs (22/29 worlds), as expected; whether changing a world's condition shortens
+> life remains open. The code is written by Claude (Anthropic)
 > under the direction of a human project owner, and reviewed by **two AI auditors**. **This is not human peer
 > review.** [Full English README](README.en.md).
 
@@ -156,13 +157,16 @@ Vegeu l'[entrada 8](quadern/index.html#entrada-8).
 
 Hem continuat 29 mons des del moment que s'hi va establir la vida, en la seva condició i en l'altra, amb dues
 llavors per condició i 5.000 èpoques més: 116 branques ([protocol](docs/protocol-b2.md)).
-- **En el seu món, la vida dura.** El 93,1 % de les branques no la perden en cap moment (IC del 95 %:
-  73,8–98,5 %).
-  - Les poques pèrdues són d'hora, fins a *t* + 1.500.
-  - Totes tornen a passar de l'1 %.
-- **El corrent l'escampa més de pressa:** confirmat, en 22 de 29 mons i als dos orígens (*p* = 0,004, amb la
-  correcció de Holm).
-  - **No és un descobriment:** la teoria dels fronts d'invasió ja ho preveu. La sèrie en mesura la mida.
+- **En el seu món, la vida dura.** El 93,1 % de les branques no tenen cap pèrdua sostinguda en 5.000 èpoques
+  (IC del 95 %: 73,8–98,5 %).
+  - Les 4 pèrdues d'aquesta condició són d'hora, fins a *t* + 1.500.
+  - Totes quatre tornen a passar de l'1 %.
+- **Amb corrent, la vida ocupa més part del món** durant les primeres 2.000 èpoques: confirmat, en 22 de 29 mons i
+  als dos orígens (*p* = 0,004, amb la correcció de Holm).
+  - **Al final, amb corrent i sense, arriba al mateix nivell** (descriptiu, mirat després). El corrent fa que la
+    vida ocupi el món abans, no que n'ocupi més.
+  - **No és un descobriment:** és el que s'espera de la teoria dels fronts d'invasió. La sèrie en mesura la mida,
+    però no la velocitat de cap front.
 - **Si la vida dura menys quan el món canvia de condició:** no concloent (3 mons a favor, 3 en contra i 23
   iguals). Les pèrdues són rares i es concentren en pocs mons, i la prova tenia poca potència, com ja deia el
   protocol.
@@ -209,8 +213,10 @@ Vegeu l'[entrada 10](quadern/index.html#entrada-10).
   - **Què no:** la data, perquè git no la certifica i el repositori era privat.
 - **El preregistre de B2** és l'etiqueta `preregistre-b2`, amb un segell d'OpenTimestamps ancorat a Bitcoin
   ([`docs/preregistre-b2/`](docs/preregistre-b2/)).
-  - **Què demostra:** que l'etiqueta existia abans de les 20:25:42 UTC del 20-10-2026, 6 minuts després que
-    comencés la primera branca. En aquests 6 minuts, ningú no havia mirat cap resultat.
+  - **Què demostra Bitcoin:** que l'etiqueta existia quan es va minar el bloc 972.374 (20:25:42 UTC del
+    20-10-2026), uns 6 minuts després que comencés la primera branca.
+  - **El que no demostra:** que el segell es va enviar 31 minuts abans ho registren els calendaris, i que ningú no
+    va mirar cap resultat ho diu l'acta.
 - **Com citar-ho:** [`CITATION.cff`](CITATION.cff). **Com participar-hi:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Com obrir-ho

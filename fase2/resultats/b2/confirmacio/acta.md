@@ -108,3 +108,18 @@ això, durant la sèrie, el PC ha d'estar endollat. Si s'adorm, s'aturen tots do
   - S_orig = 93,1 %.
 
   Els registres són de 29 mons de confirmació, cap de l'exploració, amb 58 llavors.
+
+## Addenda: l'auditoria 14 (25-10-2026)
+
+Els dos auditors van reproduir la decisió byte a byte des de la còpia de l'etiqueta i en van refer els recomptes pel seu
+compte. L'acta queda com estava. Hi afegim el que van demanar:
+- **Cap relançament** (auditoria 14, auditor 1). Els dos lots van acabar sense cap branca fallada ni cap branca saltada
+  per ja feta: `lot-llista-pc.out` i `lot-llista-vm.out`.
+- **Què hi havia escrit abans de l'ancoratge a Bitcoin** (AUD-104, AU2-76). El bloc 972.374 porta l'hora 20:25:42 UTC,
+  331 s després de començar el lot del PC i 360 s després del de la màquina virtual.
+  - **Les mesures:** les primeres branques ja n'havien escrit. Al PC, la primera de cada branca és als 26, 77, 80 i 121 s.
+  - **Els censos:** al PC, b002 i b004 havien escrit el primer cens, a uns 158 s i 289 s. Cap branca no tenia el segon
+    cens, i per tant cap no podia mostrar una pèrdua R2. A la màquina virtual, cap no havia escrit cap cens.
+  - **La frase de la secció "El segell, completat"**, "en 6 minuts cap branca no havia donat res que algú mirés", era
+    massa forta. El que és exacte: ningú no va mirar cap registre ni va intervenir en cap branca. Ho declara aquesta
+    acta, i no ho pot demostrar Bitcoin.
