@@ -57,6 +57,8 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
     miren amb `--decideix`.
   - **Els programes confirmatoris nous** comproven el preregistre (`fase2/preregistre.mjs`, només mòduls de Node)
     abans de carregar res més del projecte (AUD-81).
+- La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
+  els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
   captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
