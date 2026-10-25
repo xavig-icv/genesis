@@ -19,6 +19,10 @@
 //   placebo-cell      el seu control: a cada cel·la de l'abast, tants bytes de dades com zeros té la cel·la passen a
 //                     un altre byte de dades. Si una cel·la té més zeros que bytes de dades, els canvia tots i
 //                     el registre en diu la diferència (AU2-78). Els zeros i el mapa d'instruccions no canvien
+//   zeros-inert       el quart braç de la prova dels zeros (auditoria 16, AUD-116): cel·la per cel·la i en l'ordre de
+//                     les cel·les, els zeros de fora dels replicadors detectats passen a bytes de dades, però només si
+//                     la cel·la no passa a replicar-se (la prova de replicació, sola o en context). Si hi passa, la
+//                     cel·la es deixa com era, i el registre en diu quantes. Neteja els companys sense reactivar còpies
 //   zeros-outside     els bytes zero de fora dels replicadors detectats passen a un valor a l'atzar, d'1 a 255
 //   control-outside   el mateix nombre de bytes no zero de les mateixes cel·les passen a un altre valor no zero: desfà
 //                     també codi de les deixalles (AUD-112), i s'ha de llegir contra continue
@@ -47,9 +51,9 @@ import { makeRng, randomSoup } from '../fase1/soup.js';
 import { replicationTest } from '../fase2/replication.js';
 
 export const KINDS = ['continue', 'shuffle-programs', 'shuffle-within', 'shuffle-all', 'reinit',
-  'zeros-data', 'placebo-cell', 'zeros-outside', 'control-outside', 'zeros-all', 'control-all'];
+  'zeros-data', 'placebo-cell', 'zeros-inert', 'zeros-outside', 'control-outside', 'zeros-all', 'control-all'];
 // L'abast de cada tipus que en té: les cel·les de fora dels replicadors detectats, o totes
-const SCOPE = { 'zeros-data': 'outside', 'placebo-cell': 'outside', 'zeros-outside': 'outside', 'control-outside': 'outside', 'zeros-all': 'all', 'control-all': 'all' };
+const SCOPE = { 'zeros-data': 'outside', 'placebo-cell': 'outside', 'zeros-inert': 'outside', 'zeros-outside': 'outside', 'control-outside': 'outside', 'zeros-all': 'all', 'control-all': 'all' };
 // Els bytes de dades: ni 0 ni cap instrucció
 export const DATA_VALUES = Uint8Array.from({ length: 256 }, (_, v) => v).filter((v) => v !== 0 && !KIND[v]);
 const DATA_INDEX = new Int16Array(256).fill(-1);
@@ -120,7 +124,7 @@ export function transform(soup, kind, seed, { width = 0, radius = 2 } = {}) {
       for (let i = 0; i < soup.length; i++) if (soup[i] === 0 && inScope((i / PROGRAM_SIZE) | 0)) out[i] = DATA_VALUES[(rng() * DATA_VALUES.length) | 0];
     } else if (kind === 'placebo-cell') {
       // a cada cel·la, tants bytes de dades com zeros té (o tots, si en té menys), triats a l'atzar
-      let changed = 0, shortfall = 0;
+      let changed = 0, shortfall = 0, saturatedCells = 0, zerosInSaturated = 0;
       const pos = new Uint8Array(PROGRAM_SIZE);
       for (let c = 0; c < n; c++) {
         if (!inScope(c)) continue;
@@ -131,6 +135,7 @@ export function transform(soup, kind, seed, { width = 0, radius = 2 } = {}) {
         }
         const m = Math.min(z, k);
         shortfall += z - m;
+        if (z > k) { saturatedCells++; zerosInSaturated += z; }
         for (let j = 0; j < m; j++) {
           const r = j + ((rng() * (k - j)) | 0);
           const t = pos[j]; pos[j] = pos[r]; pos[r] = t;
@@ -143,6 +148,24 @@ export function transform(soup, kind, seed, { width = 0, radius = 2 } = {}) {
       }
       info.scope.placebo = changed;
       info.scope.shortfall = shortfall;
+      // AU2-86: on es concentra la diferència, les cel·les amb més zeros que bytes de dades
+      info.scope.saturated = { cells: saturatedCells, zeros: zerosInSaturated };
+    } else if (kind === 'zeros-inert') {
+      // cel·la per cel·la, sobre la sortida mateixa: els zeros passen a dades, es prova la cel·la, i si es replica, es desfà
+      let cleaned = 0, reverted = 0, zerosLeft = 0;
+      const saved = new Uint8Array(PROGRAM_SIZE);
+      for (let c = 0; c < n; c++) {
+        if (!inScope(c)) continue;
+        const base = c * PROGRAM_SIZE;
+        let z = 0;
+        for (let j = 0; j < PROGRAM_SIZE; j++) if (out[base + j] === 0) z++;
+        if (!z) continue;
+        saved.set(out.subarray(base, base + PROGRAM_SIZE));
+        for (let j = 0; j < PROGRAM_SIZE; j++) if (out[base + j] === 0) out[base + j] = DATA_VALUES[(rng() * DATA_VALUES.length) | 0];
+        const r = replicationTest(out, c, rng, { width, radius, complete: true, heredity: false });
+        if (r.solo || r.context) { out.set(saved, base); reverted++; zerosLeft += z; } else cleaned++;
+      }
+      info.scope.inert = { cleaned, reverted, zerosLeft };
     } else if (kind.startsWith('zeros-')) {
       for (let i = 0; i < soup.length; i++) if (soup[i] === 0 && inScope((i / PROGRAM_SIZE) | 0)) out[i] = 1 + ((rng() * 255) | 0);
     } else {
@@ -203,7 +226,7 @@ export function checkInvariants(input, output, info) {
       break;
     default: {
       const mask = info.mask;
-      const sameMap = info.kind === 'zeros-data' || info.kind === 'placebo-cell';
+      const sameMap = info.kind === 'zeros-data' || info.kind === 'placebo-cell' || info.kind === 'zeros-inert';
       const perCell = new Int32Array(n);
       let changed = 0;
       for (let c = 0; c < n; c++) {
@@ -213,12 +236,25 @@ export function checkInvariants(input, output, info) {
           changed++; perCell[c]++;
           if (mask[c]) { p.push(`${info.kind} ha canviat una cel·la fora de l'abast (${c})`); return p; }
           if (info.kind.startsWith('zeros-') && input[i] !== 0) { p.push(`${info.kind} ha canviat un byte no zero (${i})`); return p; }
-          if (info.kind === 'zeros-data' && !isData(output[i])) { p.push(`zeros-data hi ha posat un byte que no és de dades (${i})`); return p; }
+          if ((info.kind === 'zeros-data' || info.kind === 'zeros-inert') && !isData(output[i])) { p.push(`${info.kind} hi ha posat un byte que no és de dades (${i})`); return p; }
           if (info.kind === 'placebo-cell' && !(isData(input[i]) && isData(output[i]))) { p.push(`placebo-cell ha tocat un byte que no és de dades (${i})`); return p; }
           if (info.kind.startsWith('control-') && (input[i] === 0 || output[i] === 0)) { p.push(`${info.kind} ha tocat o creat un zero (${i})`); return p; }
         }
       }
-      if (info.kind.startsWith('zeros-')) {
+      if (info.kind === 'zeros-inert') {
+        // cada cel·la de l'abast amb zeros, o es neteja sencera, o es deixa com era
+        let cleaned = 0, untouched = 0, zerosLeft = 0;
+        for (let c = 0; c < n; c++) {
+          if (mask[c]) continue;
+          const z = cell(input, c).reduce((s, v) => s + (v === 0), 0);
+          if (!z) continue;
+          if (perCell[c] === 0) { untouched++; zerosLeft += z; } else if (perCell[c] === z && !cell(output, c).includes(0)) cleaned++;
+          else { p.push(`zeros-inert ha netejat la cel·la ${c} només en part`); return p; }
+        }
+        const inert = info.scope.inert;
+        if (cleaned !== inert.cleaned || untouched !== inert.reverted || zerosLeft !== inert.zerosLeft) p.push(`zeros-inert: el registre diu ${inert.cleaned} cel·les netes i ${inert.reverted} deixades com eren, i n'hi ha ${cleaned} i ${untouched}`);
+        if (changed !== info.scope.zeros - inert.zerosLeft) p.push(`zeros-inert ha canviat ${changed} bytes, i n'havia de canviar ${info.scope.zeros - inert.zerosLeft}`);
+      } else if (info.kind.startsWith('zeros-')) {
         for (let c = 0; c < n; c++) if (!mask[c] && cell(output, c).includes(0)) { p.push(`${info.kind} deixa zeros a l'abast (cel·la ${c})`); break; }
         if (changed !== info.scope.zeros) p.push(`${info.kind} ha canviat ${changed} bytes, i n'havia de canviar ${info.scope.zeros}`);
       } else if (info.kind === 'placebo-cell') {

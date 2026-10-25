@@ -1,12 +1,12 @@
 # Els pilots de la maduració de la sopa i de la intervenció dels zeros · disseny
 
-**Estat: esborrany v2 (25-10-2026), amb les correccions de l'auditoria 15.** No s'ha fet córrer cap branca de cap dels dos
-pilots.
+**Estat: v2.1 (25-10-2026), amb les correccions de les auditories 15 i 16.** No s'ha fet córrer cap branca de cap dels dos
+experiments. L'envelliment de la maduració ja és fet (`fase2/resultats/maduracio/pilot/acta.md`).
 - **Els veredictes de la v1:**
   - **L'auditor 1:** GO per als dos pilots, amb canvis.
   - **L'auditor 2:** GO condicionat per a la maduració, i NO-GO per al dels zeros tal com era.
   - **La síntesi,** amb les tres recomanacions una al costat de l'altra: `../auditories/claude-origins/equip/sintesi-audit15.md`.
-- **El que ha canviat de la v1** és a la §7.
+- **El que ha canviat de la v1** és a la §7, i de la v2, a la §8.
 - **Les eines:**
   - `eines/transforma.mjs`, per transformar les captures;
   - `eines/pilot.mjs`, per a les llistes, el manifest i la comprovació prèvia;
@@ -128,6 +128,10 @@ al 30 %. No podrà distingir un 11 % d'un 15 %.
 
 ## 4. El pilot dels zeros
 
+**Aquesta secció ja no mana.** La intervenció dels zeros és ara una prova preregistrada, i el seu disseny és al protocol
+(`docs/protocol-zeros.md`, v0.2). Hi ha canviat la mesura (*g* = *h*₁ / *h*₀, auditoria 16, AUD-116), hi ha un quart braç
+descriptiu (`zeros-inert`) i 132 branques. El que segueix és el disseny de la v2, tal com era, per a la traçabilitat.
+
 ### 4.1 El disseny
 
 | Element | Proposta | Per què |
@@ -195,17 +199,32 @@ L'auditor 1 hi fa notar que la intervenció és nova i l'atzar també, de manera
 1. **El codi,** en un commit de `main`, desplegat a la màquina virtual amb `eines/desplega-vm.sh`. Les actualitzacions de
    Windows, pausades. L'espai: unes 2 GB de captures noves a la carpeta del repositori.
 2. **La maduració, l'envelliment:** `node eines/pilot.mjs maduracio --envelliment > llista`, i el lot.
-3. **La preparació:** `node eines/pilot.mjs PILOT --prepara`.
-   - **Què comprova:** l'envelliment (la maduració).
-   - **Què fa:** l'escaneig i les exclusions (la maduració), i totes les transformacions.
-   - **Què escriu:** el manifest (`manifest.json`, amb les SHA-256 de les captures d'origen i transformades) i les llistes
-     de les dues màquines.
-   - **Què no fa:** no sobreescriu res, i el manifest va a git abans de la primera branca.
-4. **La comprovació prèvia,** a cada màquina: `node eines/pilot.mjs PILOT --comprova`.
-   - **Que cada captura transformada** tingui la SHA-256 del manifest i del seu registre, i vingui de la captura d'origen.
+3. **La preparació:** `node eines/pilot.mjs PILOT --prepara`, des d'un commit net.
+   - **Què comprova a la maduració** (AU2-85):
+     - el registre de l'envelliment de cada món, sencer: la capçalera i l'ordre exacta, tots els censos i totes les
+       mesures, els invariants del cens, l'establiment recalculat i la línia final;
+     - que el simulador del commit de l'envelliment sigui el d'ara.
+     - **Un registre que no és el que toca és un error de la preparació,** no un món exclòs.
+   - **Què fa:**
+     - l'escaneig i les exclusions (la maduració);
+     - totes les transformacions;
+     - l'escaneig de cada captura transformada: el punt de partida de cada braç (AUD-116). A la maduració, n'han de sortir
+       0 hereditaris, i és un descriptiu.
+   - **Què escriu:** el manifest (`manifest.json`), amb:
+     - l'ordre de cada branca;
+     - les SHA-256 dels registres de l'envelliment, dels escanejos, de les captures d'origen i transformades i dels seus
+       registres (AUD-120);
+     - les llistes de les dues màquines.
+   - **Què no fa:** no sobreescriu res.
+   - **On va:** el manifest, els registres i les llistes van a git abans de la primera branca.
+4. **La comprovació prèvia,** a cada màquina, amb les captures d'origen i les transformades: `node eines/pilot.mjs PILOT --comprova`.
+   - **El manifest, contra el disseny** (AU2-84): els mons, el seu paper i la inclusió, els paràmetres, les branques i les
+     llistes. Un manifest buit o truncat no passa.
+   - **La procedència de cada captura** (AU2-88): la SHA-256 del manifest i del seu registre, d'on ve, on va, la llavor, el
+     món i el codi; i el seu escaneig.
    - **Que cap camí** no es repeteixi.
-   - **Que les llistes** siguin les del manifest.
    - **Que cap branca** no hagi començat.
+   - **Després de la sèrie** (AUD-118), `--comprova-captures` fa el mateix, sense mirar les branques.
 5. **El lot de les branques,** amb `eines/llanca-lot.sh`, des de la carpeta del commit.
 
 **L'eina de les transformacions no sobreescriu mai cap fitxer:**
@@ -238,3 +257,14 @@ L'auditor 1 hi fa notar que la intervenció és nova i l'atzar també, de manera
 | AU2-81 | Les mesures secundàries dels zeros, i *H* fix (§4.1) |
 | AU2-82 | La definició de la cohort de la maduració (§3) |
 | Els 11 mons | El paper de cadascun, escrit abans: 8 de prova i 3 controls negatius (§4.1) |
+
+## 8. Canvis respecte de la v2 (auditoria 16)
+
+| Troballa | Què canvia |
+|---|---|
+| AU2-84 | La comprovació prèvia compara el manifest amb el disseny, i un manifest buit o truncat no passa (§5) |
+| AU2-85 | L'envelliment, validat sencer a la preparació, i el mateix simulador que el de l'envelliment (§5) |
+| AU2-88 | La procedència de cada captura transformada i del seu escaneig, comprovada (§5) |
+| AUD-116, AUD-120 | L'escaneig de cada captura transformada, i les SHA-256 de tots els registres al manifest (§5) |
+| AUD-118 | `--comprova-captures`, per comprovar les captures després de la sèrie (§5) |
+| Els zeros | La §4 ja no mana: el disseny és a `docs/protocol-zeros.md` |
