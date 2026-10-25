@@ -57,6 +57,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
     miren amb `--decideix`.
   - **Els programes confirmatoris nous** comproven el preregistre (`fase2/preregistre.mjs`, només mòduls de Node)
     abans de carregar res més del projecte (AUD-81).
+- Les alíquotes (els pilots de la maduració i dels zeros, `docs/pilot-maduracio.md`): `node eines/transforma.mjs --from
+  captura.bin --kind TIPUS --seed N --out sortida.bin`, que escriu la captura transformada i el seu registre `.json`, amb
+  els invariants comprovats. L'atzar de la transformació és independent del de la continuació.
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
