@@ -268,7 +268,7 @@ npm test
 | [`fase2/`](fase2/) | El món 2D i les seves lleis (espai, corrents, flux), el cens de la vida, el registre de famílies i les eines d'anàlisi i d'estadística de totes les sèries. Els resultats dels experiments són a `fase2/resultats/`. |
 | [`fase3/`](fase3/) | Dades: les llistes i els registres dels experiments de la llei 3. El codi és a `fase2/`. |
 | [`eines/`](eines/) | Les eines per llançar lots d'experiments i seguir-los, desplegar a la màquina virtual, arxivar les captures i generar les imatges, i la comparació de l'intèrpret amb cubff. |
-| [`test/`](test/) | Les proves: l'intèrpret, el món i el cens, la línia d'ordres, els lots, el servidor, l'estadística i el preregistre, el generador del quadern, l'oracle de cubff i el determinisme. |
+| [`test/`](test/) | Les proves: l'intèrpret, el món i el cens, la línia d'ordres, els lots, el servidor, l'estadística i el preregistre, el generador del quadern, l'eina de les alíquotes, l'oracle de cubff i el determinisme. |
 | `sim.mjs`, `server.mjs`, `index.html` | La simulació sense gràfics, el servidor local i la portada. |
 
 Els noms de les carpetes són històrics. Els registres i les etiquetes els citen, i per això no es canvien.
