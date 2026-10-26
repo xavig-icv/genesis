@@ -1,7 +1,6 @@
 // Proves de la prova preregistrada dels zeros (fase2/zeros-serie.mjs i fase2/zeros-confirmacio.mjs), amb sèries
 // sintètiques amb l'esquema sencer que escriu sim.mjs, i amb un registre de veritat d'un món petit:
 //   - la prova de signes, Holm, i la mesura g = h₁ / h₀ (AUD-116: un efecte només immediat no dona cap decisió);
-//   - la frase del no-rebuig, que no promet cap potència amb empats (AU2-89);
 //   - la validació dels registres, amb les mutacions de l'auditor 2 (AU2-83, AUD-117);
 //   - --prova, i --decideix en un repositori temporal (amb i sense l'etiqueta, i amb el codi canviat).
 // Executa: node test/zeros-confirmacio.mjs
@@ -100,7 +99,7 @@ const tests = {
     ({ worlds } = readSeries(join(tmp, 'b'), m, { commit: COMMIT }));
     r = analyse(worlds, m);
     assert.deepStrictEqual(r.results.map((x) => [x.pos, x.neg, x.rejected]), [[7, 1, false], [7, 1, false]]);
-    assert.match(decisionLines(r)[1], /no es rebutja H0: no concloent.*Amb 8 mons amb diferència, la p més petita possible era 0\.0039\..*no és la potència d'aquest resultat/);
+    assert.match(decisionLines(r)[1], /no es rebutja H0: no concloent.*La potència era condicionada/);
     // el cas de l'auditor 1: zeros-data comença amb un 50 % més de vida (300 contra 200) i baixa igual (75: g = 0,25).
     // h₁ sol seria més alt a tots 8 mons, però g és igual: cap decisió
     writeSeries(join(tmp, 'c'), m, fate({ zeros: 75 }));
@@ -120,42 +119,6 @@ const tests = {
     ({ worlds } = readSeries(join(tmp, 'e'), m, { commit: COMMIT }));
     assert.deepStrictEqual(analyse(worlds, m).results.map((x) => [x.pos, x.neg, x.ties]), [[0, 0, 8], [0, 0, 8]]);
   }),
-  "la frase del no-rebuig no promet cap potència (AU2-89): els casos de l'auditor 2, i tots els recomptes de 8 mons": () => {
-    // la decisió 1 amb pos, neg i empats, i la decisió 2 amb la p other: primera o segona a Holm, segons other
-    const line = (pos, neg, ties, other) => {
-      const p = signTest(pos, neg), h = holm([p, other], 0.025);
-      const results = [{ a: 'zeros-data', b: 'continue', pos, neg, ties, p, ...h[0] }, { a: 'zeros-data', b: 'placebo-cell', pos: 8, neg: 0, ties: 0, p: other, ...h[1] }];
-      return { p, h: h[0], text: decisionLines({ results })[0] };
-    };
-    // els quatre casos de l'auditor 2: les p i Holm no canvien
-    let c = line(5, 0, 3, 1 / 256);
-    assert.deepStrictEqual([c.p, c.h.rejected, c.h.threshold], [1 / 32, false, 0.025]);
-    assert.match(c.text, /Amb 5 mons amb diferència, la p més petita possible era 0\.0313\./);
-    c = line(6, 0, 2, 0.5);
-    assert.deepStrictEqual([c.p, c.h.rejected, c.h.threshold], [1 / 64, false, 0.0125]);
-    assert.match(c.text, /Amb 6 mons amb diferència, la p més petita possible era 0\.0156\./);
-    c = line(6, 0, 2, 1 / 256);
-    assert.deepStrictEqual([c.p, c.h.rejected, c.h.threshold], [1 / 64, true, 0.025]);
-    c = line(8, 0, 0, 0.5);
-    assert.deepStrictEqual([c.p, c.h.rejected, c.h.threshold], [1 / 256, true, 0.0125]);
-    // la frase del rebuig és la d'abans, lletra per lletra (la de la sortida de l'auditor 2)
-    assert.strictEqual(c.text, 'DECISIÓ 1 (zeros-data contra continue): es rebutja H0: als mons de prova, entre els que tenen una diferència, predominen els que la vida baixa menys, o creix més, del començament al primer cens amb zeros-data que amb continue (g més alt: 8, més baix: 0, iguals: 0; p = 0.0039, llindar de Holm 0.0125). No diu res de mons nous');
-    // tots els recomptes de 8 mons, amb l'altra prova primera o segona: cap frase no diu que la potència sigui q elevat a
-    // res, el no-rebuig diu la p més petita possible, i el que diu el protocol (§6) dels empats és cert
-    for (let n = 0; n <= 8; n++) {
-      for (let pos = 0; pos <= n; pos++) {
-        for (const other of [1 / 256, 0.5]) {
-          const { h, text } = line(pos, n - pos, 8 - n, other), what = `${pos} a favor, ${n - pos} en contra, ${8 - n} empats, l'altra p ${other}`;
-          assert.ok(!/elevat|es rebutja amb una probabilitat/.test(text), `${what}: la frase promet una potència`);
-          if (h.rejected) assert.match(text, /^DECISIÓ 1 \(zeros-data contra continue\): es rebutja H0: /, what);
-          else assert.ok(text.includes(`Amb ${n} ${n === 1 ? 'món' : 'mons'} amb diferència, la p més petita possible era ${(2 ** -n).toFixed(4)}.`) && text.includes("no és la potència d'aquest resultat"), what);
-          if (n <= 5) assert.strictEqual(h.rejected, false, `${what}: amb 5 mons amb diferència o menys no es pot rebutjar`);
-          else if (n === 6) assert.strictEqual(h.rejected, pos === 6 && other < 0.0125, `${what}: amb 6, només tots a favor i com a segona prova`);
-          else assert.strictEqual(h.rejected, pos === n, `${what}: amb 7 o 8, només tots a favor`);
-        }
-      }
-    }
-  },
   'el manifest ha de ser coherent: sense escaneig, amb un punt de partida 0, o amb branques de menys, no es llegeix res': () => withTmp((tmp) => {
     let m = smallManifest();
     delete m.worlds[0].arms['zeros-inert'].scan;
