@@ -65,6 +65,8 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
     (les llistes, el manifest congelat i contrastat amb el disseny, i les comprovacions abans de llançar i abans de decidir).
     La preparació valida l'envelliment sencer i escaneja totes les captures, el punt de partida de cada braç.
   - **La potència de la sèrie de la maduració:** `node eines/potencia-maduracio.mjs`, amb el món com a unitat.
+  - **L'anàlisi del pilot de la maduració** (exploratòria): `node eines/maduracio-analisi.mjs [carpeta]`, escrita abans de cap
+    resultat. Només quan hi ha les 220 branques; si en falta cap, no en llegeix cap. Valida el registre i el simulador de cadascuna.
 - La prova preregistrada dels zeros (`docs/protocol-zeros.md`): `node fase2/zeros-confirmacio.mjs --decideix|--prova COMMIT
   [--serie manifest.json] carpeta`, amb el manifest de `node eines/pilot.mjs zeros --prepara`. Com a B2, la decisió només es
   pren des d'una còpia del commit de l'etiqueta (`preregistre-zeros`), i cap branca no es llança abans de l'ancoratge del
