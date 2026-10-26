@@ -113,6 +113,9 @@ sense tocar res?
 **Què no se'n traurà:** cap conclusió. Amb unes 44 branques per braç, l'interval de cada ritme anirà, per exemple, del 7
 al 30 %. No podrà distingir un 11 % d'un 15 %.
 
+**L'anàlisi:** `node eines/maduracio-analisi.mjs`, escrita abans de cap resultat. Valida les 220 branques i en dona les xifres
+d'aquesta llista, amb la lectura de l'acta. Si en falta cap, no en llegeix cap.
+
 **La lectura de cada braç** (auditoria 17) és a l'acta, escrita abans de la primera branca. `shuffle-all` comença amb cel·les
 hereditàries, i `continue`, no: el contrast compara tractaments sencers, no l'estructura sola.
 
@@ -281,3 +284,4 @@ L'auditor 1 hi fa notar que la intervenció és nova i l'atzar també, de manera
 | AUD-121 | **El criteri principal de "hereditari"** és el de les soles. De les 169 hereditàries de `shuffle-all`, 159 ho són només en context |
 | AUD-122 | **La composició de les captures,** a l'acta com a descriptiu estàtic |
 | AUD-123 | **El text de la §5** deia que l'escaneig de les captures transformades havia de donar 0 hereditaris, i l'acta donava les medianes superiors |
+| L'equip | **L'eina de l'anàlisi** (`eines/maduracio-analisi.mjs`), escrita i provada amb dades sintètiques abans de cap resultat |
