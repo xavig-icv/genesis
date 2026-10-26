@@ -1,13 +1,13 @@
 # Protocol de la prova dels zeros · treure l'enverinament des de la mateixa captura
 
-**Versió: v0.2, esborrany (25-10-2026), amb les correccions de l'auditoria 16, per a una comprovació breu (auditoria 17).**
+**Versió: v0.3, esborrany (26-10-2026), amb la correcció de l'auditoria 17 (AU2-89), per a una comprovació breu (auditoria 18).**
 No s'ha fet córrer cap branca.
 - **D'on surt:**
   - l'exploració de la fragilitat del món (entrada 11, `fase2/resultats/b2/fragilitat/`);
   - les auditories 15 i 16;
   - les decisions del responsable: una prova preregistrada dins dels 11 mons, i, després de l'auditoria 16, un quart braç
     descriptiu (`docs/disseny.md`).
-- **El que ha canviat de la v0.1** és a la §10.
+- **El que ha canviat de la v0.1** és a la §10, i de la v0.2, a la §11.
 - **Els programes:**
   - `eines/transforma.mjs`, per a les transformacions i els escanejos;
   - `eines/pilot.mjs`, per al manifest, les llistes i les comprovacions;
@@ -156,6 +156,10 @@ llavor més fa que la mitjana de cada món tingui menys soroll.
   - amb 7 a favor i 1 en contra, *p* = 9/256 = 0,035, i no es rebutja;
   - amb 7 a favor i 1 empat, *p* = 1/128 = 0,0078.
   - **A la pràctica,** es rebutja només si tots els mons amb una diferència la tenen a favor.
+- **Amb més empats** (AU2-89):
+  - amb 6 mons amb diferència, la *p* més petita és 1/64 = 0,016. Només es pot rebutjar com a segona prova de Holm, si l'altra
+    ja s'ha rebutjat;
+  - amb 5 o menys, la *p* més petita és 1/32 = 0,031 o més, i no es pot rebutjar.
 
 **El model de la prova** (AU2-87). La prova de signes suposa que, sota H₀, el signe de *D* és a l'atzar a cada món, i
 independent d'un món a l'altre.
@@ -171,6 +175,8 @@ rebutja amb una probabilitat *q*⁸:
 
 - **Què és:** una aproximació condicionada a 8 diferències sense empat i independents, per a un sol contrast.
 - **Què no és:** la potència exacta conjunta de les dues proves amb Holm, si hi ha empats o dependència entre els contrastos.
+  Amb empats, la potència canvia: amb 6 mons amb diferència només es pot rebutjar com a segona prova de Holm, i amb 5 o menys,
+  mai (AU2-89).
 - **Que *g* sigui més alt amb `zeros-data`** no vol dir que la vida no baixi: vol dir que baixa menys, o creix més.
 
 **Com es comunica:**
@@ -178,7 +184,10 @@ rebutja amb una probabilitat *q*⁸:
   creix més, del començament al primer cens amb `zeros-data` que amb l'altre braç".
   - **Contra el placebo:** "aparellat cel·la per cel·la, en part a les cel·les saturades".
   - **I sempre:** "no diu res de mons nous".
-- **Si no es rebutja:** no concloent, amb la potència condicionada d'aquesta secció.
+- **Si no es rebutja:** no concloent.
+  - **Què més diu la frase** (AU2-89): la *p* més petita que permetien els mons amb diferència.
+  - **I la potència:** la d'aquesta secció (*q*⁸) només val per a 8 mons amb diferència, sense empats i independents, i no és
+    la del resultat.
 - **Les frases** surten de `decisionLines()` (`fase2/zeros-serie.mjs`).
 - **La sortida informa** de tot això:
   - els valors de cada món (*h*₀, *h*₁ i *g* de cada braç);
@@ -241,6 +250,10 @@ rebutja amb una probabilitat *q*⁸:
   - `fase2/zeros-confirmacio.mjs`, `fase2/zeros-serie.mjs`, `fase2/b2-serie.mjs` i `fase2/census.js`
   - `fase2/preregistre.mjs`
   - `eines/transforma.mjs` i `eines/pilot.mjs`
+- **El commit de l'etiqueta** (auditoria 17):
+  - **El codi:** el de la preparació (`4fa032b`), llevat de la frase de l'AU2-89 (`fase2/zeros-serie.mjs`) i de la seva prova.
+  - **El missatge de l'etiqueta** porta la llista de `git diff --name-only 4fa032b` fins a l'etiqueta.
+  - **Les branques** es llancen des d'una còpia d'aquest commit exacte: el codi de cada registre ha de ser el de l'etiqueta.
 - **El segell:** el de l'objecte de l'etiqueta, amb OpenTimestamps.
 - **Abans de la primera branca,** cal que Bitcoin l'hagi ancorat (`docs/disseny.md`, 25-10-2026).
 - **Després,** cap canvi al protocol, al manifest ni als programes sense justificar-lo aquí, amb data i motiu, abans de mirar
@@ -260,3 +273,10 @@ rebutja amb una probabilitat *q*⁸:
 | AUD-118 | **Abans de decidir,** `--comprova-captures` a la màquina on es decideix. A la màquina virtual hi han de ser també les captures d'origen |
 | AUD-119 | **Els controls negatius tenen sostre** (§2); una sensibilitat amb els hereditaris sols; la potència a la frase quan no es rebutja |
 | AUD-120 | **El manifest desa les SHA-256** dels registres de l'envelliment, dels escanejos i dels registres de les transformacions, i aquests van a git abans de l'etiqueta |
+
+## 11. Canvis respecte de la v0.2 (auditoria 17)
+
+| Troballa | Què canvia |
+|---|---|
+| AU2-89 | **La frase del no-rebuig** deia que la prova es rebutja amb una probabilitat *q* elevat al nombre de mons amb diferència. Amb empats és fals: amb 5 mons o menys no es pot rebutjar, i amb 6 depèn de l'ordre de les dues proves a Holm. Ara diu la *p* més petita possible i que la potència de la §6 no és la del resultat. Les *p*, Holm i la decisió no canvien, i la frase del rebuig tampoc. Una prova de regressió recorre tots els recomptes de 8 mons, amb l'altra prova primera i segona |
+| Els dos auditors | **El commit de l'etiqueta:** el codi de la preparació, llevat d'aquesta frase (§9) |
