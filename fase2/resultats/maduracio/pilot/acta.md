@@ -72,3 +72,58 @@ transformada (cel·les que es repliquen / hereditàries, de 131.072):
   no compara només l'estructura. Es porta a l'auditoria 17 abans de llançar cap branca.
 - **Les captures transformades** (110, unes 880 MB) no van a git: es regeneren amb el commit, les captures envellides i les
   llavors. Els seus registres, els escanejos, el manifest i les llistes, sí.
+
+**Dues correccions de l'observació (auditoria 17), sense esborrar-la.**
+- **Les hereditàries de `shuffle-all` (AUD-121):** "replicadors hereditaris a tots els mons" s'ha de matisar.
+  - **Què passa:** de les 169 cel·les, 159 ho són només en context, el cas en què la prova pot donar falsos positius (AUD-42).
+  - **Amb el criteri robust:** hereditàries soles, n'hi ha 10, en 9 dels 22 mons.
+- **Les medianes (AUD-123):** les de la taula (25, 31, 88 i 713) eren les superiors. Amb el criteri de la resta del projecte, la
+  mitjana dels dos valors del mig de 22, són 23,5, 30,5, 87,5 i 712,5.
+
+| Braç | Es repliquen (mediana, rang) | Hereditàries (mons) | Hereditàries soles (mons) | Només en context |
+|---|---|---|---|---|
+| `continue` | 23,5 (14–31) | 0 (0) | 0 (0) | 0 |
+| `shuffle-programs` | 30,5 (19–43) | 3 (3) | 2 (2) | 1 |
+| `shuffle-within` | 87,5 (71–116) | 14 (9) | 4 (4) | 10 |
+| `shuffle-all` | 712,5 (641–776) | 169 (22) | **10 (9)** | 159 |
+| `reinit` | 119 (105–138) | 8 (7) | 4 (4) | 4 |
+
+**La composició de les captures (AUD-122).** És un descriptiu estàtic i determinista, de les 22 captures de cada braç (medianes
+dels 22 mons).
+- **Qui l'ha calculat:** l'auditor 1, a l'auditoria 17, i l'equip ho ha comprovat amb un script independent. Les xifres coincideixen.
+- **La dispersió:** la variància del nombre d'instruccions per programa, dividida per la de la binomial.
+
+| Braç | Bytes d'instrucció | Zeros | Dispersió (rang) | Programes amb `[`, `]` i una còpia (`.` o `,`) |
+|---|---|---|---|---|
+| A l'atzar (esperat) | 3,9 % | 0,39 % | 1 | 1,9 % |
+| `continue`, `shuffle-programs` i `shuffle-within` | 11,37 % | 0,56 % | 8,50 (8,09–8,89) | 3,05 % |
+| `shuffle-all` | 11,37 % | 0,56 % | 1,00 (1,00–1,01) | 10,56 % |
+| `reinit` | 3,91 % | 0,39 % | 1,00 (0,99–1,00) | 1,86 % |
+
+- **La composició global de la sopa envellida canvia:** gairebé el triple de bytes d'instrucció que a l'atzar.
+- **Però les instruccions es concentren en pocs programes:** la dispersió és 8,5 vegades la de l'atzar.
+  - **La barreja global les reparteix,** i els programes amb els ingredients d'un bucle de còpia passen del 3,05 al 10,56 %.
+  - **És la hipòtesi de l'equip a l'auditoria 17,** ara concreta: l'envelliment fa programes de composicions molt diferents, i
+    la barreja els iguala.
+- **L'ordre dels bytes dins dels programes envellits suprimeix la replicació:** amb la mateixa composició per programa, 23,5
+  cel·les que es repliquen amb `continue` i 87,5 amb `shuffle-within`.
+
+## La lectura, escrita abans de la primera branca (auditoria 17, 26-10-2026)
+
+**El GO:** tots dos auditors han donat GO per llançar les 220 branques tal com són (l'opció (a) del traspàs), sense cap braç nou.
+- **L'auditor 1** demana escriure aquí, abans de la primera branca, com es llegirà cada braç.
+- **L'auditor 2** demana no fer cap afirmació causal sobre la maduració a partir del contrast brut, i declarar el punt de partida.
+
+**Com es llegirà:**
+- **Què és el pilot:** un calibratge exploratori, com diu el disseny.
+  - **El contrast `continue` contra `shuffle-all`** compara tractaments sencers, no l'estructura sola.
+  - **No se'n farà cap afirmació causal** sobre la maduració de la sopa.
+- **`shuffle-all`** es llegeix com "la composició envellida, amb la seva propensió immediata", no com la manca d'estructura sola.
+  - **El seu punt de partida:** 169 cel·les hereditàries, de 4 a 16 per món, als 22 mons; 10 de soles, en 9 mons.
+  - **El de `continue`:** cap.
+- **El punt de partida de cada món i braç** (l'escaneig, al manifest) és una covariable descriptiva.
+  - **Els establiments de cada braç** es donaran també separats segons si el món tenia alguna hereditària sola al començament.
+- **El criteri principal de "hereditari"** és el de les soles (AUD-121). Les de context hi seran com a secundàries.
+- **Per a la sèrie,** si cal un braç `shuffle-all` "inert", es dissenyarà amb les dades del pilot.
+  - **Les condicions de tots dos auditors:** el criteri, amb les hereditàries soles; una regla d'aturada finita, amb la llavor
+    fixa; el registre dels bytes moguts; i una comprovació del que conserva.

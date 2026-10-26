@@ -1,12 +1,12 @@
 # Els pilots de la maduració de la sopa i de la intervenció dels zeros · disseny
 
-**Estat: v2.1 (25-10-2026), amb les correccions de les auditories 15 i 16.** No s'ha fet córrer cap branca de cap dels dos
-experiments. L'envelliment de la maduració ja és fet (`fase2/resultats/maduracio/pilot/acta.md`).
+**Estat: v2.2 (26-10-2026), amb les correccions de les auditories 15, 16 i 17.** No s'ha fet córrer cap branca de cap dels dos
+experiments. L'envelliment i la preparació de la maduració ja són fets (`fase2/resultats/maduracio/pilot/acta.md`).
 - **Els veredictes de la v1:**
   - **L'auditor 1:** GO per als dos pilots, amb canvis.
   - **L'auditor 2:** GO condicionat per a la maduració, i NO-GO per al dels zeros tal com era.
   - **La síntesi,** amb les tres recomanacions una al costat de l'altra: `../auditories/claude-origins/equip/sintesi-audit15.md`.
-- **El que ha canviat de la v1** és a la §7, i de la v2, a la §8.
+- **El que ha canviat de la v1** és a la §7; de la v2, a la §8; i de la v2.1, a la §9.
 - **Les eines:**
   - `eines/transforma.mjs`, per transformar les captures;
   - `eines/pilot.mjs`, per a les llistes, el manifest i la comprovació prèvia;
@@ -113,6 +113,9 @@ sense tocar res?
 **Què no se'n traurà:** cap conclusió. Amb unes 44 branques per braç, l'interval de cada ritme anirà, per exemple, del 7
 al 30 %. No podrà distingir un 11 % d'un 15 %.
 
+**La lectura de cada braç** (auditoria 17) és a l'acta, escrita abans de la primera branca. `shuffle-all` comença amb cel·les
+hereditàries, i `continue`, no: el contrast compara tractaments sencers, no l'estructura sola.
+
 **La potència orientativa de la sèrie** (AUD-113, corregida): `node eines/potencia-maduracio.mjs`, amb el món com a unitat,
 *K* = 2, la prova de signes exacta unilateral amb α = 0,025 i el contrast `continue` contra `shuffle-all`.
 
@@ -208,8 +211,9 @@ L'auditor 1 hi fa notar que la intervenció és nova i l'atzar també, de manera
    - **Què fa:**
      - l'escaneig i les exclusions (la maduració);
      - totes les transformacions;
-     - l'escaneig de cada captura transformada: el punt de partida de cada braç (AUD-116). A la maduració, n'han de sortir
-       0 hereditaris, i és un descriptiu.
+     - l'escaneig de cada captura transformada: el punt de partida de cada braç (AUD-116). A la maduració és un descriptiu.
+       - **Corregit a l'auditoria 17 (AUD-123):** la v2.1 deia que "n'han de sortir 0 hereditaris". No és així: les barreges
+         en creen, sobretot `shuffle-all` (l'acta).
    - **Què escriu:** el manifest (`manifest.json`), amb:
      - l'ordre de cada branca;
      - les SHA-256 dels registres de l'envelliment, dels escanejos, de les captures d'origen i transformades i dels seus
@@ -268,3 +272,12 @@ L'auditor 1 hi fa notar que la intervenció és nova i l'atzar també, de manera
 | AUD-116, AUD-120 | L'escaneig de cada captura transformada, i les SHA-256 de tots els registres al manifest (§5) |
 | AUD-118 | `--comprova-captures`, per comprovar les captures després de la sèrie (§5) |
 | Els zeros | La §4 ja no mana: el disseny és a `docs/protocol-zeros.md` |
+
+## 9. Canvis respecte de la v2.1 (auditoria 17)
+
+| Troballa | Què canvia |
+|---|---|
+| Tots dos auditors | **La lectura de cada braç,** a l'acta abans de la primera branca: `shuffle-all` com la composició envellida amb la seva propensió immediata, el punt de partida com a covariable, i cap afirmació causal a partir del contrast brut |
+| AUD-121 | **El criteri principal de "hereditari"** és el de les soles. De les 169 hereditàries de `shuffle-all`, 159 ho són només en context |
+| AUD-122 | **La composició de les captures,** a l'acta com a descriptiu estàtic |
+| AUD-123 | **El text de la §5** deia que l'escaneig de les captures transformades havia de donar 0 hereditaris, i l'acta donava les medianes superiors |
