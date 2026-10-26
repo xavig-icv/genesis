@@ -127,3 +127,24 @@ dels 22 mons).
 - **Per a la sèrie,** si cal un braç `shuffle-all` "inert", es dissenyarà amb les dades del pilot.
   - **Les condicions de tots dos auditors:** el criteri, amb les hereditàries soles; una regla d'aturada finita, amb la llavor
     fixa; el registre dels bytes moguts; i una comprovació del que conserva.
+
+## Les branques
+
+### El PC (26-10-2026)
+
+- **El codi:** el commit `521039c`, a la còpia de treball del PC, sense cap canvi als fitxers seguits.
+  - **Respecte de `4fa032b`,** el de la preparació, només hi canvien textos i registres: fora de `docs/` i de
+    `fase2/resultats/`, `git diff --name-only 4fa032b 521039c` no dona cap fitxer.
+- **Abans de la primera branca,** a les 13:01:
+  - les SHA-256 del manifest i de les dues llistes, les de més amunt;
+  - `node eines/pilot.mjs maduracio --comprova`: "La comprovació prèvia del pilot maduracio: tot correcte." (codi 0);
+  - les actualitzacions de Windows, pausades fins al 23-11-2026 a les 00:07:05Z, comprovat al registre;
+  - el PC, connectat a la corrent.
+- **El llançament:** el 26-10-2026 a les 13:01:28, en una finestra oculta.
+  - **L'ordre:** `bash eines/llanca-lot.sh 6 fase2/resultats/maduracio/pilot/branques fase2/resultats/maduracio/pilot/llista-pc.txt`.
+  - **Què hi ha:** 110 branques, 6 alhora. La primera línia del lot diu `codi=521039c`.
+- **Durant el lot:** només `bash eines/seguiment.sh --agregat`.
+
+### La màquina virtual
+
+- **Pendent:** hi falta espai al disc. La comprovació prèvia hi mira totes les captures, d'origen i transformades (1,1 GB).
