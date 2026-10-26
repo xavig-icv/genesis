@@ -145,6 +145,18 @@ dels 22 mons).
   - **Què hi ha:** 110 branques, 6 alhora. La primera línia del lot diu `codi=521039c`.
 - **Durant el lot:** només `bash eines/seguiment.sh --agregat`.
 
-### La màquina virtual
+### La màquina virtual (26-10-2026)
 
-- **Pendent:** hi falta espai al disc. La comprovació prèvia hi mira totes les captures, d'origen i transformades (1,1 GB).
+- **L'espai:** la comprovació prèvia hi mira totes les captures, d'origen i transformades (1,1 GB), i hi quedaven 1,6 GB.
+  - **Què s'hi va esborrar:** les 168 captures de la sèrie de B2 que hi havia (1,4 GB). El responsable ens deixa gestionar
+    l'espai de la màquina.
+  - **Abans d'esborrar-les:** es va comprovar, una per una, que eren idèntiques a les de la còpia de seguretat (SHA-256).
+- **El codi:** el commit `521039c`, desplegat amb `eines/desplega-vm.sh` (el fitxer `VERSIO` diu `521039c`).
+  - **Les captures:** les 134 (24 envellides i 110 transformades), copiades del PC.
+- **Abans de la primera branca,** a les 13:20:
+  - les SHA-256 del manifest i de les dues llistes, les de més amunt;
+  - `node eines/pilot.mjs maduracio --comprova`: "La comprovació prèvia del pilot maduracio: tot correcte." (codi 0).
+- **El llançament:** el 26-10-2026 a les 13:20:28, amb `nohup`.
+  - **L'ordre:** `bash eines/llanca-lot.sh 4 fase2/resultats/maduracio/pilot/branques fase2/resultats/maduracio/pilot/llista-vm.txt`.
+  - **Què hi ha:** 110 branques, 4 alhora. La primera línia del lot diu `codi=521039c`.
+- **Node:** el 16.15.1 al PC (Windows) i el 20.19.2 a la màquina virtual (Linux). Els registres en diuen la versió.
