@@ -13,6 +13,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { expectedBranches, manifestProblems, branchProblems, branchMeasures, readSeries, analyse, seedConcordance, median, missingBranches, simulatorCheck } from '../eines/maduracio-analisi.mjs';
 import { establishment } from '../fase2/census.js';
+import { SIM_FILES } from '../eines/pilot.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const ARMS = ['continue', 'shuffle-programs', 'shuffle-within', 'shuffle-all', 'reinit'];
@@ -159,13 +160,22 @@ const tests = {
     assert.strictEqual(seedConcordance([{ arm: 'x', pairs: [[1, 1], [0, 0]] }]).rho, 1);
     assert.strictEqual(seedConcordance([{ arm: 'x', pairs: [[1, 0], [0, 1]] }]).rho, -1);
   },
-  "el simulador dels registres, comparat amb el de la preparació": () => {
-    const head = git('rev-parse', '--short=7', 'HEAD');
-    if (!head) { console.log('    (sense git: no es prova)'); return; }
-    assert.deepStrictEqual(simulatorCheck([head], head), { checked: true, problems: [] });
-    const first = git('rev-list', '--max-parents=0', 'HEAD').split('\n')[0];
-    assert.ok(simulatorCheck([first.slice(0, 7)], head).problems.length > 0, 'el primer commit del repositori té un altre simulador');
-  },
+  // en un repositori temporal de dos commits, i no amb la història del de veritat: a GitHub, la còpia és superficial i
+  // només té un commit
+  "el simulador dels registres, comparat amb el de la preparació": () => withTmp((tmp) => {
+    const g = (...a) => execFileSync('git', ['-c', 'user.name=prova', '-c', 'user.email=prova@example.invalid', ...a], { cwd: tmp, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    try { g('init', '-q'); } catch { console.log('    (sense git: no es prova)'); return; }
+    for (const f of SIM_FILES) { mkdirSync(join(tmp, f, '..'), { recursive: true }); writeFileSync(join(tmp, f), `// ${f}\n`); }
+    g('add', '-A'); g('commit', '-q', '-m', 'a');
+    const a = g('rev-parse', '--short=7', 'HEAD');
+    writeFileSync(join(tmp, 'sim.mjs'), '// un altre simulador\n');
+    g('commit', '-q', '-am', 'b');
+    const b = g('rev-parse', '--short=7', 'HEAD');
+    assert.deepStrictEqual(simulatorCheck([a], a, { root: tmp }), { checked: true, problems: [] });
+    assert.deepStrictEqual(simulatorCheck([a], b, { root: tmp }).problems, [`sim.mjs del commit dels registres (${a}) no és el de la preparació (${b})`]);
+    const missing = simulatorCheck(['0000000'], b, { root: tmp }).problems;
+    assert.ok(missing.length && missing.every((x) => /no es pot llegir/.test(x)), 'un commit que no existeix no pot passar');
+  }),
   "la línia d'ordres: amb tots els registres, l'anàlisi; si en falta cap, no en llegeix ni n'analitza cap": () => withTmp((tmp) => {
     const code = git('rev-parse', '--short=7', 'HEAD') ?? 'abcdef0';
     const m = smallManifest({ code });
