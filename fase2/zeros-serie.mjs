@@ -206,11 +206,14 @@ export function analyse(worlds, manifest) {
   return { results, lines };
 }
 
-// Les frases de les decisions: diuen exactament el que posa a prova cada prova (com a B2, AU2-74), i, quan no es
-// rebutja, la potència condicionada del protocol (AUD-119)
+// Les frases de les decisions: diuen exactament el que posa a prova cada prova (com a B2, AU2-74). Quan no es rebutja,
+// diuen la p més petita que permetien els mons amb diferència, i que la potència del protocol (q⁸) no és la del resultat
+// (AUD-119). Amb empats, la potència no és q elevat al nombre de mons amb diferència: amb 5 o menys no es pot rebutjar, i
+// amb 6, només com a segona prova de Holm (AU2-89, auditoria 17)
 export function decisionLines({ results }) {
   const against = (b) => (b === 'placebo-cell' ? 'amb el placebo, aparellat cel·la per cel·la (en part a les cel·les saturades)' : `amb ${b}`);
+  const differing = (n) => `${n} ${n === 1 ? 'món' : 'mons'} amb diferència`;
   return results.map((r, i) => `DECISIÓ ${i + 1} (${r.a} contra ${r.b}): ` + (r.rejected
     ? `es rebutja H0: als mons de prova, entre els que tenen una diferència, predominen els que la vida baixa menys, o creix més, del començament al primer cens amb ${r.a} que ${against(r.b)} (g més alt: ${r.pos}, més baix: ${r.neg}, iguals: ${r.ties}; p = ${r.p.toFixed(4)}, llindar de Holm ${r.threshold}). No diu res de mons nous`
-    : `no es rebutja H0: no concloent; la prova no permet afirmar que, als mons de prova, la vida baixi menys del començament al primer cens amb ${r.a} que ${against(r.b)} (g més alt: ${r.pos}, més baix: ${r.neg}, iguals: ${r.ties}; p = ${r.p.toFixed(4)}, llindar de Holm ${r.threshold}). La potència era condicionada: si a cada món la diferència surt a favor amb una probabilitat q, la prova es rebutja amb una probabilitat q elevat al nombre de mons amb diferència (protocol §6)`));
+    : `no es rebutja H0: no concloent; la prova no permet afirmar que, als mons de prova, la vida baixi menys del començament al primer cens amb ${r.a} que ${against(r.b)} (g més alt: ${r.pos}, més baix: ${r.neg}, iguals: ${r.ties}; p = ${r.p.toFixed(4)}, llindar de Holm ${r.threshold}). Amb ${differing(r.pos + r.neg)}, la p més petita possible era ${signTest(r.pos + r.neg, 0).toFixed(4)}. La potència del protocol (§6, q⁸) només val per a una prova amb els 8 mons amb diferència, sense empats i independents: no és la potència d'aquest resultat, que depèn dels empats, de la dependència entre els mons i de l'ordre de les dues proves a Holm`));
 }
