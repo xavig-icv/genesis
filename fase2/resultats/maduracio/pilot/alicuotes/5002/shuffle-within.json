@@ -1,0 +1,20 @@
+{
+ "tool": "eines/transforma.mjs",
+ "code": "4fa032b",
+ "node": "v16.15.1",
+ "from": "fase2/resultats/maduracio/pilot/envelliment/captures/llavor5002-mon512x256-r2-final.bin",
+ "fromSha256": "08f9e86f13e2791af28266b331959a45f5534dbe72e20d8ec891ab2010938ca1",
+ "kind": "shuffle-within",
+ "seed": 605002,
+ "width": 512,
+ "radius": 2,
+ "out": "fase2/resultats/maduracio/pilot/alicuotes/5002/shuffle-within.bin",
+ "outSha256": "b62e5d877532d8ba5badc2043fcbe728c8a4739ec0282197b97d4345726bae5a",
+ "changed": 7706036,
+ "scope": null,
+ "zeros": {
+  "before": 48253,
+  "after": 48253
+ },
+ "invariants": "correctes"
+}
