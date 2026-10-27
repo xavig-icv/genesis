@@ -108,6 +108,8 @@ See notebook entry 10, in Catalan.
   - **Next:** the design of a preregistered series, with new worlds.
 - **A lead to confirm: zero bytes.** In the worlds where life is lost again and again, there are many more
   zero bytes when it becomes established (exploratory; notebook entry 11, in Catalan).
+  - **The preregistered test** ([protocol](docs/protocol-zeros.md), in Catalan): removing the zeros from the
+    same snapshot, in 11 worlds. Running since 27 October 2026.
 - **World size.**
 - **Chemistry ablations.**
 - **A changing weather,** with a current that alternates calm and storm.
@@ -115,7 +117,8 @@ See notebook entry 10, in Catalan.
 ## How we work
 
 - **Preregistration.** Confirmatory series have a protocol written before starting
-  ([law-2 protocol](docs/protocol-estadistic.md) and [B2 protocol](docs/protocol-b2.md), in Catalan). The
+  ([law-2 protocol](docs/protocol-estadistic.md), [B2 protocol](docs/protocol-b2.md) and
+  [zeros protocol](docs/protocol-zeros.md), in Catalan). The
   deciding program only decides from a copy identical to the git tag of the preregistration.
 - **Two auditors, both AI.**
   - **What they do:** at each iteration, two models review the code, the methods and the results, in
@@ -147,6 +150,11 @@ See notebook entry 10, in Catalan.
     2026), about 6 minutes after the first branch started.
   - **What it does not prove:** that the stamp was sent 31 minutes earlier is recorded by the calendars, and
     that nobody looked at any result is stated in the run log.
+- **The zeros-test preregistration** is the git tag `preregistre-zeros`, with an OpenTimestamps proof anchored
+  in Bitcoin ([`docs/preregistre-zeros/`](docs/preregistre-zeros/), in Catalan).
+  - **What Bitcoin proves:** that the tag existed when block 973,367 was mined (07:43:35 UTC on 27 October
+    2026), 51 minutes before the first branch started. This time we waited for the anchor before launching.
+  - **What it does not prove:** that nobody looked at any result. That is stated in the run log.
 - **How to cite it:** [`CITATION.cff`](CITATION.cff). **How to take part:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## How to run it

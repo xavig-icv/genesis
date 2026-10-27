@@ -184,6 +184,8 @@ Vegeu l'[entrada 10](quadern/index.html#entrada-10).
   - **El que ve:** el disseny d'una sèrie preregistrada, amb mons nous.
 - **Una pista per confirmar: els bytes zero.** Als mons on la vida es torna a perdre, quan s'hi estableix ja hi
   ha molts més bytes zero (exploratori; [entrada 11](quadern/index.html#entrada-11)).
+  - **La prova preregistrada** ([protocol](docs/protocol-zeros.md)): treure'n els zeros des de la mateixa
+    captura, en 11 mons. Corre des del 27-10-2026.
 - **La mida del món,** començant pels mons petits.
 - **Els ingredients de la química:** treure-li instruccions o capacitats per saber quines calen.
 - **Un temps que canvia:** un corrent que alterna la calma i el temporal.
@@ -191,7 +193,8 @@ Vegeu l'[entrada 10](quadern/index.html#entrada-10).
 ## Com es treballa
 
 - **Preregistre.** Les sèries confirmatòries tenen un protocol escrit abans de començar
-  ([protocol de la llei 2](docs/protocol-estadistic.md) i [de B2](docs/protocol-b2.md)). El programa que
+  ([protocol de la llei 2](docs/protocol-estadistic.md), [de B2](docs/protocol-b2.md) i
+  [dels zeros](docs/protocol-zeros.md)). El programa que
   decideix només ho fa des d'una còpia idèntica a l'etiqueta de git del preregistre.
 - **Dos auditors, tots dos d'IA.**
   - **Què revisen:** a cada iteració, dos models revisen el codi, els mètodes i els resultats, en sessions
@@ -224,6 +227,12 @@ Vegeu l'[entrada 10](quadern/index.html#entrada-10).
     20-10-2026), uns 6 minuts després que comencés la primera branca.
   - **El que no demostra:** que el segell es va enviar 31 minuts abans ho registren els calendaris, i que ningú no
     va mirar cap resultat ho diu l'acta.
+- **El preregistre de la prova dels zeros** és l'etiqueta `preregistre-zeros`, amb un segell d'OpenTimestamps
+  ancorat a Bitcoin ([`docs/preregistre-zeros/`](docs/preregistre-zeros/)).
+  - **Què demostra Bitcoin:** que l'etiqueta existia quan es va minar el bloc 973.367 (07:43:35 UTC del
+    27-10-2026), 51 minuts abans que comencés la primera branca. Aquesta vegada es va esperar l'ancoratge abans
+    de llançar.
+  - **El que no demostra:** que ningú no va mirar cap resultat. Ho diu l'acta.
 - **Com citar-ho:** [`CITATION.cff`](CITATION.cff). **Com participar-hi:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Com obrir-ho
