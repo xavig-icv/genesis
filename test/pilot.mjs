@@ -70,7 +70,7 @@ function agedFixture(base, name, ids, { established, heritable: withHeritable })
     if (world === established) { worlds.push({ ...w, included: false, reason: "establiment abans de l'època 8000 (a l'època 4000)" }); continue; }
     const seed = Number(world) + TRANSFORM_OFFSET, heritable = world === withHeritable ? 1 : 0;
     const scanFile = `${p.folder}/alicuotes/${world}/escaneig.json`;
-    put(base, scanFile, JSON.stringify({ from: capture, seed, cells: 131072, replicating: heritable, heritable, heritableSolo: heritable }));
+    put(base, scanFile, JSON.stringify({ code, from: capture, fromSha256: sha(readFileSync(join(base, capture))), seed, cells: 131072, replicating: heritable, heritable, heritableSolo: heritable }));
     w.scan = { file: scanFile, sha256: sha(readFileSync(join(base, scanFile))), replicating: heritable, heritable, heritableSolo: heritable, cells: 131072 };
     if (heritable) { worlds.push({ ...w, included: false, reason: "1 cel·les hereditàries a l'escaneig de l'època 8000" }); continue; }
     w.included = true;
@@ -274,6 +274,45 @@ const tests = {
     put(tmp, `${p.folder}/envelliment/e6010.jsonl`, '{}');
     assert.throws(() => agedCandidates('serie', { root: tmp }), /falta el registre de l'envelliment de 6009/);
   })),
+  "la sèrie: cada llista és exactament la seva part (AU2-97), i l'escaneig de l'edat és de la captura d'origen, amb el codi de la preparació": () => withTmp((tmp) => withCohort(5, () => {
+    const p = PILOTS.serie, m = seriesFixture(tmp);
+    assert.deepStrictEqual(checkCaptures('serie', { root: tmp }), []);
+    // les branques d'un món del PC, passades a la màquina virtual, amb les SHA-256 i els recomptes al dia: la unió és la
+    // mateixa, però no la partició
+    const pcFile = join(tmp, m.lists.pc.file), vmFile = join(tmp, m.lists.vm.file), pcText = readFileSync(pcFile, 'utf8'), vmText = readFileSync(vmFile, 'utf8');
+    const pcLines = pcText.trim().split('\n'), moved = pcLines.filter((l) => l.startsWith('6001-')), kept = pcLines.filter((l) => !l.startsWith('6001-'));
+    put(tmp, m.lists.pc.file, kept.join('\n') + '\n');
+    put(tmp, m.lists.vm.file, [...moved, ...vmText.trim().split('\n')].join('\n') + '\n');
+    const swapped = JSON.parse(JSON.stringify(m));
+    for (const [machine, f] of [['pc', pcFile], ['vm', vmFile]]) Object.assign(swapped.lists[machine], { sha256: sha(readFileSync(f)), branches: readFileSync(f, 'utf8').trim().split('\n').length });
+    rewrite(tmp, swapped, 'serie');
+    let pr = checkCaptures('serie', { root: tmp });
+    assert.ok(pr.some((x) => /la llista pc no és exactament la seva part/.test(x)) && pr.some((x) => /la llista vm no és exactament la seva part/.test(x)), pr.join('; '));
+    assert.ok(!pr.some((x) => /les llistes no són exactament les branques/.test(x)), 'la unió és la mateixa');
+    put(tmp, m.lists.pc.file, pcText); put(tmp, m.lists.vm.file, vmText);
+    // el recompte de branques d'una llista, canviat
+    rewrite(tmp, { ...m, lists: { ...m.lists, vm: { ...m.lists.vm, branches: m.lists.vm.branches + 1 } } }, 'serie');
+    assert.ok(checkCaptures('serie', { root: tmp }).some((x) => /la llista vm no és exactament/.test(x)));
+    rewrite(tmp, m, 'serie');
+    // l'escaneig de l'edat d'una altra captura (fromSha256), o d'un altre codi, amb la SHA-256 del fitxer al dia al manifest
+    const w = m.worlds.find((x) => x.world === '6001'), scan = JSON.parse(readFileSync(join(tmp, w.scan.file), 'utf8'));
+    for (const [what, changed, re] of [['una altra captura', { fromSha256: '0'.repeat(64) }, /no és de la captura d'origen/], ['un altre codi', { code: '1234567' }, /no és el de la captura envellida/]]) {
+      put(tmp, w.scan.file, JSON.stringify({ ...scan, ...changed }));
+      const x = JSON.parse(JSON.stringify(m));
+      x.worlds.find((y) => y.world === '6001').scan.sha256 = sha(readFileSync(join(tmp, w.scan.file)));
+      rewrite(tmp, x, 'serie');
+      pr = checkCaptures('serie', { root: tmp });
+      assert.ok(pr.some((y) => /^6001: /.test(y) && re.test(y)), `no detecta ${what}: ${pr.join('; ')}`);
+    }
+    // un món exclòs per l'escaneig: el fromSha256 es mira contra la captura del disc, si s'hi és
+    const ex = m.worlds.find((x) => x.world === '6004'), exScan = JSON.parse(readFileSync(join(tmp, ex.scan.file), 'utf8'));
+    put(tmp, w.scan.file, JSON.stringify(scan)); rewrite(tmp, m, 'serie');
+    put(tmp, ex.scan.file, JSON.stringify({ ...exScan, fromSha256: '0'.repeat(64) }));
+    const y = JSON.parse(JSON.stringify(m));
+    y.worlds.find((z) => z.world === '6004').scan.sha256 = sha(readFileSync(join(tmp, ex.scan.file)));
+    rewrite(tmp, y, 'serie');
+    assert.ok(checkCaptures('serie', { root: tmp }).some((z) => /^6004: .*no és de la captura d'origen/.test(z)));
+  })),
   'els zeros: el manifest buit, o amb un paper canviat, és un problema; i la línia d\'ordres surt amb error (AU2-84)': () => withTmp((tmp) => {
     // un repositori mínim, com el de l'auditor 2, amb el programa i el repartiment de B2
     for (const d of ['fase1', 'fase2', 'eines']) {
@@ -308,6 +347,11 @@ const tests = {
     assert.strictEqual(run('zeros', '--prepara', '--paral·lel', '0').status, 2);
     assert.strictEqual(run('zeros', '--comprova', '--paral·lel', '2').status, 2);
     assert.strictEqual(run('serie', '--comprova', '--maquina', 'mac').status, 2);
+    // --comprova-captures també accepta --maquina; sense manifest, és un problema i no un ús incorrecte
+    assert.strictEqual(run('serie', '--comprova-captures', '--maquina', 'mac').status, 2);
+    const vm = run('serie', '--comprova-captures', '--maquina', 'vm');
+    assert.strictEqual(vm.status, 1, vm.stdout + vm.stderr);
+    assert.ok(/La comprovació de les captures \(vm\) ha trobat 1 problemes/.test(vm.stdout) && /no hi ha cap manifest/.test(vm.stdout), vm.stdout);
     assert.strictEqual(run('maduracio', '--envelliment', '--mons', '3').status, 2, '--mons és només de la sèrie');
     assert.strictEqual(run('serie', '--envelliment', '--mons', '401').status, 2);
     const aging = run('serie', '--envelliment');
@@ -334,6 +378,15 @@ const tests = {
     const v = validity({ p: 0.2, worlds: 150, rhoA: 0, rhoB: 0.4, alpha: 0.0125, sims: 4000 });
     assert.ok(v.signes > 0.03, `la de signes, ${v.signes}`);
     assert.ok(v.permutacio < 0.02, `la de permutació, ${v.permutacio}`);
+    // la calibrada (AUD-128, AU2-94): per sota de la de permutació, i amb concordança 1 a reinit i un ritme del 2 %, on la
+    // de permutació passa d'α, per sota d'α
+    assert.ok(v.calibrada <= v.permutacio && v.calibrada < 0.0125 + 0.004, `la calibrada, ${v.calibrada}`);
+    const low = validity({ p: 0.02, worlds: 150, rhoA: 0, rhoB: 1, alpha: 0.0125, sims: 6000 });
+    assert.ok(low.permutacio > 0.017 && low.calibrada < 0.008, JSON.stringify(low));
+    // la família amb els llindars calibrats és la de per defecte, i amb els nominals de la permutació rebutja més
+    const perm = familyPower({ pc: 0.27, ps: 0.27, pr: 0.135, worlds: 150, rho: 0.03, sims: 1000, test: 'permutacio' });
+    assert.ok(perm.both >= half.both - 0.03 && half.both > 0.9, `${JSON.stringify(perm)} ${JSON.stringify(half)}`);
+    assert.throws(() => familyPower({ pc: 0.27, ps: 0.27, pr: 0.135, k: 4, worlds: 80, sims: 10 }), /K = 2/);
   },
 };
 

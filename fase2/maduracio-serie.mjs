@@ -5,8 +5,8 @@
 // La mesura (§5): per a cada món i braç, el nombre de branques on la vida s'estableix dins de H (de 0 a K), amb el
 // criteri de la llei 2 (fase2/census.js). Les dues proves (§6) comparen continue i shuffle-all amb reinit, món a món:
 // la diferència d'un món és la dels seus nombres d'establiments, i la prova és la permutació de signes exacta sobre la
-// suma de les diferències, unilateral, amb Holm. Les p es calculen amb enters exactes, i la decisió les compara amb els
-// llindars sense cap arrodoniment.
+// suma de les diferències, unilateral, amb Holm i els llindars calibrats per m (fase2/maduracio-llindars.json; AUD-128,
+// AU2-94). Les p es calculen amb enters exactes, i la decisió compara els recomptes amb els llindars, sense cap arrodoniment.
 //
 // Els registres es validen com els del pilot (eines/maduracio-analisi.mjs), amb les funcions de la sèrie de B2: l'esquema
 // sencer de cada línia, l'ordre exacta del manifest, els censos, les mesures i l'establiment recalculat. A més, el codi
@@ -39,7 +39,7 @@ export function manifestProblems(manifest) {
   if (!P || !Array.isArray(P.arms) || !P.arms.length || !Array.isArray(P.continuation) || !P.continuation.length || !num(P.horizon) || P.stopAfterEvent !== 0 ||
     !Array.isArray(P.world) || P.world.length !== 2 || !num(P.radius) || P.rng !== 'v2' || !num(P.every) || !num(P.mutation) || !num(P.mixing) ||
     !P.census || !['version', 'every', 'sample', 'seed'].every((k) => k in P.census) || !P.cohort || !Number.isInteger(P.cohort.size)) return ["els paràmetres del manifest no tenen l'estructura esperada"];
-  if (!t || !Array.isArray(t.contrasts) || !t.contrasts.length || !num(t.alpha) || t.method !== 'holm' || t.sided !== 'greater' ||
+  if (!t || !Array.isArray(t.contrasts) || t.contrasts.length !== 2 || !num(t.alpha) || t.method !== 'holm' || t.sided !== 'greater' || t.thresholds !== THRESHOLDS ||
     t.contrasts.some((c) => !Array.isArray(c) || c.length !== 2 || c.some((a) => !P.arms.includes(a)))) return ["la prova del manifest no té l'estructura esperada"];
   if (!Array.isArray(manifest.worlds) || !Array.isArray(manifest.branches)) return ['el manifest no té els mons o les branques'];
   const out = [];
@@ -161,8 +161,9 @@ export function signFlipTest(diffs) {
 const fraction = (x) => { const d = 10n ** 9n; return [BigInt(Math.round(x * 1e9)), d]; };
 // count / total ≤ num / (den · k), sense arrodonir
 const atMost = (r, [num, den], k) => r.count * den * BigInt(k) <= num * r.total;
-// La correcció de Holm, amb les p exactes: la més petita amb α / n, la següent amb α / (n − 1)... fins a la primera que no
-// es rebutja. Les p iguals es tracten en l'ordre de les proves
+// La correcció de Holm amb els llindars nominals, amb les p exactes: la més petita amb α / n, la següent amb α / (n − 1)...
+// fins a la primera que no es rebutja. Les p iguals es tracten en l'ordre de les proves. La decisió de la sèrie fa servir
+// els llindars calibrats (calibratedHolm); aquesta es manté per comparar-les
 export function holm(results, alpha) {
   const a = fraction(alpha), n = results.length;
   const order = results.map((_, i) => i).sort((i, j) => {
@@ -176,6 +177,56 @@ export function holm(results, alpha) {
     if (open && atMost(results[i], a, n - rank)) out[i].rejected = true; else open = false;
   });
   return out;
+}
+
+// ---- Els llindars calibrats (§6; AUD-128, AU2-94)
+
+// La permutació de signes és exacta si els dos braços d'un món són intercanviables, però no per a la hipòtesi del mateix
+// ritme: amb una concordança diferent a cada braç, rebutja més que α. Els llindars calibrats ho corregeixen. Per a cada m,
+// el nombre de mons amb diferència, i per a cada pas de Holm j (α/2 i α), la taula dona el recompte K_j(m) més gran amb
+// què la probabilitat de rebutjar, sabent m, no passa d'α_j amb cap distribució de les diferències amb mitjana 0. Al pas j
+// es rebutja si count ≤ K_j(m); −1 vol dir que amb m mons amb diferència no es pot rebutjar. La calcula
+// eines/llindars-maduracio.mjs, i va amb l'etiqueta.
+export const THRESHOLDS = 'fase2/maduracio-llindars.json';
+
+// Els problemes de la taula (buit si és correcta): un recompte per pas i per m, des de m = 0, amb K_1 ≤ K_2 i cap K per
+// sobre del nominal, el d'α·2^m
+export function thresholdProblems(t, alpha) {
+  if (!t || !Array.isArray(t.rows) || !t.rows.length || !Array.isArray(t.steps) || t.steps.length !== 2) return ["la taula dels llindars no té l'estructura esperada"];
+  const [[n1, d1], [n2, d2]] = t.steps;
+  if (![n1, d1, n2, d2].every(Number.isInteger) || n1 / d1 !== alpha / 2 || n2 / d2 !== alpha) return [`els passos de la taula dels llindars no són α/2 i α, amb α = ${alpha}`];
+  const out = [];
+  t.rows.forEach((row, m) => {
+    if (row?.m !== m || !Array.isArray(row.k) || row.k.length !== 2 || !row.k.every((k) => typeof k === 'string' && /^(-1|0|[1-9]\d*)$/.test(k))) { out.push(`la fila ${m} de la taula dels llindars no té l'estructura esperada`); return; }
+    const [k1, k2] = row.k.map(BigInt), total = 1n << BigInt(m);
+    if (k1 > k2) out.push(`m = ${m}: el llindar del primer pas és més alt que el del segon`);
+    if (k1 * BigInt(d1) > BigInt(n1) * total || k2 * BigInt(d2) > BigInt(n2) * total) out.push(`m = ${m}: un llindar és més alt que el nominal`);
+  });
+  return out;
+}
+// Llegeix la taula. Retorna { table (amb els K com a BigInt), problems }
+export function readThresholds(file, alpha) {
+  let t;
+  try { t = JSON.parse(readFileSync(file, 'utf8')); } catch { return { table: null, problems: [`no es pot llegir la taula dels llindars ${file}`] }; }
+  const problems = thresholdProblems(t, alpha);
+  return { table: problems.length ? null : { ...t, rows: t.rows.map((r) => ({ ...r, k: r.k.map(BigInt) })) }, problems };
+}
+// Holm amb els llindars calibrats, per a les dues proves de la sèrie: la prova j es rebutja si count_j ≤ K_1(m_j), o si
+// count_j ≤ K_2(m_j) i l'altra es rebutja al primer pas. És Holm amb les p calibrades, que són vàlides cadascuna per a la
+// seva nul·la: la família queda com a molt a α, sigui quina sigui la dependència entre les dues proves. Retorna, per a
+// cada prova, { rejected, step (el pas en què es compara), K, threshold (K / 2^m, o 0 si no es pot rebutjar) }
+export function calibratedHolm(results, table) {
+  if (results.length !== 2) throw new Error('els llindars calibrats són per a dues proves');
+  const K = (r, step) => {
+    const row = table.rows[r.m];
+    if (!row) throw new Error(`la taula dels llindars no arriba a m = ${r.m}`);
+    return row.k[step - 1];
+  };
+  const first = results.map((r) => r.count <= K(r, 1));
+  return results.map((r, i) => {
+    const step = first[i] || !first[1 - i] ? 1 : 2, k = K(r, step);
+    return { rejected: r.count <= k, step, K: k, threshold: k < 1n ? 0 : Number(k) / Number(r.total) };
+  });
 }
 
 // ---- Els descriptius (§5)
@@ -236,8 +287,13 @@ const ep = (x) => (x === null ? '—' : String(Math.round(x)));
 const fmt = (x, d = 2) => (x === null ? '—' : x.toFixed(d));
 const pText = (r) => (r.p < 1e-4 ? r.p.toExponential(2) : r.p.toFixed(4));
 
-// L'anàlisi: les dues proves i els descriptius predefinits. branches, les de readSeries
-export function analyse(branches, manifest) {
+// El llindar calibrat d'una prova, per escriure'l
+const thresholdText = (r) => (r.K < 1n ? 'cap rebuig possible' : r.threshold.toPrecision(4));
+
+// L'anàlisi: les dues proves, amb els llindars calibrats de la taula (readThresholds), i els descriptius predefinits.
+// branches, les de readSeries
+export function analyse(branches, manifest, thresholds) {
+  if (!thresholds) throw new Error("l'anàlisi necessita la taula dels llindars calibrats");
   const P = manifest.params, t = manifest.test, H = P.horizon, arms = P.arms, tags = P.continuation.map(([x]) => x), lines = [];
   const byWorld = new Map(manifest.worlds.map((w) => [w.world, w]));
   const worlds = manifest.worlds.filter((w) => w.included).map((w) => w.world);
@@ -260,14 +316,14 @@ export function analyse(branches, manifest) {
     const d = units.map((u) => u[a] - u[b]);
     return { a, b, ...signFlipTest(d), ka: units.reduce((s, u) => s + u[a], 0), kb: units.reduce((s, u) => s + u[b], 0), branches: branchesPerArm, worlds: worlds.length, diff: worldBootstrap(units, (s) => rate(s, a) - rate(s, b)) };
   });
-  holm(results, t.alpha).forEach((h, i) => Object.assign(results[i], h));
+  calibratedHolm(results, thresholds).forEach((h, i) => Object.assign(results[i], h));
   lines.push('');
-  lines.push(`Les proves (la permutació de signes exacta, unilateral, sobre la suma de les diferències de cada món; Holm, α = ${t.alpha} per a la família):`);
+  lines.push(`Les proves (la permutació de signes exacta, unilateral, sobre la suma de les diferències de cada món; Holm, α = ${t.alpha} per a la família, amb els llindars calibrats per m):`);
   results.forEach((r, i) => {
     const sizes = [1, 2, 3, 4].filter((v) => v <= K).map((v) => `${v}: ${units.filter((u) => u[r.a] - u[r.b] === v).length} a favor i ${units.filter((u) => u[r.a] - u[r.b] === -v).length} en contra`).join(', ');
     lines.push(`  Prova ${i + 1}, ${r.a} contra ${r.b}: ${r.ka} contra ${r.kb} establiments de ${r.branches}; la diferència dels ritmes ${pts((r.ka - r.kb) / r.branches)} (IC del bootstrap per món ${pts(r.diff[0])} a ${pts(r.diff[1])}).`);
     lines.push(`    Món a món: més alt amb ${r.a} a ${nm(r.pos)}, més baix a ${r.neg}, iguals ${r.ties}; per la mida de la diferència, ${sizes}. Suma ${r.sum}, amb ${nm(r.m)} amb diferència.`);
-    lines.push(`    p = ${pText(r)} (exacta: ${r.count} de ${r.total} assignacions de signes); llindar de Holm ${r.threshold}; ${r.rejected ? 'es rebutja H0' : 'no es rebutja H0'}`);
+    lines.push(`    p = ${pText(r)} (exacta: ${r.count} de ${r.total} assignacions de signes); llindar calibrat de Holm, pas ${r.step}, amb ${nm(r.m)} amb diferència: ${thresholdText(r)} (es rebutja si el recompte és com a molt ${r.K}); ${r.rejected ? 'es rebutja H0' : 'no es rebutja H0'}`);
   });
 
   lines.push('');
@@ -323,11 +379,12 @@ export function decisionLines({ results }) {
   const what = (a) => (a === 'continue' ? 'si es conserva la sopa envellida' : a === 'shuffle-all' ? "si es conserva l'histograma de bytes de la sopa envellida, barrejat," : `amb ${a}`);
   const scope = (a) => (a === 'continue' ? "És l'efecte total de conservar la sopa d'aquests mons, no d'un mecanisme concret" : a === 'shuffle-all' ? "Inclou el que la barreja crea a l'instant, com els replicadors del començament: no aïlla la composició" : 'No aïlla cap mecanisme');
   return results.map((r, i) => {
-    const counts = `${r.ka} de ${r.branches} branques contra ${r.kb}; p = ${pText(r)}, llindar de Holm ${r.threshold}`;
+    const counts = `${r.ka} de ${r.branches} branques contra ${r.kb}; p = ${pText(r)}, llindar calibrat de Holm ${thresholdText(r)}`;
     if (r.rejected) {
       return `DECISIÓ ${i + 1} (${r.a} contra ${r.b}): es rebutja H0. A la cohort (mons quiets sense vida a l'època 8.000, sense cap cel·la hereditària), la vida s'hi estableix més sovint en les 8.000 èpoques següents ${what(r.a)} que amb una sopa nova (${counts}). ${scope(r.a)}.`;
     }
-    const minimum = 2 ** -r.m > r.threshold ? ` Amb ${nm(r.m)} amb diferència, la p més petita possible era ${(2 ** -r.m).toFixed(4)}: la prova no es podia rebutjar.` : '';
+    // el llindar calibrat no admet cap resultat amb aquest m (AUD-129, AU2-95): ni el més extrem, amb el recompte 1
+    const minimum = r.K < 1n ? ` Amb ${nm(r.m)} amb diferència, cap resultat no arriba al llindar calibrat del pas ${r.step}: la prova no es podia rebutjar.` : '';
     return `DECISIÓ ${i + 1} (${r.a} contra ${r.b}): no es rebutja H0: no concloent. La prova no permet afirmar que, a la cohort, la vida s'hi estableixi més sovint ${what(r.a)} que amb una sopa nova (${counts}). No vol dir que s'hi estableixi igual.${minimum}`;
   });
 }

@@ -64,10 +64,12 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   - **Els experiments:** `node eines/pilot.mjs maduracio|zeros|serie --envelliment|--prepara|--comprova|--comprova-captures`
     (les llistes, el manifest congelat i contrastat amb el disseny, i les comprovacions abans de llançar i abans de decidir).
     La preparació valida l'envelliment sencer i escaneja totes les captures, el punt de partida de cada braç. A la sèrie,
-    `--envelliment [--mons N]` dona els N primers mons de la llista (180 per defecte), i `--comprova --maquina pc|vm` només
-    mira les captures dels mons de la llista d'aquella màquina.
+    `--envelliment [--mons N]` dona els N primers mons de la llista (180 per defecte), i `--comprova --maquina pc|vm` i
+    `--comprova-captures --maquina pc|vm` només miren les captures dels mons de la llista d'aquella màquina.
   - **La potència de la sèrie de la maduració:** `node eines/potencia-maduracio.mjs`, amb el món com a unitat. Amb `--familia`,
-    les dues proves de la sèrie amb Holm, i amb `--validesa`, l'error de tipus I de la prova de signes i de la de permutació.
+    les dues proves de la sèrie amb Holm i els llindars calibrats, i amb `--validesa`, l'error de tipus I de cada prova.
+  - **Els llindars calibrats de la sèrie** (AUD-128, AU2-94): `node eines/llindars-maduracio.mjs --calcula|--comprova [--fins
+    M]|--validesa|--suprem`. La taula, `fase2/maduracio-llindars.json`, va amb l'etiqueta i no es torna a calcular.
   - **L'anàlisi del pilot de la maduració** (exploratòria): `node eines/maduracio-analisi.mjs [carpeta]`, escrita abans de cap
     resultat. Només quan hi ha les 220 branques; si en falta cap, no en llegeix cap. Valida el registre i el simulador de cadascuna.
 - La prova preregistrada dels zeros (`docs/protocol-zeros.md`): `node fase2/zeros-confirmacio.mjs --decideix|--prova COMMIT
@@ -76,8 +78,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   segell a Bitcoin.
 - La sèrie preregistrada de la maduració (`docs/protocol-maduracio.md`): `node fase2/maduracio-confirmacio.mjs --decideix|--prova
   COMMIT [--serie manifest.json] carpeta`, amb el manifest de `node eines/pilot.mjs serie --prepara`. La prova és la permutació de
-  signes exacta, i la decisió només es pren des d'una còpia del commit de l'etiqueta (`preregistre-maduracio`), com als zeros.
-  Les branques no desen captures: si cal alguna, es regenera amb l'ordre de la branca del manifest.
+  signes exacta, amb els llindars de Holm calibrats per *m* de la taula, i la decisió només es pren des d'una còpia del commit de
+  l'etiqueta (`preregistre-maduracio`), com als zeros. Les branques no desen captures: si cal alguna, es regenera amb l'ordre de
+  la branca del manifest, i només és bona si en surten els mateixos censos i la mateixa empremta final.
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).

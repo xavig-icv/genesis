@@ -8,13 +8,14 @@
 //
 // Aquest fitxer només importa mòduls de Node i fase2/preregistre.mjs, que tampoc no en carrega cap altre. Amb
 // --decideix, comprova el preregistre abans de carregar cap codi més del projecte (AUD-81, auditoria 9).
-import { readFileSync } from 'fs';
+import { readFileSync, realpathSync } from 'fs';
 import { resolve, relative, isAbsolute } from 'path';
 import { checkPreregistration, ROOT } from './preregistre.mjs';
 
 // els fitxers del programa i els que carrega (la validació de B2, el criteri d'establiment i el generador del bootstrap),
-// i les eines dels braços i del manifest
-const PROGRAM_FILES = ['docs/protocol-maduracio.md', 'fase2/maduracio-confirmacio.mjs', 'fase2/maduracio-serie.mjs', 'fase2/b2-serie.mjs', 'fase2/census.js', 'fase1/soup.js', 'fase2/preregistre.mjs', 'eines/transforma.mjs', 'eines/pilot.mjs'];
+// la taula dels llindars calibrats i el programa que la calcula, i les eines dels braços i del manifest
+const THRESHOLDS = 'fase2/maduracio-llindars.json';
+const PROGRAM_FILES = ['docs/protocol-maduracio.md', 'fase2/maduracio-confirmacio.mjs', 'fase2/maduracio-serie.mjs', 'fase2/b2-serie.mjs', 'fase2/census.js', 'fase1/soup.js', 'fase2/preregistre.mjs', THRESHOLDS, 'eines/llindars-maduracio.mjs', 'eines/transforma.mjs', 'eines/pilot.mjs'];
 const fail = (msg, code = 1) => { console.log(msg); process.exit(code); };
 
 const args = process.argv.slice(2);
@@ -42,19 +43,27 @@ try { manifest = pre ? pre.manifest : JSON.parse(readFileSync(resolve(ROOT, mani
 if (!manifest.test || !manifest.dir) fail(`${manifestPath} no és el manifest d'una prova (no té "test" ni "dir")`, 2);
 
 if (testCommit !== null) {
-  const real = resolve(ROOT, manifest.dir), rel = relative(real, folder);
-  if (rel === '' || (!rel.startsWith('..') && !isAbsolute(rel))) fail(`--prova no llegeix la carpeta de la sèrie (${manifest.dir}): els resultats només es miren amb --decideix.`, 2);
+  // la carpeta de la sèrie i la de l'argument, també pels seus camins reals: un àlies de la carpeta (un enllaç simbòlic o una
+  // unió de Windows) no hi passa (AU2-96)
+  const inside = (dir, f) => { const rel = relative(dir, f); return rel === '' || (!rel.startsWith('..') && !isAbsolute(rel)); };
+  const physical = (p) => { try { return realpathSync.native(p); } catch { return p; } };
+  const real = resolve(ROOT, manifest.dir);
+  if (inside(real, folder) || inside(physical(real), physical(folder))) fail(`--prova no llegeix la carpeta de la sèrie (${manifest.dir}): els resultats només es miren amb --decideix.`, 2);
   if (!/^[0-9a-f]{40}$/.test(testCommit)) fail('--prova necessita un commit sencer (40 xifres hexadecimals)', 2);
   console.log(`MODE DE PROVA, sense cap decisió: commit ${testCommit}, manifest ${manifestPath}`);
 }
 
+// la taula dels llindars calibrats (§6): amb --decideix, la de l'etiqueta
+if (pre && manifest.test.thresholds !== THRESHOLDS) fail(`el manifest no fa servir la taula dels llindars del preregistre (${THRESHOLDS})`);
+const thresholds = lib.readThresholds(resolve(ROOT, String(manifest.test.thresholds)), manifest.test.alpha);
+if (thresholds.problems.length) fail(`La taula dels llindars no és vàlida (${thresholds.problems.length} problemes):\n${thresholds.problems.slice(0, 10).map((p) => `  ${p}`).join('\n')}`);
 const commit = pre ? pre.commit : testCommit;
 const { branches, problems } = lib.readSeries(folder, manifest, { commit });
 if (problems.length) {
   fail(`La sèrie no és la del manifest (${problems.length} problemes):\n${problems.slice(0, 20).map((p) => `  ${p}`).join('\n')}${problems.length > 20 ? `\n  i ${problems.length - 20} més` : ''}`);
 }
 if (pre) console.log(`Commit del preregistre: ${pre.commit} (etiqueta de git ${pre.tag} (objecte ${pre.tagObject}); manifest ${manifestPath})`);
-const result = lib.analyse(branches, manifest);
+const result = lib.analyse(branches, manifest, thresholds.table);
 for (const l of result.lines) console.log(l);
 if (pre) {
   console.log('');
