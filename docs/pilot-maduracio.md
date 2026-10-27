@@ -1,7 +1,9 @@
 # Els pilots de la maduració de la sopa i de la intervenció dels zeros · disseny
 
-**Estat: v2.2 (26-10-2026), amb les correccions de les auditories 15, 16 i 17.** No s'ha fet córrer cap branca de cap dels dos
-experiments. L'envelliment i la preparació de la maduració ja són fets (`fase2/resultats/maduracio/pilot/acta.md`).
+**Estat: v2.2 (26-10-2026), amb les correccions de les auditories 15, 16 i 17.**
+- **La maduració, feta (27-10-2026):** les 220 branques, sense cap fallada, i l'anàlisi. Els resultats són a l'acta
+  (`fase2/resultats/maduracio/pilot/acta.md`) i a l'entrada 12 del quadern. El disseny de la sèrie va a l'auditoria 19.
+- **Els zeros:** encara no s'ha fet córrer cap branca.
 - **Els veredictes de la v1:**
   - **L'auditor 1:** GO per als dos pilots, amb canvis.
   - **L'auditor 2:** GO condicionat per a la maduració, i NO-GO per al dels zeros tal com era.

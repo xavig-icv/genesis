@@ -101,7 +101,11 @@ See notebook entry 10, in Catalan.
 
 **What we study now:**
 - **How the soup matures before life appears,** the line chosen after audit 14: branches from the same
-  snapshot that either continue the soup or shuffle its bytes. A pilot comes first.
+  snapshot that either continue the soup or shuffle its bytes.
+  - **The pilot, done:** with 22 worlds, life becomes established in 27 % of the branches that continue as they
+    are, and in the same 27 % when all the bytes of the world are shuffled. It is a pilot, with no conclusion
+    (notebook entry 12, in Catalan).
+  - **Next:** the design of a preregistered series, with new worlds.
 - **A lead to confirm: zero bytes.** In the worlds where life is lost again and again, there are many more
   zero bytes when it becomes established (exploratory; notebook entry 11, in Catalan).
 - **World size.**

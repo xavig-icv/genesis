@@ -22,6 +22,7 @@
     <a href="#entrada-9">Entrada 9</a>
     <a href="#entrada-10">Entrada 10</a>
     <a href="#entrada-11">Entrada 11</a>
+    <a href="#entrada-12">Entrada 12</a>
   </nav>
 
   <article id="entrada-1">
@@ -1120,6 +1121,96 @@
     </ul>
 
     <p class="pending"><strong>Corregit (auditoria 15, 25-10-2026):</strong> l'entrada deia que els mons fràgils tenen "moltes més cel·les" amb bytes zero: és la proporció de bytes, no de cel·les. Deia que la part del mapa de la família dominant "ja ve dels zeros": la direcció és, com a mínim, la inversa. I deia que els zeros podien ser el senyal "de quant havia treballat el replicador abans de l'establiment": abans no n'hi havia cap rastre. El pla ja preveia mirar les captures de <em>t</em> − 250 i <em>t</em> − 500, i no ho vam fer; ho va fer l'auditor 1. A més, el braç dels zeros de la intervenció ara els canvia per bytes de dades, amb un placebo aparellat cel·la per cel·la.</p>
+  </article>
+
+  <article id="entrada-12">
+    <header>
+      <p class="date">Entrada 12 · 27 d'octubre de 2026</p>
+      <h1>La maduració de la sopa: el pilot</h1>
+      <p class="lede">Hem agafat 22 mons sense vida que feia 8.000 èpoques que corrien, i hem dividit cadascun en cinc còpies des del mateix instant. Una continua tal com és; tres continuen amb els bytes barrejats de maneres diferents, i l'última, amb una sopa nova. Totes tenen el mateix atzar. En les 8.000 èpoques següents, la vida s'estableix en el 27 % de les branques que continuen tal com són, i en el mateix 27 % quan es barregen tots els bytes del món. És un pilot: no en surt cap conclusió, però ens diu com haurà de ser la sèrie.</p>
+    </header>
+
+    <h2>Què volíem saber</h2>
+    <p>A les dades de la llei 2 hi havia una pista (AUD-64), mirada després i amb pocs casos. Un món quiet que arriba sense vida a l'època 8.000 s'hi estableix en les 8.000 èpoques següents el doble de sovint que un món nou: el 22 %, contra el 10 %. Si és així, la sopa madura: abans que hi aparegui la vida, hi passa alguna cosa que la fa més probable.</p>
+    <p>La pregunta és què és el que madura. Pot ser l'histograma de bytes, la composició de cada programa, l'ordre dels bytes dins de cada programa o la disposició dels programes a l'espai. Per saber-ho, es fan branques des de la mateixa captura i, a cadascuna, es desfà una capa i es conserven les altres.</p>
+    <p>Abans d'una sèrie preregistrada calia un pilot, que serveix per fixar-ne el disseny: el nombre de mons, el cost i la potència. No en surt cap conclusió, i els seus mons no entraran a la sèrie (<code>docs/pilot-maduracio.md</code>).</p>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>Els mons:</strong> 24 mons quiets nous, de 512 × 256, de la llavor 5001 a la 5024, fins a l'època 8.000. A l'època 8.000 vam provar totes les cel·les de cada món. N'hem exclòs dos que ja hi tenien alguna cel·la hereditària, i n'han quedat 22.</li>
+      <li><strong>Les cinc branques de cada món,</strong> des de la captura de l'època 8.000:
+        <ul>
+          <li><code>continue</code>: la sopa tal com és;</li>
+          <li><code>shuffle-programs</code>: els programes canvien de lloc, sencers;</li>
+          <li><code>shuffle-within</code>: els bytes de cada programa es barregen dins del mateix programa;</li>
+          <li><code>shuffle-all</code>: es barregen tots els bytes del món, i només se'n conserva l'histograma;</li>
+          <li><code>reinit</code>: una sopa nova a l'atzar, el control de l'edat.</li>
+        </ul>
+      </li>
+      <li><strong>La continuació:</strong> 8.000 èpoques més, amb dues llavors per món. Són les mateixes per a les cinc branques, i per tant les cinc tenen les mateixes parelles i les mateixes mutacions. Cada branca s'atura quan s'hi estableix la vida, amb el criteri de la llei 2.</li>
+      <li><strong>Escrit abans:</strong> els dos auditors van revisar el disseny en tres auditories, de la 15 a la 17. Abans de la primera branca vam escriure a l'acta com llegiríem cada braç. L'anàlisi també era escrita, i provada amb dades sintètiques.</li>
+    </ul>
+    <div class="params">
+      <div class="param"><b>22</b><span>mons sense vida a l'època 8.000</span></div>
+      <div class="param"><b>220</b><span>branques: 5 braços i 2 llavors per món</span></div>
+      <div class="param"><b>8.000</b><span>èpoques més, com a molt</span></div>
+      <div class="param"><b>158 h</b><span>de càlcul, en 19 h, a dues màquines</span></div>
+    </div>
+
+    <h2>El que surt</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Branca</th><th style="text-align:left">S'hi estableix la vida</th><th style="text-align:left">Interval del 95 %</th><th style="text-align:left">Mons amb algun establiment</th><th style="text-align:left">Què es fa a la sopa</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left"><code>continue</code></td><td style="text-align:left">12 de 44 (27,3 %)</td><td style="text-align:left">15,0–42,8 %</td><td style="text-align:left">11 de 22</td><td style="text-align:left">res</td></tr>
+          <tr><td style="text-align:left"><code>shuffle-programs</code></td><td style="text-align:left">13 de 44 (29,5 %)</td><td style="text-align:left">16,8–45,2 %</td><td style="text-align:left">10 de 22</td><td style="text-align:left">els programes canvien de lloc</td></tr>
+          <tr><td style="text-align:left"><code>shuffle-within</code></td><td style="text-align:left">6 de 44 (13,6 %)</td><td style="text-align:left">5,2–27,4 %</td><td style="text-align:left">5 de 22</td><td style="text-align:left">es barregen els bytes de cada programa</td></tr>
+          <tr><td style="text-align:left"><code>shuffle-all</code></td><td style="text-align:left">12 de 44 (27,3 %)</td><td style="text-align:left">15,0–42,8 %</td><td style="text-align:left">12 de 22</td><td style="text-align:left">es barregen tots els bytes del món</td></tr>
+          <tr><td style="text-align:left"><code>reinit</code></td><td style="text-align:left">8 de 44 (18,2 %)</td><td style="text-align:left">8,2–32,7 %</td><td style="text-align:left">6 de 22</td><td style="text-align:left">una sopa nova</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">L'establiment és el de la llei 2, dins de les 8.000 èpoques següents. L'interval és l'exacte de Clopper-Pearson, calculat després de l'anàlisi. Tracta les 44 branques de cada braç com a independents, i ho podem fer perquè les dues llavors d'un món coincideixen gairebé només per atzar.</p>
+    <ul>
+      <li><strong>Desfer tota l'estructura no hi canvia res, en aquest pilot.</strong> <code>continue</code> i <code>shuffle-all</code> s'estableixen totes dues a 12 branques de 44. Món a món, <code>shuffle-all</code> s'estableix més en 8 mons, menys en 8, i igual en 6. Si els programes només canvien de lloc, tampoc no hi ha diferència (13 de 44).</li>
+      <li><strong>Els replicadors del començament no s'hi noten.</strong>
+        <ul>
+          <li><strong>Com començaven:</strong> les sopes de <code>shuffle-all</code> començaven amb unes 700 cel·les que es repliquen, unes 30 vegades més que les de <code>continue</code>, i a tots els mons n'hi havia alguna d'hereditària.</li>
+          <li><strong>Què en surt:</strong> no s'hi estableix més sovint que a <code>continue</code>. Als 9 mons que començaven amb alguna cel·la hereditària per si sola, s'estableix a 3 branques de 18, i als altres 13, a 9 de 26.</li>
+          <li><strong>Quan s'hi estableix,</strong> ho fa abans: la mediana és de 3.250 èpoques, contra les 5.500 de <code>continue</code>.</li>
+        </ul>
+      </li>
+      <li><strong>Les branques que s'estableixen menys</strong> són <code>shuffle-within</code> (6 de 44, i, món a món, 7 a la baixa i 1 a l'alça) i <code>reinit</code> (8 de 44; 7 i 3). Ho hem vist després, entre quatre comparacions: pot ser l'atzar.</li>
+      <li><strong>El món no ho decideix, ho decideix l'atzar de la continuació.</strong> La concordança entre les dues llavors d'un món és gairebé nul·la (<em>rho</em> = 0,03).</li>
+      <li><strong>Encaixa amb la llei 2.</strong> El 27 % de <code>continue</code> és prop del 22 % dels mons de la llei 2 a la mateixa edat. El 18 % de <code>reinit</code>, la sopa nova, queda entre aquest i el 10 % dels mons nous.</li>
+    </ul>
+
+    <h2>Què vol dir, i què no</h2>
+    <ul>
+      <li><strong>És un pilot.</strong> Amb 44 branques per braç, els intervals s'encavalquen tots. El disseny ja ho deia: no pot distingir un 11 % d'un 15 %.</li>
+      <li><strong>No diu res de causal sobre la maduració.</strong> Ho havíem escrit abans de la primera branca: <code>continue</code> contra <code>shuffle-all</code> compara tractaments sencers, no l'estructura sola.</li>
+      <li><strong>Una diferència com les que calculava el disseny no s'hi veu,</strong> per exemple del 22 % a l'11 %. Amb 22 mons, però, tampoc no es pot descartar.</li>
+      <li><strong>El que ens dona per a la sèrie</strong> és el calibratge:
+        <ul>
+          <li>les proporcions de cada braç;</li>
+          <li>que les dues llavors d'un món valen gairebé com dues observacions independents;</li>
+          <li>el cost, unes 0,7 h per branca, més l'envelliment de cada món.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>El disseny de la sèrie</strong> el revisaran els auditors a l'auditoria 19.
+        <ul>
+          <li><strong>Quin contrast es confirma:</strong> el previst (<code>continue</code> contra <code>shuffle-all</code>), el de l'edat (contra <code>reinit</code>), o el de l'ordre dins dels programes (contra <code>shuffle-within</code>). Aquest últim l'hem vist després.</li>
+          <li><strong>La resta:</strong> l'efecte que val la pena detectar, fixat abans, i el nombre de mons.</li>
+          <li><strong>Els mons de la sèrie</strong> seran nous.</li>
+        </ul>
+      </li>
+      <li><strong>Mentrestant, la prova dels zeros</strong> (<code>docs/protocol-zeros.md</code>), quan se n'hagi fet l'etiqueta i el segell.</li>
+      <li><strong>Com es reprodueix:</strong> els 220 registres són a <code>fase2/resultats/maduracio/pilot/branques/</code>, i l'acta i la sortida de l'anàlisi (<code>node eines/maduracio-analisi.mjs</code>), a la mateixa carpeta.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

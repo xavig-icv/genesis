@@ -177,7 +177,11 @@ Vegeu l'[entrada 10](quadern/index.html#entrada-10).
 ### El que estudiem ara
 
 - **La maduració de la sopa abans que hi aparegui la vida,** la línia que vam triar després de l'auditoria 14:
-  branques des d'una mateixa captura, que continuen la sopa o en barregen els bytes. Primer, un pilot.
+  branques des d'una mateixa captura, que continuen la sopa o en barregen els bytes.
+  - **El pilot, fet:** amb 22 mons, la vida s'estableix en el 27 % de les branques que continuen tal com són, i en el
+    mateix 27 % quan es barregen tots els bytes del món. És un pilot, sense cap conclusió
+    ([entrada 12](quadern/index.html#entrada-12)).
+  - **El que ve:** el disseny d'una sèrie preregistrada, amb mons nous.
 - **Una pista per confirmar: els bytes zero.** Als mons on la vida es torna a perdre, quan s'hi estableix ja hi
   ha molts més bytes zero (exploratori; [entrada 11](quadern/index.html#entrada-11)).
 - **La mida del món,** començant pels mons petits.
