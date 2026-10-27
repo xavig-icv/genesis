@@ -2,19 +2,22 @@
 // manifest petit i registres sintètics amb l'esquema sencer que escriu sim.mjs:
 //   - la permutació de signes exacta, contra l'enumeració de totes les assignacions de signes, i contra la de coma
 //     flotant de la potència (eines/potencia-maduracio.mjs);
-//   - Holm amb les p exactes, l'interval de Clopper-Pearson i el bootstrap per món;
+//   - Holm amb les p exactes i amb els llindars calibrats, la taula dels llindars, l'interval de Clopper-Pearson i el
+//     bootstrap per món;
 //   - el manifest i la validació dels registres, amb les mutacions que no hi han de passar;
 //   - l'anàlisi i les frases de les decisions, amb un resultat conegut;
-//   - la línia d'ordres: --prova no llegeix la carpeta de la sèrie, i --decideix no decideix res sense el preregistre.
+//   - la línia d'ordres: --prova no llegeix la carpeta de la sèrie, ni pel camí d'un àlies, i --decideix no decideix res
+//     sense el preregistre.
 // Executa: node test/maduracio-serie.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
 import { createHash } from 'crypto';
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync, readdirSync, copyFileSync, appendFileSync } from 'fs';
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync, readdirSync, copyFileSync, appendFileSync, symlinkSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
-import { expectedBranches, manifestProblems, branchProblems, readSeries, signFlipTest, holm, clopperPearson, worldBootstrap, analyse, decisionLines } from '../fase2/maduracio-serie.mjs';
+import { expectedBranches, manifestProblems, branchProblems, readSeries, signFlipTest, holm, calibratedHolm, readThresholds, thresholdProblems, THRESHOLDS, clopperPearson, worldBootstrap, analyse, decisionLines } from '../fase2/maduracio-serie.mjs';
+import { calibrate, STEPS, tailCounts, criticals, ruleCriticals, nominalK } from '../eines/llindars-maduracio.mjs';
 import { signFlipP, signP } from '../eines/potencia-maduracio.mjs';
 import { establishment } from '../fase2/census.js';
 import { makeRng } from '../fase1/soup.js';
@@ -23,6 +26,9 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const ARMS = ['continue', 'shuffle-all', 'reinit'];
 const COMMIT = 'abcdef0' + '1'.repeat(33);
 function withTmp(fn) { const tmp = mkdtempSync(join(tmpdir(), 'serie-')); try { fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
+// la taula dels llindars calibrats del projecte (fase2/maduracio-llindars.json)
+let TABLE = null;
+const table = () => { if (!TABLE) { const t = readThresholds(join(root, THRESHOLDS), 0.025); assert.deepStrictEqual(t.problems, []); TABLE = t.table; } return TABLE; };
 
 // Un manifest petit de la sèrie: n mons inclosos (W1, W2...) i un d'exclòs, 3 braços, 2 llavors, i H = 1.000 des de
 // l'època 1.000
@@ -38,7 +44,7 @@ function smallManifest({ n = 6, dir = 'fase2/resultats/maduracio/serie/branques'
     const id = `${w.world}-${arm}-${tag}`, seed = Number(w.world.slice(1)) + off;
     return { id, world: w.world, arm, tag, seed, command: `node sim.mjs --world 512x256 --seed ${seed} --mixing 0 --from ${w.arms[arm].file} --start 1000 --epochs 2000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json ${dir}/${id}.jsonl` };
   })));
-  const test = { measure: 'x', unit: 'món', worlds: 'tots', contrasts: [['continue', 'reinit'], ['shuffle-all', 'reinit']], method: 'holm', alpha: 0.025, sided: 'greater', statistic: 'x', descriptive: [['continue', 'shuffle-all']] };
+  const test = { measure: 'x', unit: 'món', worlds: 'tots', contrasts: [['continue', 'reinit'], ['shuffle-all', 'reinit']], method: 'holm', alpha: 0.025, sided: 'greater', statistic: 'x', thresholds: THRESHOLDS, descriptive: [['continue', 'shuffle-all']] };
   return { pilot: 'serie', code, tag: 'preregistre-maduracio', dir, test, params, worlds, branches };
 }
 // Un registre complet, com l'escriu sim.mjs amb --stop-after-event 0 (com a test/maduracio-analisi.mjs). fate(b) dona
@@ -124,6 +130,47 @@ const tests = {
     assert.strictEqual(holm([r(1638399, 27), r(1, 1)], 0.025)[0].rejected, true);
     assert.strictEqual(holm([r(1677722, 27), r(1, 1)], 0.025)[0].rejected, false);
   },
+  "Holm amb els llindars calibrats: el primer pas amb K1(m), i el segon amb K2(m) només si l'altra es rebutja al primer": () => {
+    // una taula sintètica: al primer pas, només el resultat més extrem (el recompte 1) i a partir de 7 mons; al segon, el
+    // recompte 2 a partir de 6
+    const t = { rows: Array.from({ length: 13 }, (_, m) => ({ m, k: [m >= 7 ? 1n : -1n, m >= 6 ? 2n : -1n] })) };
+    const r = (count, m) => ({ count: BigInt(count), total: 1n << BigInt(m), m });
+    const h = (a, b) => calibratedHolm([a, b], t).map((x) => [x.rejected, x.step]);
+    assert.deepStrictEqual(h(r(1, 7), r(1, 7)), [[true, 1], [true, 1]]);
+    assert.deepStrictEqual(h(r(1, 7), r(2, 6)), [[true, 1], [true, 2]]); // la segona, al segon pas
+    assert.deepStrictEqual(h(r(2, 7), r(1, 8)), [[true, 2], [true, 1]]);
+    assert.deepStrictEqual(h(r(3, 7), r(1, 8)), [[false, 2], [true, 1]]);
+    assert.deepStrictEqual(h(r(2, 7), r(2, 8)), [[false, 1], [false, 1]]); // cap al primer pas: cap
+    assert.deepStrictEqual(h(r(1, 6), r(1, 6)), [[false, 1], [false, 1]]); // amb 6 mons, el primer pas no admet res
+    const x = calibratedHolm([r(1, 7), r(1, 6)], t);
+    assert.deepStrictEqual([x[0].K, x[1].K, x[0].threshold, x[1].threshold], [1n, 2n, 1 / 128, 2 / 64]);
+    assert.strictEqual(calibratedHolm([r(1, 6), r(1, 6)], t)[0].threshold, 0);
+    assert.throws(() => calibratedHolm([r(1, 13), r(1, 7)], t), /no arriba/);
+    assert.throws(() => calibratedHolm([r(1, 7)], t), /dues proves/);
+  },
+  'la taula dels llindars: la del programa, amb els seus límits, i cada mutació és un problema (AUD-128, AU2-94)': () => {
+    const t = JSON.parse(readFileSync(join(root, THRESHOLDS), 'utf8'));
+    assert.deepStrictEqual(thresholdProblems(t, 0.025), []);
+    assert.strictEqual(t.rows.length, 151);
+    assert.deepStrictEqual(t.steps, STEPS);
+    // les primeres files, tornades a calcular amb eines/llindars-maduracio.mjs
+    for (let m = 0; m <= 16; m++) assert.deepStrictEqual(t.rows[m].k, STEPS.map(([num, den]) => String(calibrate(m, num, den).K)), `m = ${m}`);
+    // amb 10 mons o menys amb diferència, el primer pas no admet cap rebuig, i el segon, amb 9 o menys
+    assert.ok(t.rows.slice(0, 11).every((r) => r.k[0] === '-1') && t.rows[11].k[0] !== '-1', 'el primer pas');
+    assert.ok(t.rows.slice(0, 10).every((r) => r.k[1] === '-1') && t.rows[10].k[1] !== '-1', 'el segon pas');
+    // cap llindar no passa del nominal, i el màxim de cada fila no passa d'α
+    for (const r of t.rows) STEPS.forEach(([num, den], j) => { assert.ok(BigInt(r.k[j]) * BigInt(den) <= BigInt(num) << BigInt(r.m)); assert.ok(r.max[j] <= num / den, `m = ${r.m}`); });
+    const mut = (fn) => { const c = JSON.parse(JSON.stringify(t)); fn(c); return thresholdProblems(c, 0.025); };
+    assert.ok(mut((c) => { c.rows[50].k = [c.rows[50].k[1], c.rows[50].k[0]]; }).some((x) => /més alt que el del segon/.test(x)));
+    assert.ok(mut((c) => { c.rows[50].k = [String(1n << 50n), String(1n << 50n)]; }).some((x) => /nominal/.test(x)));
+    assert.ok(mut((c) => { c.rows.splice(3, 1); }).some((x) => /fila 3/.test(x)));
+    assert.ok(mut((c) => { c.rows[3].k[0] = '1.5'; }).some((x) => /fila 3/.test(x)));
+    assert.ok(mut((c) => { c.steps = [[1, 40], [1, 20]]; }).some((x) => /passos/.test(x)));
+    assert.ok(thresholdProblems(t, 0.05).some((x) => /passos/.test(x)));
+    // els recomptes per recurrència (els de la potència) són els de tailCounts (els de la calibració)
+    const [c] = ruleCriticals([nominalK(1, 80)], 40);
+    for (const m of [12, 25, 40]) assert.deepStrictEqual(c[m], criticals(tailCounts(m), nominalK(1, 80)(m)), `m = ${m}`);
+  },
   "l'interval de Clopper-Pearson (els del pilot) i el bootstrap per món, determinista": () => {
     const f = ([lo, hi]) => `${(100 * lo).toFixed(1)}–${(100 * hi).toFixed(1)}`;
     assert.strictEqual(f(clopperPearson(12, 44)), '15.0–42.8');
@@ -182,7 +229,7 @@ const tests = {
     const { branches, problems } = readSeries(dir, m, { commit: COMMIT });
     assert.deepStrictEqual(problems, []);
     assert.strictEqual(branches.length, 36);
-    const { results, lines } = analyse(branches, m);
+    const { results, lines } = analyse(branches, m, table());
     const db = Object.values(COUNTS).map(([c, , r]) => c - r), dc = Object.values(COUNTS).map(([, s, r]) => s - r);
     assert.deepStrictEqual([results[0].ka, results[0].kb, results[0].sum, results[0].pos, results[0].neg, results[0].ties], [5, 3, 2, 3, 1, 2]);
     assert.deepStrictEqual([results[1].ka, results[1].kb, results[1].sum, results[1].pos, results[1].neg, results[1].ties], [5, 3, 2, 4, 2, 0]);
@@ -195,23 +242,33 @@ const tests = {
     const dec = decisionLines({ results });
     assert.strictEqual(dec.length, 2);
     assert.ok(dec.every((l) => /no es rebutja H0: no concloent/.test(l) && /No vol dir que s'hi estableixi igual/.test(l)));
-    assert.ok(/la p més petita possible era 0\.0625/.test(dec[0]), dec[0]); // 4 mons amb diferència
+    assert.ok(/Amb 4 mons amb diferència, cap resultat no arriba al llindar calibrat del pas 1: la prova no es podia rebutjar/.test(dec[0]), dec[0]);
+    assert.ok(/llindar calibrat de Holm, pas 1, amb 4 mons amb diferència: cap rebuig possible/.test(text), text);
+    assert.throws(() => analyse(branches, m), /taula dels llindars/);
     // un registre de menys: un problema, i no s'analitza res
     rmSync(join(dir, `${m.branches[0].id}.jsonl`));
     assert.ok(readSeries(dir, m, { commit: COMMIT }).problems.some((x) => /no hi ha el registre/.test(x)));
   }),
   'les decisions, quan es rebutja: el que diu la frase, i l\'abast': () => withTmp((tmp) => {
-    // 10 mons: continue i shuffle-all s'estableixen a totes dues llavors, i reinit a cap; p = 2^-10 a totes dues proves
-    const counts = Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`W${i + 1}`, [2, 2, 0]]));
-    const m = smallManifest({ n: 10 }), dir = join(tmp, 'branques');
+    // 12 mons: continue i shuffle-all s'estableixen a totes dues llavors, i reinit a cap; p = 2^-12 a totes dues proves
+    const counts = Object.fromEntries(Array.from({ length: 12 }, (_, i) => [`W${i + 1}`, [2, 2, 0]]));
+    const m = smallManifest({ n: 12 }), dir = join(tmp, 'branques');
     writeSeries(dir, m, fateOf(counts));
     const { branches, problems } = readSeries(dir, m, { commit: COMMIT });
     assert.deepStrictEqual(problems, []);
-    const result = analyse(branches, m);
-    assert.ok(result.results.every((r) => r.rejected && r.count === 1n && r.total === 1024n));
+    const result = analyse(branches, m, table());
+    assert.ok(result.results.every((r) => r.rejected && r.count === 1n && r.total === 4096n && r.step === 1));
     const [b, c] = decisionLines(result);
     assert.ok(/es rebutja H0/.test(b) && /si es conserva la sopa envellida que amb una sopa nova/.test(b) && /efecte total/.test(b), b);
     assert.ok(/es rebutja H0/.test(c) && /l'histograma de bytes/.test(c) && /no aïlla la composició/.test(c), c);
+    // la segona prova amb sis mons a favor (AUD-129, AU2-95): amb els llindars nominals es rebutjaria, i amb els calibrats
+    // no es pot rebutjar, i la frase ho diu
+    const second = { ...signFlipTest([1, 1, 1, 1, 1, 1]), a: 'shuffle-all', b: 'reinit', ka: 6, kb: 0, branches: 24 };
+    const pair = [{ ...result.results[0] }, second];
+    assert.deepStrictEqual(holm(pair, 0.025).map((x) => x.rejected), [true, true]);
+    calibratedHolm(pair, table()).forEach((x, i) => Object.assign(pair[i], x));
+    assert.deepStrictEqual(pair.map((x) => [x.rejected, x.step]), [[true, 1], [false, 2]]);
+    assert.ok(/Amb 6 mons amb diferència, cap resultat no arriba al llindar calibrat del pas 2: la prova no es podia rebutjar/.test(decisionLines({ results: pair })[1]));
   }),
   "la línia d'ordres: --prova calcula sense decidir, no llegeix la carpeta de la sèrie, i --decideix necessita el preregistre": () => withTmp((tmp) => {
     const run = (...a) => spawnSync(process.execPath, [join(root, 'fase2', 'maduracio-confirmacio.mjs'), ...a], { cwd: root, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '' } });
@@ -231,15 +288,31 @@ const tests = {
     r = run('--prova', '0'.repeat(40), '--serie', manifest, dir);
     assert.strictEqual(r.status, 1, 'un altre commit: els registres no són del preregistre');
     assert.ok(/no el del preregistre/.test(r.stdout));
+    // un àlies de la carpeta de la sèrie (una unió a Windows, un enllaç simbòlic a la resta), tampoc (AU2-96)
+    const real = join(tmp, 'serie-real'), alias = join(tmp, 'alies');
+    mkdirSync(join(real, 'sub'), { recursive: true });
+    symlinkSync(real, alias, process.platform === 'win32' ? 'junction' : 'dir');
+    writeFileSync(manifest, JSON.stringify({ ...m, dir: real }));
+    for (const f of [alias, join(alias, 'sub')]) {
+      r = run('--prova', COMMIT, '--serie', manifest, f);
+      assert.strictEqual(r.status, 2, `l'àlies ${f}: ${r.stdout}`);
+      assert.ok(/--prova no llegeix la carpeta de la sèrie/.test(r.stdout), r.stdout);
+    }
+    // una taula dels llindars que no és la del projecte: la prova del manifest no té l'estructura esperada
+    writeFileSync(manifest, JSON.stringify({ ...m, test: { ...m.test, thresholds: 'package.json' } }));
+    r = run('--prova', COMMIT, '--serie', manifest, dir);
+    assert.strictEqual(r.status, 1, r.stdout);
+    assert.ok(/no té l'estructura esperada/.test(r.stdout), r.stdout);
   }),
   "--decideix: sense l'etiqueta es nega; amb l'etiqueta decideix; i amb el codi canviat es nega sense executar-lo": () => withTmp((tmp) => {
     const repo = join(tmp, 'repo');
     for (const d of ['fase1', 'fase2', 'eines', 'docs']) mkdirSync(join(repo, d), { recursive: true });
     copyFileSync(join(root, 'package.json'), join(repo, 'package.json'));
     for (const d of ['fase1', 'fase2', 'eines']) for (const f of readdirSync(join(root, d)).filter((f) => /\.m?js$/.test(f))) copyFileSync(join(root, d, f), join(repo, d, f));
+    copyFileSync(join(root, THRESHOLDS), join(repo, THRESHOLDS));
     writeFileSync(join(repo, 'docs', 'protocol-maduracio.md'), '# Protocol de prova\n');
-    const counts = Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`W${i + 1}`, i < 9 ? [2, 1, 0] : [0, 0, 1]]));
-    const m = smallManifest({ n: 10 });
+    const counts = Object.fromEntries(Array.from({ length: 12 }, (_, i) => [`W${i + 1}`, i < 11 ? [2, 1, 0] : [0, 0, 1]]));
+    const m = smallManifest({ n: 12 });
     writeFileSync(join(repo, 'serie.json'), JSON.stringify(m, null, 1) + '\n');
     const GIT = ['-c', 'user.name=prova', '-c', 'user.email=prova@exemple.invalid', '-c', 'core.autocrlf=false'];
     const git = (...a) => { const r = spawnSync('git', [...GIT, ...a], { cwd: repo, encoding: 'utf8' }); if (r.status) throw new Error(r.stderr); return r.stdout.trim(); };
@@ -249,7 +322,7 @@ const tests = {
     assert.strictEqual(r.status, 1);
     assert.match(r.stdout, /no hi ha l'etiqueta de git preregistre-maduracio/);
     const sha = (f) => createHash('sha256').update(readFileSync(join(repo, f))).digest('hex');
-    const files = ['serie.json', 'docs/protocol-maduracio.md', 'fase2/maduracio-confirmacio.mjs', 'fase2/maduracio-serie.mjs', 'fase2/b2-serie.mjs', 'fase2/census.js', 'fase1/soup.js', 'fase2/preregistre.mjs', 'eines/transforma.mjs', 'eines/pilot.mjs'];
+    const files = ['serie.json', 'docs/protocol-maduracio.md', 'fase2/maduracio-confirmacio.mjs', 'fase2/maduracio-serie.mjs', 'fase2/b2-serie.mjs', 'fase2/census.js', 'fase1/soup.js', 'fase2/preregistre.mjs', THRESHOLDS, 'eines/llindars-maduracio.mjs', 'eines/transforma.mjs', 'eines/pilot.mjs'];
     // sense la SHA-256 d'un dels fitxers del programa al missatge, es nega
     git('tag', '-a', 'preregistre-maduracio', '-m', 'Preregistre de prova\n\n' + files.filter((f) => f !== 'fase1/soup.js').map((f) => `${sha(f)}  ${f}`).join('\n'));
     r = decide();

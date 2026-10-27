@@ -80,7 +80,8 @@ export const PILOTS = {
     test: {
       measure: "el nombre de branques de cada món i braç on la vida s'estableix dins de H (el criteri de la llei 2)", unit: 'món', worlds: 'tots',
       contrasts: [['continue', 'reinit'], ['shuffle-all', 'reinit']], method: 'holm', alpha: 0.025, sided: 'greater',
-      statistic: 'la permutació de signes exacta, sobre la suma de les diferències de cada món',
+      statistic: 'la permutació de signes exacta, sobre la suma de les diferències de cada món, amb els llindars de Holm calibrats per m',
+      thresholds: 'fase2/maduracio-llindars.json',
       descriptive: [['continue', 'shuffle-all']],
     },
   },
@@ -254,6 +255,7 @@ export async function prepare(name, { root = ROOT, parallel = 6 } = {}) {
   if (existsSync(join(root, manifestPath))) fail(`${manifestPath} ja existeix: no es torna a preparar`);
   const code = codeVersion(root);
   if (code.includes('+') || code === 'desconeguda') fail(`el codi té canvis sense desar (${code}): la preparació ha de ser d'un commit net`);
+  if (p.test?.thresholds && !existsSync(join(root, p.test.thresholds))) fail(`no hi ha la taula dels llindars calibrats (${p.test.thresholds}): node eines/llindars-maduracio.mjs --calcula`);
   const worlds = (p.cohort ? agedCandidates(name, { root }) : p.worlds).map((world) => {
     const o = origin(name, world, { root });
     return { world, role: roleOf(p, world), start: o.start, capture: o.capture, repartimentSha256: o.sha256 };
@@ -377,7 +379,10 @@ function captureProblems(name, root, machine) {
       if (!a.status.included) { if (w.included || w.reason !== a.status.reason) q(`${w.world}: l'exclusió no és la que dona l'envelliment`); continue; }
       if (!w.scan || w.scan.file !== scanPath(p, w.world) || !existsSync(join(root, w.scan.file)) || shaFile(root, w.scan.file) !== w.scan.sha256) { q(`${w.world}: l'escaneig de l'edat no és el del manifest`); continue; }
       const s = JSON.parse(readFileSync(join(root, w.scan.file), 'utf8'));
-      if (s.from !== w.capture || s.seed !== seedOf(w.world) + TRANSFORM_OFFSET || s.heritable !== w.scan.heritable) q(`${w.world}: l'escaneig de l'edat no és el de la captura envellida`);
+      if (s.from !== w.capture || s.seed !== seedOf(w.world) + TRANSFORM_OFFSET || s.heritable !== w.scan.heritable || s.code !== m.code) q(`${w.world}: l'escaneig de l'edat no és el de la captura envellida`);
+      // la captura de l'escaneig, per la SHA-256 (auditor 1, auditoria 20): la del manifest, si el món hi entra, i la del disc,
+      // si se'n miren les captures
+      else if ((w.included && s.fromSha256 !== w.captureSha256) || (need && existsSync(join(root, w.capture)) && s.fromSha256 !== shaFile(root, w.capture))) q(`${w.world}: l'escaneig de l'edat no és de la captura d'origen (SHA-256)`);
       if (w.included !== (s.heritable === 0)) q(`${w.world}: la inclusió no és la que dona l'escaneig`);
       else if (!w.included && w.reason !== `${s.heritable} cel·les hereditàries a l'escaneig de l'època ${p.age}`) q(`${w.world}: la raó de l'exclusió no és la que dona l'escaneig`);
     } else if (w.included !== true) q(`${w.world}: als zeros, tots els mons hi entren`);
@@ -416,7 +421,11 @@ function captureProblems(name, root, machine) {
     const l = m.lists?.[machine];
     if (!l || l.file !== `${p.folder}/llista-${machine}.txt` || !existsSync(join(root, l.file))) { q(`falta la llista ${machine}`); continue; }
     if (shaFile(root, l.file) !== l.sha256) q(`la llista ${machine} no té la SHA-256 del manifest`);
-    lines.push(...readFileSync(join(root, l.file), 'utf8').split('\n').filter(Boolean));
+    const own = readFileSync(join(root, l.file), 'utf8').split('\n').filter(Boolean);
+    // la seva part dels mons inclosos, la de machineOf, en ordre (AU2-97)
+    const part = included.filter((_, i) => machineOf(name, i) === machine).flatMap((w) => branchLines(name, w));
+    if (!same(own, part) || l.branches !== part.length) q(`la llista ${machine} no és exactament la seva part dels mons inclosos (${own.length} branques, i n'hi han de ser ${part.length})`);
+    lines.push(...own);
   }
   const expectedLines = included.flatMap((w) => branchLines(name, w));
   if (!same([...lines].sort(), [...expectedLines].sort())) q('les llistes no són exactament les branques del manifest');
@@ -439,10 +448,10 @@ export function preflight(name, { root = ROOT, machine = null } = {}) {
 async function main(argv) {
   const [name, mode, ...rest] = argv;
   const modes = ['--envelliment', '--prepara', '--comprova', '--comprova-captures'];
-  const usage = 'Ús: node eines/pilot.mjs maduracio|zeros|serie --envelliment [--mons N]|--prepara [--paral·lel N]|--comprova [--maquina pc|vm]|--comprova-captures';
+  const usage = 'Ús: node eines/pilot.mjs maduracio|zeros|serie --envelliment [--mons N]|--prepara [--paral·lel N]|--comprova [--maquina pc|vm]|--comprova-captures [--maquina pc|vm]';
   if (!PILOTS[name] || !modes.includes(mode)) fail(usage, 2);
-  // les opcions de cada mode: --paral·lel a --prepara, --mons a l'envelliment de la sèrie, i --maquina a --comprova
-  const allowed = { '--prepara': ['--paral·lel', /^[1-9]\d?$/], '--envelliment': ['--mons', /^[1-9]\d{0,2}$/], '--comprova': ['--maquina', /^(pc|vm)$/] }[mode];
+  // les opcions de cada mode: --paral·lel a --prepara, --mons a l'envelliment de la sèrie, i --maquina a les comprovacions
+  const allowed = { '--prepara': ['--paral·lel', /^[1-9]\d?$/], '--envelliment': ['--mons', /^[1-9]\d{0,2}$/], '--comprova': ['--maquina', /^(pc|vm)$/], '--comprova-captures': ['--maquina', /^(pc|vm)$/] }[mode];
   let value = null;
   if (rest.length) {
     if (!allowed || rest.length !== 2 || rest[0] !== allowed[0] || !allowed[1].test(rest[1]) || (mode === '--envelliment' && name !== 'serie')) fail(usage, 2);
@@ -456,8 +465,8 @@ async function main(argv) {
   } else if (mode === '--prepara') {
     try { await prepare(name, { parallel: value === null ? 6 : Number(value) }); } catch (e) { fail(e.message); }
   } else {
-    const problems = mode === '--comprova' ? preflight(name, { machine: value }) : checkCaptures(name);
-    const what = mode === '--comprova' ? `La comprovació prèvia${value ? ` (${value})` : ''}` : 'La comprovació de les captures';
+    const problems = mode === '--comprova' ? preflight(name, { machine: value }) : checkCaptures(name, { machine: value });
+    const what = `${mode === '--comprova' ? 'La comprovació prèvia' : 'La comprovació de les captures'}${value ? ` (${value})` : ''}`;
     if (problems.length) { console.log(`${what} ha trobat ${problems.length} problemes:\n- ${problems.slice(0, 30).join('\n- ')}`); process.exit(1); }
     console.log(`${what} del pilot ${name}: tot correcte.`);
   }
