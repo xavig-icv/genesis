@@ -1170,18 +1170,18 @@
         </tbody>
       </table>
     </div>
-    <p class="sub">L'establiment és el de la llei 2, dins de les 8.000 èpoques següents. L'interval és l'exacte de Clopper-Pearson, calculat després de l'anàlisi. Tracta les 44 branques de cada braç com a independents, i ho podem fer perquè les dues llavors d'un món coincideixen gairebé només per atzar.</p>
+    <p class="sub">L'establiment és el de la llei 2, dins de les 8.000 èpoques següents. L'interval és l'exacte de Clopper-Pearson, calculat després de l'anàlisi. Tracta les 44 branques de cada braç com a independents, i el pilot no demostra que ho siguin (vegeu la concordança, més avall). Un bootstrap per món, que no ho suposa, dona intervals semblants: per exemple, del 15,9 al 40,9 % a <code>continue</code>.</p>
     <ul>
-      <li><strong>Desfer tota l'estructura no hi canvia res, en aquest pilot.</strong> <code>continue</code> i <code>shuffle-all</code> s'estableixen totes dues a 12 branques de 44. Món a món, <code>shuffle-all</code> s'estableix més en 8 mons, menys en 8, i igual en 6. Si els programes només canvien de lloc, tampoc no hi ha diferència (13 de 44).</li>
-      <li><strong>Els replicadors del començament no s'hi noten.</strong>
+      <li><strong>En aquest pilot, desfer tota l'estructura no hi fa cap diferència visible.</strong> <code>continue</code> i <code>shuffle-all</code> s'estableixen totes dues a 12 branques de 44. Món a món, <code>shuffle-all</code> s'estableix més en 8 mons, menys en 8, i igual en 6. Si els programes només canvien de lloc, tampoc no s'hi veu cap diferència (13 de 44). Que no es vegi no vol dir que no n'hi hagi: amb 22 mons, l'interval de la diferència entre <code>continue</code> i <code>shuffle-all</code> va de −18 a +18 punts (bootstrap per món).</li>
+      <li><strong>No hem vist que els replicadors del començament hi ajudin.</strong>
         <ul>
-          <li><strong>Com començaven:</strong> les sopes de <code>shuffle-all</code> començaven amb unes 700 cel·les que es repliquen, unes 30 vegades més que les de <code>continue</code>, i a tots els mons n'hi havia alguna d'hereditària.</li>
-          <li><strong>Què en surt:</strong> no s'hi estableix més sovint que a <code>continue</code>. Als 9 mons que començaven amb alguna cel·la hereditària per si sola, s'estableix a 3 branques de 18, i als altres 13, a 9 de 26.</li>
-          <li><strong>Quan s'hi estableix,</strong> ho fa abans: la mediana és de 3.250 èpoques, contra les 5.500 de <code>continue</code>.</li>
+          <li><strong>Com començaven:</strong> les sopes de <code>shuffle-all</code> començaven amb unes 700 cel·les que es repliquen, unes 30 vegades més que les de <code>continue</code>, i a tots els mons n'hi havia alguna d'hereditària, la majoria només en context (159 de 169).</li>
+          <li><strong>Què en surt:</strong> no s'hi estableix més sovint que a <code>continue</code>. Als 9 mons que començaven amb alguna cel·la hereditària per si sola, s'estableix a 3 branques de 18, i als altres 13, a 9 de 26. És una partició dels mons tal com van sortir, no un experiment: no diu que no hi influeixin.</li>
+          <li><strong>Les branques que s'hi estableixen</strong> ho fan abans: la mediana és de 3.250 èpoques, contra les 5.500 de <code>continue</code>. És la mediana de les establertes, i no diu que el braç sigui més ràpid. La mitjana restringida (RMST), que les compta totes, és de 6.756 èpoques contra 7.210.</li>
         </ul>
       </li>
       <li><strong>Les branques que s'estableixen menys</strong> són <code>shuffle-within</code> (6 de 44, i, món a món, 7 a la baixa i 1 a l'alça) i <code>reinit</code> (8 de 44; 7 i 3). Ho hem vist després, entre quatre comparacions: pot ser l'atzar.</li>
-      <li><strong>El món no ho decideix, ho decideix l'atzar de la continuació.</strong> La concordança entre les dues llavors d'un món és gairebé nul·la (<em>rho</em> = 0,03).</li>
+      <li><strong>Les dues llavors d'un món coincideixen poc més que per atzar, de mitjana.</strong> La concordança és de <em>rho</em> = 0,03, però varia molt d'un braç a l'altre (de −0,35 a 0,41), i és molt incerta: amb un bootstrap per món, l'interval va de −0,20 a 0,22. No demostra, doncs, que les llavors siguin independents, ni que el món no hi compti.</li>
       <li><strong>Encaixa amb la llei 2.</strong> El 27 % de <code>continue</code> és prop del 22 % dels mons de la llei 2 a la mateixa edat. El 18 % de <code>reinit</code>, la sopa nova, queda entre aquest i el 10 % dels mons nous.</li>
     </ul>
 
@@ -1193,7 +1193,7 @@
       <li><strong>El que ens dona per a la sèrie</strong> és el calibratge:
         <ul>
           <li>les proporcions de cada braç;</li>
-          <li>que les dues llavors d'un món valen gairebé com dues observacions independents;</li>
+          <li>que la concordança entre les dues llavors d'un món és baixa de mitjana, però incerta: per a la sèrie, val més tenir més mons que més llavors per món;</li>
           <li>el cost, unes 0,7 h per branca, més l'envelliment de cada món.</li>
         </ul>
       </li>
@@ -1211,6 +1211,17 @@
       <li><strong>Mentrestant, la prova dels zeros</strong> (<code>docs/protocol-zeros.md</code>), quan se n'hagi fet l'etiqueta i el segell.</li>
       <li><strong>Com es reprodueix:</strong> els 220 registres són a <code>fase2/resultats/maduracio/pilot/branques/</code>, i l'acta i la sortida de l'anàlisi (<code>node eines/maduracio-analisi.mjs</code>), a la mateixa carpeta.</li>
     </ul>
+
+    <div class="pending">
+      <p><strong>Correccions de l'auditoria 19 (27-10-2026).</strong> Tots dos auditors van refer el resultat pel seu compte, i coincideix amb l'anàlisi. Van demanar dir-lo amb més precisió, sense canviar cap dada:</p>
+      <ul>
+        <li><strong>La concordança</strong> (AUD-125, AU2-90). Dèiem "el món no ho decideix, ho decideix l'atzar de la continuació", i que les dues llavors d'un món "coincideixen gairebé només per atzar" i "valen gairebé com dues observacions independents". La <em>rho</em> de 0,03 és una mitjana de 22 mons, imprecisa i molt diferent segons el braç.</li>
+        <li><strong>L'estructura</strong> (AUD-126, AU2-91). Dèiem "desfer tota l'estructura no hi canvia res", i dels programes que canvien de lloc, que "tampoc no hi ha diferència". El que mostra el pilot és que no s'hi veu cap diferència, que no és el mateix.</li>
+        <li><strong>Els replicadors del començament</strong> (AUD-126, AU2-91). Dèiem que "no s'hi noten", i que "a tots els mons n'hi havia alguna d'hereditària", sense dir que la majoria ho eren només en context (AUD-121).</li>
+        <li><strong>El temps</strong> (AU2-91). Dèiem "quan s'hi estableix, ho fa abans". La mediana és només de les branques establertes.</li>
+        <li><strong>Els intervals del bootstrap per món</strong>, el de la <em>rho</em> i el de la diferència, són de l'auditor 2, i les concordances per braç, de l'auditor 1. Els hem refet amb els seus scripts.</li>
+      </ul>
+    </div>
   </article>
 
   <script type="module" src="quadern.js"></script>

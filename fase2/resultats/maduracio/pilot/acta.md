@@ -263,3 +263,34 @@ amb la mateixa llavor, s'haguessin establert al mateix cens, el segon hauria sob
   - **La concordança:** amb una *rho* de 0,03, les dues llavors d'un món valen gairebé com dues observacions independents.
   - **El cost:** unes 0,72 h per branca. Cal sumar-hi l'envelliment i l'escaneig de cada món.
 - **El braç `shuffle-all` "inert"** que preveia la lectura es discutirà a l'auditoria 19, amb el disseny de la sèrie.
+
+## L'auditoria 19 (27-10-2026)
+
+Tots dos auditors van refer el resultat sense codi del projecte, i coincideix amb `analisi.txt`. L'auditor 2 també en va
+reproduir la sortida byte a byte des del bundle.
+
+**Les precisions, sense esborrar el que dèiem:**
+- **La concordança (AUD-125, AU2-90).** Dèiem que les dues llavors d'un món "coincideixen gairebé només per atzar" i "valen
+  gairebé com dues observacions independents", i que els intervals tracten les branques com a independents perquè "és el que
+  diu la concordança".
+  - **Què hi ha:** *rho* = 0,035 és una mitjana de 22 mons. Per braç, la correlació intraclasse va de −0,35 (`shuffle-all`) a
+    0,41 (`reinit`), i el bootstrap per món en dona un interval de −0,20 a 0,22.
+  - **Què vol dir:** de mitjana, les dues llavors coincideixen poc més que per atzar, però el pilot no demostra que siguin
+    independents.
+  - **Els intervals:** els de Clopper-Pearson suposen la independència. Els del bootstrap per món (10.000 remostres, llavor
+    20261027), que no la suposen, són semblants: `continue` 15,9–40,9 %, `shuffle-programs` 15,9–45,5 %, `shuffle-within`
+    4,5–25,0 %, `shuffle-all` 15,9–38,6 % i `reinit` 6,8–31,8 %.
+- **El punt de partida (AU2-91).** Que "els mons que tenien alguna hereditària sola s'hi estableixen menys" és una partició dels
+  mons tal com van sortir (9 i 13), no un efecte.
+- **El temps (AU2-91).** La mediana de *T* és només de les branques establertes. La RMST de la taula és la que les compta totes.
+- **El que vam veure abans de l'anàlisi** (auditor 2). Dèiem "per què no canvia res". Era informació parcial del resultat: 69
+  captures volen dir unes 23 branques establertes al PC. No en canvia l'anàlisi, que era fixada abans, però no vol dir que no en
+  sabéssim res.
+- **El braç inert:** la sèrie no en tindrà. Hi estem d'acord tots tres.
+
+**Les dades que hi hem afegit per al disseny de la sèrie:**
+- **El cost per braç:** 0,69 h per branca a `continue`, 0,86 h a `shuffle-all` i 0,61 h a `reinit`. Amb aquests tres braços,
+  0,72 h de mitjana. L'envelliment, 0,45 h per món.
+- **Les llavors comunes:** els braços d'un món comparteixen les llavors de continuació, però les branques amb la mateixa llavor
+  no coincideixen més que les que en tenen una altra. Per exemple, `continue` i `reinit` s'estableixen totes dues 2 vegades amb
+  la mateixa llavor, i 3 amb l'altra.

@@ -314,8 +314,8 @@ Resum. El detall és al quadern.
   - **Els establiments en 8.000 èpoques més, des de l'edat 8.000:** el 27 % si la sopa continua tal com és, i el mateix
     27 % si se'n barregen tots els bytes. Els que menys, vist després: amb els bytes barrejats dins de cada programa (14 %)
     i amb una sopa nova (18 %).
-  - **La concordança entre les dues llavors d'un món** és gairebé nul·la (*rho* = 0,03): ho decideix l'atzar de la
-    continuació, no el món.
+  - **La concordança entre les dues llavors d'un món** és baixa de mitjana (*rho* = 0,03), però molt incerta i diferent
+    segons el braç (AUD-125, AU2-90): no demostra que les llavors siguin independents.
 - **Registre de famílies v2:** arregla els tres punts cecs de la v1. Sobre els mons desats de
   l'escombrat, ara troba el replicador que necessita parella (3,9 % del mapa), el palíndrom espaiat, i
   no s'inventa famílies en un món sense vida. Triga ~0,5 s per anàlisi en un món de 131.072 cel·les.
