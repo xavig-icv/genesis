@@ -107,6 +107,9 @@ Les hores d'aquesta secció són les del PC i la màquina virtual (+01:00).
 - **Quan:** a les 08:34, quan el bloc ja tenia 6 confirmacions, el calendari va donar la prova completa.
 - **La comprovació,** a les 08:34:49: l'arrel de Merkle del bloc coincideix amb el missatge atestat (blockstream.info), i el
   fitxer segellat és l'objecte de l'etiqueta.
+- **La segona atestació:** el calendari `btc.calendar.catallaxy.com` va ancorar el mateix segell al bloc 973.378, de les
+  09:37:13 (la transacció `463e4ad7…`), una hora després del llançament. La va donar a les 11:23, i l'arrel de Merkle
+  coincideix. No hi canvia res: la que data l'etiqueta és la del bloc 973.367.
 - **El detall:** `docs/preregistre-zeros/LLEGEIX-ME.md`.
 
 **El llançament** (hores de les màquines, +01:00):
