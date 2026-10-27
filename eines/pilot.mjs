@@ -1,20 +1,25 @@
-// Els experiments d'alíquotes: el pilot de la maduració (docs/pilot-maduracio.md) i la prova preregistrada dels zeros
-// (docs/protocol-zeros.md). Les llistes, el manifest congelat i les comprovacions que van demanar les auditories 15 i
-// 16. Cap resultat no es llegeix: només els registres de l'envelliment, per saber quins mons hi entren, i les captures,
-// per transformar-les i escanejar-les.
+// Els experiments d'alíquotes: el pilot de la maduració (docs/pilot-maduracio.md), la prova preregistrada dels zeros
+// (docs/protocol-zeros.md) i la sèrie preregistrada de la maduració (docs/protocol-maduracio.md). Les llistes, el
+// manifest congelat i les comprovacions que van demanar les auditories 15, 16 i 19. Cap resultat no es llegeix: només
+// els registres de l'envelliment, per saber quins mons hi entren, i les captures, per transformar-les i escanejar-les.
 //
-//   node eines/pilot.mjs maduracio --envelliment          la llista de l'envelliment dels mons nous (a la sortida)
-//   node eines/pilot.mjs PILOT --prepara [--paral·lel N]  valida l'envelliment (la maduració) i hi exclou els mons amb vida
-//                                                         (AUD-111); transforma les captures amb eines/transforma.mjs i les
-//                                                         escaneja totes (el punt de partida de cada braç, AUD-116); escriu
-//                                                         el manifest i les llistes de les branques
+//   node eines/pilot.mjs maduracio|serie --envelliment [--mons N]
+//                                                         la llista de l'envelliment dels mons nous (a la sortida). A la
+//                                                         sèrie, els N primers de la llista de llavors (per defecte, 180)
+//   node eines/pilot.mjs PILOT --prepara [--paral·lel N]  valida l'envelliment (la maduració i la sèrie) i hi exclou els
+//                                                         mons amb vida (AUD-111); a la sèrie, n'agafa els primers que hi
+//                                                         entren, en l'ordre de la llista; transforma les captures amb
+//                                                         eines/transforma.mjs i les escaneja totes (el punt de partida de
+//                                                         cada braç, AUD-116); escriu el manifest i les llistes de les branques
 //   node eines/pilot.mjs PILOT --comprova-captures        el manifest contra el disseny, i totes les captures, els registres
 //                                                         i els escanejos contra el manifest (AU2-84, AU2-88). Serveix també
 //                                                         després de la sèrie, abans de decidir (AUD-118)
-//   node eines/pilot.mjs PILOT --comprova                 la comprovació prèvia: --comprova-captures, les llistes, i que cap
-//                                                         branca no hagi començat
+//   node eines/pilot.mjs PILOT --comprova [--maquina pc|vm]
+//                                                         la comprovació prèvia: --comprova-captures, les llistes, i que cap
+//                                                         branca no hagi començat. Amb --maquina, només les captures dels
+//                                                         mons de la llista d'aquella màquina
 //
-// PILOT és maduracio o zeros. --prepara no sobreescriu res: si el manifest ja existeix, s'atura. Un registre de
+// PILOT és maduracio, zeros o serie. --prepara no sobreescriu res: si el manifest ja existeix, s'atura. Un registre de
 // l'envelliment que no sigui el que toca és un error de la preparació, no un món exclòs (AU2-85). Els camins de les
 // llistes són relatius a la carpeta del repositori, com a eines/experiments.sh.
 import { readFileSync, writeFileSync, existsSync, mkdirSync, lstatSync } from 'fs';
@@ -61,6 +66,24 @@ export const PILOTS = {
       descriptive: [['zeros-inert', 'continue'], ['zeros-data', 'zeros-inert'], ['placebo-cell', 'continue']],
     },
   },
+  // la sèrie preregistrada de la maduració (auditoria 19): els 150 primers mons de la llista que hi entren, tres braços,
+  // dues llavors, i cap captura de les branques (AUD-124, AU2-93). El PC en fa 3 de cada 5 mons, i la màquina virtual, 2
+  serie: {
+    folder: 'fase2/resultats/maduracio/serie',
+    candidates: Array.from({ length: 400 }, (_, i) => String(6001 + i)),
+    cohort: { from: 6001, to: 6400, size: 150 }, aging: 180,
+    age: 8000, horizon: 8000, mixing: 0, stopAfterEvent: 0, saveEvents: false,
+    arms: ['continue', 'shuffle-all', 'reinit'],
+    continuation: [['a', 400000], ['b', 500000]],
+    split: [['pc', 3], ['vm', 2]],
+    tag: 'preregistre-maduracio', protocol: 'docs/protocol-maduracio.md',
+    test: {
+      measure: "el nombre de branques de cada món i braç on la vida s'estableix dins de H (el criteri de la llei 2)", unit: 'món', worlds: 'tots',
+      contrasts: [['continue', 'reinit'], ['shuffle-all', 'reinit']], method: 'holm', alpha: 0.025, sided: 'greater',
+      statistic: 'la permutació de signes exacta, sobre la suma de les diferències de cada món',
+      descriptive: [['continue', 'shuffle-all']],
+    },
+  },
 };
 
 const seedOf = (world) => Number(world.replace(/^[AB]/, ''));
@@ -71,21 +94,23 @@ const roleOf = (p, world) => p.roles?.[world] ?? 'prova';
 // Els paràmetres que el manifest ha de portar, exactament
 export function designParams(name) {
   const p = PILOTS[name];
-  return { arms: p.arms, horizon: p.horizon, mixing: p.mixing, stopAfterEvent: p.stopAfterEvent, age: p.age ?? null, transformOffset: TRANSFORM_OFFSET, continuation: p.continuation, ...COMMON };
+  return { arms: p.arms, horizon: p.horizon, mixing: p.mixing, stopAfterEvent: p.stopAfterEvent, age: p.age ?? null, transformOffset: TRANSFORM_OFFSET, continuation: p.continuation, ...COMMON, ...(p.cohort ? { cohort: p.cohort } : {}) };
 }
+// Els experiments amb mons nous, envellits aquí: la maduració i la sèrie
+const aged = (name) => name === 'maduracio' || name === 'serie';
 
-// L'ordre de l'envelliment d'un món nou de la maduració
-export function agingLine(world) {
-  const p = PILOTS.maduracio, d = `${p.folder}/envelliment`;
+// L'ordre de l'envelliment d'un món nou de la maduració o de la sèrie
+export function agingLine(world, name = 'maduracio') {
+  const p = PILOTS[name], d = `${p.folder}/envelliment`;
   return `e${world} --world 512x256 --seed ${world} --mixing 0 --epochs ${p.age} ${CENSUS} --stop-after-event 0 --json ${d}/e${world}.jsonl --save ${d}/captures`;
 }
-const agedCapture = (world) => `${PILOTS.maduracio.folder}/envelliment/captures/llavor${world}-mon512x256-r2-final.bin`;
+const agedCapture = (world, name = 'maduracio') => `${PILOTS[name].folder}/envelliment/captures/llavor${world}-mon512x256-r2-final.bin`;
 const armPath = (p, world, arm) => `${p.folder}/alicuotes/${world}/${arm}.bin`;
 const scanPath = (p, world, arm = null) => `${p.folder}/alicuotes/${world}/${arm ? `${arm}-` : ''}escaneig.json`;
 
 // La captura d'origen i l'època de cada món (i, als zeros, la SHA-256 del repartiment de B2)
 export function origin(name, world, { root = ROOT } = {}) {
-  if (name === 'maduracio') return { capture: agedCapture(world), start: PILOTS.maduracio.age };
+  if (aged(name)) return { capture: agedCapture(world, name), start: PILOTS[name].age };
   const rep = JSON.parse(readFileSync(join(root, 'fase2/resultats/b2/repartiment.json'), 'utf8'));
   const w = rep.worlds.find((x) => `${x.group}${x.seed}` === world);
   if (!w) throw new Error(`${world} no és al repartiment de B2`);
@@ -115,11 +140,12 @@ export function branchList(name, entry) {
   });
 }
 
-// L'envelliment d'un món de la maduració (AU2-85). Retorna { problems, status }: problems, si el registre no és el que
-// toca (és un error de la preparació); status, si hi entra o no i per què
+// L'envelliment d'un món de la maduració o de la sèrie (AU2-85). Retorna { problems, status }: problems, si el registre
+// no és el que toca (és un error de la preparació); status, si hi entra o no i per què. Sense needCapture, no cal que hi
+// sigui la captura final (la comprovació d'una màquina que no fa córrer aquest món)
 const START_KEYS = 'census,code,command,diffusion,epochs,event,every,flow,from,mixing,mutation,node,programs,radius,renewal,rng,seed,start,type,world,zlib';
-export function validateAging(world, { root = ROOT } = {}) {
-  const p = PILOTS.maduracio, f = `${p.folder}/envelliment/e${world}.jsonl`, problems = [], q = (m) => problems.push(`e${world}: ${m}`);
+export function validateAging(world, { root = ROOT, name = 'maduracio', needCapture = true } = {}) {
+  const p = PILOTS[name], f = `${p.folder}/envelliment/e${world}.jsonl`, problems = [], q = (m) => problems.push(`e${world}: ${m}`);
   if (!existsSync(join(root, f))) return { problems: [`e${world}: no hi ha el registre de l'envelliment`] };
   let r;
   try { r = read(root, f); } catch { return { problems: [`e${world}: el registre de l'envelliment no es pot llegir`] }; }
@@ -129,7 +155,7 @@ export function validateAging(world, { root = ROOT } = {}) {
   const expect = {
     seed: Number(world), programs: COMMON.world[0] * COMMON.world[1], world: COMMON.world, radius: COMMON.radius, mixing: 0, diffusion: 0, flow: 0, renewal: 0,
     mutation: COMMON.mutation, from: null, start: 0, epochs: p.age, every: COMMON.every, rng: COMMON.rng, census: COMMON.census,
-    event: { share: 0.01, censuses: 2, stopAfter: 0 }, command: `node sim.mjs ${agingLine(world).split(' ').slice(1).join(' ')}`,
+    event: { share: 0.01, censuses: 2, stopAfter: 0 }, command: `node sim.mjs ${agingLine(world, name).split(' ').slice(1).join(' ')}`,
   };
   for (const [k, v] of Object.entries(expect)) if (!same(s[k], v)) q(`${k} és ${JSON.stringify(s[k])}, i el disseny diu ${JSON.stringify(v)}`);
   if (!(typeof s.code === 'string' && s.code.length >= 7 && !s.code.includes('+'))) q(`el codi del registre no és un commit net (${s.code})`);
@@ -148,7 +174,7 @@ export function validateAging(world, { root = ROOT } = {}) {
   } else if (end.reason === 'establiment' && ev && end.epoch === ev.confirmed && end.epoch <= p.age) {
     status = { included: false, reason: `establiment abans de l'època ${p.age} (a l'època ${ev.epoch})` };
   } else q(`acaba a l'època ${end.epoch} per "${end.reason}", que no és ni l'horitzó sense vida ni un establiment`);
-  if (!existsSync(join(root, agedCapture(world)))) q(`no hi ha la captura final ${agedCapture(world)}`);
+  if (needCapture && !existsSync(join(root, agedCapture(world, name)))) q(`no hi ha la captura final ${agedCapture(world, name)}`);
   return { problems, status, file: f, sha256: shaFile(root, f), code: s.code };
 }
 
@@ -199,33 +225,70 @@ const scanRecord = (root, file) => {
   return { file, sha256: shaFile(root, file), replicating: s.replicating, heritable: s.heritable, heritableSolo: s.heritableSolo, cells: s.cells };
 };
 
+// La màquina de cada món inclòs, per la seva posició al manifest: alternats, o, a la sèrie, 3 de cada 5 al PC i 2 a la
+// màquina virtual (la proporció de branques alhora de cada una)
+export function machineOf(name, i) {
+  const split = PILOTS[name].split ?? [['pc', 1], ['vm', 1]], total = split.reduce((a, [, k]) => a + k, 0);
+  let r = i % total;
+  for (const [machine, k] of split) { if (r < k) return machine; r -= k; }
+  return null;
+}
+
+// Els mons de la llista de la sèrie que tenen el registre de l'envelliment, en ordre. Un forat a la llista (un món sense
+// registre i, després, mons que en tenen) és un error de l'envelliment
+export function agedCandidates(name, { root = ROOT } = {}) {
+  const p = PILOTS[name], has = p.candidates.map((w) => existsSync(join(root, `${p.folder}/envelliment/e${w}.jsonl`)));
+  const first = has.indexOf(false), upTo = first < 0 ? has.length : first;
+  if (has.slice(upTo).some(Boolean)) throw new Error(`falta el registre de l'envelliment de ${p.candidates[upTo]}, i n'hi ha de mons posteriors de la llista`);
+  return p.candidates.slice(0, upTo);
+}
+
+const scanJob = (p, w) => ({ label: `escaneig de ${w.world}`, args: ['--scan', '--from', w.capture, '--seed', String(seedOf(w.world) + TRANSFORM_OFFSET), '--out', scanPath(p, w.world)] });
+const excludeIfHeritable = (p, w, root) => {
+  w.scan = scanRecord(root, scanPath(p, w.world));
+  if (w.scan.heritable > 0) { w.included = false; w.reason = `${w.scan.heritable} cel·les hereditàries a l'escaneig de l'època ${p.age}`; }
+};
+
 export async function prepare(name, { root = ROOT, parallel = 6 } = {}) {
   const p = PILOTS[name], manifestPath = `${p.folder}/manifest.json`;
   if (existsSync(join(root, manifestPath))) fail(`${manifestPath} ja existeix: no es torna a preparar`);
   const code = codeVersion(root);
   if (code.includes('+') || code === 'desconeguda') fail(`el codi té canvis sense desar (${code}): la preparació ha de ser d'un commit net`);
-  const worlds = p.worlds.map((world) => {
+  const worlds = (p.cohort ? agedCandidates(name, { root }) : p.worlds).map((world) => {
     const o = origin(name, world, { root });
     return { world, role: roleOf(p, world), start: o.start, capture: o.capture, repartimentSha256: o.sha256 };
   });
-  // 1. L'envelliment (la maduració): validat sencer, i amb el mateix simulador que ara
-  if (name === 'maduracio') {
+  // 1. L'envelliment (la maduració i la sèrie): validat sencer, i amb el mateix simulador que ara
+  if (aged(name)) {
     const problems = [], codes = new Set();
     for (const w of worlds) {
-      const a = validateAging(w.world, { root });
+      const a = validateAging(w.world, { root, name });
       problems.push(...a.problems);
       if (!a.problems.length) { Object.assign(w, a.status); w.aging = { file: a.file, sha256: a.sha256, code: a.code }; codes.add(a.code); }
     }
     for (const c of codes) problems.push(...simulatorProblems(c, { root }));
     if (problems.length) fail(`l'envelliment no és el que toca (${problems.length} problemes):\n- ${problems.slice(0, 20).join('\n- ')}`);
     // l'escaneig d'herència de totes les cel·les a l'edat (AUD-111): s'exclou el món si hi ha alguna cel·la hereditària
-    const candidates = worlds.filter((w) => w.included);
-    for (const w of candidates) mkdirSync(join(root, p.folder, 'alicuotes', w.world), { recursive: true });
-    console.log(`L'escaneig dels ${candidates.length} mons envellits:`);
-    await runPool(candidates.map((w) => ({ label: `escaneig de ${w.world}`, args: ['--scan', '--from', w.capture, '--seed', String(seedOf(w.world) + TRANSFORM_OFFSET), '--out', scanPath(p, w.world)] })), parallel, root);
-    for (const w of candidates) {
-      w.scan = scanRecord(root, scanPath(p, w.world));
-      if (w.scan.heritable > 0) { w.included = false; w.reason = `${w.scan.heritable} cel·les hereditàries a l'escaneig de l'època ${p.age}`; }
+    if (p.cohort) {
+      // la sèrie: els primers mons de la llista que hi entren, fins a tenir-ne cohort.size. S'escanegen per rondes, tants
+      // com en falten, i no se n'escaneja cap de més. Els que vénen després del darrer no van al manifest
+      let i = 0, included = 0;
+      while (included < p.cohort.size && i < worlds.length) {
+        const batch = [];
+        while (batch.length < p.cohort.size - included && i < worlds.length) { const w = worlds[i++]; if (w.included) batch.push(w); }
+        for (const w of batch) mkdirSync(join(root, p.folder, 'alicuotes', w.world), { recursive: true });
+        console.log(`L'escaneig de ${batch.length} mons envellits:`);
+        await runPool(batch.map((w) => scanJob(p, w)), parallel, root);
+        for (const w of batch) { excludeIfHeritable(p, w, root); if (w.included) included++; }
+      }
+      if (included < p.cohort.size) fail(`hi ha ${included} mons inclosos, i en calen ${p.cohort.size}: cal envellir els següents de la llista, en ordre (node eines/pilot.mjs ${name} --envelliment --mons N)`);
+      worlds.splice(i);
+    } else {
+      const candidates = worlds.filter((w) => w.included);
+      for (const w of candidates) mkdirSync(join(root, p.folder, 'alicuotes', w.world), { recursive: true });
+      console.log(`L'escaneig dels ${candidates.length} mons envellits:`);
+      await runPool(candidates.map((w) => scanJob(p, w)), parallel, root);
+      for (const w of candidates) excludeIfHeritable(p, w, root);
     }
   } else worlds.forEach((w) => { w.included = true; });
   const included = worlds.filter((w) => w.included);
@@ -248,11 +311,11 @@ export async function prepare(name, { root = ROOT, parallel = 6 } = {}) {
       w.arms[arm] = { file, sha256: rec.outSha256, record: { file: recFile, sha256: shaFile(root, recFile) }, changed: rec.changed, scope: rec.scope, scan: scanRecord(root, scanPath(p, w.world, arm)) };
     }
   }
-  // 4. Les branques i les llistes de les dues màquines (els mons inclosos, alternats), i el manifest
+  // 4. Les branques i les llistes de les dues màquines (els mons inclosos, repartits amb machineOf), i el manifest
   const branches = included.flatMap((w) => branchList(name, w));
   const lists = {};
-  for (const [machine, parity] of [['pc', 0], ['vm', 1]]) {
-    const lines = included.filter((_, i) => i % 2 === parity).flatMap((w) => branchLines(name, w));
+  for (const machine of ['pc', 'vm']) {
+    const lines = included.filter((_, i) => machineOf(name, i) === machine).flatMap((w) => branchLines(name, w));
     const file = `${p.folder}/llista-${machine}.txt`;
     writeFileSync(join(root, file), lines.join('\n') + '\n', { flag: 'wx' });
     lists[machine] = { file, sha256: shaFile(root, file), branches: lines.length };
@@ -267,12 +330,13 @@ export async function prepare(name, { root = ROOT, parallel = 6 } = {}) {
   console.log(`manifest: ${manifestPath}; ${included.length} mons inclosos de ${worlds.length}, ${branches.length} branques`);
 }
 
-// El manifest contra el disseny, i totes les captures, registres i escanejos contra el manifest. Retorna la llista de
-// problemes (buida si tot és correcte)
-export function checkCaptures(name, { root = ROOT } = {}) {
-  try { return captureProblems(name, root); } catch (e) { return [`el manifest no té l'estructura esperada (${e.message})`]; }
+// El manifest contra el disseny, i totes les captures, registres i escanejos contra el manifest. Amb una màquina, només
+// les captures (els .bin) dels mons de la seva llista; els registres i els escanejos, que van a git, de tots. Retorna la
+// llista de problemes (buida si tot és correcte)
+export function checkCaptures(name, { root = ROOT, machine = null } = {}) {
+  try { return captureProblems(name, root, machine); } catch (e) { return [`el manifest no té l'estructura esperada (${e.message})`]; }
 }
-function captureProblems(name, root) {
+function captureProblems(name, root, machine) {
   const p = PILOTS[name], problems = [], q = (m) => problems.push(m);
   const manifestPath = join(root, p.folder, 'manifest.json');
   if (!existsSync(manifestPath)) return [`no hi ha cap manifest a ${p.folder}`];
@@ -282,17 +346,32 @@ function captureProblems(name, root) {
   if (m.pilot !== name) q(`el manifest és del pilot ${m.pilot}, no de ${name}`);
   if (!same(m.params, designParams(name))) q('els paràmetres del manifest no són els del disseny');
   if (p.tag && (m.tag !== p.tag || m.dir !== `${p.folder}/branques` || !same(m.test, p.test))) q("l'etiqueta, la carpeta o la prova del manifest no són les del disseny");
-  if (!Array.isArray(m.worlds) || !same(m.worlds.map((w) => w.world), p.worlds)) return [...problems, `els mons del manifest no són exactament els ${p.worlds.length} del disseny, en el seu ordre`];
+  if (p.cohort) {
+    // la sèrie: els primers mons de la llista, en ordre, fins al darrer inclòs, i exactament cohort.size d'inclosos
+    const ids = Array.isArray(m.worlds) ? m.worlds.map((w) => w.world) : [];
+    if (!ids.length || !same(ids, p.candidates.slice(0, ids.length))) return [...problems, 'els mons del manifest no són els primers de la llista de la sèrie, en el seu ordre'];
+    const n = m.worlds.filter((w) => w.included === true).length;
+    if (n !== p.cohort.size) q(`el manifest té ${n} mons inclosos, i la sèrie n'ha de tenir ${p.cohort.size}`);
+    if (m.worlds[m.worlds.length - 1].included !== true) q("la llista dels mons del manifest no acaba al darrer món inclòs");
+  } else if (!Array.isArray(m.worlds) || !same(m.worlds.map((w) => w.world), p.worlds)) return [...problems, `els mons del manifest no són exactament els ${p.worlds.length} del disseny, en el seu ordre`];
   const included = m.worlds.filter((w) => w.included === true);
   if (!included.length) q('el manifest no té cap món inclòs');
+  // amb una màquina, els mons de la seva llista (l'identificador de cada branca comença pel del món)
+  let only = null;
+  if (machine) {
+    const l = m.lists?.[machine];
+    if (!l || l.file !== `${p.folder}/llista-${machine}.txt` || !existsSync(join(root, l.file))) return [...problems, `falta la llista ${machine}`];
+    only = new Set(readFileSync(join(root, l.file), 'utf8').split('\n').filter(Boolean).map((line) => line.split(' ')[0].split('-')[0]));
+  }
   const seen = new Set(), paths = (f) => { if (seen.has(f)) q(`el camí ${f} es repeteix`); seen.add(f); };
   for (const w of m.worlds) {
+    const need = !only || only.has(w.world);
     if (w.role !== roleOf(p, w.world)) q(`${w.world}: el paper és "${w.role}", i el disseny diu "${roleOf(p, w.world)}"`);
     const o = origin(name, w.world, { root });
     if (w.capture !== o.capture || w.start !== o.start) { q(`${w.world}: la captura d'origen o l'època no són les del disseny`); continue; }
-    if (name === 'maduracio') {
+    if (aged(name)) {
       // l'envelliment, tornat a validar, i el seu registre, el del manifest
-      const a = validateAging(w.world, { root });
+      const a = validateAging(w.world, { root, name, needCapture: need });
       if (a.problems.length) { q(`${w.world}: ${a.problems[0]}`); continue; }
       if (!w.aging || w.aging.file !== a.file || w.aging.sha256 !== a.sha256 || w.aging.code !== a.code) q(`${w.world}: el registre de l'envelliment no és el del manifest`);
       if (!a.status.included) { if (w.included || w.reason !== a.status.reason) q(`${w.world}: l'exclusió no és la que dona l'envelliment`); continue; }
@@ -303,18 +382,22 @@ function captureProblems(name, root) {
       else if (!w.included && w.reason !== `${s.heritable} cel·les hereditàries a l'escaneig de l'època ${p.age}`) q(`${w.world}: la raó de l'exclusió no és la que dona l'escaneig`);
     } else if (w.included !== true) q(`${w.world}: als zeros, tots els mons hi entren`);
     if (!w.included) continue;
-    if (!existsSync(join(root, w.capture))) { q(`${w.world}: no hi ha la captura d'origen ${w.capture}`); continue; }
-    const captureSha = shaFile(root, w.capture);
-    if (captureSha !== w.captureSha256) q(`${w.world}: la captura d'origen no té la SHA-256 del manifest`);
-    if (o.sha256 && o.sha256 !== captureSha) q(`${w.world}: la captura d'origen no té la SHA-256 del repartiment de B2`);
+    if (need) {
+      if (!existsSync(join(root, w.capture))) { q(`${w.world}: no hi ha la captura d'origen ${w.capture}`); continue; }
+      const captureSha = shaFile(root, w.capture);
+      if (captureSha !== w.captureSha256) q(`${w.world}: la captura d'origen no té la SHA-256 del manifest`);
+      if (o.sha256 && o.sha256 !== captureSha) q(`${w.world}: la captura d'origen no té la SHA-256 del repartiment de B2`);
+    }
     paths(w.capture);
     for (const arm of p.arms) {
       const a = w.arms?.[arm];
       if (!a) { q(`${w.world}: falta el braç ${arm}`); continue; }
       if (a.file !== armPath(p, w.world, arm)) q(`${w.world} ${arm}: el camí de la captura no és el del disseny`);
       paths(a.file);
-      if (!existsSync(join(root, a.file))) { q(`${w.world} ${arm}: no hi ha ${a.file}`); continue; }
-      if (shaFile(root, a.file) !== a.sha256) q(`${w.world} ${arm}: la captura transformada no té la SHA-256 del manifest`);
+      if (need) {
+        if (!existsSync(join(root, a.file))) { q(`${w.world} ${arm}: no hi ha ${a.file}`); continue; }
+        if (shaFile(root, a.file) !== a.sha256) q(`${w.world} ${arm}: la captura transformada no té la SHA-256 del manifest`);
+      }
       if (!a.record || !existsSync(join(root, a.record.file)) || shaFile(root, a.record.file) !== a.record.sha256) { q(`${w.world} ${arm}: el registre de la transformació no és el del manifest`); continue; }
       const rec = JSON.parse(readFileSync(join(root, a.record.file), 'utf8'));
       // la procedència (AU2-88): d'on ve, on va, amb quina llavor, amb quin món i amb quin codi
@@ -340,9 +423,10 @@ function captureProblems(name, root) {
   return problems;
 }
 
-// La comprovació prèvia: les captures i, a més, que cap branca no hagi començat
-export function preflight(name, { root = ROOT } = {}) {
-  const problems = checkCaptures(name, { root });
+// La comprovació prèvia: les captures (amb una màquina, les dels mons de la seva llista) i, a més, que cap branca no hagi
+// començat
+export function preflight(name, { root = ROOT, machine = null } = {}) {
+  const problems = checkCaptures(name, { root, machine });
   if (problems.length) return problems;
   const m = JSON.parse(readFileSync(join(root, PILOTS[name].folder, 'manifest.json'), 'utf8'));
   for (const b of m.branches) {
@@ -355,20 +439,25 @@ export function preflight(name, { root = ROOT } = {}) {
 async function main(argv) {
   const [name, mode, ...rest] = argv;
   const modes = ['--envelliment', '--prepara', '--comprova', '--comprova-captures'];
-  if (!PILOTS[name] || !modes.includes(mode)) fail('Ús: node eines/pilot.mjs maduracio|zeros --envelliment|--prepara [--paral·lel N]|--comprova|--comprova-captures', 2);
-  let parallel = 6;
+  const usage = 'Ús: node eines/pilot.mjs maduracio|zeros|serie --envelliment [--mons N]|--prepara [--paral·lel N]|--comprova [--maquina pc|vm]|--comprova-captures';
+  if (!PILOTS[name] || !modes.includes(mode)) fail(usage, 2);
+  // les opcions de cada mode: --paral·lel a --prepara, --mons a l'envelliment de la sèrie, i --maquina a --comprova
+  const allowed = { '--prepara': ['--paral·lel', /^[1-9]\d?$/], '--envelliment': ['--mons', /^[1-9]\d{0,2}$/], '--comprova': ['--maquina', /^(pc|vm)$/] }[mode];
+  let value = null;
   if (rest.length) {
-    if (mode !== '--prepara' || rest.length !== 2 || rest[0] !== '--paral·lel' || !/^[1-9]\d?$/.test(rest[1])) fail('Ús: node eines/pilot.mjs PILOT --prepara [--paral·lel N]', 2);
-    parallel = Number(rest[1]);
+    if (!allowed || rest.length !== 2 || rest[0] !== allowed[0] || !allowed[1].test(rest[1]) || (mode === '--envelliment' && name !== 'serie')) fail(usage, 2);
+    value = rest[1];
   }
   if (mode === '--envelliment') {
-    if (name !== 'maduracio') fail('només la maduració té envelliment', 2);
-    console.log(PILOTS.maduracio.worlds.map(agingLine).join('\n'));
+    if (!aged(name)) fail("només la maduració i la sèrie tenen envelliment", 2);
+    const p = PILOTS[name], count = value === null ? (p.aging ?? p.worlds.length) : Number(value);
+    if (p.candidates && count > p.candidates.length) fail(`la llista de la sèrie té ${p.candidates.length} mons`, 2);
+    console.log((p.candidates ? p.candidates.slice(0, count) : p.worlds).map((w) => agingLine(w, name)).join('\n'));
   } else if (mode === '--prepara') {
-    try { await prepare(name, { parallel }); } catch (e) { fail(e.message); }
+    try { await prepare(name, { parallel: value === null ? 6 : Number(value) }); } catch (e) { fail(e.message); }
   } else {
-    const problems = mode === '--comprova' ? preflight(name) : checkCaptures(name);
-    const what = mode === '--comprova' ? 'La comprovació prèvia' : 'La comprovació de les captures';
+    const problems = mode === '--comprova' ? preflight(name, { machine: value }) : checkCaptures(name);
+    const what = mode === '--comprova' ? `La comprovació prèvia${value ? ` (${value})` : ''}` : 'La comprovació de les captures';
     if (problems.length) { console.log(`${what} ha trobat ${problems.length} problemes:\n- ${problems.slice(0, 30).join('\n- ')}`); process.exit(1); }
     console.log(`${what} del pilot ${name}: tot correcte.`);
   }
