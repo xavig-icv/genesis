@@ -18,12 +18,16 @@
   - **Qui va respondre:** dos calendaris, `b.pool.opentimestamps.org` i `ots.btc.catallaxy.com`. Els altres dos de la
     llista per defecte tenien el certificat caducat.
   - **Què s'hi va enviar:** només un hash, el del fitxer amb un nonce aleatori.
-  - **Si és completa:** sí, amb una atestació de Bitcoin, la del bloc 973.367.
-    - **D'on ve:** de `bob.btc.calendar.opentimestamps.org`, amb la transacció
+  - **Si és completa:** sí, amb dues atestacions de Bitcoin, la del bloc 973.367 i la del 973.378.
+    - **La primera:** de `bob.btc.calendar.opentimestamps.org`, amb la transacció
       `b429782c12f12ba6608c11de714730686e028daa82565de17ca1f703c9653b2e`. El calendari dona la prova quan el bloc té 6
       confirmacions.
-    - **La comprovació:** l'arrel de Merkle del bloc coincideix amb el missatge atestat (comprovat amb blockstream.info).
-    - **L'altre calendari,** `btc.calendar.catallaxy.com`, encara era pendent quan es van llançar les branques.
+    - **La segona:** de `btc.calendar.catallaxy.com`, amb la transacció
+      `463e4ad7f8440f2dbbca7dafcac3a953c2f37489c1d074bd71b12325054d5dc0`, al bloc 973.378. Quan es van llançar les
+      branques, encara era pendent. La vam afegir al fitxer el mateix dia, quan el calendari la va donar.
+    - **La comprovació:** l'arrel de Merkle de tots dos blocs coincideix amb el missatge atestat (comprovat amb
+      blockstream.info).
+    - **Per què dues:** la prova no depèn d'un sol calendari. La que data l'etiqueta és la primera, la del bloc més antic.
 
 **L'ordre, hora a hora (UTC):**
 - **07:19:53:** l'etiqueta.
@@ -36,6 +40,8 @@
 - **08:35:08:** comença el lot del PC. La primera línia del lot és de les 08:35:09.
 - **08:35:16:** `--comprova` a la màquina virtual, "tot correcte".
 - **08:35:19:** comença el lot de la màquina virtual.
+- **09:37:13:** l'hora del bloc 973.378, el de la segona atestació. El calendari la dona a les 11:23, i la comprovem tot
+  seguit.
 
 **El que demostra:**
 - **Bitcoin,** sense confiar en ningú, demostra que l'etiqueta existia quan es va minar el bloc 973.367.
