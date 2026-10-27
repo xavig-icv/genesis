@@ -2,8 +2,9 @@
 
 **Estat: v2.2 (26-10-2026), amb les correccions de les auditories 15, 16 i 17.**
 - **La maduració, feta (27-10-2026):** les 220 branques, sense cap fallada, i l'anàlisi. Els resultats són a l'acta
-  (`fase2/resultats/maduracio/pilot/acta.md`) i a l'entrada 12 del quadern. El disseny de la sèrie va a l'auditoria 19.
-- **Els zeros:** encara no s'ha fet córrer cap branca.
+  (`fase2/resultats/maduracio/pilot/acta.md`) i a l'entrada 12 del quadern. El disseny de la sèrie es va decidir després de
+  l'auditoria 19, i el seu protocol és a `docs/protocol-maduracio.md`.
+- **Els zeros:** la prova preregistrada corre des del 27-10-2026 (`docs/protocol-zeros.md`).
 - **Els veredictes de la v1:**
   - **L'auditor 1:** GO per als dos pilots, amb canvis.
   - **L'auditor 2:** GO condicionat per a la maduració, i NO-GO per al dels zeros tal com era.

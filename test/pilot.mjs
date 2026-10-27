@@ -11,9 +11,9 @@ import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync, copyFileSy
 import { tmpdir } from 'os';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { PILOTS, COMMON, TRANSFORM_OFFSET, agingLine, branchLines, branchList, designParams, validateAging, simulatorProblems, checkCaptures, preflight } from '../eines/pilot.mjs';
+import { PILOTS, COMMON, TRANSFORM_OFFSET, agingLine, branchLines, branchList, designParams, validateAging, simulatorProblems, checkCaptures, preflight, machineOf, agedCandidates } from '../eines/pilot.mjs';
 import { establishment } from '../fase2/census.js';
-import { critical, power } from '../eines/potencia-maduracio.mjs';
+import { critical, power, familyPower, validity } from '../eines/potencia-maduracio.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const opt = (line, name) => line.match(new RegExp(`--${name} (\\S+)`))?.[1];
@@ -23,9 +23,9 @@ const put = (base, f, data) => { mkdirSync(dirname(join(base, f)), { recursive: 
 
 // Un registre d'envelliment complet, com l'escriu sim.mjs: els censos cada 250 èpoques, l'establiment si el donen els
 // censos (i l'aturada al cens que el confirma) i les mesures cada 100
-function agingRecords(world, { establishAt = null } = {}) {
+function agingRecords(world, { establishAt = null, name = 'maduracio' } = {}) {
   const rec = [{
-    type: 'start', code: 'abcdef1', rng: 'v2', node: 'v16', zlib: 'x', command: `node sim.mjs ${agingLine(world).split(' ').slice(1).join(' ')}`,
+    type: 'start', code: 'abcdef1', rng: 'v2', node: 'v16', zlib: 'x', command: `node sim.mjs ${agingLine(world, name).split(' ').slice(1).join(' ')}`,
     seed: Number(world), programs: 131072, world: [512, 256], radius: 2, mixing: 0, diffusion: 0, flow: 0, renewal: 0, mutation: 0.00024,
     from: null, start: 0, epochs: 8000, every: 100, census: { ...COMMON.census }, event: { share: 0.01, censuses: 2, stopAfter: 0 },
   }];
@@ -45,22 +45,30 @@ function agingRecords(world, { establishAt = null } = {}) {
   rec.push({ type: 'end', epoch: end, reason: event !== null ? 'establiment' : 'horitzó', fingerprint: 'abcd1234', hoeTransition: null, event, seconds: end / 10 });
   return rec;
 }
-const writeAging = (base, world, records) => {
-  put(base, `${PILOTS.maduracio.folder}/envelliment/e${world}.jsonl`, records.map((r) => JSON.stringify(r)).join('\n') + '\n');
-  put(base, `${PILOTS.maduracio.folder}/envelliment/captures/llavor${world}-mon512x256-r2-final.bin`, Buffer.from(`captura ${world}`));
+const writeAging = (base, world, records, name = 'maduracio') => {
+  put(base, `${PILOTS[name].folder}/envelliment/e${world}.jsonl`, records.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  put(base, `${PILOTS[name].folder}/envelliment/captures/llavor${world}-mon512x256-r2-final.bin`, Buffer.from(`captura ${world}`));
 };
 
 // Un experiment de maduració sintètic i coherent: l'envelliment, els escanejos, les transformacions, els registres, les
 // llistes i el manifest. El món 5003 s'estableix abans de l'època 8.000, i el 5004 té una cel·la hereditària.
-function maturationFixture(base) {
-  const p = PILOTS.maduracio, code = 'abcdef1', worlds = [];
-  for (const world of p.worlds) {
-    writeAging(base, world, agingRecords(world, { establishAt: world === '5003' ? 4000 : null }));
+const maturationFixture = (base) => agedFixture(base, 'maduracio', PILOTS.maduracio.worlds, { established: '5003', heritable: '5004' });
+// El mateix per a la sèrie, amb una cohort de 5 (la prova la hi posa): el 6002 s'estableix abans de l'època 8.000, el
+// 6004 té una cel·la hereditària, i el 6008, envellit, ja no hi entra. Hi entren el 6001, el 6003, el 6005, el 6006 i el
+// 6007, i el PC en fa els tres primers
+function seriesFixture(base) {
+  writeAging(base, '6008', agingRecords('6008', { name: 'serie' }), 'serie');
+  return agedFixture(base, 'serie', ['6001', '6002', '6003', '6004', '6005', '6006', '6007'], { established: '6002', heritable: '6004' });
+}
+function agedFixture(base, name, ids, { established, heritable: withHeritable }) {
+  const p = PILOTS[name], code = 'abcdef1', worlds = [];
+  for (const world of ids) {
+    writeAging(base, world, agingRecords(world, { establishAt: world === established ? 4000 : null, name }), name);
     const capture = `${p.folder}/envelliment/captures/llavor${world}-mon512x256-r2-final.bin`;
     const agingFile = `${p.folder}/envelliment/e${world}.jsonl`;
     const w = { world, role: 'prova', start: 8000, capture, aging: { file: agingFile, sha256: sha(readFileSync(join(base, agingFile))), code } };
-    if (world === '5003') { worlds.push({ ...w, included: false, reason: "establiment abans de l'època 8000 (a l'època 4000)" }); continue; }
-    const seed = Number(world) + TRANSFORM_OFFSET, heritable = world === '5004' ? 1 : 0;
+    if (world === established) { worlds.push({ ...w, included: false, reason: "establiment abans de l'època 8000 (a l'època 4000)" }); continue; }
+    const seed = Number(world) + TRANSFORM_OFFSET, heritable = world === withHeritable ? 1 : 0;
     const scanFile = `${p.folder}/alicuotes/${world}/escaneig.json`;
     put(base, scanFile, JSON.stringify({ from: capture, seed, cells: 131072, replicating: heritable, heritable, heritableSolo: heritable }));
     w.scan = { file: scanFile, sha256: sha(readFileSync(join(base, scanFile))), replicating: heritable, heritable, heritableSolo: heritable, cells: 131072 };
@@ -79,20 +87,29 @@ function maturationFixture(base) {
     worlds.push(w);
   }
   const included = worlds.filter((w) => w.included), lists = {};
-  for (const [machine, parity] of [['pc', 0], ['vm', 1]]) {
-    const file = `${p.folder}/llista-${machine}.txt`, lines = included.filter((_, i) => i % 2 === parity).flatMap((w) => branchLines('maduracio', w));
+  for (const machine of ['pc', 'vm']) {
+    const file = `${p.folder}/llista-${machine}.txt`, lines = included.filter((_, i) => machineOf(name, i) === machine).flatMap((w) => branchLines(name, w));
     put(base, file, lines.join('\n') + '\n');
     lists[machine] = { file, sha256: sha(readFileSync(join(base, file))), branches: lines.length };
   }
-  const manifest = { pilot: 'maduracio', design: 'docs/pilot-maduracio.md', code, params: designParams('maduracio'), worlds, branches: included.flatMap((w) => branchList('maduracio', w)), lists };
+  const manifest = {
+    pilot: name, design: p.protocol ?? 'docs/pilot-maduracio.md', code, ...(p.tag ? { tag: p.tag, dir: `${p.folder}/branques`, test: p.test } : {}),
+    params: designParams(name), worlds, branches: included.flatMap((w) => branchList(name, w)), lists,
+  };
   put(base, `${p.folder}/manifest.json`, JSON.stringify(manifest, null, 1));
   return manifest;
 }
-const rewrite = (base, m) => put(base, `${PILOTS.maduracio.folder}/manifest.json`, JSON.stringify(m, null, 1));
+const rewrite = (base, m, name = 'maduracio') => put(base, `${PILOTS[name].folder}/manifest.json`, JSON.stringify(m, null, 1));
+// La sèrie amb una cohort de 5, per a les proves (la de veritat, de 150), i la de veritat després
+function withCohort(size, fn) {
+  const saved = PILOTS.serie.cohort;
+  PILOTS.serie.cohort = { ...saved, size };
+  try { fn(); } finally { PILOTS.serie.cohort = saved; }
+}
 
 const tests = {
   "l'envelliment de la maduració: 24 mons nous, fins a l'època 8.000, i s'aturen si s'hi estableix la vida": () => {
-    const lines = PILOTS.maduracio.worlds.map(agingLine);
+    const lines = PILOTS.maduracio.worlds.map((w) => agingLine(w));
     assert.strictEqual(lines.length, 24);
     assert.strictEqual(new Set(lines.map((l) => l.split(' ')[0])).size, 24);
     assert.deepStrictEqual(lines.map((l) => Number(opt(l, 'seed'))), Array.from({ length: 24 }, (_, i) => 5001 + i));
@@ -204,6 +221,59 @@ const tests = {
     assert.ok(preflight('maduracio', { root: tmp }).some((x) => /ja ha començat/.test(x)));
     assert.deepStrictEqual(checkCaptures('maduracio', { root: tmp }), [], 'la comprovació de les captures serveix també després de la sèrie');
   }),
+  "la sèrie: la llista de llavors, l'envelliment, tres braços sense cap captura de les branques (AUD-124), i la proporció 3:2": () => {
+    const p = PILOTS.serie;
+    assert.strictEqual(p.candidates.length, 400);
+    assert.deepStrictEqual([p.candidates[0], p.candidates[399]], ['6001', '6400']);
+    assert.deepStrictEqual(designParams('serie').cohort, { from: 6001, to: 6400, size: 150 });
+    assert.ok(!('cohort' in designParams('maduracio')) && !('cohort' in designParams('zeros')), 'els manifests congelats no hi porten la cohort');
+    const aging = agingLine('6001', 'serie');
+    assert.strictEqual(opt(aging, 'seed'), '6001');
+    assert.ok(opt(aging, 'json').startsWith('fase2/resultats/maduracio/serie/envelliment/'));
+    assert.strictEqual(opt(aging, 'stop-after-event'), '0');
+    const lines = branchLines('serie', { world: '6001', start: 8000 });
+    assert.strictEqual(lines.length, 6);
+    assert.deepStrictEqual([...new Set(lines.map((l) => opt(l, 'seed')))].sort(), ['406001', '506001']);
+    assert.ok(lines.every((l) => !l.includes('--save')), 'les branques de la sèrie no desen cap captura');
+    assert.ok(lines.every((l) => opt(l, 'epochs') === '16000' && opt(l, 'stop-after-event') === '0' && opt(l, 'mixing') === '0'));
+    assert.deepStrictEqual(Array.from({ length: 10 }, (_, i) => machineOf('serie', i)), ['pc', 'pc', 'pc', 'vm', 'vm', 'pc', 'pc', 'pc', 'vm', 'vm']);
+    assert.deepStrictEqual(Array.from({ length: 4 }, (_, i) => machineOf('maduracio', i)), ['pc', 'vm', 'pc', 'vm']);
+    assert.deepStrictEqual(p.test.contrasts, [['continue', 'reinit'], ['shuffle-all', 'reinit']]);
+  },
+  "la sèrie: la cohort són els primers mons de la llista que hi entren; el manifest coherent passa, i amb una màquina només se'n miren les captures dels seus mons": () => withTmp((tmp) => withCohort(5, () => {
+    const p = PILOTS.serie, m = seriesFixture(tmp);
+    assert.deepStrictEqual(agedCandidates('serie', { root: tmp }), ['6001', '6002', '6003', '6004', '6005', '6006', '6007', '6008']);
+    assert.deepStrictEqual(m.worlds.filter((w) => w.included).map((w) => w.world), ['6001', '6003', '6005', '6006', '6007']);
+    assert.deepStrictEqual(checkCaptures('serie', { root: tmp }), []);
+    assert.deepStrictEqual(preflight('serie', { root: tmp }), []);
+    assert.deepStrictEqual(preflight('serie', { root: tmp, machine: 'vm' }), []);
+    const mutations = [
+      ['un món saltat', (x) => ({ ...x, worlds: x.worlds.filter((w) => w.world !== '6003') }), /primers de la llista/],
+      ['un món de més al final, exclòs', (x) => { x.worlds.push({ ...x.worlds[1], world: '6008' }); return x; }, /darrer món inclòs|primers/],
+      ['un món inclòs de menys', (x) => { x.worlds[x.worlds.length - 1].included = false; return x; }, /mons inclosos|inclusió/],
+      ['una altra cohort', (x) => ({ ...x, params: { ...x.params, cohort: { ...x.params.cohort, size: 6 } } }), /paràmetres/],
+      ["les branques amb captures", (x) => { x.branches[0] = { ...x.branches[0], command: `${x.branches[0].command} --save a` }; return x; }, /branques del manifest/],
+    ];
+    for (const [what, mutate, re] of mutations) {
+      rewrite(tmp, mutate(JSON.parse(JSON.stringify(m))), 'serie');
+      const pr = checkCaptures('serie', { root: tmp });
+      assert.ok(pr.some((x) => re.test(x)), `no detecta ${what}: ${pr.slice(0, 3).join('; ')}`);
+    }
+    rewrite(tmp, m, 'serie');
+    // una màquina només necessita les captures dels mons de la seva llista: a la màquina virtual, el 6006 i el 6007
+    const pc = m.worlds.find((w) => w.world === '6001');
+    for (const f of [pc.capture, ...Object.values(pc.arms).map((a) => a.file)]) rmSync(join(tmp, f));
+    assert.deepStrictEqual(checkCaptures('serie', { root: tmp, machine: 'vm' }), []);
+    assert.ok(checkCaptures('serie', { root: tmp, machine: 'pc' }).some((x) => /^6001: .*no hi ha la captura/.test(x)));
+    assert.ok(checkCaptures('serie', { root: tmp }).some((x) => /6001/.test(x)), 'sense màquina, hi han de ser totes');
+    // els registres i els escanejos, que van a git, es miren a totes dues
+    const s = m.worlds.find((w) => w.world === '6001').arms.reinit.scan.file;
+    put(tmp, s, '{}');
+    assert.ok(checkCaptures('serie', { root: tmp, machine: 'vm' }).some((x) => /6001 reinit: l'escaneig/.test(x)));
+    // un forat a l'envelliment és un error, no el final de la llista
+    put(tmp, `${p.folder}/envelliment/e6010.jsonl`, '{}');
+    assert.throws(() => agedCandidates('serie', { root: tmp }), /falta el registre de l'envelliment de 6009/);
+  })),
   'els zeros: el manifest buit, o amb un paper canviat, és un problema; i la línia d\'ordres surt amb error (AU2-84)': () => withTmp((tmp) => {
     // un repositori mínim, com el de l'auditor 2, amb el programa i el repartiment de B2
     for (const d of ['fase1', 'fase2', 'eines']) {
@@ -237,6 +307,13 @@ const tests = {
     assert.strictEqual(run('b3', '--prepara').status, 2);
     assert.strictEqual(run('zeros', '--prepara', '--paral·lel', '0').status, 2);
     assert.strictEqual(run('zeros', '--comprova', '--paral·lel', '2').status, 2);
+    assert.strictEqual(run('serie', '--comprova', '--maquina', 'mac').status, 2);
+    assert.strictEqual(run('maduracio', '--envelliment', '--mons', '3').status, 2, '--mons és només de la sèrie');
+    assert.strictEqual(run('serie', '--envelliment', '--mons', '401').status, 2);
+    const aging = run('serie', '--envelliment');
+    assert.strictEqual(aging.status, 0);
+    assert.strictEqual(aging.stdout.trim().split('\n').length, 180);
+    assert.strictEqual(run('serie', '--envelliment', '--mons', '3').stdout.trim().split('\n').length, 3);
   },
   'la potència de la maduració: els valors crítics de la prova de signes, i cap efecte dona com a molt α': () => {
     assert.strictEqual(critical(29, 0.025), 21); // el llindar de B2
@@ -245,6 +322,18 @@ const tests = {
     const p0 = power({ pc: 0.2, ps: 0.2, worlds: 80, sims: 2000 });
     assert.ok(p0 <= 0.035, `sense efecte, la potència hauria de ser com a molt α (és ${p0})`);
     assert.ok(power({ pc: 0.22, ps: 0.11, worlds: 120, sims: 2000 }) > 0.8);
+  },
+  'la potència de la sèrie: la família de Holm, i la validesa de les dues proves amb concordances diferents (auditoria 19)': () => {
+    // sense cap efecte, rebutjar-ne almenys una no passa gaire d'α
+    const none = familyPower({ pc: 0.2, ps: 0.2, pr: 0.2, worlds: 150, sims: 1000 });
+    assert.ok(none.any <= 0.045, `sense efecte, ${none.any}`);
+    const half = familyPower({ pc: 0.27, ps: 0.27, pr: 0.135, worlds: 150, rho: 0.03, sims: 1000 });
+    assert.ok(half.b > 0.9 && half.c > 0.9 && half.both > 0.85, JSON.stringify(half));
+    assert.ok(half.both <= Math.min(half.b, half.c) && half.any >= Math.max(half.b, half.c));
+    // el mateix ritme, i una concordança de 0 contra 0,4: la de signes rebutja massa sovint, la de permutació, no
+    const v = validity({ p: 0.2, worlds: 150, rhoA: 0, rhoB: 0.4, alpha: 0.0125, sims: 4000 });
+    assert.ok(v.signes > 0.03, `la de signes, ${v.signes}`);
+    assert.ok(v.permutacio < 0.02, `la de permutació, ${v.permutacio}`);
   },
 };
 
