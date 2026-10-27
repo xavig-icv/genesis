@@ -160,3 +160,106 @@ dels 22 mons).
   - **L'ordre:** `bash eines/llanca-lot.sh 4 fase2/resultats/maduracio/pilot/branques fase2/resultats/maduracio/pilot/llista-vm.txt`.
   - **Què hi ha:** 110 branques, 4 alhora. La primera línia del lot diu `codi=521039c`.
 - **Node:** el 16.15.1 al PC (Windows) i el 20.19.2 a la màquina virtual (Linux). Els registres en diuen la versió.
+
+### El final (27-10-2026)
+
+- **El PC:** el lot va acabar a les 03:15:46, amb 110 branques acabades, cap de fallada i els 110 registres complets
+  (`bash eines/seguiment.sh --agregat`). Unes 14 h 14 min.
+- **La màquina virtual:** el lot va acabar a les 08:02:28, amb 110 branques acabades, cap de fallada i els 110 registres
+  complets. Unes 18 h 42 min.
+- **Les captures, després de la sèrie** (AUD-118): `node eines/pilot.mjs maduracio --comprova-captures`, a cada màquina, des de la
+  carpeta de `521039c`. Totes dues van donar "La comprovació de les captures del pilot maduracio: tot correcte." (codi 0): el PC
+  a les 07:50, i la màquina virtual a les 08:03.
+- **Els registres:** els 220 JSONL, els 220 registres de text i els dos `lot-*.out` són a `branques/`.
+  - **D'on vénen:** copiats de les dues màquines, amb les SHA-256 comprovades.
+  - **Dades internes:** cap, comprovat amb `grep`.
+- **Les captures** no van a git:
+  - les de partida, 24 d'envellides i 110 de transformades;
+  - les dels establiments de les branques, 150: 69 del PC i 81 de la màquina virtual.
+  - **La còpia de seguretat:** n'hi ha una de totes, amb les SHA-256 comprovades.
+
+**El que vam veure abans de l'anàlisi.**
+- **Quan:** cap a les 07:47, en fer la còpia de seguretat de les captures del PC. La màquina virtual encara tenia 3 branques
+  en marxa.
+- **Què:** la mida de la carpeta de les branques del PC (557 MB) i el nombre de captures d'establiment que hi havia (69). Cada
+  branca que s'estableix en desa fins a tres.
+- **Per què no canvia res:** l'anàlisi ja era escrita i fixada (la PR #23), i no en depèn.
+
+**Una errada latent als noms de les captures.** El nom de cada captura d'establiment porta la llavor de la continuació i les
+èpoques, però no el braç. Els cinc braços d'un món comparteixen la llavor i corren a la mateixa màquina. Si dos braços d'un món,
+amb la mateixa llavor, s'haguessin establert al mateix cens, el segon hauria sobreescrit les captures del primer.
+- **Què ha passat:** cap col·lisió. Totes les captures que havien d'escriure les 51 branques establertes hi són, cadascuna amb
+  un nom propi (comprovat amb els registres).
+- **Què no afecta:**
+  - l'anàlisi, que només llegeix els registres;
+  - la prova dels zeros, perquè les seves branques no desen cap captura.
+- **Per a la sèrie:** cada branca ha de desar les captures a una carpeta pròpia. Es porta a l'auditoria 19.
+
+## L'anàlisi (27-10-2026)
+
+- **L'ordre:** `node eines/maduracio-analisi.mjs > fase2/resultats/maduracio/pilot/analisi.txt`, amb codi de sortida 0.
+  - **Des d'on:** `main` a `8ea4e93`, el merge de la PR #23.
+  - **On i quan:** al PC, amb Node 16.15.1, a les 08:03:44.
+- **La sortida,** tal com va sortir: `analisi.txt`, SHA-256 `abee5c30f6c75798d31041f66693ea79d95729412d2afb1184726088323ce63e`.
+- **La validació:** 220 branques de 220, totes vàlides. El codi dels registres és `521039c`, i el simulador, el de la preparació
+  (`4fa032b`).
+- **La comprovació independent,** feta després: un script que només llegeix els JSONL i el manifest, sense cap mòdul del projecte.
+  - **Què dona:** la mateixa taula principal (els establiments, els mons, la RMST, les medianes, els contrastos món a món i la
+    separació pel punt de partida).
+  - **Els finals:** 51 branques s'aturen per l'establiment, i 169 arriben a l'horitzó.
+
+### Els resultats
+
+| Braç | Branques establertes | IC exacte del 95 % (\*) | Mons amb algun establiment | RMST (èpoques) | *T* dels establerts, mediana |
+|---|---|---|---|---|---|
+| `continue` | 12 de 44 (27,3 %) | 15,0–42,8 % | 11 de 22 | 7.210 | 5.500 |
+| `shuffle-programs` | 13 de 44 (29,5 %) | 16,8–45,2 % | 10 de 22 | 6.926 | 4.750 |
+| `shuffle-within` | 6 de 44 (13,6 %) | 5,2–27,4 % | 5 de 22 | 7.489 | 4.625 |
+| `shuffle-all` | 12 de 44 (27,3 %) | 15,0–42,8 % | 12 de 22 | 6.756 | 3.250 |
+| `reinit` | 8 de 44 (18,2 %) | 8,2–32,7 % | 6 de 22 | 7.477 | 5.625 |
+
+(\*) Calculat després, com a descriptiu. Tracta les branques com a independents, que és el que diu la concordança entre llavors
+(*rho* = 0,03).
+
+- **Cada braç contra `continue`, món a món** (la proporció dels dos; sense cap prova):
+
+  | Braç | Més alta | Més baixa | Igual |
+  |---|---|---|---|
+  | `shuffle-programs` | 7 | 7 | 8 |
+  | `shuffle-within` | 1 | 7 | 14 |
+  | `shuffle-all` | 8 | 8 | 6 |
+  | `reinit` | 3 | 7 | 12 |
+
+- **El punt de partida** (el criteri de les hereditàries soles): els mons amb alguna hereditària sola a l'escaneig del braç no
+  s'estableixen més que els altres.
+  - **`shuffle-all`:** amb alguna (9 mons), 3 de 18 branques (16,7 %); sense cap (13 mons), 9 de 26 (34,6 %).
+  - **Els altres braços:** amb alguna, `shuffle-programs` 1 de 4, `shuffle-within` 1 de 8 i `reinit` 2 de 8. `continue` no en té
+    cap.
+- **La concordança entre llavors:** *rho* = 0,03.
+  - **Què vol dir:** les dues llavors d'un món coincideixen gairebé només per atzar.
+  - **Per braç:** a `continue`, coincideixen a 12 mons de 22 (*phi* −0,06); a `reinit`, a 18 (*phi* 0,39).
+- **El primer cens amb algun hereditari,** des del començament (la mediana de les branques que en tenen algun): 2.250 èpoques a
+  `shuffle-all` (16 de 44 branques), i 4.750 a `continue` (17 de 44).
+- **El cost:**
+  - **En total:** 158,5 h de branques (la suma dels temps, amb les altres corrent alhora), unes 7,2 h per món.
+  - **Per branca:** 0,72 h de mitjana. `shuffle-all` és el braç més car (38,0 h), i `reinit`, el més barat (26,7 h).
+  - **Per màquina:** Node 16 al PC i Node 20 a la màquina virtual van a la mateixa velocitat, unes 377 s per 1.000 èpoques.
+  - **El temps de rellotge:** unes 19 h per a les 220 branques, amb 10 alhora.
+
+### La lectura, tal com era escrita
+
+- **No en surt cap conclusió:** és un calibratge exploratori, i amb 44 branques per braç els intervals s'encavalquen tots.
+- **El contrast `continue` contra `shuffle-all`** compara tractaments sencers.
+  - **Què dona:** 12 contra 12 establiments, i 8 mons a favor de cada braç, amb 6 d'iguals.
+  - **El que no se'n diu:** res de causal sobre la maduració.
+- **`shuffle-all`, la composició envellida amb la seva propensió immediata:** la propensió no s'hi veu.
+  - **Com començava:** amb més cel·les que es repliquen que cap altre braç, i hereditàries als 22 mons.
+  - **Què fa:** no s'estableix més que `continue`, i els mons que tenien alguna hereditària sola s'hi estableixen menys.
+- **El que ens servirà per a la sèrie,** mirat després i, per tant, sense cap valor de prova:
+  - **Les diferències més grans:** `shuffle-within` (1 món més alt, 7 més baixos) i `reinit` (3 i 7), totes dues per sota de
+    `continue`. Amb 4 contrastos mirats després, una diferència així pot sortir per atzar.
+  - **Les dades de la llei 2, per comparar:** a l'edat 8.000, 16 de 72 mons (22,2 %, IC 13,3–33,6 %); un món nou, 8 de 80
+    (10,0 %, IC 4,4–18,8 %). `continue` hi encaixa, i `reinit` queda entre els dos.
+  - **La concordança:** amb una *rho* de 0,03, les dues llavors d'un món valen gairebé com dues observacions independents.
+  - **El cost:** unes 0,72 h per branca. Cal sumar-hi l'envelliment i l'escaneig de cada món.
+- **El braç `shuffle-all` "inert"** que preveia la lectura es discutirà a l'auditoria 19, amb el disseny de la sèrie.

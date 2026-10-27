@@ -1,0 +1,23 @@
+codi=521039c  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 505011 --mixing 0 --from fase2/resultats/maduracio/pilot/alicuotes/5011/shuffle-within.bin --start 8000 --epochs 16000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/maduracio/pilot/branques/5011-shuffle-within-b.jsonl --save fase2/resultats/maduracio/pilot/branques/captures --save-what event
+llavor=505011 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/maduracio/pilot/alicuotes/5011/shuffle-within.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.836  HOE=0.222  ops/execució=163.5  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments [[[[[[[[[[[[ (0.2%)  [[[[[[[·[[[[ (0.1%)  ,,,,,,,,,,,, (0.1%)  37s
+època 8200  H0=7.834  HOE=0.249  ops/execució=171.1  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.2%)  [[[[[[[·[[[[ (0.2%)  78s
+cens 8250  mostra=2048  hereditaris=0.1% (sols 0.1%, només en context 0.0%)  es repliquen=0.1% (sols 0.1%, en context 0.0%)  famílies=0
+època 8300  H0=7.831  HOE=0.281  ops/execució=175.5  parelles=75%  bytes <:4.1% ,:1.5% #61:1.5%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.2%)  [[[[[[[·[[[[ (0.2%)  117s
+època 8400  H0=7.824  HOE=0.345  ops/execució=186.2  parelles=75%  bytes <:4.1% ,:1.6% #61:1.5%  fragments <··,,···}··] (0.7%)  ]··}···,,··< (0.7%)  [[[[[[[[[[[[ (0.3%)  161s
+*** PRIMERA FAMÍLIA a l'època 8500 ***
+cens 8500  mostra=2048  hereditaris=1.2% (sols 1.2%, només en context 0.0%)  es repliquen=1.3% (sols 1.3%, en context 0.0%)  famílies=1  #1:4.69%(,,<[<{)
+època 8500  H0=7.807  HOE=0.459  ops/execució=211.4  parelles=75%  bytes <:4.3% ,:1.8% #61:1.4%  fragments ]··}···,,··< (1.3%)  <··,,···}··] (1.3%)  <··<··[<··,, (0.6%)  217s
+època 8600  H0=7.773  HOE=0.629  ops/execució=236.3  parelles=75%  bytes <:4.5% ,:2.0% #61:1.4%  fragments <··,,···}··] (2.1%)  ]··}···,,··< (2.1%)  <··<··[<··,, (1.4%)  274s
+època 8700  H0=7.713  HOE=0.883  ops/execució=277.0  parelles=75%  bytes <:4.7% ,:2.4% [:1.5%  fragments ]··}···,,··< (3.7%)  <··,,···}··] (3.6%)  <··<··[<··,, (2.0%)  342s
+cens 8750  mostra=2048  hereditaris=5.4% (sols 5.4%, només en context 0.0%)  es repliquen=5.5% (sols 5.5%, en context 0.0%)  famílies=1  #1:16.20%([<,,}])
+*** ESTABLIMENT DE LA VIDA a l'època 8500 (confirmat al cens 8750) ***
+
+empremta del món: b4c3e11f
+
+programes diferents: 128052 de 131072
+     42  |    [<  ,,   }  ]                              ]  }   ,,  <[    |
+     36  |    [<  ,,   }  ]                              ]  }   ,,  <[    |
+     27  |    [<  ,,   }  ]                              ]  }   ,,  <[    |
+     25  | [<   ,   }  ]                               ]  }   ,,  <[      |
+     25  |    [<  ,,   }  ]                              ]  }   ,,  <[    |

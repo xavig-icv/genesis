@@ -1,0 +1,58 @@
+El pilot de la maduració: 220 branques de 220, totes vàlides. El codi dels registres: 521039c; el simulador, el de la preparació (4fa032b).
+És un pilot: no en surt cap conclusió (docs/pilot-maduracio.md). La lectura de cada braç és a l'acta.
+
+La mesura principal: l'establiment dins de H = 8000 èpoques (el criteri de la llei 2), per braç, amb 22 mons i 2 llavors:
+  continue: establertes 12 de 44 branques (27.3 %), a 11 mons de 22 (totes dues llavors a 1); RMST 7210 èpoques; T dels establerts, mediana 5500
+  shuffle-programs: establertes 13 de 44 branques (29.5 %), a 10 mons de 22 (totes dues llavors a 3); RMST 6926 èpoques; T dels establerts, mediana 4750
+  shuffle-within: establertes 6 de 44 branques (13.6 %), a 5 mons de 22 (totes dues llavors a 1); RMST 7489 èpoques; T dels establerts, mediana 4625
+  shuffle-all: establertes 12 de 44 branques (27.3 %), a 12 mons de 22 (totes dues llavors a 0); RMST 6756 èpoques; T dels establerts, mediana 3250
+  reinit: establertes 8 de 44 branques (18.2 %), a 6 mons de 22 (totes dues llavors a 2); RMST 7477 èpoques; T dels establerts, mediana 5625
+
+Separats pel punt de partida del braç (la lectura de l'acta): alguna cel·la hereditària sola a l'escaneig, o cap:
+  continue: amb alguna (0 mons) —; sense cap (22 mons) 12 de 44 (27.3 %)
+  shuffle-programs: amb alguna (2 mons) 1 de 4 (25.0 %); sense cap (20 mons) 12 de 40 (30.0 %)
+  shuffle-within: amb alguna (4 mons) 1 de 8 (12.5 %); sense cap (18 mons) 5 de 36 (13.9 %)
+  shuffle-all: amb alguna (9 mons) 3 de 18 (16.7 %); sense cap (13 mons) 9 de 26 (34.6 %)
+  reinit: amb alguna (4 mons) 2 de 8 (25.0 %); sense cap (18 mons) 6 de 36 (16.7 %)
+
+La concordança entre llavors: rho = 0.03 (la correlació intraclasse, amb la mitjana de cada braç; la de la potència)
+  continue: les dues llavors coincideixen a 12 mons de 22; phi -0.06
+  shuffle-programs: les dues llavors coincideixen a 15 mons de 22; phi 0.24
+  shuffle-within: les dues llavors coincideixen a 18 mons de 22; phi 0.23
+  shuffle-all: les dues llavors coincideixen a 10 mons de 22; phi -0.33
+  reinit: les dues llavors coincideixen a 18 mons de 22; phi 0.39
+
+Entre braços: la correlació, entre mons, de la proporció d'establiments de cada món:
+  continue · shuffle-programs: -0.23
+  continue · shuffle-within: 0.54
+  continue · shuffle-all: -0.24
+  continue · reinit: 0.08
+  shuffle-programs · shuffle-within: -0.42
+  shuffle-programs · shuffle-all: 0.37
+  shuffle-programs · reinit: -0.07
+  shuffle-within · shuffle-all: -0.05
+  shuffle-within · reinit: -0.02
+  shuffle-all · reinit: -0.34
+
+Cada braç contra continue, món a món (la proporció dels dos; és un pilot, sense cap prova):
+  shuffle-programs: més alta a 7 mons, més baixa a 7, igual a 8
+  shuffle-within: més alta a 1 mons, més baixa a 7, igual a 14
+  shuffle-all: més alta a 8 mons, més baixa a 8, igual a 6
+  reinit: més alta a 3 mons, més baixa a 7, igual a 12
+
+El primer cens amb algun hereditari, des del començament (mediana de les branques que en tenen):
+  continue: qualsevol, 4750 èpoques (17 de 44 branques); sol, 5125 èpoques (14 de 44)
+  shuffle-programs: qualsevol, 4750 èpoques (15 de 44 branques); sol, 4750 èpoques (15 de 44)
+  shuffle-within: qualsevol, 4000 èpoques (9 de 44 branques); sol, 4000 èpoques (9 de 44)
+  shuffle-all: qualsevol, 2250 èpoques (16 de 44 branques); sol, 2250 èpoques (16 de 44)
+  reinit: qualsevol, 5000 èpoques (11 de 44 branques); sol, 5000 èpoques (11 de 44)
+
+El cost: 158.5 h de branques en total (la suma dels temps de cada una, amb les altres corrent alhora)
+  continue: 30.4 h; per branca, mediana 2877 s i 8000 èpoques
+  shuffle-programs: 30.5 h; per branca, mediana 2973 s i 8000 èpoques
+  shuffle-within: 32.9 h; per branca, mediana 3031 s i 8000 èpoques
+  shuffle-all: 38.0 h; per branca, mediana 3645 s i 8000 èpoques
+  reinit: 26.7 h; per branca, mediana 2497 s i 8000 èpoques
+  Node v16.15.1: 110 branques; mediana 377 s per 1.000 èpoques
+  Node v20.19.2: 110 branques; mediana 376 s per 1.000 èpoques
+  per món (5 braços × 2 llavors), de mitjana: 7.2 h
