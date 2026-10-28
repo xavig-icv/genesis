@@ -14,6 +14,7 @@ import { fileURLToPath } from 'url';
 import { PILOTS, COMMON, TRANSFORM_OFFSET, agingLine, branchLines, branchList, designParams, validateAging, simulatorProblems, checkCaptures, preflight, machineOf, agedCandidates } from '../eines/pilot.mjs';
 import { establishment } from '../fase2/census.js';
 import { critical, power, familyPower, validity } from '../eines/potencia-maduracio.mjs';
+import { CERTIFICATE } from '../eines/llindars-maduracio.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const opt = (line, name) => line.match(new RegExp(`--${name} (\\S+)`))?.[1];
@@ -62,6 +63,8 @@ function seriesFixture(base) {
 }
 function agedFixture(base, name, ids, { established, heritable: withHeritable }) {
   const p = PILOTS[name], code = 'abcdef1', worlds = [];
+  // la sèrie: la taula dels llindars i el seu certificat, els del repositori (AU2-99)
+  if (p.test?.thresholds) for (const f of [p.test.thresholds, CERTIFICATE]) put(base, f, readFileSync(join(root, f)));
   for (const world of ids) {
     writeAging(base, world, agingRecords(world, { establishAt: world === established ? 4000 : null, name }), name);
     const capture = `${p.folder}/envelliment/captures/llavor${world}-mon512x256-r2-final.bin`;
@@ -312,6 +315,30 @@ const tests = {
     y.worlds.find((z) => z.world === '6004').scan.sha256 = sha(readFileSync(join(tmp, ex.scan.file)));
     rewrite(tmp, y, 'serie');
     assert.ok(checkCaptures('serie', { root: tmp }).some((z) => /^6004: .*no és de la captura d'origen/.test(z)));
+  })),
+  "la sèrie: la taula dels llindars ha de ser la certificada, amb el seu certificat (AU2-99)": () => withTmp((tmp) => withCohort(5, () => {
+    const p = PILOTS.serie, m = seriesFixture(tmp), table = join(tmp, p.test.thresholds), cert = join(tmp, CERTIFICATE);
+    assert.strictEqual(m.test.thresholdsSha256, p.test.thresholdsSha256);
+    assert.strictEqual(p.test.thresholdsSha256, sha(readFileSync(join(root, p.test.thresholds))));
+    assert.deepStrictEqual(checkCaptures('serie', { root: tmp }), []);
+    const tableText = readFileSync(table, 'utf8'), certText = readFileSync(cert, 'utf8');
+    // una taula amb un altre K, encara que tingui l'estructura esperada
+    const bad = JSON.parse(tableText);
+    bad.rows[108].k[1] = String((1n << 108n) / 40n);
+    put(tmp, p.test.thresholds, JSON.stringify(bad, null, 1) + '\n');
+    assert.ok(checkCaptures('serie', { root: tmp }).some((x) => /no és la certificada/.test(x)));
+    put(tmp, p.test.thresholds, tableText);
+    // sense el certificat, o amb el certificat d'una altra taula, o amb una cota per sobre d'α
+    rmSync(cert);
+    assert.ok(checkCaptures('serie', { root: tmp }).some((x) => /no hi ha el certificat/.test(x)));
+    const c = JSON.parse(certText);
+    put(tmp, CERTIFICATE, JSON.stringify({ ...c, tableSha256: '0'.repeat(64) }));
+    assert.ok(checkCaptures('serie', { root: tmp }).some((x) => /d'una altra taula/.test(x)));
+    c.rows[108].upper[1] = 0.026;
+    put(tmp, CERTIFICATE, JSON.stringify(c));
+    assert.ok(checkCaptures('serie', { root: tmp }).some((x) => /m = 108, pas 2: la cota superior/.test(x)));
+    put(tmp, CERTIFICATE, certText);
+    assert.deepStrictEqual(checkCaptures('serie', { root: tmp }), []);
   })),
   'els zeros: el manifest buit, o amb un paper canviat, és un problema; i la línia d\'ordres surt amb error (AU2-84)': () => withTmp((tmp) => {
     // un repositori mínim, com el de l'auditor 2, amb el programa i el repartiment de B2

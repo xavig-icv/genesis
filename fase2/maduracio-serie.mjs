@@ -12,6 +12,7 @@
 // sencer de cada línia, l'ordre exacta del manifest, els censos, les mesures i l'establiment recalculat. A més, el codi
 // de cada registre ha de ser el commit del preregistre.
 import { readFileSync, existsSync } from 'fs';
+import { createHash } from 'crypto';
 import { join } from 'path';
 import { censusProblem, structureProblems } from './b2-serie.mjs';
 import { EVENT_SHARE, EVENT_CENSUSES } from './census.js';
@@ -41,6 +42,7 @@ export function manifestProblems(manifest) {
     !P.census || !['version', 'every', 'sample', 'seed'].every((k) => k in P.census) || !P.cohort || !Number.isInteger(P.cohort.size)) return ["els paràmetres del manifest no tenen l'estructura esperada"];
   if (!t || !Array.isArray(t.contrasts) || t.contrasts.length !== 2 || !num(t.alpha) || t.method !== 'holm' || t.sided !== 'greater' || t.thresholds !== THRESHOLDS ||
     t.contrasts.some((c) => !Array.isArray(c) || c.length !== 2 || c.some((a) => !P.arms.includes(a)))) return ["la prova del manifest no té l'estructura esperada"];
+  if (t.thresholdsSha256 !== THRESHOLDS_SHA256) return ['la prova del manifest no porta la SHA-256 de la taula dels llindars certificada (AU2-99)'];
   if (!Array.isArray(manifest.worlds) || !Array.isArray(manifest.branches)) return ['el manifest no té els mons o les branques'];
   const out = [];
   const included = manifest.worlds.filter((w) => w.included === true);
@@ -188,6 +190,9 @@ export function holm(results, alpha) {
 // es rebutja si count ≤ K_j(m); −1 vol dir que amb m mons amb diferència no es pot rebutjar. La calcula
 // eines/llindars-maduracio.mjs, i va amb l'etiqueta.
 export const THRESHOLDS = 'fase2/maduracio-llindars.json';
+// La SHA-256 de la taula certificada (fase2/maduracio-llindars-certificat.json; AU2-99, auditoria 21): cap altra taula no
+// serveix per decidir, encara que tingui l'estructura esperada
+export const THRESHOLDS_SHA256 = '950991ea70f75534eacae78c374ac5013e68fae0b317e155b21119513920121f';
 
 // Els problemes de la taula (buit si és correcta): un recompte per pas i per m, des de m = 0, amb K_1 ≤ K_2 i cap K per
 // sobre del nominal, el d'α·2^m
@@ -204,11 +209,12 @@ export function thresholdProblems(t, alpha) {
   });
   return out;
 }
-// Llegeix la taula. Retorna { table (amb els K com a BigInt), problems }
+// Llegeix la taula, i comprova que sigui la certificada. Retorna { table (amb els K com a BigInt), problems }
 export function readThresholds(file, alpha) {
-  let t;
-  try { t = JSON.parse(readFileSync(file, 'utf8')); } catch { return { table: null, problems: [`no es pot llegir la taula dels llindars ${file}`] }; }
+  let t, sha;
+  try { const bytes = readFileSync(file); sha = createHash('sha256').update(bytes).digest('hex'); t = JSON.parse(bytes.toString('utf8')); } catch { return { table: null, problems: [`no es pot llegir la taula dels llindars ${file}`] }; }
   const problems = thresholdProblems(t, alpha);
+  if (sha !== THRESHOLDS_SHA256) problems.push(`la taula dels llindars no és la certificada: la seva SHA-256 és ${sha}, i la de la certificada, ${THRESHOLDS_SHA256}`);
   return { table: problems.length ? null : { ...t, rows: t.rows.map((r) => ({ ...r, k: r.k.map(BigInt) })) }, problems };
 }
 // Holm amb els llindars calibrats, per a les dues proves de la sèrie: la prova j es rebutja si count_j ≤ K_1(m_j), o si
