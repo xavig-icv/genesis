@@ -1,21 +1,24 @@
 # Protocol de la sèrie de la maduració · l'edat i la composició de la sopa
 
-**Versió: v0.2, esborrany (27-10-2026), per a l'auditoria 21.** No s'ha envellit cap món, ni s'ha fet córrer cap branca. El
-que canvia de la v0.1, amb l'auditoria 20, és a la §10.
+**Versió: v0.3, esborrany (28-10-2026), per a l'auditoria 22.** No s'ha preparat cap manifest, ni s'ha fet córrer cap branca.
+L'envelliment dels mons pot començar (§7). El que canvia de la v0.2, amb l'auditoria 21, és a la §10.
 - **D'on surt:**
   - el pilot de la maduració (l'entrada 12 del quadern i `fase2/resultats/maduracio/pilot/acta.md`);
   - l'auditoria 19, i la decisió del responsable del 27-10-2026 (`docs/disseny.md`, §5);
-  - l'auditoria 20, i la decisió del responsable del 27-10-2026: els llindars calibrats per *m* (§6).
+  - l'auditoria 20, i la decisió del responsable del 27-10-2026: els llindars calibrats per *m* (§6);
+  - l'auditoria 21, i la decisió del responsable del 28-10-2026: la taula certificada, i una revisió de les correccions abans
+    de preparar el manifest (§6, §7).
 - **Els programes:**
   - `eines/pilot.mjs`, l'experiment `serie`: l'envelliment, la preparació, el manifest i les comprovacions;
   - `eines/transforma.mjs`, per a les transformacions i els escanejos;
   - `fase2/maduracio-confirmacio.mjs` i `fase2/maduracio-serie.mjs`, per a la decisió;
-  - `eines/llindars-maduracio.mjs`, per als llindars calibrats, i la seva taula, `fase2/maduracio-llindars.json` (§6);
+  - `eines/llindars-maduracio.mjs`, per als llindars calibrats i la seva certificació, i els seus fitxers,
+    `fase2/maduracio-llindars.json` i `fase2/maduracio-llindars-certificat.json` (§6);
   - `eines/potencia-maduracio.mjs`, per a la potència (§6).
 - **El procediment:**
-  1. l'auditoria 20 va revisar la v0.1; l'auditoria 21 revisa aquesta versió, la taula dels llindars i les correccions;
-  2. s'envelleixen els mons, i, després del GO de l'auditoria 21, la preparació escriu el manifest (§7);
-  3. una comprovació breu del manifest (auditoria 22);
+  1. les auditories 20 i 21 van revisar la v0.1 i la v0.2; l'auditoria 22 revisa aquesta versió i les correccions;
+  2. s'envelleixen els mons, i, després del GO de l'auditoria 22, la preparació escriu el manifest (§7);
+  3. una comprovació breu del manifest (auditoria 23);
   4. el protocol, el manifest i els programes es fixen amb l'etiqueta anotada `preregistre-maduracio` i un segell
      d'OpenTimestamps. **Cap branca no es llança abans que Bitcoin hagi ancorat el segell** (§9).
 
@@ -173,6 +176,20 @@ intercanviables, que demanaria més.
     de la cerca.
   - **El càlcul,** amb enters exactes per als recomptes i només sumes i productes per a les probabilitats: és el mateix a
     qualsevol màquina. La taula va amb l'etiqueta, i `--comprova` la torna a calcular.
+  - **La certificació** (AU2-99, auditoria 21; `node eines/llindars-maduracio.mjs --certifica`, al fitxer
+    `fase2/maduracio-llindars-certificat.json`): una cota superior rigorosa del màxim de cada fila, que no depèn de cap cerca.
+    - **El mètode:** les distribucions de les diferències no nul·les amb mitjana 0 són un quadrilàter, i la diagonal de les
+      simètriques el parteix en dos triangles. A cada triangle, la probabilitat de rebutjar, sabent *m*, és exactament un
+      polinomi de Bernstein, i el seu màxim no passa del coeficient més gran. Es parteixen els triangles fins que la cota
+      superior i la inferior queden a menys d'una milionèsima.
+    - **El resultat:** les 302 cotes són com a molt α<sub>*j*</sub>·(1 − 10⁻⁴), el criteri de la taula. La més justa és la
+      de *m* = 108 al pas 2: el suprem és el 2,499740 % (0,999896·α).
+    - **Cada *K* és el més gran:** a les 289 files on hi ha un recompte més fins al nominal, el següent ja passa del criteri.
+      En tres, *m* = 55 al pas 2, 121 al pas 1 i 140 al pas 2, seria vàlid, i només el marge l'exclou.
+    - **Una altra certificació, independent:** la de l'auditor 1, amb el mateix mètode i el seu codi, hi coincideix
+      (auditoria 21).
+  - **La taula certificada:** la seva SHA-256 és fixada a `fase2/maduracio-serie.mjs` i al manifest. La preparació, les
+    comprovacions i la decisió no n'accepten cap altra (AU2-99).
 - **La correcció de Holm,** amb α = 0,025 per a la família, i els llindars calibrats:
   - **Al primer pas:** cada prova es compara amb el seu *K*₁(*m*);
   - **Al segon pas:** si una es rebutja, l'altra es compara amb el seu *K*₂(*m*).
@@ -182,27 +199,36 @@ intercanviables, que demanaria més.
 intercanviables. La hipòtesi d'aquesta sèrie, però, és la del ritme (§1). Si dos braços tenen el mateix ritme i una
 concordança diferent, un concentra els establiments en pocs mons i l'altre els reparteix. Les diferències ja no són
 simètriques, i amb els llindars de Holm de sempre la prova rebutja més que α.
-- **El cas pitjor de la regla nominal, exacte** (`node eines/llindars-maduracio.mjs --suprem`): el 2,31 % amb α/2 = 1,25 %, i
-  el 3,50 % amb α = 2,5 %.
+- **El cas pitjor de la regla nominal** (`node eines/llindars-maduracio.mjs --suprem`): almenys el 2,31 % amb α/2 = 1,25 %, i
+  el 3,50 % amb α = 2,5 %. Les cotes superiors en són el 2,67 % i el 4,15 %.
   - **On és:** amb pocs mons amb diferència (P(*D* ≠ 0) d'un 6 %), i *D* a −2, 0 i +1.
   - **La família:** fins al 4,6 %.
 - **Per què són vàlids els llindars calibrats:**
+  - **Els mons són independents** (auditor 2). Les llavors es fixen abans, la regla d'inclusió només mira l'envelliment de
+    cada món, i la decisió s'atura si en falta cap registre. La validesa no cobreix una dependència entre mons.
   - **Sota la nul·la del ritme:** les diferències dels mons són independents i tenen mitjana 0.
   - **Sabent *m*:** les diferències no nul·les són independents i tenen una mateixa distribució amb mitjana 0. La
     concordança i la dependència entre els braços d'un món només canvien aquesta distribució, i la calibració les té en compte
     totes.
   - **Si la prova és vàlida per a cada *m*, ho és sempre.**
-  - **Una nul·la amb un ritme més baix** rebutja encara menys, perquè la *p* no creix mai quan una diferència creix.
+  - **Sabent *m*, una nul·la amb un ritme més baix** rebutja encara menys, perquè el recompte no creix mai quan una diferència
+    no nul·la creix.
+  - **Entre *m* diferents, la decisió no és monòtona** (AUD-130). Amb 15 mons amb diferència, es pot rebutjar una prova, i si
+    un món més passa de 0 a +1, ja no: la *p* baixa, del 0,320 % al 0,208 %, però el llindar baixa més, del 0,320 % de *m* = 15
+    al 0,171 % de *m* = 16. És el preu de calibrar per a cada *m*, i no afecta la validesa (§8).
   - **Holm, amb aquests llindars,** deixa la família com a molt al 2,5 %, sigui quina sigui la dependència entre les dues
     proves.
 - **Els llindars de la taula:**
   - **Al primer pas,** per als *m* de 60 a 100, els habituals amb els efectes de la potència, el llindar, *K*/2^*m*, va del
     0,64 % a l'1,05 %, i és del 0,89 % de mitjana. Amb 10 mons o menys amb diferència, no es pot rebutjar.
   - **Al segon pas:** de l'1,61 % al 2,30 %, i del 2,04 % de mitjana. Amb 9 mons o menys, no es pot rebutjar.
-  - **El cas pitjor dels calibrats** (`--suprem`), sense saber *m*: l'1,15 % i el 2,40 %.
-- **Una sola α' per a tots els *m*** hauria de ser més petita que 1/256, el 0,39 % (el càlcul de l'auditoria 20). Amb α' = 1/256
-  ja es rebutja el resultat més extrem amb 8 mons amb diferència, que amb la forma del cas pitjor té una probabilitat de
-  (2/3)⁸, el 3,9 %.
+  - **El cas pitjor dels calibrats, sense saber *m*** (`--suprem`; AUD-131): entre l'1,15 % i l'1,17 % al primer pas, i el
+    2,43 % al segon, amb tots els mons amb diferència. La cota inferior surt d'una cerca, i la superior, de les cotes
+    certificades de cada *m*.
+- **Una sola α' per a tots els *m*** costaria més potència, i depèn del criteri (AUD-130):
+  - **amb la validesa sense saber *m*,** hauria de ser més petita que 1/256, el 0,39 % (el càlcul de l'auditoria 20);
+  - **amb el criteri de la taula, sabent *m*,** més petita que 2⁻¹⁰ al primer pas: amb 10 mons amb diferència, el resultat més
+    extrem, amb la forma del cas pitjor, té una probabilitat de (2/3)¹⁰, l'1,73 %.
 
 **Per què no la prova de signes** (auditoria 19). La de signes compta els mons a favor i en contra, però no la mida de
 cada diferència. Si la concordança entre les dues llavors canvia d'un braç a l'altre, rebutja massa sovint, encara que
@@ -223,7 +249,7 @@ rebutjar de cada prova, amb els llindars nominals / els calibrats:
 | 20 % | 0 i 1 | 1,30 % / 0,92 % | 2,44 % / 1,99 % |
 | La forma de (c) al pilot, amb mitjana 0 | — | 1,37 % / 1,06 % | 2,56 % / 2,17 % |
 | Tots els mons amb diferència, amb *D* = +1 o −2 | — | 1,36 % / 0,84 % | 3,25 % / 2,14 % |
-| **El cas pitjor** (`--suprem`) | — | **2,31 % / 1,15 %** | **3,50 % / 2,40 %** |
+| **El cas pitjor, sense saber *m*** (`--suprem`) | — | **2,31–2,67 % / 1,15–1,17 %** | **3,50–4,15 % / 2,43 %** |
 
 - **Al pilot hi era:** les concordances per braç anaven de −0,35 (`shuffle-all`) a 0,41 (`reinit`).
 - **Què passava:** `reinit` concentrava els establiments en pocs mons, i `shuffle-all`, no.
@@ -271,24 +297,25 @@ calibrats:
 
 ## 7. L'execució
 
-1. **El codi:** el merge de la PR d'aquest protocol, amb la taula dels llindars, desplegat a la màquina virtual amb
-   `eines/desplega-vm.sh`. Les actualitzacions de Windows, pausades.
-2. **L'envelliment:** `node eines/pilot.mjs serie --envelliment`, amb `eines/llanca-lot.sh`, des d'una còpia del commit. Pot
-   començar abans del GO de l'auditoria 21: hi coincideixen tots dos auditors (auditoria 20).
+1. **El codi:** el merge de la PR d'aquest protocol, amb la taula dels llindars i el seu certificat, desplegat a la màquina
+   virtual amb `eines/desplega-vm.sh`. Les actualitzacions de Windows, pausades.
+2. **L'envelliment:** `node eines/pilot.mjs serie --envelliment`, amb `eines/llanca-lot.sh`, des d'una còpia d'un commit amb el
+   mateix simulador. Pot començar abans de la preparació: hi coincideixen tots dos auditors (auditories 20 i 21).
    - **On:** al PC.
    - **Si la màquina virtual és lliure:** una part de la llista hi pot anar. Els seus registres i les seves captures es copien al
      PC, amb les SHA-256 comprovades.
    - **Durant l'envelliment:** només `bash eines/seguiment.sh --agregat`.
-3. **La preparació:** `node eines/pilot.mjs serie --prepara`, al PC, des d'un commit net, després del GO de l'auditoria 21.
+3. **La preparació:** `node eines/pilot.mjs serie --prepara`, al PC, des d'un commit net, després del GO de l'auditoria 22.
    - **Què fa:**
-     - comprova que hi hagi la taula dels llindars;
+     - comprova que la taula dels llindars sigui la certificada, per la SHA-256, i que hi hagi el seu certificat, amb totes
+       les cotes com a molt α (AU2-99);
      - valida l'envelliment sencer;
      - escaneja els mons envellits, en ordre, i hi aplica la regla d'inclusió;
      - transforma les captures dels 150 mons, que són 450, i les escaneja;
      - escriu el manifest i les llistes de les dues màquines.
    - **On va:** el manifest, els registres de l'envelliment, els escanejos, els registres de les transformacions i les llistes,
      a git. Les captures, no: es regeneren exactament.
-4. **La comprovació breu** del manifest (auditoria 22).
+4. **La comprovació breu** del manifest (auditoria 23).
 5. **El preregistre:** l'etiqueta i el segell (§9). S'espera l'ancoratge.
 6. **Les captures de la màquina virtual:** les dels seus 60 mons, les envellides i les transformades (uns 1,9 GB), copiades
    amb les SHA-256 comprovades.
@@ -299,6 +326,7 @@ calibrats:
      auditoria 20).
    - **Les llistes:** cadascuna, exactament la seva part dels mons inclosos, en ordre: 540 branques al PC i 360 a la màquina
      virtual (AU2-97).
+   - **La taula dels llindars:** la certificada, amb el seu certificat (AU2-99).
    - **Que cap branca no hagi començat.**
 8. **El llançament:** `eines/llanca-lot.sh`, des de la carpeta del commit de l'etiqueta.
    - **Just després:** el `code` d'una branca de cada màquina (auditor 1, auditoria 18), sense llegir-ne res més.
@@ -311,9 +339,14 @@ calibrats:
     - **On:** des d'una còpia del commit de l'etiqueta, amb `NODE_OPTIONS` buit.
     - **La sortida** es desa tal com surt.
     - **El programa no decideix res si hi ha cap problema:** si el manifest no és coherent, si la taula dels llindars no és la
-      de l'etiqueta o no té l'estructura esperada, o si algun registre no és exactament el que n'espera, en llista els problemes
-      i s'atura.
-    - **`--prova`** no llegeix la carpeta de la sèrie, ni pel camí d'un àlies (AU2-96).
+      certificada (per la SHA-256) o no té l'estructura esperada, o si algun registre no és exactament el que n'espera, en
+      llista els problemes i s'atura.
+    - **`--prova` no llegeix cap registre de la sèrie** (AU2-96, AU2-98):
+      - ni la carpeta, ni pel camí d'un àlies de la carpeta o dels fitxers (enllaços simbòlics o durs);
+      - ni amb un manifest que digui un altre `dir`: la carpeta de la sèrie de veritat sempre és protegida;
+      - si la carpeta de la sèrie ja té registres, `--prova` no s'executa en aquella còpia del repositori.
+    - **Les còpies dels registres** no es poden detectar pel camí ni per la identitat del fitxer. Fins a la decisió, només es
+      copien a la carpeta del commit de l'etiqueta (els de la màquina virtual, al PC), i enlloc més.
 
 ## 8. Limitacions conegudes
 
@@ -326,9 +359,14 @@ calibrats:
 - **Cap afirmació d'equivalència** (AUD-127). Amb un marge útil, de 5 punts, caldrien uns 850 mons.
 - **Els llindars calibrats** fan la prova vàlida per a la nul·la del ritme amb qualsevol distribució (§6), a canvi d'una mica de
   potència.
-  - **La validesa depèn d'una cerca numèrica:** el màxim de cada *m* surt d'una graella i d'una cerca local, amb un marge de 10⁻⁴.
-  - **La comprovació:** una cerca millor que trobés un màxim més alt baixaria el llindar d'aquell *m*. L'auditoria 21 revisa la
-    taula.
+  - **La validesa, certificada** (AU2-99, auditoria 21): una cota superior rigorosa per a cada *m*, de dos programes
+    independents, el del projecte i el de l'auditor 1. No depèn de cap cerca.
+  - **Suposa que els mons són independents** (auditor 2): les llavors es fixen abans, i la regla d'inclusió només mira
+    l'envelliment. No cobreix una dependència entre mons.
+  - **La decisió no és monòtona entre *m* diferents** (AUD-130): un món més a favor, que passa de 0 a +1, pot treure un rebuig,
+    perquè el llindar de *m* + 1 pot ser més baix. És el preu de calibrar per a cada *m*, i no afecta la validesa.
+- **`--prova` no pot detectar una còpia dels registres** (AU2-98): la barrera és contra els àlies, i les còpies es controlen pel
+  procediment (§7).
 - **Els braços fan feines diferents de la BFF:** `shuffle-all` és el més car, i `reinit`, el més barat.
 - **Les branques no desen captures** (§4). Qualsevol anàlisi posterior que en necessiti les ha de regenerar.
 
@@ -340,7 +378,7 @@ calibrats:
   - `docs/protocol-maduracio.md`
   - `fase2/maduracio-confirmacio.mjs`, `fase2/maduracio-serie.mjs`, `fase2/b2-serie.mjs`, `fase2/census.js` i `fase1/soup.js`
   - `fase2/preregistre.mjs`
-  - `fase2/maduracio-llindars.json` i `eines/llindars-maduracio.mjs`
+  - `fase2/maduracio-llindars.json`, `fase2/maduracio-llindars-certificat.json` i `eines/llindars-maduracio.mjs`
   - `eines/transforma.mjs` i `eines/pilot.mjs`
 - **El commit de l'etiqueta:** el que afegeix el manifest i els registres de la preparació. Les branques es llancen des d'una
   còpia d'aquest commit exacte, i el codi de cada registre ha de ser el de l'etiqueta.
@@ -349,7 +387,18 @@ calibrats:
 - **Després,** cap canvi al protocol, al manifest ni als programes sense justificar-lo aquí, amb data i motiu, abans de mirar
   cap resultat.
 
-## 10. El que hi diu cada decisió de les auditories 19 i 20
+## 10. El que hi diu cada decisió de les auditories 19 a 21
+
+**L'auditoria 21** (v0.2 → v0.3):
+
+| Troballa o decisió | Què hi diu el protocol |
+|---|---|
+| AU2-99 | **La taula, certificada** amb una cota superior rigorosa, del projecte i de l'auditor 1, i no per una cerca (§6, §8). La seva SHA-256, fixada al programa i al manifest: la preparació, les comprovacions i la decisió no n'accepten cap altra (§6, §7). El certificat va amb l'etiqueta (§9) |
+| AU2-98 | **`--prova` no llegeix cap registre de la sèrie:** ni pels àlies dels fitxers (enllaços simbòlics o durs), ni amb un manifest que digui un altre `dir`, i no s'executa si la sèrie ja té registres. Les còpies, pel procediment (§7, §8) |
+| AUD-130 | **Les frases de la validesa:** "sabent *m*", la decisió no monòtona entre *m* diferents (§6, §8), i de quin criteri parla la de l'α' única (§6) |
+| AUD-131 | **El cas pitjor dels calibrats, sense saber *m*:** entre l'1,15 % i l'1,17 %, i el 2,43 % (§6) |
+| L'auditor 2 | **Els mons, independents:** el primer pas de l'argument (§6), i les limitacions (§8) |
+| L'ordre | **L'auditoria 22** revisa aquestes correccions abans de la preparació, i **la 23**, el manifest (§7). La decisió del responsable |
 
 **L'auditoria 20** (v0.1 → v0.2):
 
