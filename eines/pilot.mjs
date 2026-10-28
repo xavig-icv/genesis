@@ -28,6 +28,8 @@ import { join } from 'path';
 import { spawn, execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { censusProblem, structureProblems } from '../fase2/b2-serie.mjs';
+import { THRESHOLDS_SHA256 } from '../fase2/maduracio-serie.mjs';
+import { CERTIFICATE, certificateProblems, sha256Of } from './llindars-maduracio.mjs';
 
 export const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const TOOL = join(ROOT, 'eines', 'transforma.mjs');
@@ -81,7 +83,7 @@ export const PILOTS = {
       measure: "el nombre de branques de cada món i braç on la vida s'estableix dins de H (el criteri de la llei 2)", unit: 'món', worlds: 'tots',
       contrasts: [['continue', 'reinit'], ['shuffle-all', 'reinit']], method: 'holm', alpha: 0.025, sided: 'greater',
       statistic: 'la permutació de signes exacta, sobre la suma de les diferències de cada món, amb els llindars de Holm calibrats per m',
-      thresholds: 'fase2/maduracio-llindars.json',
+      thresholds: 'fase2/maduracio-llindars.json', thresholdsSha256: THRESHOLDS_SHA256,
       descriptive: [['continue', 'shuffle-all']],
     },
   },
@@ -255,7 +257,8 @@ export async function prepare(name, { root = ROOT, parallel = 6 } = {}) {
   if (existsSync(join(root, manifestPath))) fail(`${manifestPath} ja existeix: no es torna a preparar`);
   const code = codeVersion(root);
   if (code.includes('+') || code === 'desconeguda') fail(`el codi té canvis sense desar (${code}): la preparació ha de ser d'un commit net`);
-  if (p.test?.thresholds && !existsSync(join(root, p.test.thresholds))) fail(`no hi ha la taula dels llindars calibrats (${p.test.thresholds}): node eines/llindars-maduracio.mjs --calcula`);
+  const tp = thresholdsProblems(p, root);
+  if (tp.length) fail(`la taula dels llindars no és la que toca (${tp.length} problemes):\n- ${tp.slice(0, 10).join('\n- ')}`);
   const worlds = (p.cohort ? agedCandidates(name, { root }) : p.worlds).map((world) => {
     const o = origin(name, world, { root });
     return { world, role: roleOf(p, world), start: o.start, capture: o.capture, repartimentSha256: o.sha256 };
@@ -335,6 +338,17 @@ export async function prepare(name, { root = ROOT, parallel = 6 } = {}) {
 // El manifest contra el disseny, i totes les captures, registres i escanejos contra el manifest. Amb una màquina, només
 // les captures (els .bin) dels mons de la seva llista; els registres i els escanejos, que van a git, de tots. Retorna la
 // llista de problemes (buida si tot és correcte)
+// La taula dels llindars de la sèrie (AU2-99, auditoria 21): la certificada, amb la SHA-256 del disseny, i el seu certificat,
+// amb totes les cotes com a molt α
+function thresholdsProblems(p, root) {
+  if (!p.test?.thresholds) return [];
+  const file = join(root, p.test.thresholds), certFile = join(root, CERTIFICATE);
+  if (!existsSync(file)) return [`no hi ha la taula dels llindars calibrats (${p.test.thresholds}): node eines/llindars-maduracio.mjs --calcula`];
+  const tableSha256 = sha256Of(file);
+  if (tableSha256 !== p.test.thresholdsSha256) return [`la taula dels llindars no és la certificada: la seva SHA-256 és ${tableSha256}, i la del disseny, ${p.test.thresholdsSha256}`];
+  if (!existsSync(certFile)) return [`no hi ha el certificat de la taula dels llindars (${CERTIFICATE}): node eines/llindars-maduracio.mjs --certifica`];
+  try { return certificateProblems(JSON.parse(readFileSync(certFile, 'utf8')), { table: JSON.parse(readFileSync(file, 'utf8')), tableSha256 }); } catch { return ['el certificat o la taula dels llindars no es poden llegir']; }
+}
 export function checkCaptures(name, { root = ROOT, machine = null } = {}) {
   try { return captureProblems(name, root, machine); } catch (e) { return [`el manifest no té l'estructura esperada (${e.message})`]; }
 }
@@ -348,6 +362,7 @@ function captureProblems(name, root, machine) {
   if (m.pilot !== name) q(`el manifest és del pilot ${m.pilot}, no de ${name}`);
   if (!same(m.params, designParams(name))) q('els paràmetres del manifest no són els del disseny');
   if (p.tag && (m.tag !== p.tag || m.dir !== `${p.folder}/branques` || !same(m.test, p.test))) q("l'etiqueta, la carpeta o la prova del manifest no són les del disseny");
+  problems.push(...thresholdsProblems(p, root));
   if (p.cohort) {
     // la sèrie: els primers mons de la llista, en ordre, fins al darrer inclòs, i exactament cohort.size d'inclosos
     const ids = Array.isArray(m.worlds) ? m.worlds.map((w) => w.world) : [];
