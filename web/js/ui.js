@@ -224,6 +224,11 @@ export function createUI({ base = '../dades', onWorld, onFrame }) {
     });
   }
   $('help-btn')?.addEventListener('click', () => $('help').showModal());
+  // el panell es pot amagar; al mòbil, comença amagat perquè es vegi el món
+  const side = $('side'), panelBtn = $('panel-btn');
+  const showPanel = (on) => { side.classList.toggle('collapsed', !on); panelBtn?.setAttribute('aria-expanded', String(on)); };
+  showPanel(!matchMedia('(max-width: 820px)').matches);
+  panelBtn?.addEventListener('click', () => showPanel(side.classList.contains('collapsed')));
   window.addEventListener('keydown', (e) => {
     if (e.key === ' ' && !e.target.closest?.('input, select, textarea, button')) { e.preventDefault(); $('play').click(); }
   });

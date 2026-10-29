@@ -100,6 +100,12 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   - **Els exemples:** quan una imatge compara condicions, es trien a l'atzar amb una llavor declarada
     (`node eines/tria.mjs LLAVOR N elements...`), no els que es veuen bé.
   - **Les afirmacions dels peus** es comproven amb dades abans de publicar-les.
+- El lloc web (`web/`, sense dependències): la portada, en català i en anglès, l'explorador 3D (WebGL2) i la vista 2D.
+  - **Les dades de cada món:** `node eines/web-dades.mjs web/dades/ID/fitxa.json carpeta-de-captures`, a partir de les
+    captures d'una execució amb `--save-every` (l'ordre és a la fitxa). Només les escriu si la història és la del registre:
+    les SHA-256 de les captures (`docs/captures.sha256`) i els censos i l'empremta de la sèrie. No van a git.
+  - **Els mons, com les imatges:** il·lustratius i declarats com a tals, o triats a l'atzar amb una llavor declarada, i
+    cadascun amb la proporció de la seva sèrie. Cap resultat d'una sèrie abans de la seva decisió.
 - Documents per a qui arriba de fora: `README.en.md` (cal posar-lo al dia quan canviï el README), `docs/reproduir.md`
   (receptes comprovades), `docs/glossari.md`, `CITATION.cff`, `CONTRIBUTING.md` i `LICENSE-data.md`. Al
   README, la revisió és "de dos auditors d'IA", mai "externa" sense dir-ho.
