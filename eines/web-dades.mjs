@@ -12,12 +12,15 @@
 //                  seu nombre d'instruccions (de 0 a 64): 2 bytes per cel·la, comprimits amb zlib
 //   codi/E.z       el codi de l'època E: la classe de cada byte (0 = dada, 1 = zero, 2 a 11 = les instruccions
 //                  <>{}-+.,[] en aquest ordre), comprimit amb zlib
-// Les captures de la fitxa que porten SHA-256 ("comprova") s'hi comparen abans de res: si no hi coincideixen, la
-// història no és la del registre i no s'escriu res. Mai no sobreescriu cap fitxer.
+// Abans de res, l'eina comprova que la història sigui la del registre, i si no ho és, no escriu res:
+//   "comprova"   les captures que porten SHA-256 (de docs/captures.sha256), comparades amb les de la carpeta;
+//   "registre"   els censos del JSONL de l'execució (--json, a la carpeta de les captures), comparats amb els del
+//                registre de la sèrie, i l'empremta final si totes dues acaben a la mateixa època.
+// "epoques" i "codi" són un tram ({ des, fins, cada }) o una llista de trams. Mai no sobreescriu cap fitxer.
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { createHash } from 'crypto';
 import { deflateSync } from 'zlib';
-import { dirname, join, relative } from 'path';
+import { dirname, join, relative, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { PROGRAM_SIZE, KIND, OPCODES } from '../fase1/bff.js';
 import { createFamilyTracker } from '../fase2/families.js';
@@ -36,7 +39,31 @@ function fail(message) { console.error(`Error: ${message}`); process.exit(1); }
 
 // Els noms de les captures d'una execució: el patró de la fitxa, amb {e} per l'època
 const captureName = (pattern, e) => pattern.replace('{e}', String(e));
-const range = ({ des, fins, cada }) => { const out = []; for (let e = des; e <= fins; e += cada) out.push(e); return out; };
+const range1 = ({ des, fins, cada }) => { const out = []; for (let e = des; e <= fins; e += cada) out.push(e); return out; };
+const range = (r) => [...new Set((Array.isArray(r) ? r : [r]).flatMap(range1))].sort((a, b) => a - b);
+const jsonl = (f) => readFileSync(f, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+
+// Els censos de l'execució han de ser exactament els del registre de la sèrie, fins on arriben tots dos, i l'empremta
+// final, la mateixa si acaben a la mateixa època. Retorna què s'ha comparat
+function checkRecord(reg, captures) {
+  const serie = jsonl(resolve(ROOT, reg.serie)), run = jsonl(join(captures, reg.execucio));
+  const end = (r) => r.find((x) => x.type === 'end'), cens = (r) => new Map(r.filter((x) => x.type === 'census').map((x) => [x.epoch, JSON.stringify(x)]));
+  const a = cens(serie), b = cens(run), last = Math.min(Math.max(...a.keys()), Math.max(...b.keys()));
+  let n = 0;
+  for (const [e, line] of a) {
+    if (e > last) continue;
+    if (b.get(e) !== line) fail(`el cens de l'època ${e} no és el de ${reg.serie}: no és la mateixa història`);
+    n++;
+  }
+  if (!n) fail(`cap cens per comparar amb ${reg.serie}`);
+  const ea = end(serie), eb = end(run);
+  let fingerprint = false;
+  if (ea && eb && ea.epoch === eb.epoch) {
+    if (ea.fingerprint !== eb.fingerprint) fail(`l'empremta final (època ${ea.epoch}) no és la de ${reg.serie}`);
+    fingerprint = true;
+  }
+  return { censos: n, fins: last, empremta: fingerprint ? ea.fingerprint : null };
+}
 
 export function build(fitxaPath, captures) {
   const dir = dirname(fitxaPath), fitxa = JSON.parse(readFileSync(fitxaPath, 'utf8'));
@@ -50,6 +77,7 @@ export function build(fitxaPath, captures) {
     if (!existsSync(file)) fail(`no hi ha la captura de l'època ${c.epoca} (${file})`);
     if (sha256(readFileSync(file)) !== c.sha256) fail(`la captura de l'època ${c.epoca} no té la SHA-256 de ${c.font}: no és la mateixa història`);
   }
+  const record = fitxa.registre ? checkRecord(fitxa.registre, captures) : null;
 
   const tracker = createFamilyTracker();
   const maps = Buffer.alloc(epochs.length * 2 * n);
@@ -106,6 +134,7 @@ export function build(fitxaPath, captures) {
   const mon = {
     ...fitxa, format: 1,
     eina: { programa: 'eines/web-dades.mjs', registre: 'fase2/families.js (createFamilyTracker, per defecte)' },
+    comprovat: { captures: (fitxa.comprova ?? []).length, ...(record ? { registre: record } : {}) },
     mapes: { fitxer: 'mapes.z', sha256: sha256(mapsZ), bytes: mapsZ.length },
     codiFitxers: codi, fotogrames: frames, families: [...families.values()].sort((a, b) => a.neix - b.neix || a.id - b.id), fonts,
   };

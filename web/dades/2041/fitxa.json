@@ -1,0 +1,25 @@
+{
+  "id": "2041",
+  "mida": [512, 256],
+  "titol": { "ca": "Un món amb corrent", "en": "A world with a current" },
+  "tria": {
+    "ca": "Triat a l'atzar d'entre els 34 mons amb corrent, de 80, on la vida es va establir a la sèrie de la llei 2 (eines/tria.mjs, amb la llavor 20261029, declarada abans de mirar-lo).",
+    "en": "Chosen at random among the 34 worlds with a current, out of 80, where life became established in the law 2 series (eines/tria.mjs, with seed 20261029, declared before looking at it)."
+  },
+  "text": {
+    "ca": "Un món de 512 × 256 cel·les amb un corrent feble: cada època, l'1 % de les cel·les canvien de lloc. La vida hi triga: el primer replicador hereditari apareix al cens de l'època 10.500. Al de l'època 10.750 ja en són l'1,2 % de la mostra, i el de l'època 11.000 en confirma l'establiment, amb el 12,7 %.",
+    "en": "A world of 512 × 256 cells with a weak current: every epoch, 1 % of the cells change places. Life takes its time: the first heritable replicator appears at the census of epoch 10,500. At the census of epoch 10,750 they are already 1.2 % of the sample, and the census of epoch 11,000 confirms the establishment, with 12.7 %."
+  },
+  "serie": "fase2/resultats/serie-llei2/B/2041.jsonl",
+  "establiment": { "epoca": 10750, "confirmat": 11000 },
+  "ordre": "node sim.mjs --world 512x256 --seed 2041 --mixing 0.01 --epochs 11750 --after 99999 --every 100 --census 250 --census-version v3 --rng v2 --save CARPETA --save-every 50 --json CARPETA/r2041.jsonl",
+  "captures": "llavor2041-mon512x256-r2-m0.01-epoca{e}.bin",
+  "epoques": [{ "des": 100, "fins": 10000, "cada": 100 }, { "des": 10050, "fins": 11750, "cada": 50 }],
+  "codi": [{ "des": 1000, "fins": 10000, "cada": 1000 }, { "des": 10250, "fins": 11750, "cada": 50 }],
+  "comprova": [
+    { "epoca": 10250, "sha256": "1f27398dbe4b458e87660b1e909a3d5d7f0c6db3a9f18108219d182e31913109", "font": "docs/captures.sha256" },
+    { "epoca": 10500, "sha256": "d08d539a6cd8dfdf703d7d3751c390d614359c0964a243e01ed19d7f5b128708", "font": "docs/captures.sha256" },
+    { "epoca": 10750, "sha256": "d8af7480a6493c14da00318d24ba5873f5e0bd937578398f9fcfc168564061e1", "font": "docs/captures.sha256" }
+  ],
+  "registre": { "serie": "fase2/resultats/serie-llei2/B/2041.jsonl", "execucio": "r2041.jsonl" }
+}

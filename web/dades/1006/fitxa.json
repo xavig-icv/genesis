@@ -1,7 +1,13 @@
 {
   "id": "1006",
-  "mida": [512, 256],
-  "titol": { "ca": "Una colònia en un món quiet", "en": "A colony in a quiet world" },
+  "mida": [
+    512,
+    256
+  ],
+  "titol": {
+    "ca": "Una colònia en un món quiet",
+    "en": "A colony in a quiet world"
+  },
   "tria": {
     "ca": "Il·lustratiu, triat a mà perquè hi neix una sola colònia, que es veu bé. És un dels 24 mons quiets, de 80, on la vida es va establir a la sèrie de la llei 2.",
     "en": "Illustrative, chosen by hand because a single colony is born in it and it is easy to follow. It is one of the 24 quiet worlds, out of 80, where life became established in the law 2 series."
@@ -11,14 +17,41 @@
     "en": "A world of 512 × 256 cells, without currents: each program only meets its neighbours. For about 2,000 epochs there is only noise. At the census of epoch 2,250, 1.9 % of the sample are already heritable replicators, and the census of epoch 2,500 confirms the establishment. Then the colony spreads."
   },
   "serie": "fase2/resultats/serie-llei2/A/1006.jsonl",
-  "establiment": { "epoca": 2250, "confirmat": 2500 },
-  "ordre": "node sim.mjs --world 512x256 --seed 1006 --mixing 0 --epochs 6000 --after 99999 --every 100 --census 250 --census-version v3 --rng v2 --save CARPETA --save-every 50",
+  "establiment": {
+    "epoca": 2250,
+    "confirmat": 2500
+  },
+  "ordre": "node sim.mjs --world 512x256 --seed 1006 --mixing 0 --epochs 6000 --after 99999 --every 100 --census 250 --census-version v3 --rng v2 --save CARPETA --save-every 50 --json CARPETA/r1006.jsonl",
   "captures": "llavor1006-mon512x256-r2-epoca{e}.bin",
-  "epoques": { "des": 50, "fins": 6000, "cada": 50 },
-  "codi": { "des": 1500, "fins": 6000, "cada": 50 },
+  "epoques": {
+    "des": 50,
+    "fins": 6000,
+    "cada": 50
+  },
+  "codi": {
+    "des": 1500,
+    "fins": 6000,
+    "cada": 50
+  },
   "comprova": [
-    { "epoca": 1750, "sha256": "e7ab471679e6bcc59625cde9f5e8b90485432c74c40b335015c01bec40b5c645", "font": "docs/captures.sha256" },
-    { "epoca": 2000, "sha256": "fed421ea044115a8729c5f56a95a405285eb095773628cc20fac2fed3d17d02e", "font": "docs/captures.sha256" },
-    { "epoca": 2250, "sha256": "be6ea4e56aaaa5ac7b25a8afa4cadcd5b577f1e3f52016ce08985b3a0f357ba5", "font": "docs/captures.sha256" }
-  ]
+    {
+      "epoca": 1750,
+      "sha256": "e7ab471679e6bcc59625cde9f5e8b90485432c74c40b335015c01bec40b5c645",
+      "font": "docs/captures.sha256"
+    },
+    {
+      "epoca": 2000,
+      "sha256": "fed421ea044115a8729c5f56a95a405285eb095773628cc20fac2fed3d17d02e",
+      "font": "docs/captures.sha256"
+    },
+    {
+      "epoca": 2250,
+      "sha256": "be6ea4e56aaaa5ac7b25a8afa4cadcd5b577f1e3f52016ce08985b3a0f357ba5",
+      "font": "docs/captures.sha256"
+    }
+  ],
+  "registre": {
+    "serie": "fase2/resultats/serie-llei2/A/1006.jsonl",
+    "execucio": "r1006.jsonl"
+  }
 }

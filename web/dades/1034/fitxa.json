@@ -1,0 +1,19 @@
+{
+  "id": "1034",
+  "mida": [512, 256],
+  "titol": { "ca": "Un món quiet on la vida no arriba", "en": "A quiet world where life does not arrive" },
+  "tria": {
+    "ca": "Triat a l'atzar d'entre els 56 mons quiets, de 80, on la vida no es va establir en 16.000 èpoques a la sèrie de la llei 2 (eines/tria.mjs, amb la llavor 20261029, declarada abans de mirar-lo). És el resultat més freqüent.",
+    "en": "Chosen at random among the 56 quiet worlds, out of 80, where life did not become established within 16,000 epochs in the law 2 series (eines/tria.mjs, with seed 20261029, declared before looking at it). It is the most frequent outcome."
+  },
+  "text": {
+    "ca": "Un món de 512 × 256 cel·les sense corrents. En 16.000 èpoques, la vida no s'hi estableix: dels 64 censos, només el de l'època 5.250 hi troba algun replicador hereditari, 2 de 2.048, que no arrelen. Tot el temps hi ha soroll.",
+    "en": "A world of 512 × 256 cells without currents. Within 16,000 epochs, life does not become established: of the 64 censuses, only the one at epoch 5,250 finds any heritable replicators, 2 out of 2,048, and they do not take hold. There is noise all along."
+  },
+  "serie": "fase2/resultats/serie-llei2/A/1034.jsonl",
+  "ordre": "node sim.mjs --world 512x256 --seed 1034 --mixing 0 --epochs 16000 --after 99999 --every 100 --census 250 --census-version v3 --rng v2 --save CARPETA --save-every 100 --json CARPETA/r1034.jsonl",
+  "captures": "llavor1034-mon512x256-r2-epoca{e}.bin",
+  "epoques": { "des": 100, "fins": 16000, "cada": 100 },
+  "codi": { "des": 1000, "fins": 16000, "cada": 1000 },
+  "registre": { "serie": "fase2/resultats/serie-llei2/A/1034.jsonl", "execucio": "r1034.jsonl" }
+}

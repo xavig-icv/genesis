@@ -80,6 +80,26 @@ const tests = {
     assert.match(r.stderr, /ja existeix/);
     assert.strictEqual(sha(readFileSync(join(one, 'mon.json'))), before);
   },
+  'compara els censos i l’empremta final amb el registre de la sèrie': () => {
+    // un registre de la sèrie i el de l'execució, amb els mateixos censos i la mateixa empremta
+    const cens = (e, h) => ({ type: 'census', version: 'v3', epoch: e, families: [], sample: 2048, heritable: h });
+    const lines = (rows, end) => [{ type: 'start', seed: 1 }, ...rows, { type: 'end', epoch: 150, fingerprint: end }].map((x) => JSON.stringify(x)).join('\n') + '\n';
+    const serie = join(tmp, 'serie.jsonl');
+    writeFileSync(serie, lines([cens(50, 0), cens(100, 3), cens(150, 40)], 'abcd1234'));
+    writeFileSync(join(caps, 'run-igual.jsonl'), lines([cens(50, 0), cens(100, 3), cens(150, 40)], 'abcd1234'));
+    const dir = join(tmp, 'quatre');
+    const r = run(fitxa(dir, { codi: undefined, registre: { serie, execucio: 'run-igual.jsonl' } }));
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.deepStrictEqual(JSON.parse(readFileSync(join(dir, 'mon.json'), 'utf8')).comprovat.registre, { censos: 3, fins: 150, empremta: 'abcd1234' });
+    // un cens diferent, o una altra empremta: no és la mateixa història, i no s'escriu res
+    for (const [name, rows, end, why] of [['cens', [cens(50, 0), cens(100, 4), cens(150, 40)], 'abcd1234', /el cens de l'època 100/], ['empremta', [cens(50, 0), cens(100, 3), cens(150, 40)], 'ffff0000', /l'empremta final/]]) {
+      writeFileSync(join(caps, `run-${name}.jsonl`), lines(rows, end));
+      const d = join(tmp, `cinc-${name}`), q = run(fitxa(d, { registre: { serie, execucio: `run-${name}.jsonl` } }));
+      assert.strictEqual(q.status, 1, name);
+      assert.match(q.stderr, why);
+      assert.ok(!existsSync(join(d, 'mon.json')) && !existsSync(join(d, 'mapes.z')), name);
+    }
+  },
   'si una captura no té la SHA-256 del registre, no escriu res': () => {
     const dir = join(tmp, 'tres');
     const r = run(fitxa(dir, { comprova: [{ epoca: 100, sha256: '0'.repeat(64), font: 'una prova' }] }));
