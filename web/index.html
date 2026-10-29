@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>claude-origins · Abiogènesi digital</title>
+  <meta name="description" content="Un univers de joguina on la vida sorgeix sola: programes aleatoris que es tornen replicadors, sense que ningú n'escrigui el primer. Dissenyem les lleis, mai els organismes.">
+  <link rel="stylesheet" href="css/estil.css">
+  <link rel="stylesheet" href="css/portada.css">
+</head>
+<body class="home">
+  <header class="nav glass">
+    <a class="brand" href="./"><b>claude-origins</b></a>
+    <nav>
+      <a href="explorador/" data-i18n="nav.explorer">Explorador 3D</a>
+      <a href="../quadern/" data-i18n="nav.notebook">Quadern</a>
+      <a href="https://github.com/xavig-icv/genesis" data-i18n="nav.repo">Codi</a>
+    </nav>
+    <div class="seg" role="group" aria-label="Llengua / Language">
+      <button data-lang="ca" aria-pressed="true">CA</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <canvas id="hero" aria-hidden="true"></canvas>
+    <div class="hero-text">
+      <p class="eyebrow"><span lang="ca">Un experiment d'abiogènesi digital</span><span lang="en">A digital abiogenesis experiment</span></p>
+      <h1><span lang="ca">La vida, sense que ningú l'escrigui</span><span lang="en">Life, without anyone writing it</span></h1>
+      <p class="lede" lang="ca">Un univers de joguina on intentem que la vida sorgeixi sola. Programes aleatoris es troben, es reescriuen i, de vegades, en surt un que es copia. Dissenyem les lleis del món, mai els organismes.</p>
+      <p class="lede" lang="en">A toy universe where we try to let life arise on its own. Random programs meet and rewrite each other and, sometimes, one appears that copies itself. We design the laws of the world, never the organisms.</p>
+      <div class="cta">
+        <a class="btn primary" href="explorador/"><span lang="ca">Explora un món en 3D</span><span lang="en">Explore a world in 3D</span></a>
+        <a class="btn" href="../quadern/"><span lang="ca">Llegeix el quadern</span><span lang="en">Read the notebook</span></a>
+      </div>
+      <p class="caption" lang="ca">Al fons, el món de la llavor 1006, que gira com un planeta: hi ha nascut una colònia de replicadors. És un exemple triat perquè es veu bé, no una mostra.</p>
+      <p class="caption" lang="en">In the background, the world of seed 1006, turning like a planet: a colony of replicators has been born in it. It is an example chosen because it is easy to see, not a sample.</p>
+    </div>
+  </section>
+
+  <main>
+    <section class="block" id="vida">
+      <h2><span lang="ca">Què vol dir “vida” aquí</span><span lang="en">What “life” means here</span></h2>
+      <p lang="ca">És un criteri de treball, no cap afirmació sobre la vida biològica.</p>
+      <p lang="en">It is an operational criterion, not a claim about biological life.</p>
+      <div class="two">
+        <div class="card">
+          <h3><span lang="ca">Un replicador hereditari</span><span lang="en">A heritable replicator</span></h3>
+          <p lang="ca">és un programa que es copia en un company, i la còpia també es copia.</p>
+          <p lang="en">is a program that copies itself into a partner, and whose copy copies itself in turn.</p>
+        </div>
+        <div class="card">
+          <h3><span lang="ca">La vida s'ha establert</span><span lang="en">Life is established</span></h3>
+          <p lang="ca">quan, en dos censos seguits (un cada 250 èpoques), almenys l'1 % d'una mostra de 2.048 cel·les en són.</p>
+          <p lang="en">when at least 1 % of a sample of 2,048 cells are heritable replicators, in two consecutive censuses taken 250 epochs apart.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="que-es">
+      <h2><span lang="ca">Què és</span><span lang="en">What it is</span></h2>
+      <p lang="ca">Tierra (1991) i Avida (1994) van estudiar l'evolució digital, però hi començava un organisme escrit a mà. El 2024, <em>Computational Life</em> (Agüera y Arcas i altres) va mostrar que en una sopa de programes molt senzills, en llenguatge BFF, hi apareixen replicadors sols: en un 40 % de les sopes. Aquest projecte parteix d'aquí i es pregunta el que queda obert:</p>
+      <p lang="en">Tierra (1991) and Avida (1994) studied digital evolution, but they started from a hand-written organism. In 2024, <em>Computational Life</em> (Agüera y Arcas et al.) showed that replicators appear on their own in a soup of very simple programs written in the BFF language: in about 40 % of the soups. This project starts from there and asks what remains open:</p>
+      <ol class="questions">
+        <li><span lang="ca">Quines propietats de la química i de l'entorn calen perquè hi aparegui la vida.</span><span lang="en">Which properties of the chemistry and of the environment are needed for life to appear.</span></li>
+        <li><span lang="ca">De què depèn que s'estableixi i que duri.</span><span lang="en">What makes it become established, and last.</span></li>
+        <li><span lang="ca">Si després hi ha evolució darwiniana sostinguda.</span><span lang="en">Whether sustained Darwinian evolution follows.</span></li>
+        <li><span lang="ca">Si els resultats són generals o propis d'aquest llenguatge.</span><span lang="en">Whether the results are general or specific to this language.</span></li>
+      </ol>
+      <div class="rule">
+        <p lang="ca"><b>La regla principal: dissenyem les lleis, mai els organismes.</b> No hi ha replicadors inicials, ni premis per copiar-se, ni cap instrucció que copiï un programa sencer d'un sol cop. Els organismes són bytes executats pel nostre intèrpret, en un univers tancat: sense accés al sistema, a la xarxa ni als fitxers.</p>
+        <p lang="en"><b>The main rule: we design the laws, never the organisms.</b> There are no seeded replicators, no rewards for copying, and no instruction that copies a whole program at once. The organisms are bytes run by our interpreter, in a closed universe: no access to the system, the network or the files.</p>
+      </div>
+    </section>
+
+    <section class="block" id="instruccions">
+      <h2><span lang="ca">La química: 10 instruccions</span><span lang="en">The chemistry: 10 instructions</span></h2>
+      <p lang="ca">Cada programa són 64 bytes. Dos programes es posen l'un al costat de l'altre en una cinta de 128 bytes, i la cinta s'executa: el codi i les dades hi viuen junts, de manera que un programa es pot reescriure a si mateix i també el seu veí. Hi ha dos caps que llegeixen i escriuen. Qualsevol altre byte no fa res: són dades. A l'explorador, cada instrucció és un sòlid diferent.</p>
+      <p lang="en">Each program is 64 bytes. Two programs are placed side by side on a 128-byte tape, and the tape is run: code and data live together, so a program can rewrite itself and its neighbour. Two heads read and write. Any other byte does nothing: it is data. In the explorer, each instruction is a different solid.</p>
+      <div class="gallery">
+        <canvas id="gallery" aria-hidden="true"></canvas>
+        <div class="glyphs" id="glyphs"></div>
+      </div>
+    </section>
+
+    <section class="block" id="resultats">
+      <h2><span lang="ca">Què hem trobat</span><span lang="en">What we have found</span></h2>
+      <div class="cards">
+        <article class="card">
+          <p class="tag"><span lang="ca">Fase 1 · La sopa</span><span lang="en">Phase 1 · The soup</span></p>
+          <h3><span lang="ca">La sopa cobra vida</span><span lang="en">The soup comes alive</span></h3>
+          <p lang="ca">Hem reproduït el resultat de 2024 en sopes de 131.072 programes, i n'hem seguit la història. Els primers replicadors s'enverinen: cada còpia deixa zeros, i els zeros aturen les còpies, com ja descrivia l'article. En una sopa, un successor els converteix en 255 i s'hi continua copiant.</p>
+          <p lang="en">We reproduced the 2024 result in soups of 131,072 programs, and followed their history. The first replicators poison themselves: each copy leaves zeros behind, and zeros stop copying, as the paper already described. In one soup, a successor turns them into 255 and keeps copying.</p>
+          <a href="../quadern/#entrada-1"><span lang="ca">Entrades 1 i 2 del quadern</span><span lang="en">Notebook entries 1 and 2</span></a>
+        </article>
+        <article class="card">
+          <p class="tag"><span lang="ca">Sèrie preregistrada 1</span><span lang="en">Preregistered series 1</span></p>
+          <h3><span lang="ca">Un corrent feble: no concloent</span><span lang="en">A weak current: inconclusive</span></h3>
+          <p lang="ca">En un món 2D, cada programa només es troba amb els veïns. En 160 mons, la vida s'hi va establir en el 30 % dels quiets (24 de 80) i en el 42,5 % dels que tenen un corrent feble (34 de 80). La diferència no arriba al límit preregistrat: no permet afirmar cap efecte del corrent, però tampoc no el descarta.</p>
+          <p lang="en">In a 2D world, each program only meets its neighbours. In 160 worlds, life became established in 30 % of the quiet ones (24 of 80) and in 42.5 % of those with a weak current (34 of 80). The difference does not reach the preregistered bound: it does not show an effect of the current, nor does it rule one out.</p>
+          <a href="../quadern/#entrada-8"><span lang="ca">Entrada 8</span><span lang="en">Entry 8</span></a>
+        </article>
+        <article class="card">
+          <p class="tag"><span lang="ca">Sèrie preregistrada 2</span><span lang="en">Preregistered series 2</span></p>
+          <h3><span lang="ca">La vida establerta dura</span><span lang="en">Established life lasts</span></h3>
+          <p lang="ca">Continuant 29 mons des de l'establiment, 116 branques de 5.000 èpoques: en el seu món, el 93,1 % de les branques no tenen cap pèrdua sostinguda. Amb corrent, durant les primeres 2.000 èpoques la vida ocupa de mitjana més part del món (22 de 29 mons), com s'espera dels fronts d'invasió.</p>
+          <p lang="en">Continuing 29 worlds from the establishment, 116 branches of 5,000 epochs: in their own world, 93.1 % of the branches show no sustained loss. With a current, life fills on average a larger share of the world during the first 2,000 epochs (22 of 29 worlds), as invasion-front theory predicts.</p>
+          <a href="../quadern/#entrada-10"><span lang="ca">Entrada 10</span><span lang="en">Entry 10</span></a>
+        </article>
+        <article class="card">
+          <p class="tag"><span lang="ca">Sèrie preregistrada 3</span><span lang="en">Preregistered series 3</span></p>
+          <h3><span lang="ca">Els zeros enverinen</span><span lang="en">Zeros poison</span></h3>
+          <p lang="ca">En 8 mons on la vida baixa just després d'establir-se, treure els zeros de les cel·les que no es repliquen fa que la vida baixi menys que amb un placebo: confirmat als 8 mons. Contra el món sense tocar, no concloent. No diu res de mons nous.</p>
+          <p lang="en">In 8 worlds where life drops right after becoming established, removing the zeros of the cells that do not replicate makes life drop less than with a placebo: confirmed in all 8 worlds. Against the untouched world, inconclusive. It says nothing about new worlds.</p>
+          <a href="../quadern/#entrada-13"><span lang="ca">Entrada 13</span><span lang="en">Entry 13</span></a>
+        </article>
+        <article class="card now">
+          <p class="tag"><span lang="ca">Ara</span><span lang="en">Now</span></p>
+          <h3><span lang="ca">La maduració de la sopa</span><span lang="en">The maturation of the soup</span></h3>
+          <p lang="ca">Una sopa vella fa néixer la vida més sovint que una de nova? Una sèrie preregistrada amb 150 mons nous, que continuen la sopa envellida, en barregen els bytes o la canvien per una de nova. Els resultats, quan s'hagi decidit.</p>
+          <p lang="en">Does an aged soup give rise to life more often than a fresh one? A preregistered series with 150 new worlds that continue the aged soup, shuffle its bytes, or replace it with a fresh one. Results once it has been decided.</p>
+          <a href="../quadern/#entrada-12"><span lang="ca">El pilot: entrada 12</span><span lang="en">The pilot: entry 12</span></a>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="metode">
+      <h2><span lang="ca">Com es treballa</span><span lang="en">How we work</span></h2>
+      <div class="cards three">
+        <div class="card">
+          <h3><span lang="ca">Preregistre</span><span lang="en">Preregistration</span></h3>
+          <p lang="ca">Cada sèrie confirmatòria té un protocol escrit abans de començar, fixat en una etiqueta de git; les de B2 i dels zeros, a més, amb un segell ancorat a Bitcoin. El programa que decideix només ho fa des d'una còpia idèntica a l'etiqueta.</p>
+          <p lang="en">Each confirmatory series has a protocol written before it starts, fixed in a git tag; those of B2 and of the zeros also carry a stamp anchored on Bitcoin. The program that decides only runs from a copy identical to the tag.</p>
+        </div>
+        <div class="card">
+          <h3><span lang="ca">Dos auditors d'IA</span><span lang="en">Two AI auditors</span></h3>
+          <p lang="ca">A cada iteració, dos models revisen el codi, els mètodes i els resultats, per separat: una altra instància de Claude i un model diferent. No és cap revisió per experts humans.</p>
+          <p lang="en">At each iteration, two models review the code, methods and results separately: another instance of Claude and a different model. This is not human peer review.</p>
+        </div>
+        <div class="card">
+          <h3><span lang="ca">Reproduïble i honest</span><span lang="en">Reproducible and honest</span></h3>
+          <p lang="ca">La història de cada món es pot reproduir exactament amb el mateix commit i la mateixa llavor. Les errades es corregeixen al quadern sense esborrar el que vam dir.</p>
+          <p lang="en">The history of every world can be reproduced exactly with the same commit and seed. Mistakes are corrected in the notebook without erasing what we said.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="limits">
+      <h2><span lang="ca">Estat i límits</span><span lang="en">Status and limits</span></h2>
+      <p lang="ca">És un projecte personal en curs, començat el 14 d'octubre de 2026. Ho desenvolupa Claude (Anthropic), amb un responsable humà que decideix la direcció i revisa cada canvi del simulador. Els resultats són preliminars, i no s'han publicat ni els han revisat experts humans.</p>
+      <p lang="en">This is a personal project in progress, started on 14 October 2026. It is developed by Claude (Anthropic), with a human owner who sets the direction and reviews every change to the simulator. The results are preliminary, and have not been published or reviewed by human experts.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p lang="ca">Codi: Apache 2.0. Quadern, documentació i dades: CC BY 4.0. El simulador és una reimplementació independent del llenguatge BFF de <em>Computational Life</em> (Agüera y Arcas i altres, 2024, arXiv:2406.19108), contrastada amb cubff, la seva implementació de referència.</p>
+    <p lang="en">Code: Apache 2.0. Notebook, documentation and data: CC BY 4.0. The simulator is an independent reimplementation of the BFF language of <em>Computational Life</em> (Agüera y Arcas et al., 2024, arXiv:2406.19108), checked against cubff, its reference implementation.</p>
+  </footer>
+  <script type="module" src="js/portada.js"></script>
+</body>
+</html>

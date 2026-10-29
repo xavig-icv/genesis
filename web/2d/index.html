@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Vista 2D · claude-origins</title>
+  <meta name="description" content="Un món digital on la vida sorgeix sola, vist des de dalt: del món sencer fins als bytes de cada programa.">
+  <link rel="stylesheet" href="../css/estil.css">
+</head>
+<body class="explorer">
+  <canvas id="view" aria-label="El món vist des de dalt"></canvas>
+
+  <header class="topbar glass">
+    <a class="brand" href="../"><b>claude-origins</b><span data-i18n="nav.map">Vista 2D</span></a>
+    <select class="world" id="world" aria-label="Món"></select>
+    <div class="spacer"></div>
+    <a class="icon-btn wide" href="../explorador/" data-i18n="nav.explorer">Explorador 3D</a>
+    <a class="icon-btn wide" href="../../fase2/" data-i18n="nav.live">El teu món, en viu</a>
+    <button class="icon-btn" id="help-btn" data-i18n-title="help.title" title="Com et pots moure">?</button>
+    <div class="seg" role="group" aria-label="Llengua / Language">
+      <button data-lang="ca" aria-pressed="true">CA</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </header>
+
+  <aside class="side glass" id="side">
+    <h2 data-i18n="panel.world">El món</h2>
+    <h3 id="w-title"></h3>
+    <p id="w-text"></p>
+    <h2 data-i18n="panel.why">Per què aquest món</h2>
+    <p class="why" id="w-why"></p>
+    <p class="check" id="w-check" hidden></p>
+    <h2 data-i18n="panel.families">Famílies</h2>
+    <ul class="fam-list" id="families"></ul>
+    <h2 data-i18n="panel.legend">Les instruccions</h2>
+    <div class="legend" id="legend"></div>
+    <p class="source" data-i18n="source"></p>
+  </aside>
+
+  <div class="inspector glass" id="inspector" hidden></div>
+  <div class="hint glass" id="hint" data-i18n="zoom.code2d"></div>
+
+  <footer class="timeline glass">
+    <button class="play" id="play" data-i18n-title="time.play" title="Reprodueix">
+      <svg id="play-icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M4 2.5v13l11-6.5z" fill="currentColor"/></svg>
+    </button>
+    <div class="track">
+      <div class="marks" id="marks"></div>
+      <input type="range" id="time" min="0" max="6000" step="1" value="0" aria-label="Època">
+    </div>
+    <div class="epoch"><span data-i18n="time.epoch">Època</span><b id="epoch">0</b></div>
+    <div></div>
+    <div class="speed"><span data-i18n="time.speed">Velocitat</span>
+      <div class="seg" role="group" id="speeds">
+        <button data-speed="0.5" aria-pressed="false">½×</button>
+        <button data-speed="1" aria-pressed="true">1×</button>
+        <button data-speed="2" aria-pressed="false">2×</button>
+        <button data-speed="4" aria-pressed="false">4×</button>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="help glass" id="help">
+    <h3 data-i18n="help.title">Com et pots moure</h3>
+    <ul>
+      <li data-i18n="help.drag"></li>
+      <li data-i18n="help.zoom"></li>
+      <li data-i18n="help.dbl2d"></li>
+      <li data-i18n="help.touch2d"></li>
+      <li data-i18n="help.keys2d"></li>
+    </ul>
+    <form method="dialog"><button data-i18n="help.close">Entesos</button></form>
+  </dialog>
+
+  <div class="status" id="status" data-i18n="loading">Carregant el món…</div>
+  <script type="module" src="../js/vista2d.js"></script>
+</body>
+</html>

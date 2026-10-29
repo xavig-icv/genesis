@@ -42,6 +42,8 @@ const tests = {
     assert.strictEqual((await get('/fase2/')).status, 200);
     assert.strictEqual((await get('/fase1/bff.js')).status, 200);
     assert.strictEqual((await get('/quadern/')).status, 200);
+    // el lloc web: la portada, l'explorador 3D, la vista 2D i les dades dels mons
+    for (const p of ['/web/', '/web/explorador/', '/web/2d/', '/web/js/render.js', '/web/dades/mons.json']) assert.strictEqual((await get(p)).status, 200, p);
   },
   'una adreça mal codificada dona 400 i el servidor no cau (AUD-04)': async () => {
     assert.strictEqual((await get('/%E0%A4%A')).status, 400);
