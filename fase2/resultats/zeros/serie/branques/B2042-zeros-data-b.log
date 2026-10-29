@@ -1,0 +1,41 @@
+codi=2628f9b  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 502042 --mixing 0.01 --from fase2/resultats/zeros/serie/alicuotes/B2042/zeros-data.bin --start 5750 --epochs 7750 --every 100 --census 250 --census-version v3 --rng v2 --json fase2/resultats/zeros/serie/branques/B2042-zeros-data-b.jsonl
+llavor=502042 món=512x256 radi=2 barreja=0.01 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/zeros/serie/alicuotes/B2042/zeros-data.bin (època 5750; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048
+època 5800  H0=5.207  HOE=0.960  ops/execució=265.2  parelles=38%  bytes 0:29.1% <:7.5% #57:7.4%  fragments }<·]<<]·<}·, (12.9%)  ,·}<·]]·<}·, (7.2%)  <[0·····,·}< (7.2%)  43s
+època 5900  H0=5.120  HOE=0.423  ops/execució=115.1  parelles=75%  bytes 0:31.9% <:7.2% #57:6.9%  fragments }<·]<<]·<}·, (7.7%)  <[0·····,·}< (5.7%)  ,·}<·]]·<}·, (4.6%)  77s
+*** PRIMERA FAMÍLIA a l'època 6000 ***
+cens 6000  mostra=2048  hereditaris=10.7% (sols 10.7%, només en context 0.0%)  es repliquen=22.7% (sols 22.7%, en context 0.0%)  famílies=1  #1:39.48%(<]<},[)
+època 6000  H0=5.140  HOE=0.252  ops/execució=124.5  parelles=75%  bytes 0:32.8% <:6.9% #57:6.5%  fragments }<·]<<]·<}·, (5.0%)  <[0·····,·}< (4.4%)  ,·}<·]]·<}·, (3.5%)  116s
+època 6100  H0=5.187  HOE=0.150  ops/execució=133.2  parelles=75%  bytes 0:33.0% <:6.7% #57:6.2%  fragments <[0·····,·}< (3.5%)  }<·]<<]·<}·, (3.5%)  ,·}<·]]·<}·, (2.7%)  149s
+època 6200  H0=5.249  HOE=0.090  ops/execució=140.8  parelles=75%  bytes 0:32.9% <:6.7% #57:6.0%  fragments <[······,·}< (2.9%)  }<·]<<]·<}·, (2.8%)  ,·}<·]]·<}·, (1.8%)  185s
+cens 6250  mostra=2048  hereditaris=7.8% (sols 7.8%, només en context 0.0%)  es repliquen=17.3% (sols 17.3%, en context 0.1%)  famílies=2  #1:23.73%(<]<},[) #3:5.05%(,,[<,})
+*** ESTABLIMENT DE LA VIDA a l'època 6000 (confirmat al cens 6250) ***
+època 6300  H0=5.412  HOE=3.647  ops/execució=536.4  parelles=75%  bytes <:11.7% #57:11.0% ,:8.3%  fragments ,·}··]]··}·, (77.8%)  ,,[<·····,·} (40.2%)  }·,·····<[,, (39.0%)  385s
+època 6400  H0=5.365  HOE=3.782  ops/execució=2355.0  parelles=75%  bytes <:11.9% #57:11.0% ,:8.4%  fragments ,·}··]]··}·, (79.6%)  ,,[<·····,·} (40.1%)  }·,·····<[,, (38.8%)  1527s
+cens 6500  mostra=2048  hereditaris=92.9% (sols 92.9%, només en context 0.0%)  es repliquen=93.8% (sols 93.8%, en context 0.0%)  famílies=2  #1:6.80%(<[,}<]) #3:91.68%(,[<,}])
+època 6500  H0=5.473  HOE=3.718  ops/execució=2402.7  parelles=75%  bytes <:11.4% #57:10.7% ,:8.2%  fragments ,·}··]]··}·, (76.3%)  ,,[<·····,·} (38.0%)  }·,·····<[,, (36.6%)  2641s
+època 6600  H0=5.557  HOE=3.660  ops/execució=2405.4  parelles=75%  bytes <:11.2% #57:10.4% ,:8.1%  fragments ,·}··]]··}·, (72.9%)  }·,·····<[,, (35.0%)  ,,[<·····,·} (34.8%)  3823s
+època 6700  H0=5.654  HOE=3.613  ops/execució=2384.2  parelles=75%  bytes <:10.8% #57:10.1% ,:7.9%  fragments ,·}··]]··}·, (69.2%)  ,,[<·····,·} (31.9%)  }·,·····<[,, (31.9%)  5246s
+cens 6750  mostra=2048  hereditaris=96.2% (sols 96.2%, només en context 0.0%)  es repliquen=97.0% (sols 97.0%, en context 0.0%)  famílies=2  #1:9.48%(<[,}<]) #3:89.25%(,[<,}])
+època 6800  H0=5.719  HOE=3.567  ops/execució=2354.2  parelles=75%  bytes <:10.5% #57:10.0% ,:7.7%  fragments ,·}··]]··}·, (64.7%)  ,,[<·····,·} (31.3%)  }·,·····<[,, (29.9%)  7016s
+època 6900  H0=5.783  HOE=3.540  ops/execució=2345.1  parelles=75%  bytes <:10.5% #57:9.8% ,:7.7%  fragments ,·}··]]··}·, (59.6%)  ,,[<·····,·} (30.2%)  }·,·····<[,, (29.2%)  8321s
+cens 7000  mostra=2048  hereditaris=96.1% (sols 96.1%, només en context 0.0%)  es repliquen=96.7% (sols 96.7%, en context 0.0%)  famílies=2  #1:9.05%(<[,}<]) #3:89.41%(,[<,}])
+època 7000  H0=5.844  HOE=3.507  ops/execució=2355.3  parelles=75%  bytes <:10.5% #57:9.6% ,:7.7%  fragments ,·}··]]··}·, (57.9%)  }·,·····<[,, (28.5%)  ,,[<·····,·} (28.3%)  9357s
+època 7100  H0=5.890  HOE=3.492  ops/execució=2357.7  parelles=75%  bytes <:10.5% #57:9.4% ,:7.7%  fragments ,·}··]]··}·, (55.9%)  ,,[<·····,·} (29.0%)  }·,·····<[,, (28.0%)  10692s
+època 7200  H0=5.948  HOE=3.477  ops/execució=2381.7  parelles=75%  bytes <:10.4% #57:9.4% ,:7.7%  fragments ,·}··]]··}·, (54.2%)  }·,·····<[,, (28.3%)  ,,[<·····,·} (28.2%)  12178s
+cens 7250  mostra=2048  hereditaris=95.7% (sols 95.7%, només en context 0.0%)  es repliquen=96.3% (sols 96.3%, en context 0.0%)  famílies=2  #1:8.16%(<[,}<]) #3:89.78%(,[<,}])
+època 7300  H0=6.005  HOE=3.452  ops/execució=2375.6  parelles=75%  bytes <:10.3% #57:9.1% ,:7.6%  fragments ,·}··]]··}·, (51.6%)  }·,·····<[,, (26.4%)  ,,[<·····,·} (26.0%)  13480s
+època 7400  H0=6.059  HOE=3.448  ops/execució=2371.4  parelles=75%  bytes <:10.2% #57:9.1% ,:7.5%  fragments ,·}··]]··}·, (46.7%)  ,,[<·····,·} (24.1%)  }·,·····<[,, (23.0%)  14691s
+cens 7500  mostra=2048  hereditaris=95.6% (sols 95.6%, només en context 0.0%)  es repliquen=96.5% (sols 96.5%, en context 0.0%)  famílies=2  #1:8.40%(<[,}<]) #3:88.88%(,[<,}])
+època 7500  H0=6.109  HOE=3.476  ops/execució=2343.9  parelles=75%  bytes <:10.0% #57:8.8% ,:7.3%  fragments ,·}··]]··}·, (45.2%)  }·,·····<[,, (22.0%)  ,·}···]··}·, (21.6%)  15859s
+època 7600  H0=6.162  HOE=3.437  ops/execució=2344.5  parelles=75%  bytes <:9.9% #57:8.6% ,:7.1%  fragments ,·}··]]··}·, (39.9%)  ,·}··]···}·, (22.6%)  ,·}···]··}·, (22.3%)  16849s
+època 7700  H0=6.198  HOE=3.487  ops/execució=2318.3  parelles=75%  bytes <:9.8% #57:8.5% ,:7.2%  fragments ,·}··]]··}·, (37.6%)  ,·}···]··}·, (23.5%)  ,·}··]···}·, (23.3%)  17805s
+cens 7750  mostra=2048  hereditaris=96.2% (sols 96.2%, només en context 0.0%)  es repliquen=97.0% (sols 97.0%, en context 0.0%)  famílies=2  #1:8.98%(<]<},[) #3:86.42%(,[<,}])
+
+empremta del món: eec8a7b6
+
+programes diferents: 47552 de 131072
+     67  |                  <  <   ,[<     , }  ]]  } , <    [,,  <<      |
+     67  |>>>            <<     <[ .,[<     , }  ]   } , <    [           |
+     66  | [    < , }  ]]  } ,     <[,                  ,                 |
+     66  | ><>><<[    < , }   ]  } ,     <[    <  <  <                >> >|
+     66  |> >>                <  <  <    [<     , }  ]   } , <    [<<>><> |

@@ -128,3 +128,58 @@ Les hores d'aquesta secció són les del PC i la màquina virtual (+01:00).
   - **A la màquina virtual,** `B2011-continue-a`: `code` `2628f9b`, Node 20.19.2.
 - **Durant els lots:** només `bash eines/seguiment.sh --agregat`. No es mira cap resultat fins a la decisió, que es pren des
   d'una còpia de l'etiqueta.
+
+## El final de la sèrie (29-10-2026)
+
+Les hores d'aquesta secció i de les següents són les del PC i la màquina virtual (+01:00).
+
+- **El PC:** el lot va acabar el 29-10-2026 a les 00:49:32, amb 72 branques acabades i cap de fallada.
+- **La màquina virtual:** el lot va acabar el 29-10-2026 a les 06:47:37, amb 60 acabades i cap de fallada.
+- **Cap lot no es va tornar a llançar:** tots dos diuen "0 ja fets".
+- **Els registres de la màquina virtual,** copiats a la còpia de l'etiqueta del PC, sense sobreescriure res: cap nom no
+  coincidia amb els del PC. La SHA-256 dels 60 JSONL, dels 60 registres de text i del lot coincideix amb la de la màquina
+  virtual.
+- **El seguiment agregat dels dos lots junts:** 132 de 132 acabades, cap de fallada, i els 132 registres complets.
+- **Durant la sèrie** no s'ha mirat cap resultat: només el recompte agregat de `eines/seguiment.sh --agregat`, i la primera
+  línia d'una branca de cada màquina just després de llançar.
+- **El que va córrer alhora:**
+  - al PC, la feina de les auditories 21 i 22: la certificació de la taula dels llindars, les proves i el paquet de l'auditor 2;
+  - des del 29-10-2026 a la 01:04, quan el lot del PC ja havia acabat, l'envelliment de la sèrie de la maduració, al PC, amb 8
+    processos de prioritat baixa. La màquina virtual és dins del PC i en comparteix la CPU.
+  - **Què hi canvia:** cap resultat, perquè la simulació és determinista, però sí els temps. Els segons de cada branca no es
+    poden comparar entre branques; les operacions de cada mesura, sí.
+
+## Les comprovacions d'abans de decidir (29-10-2026)
+
+- **La còpia:** `claude-origins-zeros`, una còpia de treball de git a `2628f9b` (`git describe --exact-match` dona
+  `preregistre-zeros`).
+  - **Neta:** cap canvi als fitxers seguits, i cap fitxer amb `assume-unchanged` ni `skip-worktree`. L'únic que no és del commit
+    són els registres de les branques.
+  - **Node:** `NODE_OPTIONS` buit, i Node 16.15.1.
+- **Les SHA-256 del missatge de l'etiqueta:** les nou, tornades a calcular amb `sha256sum` (l'eina del sistema) sobre els
+  fitxers de la còpia, coincideixen totes.
+- **L'objecte de l'etiqueta** (`2fb903b0…`) té la SHA-256 del fitxer segellat (`23c4b30c…`).
+- **AUD-118:** `node eines/pilot.mjs zeros --comprova-captures`, a les 06:52:30: "La comprovació de les captures del pilot
+  zeros: tot correcte." (codi 0). La sortida és a `captures-decisio.txt`.
+
+## La decisió (29-10-2026)
+
+- **Quan i des d'on:** a les 06:53:02, des de la còpia de l'etiqueta, amb `NODE_OPTIONS` buit.
+- **L'ordre:** `node fase2/zeros-confirmacio.mjs --decideix fase2/resultats/zeros/serie/branques >
+  fase2/resultats/zeros/serie/decisio-sortida.txt`.
+- **El codi de sortida:** 0, i res a la sortida d'errors.
+- **La sortida,** desada tal com va sortir: `decisio-sortida.txt`, SHA-256
+  `b86af8766f8db2d5c86d347c9e4f637e57e6570aa9eed72961b61b62e65d60b5`.
+- **Les dues decisions:**
+  - **Prova 1, `zeros-data` contra `continue`: no es rebutja H₀, no concloent.** *g* més alt a 7 mons i més baix a 1, cap
+    empat; *p* = 0,0352, i el llindar de Holm, 0,025.
+  - **Prova 2, `zeros-data` contra `placebo-cell`: es rebutja H₀.** *g* més alt als 8 mons; *p* = 0,0039, i el llindar de
+    Holm, 0,0125.
+- **Una comprovació independent,** amb un script que no fa servir cap funció del programa: llegeix els JSONL, els escanejos i
+  el manifest com a dades.
+  - **Què comprova dels registres:** a cadascun, l'ordre del manifest, el codi `2628f9b`, l'horitzó i els 8 censos.
+  - **Què en dona, igual que el programa:**
+    - *h*₀, *h*₁ i *g* dels 4 braços dels 11 mons;
+    - els recomptes, les *p* i l'ordre de Holm;
+    - la sensibilitat amb els hereditaris sols, els descriptius dels braços, i les mitjanes dels censos 2 a 4 i del cens final.
+- **Les SHA-256 dels registres** (els 132 JSONL, els 132 registres de text i els dos lots): `branques/sha256.txt`.

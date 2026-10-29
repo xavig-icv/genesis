@@ -1,0 +1,44 @@
+Commit del preregistre: 2628f9b1e693cededb3480529e6ef15bd2e88f32 (etiqueta de git preregistre-zeros (objecte 2fb903b0eae252b2a2c78cb764e33b36b065a5ae); manifest fase2/resultats/zeros/serie/manifest.json)
+La mesura principal, g = h₁ / h₀: la vida del primer cens (h₁, mitjana de les llavors) respecte de la del començament del braç (h₀, l'escaneig de totes les cel·les):
+  B2002 (prova): continue h₀ 10.7 %, h₁ 2.0 %, g 0.189 · zeros-data h₀ 20.0 %, h₁ 17.7 %, g 0.882 · placebo-cell h₀ 10.7 %, h₁ 2.1 %, g 0.199 · zeros-inert h₀ 10.7 %, h₁ 11.4 %, g 1.068
+  B2011 (prova): continue h₀ 26.5 %, h₁ 10.0 %, g 0.380 · zeros-data h₀ 37.3 %, h₁ 20.0 %, g 0.537 · placebo-cell h₀ 26.5 %, h₁ 10.4 %, g 0.395 · zeros-inert h₀ 26.5 %, h₁ 17.8 %, g 0.672
+  B2021 (prova): continue h₀ 14.6 %, h₁ 3.2 %, g 0.219 · zeros-data h₀ 17.2 %, h₁ 9.3 %, g 0.538 · placebo-cell h₀ 14.6 %, h₁ 3.3 %, g 0.227 · zeros-inert h₀ 14.6 %, h₁ 8.7 %, g 0.597
+  B2038 (prova): continue h₀ 7.7 %, h₁ 2.4 %, g 0.308 · zeros-data h₀ 13.5 %, h₁ 41.5 %, g 3.080 · placebo-cell h₀ 7.6 %, h₁ 2.2 %, g 0.290 · zeros-inert h₀ 7.7 %, h₁ 40.4 %, g 5.241
+  B2042 (prova): continue h₀ 2.6 %, h₁ 0.8 %, g 0.321 · zeros-data h₀ 3.7 %, h₁ 11.7 %, g 3.200 · placebo-cell h₀ 2.6 %, h₁ 0.8 %, g 0.322 · zeros-inert h₀ 2.6 %, h₁ 11.6 %, g 4.400
+  B2043 (prova): continue h₀ 21.4 %, h₁ 6.4 %, g 0.298 · zeros-data h₀ 25.2 %, h₁ 41.5 %, g 1.646 · placebo-cell h₀ 21.4 %, h₁ 6.6 %, g 0.308 · zeros-inert h₀ 21.5 %, h₁ 40.3 %, g 1.877
+  B2078 (prova): continue h₀ 8.5 %, h₁ 37.6 %, g 4.422 · zeros-data h₀ 10.5 %, h₁ 37.7 %, g 3.576 · placebo-cell h₀ 8.5 %, h₁ 28.1 %, g 3.291 · zeros-inert h₀ 8.6 %, h₁ 36.8 %, g 4.305
+  B2001 (prova): continue h₀ 14.8 %, h₁ 5.8 %, g 0.393 · zeros-data h₀ 15.4 %, h₁ 27.7 %, g 1.798 · placebo-cell h₀ 14.7 %, h₁ 4.5 %, g 0.304 · zeros-inert h₀ 14.8 %, h₁ 9.6 %, g 0.653
+  B2071 (control negatiu): continue h₀ 7.1 %, h₁ 2.1 %, g 0.294 · zeros-data h₀ 8.8 %, h₁ 96.5 %, g 10.937 · placebo-cell h₀ 7.1 %, h₁ 2.2 %, g 0.316 · zeros-inert h₀ 7.1 %, h₁ 38.5 %, g 5.414
+  B2044 (control negatiu): continue h₀ 42.6 %, h₁ 96.8 %, g 2.272 · zeros-data h₀ 46.9 %, h₁ 97.2 %, g 2.071 · placebo-cell h₀ 42.6 %, h₁ 96.9 %, g 2.277 · zeros-inert h₀ 42.6 %, h₁ 97.2 %, g 2.280
+  B2058 (control negatiu): continue h₀ 28.7 %, h₁ 98.1 %, g 3.421 · zeros-data h₀ 33.5 %, h₁ 98.1 %, g 2.924 · placebo-cell h₀ 28.6 %, h₁ 98.0 %, g 3.424 · zeros-inert h₀ 28.7 %, h₁ 97.9 %, g 3.416
+
+Prova 1, g amb zeros-data contra g amb continue (els 8 mons de prova, prova de signes unilateral): més alt amb zeros-data a 7, més baix a 1, iguals 0; p = 0.0352; llindar de Holm 0.025
+Prova 2, g amb zeros-data contra g amb placebo-cell (els 8 mons de prova, prova de signes unilateral): més alt amb zeros-data a 8, més baix a 0, iguals 0; p = 0.0039; llindar de Holm 0.0125
+
+Descriptius:
+  l'efecte immediat de zeros-data, h₀ respecte del de continue, als mons de prova: de 1.04 a 1.87, mediana 1.24
+  l'efecte immediat de placebo-cell, h₀ respecte del de continue, als mons de prova: de 1.00 a 1.01, mediana 1.00
+  l'efecte immediat de zeros-inert, h₀ respecte del de continue, als mons de prova: de 1.00 a 1.01, mediana 1.00
+  g amb zeros-inert contra g amb continue, als mons de prova: més alt a 7, més baix a 1, iguals 0
+  g amb zeros-data contra g amb zeros-inert, als mons de prova: més alt a 1, més baix a 7, iguals 0
+  g amb placebo-cell contra g amb continue, als mons de prova: més alt a 5, més baix a 3, iguals 0
+  sensibilitat, només els hereditaris sols: g amb zeros-data contra continue, més alt a 7, més baix a 1, iguals 0; p = 0.0352, descriptiva
+  sensibilitat, només els hereditaris sols: g amb zeros-data contra placebo-cell, més alt a 8, més baix a 0, iguals 0; p = 0.0039, descriptiva
+  control negatiu B2071: g amb zeros-data menys g amb continue 10.643; g amb placebo-cell menys g amb continue 0.021; g amb zeros-inert menys g amb continue 5.120
+  control negatiu B2044: g amb zeros-data menys g amb continue -0.201; g amb placebo-cell menys g amb continue 0.005; g amb zeros-inert menys g amb continue 0.008
+  control negatiu B2058: g amb zeros-data menys g amb continue -0.498; g amb placebo-cell menys g amb continue 0.003; g amb zeros-inert menys g amb continue -0.005
+  B2002: el placebo deixa sense aparellar 14775 dels 1241546 zeros de l'abast (1.2 %), a 898 cel·les saturades
+  B2011: el placebo deixa sense aparellar 7353 dels 656800 zeros de l'abast (1.1 %), a 317 cel·les saturades
+  B2021: el placebo deixa sense aparellar 66172 dels 1313481 zeros de l'abast (5.0 %), a 5043 cel·les saturades
+  B2038: el placebo deixa sense aparellar 9526 dels 1107108 zeros de l'abast (0.9 %), a 427 cel·les saturades
+  B2042: el placebo deixa sense aparellar 47329 dels 1638504 zeros de l'abast (2.9 %), a 5559 cel·les saturades
+  B2043: el placebo deixa sense aparellar 3727 dels 454637 zeros de l'abast (0.8 %), a 195 cel·les saturades
+  B2078: el placebo deixa sense aparellar 18608 dels 988804 zeros de l'abast (1.9 %), a 1286 cel·les saturades
+  B2001: el placebo deixa sense aparellar 3061 dels 610040 zeros de l'abast (0.5 %), a 161 cel·les saturades
+  continue: censos 2 a 4, 49.2 % de mitjana; pèrdua R2 a 10 de 33 branques, recuperades 2; al cens final, 69.1 %
+  zeros-data: censos 2 a 4, 60.0 % de mitjana; pèrdua R2 a 5 de 33 branques, recuperades 1; al cens final, 80.9 %
+  placebo-cell: censos 2 a 4, 43.8 % de mitjana; pèrdua R2 a 11 de 33 branques, recuperades 0; al cens final, 64.2 %
+  zeros-inert: censos 2 a 4, 47.7 % de mitjana; pèrdua R2 a 6 de 33 branques, recuperades 1; al cens final, 80.3 %
+
+DECISIÓ 1 (zeros-data contra continue): no es rebutja H0: no concloent; la prova no permet afirmar que, als mons de prova, la vida baixi menys del començament al primer cens amb zeros-data que amb continue (g més alt: 7, més baix: 1, iguals: 0; p = 0.0352, llindar de Holm 0.025). Amb 8 mons amb diferència, la p més petita possible era 0.0039. La potència del protocol (§6, q⁸) només val per a una prova amb els 8 mons amb diferència, sense empats i independents: no és la potència d'aquest resultat, que depèn dels empats, de la dependència entre els mons i de l'ordre de les dues proves a Holm
+DECISIÓ 2 (zeros-data contra placebo-cell): es rebutja H0: als mons de prova, entre els que tenen una diferència, predominen els que la vida baixa menys, o creix més, del començament al primer cens amb zeros-data que amb el placebo, aparellat cel·la per cel·la (en part a les cel·les saturades) (g més alt: 8, més baix: 0, iguals: 0; p = 0.0039, llindar de Holm 0.0125). No diu res de mons nous
