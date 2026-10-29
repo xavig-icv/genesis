@@ -408,6 +408,12 @@ export function certificateRows(table, to = WORLDS) {
   }
   return rows;
 }
+// Que les files del certificat, de m = 0 a to, siguin les que surten del càlcul: --comprova-certificat, i la preparació de la
+// sèrie, que no es refia dels números del fitxer (auditor 1, auditoria 22)
+export function recomputedProblems(cert, table, to = WORLDS) {
+  const bad = certificateRows(table, to).filter((r, m) => JSON.stringify(r) !== JSON.stringify(cert?.rows?.[m])).map((r) => r.m);
+  return bad.length ? [`les files de m = ${bad.join(', ')} no són les que surten del càlcul`] : [];
+}
 export const sha256Of = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
 // Els problemes d'un certificat: l'estructura, la taula (la SHA-256 i els K), i la validesa de cada fila: la cota superior,
 // amb el marge SAFE, com a molt α del seu pas
@@ -553,9 +559,7 @@ async function main(argv) {
   }
   if (argv[0] === '--comprova-certificat' && (argv.length === 1 || (argv.length === 3 && fins === 1))) {
     const t = readTable(), cert = JSON.parse(readFileSync(join(ROOT, CERTIFICATE), 'utf8'));
-    const problems = certificateProblems(cert, { table: t, tableSha256: sha256Of(join(ROOT, TABLE)) });
-    const rows = certificateRows(t, to), bad = rows.filter((r, m) => JSON.stringify(r) !== JSON.stringify(cert.rows[m])).map((r) => r.m);
-    if (bad.length) problems.push(`les files de m = ${bad.join(', ')} no són les que surten del càlcul`);
+    const problems = [...certificateProblems(cert, { table: t, tableSha256: sha256Of(join(ROOT, TABLE)) }), ...recomputedProblems(cert, t, to)];
     for (const l of certificateSummary(cert.rows)) console.log(l);
     if (problems.length) { console.log(`El certificat no és vàlid (${problems.length} problemes):\n${problems.slice(0, 20).map((p) => `  ${p}`).join('\n')}`); process.exit(1); }
     console.log(`El certificat és el de la taula, totes les cotes són com a molt α, i les files de m = 0 a ${to} són les que surten del càlcul.`);

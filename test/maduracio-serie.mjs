@@ -6,10 +6,11 @@
 //     bootstrap per món;
 //   - el manifest i la validació dels registres, amb les mutacions que no hi han de passar;
 //   - l'anàlisi i les frases de les decisions, amb un resultat conegut;
-//   - el certificat de la taula (AU2-99): les cotes, contra la cerca de la taula i una graella, i una taula adulterada;
+//   - el certificat de la taula (AU2-99): les cotes, contra la cerca de la taula i una graella, una taula adulterada, i un número
+//     del fitxer canviat, que la preparació troba en tornar-lo a calcular (auditoria 22);
 //   - la línia d'ordres: --prova no llegeix cap registre de la sèrie, ni pel camí d'un àlies de la carpeta o dels fitxers, ni
-//     amb un manifest que digui un altre dir, ni si la sèrie ja en té (AU2-96, AU2-98), i --decideix no decideix res sense el
-//     preregistre.
+//     amb un manifest que digui un altre dir, ni si la sèrie ja en té (AU2-96, AU2-98), ni des d'una altra còpia del
+//     repositori, ni en una còpia dels fitxers (AUD-132), i --decideix no decideix res sense el preregistre.
 // Executa: node test/maduracio-serie.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
@@ -19,7 +20,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { expectedBranches, manifestProblems, branchProblems, readSeries, signFlipTest, holm, calibratedHolm, readThresholds, thresholdProblems, THRESHOLDS, THRESHOLDS_SHA256, clopperPearson, worldBootstrap, analyse, decisionLines } from '../fase2/maduracio-serie.mjs';
-import { calibrate, STEPS, tailCounts, criticals, ruleCriticals, nominalK, CERTIFICATE, SAFE, certify, certificateRows, certificateProblems, sha256Of, shape, conditionalSize } from '../eines/llindars-maduracio.mjs';
+import { calibrate, STEPS, tailCounts, criticals, ruleCriticals, nominalK, CERTIFICATE, SAFE, certify, certificateRows, certificateProblems, recomputedProblems, sha256Of, shape, conditionalSize } from '../eines/llindars-maduracio.mjs';
 import { signFlipP, signP } from '../eines/potencia-maduracio.mjs';
 import { establishment } from '../fase2/census.js';
 import { makeRng } from '../fase1/soup.js';
@@ -27,6 +28,9 @@ import { makeRng } from '../fase1/soup.js';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const ARMS = ['continue', 'shuffle-all', 'reinit'];
 const COMMIT = 'abcdef0' + '1'.repeat(33);
+// la carpeta de la sèrie de veritat, i una altra per a les dades sintètiques de --prova: les ordres dels registres de la sèrie
+// escriuen a la primera, i --prova no en llegeix cap (AUD-132)
+const SERIES_DIR = 'fase2/resultats/maduracio/serie/branques', SYNTH_DIR = 'fase2/resultats/maduracio/prova/branques';
 function withTmp(fn) { const tmp = mkdtempSync(join(tmpdir(), 'serie-')); try { fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
 // la taula dels llindars calibrats del projecte (fase2/maduracio-llindars.json)
 let TABLE = null;
@@ -34,7 +38,7 @@ const table = () => { if (!TABLE) { const t = readThresholds(join(root, THRESHOL
 
 // Un manifest petit de la sèrie: n mons inclosos (W1, W2...) i un d'exclòs, 3 braços, 2 llavors, i H = 1.000 des de
 // l'època 1.000
-function smallManifest({ n = 6, dir = 'fase2/resultats/maduracio/serie/branques', code = 'abcdef0' } = {}) {
+function smallManifest({ n = 6, dir = SERIES_DIR, code = 'abcdef0' } = {}) {
   const continuation = [['a', 400000], ['b', 500000]];
   const params = { arms: ARMS, horizon: 1000, mixing: 0, stopAfterEvent: 0, age: 1000, transformOffset: 600000, continuation, world: [512, 256], radius: 2, rng: 'v2', every: 100, mutation: 0.00024, census: { version: 'v3', every: 250, sample: 2048, seed: 20261016 }, cohort: { from: 1, to: 99, size: n } };
   const worlds = Array.from({ length: n }, (_, i) => `W${i + 1}`).map((id) => ({
@@ -85,6 +89,13 @@ function programCopy(tmp) {
   return repo;
 }
 function writeSeries(dir, m, fate) { for (const b of expectedBranches(m)) write(dir, b, records(b, m, fate)); }
+// El programa de la decisió, executat des d'una còpia (cwd); i que --prova es negui amb el codi 2, abans de llegir cap registre
+const runIn = (cwd, ...a) => spawnSync(process.execPath, [join(cwd, 'fase2', 'maduracio-confirmacio.mjs'), ...a], { cwd, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '' } });
+function refused(r, what, why) {
+  assert.strictEqual(r.status, 2, `${what}: ${r.stdout}${r.stderr}`);
+  assert.ok(why.test(r.stdout), `${what}: ${r.stdout}`);
+  assert.ok(!/MODE DE PROVA|La sèrie no és la del manifest/.test(r.stdout), `${what}: n'ha llegit el contingut`);
+}
 // Un resultat conegut, amb els establiments de cada món (continue, shuffle-all, reinit; de 0 a 2): W1 2 1 0, W2 1 1 0,
 // W3 1 0 1, W4 0 1 0, W5 1 2 0, W6 0 0 2. La llavor a s'estableix abans que la b
 const COUNTS = { W1: [2, 1, 0], W2: [1, 1, 0], W3: [1, 0, 1], W4: [0, 1, 0], W5: [1, 2, 0], W6: [0, 0, 2] };
@@ -190,8 +201,14 @@ const tests = {
     assert.strictEqual(sha256Of(join(root, THRESHOLDS)), THRESHOLDS_SHA256);
     assert.strictEqual(cert.tableSha256, THRESHOLDS_SHA256);
     assert.deepStrictEqual(certificateProblems(cert, { table: t, tableSha256: THRESHOLDS_SHA256 }), []);
-    // les primeres files, tornades a calcular
+    // les primeres files, tornades a calcular; i un número canviat del fitxer, que la preparació no deixa passar (auditor 1,
+    // auditoria 22)
     assert.deepStrictEqual(certificateRows(t, 20), cert.rows.slice(0, 21));
+    assert.deepStrictEqual(recomputedProblems(cert, t, 20), []);
+    const touched = JSON.parse(JSON.stringify(cert));
+    touched.rows[13].upper[0] *= 0.999;
+    assert.deepStrictEqual(certificateProblems(touched, { table: t, tableSha256: THRESHOLDS_SHA256 }), []);
+    assert.deepStrictEqual(recomputedProblems(touched, t, 20), ['les files de m = 13 no són les que surten del càlcul']);
     // dos mètodes independents: el màxim de la cerca de la taula no passa mai de la cota, i hi és a prop
     for (const r of cert.rows) STEPS.forEach((_, j) => {
       assert.ok(t.rows[r.m].max[j] <= r.upper[j] * (1 + SAFE), `m = ${r.m}, pas ${j + 1}: el màxim de la taula passa de la cota`);
@@ -319,14 +336,15 @@ const tests = {
   }),
   "la línia d'ordres: --prova calcula sense decidir, no llegeix la carpeta de la sèrie, i --decideix necessita el preregistre": () => withTmp((tmp) => {
     const run = (...a) => spawnSync(process.execPath, [join(root, 'fase2', 'maduracio-confirmacio.mjs'), ...a], { cwd: root, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '' } });
-    const m = smallManifest(), dir = join(tmp, 'branques'), manifest = join(tmp, 'manifest.json');
+    const m = smallManifest({ dir: SYNTH_DIR }), dir = join(tmp, 'branques'), manifest = join(tmp, 'manifest.json');
     writeFileSync(manifest, JSON.stringify(m));
     writeSeries(dir, m, fateOf(COUNTS));
     let r = run('--prova', COMMIT, '--serie', manifest, dir);
     assert.strictEqual(r.status, 0, r.stdout + r.stderr);
     assert.ok(/MODE DE PROVA, sense cap decisió/.test(r.stdout) && /Prova 1, continue contra reinit/.test(r.stdout) && !/DECISIÓ/.test(r.stdout), r.stdout);
     assert.strictEqual(run('--prova', 'abcdef0', '--serie', manifest, dir).status, 2, 'un commit que no és sencer');
-    assert.strictEqual(run('--prova', COMMIT, '--serie', manifest, m.dir).status, 2, 'la carpeta de la sèrie de veritat');
+    assert.strictEqual(run('--prova', COMMIT, '--serie', manifest, m.dir).status, 2, 'la carpeta del manifest');
+    assert.strictEqual(run('--prova', COMMIT, '--serie', manifest, SERIES_DIR).status, 2, 'la carpeta de la sèrie de veritat');
     assert.strictEqual(run('--prova', COMMIT, '--decideix', dir).status, 2);
     assert.strictEqual(run(dir).status, 2);
     r = run('--decideix', dir);
@@ -352,29 +370,24 @@ const tests = {
     assert.ok(/no té l'estructura esperada/.test(r.stdout), r.stdout);
   }),
   "--prova no llegeix cap registre de la sèrie: ni per enllaços als fitxers, ni amb un manifest que digui un altre dir, ni si la sèrie ja en té (AU2-98)": () => withTmp((tmp) => {
-    const run = (cwd, ...a) => spawnSync(process.execPath, [join(cwd, 'fase2', 'maduracio-confirmacio.mjs'), ...a], { cwd, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '' } });
-    // es nega amb el codi 2, i abans de llegir cap registre
-    const refused = (r, what, why) => {
-      assert.strictEqual(r.status, 2, `${what}: ${r.stdout}${r.stderr}`);
-      assert.ok(why.test(r.stdout), `${what}: ${r.stdout}`);
-      assert.ok(!/MODE DE PROVA|La sèrie no és la del manifest/.test(r.stdout), `${what}: n'ha llegit el contingut`);
-    };
     // 1. al repositori, amb una carpeta protegida: la del manifest, amb registres sintètics
     const real = join(tmp, 'protegida'), m = smallManifest({ dir: real }), manifest = join(tmp, 'manifest.json');
     writeFileSync(manifest, JSON.stringify(m));
     writeSeries(real, m, fateOf(COUNTS));
-    refused(run(root, '--prova', COMMIT, '--serie', manifest, real), 'la carpeta', /no llegeix la carpeta de la sèrie/);
+    refused(runIn(root, '--prova', COMMIT, '--serie', manifest, real), 'la carpeta', /no llegeix la carpeta de la sèrie/);
     // enllaços durs a cada registre: a Windows no demanen permisos, i el camí real d'un enllaç dur és el seu
     const hard = join(tmp, 'durs');
     mkdirSync(hard);
     for (const f of readdirSync(real)) linkSync(join(real, f), join(hard, f));
-    refused(run(root, '--prova', COMMIT, '--serie', manifest, hard), 'els enllaços durs', /és el mateix fitxer que un registre de la sèrie/);
-    // enllaços simbòlics a cada registre (la prova de l'auditor 2). A Windows, sense permisos, no se'n poden fer, i el cas se salta
+    refused(runIn(root, '--prova', COMMIT, '--serie', manifest, hard), 'els enllaços durs', /és el mateix fitxer que un registre de la sèrie/);
+    // enllaços simbòlics a cada registre (la prova de l'auditor 2). A Windows, sense permisos, no se'n poden fer: el cas ho diu i
+    // se salta (a GitHub, amb Linux, s'executa)
     const soft = join(tmp, 'simbolics');
     mkdirSync(soft);
     let made = true;
-    try { for (const f of readdirSync(real)) symlinkSync(join(real, f), join(soft, f), 'file'); } catch (e) { if (e.code !== 'EPERM') throw e; made = false; }
-    if (made) refused(run(root, '--prova', COMMIT, '--serie', manifest, soft), 'els enllaços simbòlics', /és un enllaç a un registre de la sèrie/);
+    try { for (const f of readdirSync(real)) symlinkSync(join(real, f), join(soft, f), 'file'); }
+    catch (e) { if (e.code !== 'EPERM') throw e; made = false; console.log(`        (els enllaços simbòlics de fitxer, omesos: no se'n poden crear en aquest sistema, ${e.code})`); }
+    if (made) refused(runIn(root, '--prova', COMMIT, '--serie', manifest, soft), 'els enllaços simbòlics', /és un enllaç a un registre de la sèrie/);
     // 2. en una còpia del programa, amb registres a la carpeta de la sèrie de veritat
     const repo = programCopy(tmp), truth = join(repo, 'fase2', 'resultats', 'maduracio', 'serie', 'branques');
     const m2 = smallManifest(), mf2 = join(tmp, 'manifest2.json'), other = join(tmp, 'altre-dir.json');
@@ -382,16 +395,56 @@ const tests = {
     writeSeries(truth, m2, fateOf(COUNTS));
     // un manifest copiat que diu un altre dir: la carpeta de veritat continua protegida
     writeFileSync(other, JSON.stringify({ ...m2, dir: join(tmp, 'una-altra') }));
-    refused(run(repo, '--prova', COMMIT, '--serie', other, truth), 'un manifest amb un altre dir', /no llegeix la carpeta de la sèrie \(fase2\/resultats\/maduracio\/serie\/branques\)/);
+    refused(runIn(repo, '--prova', COMMIT, '--serie', other, truth), 'un manifest amb un altre dir', /no llegeix la carpeta de la sèrie \(fase2\/resultats\/maduracio\/serie\/branques\)/);
     // si la sèrie de veritat ja té registres, --prova no s'executa en aquella còpia, encara que la carpeta sigui una altra
-    const synth = join(tmp, 'sintetiques');
-    writeSeries(synth, m2, fateOf(COUNTS));
-    refused(run(repo, '--prova', COMMIT, '--serie', mf2, synth), 'la sèrie amb registres', /ja té registres de la sèrie/);
+    const ms = smallManifest({ dir: SYNTH_DIR }), mfs = join(tmp, 'sintetic.json'), synth = join(tmp, 'sintetiques');
+    writeFileSync(mfs, JSON.stringify(ms));
+    writeSeries(synth, ms, fateOf(COUNTS));
+    refused(runIn(repo, '--prova', COMMIT, '--serie', mfs, synth), 'la sèrie amb registres', /ja té registres de la sèrie/);
     // sense registres a la sèrie de veritat, la mateixa còpia sí que fa la prova amb les dades sintètiques
     rmSync(truth, { recursive: true, force: true });
-    const r = run(repo, '--prova', COMMIT, '--serie', mf2, synth);
+    const r = runIn(repo, '--prova', COMMIT, '--serie', mfs, synth);
     assert.strictEqual(r.status, 0, r.stdout + r.stderr);
     assert.match(r.stdout, /MODE DE PROVA/);
+  }),
+  // AUD-132 (auditoria 22): la sèrie de veritat en una altra còpia del repositori, la de l'etiqueta, on les branques es llancen.
+  // Des d'una altra còpia, cap de les barreres del camí i de la identitat no la veu: l'atura el contingut, la primera línia
+  "--prova no llegeix cap registre de la sèrie d'una altra còpia del repositori, ni una còpia dels registres (AUD-132)": () => withTmp((tmp) => {
+    // la còpia de l'etiqueta (a), amb el manifest i els registres de la sèrie a les seves carpetes, i una altra (b), sense
+    const a = programCopy(join(tmp, 'a')), b = programCopy(join(tmp, 'b'));
+    const m = smallManifest(), series = join(a, 'fase2', 'resultats', 'maduracio', 'serie'), truth = join(series, 'branques');
+    mkdirSync(series, { recursive: true });
+    writeFileSync(join(series, 'manifest.json'), JSON.stringify(m));
+    writeSeries(truth, m, fateOf(COUNTS));
+    const why = /és un registre de la sèrie de veritat: la seva ordre l'escriu a fase2\/resultats\/maduracio\/serie\/branques/;
+    // la carpeta de la còpia a, pel seu camí: amb el manifest de la còpia a, i amb el de la còpia b, que és el mateix
+    refused(runIn(b, '--prova', COMMIT, '--serie', join(series, 'manifest.json'), truth), "la carpeta d'una altra còpia, amb el seu manifest", why);
+    mkdirSync(join(b, 'fase2', 'resultats', 'maduracio', 'serie'), { recursive: true });
+    writeFileSync(join(b, SERIES_DIR, '..', 'manifest.json'), JSON.stringify(m));
+    refused(runIn(b, '--prova', COMMIT, truth), "la carpeta d'una altra còpia, amb el manifest per defecte", why);
+    // una unió (un enllaç simbòlic a la resta) de la carpeta de la sèrie de la còpia a, enllaços durs als seus registres, i una
+    // còpia dels fitxers, en una carpeta qualsevol
+    const alias = join(tmp, 'unio'), hard = join(tmp, 'durs'), copied = join(tmp, 'copia');
+    symlinkSync(series, alias, process.platform === 'win32' ? 'junction' : 'dir');
+    mkdirSync(hard); mkdirSync(copied);
+    for (const f of readdirSync(truth)) { linkSync(join(truth, f), join(hard, f)); copyFileSync(join(truth, f), join(copied, f)); }
+    refused(runIn(b, '--prova', COMMIT, join(alias, 'branques')), "una unió de la carpeta d'una altra còpia", why);
+    refused(runIn(b, '--prova', COMMIT, hard), "enllaços durs als registres d'una altra còpia", why);
+    refused(runIn(b, '--prova', COMMIT, copied), 'una còpia dels registres', why);
+    // un registre sol n'hi ha prou: la resta, sintètics
+    const ms = smallManifest({ dir: SYNTH_DIR }), mfs = join(tmp, 'sintetic.json'), mixed = join(tmp, 'barrejats');
+    writeFileSync(mfs, JSON.stringify(ms));
+    writeSeries(mixed, ms, fateOf(COUNTS));
+    copyFileSync(join(truth, 'W3-reinit-b.jsonl'), join(mixed, 'W3-reinit-b.jsonl'));
+    refused(runIn(b, '--prova', COMMIT, '--serie', mfs, mixed), 'un sol registre de la sèrie entre els sintètics', /W3-reinit-b\.jsonl és un registre de la sèrie de veritat/);
+    // les dades sintètiques, que escriuen a una altra carpeta, sí que es llegeixen, des de qualsevol de les dues còpies
+    writeSeries(mixed, ms, fateOf(COUNTS));
+    for (const copy of [b, a]) {
+      if (copy === a) rmSync(truth, { recursive: true, force: true });
+      const r = runIn(copy, '--prova', COMMIT, '--serie', mfs, mixed);
+      assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+      assert.match(r.stdout, /MODE DE PROVA/);
+    }
   }),
   "--decideix: sense l'etiqueta es nega; amb l'etiqueta decideix; i amb el codi canviat es nega sense executar-lo": () => withTmp((tmp) => {
     const repo = programCopy(tmp);

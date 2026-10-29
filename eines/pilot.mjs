@@ -29,7 +29,7 @@ import { spawn, execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { censusProblem, structureProblems } from '../fase2/b2-serie.mjs';
 import { THRESHOLDS_SHA256 } from '../fase2/maduracio-serie.mjs';
-import { CERTIFICATE, certificateProblems, sha256Of } from './llindars-maduracio.mjs';
+import { CERTIFICATE, certificateProblems, recomputedProblems, sha256Of } from './llindars-maduracio.mjs';
 
 export const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const TOOL = join(ROOT, 'eines', 'transforma.mjs');
@@ -259,6 +259,13 @@ export async function prepare(name, { root = ROOT, parallel = 6 } = {}) {
   if (code.includes('+') || code === 'desconeguda') fail(`el codi té canvis sense desar (${code}): la preparació ha de ser d'un commit net`);
   const tp = thresholdsProblems(p, root);
   if (tp.length) fail(`la taula dels llindars no és la que toca (${tp.length} problemes):\n- ${tp.slice(0, 10).join('\n- ')}`);
+  // el certificat, tornat a calcular sencer, fila a fila: la preparació no es refia dels seus números (auditor 1, auditoria 22)
+  if (p.test?.thresholds) {
+    const read = (f) => JSON.parse(readFileSync(join(root, f), 'utf8'));
+    const rp = recomputedProblems(read(CERTIFICATE), read(p.test.thresholds));
+    if (rp.length) fail(`el certificat dels llindars no és el que surt del càlcul: ${rp.join('; ')}`);
+    console.log('El certificat dels llindars, tornat a calcular: totes les files, iguals que les del fitxer.');
+  }
   const worlds = (p.cohort ? agedCandidates(name, { root }) : p.worlds).map((world) => {
     const o = origin(name, world, { root });
     return { world, role: roleOf(p, world), start: o.start, capture: o.capture, repartimentSha256: o.sha256 };
