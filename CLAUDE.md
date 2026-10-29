@@ -72,7 +72,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
     M]|--validesa|--suprem`. La taula, `fase2/maduracio-llindars.json`, va amb l'etiqueta i no es torna a calcular.
     - **La certificació** (AU2-99): `--certifica` escriu la cota superior rigorosa de cada llindar a
       `fase2/maduracio-llindars-certificat.json`, i `--comprova-certificat [--fins M]` la comprova. La SHA-256 de la taula
-      certificada és fixada a `fase2/maduracio-serie.mjs` (`THRESHOLDS_SHA256`): cap altra taula no serveix per decidir.
+      certificada és fixada a `fase2/maduracio-serie.mjs` (`THRESHOLDS_SHA256`): cap altra taula no serveix per decidir. La
+      preparació de la sèrie torna a calcular el certificat sencer, i abans de l'etiqueta es passa `--comprova-certificat` a la
+      còpia que s'etiquetarà (auditoria 22).
   - **L'anàlisi del pilot de la maduració** (exploratòria): `node eines/maduracio-analisi.mjs [carpeta]`, escrita abans de cap
     resultat. Només quan hi ha les 220 branques; si en falta cap, no en llegeix cap. Valida el registre i el simulador de cadascuna.
 - La prova preregistrada dels zeros (`docs/protocol-zeros.md`): `node fase2/zeros-confirmacio.mjs --decideix|--prova COMMIT
@@ -84,9 +86,11 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   signes exacta, amb els llindars de Holm calibrats per *m* de la taula, i la decisió només es pren des d'una còpia del commit de
   l'etiqueta (`preregistre-maduracio`), com als zeros. Les branques no desen captures: si cal alguna, es regenera amb l'ordre de
   la branca del manifest, i només és bona si en surten els mateixos censos i la mateixa empremta final.
-  - **`--prova`** no llegeix cap registre de la sèrie (AU2-98): ni pels àlies dels fitxers, ni amb un manifest que digui un altre
-    `dir`, i no s'executa en una còpia on la sèrie ja té registres. Les proves amb dades sintètiques, en una altra còpia. Fins a
-    la decisió, els registres només es copien a la carpeta del commit de l'etiqueta.
+  - **`--prova`** no llegeix cap registre de la sèrie (AU2-98, AUD-132): ni pels àlies dels fitxers, ni amb un manifest que digui
+    un altre `dir`, ni des d'una altra còpia del repositori, ni en una còpia dels fitxers, i no s'executa en una còpia on la sèrie
+    ja té registres. D'un registre en llegeix primer només la primera línia, i es nega si l'ordre de la branca l'escriu a la
+    carpeta de la sèrie. Les proves amb dades sintètiques, amb una altra carpeta a les ordres. **Des de l'etiqueta fins a la
+    decisió, cap `--prova`**, i els registres només es copien a la carpeta del commit de l'etiqueta.
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).

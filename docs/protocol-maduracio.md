@@ -1,13 +1,14 @@
 # Protocol de la sèrie de la maduració · l'edat i la composició de la sopa
 
-**Versió: v0.3, esborrany (28-10-2026), per a l'auditoria 22.** No s'ha preparat cap manifest, ni s'ha fet córrer cap branca.
-L'envelliment dels mons pot començar (§7). El que canvia de la v0.2, amb l'auditoria 21, és a la §10.
+**Versió: v0.4, esborrany (29-10-2026), per a l'auditoria 23.** No s'ha preparat cap manifest, ni s'ha fet córrer cap branca.
+L'envelliment dels mons va començar el 29-10-2026 (§7). El que canvia de la v0.3, amb l'auditoria 22, és a la §10.
 - **D'on surt:**
   - el pilot de la maduració (l'entrada 12 del quadern i `fase2/resultats/maduracio/pilot/acta.md`);
   - l'auditoria 19, i la decisió del responsable del 27-10-2026 (`docs/disseny.md`, §5);
   - l'auditoria 20, i la decisió del responsable del 27-10-2026: els llindars calibrats per *m* (§6);
   - l'auditoria 21, i la decisió del responsable del 28-10-2026: la taula certificada, i una revisió de les correccions abans
-    de preparar el manifest (§6, §7).
+    de preparar el manifest (§6, §7);
+  - l'auditoria 22: el GO dels dos auditors per preparar el manifest, i la correcció de l'AUD-132 (§7, §8).
 - **Els programes:**
   - `eines/pilot.mjs`, l'experiment `serie`: l'envelliment, la preparació, el manifest i les comprovacions;
   - `eines/transforma.mjs`, per a les transformacions i els escanejos;
@@ -16,9 +17,9 @@ L'envelliment dels mons pot començar (§7). El que canvia de la v0.2, amb l'aud
     `fase2/maduracio-llindars.json` i `fase2/maduracio-llindars-certificat.json` (§6);
   - `eines/potencia-maduracio.mjs`, per a la potència (§6).
 - **El procediment:**
-  1. les auditories 20 i 21 van revisar la v0.1 i la v0.2; l'auditoria 22 revisa aquesta versió i les correccions;
+  1. les auditories 20 a 22 van revisar les versions de la v0.1 a la v0.3, i les correccions;
   2. s'envelleixen els mons, i, després del GO de l'auditoria 22, la preparació escriu el manifest (§7);
-  3. una comprovació breu del manifest (auditoria 23);
+  3. una comprovació breu del manifest, d'aquesta versió i de la correcció de l'AUD-132 (auditoria 23);
   4. el protocol, el manifest i els programes es fixen amb l'etiqueta anotada `preregistre-maduracio` i un segell
      d'OpenTimestamps. **Cap branca no es llança abans que Bitcoin hagi ancorat el segell** (§9).
 
@@ -188,6 +189,10 @@ intercanviables, que demanaria més.
       En tres, *m* = 55 al pas 2, 121 al pas 1 i 140 al pas 2, seria vàlid, i només el marge l'exclou.
     - **Una altra certificació, independent:** la de l'auditor 1, amb el mateix mètode i el seu codi, hi coincideix
       (auditoria 21).
+    - **La coma flotant:** el càlcul és en coma flotant (Float64), amb un marge relatiu de 10⁻⁹ sobre cada cota, i sense una
+      demostració formal de l'error d'arrodoniment (auditor 2, auditoria 22). Només fa sumes de nombres no negatius, productes
+      i meitats, i l'error relatiu és de l'ordre de 10⁻¹² (auditor 1). El marge més just, el de *m* = 108 al pas 2, és de
+      4·10⁻⁶ relatiu.
   - **La taula certificada:** la seva SHA-256 és fixada a `fase2/maduracio-serie.mjs` i al manifest. La preparació, les
     comprovacions i la decisió no n'accepten cap altra (AU2-99).
 - **La correcció de Holm,** amb α = 0,025 per a la família, i els llindars calibrats:
@@ -305,10 +310,12 @@ calibrats:
    - **Si la màquina virtual és lliure:** una part de la llista hi pot anar. Els seus registres i les seves captures es copien al
      PC, amb les SHA-256 comprovades.
    - **Durant l'envelliment:** només `bash eines/seguiment.sh --agregat`.
-3. **La preparació:** `node eines/pilot.mjs serie --prepara`, al PC, des d'un commit net, després del GO de l'auditoria 22.
+3. **La preparació:** `node eines/pilot.mjs serie --prepara`, al PC, des d'un commit net, després del GO de l'auditoria 22, que
+   tots dos auditors van donar el 29-10-2026.
    - **Què fa:**
      - comprova que la taula dels llindars sigui la certificada, per la SHA-256, i que hi hagi el seu certificat, amb totes
        les cotes com a molt α (AU2-99);
+     - torna a calcular el certificat sencer, fila a fila, i s'atura si no és el del fitxer (auditor 1, auditoria 22);
      - valida l'envelliment sencer;
      - escaneja els mons envellits, en ordre, i hi aplica la regla d'inclusió;
      - transforma les captures dels 150 mons, que són 450, i les escaneja;
@@ -317,6 +324,8 @@ calibrats:
      a git. Les captures, no: es regeneren exactament.
 4. **La comprovació breu** del manifest (auditoria 23).
 5. **El preregistre:** l'etiqueta i el segell (§9). S'espera l'ancoratge.
+   - **Abans de l'etiqueta,** a la còpia del commit que s'etiquetarà: `node eines/llindars-maduracio.mjs --comprova-certificat`,
+     amb la sortida a l'acta (auditor 2, auditoria 22).
 6. **Les captures de la màquina virtual:** les dels seus 60 mons, les envellides i les transformades (uns 1,9 GB), copiades
    amb les SHA-256 comprovades.
 7. **La comprovació prèvia,** a cada màquina: `node eines/pilot.mjs serie --comprova --maquina pc|vm`.
@@ -341,12 +350,16 @@ calibrats:
     - **El programa no decideix res si hi ha cap problema:** si el manifest no és coherent, si la taula dels llindars no és la
       certificada (per la SHA-256) o no té l'estructura esperada, o si algun registre no és exactament el que n'espera, en
       llista els problemes i s'atura.
-    - **`--prova` no llegeix cap registre de la sèrie** (AU2-96, AU2-98):
+    - **`--prova` no llegeix cap registre de la sèrie** (AU2-96, AU2-98, AUD-132):
       - ni la carpeta, ni pel camí d'un àlies de la carpeta o dels fitxers (enllaços simbòlics o durs);
       - ni amb un manifest que digui un altre `dir`: la carpeta de la sèrie de veritat sempre és protegida;
-      - si la carpeta de la sèrie ja té registres, `--prova` no s'executa en aquella còpia del repositori.
-    - **Les còpies dels registres** no es poden detectar pel camí ni per la identitat del fitxer. Fins a la decisió, només es
-      copien a la carpeta del commit de l'etiqueta (els de la màquina virtual, al PC), i enlloc més.
+      - si la carpeta de la sèrie ja té registres, `--prova` no s'executa en aquella còpia del repositori;
+      - ni des d'una altra còpia del repositori, ni en una còpia dels fitxers (AUD-132). D'un registre, abans de llegir-lo, en
+        llegeix només la primera línia, que porta l'ordre de la branca i cap resultat, i es nega si l'ordre l'escriu a la
+        carpeta de la sèrie. Les dades sintètiques escriuen en una altra carpeta.
+    - **Des de l'etiqueta fins a la decisió, cap `--prova`** (AUD-132): el programa ja és fixat, i les còpies del repositori amb
+      el programa d'abans no tenen la barrera del contingut. Fins a la decisió, els registres només es copien a la carpeta del
+      commit de l'etiqueta (els de la màquina virtual, al PC), i enlloc més.
 
 ## 8. Limitacions conegudes
 
@@ -365,8 +378,11 @@ calibrats:
     l'envelliment. No cobreix una dependència entre mons.
   - **La decisió no és monòtona entre *m* diferents** (AUD-130): un món més a favor, que passa de 0 a +1, pot treure un rebuig,
     perquè el llindar de *m* + 1 pot ser més baix. És el preu de calibrar per a cada *m*, i no afecta la validesa.
-- **`--prova` no pot detectar una còpia dels registres** (AU2-98): la barrera és contra els àlies, i les còpies es controlen pel
-  procediment (§7).
+  - **La certificació és en coma flotant** (auditor 2, auditoria 22): amb un marge, i sense una demostració formal de l'error
+    d'arrodoniment (§6).
+- **La barrera de `--prova` és contra els errors, no contra un adversari** (AU2-98, AUD-132): un registre amb la primera línia
+  reescrita, o un fitxer canviat entre la comprovació i la lectura, la passarien (auditor 2, auditoria 22). Per això, des de
+  l'etiqueta fins a la decisió, no es fa servir `--prova` (§7).
 - **Els braços fan feines diferents de la BFF:** `shuffle-all` és el més car, i `reinit`, el més barat.
 - **Les branques no desen captures** (§4). Qualsevol anàlisi posterior que en necessiti les ha de regenerar.
 
@@ -387,7 +403,16 @@ calibrats:
 - **Després,** cap canvi al protocol, al manifest ni als programes sense justificar-lo aquí, amb data i motiu, abans de mirar
   cap resultat.
 
-## 10. El que hi diu cada decisió de les auditories 19 a 21
+## 10. El que hi diu cada decisió de les auditories 19 a 22
+
+**L'auditoria 22** (v0.3 → v0.4):
+
+| Troballa o decisió | Què hi diu el protocol |
+|---|---|
+| El GO | **La preparació del manifest,** de tots dos auditors. El manifest, a l'auditoria 23 (§7) |
+| AUD-132 | **`--prova` no llegeix cap registre de la sèrie, sigui on sigui:** pel contingut de la primera línia, també des d'una altra còpia del repositori i en una còpia dels fitxers. I cap `--prova` des de l'etiqueta fins a la decisió (§7, §8) |
+| L'auditor 1 | **La preparació torna a calcular el certificat sencer,** en lloc de refiar-se dels seus números (§7) |
+| L'auditor 2 | **`--comprova-certificat` abans de l'etiqueta,** a la còpia que s'etiquetarà (§7). La SHA-256 del certificat ja va al missatge de l'etiqueta (§9). **La coma flotant** de la certificació, i que la barrera de `--prova` és contra els errors, a les limitacions (§6, §8) |
 
 **L'auditoria 21** (v0.2 → v0.3):
 
