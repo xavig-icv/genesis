@@ -174,6 +174,26 @@ llavors per condició i 5.000 èpoques més: 116 branques ([protocol](docs/proto
 
 Vegeu l'[entrada 10](quadern/index.html#entrada-10).
 
+### La tercera sèrie preregistrada: els zeros
+
+Als mons on la vida es torna a perdre, quan s'hi estableix ja hi ha molts més bytes zero
+([entrada 11](quadern/index.html#entrada-11)). En 8 mons on la vida baixa just després d'establir-se, hem tornat a
+engegar cada món des del mateix instant, de quatre maneres i amb el mateix atzar: 132 branques
+([protocol](docs/protocol-zeros.md)).
+- **Contra un placebo, treure els zeros fa que la vida baixi menys:** confirmat, als 8 mons (*p* = 0,004, amb la
+  correcció de Holm).
+  - **Què es fa:** els zeros de les cel·les que no es repliquen passen a bytes de dades. El placebo canvia, a les mateixes
+    cel·les, tants bytes de dades com zeros hi ha, i hi deixa els zeros.
+  - **Què vol dir:** dins d'aquests mons, els zeros contribueixen a fer baixar la vida. És la hipòtesi de
+    l'autoenverinament: el replicador deixa còpies trencades plenes de zeros, i aquestes deixalles aturen les còpies
+    següents.
+- **Contra el món sense tocar:** no concloent (7 mons a favor i 1 en contra, *p* = 0,035, amb un llindar de 0,025).
+- **No diu res de mons nous,** perquè aquests es van triar després de veure'n les dades.
+- **No és un descobriment:** l'enverinament per zeros ja és a l'article de 2024. El que hi afegeix la sèrie és la prova
+  causal, amb una intervenció des d'una mateixa captura i un control.
+
+Vegeu l'[entrada 13](quadern/index.html#entrada-13).
+
 ### El que estudiem ara
 
 - **La maduració de la sopa abans que hi aparegui la vida,** la línia que vam triar després de l'auditoria 14:
@@ -181,11 +201,8 @@ Vegeu l'[entrada 10](quadern/index.html#entrada-10).
   - **El pilot, fet:** amb 22 mons, la vida s'estableix en el 27 % de les branques que continuen tal com són, i en el
     mateix 27 % quan es barregen tots els bytes del món. És un pilot, sense cap conclusió
     ([entrada 12](quadern/index.html#entrada-12)).
-  - **El que ve:** el disseny d'una sèrie preregistrada, amb mons nous.
-- **Una pista per confirmar: els bytes zero.** Als mons on la vida es torna a perdre, quan s'hi estableix ja hi
-  ha molts més bytes zero (exploratori; [entrada 11](quadern/index.html#entrada-11)).
-  - **La prova preregistrada** ([protocol](docs/protocol-zeros.md)): treure'n els zeros des de la mateixa
-    captura, en 11 mons. Corre des del 27-10-2026.
+  - **La sèrie preregistrada,** amb 150 mons nous ([protocol](docs/protocol-maduracio.md)): l'envelliment dels mons
+    corre des del 29-10-2026, i el protocol és a l'auditoria.
 - **La mida del món,** començant pels mons petits.
 - **Els ingredients de la química:** treure-li instruccions o capacitats per saber quines calen.
 - **Un temps que canvia:** un corrent que alterna la calma i el temporal.

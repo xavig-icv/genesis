@@ -99,17 +99,33 @@ more epochs: 116 branches ([protocol](docs/protocol-b2.md), in Catalan).
 
 See notebook entry 10, in Catalan.
 
+**The third preregistered series: the zeros.** In the worlds where life is lost again and again, there are
+many more zero bytes when it becomes established (notebook entry 11, in Catalan). In 8 worlds where life drops
+right after becoming established, we restarted each world from the same instant, in four ways and with the
+same randomness: 132 branches ([protocol](docs/protocol-zeros.md), in Catalan).
+- **Against a placebo, removing the zeros makes life drop less:** confirmed, in all 8 worlds (p = 0.004, with
+  Holm's correction).
+  - **What is done:** the zeros of the cells that do not replicate become data bytes. The placebo changes, in
+    the same cells, as many data bytes as there are zeros, and leaves the zeros in place.
+  - **What it means:** within these worlds, the zeros contribute to the drop of life. This is the
+    self-poisoning hypothesis: the replicator leaves behind broken copies full of zeros, and this debris stops
+    the next copies.
+- **Against the untouched world:** inconclusive (7 worlds for and 1 against, p = 0.035, with a threshold of
+  0.025).
+- **It says nothing about new worlds,** because these were chosen after seeing their data.
+- **Not a discovery:** zero poisoning is already in the 2024 paper. What the series adds is the causal test,
+  with an intervention from the same snapshot and a control.
+
+See notebook entry 13, in Catalan.
+
 **What we study now:**
 - **How the soup matures before life appears,** the line chosen after audit 14: branches from the same
   snapshot that either continue the soup or shuffle its bytes.
   - **The pilot, done:** with 22 worlds, life becomes established in 27 % of the branches that continue as they
     are, and in the same 27 % when all the bytes of the world are shuffled. It is a pilot, with no conclusion
     (notebook entry 12, in Catalan).
-  - **Next:** the design of a preregistered series, with new worlds.
-- **A lead to confirm: zero bytes.** In the worlds where life is lost again and again, there are many more
-  zero bytes when it becomes established (exploratory; notebook entry 11, in Catalan).
-  - **The preregistered test** ([protocol](docs/protocol-zeros.md), in Catalan): removing the zeros from the
-    same snapshot, in 11 worlds. Running since 27 October 2026.
+  - **The preregistered series,** with 150 new worlds ([protocol](docs/protocol-maduracio.md), in Catalan): the
+    worlds have been aging since 29 October 2026, and the protocol is under audit.
 - **World size.**
 - **Chemistry ablations.**
 - **A changing weather,** with a current that alternates calm and storm.

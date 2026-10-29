@@ -23,6 +23,7 @@
     <a href="#entrada-10">Entrada 10</a>
     <a href="#entrada-11">Entrada 11</a>
     <a href="#entrada-12">Entrada 12</a>
+    <a href="#entrada-13">Entrada 13</a>
   </nav>
 
   <article id="entrada-1">
@@ -1222,6 +1223,148 @@
         <li><strong>Els intervals del bootstrap per món</strong>, el de la <em>rho</em> i el de la diferència, són de l'auditor 2, i les concordances per braç, de l'auditor 1. Els hem refet amb els seus scripts.</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-13">
+    <header>
+      <p class="date">Entrada 13 · 29 d'octubre de 2026</p>
+      <h1>La prova dels zeros: treure'ls des de la mateixa captura</h1>
+      <p class="lede">En 8 mons, la vida baixa just després d'establir-se. Hem tornat a engegar cada món des del mateix instant, de quatre maneres i amb el mateix atzar. Si els zeros de les cel·les que no es repliquen passen a bytes de dades, la vida baixa menys, o creix més, que amb un placebo que canvia tants bytes de dades com zeros hi ha: passa als 8 mons, i la prova ho confirma. Comparat amb el món sense tocar, passa en 7 dels 8, i la prova no permet afirmar-ho. El resultat només val per a aquests mons.</p>
+    </header>
+
+    <h2>Què volíem saber</h2>
+    <p>A l'entrada 11 vam trobar una pista: als mons on la vida es torna a perdre, quan s'hi estableix hi ha molts més bytes zero, que hi apareixen mentre el replicador s'escampa. La hipòtesi era un autoenverinament: el replicador deixa còpies trencades plenes de zeros, i aquestes deixalles aturen les còpies següents.</p>
+    <p>Per posar-la a prova, cal canviar els zeros i deixar igual tota la resta. Són els 11 mons de la llei 2 amb el 8 % de zeros o més quan s'hi estableix la vida. En 8, la vida havia baixat al primer cens a totes les seves branques de B2 amb corrent: són els mons de prova. Els altres 3 són controls negatius. Des de la captura de l'establiment, cada món es torna a engegar de quatre maneres, amb les mateixes tres llavors de continuació:</p>
+    <ul>
+      <li><code>continue</code>: la captura tal com és;</li>
+      <li><code>zeros-data</code>: els zeros de les cel·les que no es repliquen passen a bytes de dades, que no són cap instrucció;</li>
+      <li><code>placebo-cell</code>: a cada cel·la, tants bytes de dades com zeros té passen a un altre byte de dades, i els zeros s'hi queden;</li>
+      <li><code>zeros-inert</code>, descriptiu: com <code>zeros-data</code>, però deixa com era cada cel·la que, sense els zeros, es replicaria.</li>
+    </ul>
+    <p><strong>La mesura</strong> és <em>g</em>, la vida del primer cens (<em>t</em> + 250) respecte de la del començament del mateix braç. Cal comparar cada braç amb el seu començament perquè treure els zeros desperta a l'instant còpies adormides (auditoria 16): <code>zeros-data</code> comença amb més vida. Hi havia dues proves de signes, als 8 mons de prova, amb la correcció de Holm: <code>zeros-data</code> contra <code>continue</code>, i contra el placebo (<code>docs/protocol-zeros.md</code>).</p>
+    <div class="params">
+      <div class="param"><b>11</b><span>mons: 8 de prova i 3 controls negatius</span></div>
+      <div class="param"><b>132</b><span>branques: 4 braços i 3 llavors per món</span></div>
+      <div class="param"><b>2.000</b><span>èpoques des de l'establiment</span></div>
+      <div class="param"><b>397 h</b><span>de càlcul, en 45 h, a dues màquines</span></div>
+    </div>
+
+    <h2>El que surt</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Món</th><th style="text-align:left">Paper</th><th style="text-align:left"><code>continue</code></th><th style="text-align:left"><code>zeros-data</code></th><th style="text-align:left"><code>placebo-cell</code></th><th style="text-align:left"><code>zeros-inert</code></th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">B2002</td><td style="text-align:left">prova</td><td style="text-align:left">0,19</td><td style="text-align:left">0,88</td><td style="text-align:left">0,20</td><td style="text-align:left">1,07</td></tr>
+          <tr><td style="text-align:left">B2011</td><td style="text-align:left">prova</td><td style="text-align:left">0,38</td><td style="text-align:left">0,54</td><td style="text-align:left">0,39</td><td style="text-align:left">0,67</td></tr>
+          <tr><td style="text-align:left">B2021</td><td style="text-align:left">prova</td><td style="text-align:left">0,22</td><td style="text-align:left">0,54</td><td style="text-align:left">0,23</td><td style="text-align:left">0,60</td></tr>
+          <tr><td style="text-align:left">B2038</td><td style="text-align:left">prova</td><td style="text-align:left">0,31</td><td style="text-align:left">3,08</td><td style="text-align:left">0,29</td><td style="text-align:left">5,24</td></tr>
+          <tr><td style="text-align:left">B2042</td><td style="text-align:left">prova</td><td style="text-align:left">0,32</td><td style="text-align:left">3,20</td><td style="text-align:left">0,32</td><td style="text-align:left">4,40</td></tr>
+          <tr><td style="text-align:left">B2043</td><td style="text-align:left">prova</td><td style="text-align:left">0,30</td><td style="text-align:left">1,65</td><td style="text-align:left">0,31</td><td style="text-align:left">1,88</td></tr>
+          <tr><td style="text-align:left">B2078</td><td style="text-align:left">prova</td><td style="text-align:left">4,42</td><td style="text-align:left">3,58</td><td style="text-align:left">3,29</td><td style="text-align:left">4,30</td></tr>
+          <tr><td style="text-align:left">B2001</td><td style="text-align:left">prova</td><td style="text-align:left">0,39</td><td style="text-align:left">1,80</td><td style="text-align:left">0,30</td><td style="text-align:left">0,65</td></tr>
+          <tr><td style="text-align:left">B2071</td><td style="text-align:left">control</td><td style="text-align:left">0,29</td><td style="text-align:left">10,94</td><td style="text-align:left">0,32</td><td style="text-align:left">5,41</td></tr>
+          <tr><td style="text-align:left">B2044</td><td style="text-align:left">control</td><td style="text-align:left">2,27</td><td style="text-align:left">2,07</td><td style="text-align:left">2,28</td><td style="text-align:left">2,28</td></tr>
+          <tr><td style="text-align:left">B2058</td><td style="text-align:left">control</td><td style="text-align:left">3,42</td><td style="text-align:left">2,92</td><td style="text-align:left">3,42</td><td style="text-align:left">3,42</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub"><em>g</em> = <em>h</em>₁ / <em>h</em>₀: la proporció d'hereditaris al primer cens, de mitjana a les tres llavors, respecte de la del començament del mateix braç, amb totes les cel·les. Per sota d'1, la vida baixa; per sobre, creix. Els valors són els de la decisió (<code>decisio-sortida.txt</code>).</p>
+
+    <p><strong>La segona prova, contra el placebo: es confirma.</strong> Amb <code>zeros-data</code>, <em>g</em> és més alt que amb el placebo als 8 mons de prova. La prova de signes dona <em>p</em> = 0,0039, per sota del llindar de Holm (0,0125).</p>
+    <ul>
+      <li><strong>Com es diu:</strong> als mons de prova, entre els que tenen una diferència, predominen els que la vida baixa menys, o creix més, del començament al primer cens amb <code>zeros-data</code> que amb el placebo, aparellat cel·la per cel·la (en part a les cel·les saturades).</li>
+      <li><strong>Què vol dir:</strong> no n'hi ha prou de tocar les cel·les; el que hi fa és treure els zeros. El placebo toca les mateixes cel·les i hi canvia el mateix nombre de bytes, però de dades, i la vida hi baixa com al món sense tocar: a 7 mons, <em>g</em> va de 0,20 a 0,39 amb el placebo, i de 0,19 a 0,39 sense tocar res.</li>
+      <li><strong>Dins d'aquests mons, és causal:</strong> els braços parteixen de la mateixa captura, amb les mateixes llavors, i només els separa la transformació.</li>
+      <li><strong>No diu res de mons nous.</strong> Els 8 mons es van triar després de veure'n les dades.</li>
+    </ul>
+
+    <p><strong>La primera prova, contra el món sense tocar: no concloent.</strong> Amb <code>zeros-data</code>, <em>g</em> és més alt a 7 mons i més baix a 1, el B2078. La prova dona <em>p</em> = 0,035, per sobre del llindar de Holm (0,025).</p>
+    <ul>
+      <li><strong>Què no vol dir:</strong> que treure els zeros no hi faci res comparat amb el món sense tocar. Només que aquesta prova no permet afirmar-ho. Amb 8 mons, només es podia rebutjar si tots els que tenien una diferència la tenien a favor.</li>
+      <li><strong>El B2078, mirat després de la decisió.</strong>
+        <ul>
+          <li><strong>Amb <code>continue</code>,</strong> la vida hi baixa en una llavor (de l'8,5 % a l'1,1 %), i hi puja en les altres dues (al 82,7 % i al 28,9 %), on domina una família diferent de la que domina més sovint al món.</li>
+          <li><strong>A B2</strong> també hi havia baixat al primer cens, a totes dues branques amb corrent. En una, una altra família va ocupar el 92 % del món al cens següent.</li>
+          <li><strong>Amb <code>zeros-data</code>,</strong> el primer cens hi té, de mitjana, la mateixa vida que amb <code>continue</code> (el 37,7 % i el 37,6 %): la diferència de <em>g</em> ve del començament, més alt.</li>
+          <li>No canvia la decisió. Ho diem perquè és l'únic món en contra.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>El que s'hi veu, sense provar-ho</h2>
+    <ul>
+      <li><strong>Sense tocar res, la vida baixa a gairebé totes les branques dels mons de prova:</strong> a 22 de 24, al primer cens. A 7 dels 8 mons, hi queda entre el 19 % i el 39 % de la vida del començament. Amb el placebo, baixa a 23 de 24 branques, i amb <code>zeros-data</code>, a 14 de 24.</li>
+      <li><strong>Netejar sense despertar còpies dona gairebé la mateixa vida.</strong> És el braç descriptiu, <code>zeros-inert</code>.
+        <ul>
+          <li><strong>Comença com el món sense tocar,</strong> perquè no desperta cap còpia.</li>
+          <li><strong>Al primer cens,</strong> amb la mediana de les tres llavors, té entre el 74 % i el 101 % de la vida de <code>zeros-data</code>.</li>
+          <li><strong>Què suggereix:</strong> al primer cens hi pesen més els zeros de les cel·les on s'escriuen les còpies que no pas les còpies adormides que es desperten. És una observació, no una prova.</li>
+        </ul>
+      </li>
+      <li><strong>En algunes branques, la vida ocupa més de la meitat del món ja al primer cens.</strong>
+        <ul>
+          <li><strong>Quantes:</strong> als mons de prova, 4 de 24 amb <code>zeros-data</code> i 3 amb <code>zeros-inert</code>. Amb <code>continue</code> i amb el placebo, 1 cadascun, totes dues del B2078.</li>
+          <li><strong>De quina família:</strong> a 8 d'aquestes 9 branques, la família dominant no és la que domina més sovint a les altres branques del mateix món.</li>
+          <li><strong>Què hi canvia:</strong> la mitjana de les tres llavors en depèn molt. Amb la mediana, que no s'hi deixa arrossegar, els signes de les dues proves són els mateixos: 7 contra 1, i 8 contra 0.</li>
+        </ul>
+      </li>
+      <li><strong>Els controls negatius.</strong>
+        <ul>
+          <li><strong>Al B2044 i al B2058,</strong> la vida ja ocupa entre el 96 % i el 99 % del món al primer cens, amb els quatre braços: la intervenció no hi fa mal. <em>g</em> hi és una mica més baix amb <code>zeros-data</code>, perquè comença més alt.</li>
+          <li><strong>Al B2071,</strong> on la vida havia baixat a la història original i havia pujat a les branques de B2, amb <code>zeros-data</code> arriba al 96–97 % a les tres llavors. Sense tocar res, es queda al 2–3 %.</li>
+        </ul>
+      </li>
+      <li><strong>De mitjana, la baixada és passatgera.</strong>
+        <ul>
+          <li><strong>Sense tocar res,</strong> als mons de prova, la vida passa del 8,5 % al primer cens al 55 % a <em>t</em> + 1.000.</li>
+          <li><strong>Al cens final,</strong> a <em>t</em> + 2.000, n'hi ha el 74,9 % amb <code>zeros-data</code> i el 74,1 % amb <code>zeros-inert</code>, i el 59,7 % i el 60,2 % sense tocar res i amb el placebo.</li>
+          <li><strong>Les pèrdues sostingudes</strong> (la regla R2), als 11 mons: 10 branques de 33 sense tocar res, 11 amb el placebo, 5 amb <code>zeros-data</code> i 6 amb <code>zeros-inert</code>.</li>
+        </ul>
+      </li>
+      <li><strong>El placebo no s'aparella del tot.</strong> A les cel·les amb més zeros que bytes de dades, no hi arriba: deixa sense aparellar entre el 0,5 % i el 5,0 % dels zeros de cada món.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>En aquests 8 mons, els zeros contribueixen a fer baixar la vida just després d'establir-se.</strong> Canviar-los per bytes de dades fa que baixi menys que un placebo que toca les mateixes cel·les, als 8 mons. És la hipòtesi de l'autoenverinament, posada a prova amb una intervenció preregistrada, i no només mirant les dades.</li>
+      <li><strong>Comparat amb el món sense tocar,</strong> les dades apunten al mateix lloc (7 de 8), però la prova no permet afirmar-ho.</li>
+      <li><strong>No diu res de mons nous.</strong> Per saber si els zeros prediuen la fragilitat d'un món que no hem vist, caldria una cohort nova, preregistrada.</li>
+      <li><strong>No és un descobriment.</strong> Que els zeros aturen les còpies ja ho vam veure a la fase 1 (entrada 2), i l'article de 2024 en descriu el fenomen. La revisió de la bibliografia ja deia què hi podia afegir aquesta prova: la prova causal, amb una intervenció des d'una mateixa captura i un control. Seria una nota curta (<code>docs/estat-questio.md</code>, §11).</li>
+    </ul>
+    <p><strong>Els límits</strong> (<code>docs/protocol-zeros.md</code>, §8):</p>
+    <ul>
+      <li>Els mons es van triar després de veure les dades, i l'afirmació queda limitada a ells.</li>
+      <li>La màscara dels replicadors que es protegeixen és una prova finita: en pot quedar algun sense protegir.</li>
+      <li>El placebo no s'aparella del tot a les cel·les saturades, i els bytes que posen les transformacions són uniformes, no els del món.</li>
+      <li>Les proves de signes parlen del signe de la diferència a cada món, no de la mida de l'efecte.</li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>El preregistre:</strong> l'etiqueta <code>preregistre-zeros</code>, sobre el commit <code>2628f9b</code>, amb les SHA-256 del manifest, del protocol (v0.3) i dels programes, després del vistiplau dels dos auditors (auditories 15 a 18).</li>
+      <li><strong>El segell:</strong> el bloc 973.367 de Bitcoin el va ancorar 51 minuts abans de la primera branca. Aquesta vegada vam esperar l'ancoratge abans de llançar (<code>docs/preregistre-zeros/</code>).</li>
+      <li><strong>L'execució:</strong> del 27 al 29 d'octubre, 6 branques alhora al PC i 4 a la màquina virtual, amb el codi de l'etiqueta.
+        <ul>
+          <li>Cap branca no ha fallat, i no se n'ha hagut de tornar a llançar cap.</li>
+          <li>Durant la sèrie no es va mirar cap resultat, només el recompte de branques acabades (ho diu l'acta).</li>
+        </ul>
+      </li>
+      <li><strong>La decisió:</strong> el 29-10-2026, amb <code>node fase2/zeros-confirmacio.mjs --decideix</code>, des d'una còpia idèntica a l'etiqueta.
+        <ul>
+          <li>Abans, es van tornar a comprovar les SHA-256 de l'etiqueta i de les 55 captures.</li>
+          <li>La sortida es va desar tal com va sortir, a <code>decisio-sortida.txt</code>.</li>
+          <li>Un script independent, que no fa servir cap funció del programa, en dona els mateixos valors.</li>
+        </ul>
+      </li>
+      <li><strong>Les dades:</strong> a <code>fase2/resultats/zeros/serie/</code>, amb l'acta i les sumes SHA-256 dels registres. Les captures transformades no van a git: es regeneren exactament amb el commit, les captures d'origen i les llavors.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>L'auditoria:</strong> els dos auditors en revisaran l'execució, la decisió i com la comuniquem.</li>
+      <li><strong>Una pregunta que en surt:</strong> per què, sense zeros, hi ha més branques on una altra família ocupa el món en 250 èpoques. Són poques, i ho hem vist després.</li>
+      <li><strong>La sèrie de la maduració</strong> (<code>docs/protocol-maduracio.md</code>): l'envelliment dels 180 mons corre des del 29-10-2026. El manifest es prepararà després de l'auditoria 22.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>
