@@ -21,6 +21,14 @@ const opt = (line, name) => line.match(new RegExp(`--${name} (\\S+)`))?.[1];
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 function withTmp(fn) { const tmp = mkdtempSync(join(tmpdir(), 'pilot-')); try { fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
 const put = (base, f, data) => { mkdirSync(dirname(join(base, f)), { recursive: true }); writeFileSync(join(base, f), data); };
+// Un repositori mínim, com el de l'auditor 2: els programes, sense cap manifest ni cap resultat
+function minimalRepo(base) {
+  for (const d of ['fase1', 'fase2', 'eines']) {
+    mkdirSync(join(base, d), { recursive: true });
+    for (const f of readdirSync(join(root, d)).filter((f) => /\.m?js$/.test(f))) copyFileSync(join(root, d, f), join(base, d, f));
+  }
+  copyFileSync(join(root, 'package.json'), join(base, 'package.json'));
+}
 
 // Un registre d'envelliment complet, com l'escriu sim.mjs: els censos cada 250 èpoques, l'establiment si el donen els
 // censos (i l'aturada al cens que el confirma) i les mesures cada 100
@@ -341,12 +349,8 @@ const tests = {
     assert.deepStrictEqual(checkCaptures('serie', { root: tmp }), []);
   })),
   'els zeros: el manifest buit, o amb un paper canviat, és un problema; i la línia d\'ordres surt amb error (AU2-84)': () => withTmp((tmp) => {
-    // un repositori mínim, com el de l'auditor 2, amb el programa i el repartiment de B2
-    for (const d of ['fase1', 'fase2', 'eines']) {
-      mkdirSync(join(tmp, d), { recursive: true });
-      for (const f of readdirSync(join(root, d)).filter((f) => /\.m?js$/.test(f))) copyFileSync(join(root, d, f), join(tmp, d, f));
-    }
-    copyFileSync(join(root, 'package.json'), join(tmp, 'package.json'));
+    // un repositori mínim, amb el programa i el repartiment de B2
+    minimalRepo(tmp);
     put(tmp, 'fase2/resultats/b2/repartiment.json', readFileSync(join(root, 'fase2/resultats/b2/repartiment.json')));
     const dir = PILOTS.zeros.folder;
     put(tmp, `${dir}/manifest.json`, JSON.stringify({ worlds: [], params: { arms: PILOTS.zeros.arms } }));
@@ -374,11 +378,15 @@ const tests = {
     assert.strictEqual(run('zeros', '--prepara', '--paral·lel', '0').status, 2);
     assert.strictEqual(run('zeros', '--comprova', '--paral·lel', '2').status, 2);
     assert.strictEqual(run('serie', '--comprova', '--maquina', 'mac').status, 2);
-    // --comprova-captures també accepta --maquina; sense manifest, és un problema i no un ús incorrecte
+    // --comprova-captures també accepta --maquina; sense manifest, és un problema i no un ús incorrecte. En un repositori
+    // mínim, perquè no depengui de l'estat del repositori, on ja hi ha el manifest de la sèrie
     assert.strictEqual(run('serie', '--comprova-captures', '--maquina', 'mac').status, 2);
-    const vm = run('serie', '--comprova-captures', '--maquina', 'vm');
-    assert.strictEqual(vm.status, 1, vm.stdout + vm.stderr);
-    assert.ok(/La comprovació de les captures \(vm\) ha trobat 1 problemes/.test(vm.stdout) && /no hi ha cap manifest/.test(vm.stdout), vm.stdout);
+    withTmp((tmp) => {
+      minimalRepo(tmp);
+      const vm = spawnSync(process.execPath, [join(tmp, 'eines', 'pilot.mjs'), 'serie', '--comprova-captures', '--maquina', 'vm'], { encoding: 'utf8' });
+      assert.strictEqual(vm.status, 1, vm.stdout + vm.stderr);
+      assert.ok(/La comprovació de les captures \(vm\) ha trobat 1 problemes/.test(vm.stdout) && /no hi ha cap manifest/.test(vm.stdout), vm.stdout);
+    });
     assert.strictEqual(run('maduracio', '--envelliment', '--mons', '3').status, 2, '--mons és només de la sèrie');
     assert.strictEqual(run('serie', '--envelliment', '--mons', '401').status, 2);
     const aging = run('serie', '--envelliment');
