@@ -1,9 +1,10 @@
-// El dibuix del món amb WebGL2: el cel, l'oceà, una columna per cel·la (de lluny), el codi de cada cel·la al cim de la
-// seva columna i els poliedres de les instruccions (de prop), i l'atmosfera del planeta. La GPU llegeix els mapes de
-// dos fotogrames (A i B) i hi interpola, de manera que el temps flueix entre els fotogrames.
-import { compile, intTexture, updateIntTexture, hexRgb } from './gl.js';
+// El dibuix del món amb WebGL2: el cel, l'oceà, una columna per cel·la (de lluny), el tauler de cada cel·la al cim de
+// la seva columna i els poliedres de les instruccions (de prop), i l'atmosfera del planeta. La GPU llegeix els mapes de
+// dos fotogrames (A i B) i hi interpola, de manera que el temps flueix entre els fotogrames. Els colors són els del
+// tema (setTheme, amb les fitxes de tema.js).
+import { compile, intTexture, updateIntTexture } from './gl.js';
 import { GLSL_GEO, W, H, LON, LAT } from './geo.js';
-import { SHAPES, CLASS_COLORS } from './formes.js';
+import { SHAPES } from './formes.js';
 
 const HEADER = `#version 300 es
 precision highp float;
@@ -32,13 +33,15 @@ uniform mat4 uViewProj;
 uniform usampler2D uFamA, uFamB, uKA, uKB;
 uniform sampler2D uPalA, uPalB;
 uniform float uT;
+uniform vec3 uCellLo, uCellHi;
 out vec3 vColor;
 out vec3 vNormal;
 out vec3 vWorld;
 out vec2 vUV;
 out float vTop;
 flat out int vCell;
-vec3 soil(float k) { return mix(vec3(0.07, 0.085, 0.12), vec3(0.23, 0.28, 0.36), clamp(k / 24.0, 0.0, 1.0)); }
+// una cel·la sense família, de buida a densa en instruccions
+vec3 soil(float k) { return mix(uCellLo, uCellHi, clamp(k / 24.0, 0.0, 1.0)); }
 void main() {
   int c = gl_InstanceID;
   ivec2 cell = ivec2(c % int(W), c / int(W));
@@ -60,11 +63,15 @@ void main() {
 `;
 const COLUMN_FS = HEADER + FOG + `
 uniform vec3 uSun;
-uniform highp usampler2D uCode;
 uniform float uCodeMix;
 uniform float uGridMix;
+uniform float uPlanet;
 uniform int uHover;
-uniform vec3 uClass[12];
+uniform vec3 uStage;
+uniform float uBoardTint;
+uniform vec4 uGround;
+uniform vec3 uHoverOutline, uHoverHalo;
+uniform float uShade;
 in vec3 vColor;
 in vec3 vNormal;
 in vec3 vWorld;
@@ -72,33 +79,41 @@ in vec2 vUV;
 in float vTop;
 flat in int vCell;
 out vec4 outColor;
+// 1 sobre una línia d'amplada w (en les unitats de d) i 0 fora, amb la vora suavitzada
+float line(float d, float w) { return 1.0 - smoothstep(w * 0.5, w * 1.5, d); }
 void main() {
   vec3 n = normalize(vNormal), base = vColor;
   bool top = vTop > 0.5;
+  vec2 px = fwidth(vUV);
   if (top && uCodeMix > 0.0) {
-    // el tauler de codi: els 64 bytes de la cel·la en una quadrícula de 8 × 8, com a la interfície
-    ivec2 b = clamp(ivec2(floor(vUV * 8.0)), ivec2(0), ivec2(7));
-    int i = b.y * 8 + b.x;
-    ivec2 cell = ivec2(vCell % 512, vCell / 512);
-    uvec4 t = texelFetch(uCode, ivec2(cell.x * 4 + (i >> 4), cell.y), 0);
-    uint word = t[(i >> 2) & 3];
-    uint cls = (word >> (8u * uint(i & 3))) & 255u;
-    vec3 bc = cls >= 2u ? uClass[cls] * 0.42 : (cls == 1u ? vec3(0.02) : base * 0.5 + 0.03);
+    // de prop, el tauler: el color de la cel·la tenyit amb l'escenari, perquè els sòlids hi destaquin, i una
+    // quadrícula de 8 × 8, un quadre per byte, com a la interfície
+    vec3 board = mix(uStage, base, uBoardTint);
     vec2 f = fract(vUV * 8.0);
-    float e = min(min(f.x, 1.0 - f.x), min(f.y, 1.0 - f.y));
-    bc = mix(bc, base * 0.2, (1.0 - smoothstep(0.0, 0.1, e)) * 0.7);
-    base = mix(base, bc, uCodeMix);
-  }
+    float e = min(min(f.x, 1.0 - f.x), min(f.y, 1.0 - f.y)) / 8.0;
+    board = mix(board, mix(board, base, 0.45), line(e, max(px.x, px.y) * 0.9));
+    base = mix(base, board, uCodeMix);
+  } else if (!top && uCodeMix > 0.0) base = mix(base, mix(uStage, base, uBoardTint), uCodeMix);
+  // la llum: al tema clar, més suau (uShade < 1), perquè els costats no s'enfosqueixin com sobre el fosc
   float light = 0.3 + 0.8 * max(dot(n, uSun), 0.0);
   if (!top) light *= 0.72;
+  light = mix(1.0, light, uShade);
   vec3 col = base * light;
-  if (top && uGridMix > 0.0) {
-    // la vora de cada cel·la, perquè es vegi la quadrícula de prop
+  if (top) {
+    // de mig a prop, la vora de cada cel·la, del color de l'escenari
     float e = min(min(vUV.x, 1.0 - vUV.x), min(vUV.y, 1.0 - vUV.y));
-    float w = fwidth(vUV.x) * 1.2;
-    col = mix(col, col * 0.35, (1.0 - smoothstep(0.0, w + 0.02, e)) * uGridMix);
+    if (uGridMix > 0.0) col = mix(col, mix(col, uStage, 0.6), line(e, max(px.x, px.y) * 1.2 + 0.02) * uGridMix);
+    // al pla, la graella de terra, cada 32 cel·les
+    vec2 m = vec2(float(vCell % 512), float(vCell / 512)) + vUV;
+    vec2 g = abs(fract(m / 32.0 + 0.5) - 0.5) * 32.0;
+    float gr = max(line(g.x, fwidth(m.x)), line(g.y, fwidth(m.y)));
+    col = mix(col, uGround.rgb, uGround.a * gr * (1.0 - uPlanet));
+    // la cel·la sota el punter: una vora en tinta, amb un halo perquè es vegi sobre qualsevol color
+    if (vCell == uHover) {
+      float w = max(px.x, px.y);
+      col = e < w * 2.0 ? uHoverOutline : (e < w * 3.0 ? uHoverHalo : col);
+    }
   }
-  if (vCell == uHover) col = mix(col, vec3(1.0), top ? 0.35 : 0.2);
   outColor = vec4(fogged(col, vWorld), 1.0);
 }
 `;
@@ -155,6 +170,9 @@ void main() {
 const OCEAN_FS = HEADER + FOG + `
 uniform vec3 uSun;
 uniform float uTime;
+uniform float uPlanet;
+uniform vec3 uDeep, uShallow, uAtmos;
+uniform float uSpec;
 in vec3 vWorld;
 in vec3 vNormal;
 out vec4 outColor;
@@ -166,10 +184,10 @@ void main() {
   vec3 v = normalize(uEye - vWorld);
   float fres = pow(1.0 - max(dot(n, v), 0.0), 4.0);
   float spec = pow(max(dot(reflect(-uSun, n), v), 0.0), 80.0);
-  vec3 deep = vec3(0.02, 0.08, 0.15), shallow = vec3(0.04, 0.17, 0.27);
-  vec3 col = mix(deep, shallow, 0.5 + 0.5 * a * 0.3) * (0.4 + 0.6 * max(dot(n, uSun), 0.0));
-  col += vec3(0.25, 0.45, 0.6) * fres * 0.5 + vec3(0.9, 0.95, 1.0) * spec * 0.6;
-  outColor = vec4(fogged(col, vWorld), 1.0);
+  vec3 col = mix(uDeep, uShallow, 0.5 + 0.5 * a * 0.3) * (0.55 + 0.45 * max(dot(n, uSun), 0.0));
+  col += uAtmos * fres * 0.35 + vec3(1.0) * spec * uSpec;
+  // al pla, el món és sobre l'escenari: l'oceà només es veu al planeta
+  outColor = vec4(mix(uFogColor, fogged(col, vWorld), uPlanet), 1.0);
 }
 `;
 
@@ -191,12 +209,13 @@ void main() {
 }
 `;
 const STAR_FS = HEADER + `
+uniform vec3 uFogColor;
 in float vBright;
 out vec4 outColor;
 void main() {
   vec2 q = gl_PointCoord * 2.0 - 1.0;
   float a = smoothstep(1.0, 0.0, dot(q, q)) * vBright;
-  outColor = vec4(vec3(0.75, 0.82, 1.0) * a, 1.0);
+  outColor = vec4(mix(uFogColor, vec3(0.957, 0.953, 0.937), a * 0.8), 1.0);
 }
 `;
 
@@ -218,6 +237,7 @@ const ATMO_FS = HEADER + `
 uniform vec3 uEye;
 uniform vec3 uSun;
 uniform float uPlanet;
+uniform vec3 uAtmos;
 in vec3 vWorld;
 in vec3 vNormal;
 out vec4 outColor;
@@ -225,7 +245,8 @@ void main() {
   vec3 n = normalize(vNormal), v = normalize(uEye - vWorld);
   float rim = pow(1.0 - max(dot(n, v), 0.0), 3.0);
   float day = 0.35 + 0.65 * max(dot(n, uSun), 0.0);
-  outColor = vec4(vec3(0.25, 0.6, 1.0) * rim * day * uPlanet * 0.9, 1.0);
+  float a = clamp(rim * day * uPlanet * 0.9, 0.0, 1.0);
+  outColor = vec4(uAtmos * a, a);
 }
 `;
 
@@ -339,10 +360,9 @@ export function createRenderer(canvas) {
     return t;
   };
   const palA = palTex(), palB = palTex();
-  const codeTex = intTexture(gl, gl.RGBA32UI, gl.RGBA_INTEGER, gl.UNSIGNED_INT, W * 4, H);
-  const classColors = new Float32Array(12 * 3);
-  CLASS_COLORS.forEach((c, i) => { if (c) classColors.set(hexRgb(c), i * 3); });
-  const shapeColors = CLASS_COLORS.map((c) => (c ? hexRgb(c) : null));
+  // el tema: els colors de l'escenari, de les cel·les i dels sòlids (tema.js, readStageTokens)
+  let theme = null;
+  const rgb = (c) => c.slice(0, 3);
 
   const state = { hasCode: false, instances: 0 };
 
@@ -359,12 +379,10 @@ export function createRenderer(canvas) {
         gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 256, 1, gl.RGBA, gl.UNSIGNED_BYTE, p);
       }
     },
-    // el codi d'una època: la classe de cada byte, 64 per cel·la, tal com surt de codi/E.z
-    setCode(bytes) {
-      if (!bytes) { state.hasCode = false; return; }
-      updateIntTexture(gl, codeTex, gl.RGBA_INTEGER, gl.UNSIGNED_INT, W * 4, H, new Uint32Array(bytes.buffer, bytes.byteOffset, bytes.byteLength / 4));
-      state.hasCode = true;
-    },
+    // si hi ha el codi d'una època (els sòlids, de prop, surten de setInstances)
+    setCode(bytes) { state.hasCode = !!bytes; },
+    setTheme(tokens) { theme = tokens; },
+    get theme() { return theme; },
     // els poliedres d'una finestra de cel·les: les instruccions i els zeros, agrupats per forma
     setInstances(bytes, x0, y0, x1, y1) {
       if (!bytes) { state.instances = 0; for (const s of shapes) if (s) s.n = 0; return 0; }
@@ -386,7 +404,8 @@ export function createRenderer(canvas) {
     },
     resize(width, height) { canvas.width = width; canvas.height = height; gl.viewport(0, 0, width, height); },
     draw(v) {
-      gl.clearColor(...v.fogColor, 1);
+      const fogColor = rgb(theme.background);
+      gl.clearColor(...fogColor, 1);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.enable(gl.DEPTH_TEST);
       gl.depthFunc(gl.LEQUAL);
@@ -396,25 +415,31 @@ export function createRenderer(canvas) {
         if (p.u.uEye) gl.uniform3fv(p.u.uEye, v.eye);
         if (p.u.uPlanet) gl.uniform1f(p.u.uPlanet, v.planet);
         if (p.u.uSun) gl.uniform3fv(p.u.uSun, v.sun);
-        if (p.u.uFogColor) gl.uniform3fv(p.u.uFogColor, v.fogColor);
+        if (p.u.uFogColor) gl.uniform3fv(p.u.uFogColor, fogColor);
         if (p.u.uFog) gl.uniform1f(p.u.uFog, v.fog);
         if (p.u.uHeight) gl.uniform1f(p.u.uHeight, v.height);
       };
-      // 1. les estrelles
-      gl.depthMask(false);
-      common(P.star);
-      gl.uniform1f(P.star.u.uPixel, v.pixel);
-      gl.bindVertexArray(starVao);
-      gl.drawArrays(gl.POINTS, 0, stars.length / 4);
-      gl.depthMask(true);
+      // 1. les estrelles, només al tema fosc
+      if (theme.stars) {
+        gl.depthMask(false);
+        common(P.star);
+        gl.uniform1f(P.star.u.uPixel, v.pixel);
+        gl.bindVertexArray(starVao);
+        gl.drawArrays(gl.POINTS, 0, stars.length / 4);
+        gl.depthMask(true);
+      }
       // 2. l'oceà
       common(P.ocean);
       gl.uniform1f(P.ocean.u.uTime, v.time);
+      gl.uniform3fv(P.ocean.u.uDeep, rgb(theme.oceanDeep));
+      gl.uniform3fv(P.ocean.u.uShallow, rgb(theme.oceanShallow));
+      gl.uniform3fv(P.ocean.u.uAtmos, rgb(theme.atmosphere));
+      gl.uniform1f(P.ocean.u.uSpec, theme.stars ? 0.6 : 0.3);
       gl.bindVertexArray(gridVao);
       gl.drawElements(gl.TRIANGLES, grid.indices.length, gl.UNSIGNED_INT, 0);
       // 3. les columnes
       const bindMaps = (p) => {
-        const units = [['uFamA', famA], ['uFamB', famB], ['uKA', kA], ['uKB', kB], ['uPalA', palA], ['uPalB', palB], ['uCode', codeTex]];
+        const units = [['uFamA', famA], ['uFamB', famB], ['uKA', kA], ['uKB', kB], ['uPalA', palA], ['uPalB', palB]];
         units.forEach(([name, t], i) => { if (p.u[name] === undefined) return; gl.activeTexture(gl.TEXTURE0 + i); gl.bindTexture(gl.TEXTURE_2D, t); gl.uniform1i(p.u[name], i); });
         gl.uniform1f(p.u.uT, v.t);
       };
@@ -423,7 +448,14 @@ export function createRenderer(canvas) {
       gl.uniform1f(P.column.u.uCodeMix, state.hasCode ? v.codeMix : 0);
       gl.uniform1f(P.column.u.uGridMix, v.gridMix);
       gl.uniform1i(P.column.u.uHover, v.hover ?? -1);
-      gl.uniform3fv(P.column.u.uClass, classColors);
+      gl.uniform3fv(P.column.u.uCellLo, rgb(theme.cellLow));
+      gl.uniform3fv(P.column.u.uCellHi, rgb(theme.cellHigh));
+      gl.uniform3fv(P.column.u.uStage, fogColor);
+      gl.uniform1f(P.column.u.uBoardTint, theme.boardTint);
+      gl.uniform4fv(P.column.u.uGround, theme.grid);
+      gl.uniform3fv(P.column.u.uHoverOutline, rgb(theme.hoverOutline));
+      gl.uniform3fv(P.column.u.uHoverHalo, rgb(theme.hoverHalo));
+      gl.uniform1f(P.column.u.uShade, theme.stars ? 1 : 0.6);
       gl.enable(gl.CULL_FACE);
       gl.cullFace(gl.BACK);
       gl.bindVertexArray(colVao);
@@ -439,16 +471,17 @@ export function createRenderer(canvas) {
           gl.bindVertexArray(s.vao);
           gl.bindBuffer(gl.ARRAY_BUFFER, instBuf);
           gl.vertexAttribIPointer(2, 2, gl.UNSIGNED_INT, 8, s.start * 8);
-          gl.uniform3fv(P.shape.u.uColor, shapeColors[k]);
+          gl.uniform3fv(P.shape.u.uColor, rgb(theme.lit[k]));
           gl.drawArraysInstanced(gl.TRIANGLES, 0, s.count, s.n);
         });
       }
       // 5. l'atmosfera, només al planeta
       if (v.planet > 0.01) {
         gl.enable(gl.BLEND);
-        gl.blendFunc(gl.ONE, gl.ONE);
+        gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
         gl.depthMask(false);
         common(P.atmo);
+        gl.uniform3fv(P.atmo.u.uAtmos, rgb(theme.atmosphere));
         gl.bindVertexArray(gridVao);
         gl.drawElements(gl.TRIANGLES, grid.indices.length, gl.UNSIGNED_INT, 0);
         gl.depthMask(true);

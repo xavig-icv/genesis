@@ -3,17 +3,13 @@
 import { createRenderer } from './render.js';
 import { createCamera } from './camera.js';
 import { createUI } from './ui.js';
-import { t } from './i18n.js';
 
 const $ = (id) => document.getElementById(id);
 const canvas = $('view');
 const SUN = (() => { const s = [0.45, 0.85, 0.32], l = Math.hypot(...s); return s.map((x) => x / l); })();
-const FOG_COLOR = [0.02, 0.028, 0.05];
 const smooth = (a, b, x) => { const u = Math.min(1, Math.max(0, (x - a) / (b - a))); return u * u * (3 - 2 * u); };
 
 const renderer = createRenderer(canvas);
-if (!renderer) { $('status').textContent = t('error.webgl'); throw new Error('WebGL2'); }
-
 let shown = { code: null, window: null };
 const ui = createUI({
   onWorld: () => { shown = { code: null, window: null }; renderer.setCode(null); renderer.setInstances(null); },
@@ -21,8 +17,16 @@ const ui = createUI({
     const w = ui.state.world;
     renderer.setFrames({ fam: w.fam(i), k: w.k(i), palette: ui.palette(i) }, { fam: w.fam(i + 1), k: w.k(i + 1), palette: ui.palette(i + 1) });
   },
+  onTheme: (tokens) => renderer?.setTheme(tokens),
 });
-const camera = createCamera(canvas, { onHover: (p) => ui.hover(p), onPick: (p) => ui.pick(p) });
+// sense WebGL2, la vista 2D és l'alternativa
+if (!renderer) {
+  $('loading').hidden = true;
+  $('nowebgl').hidden = false;
+  throw new Error('WebGL2');
+}
+renderer.setTheme(ui.state.tokens);
+const camera = createCamera(canvas, { onHover: (p, x, y) => ui.hover(p, x, y), onPick: (p, x, y) => ui.pick(p, x, y) });
 
 function resize() {
   // en píxels reals, com a molt el doble, perquè els mòbils no s'encallin
@@ -32,7 +36,7 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-// de prop: el codi a la GPU, i els poliedres d'una finestra al voltant del punt que es mira
+// de prop: els poliedres d'una finestra al voltant del punt que es mira
 function updateCode(d) {
   const code = ui.state.code;
   if (!code.bytes) return;
@@ -62,7 +66,7 @@ function frame(now) {
     if (codeMix > 0) { ui.needCode(); updateCode(d); }
     $('hint').classList.toggle('off', d < 90 || !w.codeEpochs.length || ui.state.time < w.codeEpochs[0]);
     renderer.draw({
-      viewProj, eye, planet: camera.cur.planet, sun: SUN, fogColor: FOG_COLOR, fog: 1 / (d * 3 + 500), height: 3,
+      viewProj, eye, planet: camera.cur.planet, sun: SUN, fog: 1 / (d * 3 + 500), height: 3,
       t: f.t, time: now / 1000, codeMix: shown.code !== null ? codeMix : 0, gridMix: smooth(260, 110, d), hover: ui.state.hover?.c ?? -1,
       pixel: Math.min(2, window.devicePixelRatio || 1),
     });

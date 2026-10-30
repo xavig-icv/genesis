@@ -1,21 +1,43 @@
-// La part comuna de les dues vistes del món (la 3D i la 2D): l'estat, la tria del món, el panell (el món, les
-// famílies i la llegenda), l'inspector de la cel·la sota el punter i la línia de temps. Cada vista hi posa el seu
-// dibuix: setFrame(i) quan canvia el fotograma, i el bucle de dibuix.
+// La part comuna de les dues vistes del món (la 3D i la 2D): l'estat, la tria del món, el panell (el món, les famílies
+// i les instruccions), l'inspector de la cel·la sota el punter, la línia de temps, els missatges d'estat, el tema i, al
+// mòbil, el full inferior. Cada vista hi posa el seu dibuix: onFrame(i) quan canvia el fotograma, onTheme(fitxes) quan
+// canvia el tema, i el bucle de dibuix.
 import { loadWorld } from './dades.js';
 import { W, H } from './geo.js';
-import { CLASS_COLORS, CLASS_NAMES, OPCODES } from './formes.js';
+import { CLASS_NAMES, CLASS_GLYPH, glyphOf, classOfChar } from './formes.js';
 import { t, num, pct, lang, setLang, onLang, apply } from './i18n.js';
+import { bindThemeSwitch, readStageTokens } from './tema.js';
 
 const $ = (id) => document.getElementById(id);
 export const EPOCHS_PER_SECOND = 100;
+const CENSUS = 250; // un cens cada 250 èpoques: les marques de la línia de temps, i una etiqueta cada 1.000
+const SVG = 'http://www.w3.org/2000/svg';
+const mobile = matchMedia('(max-width: 820px)');
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+const svgEl = (tag, attrs) => { const e = document.createElementNS(SVG, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); return e; };
+// un text amb els nombres en mono (2.250, 13, 64...)
+function withNumbers(text) {
+  const f = document.createDocumentFragment();
+  text.split(/(\d[\d.,]*\d|\d)/).forEach((part, i) => { if (part) f.append(i % 2 ? el('span', 'mono', part) : part); });
+  return f;
+}
+const famVar = (f) => `var(--f${(f.paleta % 12) + 1})`;
+// el nucli d'una família, amb el color de cada instrucció
+function motif(text) {
+  const s = el('span', 'mono motif');
+  for (const ch of text) { const cls = classOfChar(ch); s.append(cls ? el('b', CLASS_GLYPH[cls], glyphOf(cls)) : ch); }
+  return s;
+}
 
-export function createUI({ base = '../dades', onWorld, onFrame }) {
+export function createUI({ base = '../dades', onWorld, onFrame, onTheme }) {
   const state = {
     world: null, time: 0, playing: false, speed: 1, frame: -1, focus: null, hover: null, pinned: null,
-    code: { epoch: null, bytes: null, loading: null },
+    code: { epoch: null, bytes: null, loading: null }, tokens: readStageTokens(), list: [],
   };
   apply();
   for (const b of document.querySelectorAll('[data-lang]')) b.addEventListener('click', () => setLang(b.dataset.lang));
+  bindThemeSwitch();
+  window.addEventListener('themechange', () => { state.tokens = readStageTokens(); state.frame = -1; onTheme?.(state.tokens); });
 
   // el fotograma A (el darrer que no passa de l'època actual), el B (el següent) i on som entre tots dos
   function frameIndex() {
@@ -25,13 +47,14 @@ export function createUI({ base = '../dades', onWorld, onFrame }) {
     const i = Math.min(lo, e.length - 2), f = (time - e[i]) / (e[i + 1] - e[i]);
     return { i, t: Math.min(1, Math.max(0, f)) };
   }
-  // la paleta d'un fotograma, amb les altres famílies apagades si se'n ressalta una
+  // la paleta d'un fotograma, amb les altres famílies fosses cap a l'escenari si se'n ressalta una
   function palette(i) {
-    const p = state.world.palette(i);
+    const tk = state.tokens, p = state.world.palette(i, tk.families);
     if (state.focus !== null) {
+      const bg = tk.background.map((c) => c * 255), d = tk.dimOthers;
       state.world.meta.fotogrames[i].f.forEach((id, j) => {
         if (id === state.focus) return;
-        for (let k = 0; k < 3; k++) p[(j + 1) * 4 + k] = Math.round(p[(j + 1) * 4 + k] * 0.18 + 12);
+        for (let k = 0; k < 3; k++) p[(j + 1) * 4 + k] = Math.round(bg[k] + (p[(j + 1) * 4 + k] - bg[k]) * d);
       });
     }
     return p;
@@ -41,34 +64,68 @@ export function createUI({ base = '../dades', onWorld, onFrame }) {
     const x = Math.floor(p[0]), y = Math.floor(p[1]);
     return x >= 0 && y >= 0 && x < W && y < H ? { x, y, c: y * W + x } : null;
   };
-  // el punter: a sobre d'una cel·la (p = [u, v] en cel·les, o null); amb un clic, la cel·la queda fixada
-  const hover = (p) => { if (!state.pinned) { state.hover = cellOf(p); drawInspector(); } };
-  const pick = (p) => { state.pinned = state.pinned || !p ? null : cellOf(p); state.hover = state.pinned ?? cellOf(p); drawInspector(); };
+
+  // el punter: a sobre d'una cel·la (p = [u, v] en cel·les, o null), al punt (x, y) del llenç. Un clic fixa la cel·la
+  // (un altre clic a la mateixa, o fora del món, la deixa anar)
+  let pointer = null;
+  function hover(p, x, y) {
+    pointer = p ? { x, y } : null;
+    if (state.pinned) return;
+    state.hover = cellOf(p);
+    drawInspector();
+  }
+  function pick(p, x, y) {
+    const c = cellOf(p);
+    // la cel·la fixada, amb el punt de la pantalla on s'ha fixat (at)
+    state.pinned = !c || (state.pinned && state.pinned.c === c.c) ? null : { ...c, at: { x, y } };
+    state.hover = state.pinned ?? c;
+    if (c) pointer = { x, y };
+    drawInspector();
+  }
+  function unpin() { state.pinned = null; state.hover = null; drawInspector(); }
+
+  // els missatges d'estat: carregant, un error, o res
+  function show(which, text) {
+    for (const id of ['loading', 'error']) $(id).hidden = id !== which;
+    if (which === 'error') $('error-text').textContent = text;
+  }
 
   // els mons
   async function start() {
-    let list;
-    try { list = await (await fetch(`${base}/mons.json`)).json(); } catch (e) { $('status').textContent = t('error.load', { m: e.message }); return; }
     const sel = $('world');
-    const fill = () => { sel.replaceChildren(...list.map((w) => new Option(w.titol[lang], w.id))); if (state.world) sel.value = state.world.meta.id; };
+    try { state.list = await (await fetch(`${base}/mons.json`)).json(); } catch (e) { show('error', t('error.load', { m: e.message })); return; }
+    const fill = () => {
+      sel.replaceChildren(...state.list.map((w) => new Option(w.titol[lang], w.id)));
+      if (state.world) sel.value = state.world.meta.id;
+      sel.title = sel.selectedOptions[0]?.text ?? '';
+    };
     fill();
     onLang(fill);
-    sel.addEventListener('change', () => open(sel.value));
+    sel.addEventListener('change', () => { sel.title = sel.selectedOptions[0]?.text ?? ''; open(sel.value); });
+    $('retry').addEventListener('click', () => open(sel.value));
     const wanted = new URLSearchParams(location.search).get('mon');
-    await open(list.some((w) => w.id === wanted) ? wanted : list[0].id);
+    if (state.list.some((w) => w.id === wanted)) await open(wanted);
+    else {
+      // sense cap món demanat, el primer de la llista que es pugui carregar
+      for (const w of state.list) if (await open(w.id, true)) return;
+      show('error', t('error.load', { m: state.list.map((w) => w.id).join(', ') }));
+    }
   }
-  async function open(id) {
-    $('status').hidden = false;
-    $('status').textContent = t('loading');
-    try { state.world = await loadWorld(`${base}/${id}`); } catch (e) { $('status').textContent = t('error.load', { m: e.message }); return; }
-    $('status').hidden = true;
+  async function open(id, quiet = false) {
+    $('loading-name').textContent = state.list.find((w) => w.id === id)?.titol[lang] ?? id;
+    show('loading');
+    let w;
+    try { w = await loadWorld(`${base}/${id}`); } catch (e) { if (!quiet) show('error', t('error.load', { m: e.message })); return false; }
+    state.world = w;
+    show(null);
     $('world').value = id;
+    $('world').title = $('world').selectedOptions[0]?.text ?? '';
     Object.assign(state, { frame: -1, pinned: null, hover: null, focus: null, code: { epoch: null, bytes: null, loading: null } });
-    const w = state.world;
-    $('time').max = String(w.epochs[w.epochs.length - 1]);
+    $('time').max = String(w.epochs.at(-1));
     state.time = w.meta.establiment ? Math.max(w.epochs[0], w.meta.establiment.epoca - 600) : w.epochs[0];
     onWorld?.(w);
-    describe(); marks(); legend(); families(); drawInspector();
+    describe(); timeline(); legend(); families(); drawInspector();
+    return true;
   }
   // el codi de l'època amb codi més propera que no passi de l'actual
   async function needCode() {
@@ -82,128 +139,188 @@ export function createUI({ base = '../dades', onWorld, onFrame }) {
     return state.code.bytes;
   }
 
-  // el panell
+  // el panell: la capçalera (el món i la comprovació) i tres pestanyes
   function describe() {
     const m = state.world.meta;
     $('w-title').textContent = m.titol[lang];
     $('w-text').textContent = m.text[lang];
     $('w-why').textContent = m.tria[lang];
     $('w-check').hidden = !state.world.checked;
-    $('w-check').textContent = `✓ ${t('loaded.checked')}`;
+    $('sum-title').textContent = m.titol[lang];
   }
-  function marks() {
-    const m = state.world.meta, last = state.world.epochs.at(-1), first = state.world.epochs[0], box = $('marks');
-    box.replaceChildren();
-    if (!m.establiment) return;
-    const d = document.createElement('div');
-    d.className = 'mark';
-    d.style.left = `${((m.establiment.epoca - first) / (last - first)) * 100}%`;
-    d.textContent = t('time.established');
-    box.append(d);
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function selectTab(tab, focus = false) {
+    for (const b of tabs) {
+      const on = b === tab;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+      $(b.getAttribute('aria-controls')).hidden = !on;
+    }
+    if (focus) tab.focus();
   }
+  tabs.forEach((b, k) => {
+    b.addEventListener('click', () => selectTab(b));
+    b.addEventListener('keydown', (e) => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (d) { e.preventDefault(); selectTab(tabs[(k + d + tabs.length) % tabs.length], true); }
+    });
+  });
+  if (tabs.length) selectTab(tabs.find((b) => b.getAttribute('aria-selected') === 'true') ?? tabs[0]);
+
   function legend() {
     const box = $('legend');
     box.replaceChildren();
-    for (const cls of [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1]) {
-      const d = document.createElement('div'), c = document.createElement('code');
-      c.textContent = cls === 1 ? '0' : OPCODES[cls - 2];
-      c.style.color = CLASS_COLORS[cls];
-      d.append(c, CLASS_NAMES[lang][cls].replace(/^.\s/, ''));
+    for (const cls of [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1, 0]) {
+      const d = el('div', 'lg');
+      d.append(el('dt', CLASS_GLYPH[cls], glyphOf(cls)), el('dd', '', cls ? CLASS_NAMES[lang][cls].replace(/^.\s/, '') : t('legend.data')));
       box.append(d);
     }
-    const d = document.createElement('div'), c = document.createElement('code');
-    c.textContent = '·';
-    c.style.color = '#3d4658';
-    d.append(c, t('legend.data'));
-    box.append(d);
   }
+  // les línies d'evolució comparteixen els eixos: del naixement de la primera família al final de la història, i del 0
+  // a la quota més alta
+  let axis = null;
   function families() {
-    const ul = $('families'), w = state.world;
+    const ul = $('families'), w = state.world, fams = w.meta.families;
     ul.replaceChildren();
-    if (!w.meta.families.length) { const li = document.createElement('li'); li.textContent = t('families.none'); ul.append(li); return; }
-    for (const f of w.meta.families) {
-      const li = document.createElement('li');
-      li.className = 'fam';
-      li.dataset.id = f.id;
-      li.title = t('families.focus');
-      li.innerHTML = '<span class="swatch"></span><span class="name"></span><span class="share"></span><span class="meta"></span><canvas width="560" height="52"></canvas>';
-      li.querySelector('.swatch').style.background = f.color;
-      li.querySelector('.name').textContent = t('inspector.family', { id: f.id });
-      li.addEventListener('click', () => { state.focus = state.focus === f.id ? null : f.id; state.frame = -1; updateFamilies(true); });
+    $('fam-count').textContent = fams.length ? String(fams.length) : '';
+    if (!fams.length) { ul.append(el('li', 'empty', t('families.none'))); updateFamilies(); return; }
+    const end = w.epochs.at(-1), start = Math.min(...fams.map((f) => f.neix));
+    axis = { start, span: Math.max(1, end - start), max: Math.max(0.001, ...fams.flatMap((f) => f.quota.filter((q) => q !== null))) };
+    for (const f of fams) {
+      const li = el('li'), b = el('button', 'fam');
+      b.type = 'button';
+      b.dataset.id = f.id;
+      b.style.setProperty('--fc', famVar(f));
+      b.title = t('families.focus');
+      const main = el('span', 'fam-main'), meta = el('span', 'fam-meta');
+      meta.append(withNumbers(t('families.born', { e: num(f.neix) }) + (f.mor !== null ? ` · ${t('families.died', { e: num(f.mor) })}` : '')));
+      if (f.nucli) meta.append(' · ', motif(f.nucli));
+      main.append(el('span', 'fam-name', t('inspector.family', { id: f.id })), meta);
+      b.append(el('i', 'sw'), main, spark(f), el('span', 'fam-share'));
+      b.addEventListener('click', () => { state.focus = state.focus === f.id ? null : f.id; state.frame = -1; updateFamilies(); });
+      li.append(b);
       ul.append(li);
     }
-    updateFamilies(true);
+    updateFamilies();
   }
-  function updateFamilies(redraw = false) {
-    const w = state.world, { i } = frameIndex();
-    for (const li of $('families').querySelectorAll('.fam')) {
-      const f = w.families.get(Number(li.dataset.id)), q = f.quota[i];
-      li.classList.toggle('gone', q === null);
-      li.setAttribute('aria-pressed', String(state.focus === f.id));
-      li.querySelector('.share').textContent = q === null ? '—' : pct(q);
-      li.querySelector('.meta').textContent = t('families.born', { e: num(f.neix) }) + (f.mor !== null ? ` · ${t('families.died', { e: num(f.mor) })}` : '') + (f.nucli ? ` · ${f.nucli}` : '');
-      if (redraw || li._i !== i) { spark(li.querySelector('canvas'), f, i); li._i = i; }
-    }
-  }
-  function spark(cv, f, i) {
-    const g = cv.getContext('2d'), w = cv.width, h = cv.height, n = f.quota.length;
-    const max = Math.max(0.001, ...f.quota.filter((q) => q !== null));
-    g.clearRect(0, 0, w, h);
-    g.beginPath();
-    let on = false;
+  function spark(f) {
+    const w = state.world, svg = svgEl('svg', { class: 'spark', viewBox: '0 0 100 22', preserveAspectRatio: 'none', 'aria-hidden': 'true' });
+    svg.append(svgEl('line', { class: 'base', x1: 0, y1: 21.5, x2: 100, y2: 21.5 }));
+    let pts = [];
+    const flush = () => { if (pts.length) svg.append(svgEl('polyline', { class: 'line', points: pts.join(' ') })); pts = []; };
     f.quota.forEach((q, j) => {
-      if (q === null) { on = false; return; }
-      const x = (j / (n - 1)) * w, y = h - 3 - (q / max) * (h - 8);
-      if (!on) { g.moveTo(x, y); on = true; } else g.lineTo(x, y);
+      const e = w.epochs[j];
+      if (q === null || q === undefined || e < axis.start) { flush(); return; }
+      pts.push(`${(((e - axis.start) / axis.span) * 100).toFixed(2)},${(21 - (q / axis.max) * 19).toFixed(2)}`);
     });
-    g.strokeStyle = f.color;
-    g.lineWidth = 3;
-    g.stroke();
-    g.fillStyle = 'rgba(255,255,255,0.5)';
-    g.fillRect((i / (n - 1)) * w - 1, 0, 2, h);
+    flush();
+    svg.append(svgEl('line', { class: 'now', x1: 0, y1: 0, x2: 0, y2: 22 }));
+    return svg;
+  }
+  function updateFamilies() {
+    const w = state.world;
+    if (!w) return;
+    const { i } = frameIndex(), x = axis ? Math.min(100, Math.max(0, ((state.time - axis.start) / axis.span) * 100)) : 0;
+    const living = [];
+    for (const b of $('families').querySelectorAll('.fam')) {
+      const f = w.families.get(Number(b.dataset.id)), q = f.quota[i] ?? null;
+      b.classList.toggle('is-ended', q === null && f.mor !== null && w.epochs[i] >= f.mor);
+      b.classList.toggle('is-dimmed', state.focus !== null && state.focus !== f.id);
+      b.setAttribute('aria-pressed', String(state.focus === f.id));
+      b.querySelector('.fam-share').textContent = q === null ? '—' : pct(q);
+      const now = b.querySelector('.now');
+      now.setAttribute('x1', x.toFixed(2)); now.setAttribute('x2', x.toFixed(2));
+      now.style.display = state.time < axis.start ? 'none' : '';
+      if (q !== null) living.push([f, q]);
+    }
+    // el resum del full inferior (mòbil): les tres famílies amb més territori
+    const mini = $('sum-fams');
+    mini.replaceChildren(...living.sort((a, b) => b[1] - a[1]).slice(0, 3).map(([f, q]) => {
+      const s = el('span'), sw = el('i', 'sw');
+      sw.style.setProperty('--fc', famVar(f));
+      s.append(sw, pct(q));
+      return s;
+    }));
   }
 
-  // l'inspector
-  const KIND = { 2: 'head', 3: 'head', 4: 'head1', 5: 'head1', 6: 'arith', 7: 'arith', 8: 'copy', 9: 'copy', 10: 'loop', 11: 'loop' };
+  // l'inspector: segueix el punter, sense tapar mai la línia de temps ni el panell; fixat, té un botó per tancar-lo
+  const closeIcon = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>';
   function drawInspector() {
     const box = $('inspector'), cell = state.hover, w = state.world;
     if (!cell || !w) { box.hidden = true; return; }
     const { i } = frameIndex(), f = w.familyAt(i, cell.c), k = w.k(i)[cell.c];
     box.hidden = false;
+    box.classList.toggle('is-pinned', !!state.pinned);
     box.replaceChildren();
-    const row = (a, b, color) => {
-      const d = document.createElement('div');
-      d.className = 'row';
-      d.innerHTML = '<span></span><b></b>';
-      d.firstChild.textContent = a;
-      d.lastChild.textContent = b;
-      if (color) { const s = document.createElement('span'); s.className = 'swatch'; s.style.cssText = `display:inline-block;margin-left:8px;vertical-align:-2px;background:${color}`; d.lastChild.append(s); }
-      return d;
-    };
-    box.append(row(t('inspector.cell', { x: cell.x, y: cell.y }), f ? t('inspector.family', { id: f.id }) : t('inspector.nofamily'), f?.color));
-    box.append(row(t('inspector.instructions', { k }), ''));
-    const bytes = state.code.bytes;
+    const top = el('div', 'insp-top'), name = el('span', 'insp-cell'), right = el('span', 'insp-right');
+    const label = t('inspector.cell', { x: cell.x, y: cell.y }), at = label.indexOf('(');
+    name.append(label.slice(0, at), el('span', 'mono', label.slice(at)));
+    const chip = el('span', 'chip');
+    if (f) { const sw = el('i', 'sw'); sw.style.setProperty('--fc', famVar(f)); chip.append(sw, t('inspector.family', { id: f.id })); } else chip.append(t('inspector.nofamily'));
+    const close = el('button', 'btn btn-icon insp-close');
+    close.type = 'button';
+    close.setAttribute('aria-label', t('inspector.close'));
+    close.title = t('inspector.close');
+    close.innerHTML = closeIcon;
+    close.addEventListener('click', unpin);
+    right.append(chip, close);
+    top.append(name, right);
+    const meta = el('div', 'insp-meta'), bytes = state.code.bytes;
+    meta.append(el('span'), el('span'));
+    meta.firstChild.append(withNumbers(t('inspector.instructions', { k })));
+    if (bytes) meta.lastChild.append(withNumbers(t('inspector.code', { e: num(state.code.epoch) })));
+    box.append(top, meta);
     if (bytes) {
-      box.append(row(t('inspector.code', { e: num(state.code.epoch) }), ''));
-      const prog = document.createElement('div');
-      prog.className = 'prog';
+      const prog = el('div', 'prog');
+      prog.setAttribute('aria-label', '64 bytes');
       for (let b = 0; b < 64; b++) {
-        const cls = bytes[cell.c * 64 + b], s = document.createElement('span');
-        s.textContent = cls === 0 ? '·' : cls === 1 ? '0' : OPCODES[cls - 2];
-        s.className = cls === 0 ? 'd' : cls === 1 ? 'z' : KIND[cls];
-        prog.append(s);
+        if (b % 16 === 0) prog.append(el('span', 'off', String(b).padStart(2, '0')));
+        const cls = bytes[cell.c * 64 + b];
+        prog.append(el('span', CLASS_GLYPH[cls], glyphOf(cls)));
       }
       box.append(prog);
-    } else if (w.codeEpochs.length) {
-      const p = document.createElement('p');
-      p.style.cssText = 'margin:6px 0 0;color:var(--text-3)';
-      p.textContent = t('inspector.nocode', { e: num(w.codeEpochs[0]) });
-      box.append(p);
-    }
+    } else if (w.codeEpochs.length) box.append(el('p', 'insp-note', t('inspector.nocode', { e: num(w.codeEpochs[0]) })));
+    placeInspector();
+  }
+  function placeInspector() {
+    const box = $('inspector'), at = state.pinned ? state.pinned.at : pointer;
+    if (box.hidden || !at || mobile.matches) { box.style.left = box.style.top = ''; return; }
+    const gap = 12, off = 18, vw = innerWidth, side = $('side');
+    const right = !side.classList.contains('is-closed') ? side.getBoundingClientRect().left - gap : vw - gap;
+    const bottom = $('timeline').getBoundingClientRect().top - gap;
+    const w = box.offsetWidth, h = box.offsetHeight;
+    let x = at.x + off, y = at.y + off;
+    if (x + w > right) x = at.x - off - w;
+    if (y + h > bottom) y = at.y - off - h;
+    box.style.left = `${Math.max(gap, Math.min(x, vw - gap - w))}px`;
+    box.style.top = `${Math.max(gap * 2 + 44, y)}px`;
   }
 
-  // la línia de temps
-  const playIcon = (on) => { $('play-icon').innerHTML = on ? '<path d="M4 2.5h3.5v13H4zM10.5 2.5H14v13h-3.5z" fill="currentColor"/>' : '<path d="M4 2.5v13l11-6.5z" fill="currentColor"/>'; };
+  // la línia de temps: un cens cada 250 èpoques, una etiqueta cada 1.000 (cada 2.000, si la història és llarga), i
+  // l'establiment
+  function timeline() {
+    const m = state.world.meta, last = state.world.epochs.at(-1), box = $('ticks'), every = last > 8000 ? 2000 : 1000;
+    box.replaceChildren();
+    for (let e = 0; e <= last; e += CENSUS) {
+      const p = `${(e / last) * 100}%`, major = e % 1000 === 0, i = el('i', major ? 'tick major' : 'tick');
+      i.style.left = p;
+      box.append(i);
+      if (e % every === 0) {
+        const l = el('span', 'tick-l' + (e === 0 ? ' first' : e === last ? ' last' : ''), num(e));
+        l.style.left = p;
+        box.append(l);
+      }
+    }
+    const est = $('est');
+    est.hidden = !m.establiment;
+    if (m.establiment) { est.style.left = `${(m.establiment.epoca / last) * 100}%`; est.firstChild.textContent = t('time.established'); }
+  }
+  const track = $('time').parentElement, tip = $('scrub-tip');
+  const scrub = (on) => { track.classList.toggle('is-scrubbing', on); tip.hidden = !on; };
+  $('time').addEventListener('pointerdown', () => scrub(true));
+  window.addEventListener('pointerup', () => scrub(false));
+  $('time').addEventListener('input', (e) => { state.time = Number(e.target.value); setPlaying(false); });
+  const playIcon = (on) => { $('play-icon').innerHTML = on ? '<path class="ic-fill" d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"></path>' : '<path class="ic-fill" d="M7 4.5v15l12.5-7.5z"></path>'; };
   function setPlaying(on) {
     state.playing = on;
     playIcon(on);
@@ -216,23 +333,34 @@ export function createUI({ base = '../dades', onWorld, onFrame }) {
     if (!state.playing && state.time >= w.epochs.at(-1)) state.time = w.epochs[0];
     setPlaying(!state.playing);
   });
-  $('time').addEventListener('input', (e) => { state.time = Number(e.target.value); setPlaying(false); });
   for (const b of $('speeds').querySelectorAll('button')) {
     b.addEventListener('click', () => {
       state.speed = Number(b.dataset.speed);
       for (const o of $('speeds').querySelectorAll('button')) o.setAttribute('aria-pressed', String(o === b));
     });
   }
-  $('help-btn')?.addEventListener('click', () => $('help').showModal());
-  // el panell es pot amagar; al mòbil, comença amagat perquè es vegi el món
-  const side = $('side'), panelBtn = $('panel-btn');
-  const showPanel = (on) => { side.classList.toggle('collapsed', !on); panelBtn?.setAttribute('aria-expanded', String(on)); };
-  showPanel(!matchMedia('(max-width: 820px)').matches);
-  panelBtn?.addEventListener('click', () => showPanel(side.classList.contains('collapsed')));
+
+  // l'ajuda, el panell (a l'escriptori) i el full inferior (al mòbil)
+  const help = $('help');
+  for (const b of document.querySelectorAll('[data-help]')) b.addEventListener('click', () => { help.showModal(); help.querySelector('.btn-primary')?.focus(); });
+  const side = $('side'), panelBtn = $('panel-btn'), dock = $('dock'), grab = $('grab');
+  const showPanel = (on) => { side.classList.toggle('is-closed', !on); panelBtn?.setAttribute('aria-expanded', String(on)); placeInspector(); };
+  const showSheet = (on) => { dock.classList.toggle('is-open', on); grab.setAttribute('aria-expanded', String(on)); };
+  showPanel(true);
+  showSheet(false);
+  panelBtn?.addEventListener('click', () => showPanel(side.classList.contains('is-closed')));
+  grab.addEventListener('click', () => showSheet(!dock.classList.contains('is-open')));
+  $('sum').addEventListener('click', () => showSheet(true));
+  // el selector del món: a la barra de dalt a l'escriptori, i al full inferior al mòbil
+  const placeSelect = () => (mobile.matches ? $('world-mob') : $('world-desk')).append($('world-box'));
+  placeSelect();
+  mobile.addEventListener?.('change', () => { placeSelect(); drawInspector(); });
+  window.addEventListener('resize', placeInspector);
   window.addEventListener('keydown', (e) => {
-    if (e.key === ' ' && !e.target.closest?.('input, select, textarea, button')) { e.preventDefault(); $('play').click(); }
+    if (e.key === ' ' && !e.target.closest?.('input, select, textarea, button, a')) { e.preventDefault(); $('play').click(); }
+    if (e.key === 'Escape' && state.pinned) unpin();
   });
-  onLang(() => { if (!state.world) return; describe(); marks(); legend(); families(); drawInspector(); });
+  onLang(() => { if (!state.world) return; describe(); timeline(); legend(); families(); drawInspector(); });
 
   // un pas del temps: avança si es reprodueix, i avisa la vista si canvia el fotograma
   function tick(dt) {
@@ -244,8 +372,13 @@ export function createUI({ base = '../dades', onWorld, onFrame }) {
     }
     const f = frameIndex();
     if (f.i !== state.frame) { state.frame = f.i; onFrame?.(f.i); updateFamilies(); if (state.hover) drawInspector(); }
-    $('time').value = String(Math.round(state.time));
-    $('epoch').textContent = num(Math.round(state.time));
+    const last = w.epochs.at(-1), p = `${(state.time / last) * 100}%`, e = Math.round(state.time);
+    $('time').value = String(e);
+    $('fill').style.width = p;
+    $('playhead').style.left = p;
+    tip.style.left = p;
+    tip.textContent = num(e);
+    $('epoch').textContent = num(e);
     return f;
   }
 

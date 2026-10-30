@@ -3,82 +3,102 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
   <title>Explorador 3D · claude-origins</title>
   <meta name="description" content="Un món digital on la vida sorgeix sola, en 3D: les famílies de replicadors i el codi de cada cel·la.">
+  <!-- el tema desat, abans del primer pintat -->
+  <script>try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="preload" href="../fonts/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/fonts.css">
   <link rel="stylesheet" href="../css/estil.css">
 </head>
-<body class="explorer">
+<body class="co viewer">
   <canvas id="view" aria-label="El món en 3D"></canvas>
 
-  <header class="topbar glass">
-    <a class="brand" href="../"><b>claude-origins</b><span data-i18n="nav.explorer">Explorador 3D</span></a>
-    <select class="world" id="world" aria-label="Món"></select>
-    <div class="spacer"></div>
-    <div class="seg" role="group" aria-label="Vista">
-      <button id="flat" aria-pressed="true" data-i18n="view.flat">Pla</button>
-      <button id="planet" aria-pressed="false" data-i18n="view.planet">Planeta</button>
-    </div>
-    <a class="icon-btn wide" href="../2d/" data-i18n="nav.map">Vista 2D</a>
-    <button class="icon-btn" id="panel-btn" data-i18n-title="panel.toggle" title="Mostra o amaga el panell" aria-controls="side" aria-expanded="true">i</button>
-    <button class="icon-btn" id="help-btn" data-i18n-title="help.title" title="Com et pots moure">?</button>
-    <div class="seg" role="group" aria-label="Llengua / Language">
-      <button data-lang="ca" aria-pressed="true">CA</button>
-      <button data-lang="en" aria-pressed="false">EN</button>
-    </div>
+  <header class="tray t-left">
+    <a class="brand" href="../">claude-origins</a>
+    <span class="here only-desk" data-i18n="nav.explorer">Explorador 3D</span>
+    <span class="holder" id="world-desk"><label class="select" id="world-box"><span class="sr" data-i18n="world.label">Món</span><select id="world"></select><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></label></span>
   </header>
 
-  <aside class="side glass" id="side">
-    <h2 data-i18n="panel.world">El món</h2>
-    <h3 id="w-title"></h3>
-    <p id="w-text"></p>
-    <h2 data-i18n="panel.why">Per què aquest món</h2>
-    <p class="why" id="w-why"></p>
-    <p class="check" id="w-check" hidden></p>
-    <h2 data-i18n="panel.families">Famílies</h2>
-    <p class="note" data-i18n="families.note"></p>
-    <ul class="fam-list" id="families"></ul>
-    <h2 data-i18n="panel.legend">Les instruccions</h2>
-    <div class="legend" id="legend"></div>
-    <p class="source" data-i18n="source"></p>
-  </aside>
-
-  <div class="inspector glass" id="inspector" hidden></div>
-  <div class="hint glass" id="hint" data-i18n="zoom.code"></div>
-
-  <footer class="timeline glass">
-    <button class="play" id="play" data-i18n-title="time.play" title="Reprodueix">
-      <svg id="play-icon" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M4 2.5v13l11-6.5z" fill="currentColor"/></svg>
-    </button>
-    <div class="track">
-      <div class="marks" id="marks"></div>
-      <input type="range" id="time" min="0" max="6000" step="1" value="0" aria-label="Època">
+  <div class="tray t-right">
+    <div class="seg" role="group" data-i18n-aria="view.label"><button id="flat" type="button" aria-pressed="true" data-i18n="view.flat">Pla</button><button id="planet" type="button" aria-pressed="false" data-i18n="view.planet">Planeta</button></div>
+    <a class="btn btn-sm only-desk" href="../2d/" data-i18n="nav.map">Vista 2D</a>
+    <span class="vsep only-desk" aria-hidden="true"></span>
+    <button class="btn btn-icon only-desk" id="panel-btn" type="button" data-i18n-title="panel.toggle" aria-controls="side" aria-expanded="true"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"></rect><path d="M15 4v16"></path></svg></button>
+    <button class="btn btn-icon" type="button" data-help data-i18n-title="help.title"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.5"></path><path d="M12 17v.2"></path></svg></button>
+    <span class="vsep only-desk" aria-hidden="true"></span>
+    <div class="seg seg-mono only-desk" role="group" aria-label="Llengua / Language"><button type="button" data-lang="ca" aria-pressed="true">CA</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+    <div class="seg seg-icons only-desk" role="group" data-i18n-aria="theme.label">
+      <button type="button" data-theme-value="system" data-i18n-title="theme.system"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"></rect><path d="M8 20h8M12 16v4"></path></svg></button>
+      <button type="button" data-theme-value="light" data-i18n-title="theme.light"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg></button>
+      <button type="button" data-theme-value="dark" data-i18n-title="theme.dark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg></button>
     </div>
-    <div class="epoch"><span data-i18n="time.epoch">Època</span><b id="epoch">0</b></div>
-    <div></div>
-    <div class="speed"><span data-i18n="time.speed">Velocitat</span>
-      <div class="seg" role="group" id="speeds">
-        <button data-speed="0.5" aria-pressed="false">½×</button>
-        <button data-speed="1" aria-pressed="true">1×</button>
-        <button data-speed="2" aria-pressed="false">2×</button>
-        <button data-speed="4" aria-pressed="false">4×</button>
+  </div>
+
+  <div class="dock" id="dock">
+    <button class="grab-btn" id="grab" type="button" data-i18n-title="panel.toggle" aria-controls="side" aria-expanded="false"><span class="grab"></span></button>
+    <footer class="tray tl" id="timeline">
+      <button class="play" id="play" type="button" data-i18n-title="time.play"><svg class="ic" id="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path class="ic-fill" d="M7 4.5v15l12.5-7.5z"></path></svg></button>
+      <div class="track"><div class="rail"></div><div class="fill" id="fill"></div><div id="ticks"></div><div class="est" id="est" hidden><span></span><i></i></div><div class="playhead" id="playhead"></div><span class="tip" id="scrub-tip" hidden></span><input type="range" id="time" min="0" max="6000" step="1" value="0" data-i18n-aria="time.epoch"></div>
+      <div class="epoch"><span class="micro" data-i18n="time.epoch">Època</span><output id="epoch">0</output></div>
+      <span class="vsep" aria-hidden="true"></span>
+      <div class="speed"><span class="micro" data-i18n="time.speed">Velocitat</span><div class="seg seg-mono" role="group" id="speeds" data-i18n-aria="time.speed"><button type="button" data-speed="0.5" aria-pressed="false">½×</button><button type="button" data-speed="1" aria-pressed="true">1×</button><button type="button" data-speed="2" aria-pressed="false">2×</button><button type="button" data-speed="4" aria-pressed="false">4×</button></div></div>
+    </footer>
+    <button class="m-sum" id="sum" type="button"><span class="t" id="sum-title"></span><span class="mini" id="sum-fams"></span></button>
+    <aside class="tray panel" id="side" data-i18n-aria="panel.label">
+      <div class="panel-head">
+        <h2 class="panel-title" id="w-title"></h2>
+        <p class="verified" id="w-check" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12.5l2.7 2.7L16 9.8"></path></svg><span data-i18n="loaded.checked">Dades comprovades amb la seva SHA-256</span></p>
       </div>
-    </div>
-  </footer>
+      <div class="m-row only-mob" id="world-mob"></div>
+      <div class="seg tabs" role="tablist" data-i18n-aria="panel.label">
+        <button type="button" role="tab" id="tab-world" aria-controls="tp-world" aria-selected="false" data-i18n="panel.world">El món</button>
+        <button type="button" role="tab" id="tab-fams" aria-controls="tp-fams" aria-selected="true"><span data-i18n="panel.families">Famílies</span> <span class="count" id="fam-count"></span></button>
+        <button type="button" role="tab" id="tab-legend" aria-controls="tp-legend" aria-selected="false" data-i18n="tab.legend">Instruccions</button>
+      </div>
+      <div class="panel-body">
+        <div role="tabpanel" id="tp-world" aria-labelledby="tab-world"><p id="w-text"></p><h3 data-i18n="panel.why">Per què aquest món</h3><p id="w-why"></p></div>
+        <div role="tabpanel" id="tp-fams" aria-labelledby="tab-fams"><p class="note" data-i18n="families.note"></p><ul class="fams" id="families"></ul></div>
+        <div role="tabpanel" id="tp-legend" aria-labelledby="tab-legend"><dl class="legend" id="legend"></dl></div>
+      </div>
+      <p class="panel-foot" data-i18n="source"></p>
+      <div class="m-foot only-mob">
+        <a class="btn btn-sm" href="../2d/" data-i18n="nav.map">Vista 2D</a>
+        <div class="seg seg-mono" role="group" aria-label="Llengua / Language"><button type="button" data-lang="ca" aria-pressed="true">CA</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+        <div class="seg seg-icons" role="group" data-i18n-aria="theme.label">
+          <button type="button" data-theme-value="system" data-i18n-title="theme.system"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"></rect><path d="M8 20h8M12 16v4"></path></svg></button>
+          <button type="button" data-theme-value="light" data-i18n-title="theme.light"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg></button>
+          <button type="button" data-theme-value="dark" data-i18n-title="theme.dark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg></button>
+        </div>
+      </div>
+    </aside>
+  </div>
 
-  <dialog class="help glass" id="help">
-    <h3 data-i18n="help.title">Com et pots moure</h3>
-    <ul>
-      <li data-i18n="help.drag"></li>
-      <li data-i18n="help.rotate"></li>
-      <li data-i18n="help.zoom"></li>
-      <li data-i18n="help.dbl"></li>
-      <li data-i18n="help.touch"></li>
-      <li data-i18n="help.keys"></li>
-    </ul>
-    <form method="dialog"><button data-i18n="help.close">Entesos</button></form>
+  <div class="insp" id="inspector" role="status" hidden></div>
+  <p class="hint off" id="hint" data-i18n="zoom.code"></p>
+
+  <div class="state loading" id="loading"><p data-i18n="loading">Carregant el món…</p><div class="progress"><i></i></div><p class="micro" id="loading-name"></p></div>
+  <div class="state status-card" id="error" role="alert" hidden>
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z"></path><path d="M12 10v4.5M12 17.2v.3"></path></svg><span id="error-text"></span></h2>
+    <div class="status-actions"><button class="btn btn-sm btn-primary" id="retry" type="button" data-i18n="error.retry">Torna-ho a provar</button><a class="btn btn-sm" href="../" data-i18n="nav.home">Inici</a></div>
+  </div>
+  <div class="state status-card" id="nowebgl" hidden>
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5.5M12 7.8v.3"></path></svg><span data-i18n="error.webgl"></span></h2>
+    <p data-i18n="error.webglText"></p>
+    <div class="status-actions"><a class="btn btn-sm btn-primary" href="../2d/" data-i18n="nav.map">Vista 2D</a><a class="btn btn-sm" href="../" data-i18n="nav.home">Inici</a></div>
+  </div>
+
+  <dialog class="dialog" id="help" aria-labelledby="help-title">
+    <h2 id="help-title" data-i18n="help.title">Com et pots moure</h2>
+    <dl class="keys">
+      <div><dt class="micro" data-i18n="help.groupMouse">Ratolí</dt><dd><p data-i18n="help.drag"></p><p data-i18n-html="help.rotate"></p><p data-i18n="help.zoom"></p><p data-i18n="help.dbl"></p></dd></div>
+      <div><dt class="micro" data-i18n="help.groupTouch">Al mòbil</dt><dd><p data-i18n="help.touch"></p></dd></div>
+      <div><dt class="micro" data-i18n="help.groupKeys">Teclat</dt><dd><p data-i18n-html="help.keys"></p></dd></div>
+    </dl>
+    <form method="dialog" class="dialog-foot"><button class="btn btn-sm btn-primary" data-i18n="help.close">Entesos</button></form>
   </dialog>
 
-  <div class="status" id="status" data-i18n="loading">Carregant el món…</div>
   <script type="module" src="../js/explorador.js"></script>
 </body>
 </html>

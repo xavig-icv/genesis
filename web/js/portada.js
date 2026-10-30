@@ -1,16 +1,21 @@
-// La portada: de fons, un món com un planeta que gira lentament; i la galeria de les instruccions, amb el poliedre de
-// cadascuna a la seva casella. Sense controls al fons, perquè la pàgina es pugui desplaçar.
+// La portada: al visor de la capçalera, un món com un planeta que gira lentament; i, a la química, el sòlid de cada
+// instrucció, que gira al pou del seu espècimen. Sense controls al planeta, perquè la pàgina es pugui desplaçar. Amb
+// moviment reduït, tot quiet.
 import { createRenderer } from './render.js';
 import { loadWorld } from './dades.js';
 import { R } from './geo.js';
 import { v3, perspective, lookAt, multiply } from './mat4.js';
-import { compile, hexRgb } from './gl.js';
-import { SHAPES, CLASS_COLORS, CLASS_NAMES, OPCODES } from './formes.js';
-import { apply, setLang, onLang, lang } from './i18n.js';
+import { compile } from './gl.js';
+import { SHAPES } from './formes.js';
+import { apply, setLang } from './i18n.js';
+import { bindThemeSwitch, readStageTokens, reducedMotion } from './tema.js';
 
 apply();
 for (const b of document.querySelectorAll('[data-lang]')) b.addEventListener('click', () => setLang(b.dataset.lang));
-const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+bindThemeSwitch();
+let tokens = readStageTokens();
+const themed = [];
+window.addEventListener('themechange', () => { tokens = readStageTokens(); for (const f of themed) f(tokens); });
 const SUN = v3.normalize([0.55, 0.75, -0.35]);
 
 // Dibuixa només quan el llenç es veu (i el navegador ja s'atura quan la pestanya no es veu)
@@ -20,16 +25,22 @@ function whenVisible(el) {
   return s;
 }
 
-// 1. El planeta: el darrer fotograma del primer món de la llista que tingui dades
+// 1. El planeta: el darrer fotograma del primer món de la llista amb la llavor del peu de la figura
 async function hero() {
   const canvas = document.getElementById('hero'), r = createRenderer(canvas);
   if (!r) return;
+  r.setTheme(tokens);
+  themed.push((tk) => r.setTheme(tk));
+  const seed = canvas.closest('[data-seed]').dataset.seed;
   const list = await (await fetch('dades/mons.json')).json();
   let w = null;
-  for (const m of list) { try { w = await loadWorld(`dades/${m.id}`); break; } catch { /* el següent */ } }
+  for (const m of list) {
+    try { const c = await loadWorld(`dades/${m.id}`); if (new RegExp(`--seed ${seed}\\b`).test(c.meta.ordre)) { w = c; break; } } catch { /* el següent */ }
+  }
   if (!w) return;
-  const i = w.epochs.length - 2;
-  r.setFrames({ fam: w.fam(i + 1), k: w.k(i + 1), palette: w.palette(i + 1) }, { fam: w.fam(i + 1), k: w.k(i + 1), palette: w.palette(i + 1) });
+  const i = w.epochs.length - 1, frame = () => ({ fam: w.fam(i), k: w.k(i), palette: w.palette(i, tokens.families) });
+  r.setFrames(frame(), frame());
+  themed.push(() => r.setFrames(frame(), frame()));
   const vis = whenVisible(canvas);
   const resize = () => { const dpr = Math.min(1.5, devicePixelRatio || 1); r.resize(Math.round(canvas.clientWidth * dpr), Math.round(canvas.clientHeight * dpr)); };
   addEventListener('resize', resize);
@@ -37,15 +48,15 @@ async function hero() {
   const center = [0, -R, 0], t0 = performance.now();
   const loop = (now) => {
     if (vis.on) {
-      const t = still ? 0 : (now - t0) / 1000;
+      const t = reducedMotion.matches ? 0 : (now - t0) / 1000;
       // la càmera gira al voltant de l'eix dels pols (z), una mica per sobre de l'equador, i el nord queda amunt
       const a = 0.5 * Math.sin(t * 0.05) - 0.15, tilt = 0.32, D = R * 4.3;
       const eye = v3.add(center, v3.scale([Math.cos(tilt) * Math.sin(a), Math.cos(tilt) * Math.cos(a), -Math.sin(tilt)], D));
-      const aspect = canvas.clientWidth / canvas.clientHeight, proj = perspective(0.62, aspect, 10, D * 3);
-      // el planeta, a la dreta de la pantalla (a l'esquerra hi ha el text)
-      if (aspect > 1.1) proj[8] = -0.42;
+      // el planeta sencer al visor: si el visor és més alt que ample, el camp de visió es fixa en horitzontal
+      const aspect = canvas.clientWidth / canvas.clientHeight, fov = aspect < 1 ? 2 * Math.atan(Math.tan(0.31) / aspect) : 0.62;
+      const proj = perspective(fov, aspect, 10, D * 3);
       r.draw({
-        viewProj: multiply(proj, lookAt(eye, center, [0, 0, -1])), eye, planet: 1, sun: SUN, fogColor: [0.02, 0.028, 0.05], fog: 1 / (D * 4),
+        viewProj: multiply(proj, lookAt(eye, center, [0, 0, -1])), eye, planet: 1, sun: SUN, fog: 1 / (D * 4),
         height: 3, t: 0, time: t, codeMix: 0, gridMix: 0, hover: -1, pixel: Math.min(1.5, devicePixelRatio || 1),
       });
     }
@@ -54,7 +65,7 @@ async function hero() {
   requestAnimationFrame(loop);
 }
 
-// 2. La galeria: les deu instruccions i el zero, cadascuna amb el seu sòlid, que gira
+// 2. La química: les deu instruccions i el zero, cadascuna amb el seu sòlid al pou del seu espècimen
 const GALLERY_VS = `#version 300 es
 layout(location = 0) in vec3 aPos;
 layout(location = 1) in vec3 aNormal;
@@ -78,17 +89,6 @@ void main() {
   outColor = vec4(uColor * (0.3 + 0.8 * diff) + vec3(0.3) * spec, 1.0);
 }
 `;
-const ORDER = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1];
-function glyphs() {
-  const box = document.getElementById('glyphs');
-  box.replaceChildren(...ORDER.map((cls) => {
-    const d = document.createElement('div'), c = document.createElement('code');
-    c.textContent = cls === 1 ? '0' : OPCODES[cls - 2];
-    c.style.color = CLASS_COLORS[cls];
-    d.append(c, CLASS_NAMES[lang][cls].replace(/^.\s/, ''));
-    return d;
-  }));
-}
 // Matrius petites per a la galeria (per columnes)
 const mat = {
   ortho: (w, h) => new Float32Array([2 / w, 0, 0, 0, 0, 2 / h, 0, 0, 0, 0, -1 / 400, 0, -1, -1, 0, 1]),
@@ -103,19 +103,18 @@ const mat = {
   },
 };
 function gallery() {
-  glyphs();
-  onLang(glyphs);
   const canvas = document.getElementById('gallery'), gl = canvas.getContext('webgl2', { antialias: true, alpha: true, premultipliedAlpha: true });
   if (!gl) return;
   const p = compile(gl, GALLERY_VS, GALLERY_FS);
-  const vaos = ORDER.map((cls) => {
-    const vao = gl.createVertexArray(), buf = gl.createBuffer();
+  const wells = [...document.querySelectorAll('.specimen-well[data-cls]')];
+  const vaos = wells.map((well) => {
+    const cls = Number(well.dataset.cls), vao = gl.createVertexArray(), buf = gl.createBuffer();
     gl.bindVertexArray(vao);
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(gl.ARRAY_BUFFER, SHAPES[cls].data, gl.STATIC_DRAW);
     gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 24, 0);
     gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12);
-    return { vao, count: SHAPES[cls].count, color: hexRgb(CLASS_COLORS[cls]) };
+    return { vao, count: SHAPES[cls].count, cls, well };
   });
   const vis = whenVisible(canvas), t0 = performance.now();
   const loop = (now) => {
@@ -129,14 +128,13 @@ function gallery() {
       gl.useProgram(p.program);
       gl.uniformMatrix4fv(p.u.uProj, false, mat.ortho(w, h));
       gl.uniform3fv(p.u.uLight, v3.normalize([0.4, 0.75, 0.6]));
-      const t = still ? 0.6 : (now - t0) / 1000, origin = canvas.getBoundingClientRect();
-      const cells = document.getElementById('glyphs').children;
+      const t = reducedMotion.matches ? 0.6 : (now - t0) / 1000, origin = canvas.getBoundingClientRect();
       vaos.forEach((v, k) => {
-        const rect = cells[k].getBoundingClientRect();
-        // el centre de la part de dalt de la casella, en píxels des de la cantonada de sota a l'esquerra del llenç
-        const x = rect.left - origin.left + rect.width / 2, y = origin.bottom - (rect.top + 56);
-        gl.uniformMatrix4fv(p.u.uModel, false, mat.model(x, y, Math.min(70, rect.width * 0.62), 0.55, t * 0.7 + k * 0.6));
-        gl.uniform3fv(p.u.uColor, v.color);
+        const rect = v.well.getBoundingClientRect();
+        // el centre del pou, en píxels des de la cantonada de sota a l'esquerra del llenç
+        const x = rect.left - origin.left + rect.width / 2, y = origin.bottom - (rect.top + rect.height * 0.58);
+        gl.uniformMatrix4fv(p.u.uModel, false, mat.model(x, y, Math.min(84, rect.height * 0.52, rect.width * 0.5), 0.55, t * 0.7 + k * 0.6));
+        gl.uniform3fv(p.u.uColor, tokens.lit[v.cls].slice(0, 3));
         gl.bindVertexArray(v.vao);
         gl.drawArrays(gl.TRIANGLES, 0, v.count);
       });
@@ -146,5 +144,14 @@ function gallery() {
   requestAnimationFrame(loop);
 }
 
+// 3. L'aparició suau de les seccions, una sola vegada
+function reveal() {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -8% 0px' });
+  for (const el of document.querySelectorAll('[data-reveal]')) io.observe(el);
+}
+
+reveal();
 gallery();
 hero();

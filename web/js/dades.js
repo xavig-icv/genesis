@@ -1,8 +1,6 @@
 // Les dades d'un món de l'explorador (les escriu eines/web-dades.mjs): la fitxa amb els fotogrames i les famílies
 // (mon.json), els mapes de tots els fotogrames (mapes.z) i el codi d'algunes èpoques (codi/E.z). Cada fitxer es
 // comprova amb la seva SHA-256 de mon.json abans de fer-lo servir.
-import { hexRgb } from './gl.js';
-
 async function inflate(buffer) {
   const stream = new Blob([buffer]).stream().pipeThrough(new DecompressionStream('deflate'));
   return new Response(stream).arrayBuffer();
@@ -41,11 +39,12 @@ export async function loadWorld(base) {
       for (let c = 0; c < n; c++) { out[2 * c] = f[c]; out[2 * c + 1] = k[c]; }
       return out;
     },
-    // la paleta d'un fotograma: l'índex de la família a la llista del fotograma (1, 2...) → el seu color
-    palette(i, out = new Uint8Array(256 * 4)) {
+    // la paleta d'un fotograma: l'índex de la família a la llista del fotograma (1, 2...) → el seu color, el de la seva
+    // posició a la paleta del tema (colors, 12 [r, g, b] de 0 a 1)
+    palette(i, colors, out = new Uint8Array(256 * 4)) {
       out.fill(0);
       meta.fotogrames[i].f.forEach((id, j) => {
-        const c = hexRgb(families.get(id).color);
+        const c = colors[families.get(id).paleta % colors.length];
         out.set([c[0] * 255, c[1] * 255, c[2] * 255, 255], (j + 1) * 4);
       });
       return out;

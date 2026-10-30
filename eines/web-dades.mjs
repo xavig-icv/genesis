@@ -26,9 +26,9 @@ import { PROGRAM_SIZE, KIND, OPCODES } from '../fase1/bff.js';
 import { createFamilyTracker } from '../fase2/families.js';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-// Els colors de les famílies, sobre el fons fosc del lloc. La primera és el rosa de la primera família del README
-export const PALETTE = ['#ff4f9a', '#a98bff', '#ffcf4a', '#3fd6ff', '#ff7a59', '#b8f04a', '#e35cff', '#4ff0c8',
-  '#ff9bd2', '#7fb2ff', '#ffa62b', '#9ff5a6'];
+// Les famílies es pinten amb una paleta de 12 colors, que depèn del tema del lloc (web/css/estil.css, de --f1 a --f12).
+// Les dades en diuen la posició: la primera família és la 0, el rosa de la primera família del README
+export const PALETTE_SIZE = 12;
 // La classe de cada valor de byte: 0 dada, 1 zero, 2 + la posició a OPCODES
 export const CLASS = new Uint8Array(256);
 CLASS[0] = 1;
@@ -97,15 +97,17 @@ export function build(fitxaPath, captures) {
       for (let b = c * PROGRAM_SIZE, end = b + PROGRAM_SIZE; b < end; b++) if (KIND[soup[b]]) m++;
       k[c] = m;
     }
-    // les famílies: cadascuna conserva el seu color mentre viu, el primer que no tingui cap de les vives
+    // les famílies: cadascuna conserva el seu color mentre viu, el primer de la paleta que no tingui cap de les vives
     const now = new Set(r.families.map((f) => f.id));
     for (const id of alive) if (!now.has(id)) { const f = families.get(id); f.mor ??= e; f.fi = r.extinct.includes(id) ? 'extingida' : 'sense seguiment'; }
-    const used = new Set(r.families.filter((f) => families.has(f.id)).map((f) => families.get(f.id).color));
+    const used = new Set(r.families.filter((f) => families.has(f.id)).map((f) => families.get(f.id).paleta));
     for (const f of r.families) {
       if (!families.has(f.id)) {
-        const color = PALETTE.find((c) => !used.has(c)) ?? PALETTE[f.id % PALETTE.length];
-        used.add(color);
-        families.set(f.id, { id: f.id, color, neix: f.born, mor: null, fi: null, nucli: f.core, exemple: f.example ?? null, quota: [] });
+        let paleta = 0;
+        while (paleta < PALETTE_SIZE && used.has(paleta)) paleta++;
+        if (paleta === PALETTE_SIZE) paleta = f.id % PALETTE_SIZE;
+        used.add(paleta);
+        families.set(f.id, { id: f.id, paleta, neix: f.born, mor: null, fi: null, nucli: f.core, exemple: f.example ?? null, quota: [] });
       }
       const g = families.get(f.id);
       g.quota[i] = Math.round(f.share * 1e5) / 1e5;

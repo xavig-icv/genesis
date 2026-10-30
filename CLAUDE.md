@@ -101,6 +101,9 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
     (`node eines/tria.mjs LLAVOR N elements...`), no els que es veuen bé.
   - **Les afirmacions dels peus** es comproven amb dades abans de publicar-les.
 - El lloc web (`web/`, sense dependències): la portada, en català i en anglès, l'explorador 3D (WebGL2) i la vista 2D.
+  - **Els colors** són fitxes de `web/css/estil.css`, amb un tema clar i un de fosc (per defecte, el del sistema); els dibuixos
+    les llegeixen amb `web/js/tema.js`. El color és de les dades: la interfície va en tinta. Les dades diuen la posició de
+    cada família a la paleta, no el color. Les imatges de `web/img/` diuen d'on surten (`web/img/README.md`).
   - **Les dades de cada món:** `node eines/web-dades.mjs web/dades/ID/fitxa.json carpeta-de-captures`, a partir de les
     captures d'una execució amb `--save-every` (l'ordre és a la fitxa). Només les escriu si la història és la del registre:
     les SHA-256 de les captures (`docs/captures.sha256`) i els censos i l'empremta de la sèrie. No van a git.

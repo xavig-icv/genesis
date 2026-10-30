@@ -9,7 +9,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { KIND } from '../fase1/bff.js';
-import { CLASS } from '../eines/web-dades.mjs';
+import { CLASS, PALETTE_SIZE } from '../eines/web-dades.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const tool = join(root, 'eines', 'web-dades.mjs');
@@ -52,8 +52,10 @@ const tests = {
         assert.strictEqual(k[c], m, `les instruccions de la cel·la ${c} a l'època ${f.e}`);
         assert.ok(fam[c] <= f.f.length, `la família de la cel·la ${c} és a la llista del fotograma`);
       }
-      // cada família de la llista és a la fitxa, amb un color
-      for (const id of f.f) assert.ok(mon.families.some((g) => g.id === id && /^#[0-9a-f]{6}$/.test(g.color)));
+      // cada família de la llista és a la fitxa, amb la seva posició a la paleta, i dues de vives no la comparteixen
+      for (const id of f.f) assert.ok(mon.families.some((g) => g.id === id && Number.isInteger(g.paleta) && g.paleta >= 0 && g.paleta < PALETTE_SIZE));
+      const slots = f.f.map((id) => mon.families.find((g) => g.id === id).paleta);
+      assert.strictEqual(new Set(slots).size, Math.min(slots.length, PALETTE_SIZE));
     });
     assert.ok(mon.families.length > 0, 'els retalls tenen vida: hi ha d’haver alguna família');
     // el codi, només a les èpoques de la fitxa, i la classe de cada byte

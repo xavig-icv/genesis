@@ -81,7 +81,7 @@ export function createCamera(canvas, { onPick, onHover, onChange } = {}) {
   });
   const endDrag = (e) => {
     if (e.pointerType === 'touch' || !drag) return;
-    if (drag.moved < 4) { const rect = canvas.getBoundingClientRect(); onPick?.(mapAt(e.clientX - rect.left, e.clientY - rect.top)); }
+    if (drag.moved < 4) { const rect = canvas.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top; onPick?.(mapAt(x, y), x, y); }
     drag = null;
   };
   canvas.addEventListener('pointerup', endDrag);
@@ -98,9 +98,9 @@ export function createCamera(canvas, { onPick, onHover, onChange } = {}) {
     if (p) { goal.u = p[0]; goal.v = p[1]; goal.d = Math.min(goal.d, 14); clampGoal(); onChange?.(); }
   });
 
-  // el tàctil: un dit mou, dos fan zoom i giren
+  // el tàctil: un dit mou, dos fan zoom i giren, i un toc (un dit, gairebé quiet) fixa la cel·la, com un clic
   const touches = new Map();
-  let pinch = null;
+  let pinch = null, tap = null;
   const touchState = () => {
     const [a, b] = [...touches.values()];
     return { mid: [(a.x + b.x) / 2, (a.y + b.y) / 2], dist: Math.hypot(a.x - b.x, a.y - b.y), angle: Math.atan2(b.y - a.y, b.x - a.x) };
@@ -109,6 +109,8 @@ export function createCamera(canvas, { onPick, onHover, onChange } = {}) {
     e.preventDefault();
     for (const t of e.changedTouches) touches.set(t.identifier, { x: t.clientX, y: t.clientY });
     pinch = touches.size === 2 ? touchState() : null;
+    const first = [...touches.values()][0];
+    tap = touches.size === 1 ? { x: first.x, y: first.y, t: performance.now() } : null;
   }, { passive: false });
   canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
@@ -117,6 +119,7 @@ export function createCamera(canvas, { onPick, onHover, onChange } = {}) {
     if (touches.size === 1) {
       const [id, p] = [...touches.entries()][0], q = prev.get(id);
       if (q) pan(p.x - q.x, p.y - q.y);
+      if (tap && Math.hypot(p.x - tap.x, p.y - tap.y) > 8) tap = null;
     } else if (touches.size === 2 && pinch) {
       const s = touchState();
       if (s.dist > 0 && pinch.dist > 0) zoomAt(pinch.dist / s.dist);
@@ -129,6 +132,11 @@ export function createCamera(canvas, { onPick, onHover, onChange } = {}) {
   const touchEnd = (e) => {
     for (const t of e.changedTouches) touches.delete(t.identifier);
     pinch = touches.size === 2 ? touchState() : null;
+    if (tap && !touches.size && e.type === 'touchend' && performance.now() - tap.t < 400) {
+      const rect = canvas.getBoundingClientRect(), x = tap.x - rect.left, y = tap.y - rect.top;
+      onPick?.(mapAt(x, y), x, y);
+    }
+    if (!touches.size) tap = null;
   };
   canvas.addEventListener('touchend', touchEnd);
   canvas.addEventListener('touchcancel', touchEnd);

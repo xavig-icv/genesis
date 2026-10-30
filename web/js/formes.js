@@ -6,15 +6,12 @@
 // <>{}-+.,[] en aquest ordre.
 
 export const OPCODES = '<>{}-+.,[]';
-// Els colors, per tipus d'instrucció, com a la interfície (fase1/style.css), més vius sobre el fons fosc. Els dos
-// caps es distingeixen: el 0 (< >) verd, i l'1 ({ }) turquesa
-export const CLASS_COLORS = [
-  null, '#5b6478',
-  '#2fd79a', '#2fd79a', '#2ec4c6', '#2ec4c6',
-  '#f2f5f9', '#f2f5f9',
-  '#4d9bff', '#4d9bff',
-  '#ff7a3d', '#ff7a3d',
-];
+// El glif de cada classe de byte, com es mostra (la resta, amb el signe de menys tipogràfic), i la seva classe CSS
+// (estil.css): el color és el del tema, per tipus d'instrucció. Els dos caps es distingeixen: el 0 (< >) i l'1 ({ })
+export const glyphOf = (cls) => (cls === 0 ? '·' : cls === 1 ? '0' : '<>{}−+.,[]'[cls - 2]);
+export const CLASS_GLYPH = ['g-d', 'g-z', 'g-h0', 'g-h0', 'g-h1', 'g-h1', 'g-ar', 'g-ar', 'g-cp', 'g-cp', 'g-lp', 'g-lp'];
+// La classe d'un caràcter d'un motiu (el nucli d'una família): 0 si no és cap instrucció
+export const classOfChar = (ch) => (OPCODES.includes(ch) ? OPCODES.indexOf(ch) + 2 : ch === '0' ? 1 : 0);
 // El que fa cada instrucció (fase1/bff.js), en poques paraules
 export const CLASS_NAMES = {
   ca: [null, '0 zero: fa sortir dels bucles', '< cap 0 a l’esquerra', '> cap 0 a la dreta', '{ cap 1 a l’esquerra', '} cap 1 a la dreta',
