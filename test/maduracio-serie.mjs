@@ -10,14 +10,15 @@
 //     del fitxer canviat, que la preparació troba en tornar-lo a calcular (auditoria 22);
 //   - la línia d'ordres: --prova no llegeix cap registre de la sèrie, ni pel camí d'un àlies de la carpeta o dels fitxers, ni
 //     amb un manifest que digui un altre dir, ni si la sèrie ja en té (AU2-96, AU2-98), ni des d'una altra còpia del
-//     repositori, ni en una còpia dels fitxers (AUD-132), i --decideix no decideix res sense el preregistre.
+//     repositori, ni en una còpia dels fitxers (AUD-132); d'un registre, abans de llegir-lo, en llegeix només la primera línia
+//     no buida, com el lector, i ni un byte més, comptat (AU2-100, AUD-133); i --decideix no decideix res sense el preregistre.
 // Executa: node test/maduracio-serie.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
 import { createHash } from 'crypto';
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync, readdirSync, copyFileSync, appendFileSync, symlinkSync, linkSync } from 'fs';
 import { tmpdir } from 'os';
-import { join } from 'path';
+import { join, basename } from 'path';
 import { fileURLToPath } from 'url';
 import { expectedBranches, manifestProblems, branchProblems, readSeries, signFlipTest, holm, calibratedHolm, readThresholds, thresholdProblems, THRESHOLDS, THRESHOLDS_SHA256, clopperPearson, worldBootstrap, analyse, decisionLines } from '../fase2/maduracio-serie.mjs';
 import { calibrate, STEPS, tailCounts, criticals, ruleCriticals, nominalK, CERTIFICATE, SAFE, certify, certificateRows, certificateProblems, recomputedProblems, sha256Of, shape, conditionalSize } from '../eines/llindars-maduracio.mjs';
@@ -96,6 +97,22 @@ function refused(r, what, why) {
   assert.ok(why.test(r.stdout), `${what}: ${r.stdout}`);
   assert.ok(!/MODE DE PROVA|La sèrie no és la del manifest/.test(r.stdout), `${what}: n'ha llegit el contingut`);
 }
+// Un comptador de lectures (AU2-100): es carrega abans del programa (--require) i embolcalla les funcions de fs, també les que el
+// programa importa com a mòdul ES (syncBuiltinESMExports). De cada fitxer .jsonl, desa a $LECTURES quants bytes se n'han llegit
+// amb readSync i si s'ha llegit sencer amb readFileSync
+const COUNTER = `const fs = require('fs'), { syncBuiltinESMExports } = require('module');
+const { openSync, readSync, closeSync, readFileSync, writeFileSync } = fs, open = new Map(), reads = {};
+const note = (p) => reads[p] || (reads[p] = { bytes: 0, whole: false });
+const isRecord = (p) => typeof p === 'string' && p.endsWith('.jsonl');
+fs.openSync = (p, ...a) => { const fd = openSync(p, ...a); if (isRecord(p)) { open.set(fd, p); note(p); } return fd; };
+fs.closeSync = (fd) => { open.delete(fd); return closeSync(fd); };
+fs.readSync = (fd, ...a) => { const n = readSync(fd, ...a); if (open.has(fd)) note(open.get(fd)).bytes += n; return n; };
+fs.readFileSync = (p, ...a) => { if (isRecord(p)) note(p).whole = true; return readFileSync(p, ...a); };
+syncBuiltinESMExports();
+process.on('exit', () => writeFileSync(process.env.LECTURES, JSON.stringify(reads)));
+`;
+// Els bytes d'un registre fins al salt de línia de la primera línia no buida, inclòs: tot el que la barrera en pot llegir
+const headBytes = (buf) => { for (let from = 0; ;) { const nl = buf.indexOf(0x0a, from); if (nl < 0) return buf.length; if (buf.toString('utf8', from, nl).trim()) return nl + 1; from = nl + 1; } };
 // Un resultat conegut, amb els establiments de cada món (continue, shuffle-all, reinit; de 0 a 2): W1 2 1 0, W2 1 1 0,
 // W3 1 0 1, W4 0 1 0, W5 1 2 0, W6 0 0 2. La llavor a s'estableix abans que la b
 const COUNTS = { W1: [2, 1, 0], W2: [1, 1, 0], W3: [1, 0, 1], W4: [0, 1, 0], W5: [1, 2, 0], W6: [0, 0, 2] };
@@ -445,6 +462,81 @@ const tests = {
       assert.strictEqual(r.status, 0, r.stdout + r.stderr);
       assert.match(r.stdout, /MODE DE PROVA/);
     }
+  }),
+  // AU2-100 i AUD-133 (auditoria 23): de cada registre, la barrera del contingut en llegeix només la primera línia no buida, byte a
+  // byte i ni un byte més, i la llegeix com el lector, que salta les línies buides del començament i en llegeix el JSON. Les
+  // lectures, comptades, en còpies dels registres de la sèrie fora de qualsevol còpia del repositori
+  "--prova llegeix de cada registre només la primera línia no buida, com el lector, i ni un byte més (AU2-100, AUD-133)": () => withTmp((tmp) => {
+    const a = programCopy(join(tmp, 'a')), b = programCopy(join(tmp, 'b'));
+    const m = smallManifest(), truth = join(a, SERIES_DIR);
+    writeSeries(truth, m, fateOf(COUNTS));
+    mkdirSync(join(b, SERIES_DIR, '..'), { recursive: true });
+    writeFileSync(join(b, SERIES_DIR, '..', 'manifest.json'), JSON.stringify(m));
+    const counter = join(tmp, 'comptador.cjs'), log = join(tmp, 'lectures.json');
+    writeFileSync(counter, COUNTER);
+    // --prova des de la còpia b, amb el comptador
+    const counted = (...args) => {
+      rmSync(log, { force: true });
+      const r = spawnSync(process.execPath, ['--require', counter, join(b, 'fase2', 'maduracio-confirmacio.mjs'), '--prova', COMMIT, ...args], { cwd: b, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '', LECTURES: log } });
+      return { ...r, reads: JSON.parse(readFileSync(log, 'utf8')) };
+    };
+    // que no hagi llegit cap registre sencer, i que de cada registre que ha obert n'hagi llegit fins al salt de línia de la
+    // primera línia no buida, ni un byte més
+    const onlyHeads = (r, dir, what) => {
+      const opened = Object.keys(r.reads);
+      assert.ok(opened.length > 0, `${what}: no ha obert cap registre`);
+      for (const p of opened) {
+        assert.strictEqual(r.reads[p].whole, false, `${what}: ${basename(p)}, llegit sencer`);
+        assert.strictEqual(r.reads[p].bytes, headBytes(readFileSync(join(dir, basename(p)))), `${what}: ${basename(p)}, els bytes llegits`);
+      }
+    };
+    const why = /és un registre de la sèrie de veritat: la seva ordre l'escriu a fase2\/resultats\/maduracio\/serie\/branques/;
+    const files = readdirSync(truth);
+    const variant = (name, change) => { const d = join(tmp, name); mkdirSync(d); for (const f of files) writeFileSync(join(d, f), change(readFileSync(join(truth, f), 'utf8'))); return d; };
+    // els registres de la sèrie, copiats, i canviats sense cap diferència per al lector
+    const cases = [
+      ['una còpia dels registres', (t) => t],
+      ['amb CRLF', (t) => t.replace(/\n/g, '\r\n')],
+      ['amb la marca BOM', (t) => '﻿' + t],
+      ['amb una línia en blanc al davant', (t) => '\n' + t],
+      ["amb una línia d'espais al davant", (t) => ' \t \r\n' + t],
+      ['amb la primera línia escrita amb \\/ (el mateix JSON)', (t) => { const [h, ...rest] = t.split('\n'); return [h.replace(/\//g, '\\/'), ...rest].join('\n'); }],
+    ];
+    cases.forEach(([what, change], i) => {
+      const dir = variant(`variant${i}`, change), r = counted(dir);
+      refused(r, what, why);
+      onlyHeads(r, dir, what);
+    });
+    // un sol registre de la sèrie entre els sintètics: dels d'abans, la barrera també n'ha llegit només la primera línia
+    const ms = smallManifest({ dir: SYNTH_DIR }), mfs = join(tmp, 'sintetic.json'), mixed = join(tmp, 'barrejats');
+    writeFileSync(mfs, JSON.stringify(ms));
+    writeSeries(mixed, ms, fateOf(COUNTS));
+    copyFileSync(join(truth, 'W3-reinit-b.jsonl'), join(mixed, 'W3-reinit-b.jsonl'));
+    let r = counted('--serie', mfs, mixed);
+    refused(r, 'un registre de la sèrie entre els sintètics', /W3-reinit-b\.jsonl és un registre de la sèrie de veritat/);
+    onlyHeads(r, mixed, 'un registre de la sèrie entre els sintètics');
+    assert.strictEqual(Object.keys(r.reads).length, 18, 'els 17 sintètics d\'abans i el de la sèrie');
+    // 64 KiB de línies buides al davant: la barrera no hi troba cap línia sencera, es nega, i no en llegeix res més
+    const deep = variant('fons', (t) => '\n'.repeat(70000) + t);
+    r = counted(deep);
+    refused(r, '70.000 línies buides al davant', /W1-continue-a\.jsonl no comença amb la línia d'inici d'un registre/);
+    assert.deepStrictEqual(Object.values(r.reads), [{ bytes: 1 << 16, whole: false }]);
+    // un registre sintètic sense la línia d'inici: tampoc no se sap què és
+    const noStart = join(tmp, 'sense-inici');
+    writeSeries(noStart, ms, fateOf(COUNTS));
+    const first = join(noStart, 'W1-continue-a.jsonl');
+    writeFileSync(first, readFileSync(first, 'utf8').split('\n').slice(1).join('\n'));
+    refused(counted('--serie', mfs, noStart), "un registre sense la línia d'inici", /W1-continue-a\.jsonl no comença amb la línia d'inici d'un registre/);
+    // les dades sintètiques, amb una línia en blanc al davant, es llegeixen igual que sense
+    const synth = join(tmp, 'sintetiques'), blank = join(tmp, 'sintetiques-blanc');
+    writeSeries(synth, ms, fateOf(COUNTS));
+    mkdirSync(blank);
+    for (const f of readdirSync(synth)) writeFileSync(join(blank, f), '\n' + readFileSync(join(synth, f), 'utf8'));
+    const plain = runIn(b, '--prova', COMMIT, '--serie', mfs, synth);
+    r = counted('--serie', mfs, blank);
+    assert.strictEqual(r.status, 0, r.stdout + r.stderr);
+    assert.match(r.stdout, /Prova 1, continue contra reinit/);
+    assert.strictEqual(r.stdout, plain.stdout);
   }),
   "--decideix: sense l'etiqueta es nega; amb l'etiqueta decideix; i amb el codi canviat es nega sense executar-lo": () => withTmp((tmp) => {
     const repo = programCopy(tmp);

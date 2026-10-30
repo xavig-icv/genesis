@@ -1,14 +1,16 @@
 # Protocol de la sèrie de la maduració · l'edat i la composició de la sopa
 
-**Versió: v0.4, esborrany (29-10-2026), per a l'auditoria 23.** No s'ha preparat cap manifest, ni s'ha fet córrer cap branca.
-L'envelliment dels mons va començar el 29-10-2026 (§7). El que canvia de la v0.3, amb l'auditoria 22, és a la §10.
+**Versió: v0.5 (30-10-2026), per al preregistre.** El manifest és preparat (`d775174`, 29-10-2026) i comprovat (auditoria 23),
+i no s'ha fet córrer cap branca. El que canvia de la v0.4, amb l'auditoria 23, és a la §10.
 - **D'on surt:**
   - el pilot de la maduració (l'entrada 12 del quadern i `fase2/resultats/maduracio/pilot/acta.md`);
   - l'auditoria 19, i la decisió del responsable del 27-10-2026 (`docs/disseny.md`, §5);
   - l'auditoria 20, i la decisió del responsable del 27-10-2026: els llindars calibrats per *m* (§6);
   - l'auditoria 21, i la decisió del responsable del 28-10-2026: la taula certificada, i una revisió de les correccions abans
     de preparar el manifest (§6, §7);
-  - l'auditoria 22: el GO dels dos auditors per preparar el manifest, i la correcció de l'AUD-132 (§7, §8).
+  - l'auditoria 22: el GO dels dos auditors per preparar el manifest, i la correcció de l'AUD-132 (§7, §8);
+  - l'auditoria 23: el manifest, comprovat pels dos auditors, i la correcció de la barrera de `--prova` abans de l'etiqueta
+    (AU2-100, AUD-133; §7 a §9).
 - **Els programes:**
   - `eines/pilot.mjs`, l'experiment `serie`: l'envelliment, la preparació, el manifest i les comprovacions;
   - `eines/transforma.mjs`, per a les transformacions i els escanejos;
@@ -19,7 +21,8 @@ L'envelliment dels mons va començar el 29-10-2026 (§7). El que canvia de la v0
 - **El procediment:**
   1. les auditories 20 a 22 van revisar les versions de la v0.1 a la v0.3, i les correccions;
   2. s'envelleixen els mons, i, després del GO de l'auditoria 22, la preparació escriu el manifest (§7);
-  3. una comprovació breu del manifest, d'aquesta versió i de la correcció de l'AUD-132 (auditoria 23);
+  3. una comprovació breu del manifest i de la correcció de l'AUD-132 (auditoria 23), i una de la correcció de la barrera i
+     d'aquesta versió (auditoria 24);
   4. el protocol, el manifest i els programes es fixen amb l'etiqueta anotada `preregistre-maduracio` i un segell
      d'OpenTimestamps. **Cap branca no es llança abans que Bitcoin hagi ancorat el segell** (§9).
 
@@ -322,10 +325,12 @@ calibrats:
      - escriu el manifest i les llistes de les dues màquines.
    - **On va:** el manifest, els registres de l'envelliment, els escanejos, els registres de les transformacions i les llistes,
      a git. Les captures, no: es regeneren exactament.
-4. **La comprovació breu** del manifest (auditoria 23).
+4. **La comprovació breu** del manifest (auditoria 23), i la de la correcció de la barrera de `--prova` (auditoria 24).
 5. **El preregistre:** l'etiqueta i el segell (§9). S'espera l'ancoratge.
-   - **Abans de l'etiqueta,** a la còpia del commit que s'etiquetarà: `node eines/llindars-maduracio.mjs --comprova-certificat`,
-     amb la sortida a l'acta (auditor 2, auditoria 22).
+   - **Abans de l'etiqueta,** a la còpia del commit que s'etiquetarà: `node eines/llindars-maduracio.mjs --comprova-certificat`
+     (auditor 2, auditoria 22).
+   - **La seva sortida,** al missatge de l'etiqueta i, en un commit posterior, a l'acta (auditor 1, auditoria 23). Si l'acta
+     canviés abans de l'etiqueta, el commit etiquetat ja no seria el revisat.
 6. **Les captures de la màquina virtual:** les dels seus 60 mons, les envellides i les transformades (uns 1,9 GB), copiades
    amb les SHA-256 comprovades.
 7. **La comprovació prèvia,** a cada màquina: `node eines/pilot.mjs serie --comprova --maquina pc|vm`.
@@ -350,13 +355,16 @@ calibrats:
     - **El programa no decideix res si hi ha cap problema:** si el manifest no és coherent, si la taula dels llindars no és la
       certificada (per la SHA-256) o no té l'estructura esperada, o si algun registre no és exactament el que n'espera, en
       llista els problemes i s'atura.
-    - **`--prova` no llegeix cap registre de la sèrie** (AU2-96, AU2-98, AUD-132):
+    - **`--prova` no llegeix cap registre de la sèrie** (AU2-96, AU2-98, AUD-132, AU2-100, AUD-133):
       - ni la carpeta, ni pel camí d'un àlies de la carpeta o dels fitxers (enllaços simbòlics o durs);
       - ni amb un manifest que digui un altre `dir`: la carpeta de la sèrie de veritat sempre és protegida;
       - si la carpeta de la sèrie ja té registres, `--prova` no s'executa en aquella còpia del repositori;
       - ni des d'una altra còpia del repositori, ni en una còpia dels fitxers (AUD-132). D'un registre, abans de llegir-lo, en
         llegeix només la primera línia, que porta l'ordre de la branca i cap resultat, i es nega si l'ordre l'escriu a la
         carpeta de la sèrie. Les dades sintètiques escriuen en una altra carpeta.
+      - **La primera línia,** byte a byte, fins al seu salt de línia, i ni un byte més (AU2-100, auditoria 23). Com el lector,
+        se salten les línies buides del començament, i l'ordre es mira en el text de la línia i en el seu JSON (AUD-133). Si no
+        hi ha cap línia d'inici d'un registre sencera en els primers 64 KiB, també es nega.
     - **Des de l'etiqueta fins a la decisió, cap `--prova`** (AUD-132): el programa ja és fixat, i les còpies del repositori amb
       el programa d'abans no tenen la barrera del contingut. Fins a la decisió, els registres només es copien a la carpeta del
       commit de l'etiqueta (els de la màquina virtual, al PC), i enlloc més.
@@ -365,8 +373,16 @@ calibrats:
 
 - **Els contrastos es van triar després de veure el pilot** (auditor 1). La pista d'abans del pilot era l'edat (AUD-64), i la
   de la composició, l'AUD-122.
-- **La cohort és condicionada:** mons que arriben sense vida a l'època 8.000, sense cap cel·la hereditària. La diferència de
-  (b) és causal per a la intervenció de conservar o substituir la sopa d'aquests mons, no una llei de l'edat (auditor 2).
+- **La cohort és condicionada:** mons que arriben sense vida a l'època 8.000, sense cap cel·la hereditària detectada per
+  l'escaneig d'aquella època. La diferència de (b) és causal per a la intervenció de conservar o substituir la sopa d'aquests
+  mons, no una llei de l'edat (auditor 2).
+- **La cohort és la d'un sol escaneig** (AUD-136, auditoria 23). "Sense cap cel·la hereditària", a la frase de (b) (§6) i a la
+  de la decisió, vol dir "sense cap de detectada per l'escaneig de l'època 8.000".
+  - **La sensibilitat:** als escanejos repetits de l'auditoria 23, amb dues llavors més a cada món, un escaneig hi veu alguna
+    cel·la hereditària marginal en un 9 % dels casos als inclosos (27 de 300), i en un 8 % als exclosos d'una sola cel·la (3 de
+    38). És compatible amb que en tinguin tots els mons.
+  - **No afecta la validesa de la prova:** l'exclusió és d'abans dels braços, la mateixa per a tots tres.
+  - **Els escanejos repetits** són exploratoris, i no entren a l'anàlisi.
 - **(c) és un tractament total:** inclou els replicadors que crea la barreja (AUD-121), i no aïlla la composició.
 - **`reinit` també pot començar amb replicadors:** al pilot, 8 cel·les hereditàries a 7 mons. Es dona l'escaneig.
 - **Cap afirmació d'equivalència** (AUD-127). Amb un marge útil, de 5 punts, caldrien uns 850 mons.
@@ -380,9 +396,10 @@ calibrats:
     perquè el llindar de *m* + 1 pot ser més baix. És el preu de calibrar per a cada *m*, i no afecta la validesa.
   - **La certificació és en coma flotant** (auditor 2, auditoria 22): amb un marge, i sense una demostració formal de l'error
     d'arrodoniment (§6).
-- **La barrera de `--prova` és contra els errors, no contra un adversari** (AU2-98, AUD-132): un registre amb la primera línia
-  reescrita, o un fitxer canviat entre la comprovació i la lectura, la passarien (auditor 2, auditoria 22). Per això, des de
-  l'etiqueta fins a la decisió, no es fa servir `--prova` (§7).
+- **La barrera de `--prova` és contra els errors, no contra un adversari** (AU2-98, AUD-132): un registre amb l'ordre de la
+  primera línia reescrita, o un fitxer canviat entre la comprovació i la lectura, la passarien (auditor 2, auditoria 22). Els
+  canvis que el lector no veu, com una línia en blanc al davant o la primera línia escrita amb `\/`, ja no (AUD-133). Per
+  això, des de l'etiqueta fins a la decisió, no es fa servir `--prova` (§7).
 - **Els braços fan feines diferents de la BFF:** `shuffle-all` és el més car, i `reinit`, el més barat.
 - **Les branques no desen captures** (§4). Qualsevol anàlisi posterior que en necessiti les ha de regenerar.
 
@@ -396,14 +413,28 @@ calibrats:
   - `fase2/preregistre.mjs`
   - `fase2/maduracio-llindars.json`, `fase2/maduracio-llindars-certificat.json` i `eines/llindars-maduracio.mjs`
   - `eines/transforma.mjs` i `eines/pilot.mjs`
-- **El commit de l'etiqueta:** el que afegeix el manifest i els registres de la preparació. Les branques es llancen des d'una
-  còpia d'aquest commit exacte, i el codi de cada registre ha de ser el de l'etiqueta.
+- **El commit de l'etiqueta:** el de la correcció de la barrera de `--prova`, revisada a l'auditoria 24 (AU2-100, AU2-101).
+  - **El manifest, els registres de la preparació i les llistes** hi són els de `d775174`, el commit que els afegeix, sense cap
+    canvi. El missatge de l'etiqueta en dona el diferencial des de `d775174`, fitxer a fitxer.
+  - **Les branques** es llancen des d'una còpia d'aquest commit exacte, i el codi de cada registre ha de ser el de l'etiqueta.
 - **El segell:** de l'objecte de l'etiqueta, amb OpenTimestamps.
 - **Abans de la primera branca,** cal que Bitcoin l'hagi ancorat (`docs/disseny.md`, 25-10-2026).
 - **Després,** cap canvi al protocol, al manifest ni als programes sense justificar-lo aquí, amb data i motiu, abans de mirar
   cap resultat.
 
-## 10. El que hi diu cada decisió de les auditories 19 a 22
+## 10. El que hi diu cada decisió de les auditories 19 a 23
+
+**L'auditoria 23** (v0.4 → v0.5):
+
+| Troballa o decisió | Què hi diu el protocol |
+|---|---|
+| El manifest | **Comprovat pels dos auditors,** amb codi independent: la regla d'inclusió, els 36 exclosos, les rondes, les 900 branques, les llistes i 1.260 SHA-256. El primer intent i l'ampliació, conformes a la §2. El 6047 hi entra, amb la regla de sempre |
+| El GO | **L'auditor 1, GO a `003a9dd`. L'auditor 2, NO-GO focalitzat,** amb el manifest acceptat, fins a corregir l'AU2-100 i l'AU2-101. La correcció, en una PR, i una revisió breu a l'auditoria 24 (§7, §9) |
+| AU2-100 | **La barrera llegeix byte a byte** la primera línia no buida d'un registre, i ni un byte més (§7) |
+| AUD-133 | **La llegeix com el lector:** salta les línies buides del començament, i mira l'ordre també en el JSON. Sense cap línia d'inici sencera en els primers 64 KiB, es nega (§7, §8) |
+| AU2-101, AUD-134 | **La capçalera** diu l'estat d'ara, i **la §9,** quin commit s'etiqueta |
+| AUD-136 | **La cohort és la d'un sol escaneig,** amb la seva sensibilitat. Els escanejos repetits, exploratoris (§8) |
+| L'auditor 1 | **La sortida de `--comprova-certificat`,** al missatge de l'etiqueta, i a l'acta després de l'etiqueta (§7) |
 
 **L'auditoria 22** (v0.3 → v0.4):
 
