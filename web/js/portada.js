@@ -25,20 +25,23 @@ function whenVisible(el) {
   return s;
 }
 
-// 1. El planeta: el darrer fotograma del primer món de la llista amb la llavor del peu de la figura
+// 1. El planeta: el fotograma de l'època del peu de la figura, del primer món de la llista amb la seva llavor
 async function hero() {
   const canvas = document.getElementById('hero'), r = createRenderer(canvas);
   if (!r) return;
   r.setTheme(tokens);
   themed.push((tk) => r.setTheme(tk));
-  const seed = canvas.closest('[data-seed]').dataset.seed;
+  const fig = canvas.closest('[data-seed]'), seed = fig.dataset.seed;
   const list = await (await fetch('dades/mons.json')).json();
   let w = null;
   for (const m of list) {
     try { const c = await loadWorld(`dades/${m.id}`); if (new RegExp(`--seed ${seed}\\b`).test(c.meta.ordre)) { w = c; break; } } catch { /* el següent */ }
   }
   if (!w) return;
-  const i = w.epochs.length - 1, frame = () => ({ fam: w.fam(i), k: w.k(i), palette: w.palette(i, tokens.families) });
+  // l'època del peu de la figura (data-epoch); si el món no la té, no es dibuixa res
+  const i = w.epochs.indexOf(Number(fig.dataset.epoch));
+  if (i < 0) return;
+  const frame = () => ({ fam: w.fam(i), k: w.k(i), palette: w.palette(i, tokens.families) });
   r.setFrames(frame(), frame());
   themed.push(() => r.setFrames(frame(), frame()));
   const vis = whenVisible(canvas);
