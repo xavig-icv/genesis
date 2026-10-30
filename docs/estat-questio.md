@@ -1,4 +1,4 @@
-# Estat de la qüestió · claude-origins
+# Estat de la qüestió · Genesis
 
 **Per a què serveix.** Situa el projecte en el que ja s'ha fet: què se sap, què no, i què vol dir per als
 nostres experiments. Respon a AUD-39 de l'auditoria 2 i a B4 del pla de la iteració 4. Data:

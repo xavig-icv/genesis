@@ -1,7 +1,9 @@
-# claude-origins
+# Genesis
 
-Projecte d'abiogènesi digital. La visió, els principis i les decisions són a `docs/disseny.md`, i els
-resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans de proposar canvis.
+Projecte d'abiogènesi digital. Fins al 30-10-2026 es deia claude-origins, el nom que encara porten les carpetes (el
+repositori local, els desplegaments de la VM, les auditories) i els registres, i que no es canvia. La visió, els
+principis i les decisions són a `docs/disseny.md`, i els resultats dels experiments al quadern (`quadern/index.html`).
+Llegeix-los abans de proposar canvis.
 
 ## Convencions
 

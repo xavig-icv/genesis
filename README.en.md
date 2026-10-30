@@ -1,7 +1,10 @@
-# claude-origins
+# Genesis
 
 **Digital abiogenesis:** a toy universe where we try to let life arise on its own, without anyone writing the
 first organism.
+
+*Until 30 October 2026 it was called claude-origins, the name that still appears in the experiment records and in
+the audits.*
 
 *This is the English version of the [Catalan README](README.md), which is the main one. It is shorter, and
 was last synchronised on 25 October 2026. The lab notebook and most of the documentation are in Catalan; the

@@ -1,0 +1,123 @@
+codi=2887679  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 6033 --mixing 0 --epochs 8000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/maduracio/serie/envelliment/e6033.jsonl --save fase2/resultats/maduracio/serie/envelliment/captures
+llavor=6033 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024  cens=v3 mostra=2048  aturada=establiment+0
+època 100  H0=8.000  HOE=0.092  ops/execució=67.9  parelles=75%  bytes ,:0.5% <:0.5% 0:0.5%  fragments [[[[[[[[[[[[ (0.1%)  ,,,,,,,,,,,, (0.1%)  >>>>>>>>>>>> (0.1%)  29s
+època 200  H0=7.999  HOE=0.129  ops/execució=73.7  parelles=75%  bytes <:0.5% ,:0.5% >:0.5%  fragments [[[[[[[[[[[[ (0.2%)  ,,,,,,,,,,,, (0.1%)  [[[[[[[·[[[[ (0.1%)  59s
+cens 250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 300  H0=7.998  HOE=0.153  ops/execució=76.9  parelles=75%  bytes <:0.6% ,:0.5% >:0.5%  fragments [[[[[[[[[[[[ (0.2%)  >>>>>>>>>>>> (0.1%)  ,,,,,,,,,,,, (0.1%)  92s
+època 400  H0=7.997  HOE=0.175  ops/execució=80.8  parelles=75%  bytes <:0.7% ,:0.6% >:0.5%  fragments >>>>>>>>>>>> (0.2%)  [[[[[[[·[[[[ (0.1%)  ,,·,,,,,,,,, (0.1%)  120s
+cens 500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 500  H0=7.995  HOE=0.196  ops/execució=82.3  parelles=75%  bytes <:0.7% ,:0.6% >:0.6%  fragments ,,,,,,,,,,,, (0.2%)  >>>>>>>>>>>> (0.2%)  [[[[[[[[[[[[ (0.2%)  146s
+època 600  H0=7.994  HOE=0.212  ops/execució=84.1  parelles=75%  bytes <:0.8% ,:0.6% >:0.6%  fragments >>>>>>>>>>>> (0.2%)  [[[[[[[[[[[[ (0.2%)  ,·,,,,,,,,,, (0.2%)  171s
+època 700  H0=7.992  HOE=0.227  ops/execució=87.0  parelles=75%  bytes <:0.9% ,:0.7% >:0.6%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.2%)  [[[[·[[[[[[[ (0.2%)  193s
+cens 750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 800  H0=7.991  HOE=0.244  ops/execució=89.4  parelles=75%  bytes <:1.0% ,:0.7% >:0.6%  fragments [[[[[[[[[[[[ (0.3%)  [[[[[[[·[[[[ (0.2%)  ,,,,,,,·,,,, (0.1%)  226s
+època 900  H0=7.988  HOE=0.260  ops/execució=92.0  parelles=75%  bytes <:1.0% ,:0.7% >:0.6%  fragments [[[[[[[[[[[[ (0.3%)  [[[[[[[·[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  252s
+cens 1000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1000  H0=7.986  HOE=0.271  ops/execució=93.9  parelles=75%  bytes <:1.1% ,:0.7% >:0.7%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[[[·[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  278s
+època 1100  H0=7.984  HOE=0.280  ops/execució=94.7  parelles=75%  bytes <:1.2% ,:0.8% >:0.7%  fragments [[[[[[[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.3%)  >>>>>>>>>>>> (0.3%)  306s
+època 1200  H0=7.982  HOE=0.291  ops/execució=95.4  parelles=75%  bytes <:1.3% ,:0.8% >:0.7%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,,, (0.3%)  329s
+cens 1250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1300  H0=7.980  HOE=0.299  ops/execució=97.0  parelles=75%  bytes <:1.3% ,:0.8% >:0.7%  fragments ,,,,,,,,,,,, (0.4%)  >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.2%)  359s
+època 1400  H0=7.977  HOE=0.305  ops/execució=97.9  parelles=75%  bytes <:1.4% ,:0.8% >:0.8%  fragments ,,,,,,,,,,,, (0.4%)  >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.3%)  379s
+cens 1500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1500  H0=7.974  HOE=0.312  ops/execució=97.8  parelles=75%  bytes <:1.5% ,:0.8% >:0.8%  fragments ,,,,,,,,,,,, (0.3%)  [[[[[[[[[[[[ (0.3%)  [[[[·[[[[[[[ (0.3%)  406s
+època 1600  H0=7.972  HOE=0.318  ops/execució=98.5  parelles=75%  bytes <:1.5% ,:0.9% >:0.8%  fragments [[[[[[[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.3%)  >>>>>>>>>>>> (0.3%)  429s
+època 1700  H0=7.969  HOE=0.322  ops/execució=100.7  parelles=75%  bytes <:1.6% ,:0.9% >:0.8%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,,, (0.2%)  455s
+cens 1750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 1800  H0=7.967  HOE=0.326  ops/execució=103.8  parelles=75%  bytes <:1.7% ,:0.9% >:0.8%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,·, (0.3%)  486s
+època 1900  H0=7.964  HOE=0.328  ops/execució=105.5  parelles=75%  bytes <:1.7% ,:0.9% >:0.9%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,·, (0.3%)  509s
+cens 2000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 2000  H0=7.960  HOE=0.329  ops/execució=107.6  parelles=75%  bytes <:1.8% ,:0.9% >:0.9%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.3%)  ,·,,,,,,,,,, (0.3%)  543s
+època 2100  H0=7.958  HOE=0.331  ops/execució=109.2  parelles=75%  bytes <:1.9% ,:1.0% >:0.9%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,,, (0.3%)  569s
+època 2200  H0=7.955  HOE=0.337  ops/execució=110.0  parelles=75%  bytes <:1.9% ,:1.0% >:0.9%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  [[[[[[[·[[[[ (0.3%)  588s
+cens 2250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 2300  H0=7.951  HOE=0.334  ops/execució=109.8  parelles=75%  bytes <:2.0% ,:1.0% >:0.9%  fragments >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.3%)  [[[[[[[·[[[[ (0.3%)  625s
+època 2400  H0=7.948  HOE=0.335  ops/execució=111.5  parelles=75%  bytes <:2.1% ,:1.0% >:0.9%  fragments >>>>>>>>>>>> (0.3%)  ,·,,,,,,,,,, (0.3%)  [[[[[[[·[[[[ (0.3%)  654s
+cens 2500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 2500  H0=7.945  HOE=0.336  ops/execució=113.5  parelles=75%  bytes <:2.2% ,:1.0% >:0.9%  fragments >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,,, (0.3%)  [[[[[[[·[[[[ (0.3%)  687s
+època 2600  H0=7.941  HOE=0.338  ops/execució=116.1  parelles=75%  bytes <:2.2% ,:1.1% >:1.0%  fragments >>>>>>>>>>>> (0.4%)  ,,,,,,,,,,·, (0.3%)  [[[[[[[·[[[[ (0.3%)  720s
+època 2700  H0=7.939  HOE=0.340  ops/execució=115.6  parelles=75%  bytes <:2.3% ,:1.1% >:1.0%  fragments [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  ,,,,,,·,,,,, (0.3%)  744s
+cens 2750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 2800  H0=7.936  HOE=0.341  ops/execució=116.9  parelles=75%  bytes <:2.3% ,:1.1% >:1.0%  fragments [[[[[[[[[[[[ (0.3%)  [[[[[[[·[[[[ (0.3%)  ,,,,,,·,,,,, (0.3%)  772s
+època 2900  H0=7.933  HOE=0.344  ops/execució=119.4  parelles=75%  bytes <:2.4% ,:1.1% >:1.0%  fragments [[[[[[[[[[[[ (0.3%)  [[[[[[[·[[[[ (0.3%)  ,,,,,,·,,,,, (0.3%)  796s
+cens 3000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 3000  H0=7.931  HOE=0.349  ops/execució=120.0  parelles=75%  bytes <:2.4% ,:1.1% #61:1.0%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[·[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  830s
+època 3100  H0=7.928  HOE=0.348  ops/execució=120.5  parelles=75%  bytes <:2.5% ,:1.2% #61:1.0%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[[·[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  851s
+època 3200  H0=7.924  HOE=0.352  ops/execució=121.2  parelles=75%  bytes <:2.6% ,:1.2% #61:1.0%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[[[·[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  883s
+cens 3250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 3300  H0=7.922  HOE=0.350  ops/execució=122.8  parelles=75%  bytes <:2.6% ,:1.2% #61:1.1%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[[[·[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  918s
+època 3400  H0=7.919  HOE=0.348  ops/execució=124.3  parelles=75%  bytes <:2.7% ,:1.2% #61:1.1%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[[[·[[[[ (0.3%)  >>>>>>>>>>>> (0.2%)  946s
+cens 3500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 3500  H0=7.916  HOE=0.347  ops/execució=124.1  parelles=75%  bytes <:2.7% ,:1.2% #61:1.1%  fragments [[[[[[[[[[[[ (0.4%)  [[[[·[[[[[[[ (0.3%)  <<<<<<<·<<<< (0.3%)  977s
+època 3600  H0=7.913  HOE=0.344  ops/execució=125.0  parelles=75%  bytes <:2.8% ,:1.2% #61:1.1%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[[[·[[[[ (0.4%)  <<<<<<<·<<<< (0.3%)  1005s
+època 3700  H0=7.910  HOE=0.342  ops/execució=127.2  parelles=75%  bytes <:2.8% ,:1.2% #61:1.1%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[·[[[[[[ (0.4%)  <<<<<<<<<<·< (0.3%)  1030s
+cens 3750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.1% (sols 0.1%, en context 0.0%)  famílies=0
+època 3800  H0=7.908  HOE=0.338  ops/execució=129.2  parelles=75%  bytes <:2.9% ,:1.2% #61:1.1%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[[·[[[[[ (0.4%)  <·<<<<<<<<<< (0.3%)  1059s
+època 3900  H0=7.906  HOE=0.333  ops/execució=129.7  parelles=75%  bytes <:2.9% ,:1.2% #61:1.1%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[[·[[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  1084s
+cens 4000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 4000  H0=7.903  HOE=0.332  ops/execució=129.9  parelles=75%  bytes <:3.0% ,:1.3% #61:1.2%  fragments [[[[[[[[[[[[ (0.5%)  [[[[·[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  1120s
+època 4100  H0=7.901  HOE=0.329  ops/execució=130.6  parelles=75%  bytes <:3.0% ,:1.3% #61:1.2%  fragments [[[[[[[[[[[[ (0.4%)  [[[[·[[[[[[[ (0.3%)  <<<<<<<<<<<< (0.3%)  1152s
+època 4200  H0=7.898  HOE=0.331  ops/execució=129.8  parelles=75%  bytes <:3.0% ,:1.3% #61:1.2%  fragments [[[[[[[[[[[[ (0.5%)  >>>>>>>>>>>> (0.3%)  [[[[·[[[[[[[ (0.3%)  1173s
+cens 4250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 4300  H0=7.896  HOE=0.333  ops/execució=131.2  parelles=75%  bytes <:3.1% ,:1.3% #61:1.2%  fragments [[[[[[[[[[[[ (0.5%)  >>>>>>>>>>>> (0.3%)  [[[[·[[[[[[[ (0.3%)  1202s
+època 4400  H0=7.893  HOE=0.335  ops/execució=131.8  parelles=75%  bytes <:3.1% ,:1.3% #61:1.2%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[[[·[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  1226s
+cens 4500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.1% (sols 0.1%, en context 0.0%)  famílies=0
+època 4500  H0=7.891  HOE=0.336  ops/execució=133.0  parelles=75%  bytes <:3.1% ,:1.3% #61:1.2%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[[·[[[[[ (0.4%)  >>>>>>>>>>>> (0.4%)  1254s
+època 4600  H0=7.889  HOE=0.331  ops/execució=134.1  parelles=75%  bytes <:3.2% ,:1.4% #61:1.2%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[·[[[[[[ (0.5%)  ,,,,,,,·,,,, (0.4%)  1279s
+època 4700  H0=7.885  HOE=0.330  ops/execució=136.2  parelles=75%  bytes <:3.2% ,:1.4% #61:1.2%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[[[·[[[[ (0.4%)  ,,,,,,,·,,,, (0.3%)  1300s
+cens 4750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 4800  H0=7.883  HOE=0.330  ops/execució=138.5  parelles=75%  bytes <:3.3% ,:1.4% #61:1.3%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[[[·[[[[ (0.4%)  ,,,,,,,,,,,, (0.3%)  1332s
+època 4900  H0=7.880  HOE=0.329  ops/execució=139.6  parelles=75%  bytes <:3.3% ,:1.4% #61:1.3%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[·[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  1352s
+cens 5000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 5000  H0=7.878  HOE=0.330  ops/execució=141.3  parelles=75%  bytes <:3.3% ,:1.4% #61:1.3%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.4%)  ,,,,·,,,,,,, (0.3%)  1388s
+època 5100  H0=7.876  HOE=0.328  ops/execució=141.6  parelles=75%  bytes <:3.4% ,:1.4% #61:1.3%  fragments [[[[[[[[[[·[ (0.4%)  [[[[[·[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  1413s
+època 5200  H0=7.874  HOE=0.328  ops/execució=142.7  parelles=75%  bytes <:3.4% ,:1.4% #61:1.3%  fragments [[[[[[[[[[·[ (0.4%)  >>>>>>>>>>>> (0.3%)  [[[[[·[[[[[[ (0.3%)  1442s
+cens 5250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 5300  H0=7.872  HOE=0.329  ops/execució=144.1  parelles=75%  bytes <:3.4% ,:1.4% #61:1.3%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.3%)  [[[[[[[·[[[[ (0.2%)  1476s
+època 5400  H0=7.870  HOE=0.326  ops/execució=144.3  parelles=75%  bytes <:3.5% ,:1.4% #61:1.3%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.3%)  ,,,,,,,·,,,, (0.2%)  1500s
+cens 5500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 5500  H0=7.868  HOE=0.325  ops/execució=145.0  parelles=75%  bytes <:3.5% ,:1.4% #61:1.3%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.4%)  [[[[[·[[[[[[ (0.3%)  1530s
+època 5600  H0=7.867  HOE=0.322  ops/execució=146.4  parelles=75%  bytes <:3.5% ,:1.4% #61:1.3%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.4%)  [[[[[·[[[[[[ (0.3%)  1561s
+època 5700  H0=7.865  HOE=0.323  ops/execució=147.0  parelles=75%  bytes <:3.5% ,:1.5% #61:1.3%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.4%)  [[[[[[[·[[[[ (0.3%)  1594s
+cens 5750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 5800  H0=7.863  HOE=0.324  ops/execució=148.0  parelles=75%  bytes <:3.5% ,:1.5% #61:1.3%  fragments [[[[[[[[[[[[ (0.4%)  [[[[[[[·[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  1626s
+època 5900  H0=7.861  HOE=0.322  ops/execució=150.0  parelles=75%  bytes <:3.5% ,:1.5% #61:1.4%  fragments >>>>>>>>>>>> (0.4%)  [[[·[[[[[[[[ (0.4%)  ,,,,,,,,,,,, (0.2%)  1657s
+cens 6000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 6000  H0=7.860  HOE=0.322  ops/execució=151.7  parelles=75%  bytes <:3.6% ,:1.5% #61:1.4%  fragments [·[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.3%)  [[[[[[·[[[[[ (0.3%)  1691s
+època 6100  H0=7.858  HOE=0.322  ops/execució=150.7  parelles=75%  bytes <:3.6% ,:1.5% #61:1.4%  fragments [·[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  [[[[[[·[[[[[ (0.3%)  1718s
+època 6200  H0=7.856  HOE=0.323  ops/execució=149.9  parelles=75%  bytes <:3.6% ,:1.5% #61:1.4%  fragments >>>>>>>>>>>> (0.4%)  [[·[[[[[[[[[ (0.3%)  ,,,,,,,,·,,, (0.3%)  1749s
+cens 6250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.1% (sols 0.1%, en context 0.0%)  famílies=0
+època 6300  H0=7.855  HOE=0.325  ops/execució=149.9  parelles=75%  bytes <:3.6% ,:1.5% #61:1.4%  fragments >>>>>>>>>>>> (0.3%)  ,,,,,,,,·,,, (0.3%)  [[[[[[·[[[[[ (0.3%)  1781s
+època 6400  H0=7.853  HOE=0.324  ops/execució=151.5  parelles=75%  bytes <:3.7% ,:1.5% #61:1.4%  fragments >>>>>>>>>>>> (0.3%)  ,,,,,,,,·,,, (0.3%)  [[[[·[[[[[[[ (0.3%)  1814s
+cens 6500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 6500  H0=7.851  HOE=0.324  ops/execució=152.0  parelles=75%  bytes <:3.7% ,:1.5% #61:1.4%  fragments >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,,, (0.3%)  <<<·<<<<<<<< (0.3%)  1846s
+època 6600  H0=7.849  HOE=0.324  ops/execució=154.6  parelles=75%  bytes <:3.7% ,:1.5% #61:1.4%  fragments >>>>>>>>>>>> (0.4%)  ,,,,,,,,·,,, (0.3%)  [[[[[[[[[[[[ (0.2%)  1875s
+època 6700  H0=7.848  HOE=0.324  ops/execució=154.3  parelles=75%  bytes <:3.7% ,:1.5% #61:1.4%  fragments >>>>>>>>>>>> (0.5%)  ,,,,,,,,,,,, (0.3%)  [[[·[[[[[[[[ (0.3%)  1907s
+cens 6750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 6800  H0=7.846  HOE=0.323  ops/execució=154.3  parelles=75%  bytes <:3.8% ,:1.5% #61:1.4%  fragments >>>>>>>>>>>> (0.5%)  >>>>·>>>>>>> (0.3%)  <<<<<<<<<<<< (0.3%)  1944s
+època 6900  H0=7.844  HOE=0.325  ops/execució=155.9  parelles=75%  bytes <:3.8% ,:1.6% #61:1.4%  fragments >>>>>>>>>>>> (0.5%)  <<<<<<<<<<<< (0.3%)  [[[[[[·[[[[[ (0.2%)  1974s
+cens 7000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 7000  H0=7.841  HOE=0.323  ops/execució=155.7  parelles=75%  bytes <:3.8% ,:1.6% #61:1.4%  fragments >>>>>>>>>>>> (0.4%)  <<<<<<<<<<<< (0.3%)  [[[[[[·[[[[[ (0.3%)  2007s
+època 7100  H0=7.839  HOE=0.323  ops/execució=155.8  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  [[[[[·[[[[[[ (0.3%)  <<·<<<<<<<<< (0.3%)  2036s
+època 7200  H0=7.837  HOE=0.323  ops/execució=158.3  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  [[[·[[[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  2064s
+cens 7250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 7300  H0=7.836  HOE=0.319  ops/execució=158.6  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  [[[[[·[[[[[[ (0.3%)  [[[[[[[[[[[[ (0.3%)  2098s
+època 7400  H0=7.834  HOE=0.317  ops/execució=159.6  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  [[[·[[[[[[[[ (0.3%)  <<<<<<<<<<<< (0.2%)  2127s
+cens 7500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 7500  H0=7.832  HOE=0.318  ops/execució=162.7  parelles=75%  bytes <:4.0% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.3%)  [[[[·[[[[[[[ (0.3%)  2159s
+època 7600  H0=7.831  HOE=0.317  ops/execució=164.1  parelles=75%  bytes <:4.0% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.3%)  [[[[[·[[[[[[ (0.3%)  2187s
+època 7700  H0=7.830  HOE=0.316  ops/execució=165.3  parelles=75%  bytes <:4.0% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.3%)  <<<<<<<<<<<< (0.2%)  2218s
+cens 7750  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 7800  H0=7.829  HOE=0.316  ops/execució=164.7  parelles=75%  bytes <:4.0% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  2254s
+època 7900  H0=7.827  HOE=0.316  ops/execució=164.6  parelles=75%  bytes <:4.1% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  [[[[[[[[[[[[ (0.3%)  <<<<<<<<<<<< (0.2%)  2286s
+cens 8000  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+època 8000  H0=7.827  HOE=0.314  ops/execució=165.9  parelles=75%  bytes <:4.1% ,:1.6% #61:1.5%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,,, (0.3%)  2322s
+
+empremta del món: 440ddc9b
+
+programes diferents: 131059 de 131072
+      4  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      3  |                                                                |
+      2  |,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|
+      2  |         ,  ,,  ,,< <      < , +,<-  ,>     , ,     <           |
+      2  |<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<|
