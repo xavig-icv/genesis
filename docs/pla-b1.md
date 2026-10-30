@@ -52,8 +52,8 @@ hereditaris. És si els replicadors curts **existeixen i són abundants**.
 | Id | Definició exacta | Què diu | Què esperem, i per què |
 |---|---|---|---|
 | **C0** | BFF, tal com és | La referència | Replicadors, amb la distribució D½ |
-| **K0** | `.` i `,` no fan res | **Control:** sense còpia | 0. Només `+` i `-` escriuen, i no poden refer 16 bytes d'un altre programa |
-| **L0** | `[` i `]` no fan res | **Control:** sense bucles | 0. Cada instrucció s'executa com a molt un cop, i 64 bytes a l'atzar no copien 16 bytes un a un |
+| **K0** | `.` i `,` no fan res | **Control:** sense còpia | 0. Només `+` i `-` escriuen, i refer així 16 bytes d'un altre programa és molt improbable |
+| **L0** | `[` i `]` no fan res | **Control:** sense bucles | 0. Cada instrucció s'executa com a molt un cop, i 64 bytes a l'atzar gairebé mai no tenen prou instruccions de còpia per copiar-ne 16 un a un |
 | **S4** | Escriure a l'altra meitat que la del punter no fa res | **Control:** cap escriptura d'una meitat a l'altra | 0, per construcció: cap programa no pot posar res seu a l'altre |
 | **K1** | `.` no fa res | Hi ha replicació només amb `,`? | Sí: `,` també copia d'una meitat a l'altra, si `h0` va enrere (`<`) |
 | **K2** | `,` no fa res | Hi ha replicació només amb `.`? | Sí, amb `{`. No és el mirall de K1: `[`, `]`, `+` i `-` són de `h0` |
@@ -120,7 +120,8 @@ variant (AUD-65). Cap prova nova (AUD-02).
 
 **Contra C0, programa a programa:**
 - **la taula de 2 × 2:** els programes hereditaris a totes dues variants, només a C0, només a la variant, o a cap;
-- **el quocient de les densitats,** amb el seu interval;
+- **el quocient de les densitats,** amb el seu interval: el de dos recomptes de Poisson independents (la binomial condicionada), que
+  amb els mateixos programes és conservador;
 - **els programes que canvien:** els que són replicadors a una variant i no a l'altra. Si una ablació en crea de nous, ho diu.
 
 **Els controls primer.** Si K0, L0 o S4 donen cap replicador hereditari, no s'interpreta res més fins que no s'hagin mirat un a un:
