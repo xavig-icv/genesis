@@ -26,3 +26,19 @@ del color és d'una segona família que només hi és dos fotogrames. El seu nuc
 de la primera, i el seu exemple conté el nucli de la primera llegit al revés.
 
 Es tornen a fer quan canviï el disseny dels visors.
+
+## La cinta de la portada
+
+No és una imatge: són els 128 bytes de la figura de la química (`data-bytes` de `#tape` a `web/index.html`), que la pàgina
+executa pas a pas amb l'intèrpret del simulador (`fase1/bff.js`, a través de `web/js/cinta.js`).
+
+- **D'on surten:** de la captura `llavor1006-mon512x256-r2-epoca3500.bin` (SHA-256 `6e2236f9…`, a `fonts` de
+  `web/dades/1006/mon.json`). A és la cel·la (410, 155), de la família 1; B, la (412, 156), veïna i sense família.
+- **Com es van triar:** a l'atzar, amb `eines/tria.mjs` i la llavor 20261030, entre les 254.776 parelles d'una cel·la de la
+  família 1 (primer) amb un veí sense família dins del quadrat de 5 × 5 (segon), com les parelles del món.
+- **Les xifres del peu:** en una sola execució, el programa de la família es copia sencer al revés a l'altra meitat en
+  186.746 d'aquestes parelles (el 73,3 %), i del dret, en 10. A la triada, la còpia al revés és sencera al pas 926, i A no
+  canvia. Al principi, B ja té 43 dels 64 bytes d'A als mateixos llocs.
+- **Com es comprova:** `node eines/web-cinta.mjs CAPTURA.bin web/dades/1006 3500 20261030` torna a fer la tria i les
+  xifres, i escriu els bytes. `test/web.mjs` comprova que el traçat coincideix amb l'intèrpret a cada pas i que els peus
+  diuen el pas de la còpia i els bytes iguals.

@@ -278,7 +278,8 @@ function sphereGrid(nLon, nLat) {
   return { vertices: new Float32Array(v), indices: new Uint32Array(idx) };
 }
 
-export function createRenderer(canvas) {
+// starCount: les estrelles del tema fosc (el planeta de la portada en té més)
+export function createRenderer(canvas, { starCount = 2600 } = {}) {
   const gl = canvas.getContext('webgl2', { antialias: true, alpha: false, powerPreference: 'high-performance' });
   if (!gl) return null;
   const P = {
@@ -331,11 +332,11 @@ export function createRenderer(canvas) {
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gridIbo);
   gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, grid.indices, gl.STATIC_DRAW);
 
-  // les estrelles, amb una llavor fixa perquè el cel sigui sempre el mateix
+  // les estrelles, amb una llavor fixa perquè el cel sigui sempre el mateix (les primeres 2.600 no depenen de quantes n'hi ha)
   let s = 20261029;
   const rnd = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
-  const stars = new Float32Array(2600 * 4);
-  for (let i = 0; i < 2600; i++) {
+  const stars = new Float32Array(starCount * 4);
+  for (let i = 0; i < starCount; i++) {
     const z = rnd() * 2 - 1, a = rnd() * 2 * Math.PI, r = Math.sqrt(1 - z * z);
     stars.set([r * Math.cos(a), z, r * Math.sin(a), Math.pow(rnd(), 3)], i * 4);
   }

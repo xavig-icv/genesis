@@ -14,7 +14,7 @@
   background: var(--c-page);
   border-bottom: 1px solid var(--c-line);
 }
-.co .site-nav .brand { font-size: 15px; font-weight: 650; letter-spacing: -0.01em; text-decoration: none; }
+.co .site-nav .brand-name { font-size: 15px; }
 .co .site-links { display: flex; gap: 2px; margin: 0 0 0 auto; padding: 0; list-style: none; }
 .co .site-links a { display: block; padding: 7px 11px; border-radius: var(--r-3); font-size: 14px; color: var(--c-ink-2); text-decoration: none; white-space: nowrap; transition: background-color var(--d-instant) var(--ease-out); }
 .co .site-links a:hover { background: var(--c-ctl); color: var(--c-ink); }
@@ -32,7 +32,8 @@
 .co .spec:nth-child(even) { padding-left: 16px; border-left: 1px solid var(--c-line); }
 .co .spec dt { font: 500 22px/1.1 var(--font-mono); letter-spacing: -0.02em; }
 .co .spec dd { margin: 4px 0 0; font-size: 13px; line-height: 1.35; color: var(--c-ink-3); }
-.co .viewport { grid-column: 6 / span 7; position: relative; min-height: 640px; margin: 0; overflow: hidden; border: 1px solid var(--c-line); border-radius: var(--r-5); background: var(--stage-bg); }
+/* El fons del planeta és --hero-bg: al tema clar, el mateix paper de la pàgina; al fosc, el de l'escenari */
+.co .viewport { grid-column: 6 / span 7; position: relative; min-height: 640px; margin: 0; overflow: hidden; border: 1px solid var(--c-line); border-radius: var(--r-5); background: var(--hero-bg); }
 .co .viewport-stage { position: absolute; inset: 0; }
 .co .viewport canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .co .readout { position: absolute; top: 18px; margin: 0; }
@@ -41,7 +42,7 @@
 .co .viewport figcaption { position: absolute; left: 20px; bottom: 18px; width: 300px; font-size: 12.5px; line-height: 1.5; color: var(--c-ink-2); }
 
 /* Les seccions */
-.co .section { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; padding: 112px 40px 0; scroll-margin-top: 60px; }
+.co .section { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; padding: 96px 40px 0; scroll-margin-top: 60px; }
 .co .sec-head { grid-column: 1 / span 4; }
 .co .sec-index { display: block; margin-bottom: 14px; }
 .co .h2 { margin: 0; font-size: 34px; line-height: 1.12; font-weight: 650; letter-spacing: -0.03em; text-wrap: balance; }
@@ -50,48 +51,71 @@
 .co .prose p { margin: 0 0 16px; max-width: 62ch; font-size: 17px; line-height: 1.65; color: var(--c-ink-2); }
 .co .prose em, .co .result em, .co .site-foot em { font-style: italic; color: var(--c-ink); }
 
-/* Les definicions */
-.co .defs { margin: 0; border-top: 1px solid var(--c-ink); }
-.co .def { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; padding: 22px 0 24px; border-bottom: 1px solid var(--c-line); }
-.co .def dt { font-size: 19px; line-height: 1.3; font-weight: 600; letter-spacing: -0.012em; }
-.co .def dd { margin: 0; font-size: 17px; line-height: 1.6; color: var(--c-ink-2); }
+/* Les seccions amb el títol a dalt i el contingut a sota, a tota l'amplada: el text, les targetes i la regla */
+.co .section.block { display: block; }
+.co .block-head .sec-intro { max-width: 40em; margin-top: 12px; }
+.co .block-text { margin-top: 24px; }
+.co .block-text p { max-width: 74ch; }
+.co .cards { display: grid; gap: 16px; margin: 28px 0 0; padding: 0; list-style: none; }
+.co .cards.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.co .cards.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.co .block-text + .cards { margin-top: 8px; }
+.co .card { margin: 0; padding: 22px 24px 24px; background: var(--c-tray); border: 1px solid var(--c-line); border-radius: var(--r-5); }
+.co .card h3 { margin: 0 0 8px; font-size: 19px; line-height: 1.3; font-weight: 600; letter-spacing: -0.012em; }
+.co .card p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--c-ink-2); }
+.co .questions .card { padding: 18px 20px 20px; }
+.co .questions .n { display: block; margin-bottom: 10px; font: 500 12px/1 var(--font-mono); color: var(--c-ink-3); }
+.co .questions p { font-size: 15.5px; line-height: 1.55; color: var(--c-ink); }
+.co .rule { margin-top: 28px; padding: 20px 24px 22px; border-left: 3px solid var(--c-ink); border-radius: 0 var(--r-4) var(--r-4) 0; background: var(--c-well); }
+.co .rule p { margin: 0; max-width: 92ch; font-size: 17px; line-height: 1.65; color: var(--c-ink-2); }
+.co .rule b { font-weight: 650; color: var(--c-ink); }
 
-/* Les preguntes obertes */
-.co .questions { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; margin: 28px 0 0; padding: 0; list-style: none; }
-.co .questions li { display: grid; grid-template-columns: 32px minmax(0, 1fr); padding: 16px 0 18px; border-top: 1px solid var(--c-line); font-size: 16px; line-height: 1.5; }
-.co .questions .n { font: 500 12px/1.9 var(--font-mono); color: var(--c-ink-3); }
+/* La cinta: les dues meitats de 128 bytes (A i B), que s'executen pas a pas (js/cinta.js) */
+.co .tape-fig { margin: 32px 0 0; padding: 16px 20px 18px; background: var(--c-tray); border: 1px solid var(--c-line); border-radius: var(--r-5); }
+.co .tape-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 6px; }
+.co .tape-now { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 22px; margin: 0; font-size: 14px; color: var(--c-ink-2); }
+.co .tape-now b { font: 600 14px/1 var(--font-mono); color: var(--c-ink); }
+.co .tape-ctl { display: flex; gap: 6px; }
+.co .tape-ctl .when-playing, .co .tape-fig.is-playing .tape-ctl .when-paused { display: none; }
+.co .tape-fig.is-playing .tape-ctl .when-playing { display: inline; }
+.co .tape-label { display: flex; justify-content: space-between; gap: 12px; margin: 14px 0 6px; font-size: 13px; color: var(--c-ink-2); }
+.co .tape-label b { font-weight: 650; color: var(--c-ink); }
+.co .tape-label .mono { font-size: 11.5px; color: var(--c-ink-3); }
+.co .tape-row { display: grid; grid-template-columns: repeat(64, minmax(0, 1fr)); border: 1px solid var(--c-line-strong); border-radius: var(--r-2); overflow: hidden; background: var(--c-page); }
+.co .tape-row > span { position: relative; display: grid; place-items: center; height: 30px; border-right: 1px solid var(--c-line); font: 600 12.5px/1 var(--font-mono); transition: background-color var(--d-slow) var(--ease-out); }
+.co .tape-row > span:nth-child(64n) { border-right: 0; }
+/* els bytes d'A (el color de la família 1), on siguin; el byte que s'acaba d'escriure; la instrucció que s'executa; els caps */
+.co .tape-row > .is-a { background: color-mix(in srgb, var(--f1) 16%, transparent); }
+.co .tape-row > .is-new { background: color-mix(in srgb, var(--f1) 55%, transparent); transition: none; }
+.co .tape-row > .is-pc { background: var(--c-ink); color: var(--c-on-ink); transition: none; }
+.co .tape-row > .is-h0::after, .co .tape-row > .is-h1::before { content: ""; position: absolute; left: 0; right: 0; height: 4px; }
+.co .tape-row > .is-h0::after { bottom: 0; background: var(--i-head0-fill); }
+.co .tape-row > .is-h1::before { top: 0; background: var(--i-head1-fill); }
+.co .tape-track { position: relative; height: 28px; margin-top: 10px; }
+.co .tape-track input { position: absolute; inset: 0; width: 100%; margin: 0; accent-color: var(--c-ink); cursor: pointer; }
+.co .tape-mark { position: absolute; top: 2px; bottom: 2px; width: 2px; margin-left: -1px; background: var(--f1); pointer-events: none; }
+.co .tape-legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 6px 0 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--c-ink-2); }
+.co .tape-legend li { display: inline-flex; align-items: center; gap: 8px; }
+.co .tape-legend i { position: relative; display: inline-block; width: 14px; height: 16px; border: 1px solid var(--c-line-strong); border-radius: 2px; background: var(--c-page); }
+.co .tape-legend .lg-pc { background: var(--c-ink); border-color: var(--c-ink); }
+.co .tape-legend .lg-h0::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--i-head0-fill); }
+.co .tape-legend .lg-h1::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--i-head1-fill); }
+.co .tape-legend .lg-copy { background: color-mix(in srgb, var(--f1) 40%, var(--c-page)); }
+.co .tape-caption { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--c-line); font-size: 13.5px; line-height: 1.55; color: var(--c-ink-2); }
 
-/* La regla principal */
-.co .rule { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; margin-top: 64px; padding: 32px 0 36px; border-top: 1px solid var(--c-ink); border-bottom: 1px solid var(--c-line); }
-.co .rule > .micro { grid-column: 1 / span 4; padding-top: 8px; }
-.co .rule-main { grid-column: 6 / span 7; }
-.co .rule-statement { margin: 0 0 14px; font-size: 30px; line-height: 1.18; font-weight: 650; letter-spacing: -0.028em; }
-.co .rule-main p:last-child { margin: 0; max-width: 62ch; font-size: 17px; line-height: 1.65; color: var(--c-ink-2); }
-
-/* La química: la cinta i els espècimens */
-.co .tape-fig { grid-column: 1 / -1; margin: 56px 0 0; }
-.co .tape-top, .co .tape-bottom { display: grid; grid-template-columns: 1fr 1fr; }
-.co .tape-top { position: relative; height: 44px; }
-.co .tape-bottom { margin-top: 8px; }
-.co .tape-bottom span { font: 500 11px/1 var(--font-mono); color: var(--c-ink-3); }
-.co .tape-bottom span:nth-child(2) { padding-left: 8px; }
-.co .tape { display: grid; grid-template-columns: 1fr 1fr; height: 30px; border: 1px solid var(--c-ink); border-radius: var(--r-1); overflow: hidden; }
-.co .tape > div { background-image: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / 64 - 1px), var(--c-line) calc(100% / 64 - 1px), var(--c-line) calc(100% / 64)); }
-.co .tape > div + div { border-left: 2px solid var(--c-ink); }
-.co .head-mark { position: absolute; bottom: 0; display: flex; flex-direction: column; align-items: center; gap: 4px; transform: translateX(-50%); font: 600 12px/1 var(--font-mono); white-space: nowrap; }
-.co .head-mark i { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid currentColor; }
-.co .tape-caption { display: flex; justify-content: space-between; gap: 24px; margin-top: 16px; font-size: 13.5px; color: var(--c-ink-2); }
-.co .specimens { grid-column: 1 / -1; position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin-top: 48px; border-top: 1px solid var(--c-line); border-left: 1px solid var(--c-line); }
+/* Els espècimens: una sola fila, amb el sòlid de cada instrucció al pou de dalt */
+.co .specimens { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); margin-top: 32px; border-top: 1px solid var(--c-line); border-left: 1px solid var(--c-line); }
 /* Un sol llenç a sobre de la graella: cada sòlid es dibuixa al pou del seu espècimen */
 .co .specimens canvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; display: block; pointer-events: none; }
-.co .specimen { position: relative; margin: 0; padding: 0 0 20px; border-right: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
-.co .specimen-well { position: relative; height: 168px; background: var(--stage-bg); }
-.co .specimen-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 16px 16px 0; }
-.co .glyph { font: 600 30px/1 var(--font-mono); }
-.co .meaning { margin: 10px 16px 0; font-size: 14px; line-height: 1.45; color: var(--c-ink-2); }
+.co .specimen { position: relative; margin: 0; padding: 0 0 14px; border-right: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); }
+.co .specimen-well { position: relative; height: 104px; background: var(--well-bg); }
+.co .specimen-row { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 12px 12px 0; }
+.co .glyph { font: 600 24px/1 var(--font-mono); }
+.co .specimen .micro { font-size: 10px; letter-spacing: 0.06em; }
+.co .meaning { margin: 8px 12px 0; font-size: 13px; line-height: 1.4; color: var(--c-ink-2); }
 
 /* Les entrades als visors */
-.co .entries { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 72px; }
+.co .entries { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 56px; }
 .co .entry-lead { grid-column: 1 / -1; margin: 0; font-size: 17px; color: var(--c-ink-2); }
 .co .entry { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border: 1px solid var(--c-line); border-radius: var(--r-5); color: inherit; text-decoration: none; transition: border-color var(--d-fast) var(--ease-out); }
 .co .entry:hover { border-color: var(--c-ink); }
@@ -135,7 +159,7 @@
 
 /* El peu */
 .co .site-foot { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; margin-top: 128px; padding: 32px 40px 56px; border-top: 1px solid var(--c-line); }
-.co .foot-brand { grid-column: 1 / span 3; display: flex; flex-direction: column; gap: 6px; }
+.co .foot-brand { grid-column: 1 / span 3; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
 .co .foot-text { grid-column: 4 / span 6; margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--c-ink-2); }
 .co .foot-links { grid-column: 11 / span 2; display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; font-size: 13.5px; }
 .co .foot-links a { color: var(--c-ink-2); text-decoration: none; }
@@ -151,8 +175,16 @@
   .co .hero-text { grid-column: 1 / span 6; padding-right: 0; }
   .co .viewport { grid-column: 7 / span 6; }
   .co .display { font-size: 48px; }
-  .co .specimens { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .co .specimens { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .co .cards.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .co .site-links a { padding: 7px 8px; }
+  .co .site-nav .brand-sub { display: none; }
+}
+/* La cinta: cada meitat en dues files de 32 bytes */
+@container co (max-width: 1000px) {
+  .co .tape-row { grid-template-columns: repeat(32, minmax(0, 1fr)); }
+  .co .tape-row > span:nth-child(32n) { border-right: 0; }
+  .co .tape-row > span:nth-child(n + 33) { border-top: 1px solid var(--c-line); }
 }
 
 /* ───────────────────────── Mòbil (390 px) ───────────────────────── */
@@ -173,23 +205,28 @@
   .co .viewport { display: flex; flex-direction: column; min-height: 0; margin-top: 32px; }
   .co .viewport-stage { position: relative; height: 358px; }
   .co .viewport figcaption { position: static; width: auto; padding: 12px 16px 14px; border-top: 1px solid var(--c-line); background: var(--c-page); }
-  .co .section { display: block; padding: 72px 16px 0; scroll-margin-top: 110px; }
+  .co .section { display: block; padding: 64px 16px 0; scroll-margin-top: 110px; }
   .co .h2 { font-size: 28px; }
   .co .sec-body { margin-top: 24px; }
-  .co .prose p, .co .def dd, .co .rule-main p:last-child { font-size: 16px; }
-  .co .def { grid-template-columns: 1fr; gap: 8px; }
-  .co .questions { grid-template-columns: 1fr; }
-  .co .rule { display: block; margin-top: 48px; }
-  .co .rule-statement { margin-top: 12px; font-size: 24px; }
-  .co .tape { height: 22px; }
-  .co .tape-caption { flex-direction: column; gap: 6px; }
+  .co .prose p, .co .rule p { font-size: 16px; }
+  .co .cards.two, .co .cards.four { grid-template-columns: 1fr; gap: 12px; }
+  .co .card { padding: 18px 18px 20px; }
+  .co .rule { padding: 16px 18px 18px; }
+  .co .tape-fig { padding: 14px 12px 16px; }
+  .co .tape-ctl { width: 100%; }
+  .co .tape-ctl .btn { flex: 1; --h: 44px; }
+  .co .tape-row { grid-template-columns: repeat(16, minmax(0, 1fr)); }
+  .co .tape-row > span:nth-child(32n) { border-right: 1px solid var(--c-line); }
+  .co .tape-row > span:nth-child(16n) { border-right: 0; }
+  .co .tape-row > span:nth-child(n + 17) { border-top: 1px solid var(--c-line); }
+  .co .tape-row > span { height: 24px; font-size: 12px; }
   .co .specimens { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .co .specimen-well { height: 104px; }
-  .co .specimen-row { flex-wrap: wrap; row-gap: 6px; padding: 10px 10px 0; }
+  .co .specimen-well { height: 92px; }
+  .co .specimen-row { padding: 10px 10px 0; }
   .co .glyph { font-size: 22px; }
   .co .specimen .micro { font-size: 9.5px; letter-spacing: 0.05em; }
   .co .meaning { margin: 6px 10px 0; font-size: 12.5px; }
-  .co .entries { grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
+  .co .entries { grid-template-columns: 1fr; gap: 16px; margin-top: 40px; }
   .co .entry-media { height: 200px; }
   .co .result { display: block; padding: 22px 0 24px; }
   .co .result-meta { flex-direction: row; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }

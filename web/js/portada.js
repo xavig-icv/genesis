@@ -1,14 +1,15 @@
-// La portada: al visor de la capçalera, un món com un planeta que gira lentament; i, a la química, el sòlid de cada
-// instrucció, que gira al pou del seu espècimen. Sense controls al planeta, perquè la pàgina es pugui desplaçar. Amb
-// moviment reduït, tot quiet.
+// La portada: al visor de la capçalera, un món com un planeta que gira lentament; i, a la química, la cinta que s'executa
+// (js/cinta.js) i el sòlid de cada instrucció, que gira al pou del seu espècimen. Sense controls al planeta, perquè la
+// pàgina es pugui desplaçar. Amb moviment reduït, tot quiet.
 import { createRenderer } from './render.js';
 import { loadWorld } from './dades.js';
 import { R } from './geo.js';
 import { v3, perspective, lookAt, multiply } from './mat4.js';
 import { compile } from './gl.js';
 import { SHAPES } from './formes.js';
-import { apply, setLang } from './i18n.js';
-import { bindThemeSwitch, readStageTokens, reducedMotion } from './tema.js';
+import { apply, setLang, num, onLang } from './i18n.js';
+import { bindThemeSwitch, readStageTokens, reducedMotion, parseColor } from './tema.js';
+import { mountTape } from './cinta.js';
 
 apply();
 for (const b of document.querySelectorAll('[data-lang]')) b.addEventListener('click', () => setLang(b.dataset.lang));
@@ -25,13 +26,15 @@ function whenVisible(el) {
   return s;
 }
 
-// 1. El planeta: el fotograma de l'època del peu de la figura, del primer món de la llista amb la seva llavor
+// 1. El planeta: el fotograma de l'època del peu de la figura, del primer món de la llista amb la seva llavor. El fons és
+// el de la figura (--hero-bg: al tema clar, el paper de la pàgina), i al tema fosc hi ha més estrelles que als visors
 async function hero() {
-  const canvas = document.getElementById('hero'), r = createRenderer(canvas);
+  const canvas = document.getElementById('hero'), r = createRenderer(canvas, { starCount: 16000 });
   if (!r) return;
-  r.setTheme(tokens);
-  themed.push((tk) => r.setTheme(tk));
   const fig = canvas.closest('[data-seed]'), seed = fig.dataset.seed;
+  const withBackground = (tk) => ({ ...tk, background: parseColor(getComputedStyle(fig).getPropertyValue('--hero-bg')) });
+  r.setTheme(withBackground(tokens));
+  themed.push((tk) => r.setTheme(withBackground(tk)));
   const list = await (await fetch('dades/mons.json')).json();
   let w = null;
   for (const m of list) {
@@ -156,5 +159,6 @@ function reveal() {
 }
 
 reveal();
+mountTape(document.getElementById('tape'), { num, onLang, reducedMotion });
 gallery();
 hero();

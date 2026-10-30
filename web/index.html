@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <title>claude-origins · Abiogènesi digital</title>
+  <title>Genesis · Abiogènesi digital</title>
   <meta name="description" content="Un univers de joguina on la vida sorgeix sola: programes aleatoris que es tornen replicadors, sense que ningú n'escrigui el primer. Dissenyem les lleis, mai els organismes.">
   <!-- el tema desat, abans del primer pintat -->
   <script>try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
@@ -15,10 +15,11 @@
 </head>
 <body class="co site">
   <header class="site-nav">
-    <a class="brand" href="./">claude-origins</a>
+    <a class="brand" href="./"><span class="brand-name">Genesis</span><span class="brand-sub"><span lang="ca">Abiogènesi digital</span><span lang="en">Digital abiogenesis</span></span></a>
     <ul class="site-links">
       <li><a href="explorador/" data-i18n="nav.explorer">Explorador 3D</a></li>
       <li><a href="2d/" data-i18n="nav.map">Vista 2D</a></li>
+      <li><a href="viu/" data-i18n="nav.live">El teu món, en viu</a></li>
       <li><a href="../quadern/" data-i18n="nav.notebook">Quadern</a></li>
       <li><a href="https://github.com/xavig-icv/genesis" data-i18n="nav.repo">Codi</a></li>
     </ul>
@@ -41,7 +42,8 @@
         <p class="lede" lang="en">A toy universe where we try to let life arise on its own. Random programs meet and rewrite each other and, sometimes, one appears that copies itself. We design the laws of the world, never the organisms.</p>
         <div class="cta">
           <a class="btn btn-primary" href="explorador/"><span lang="ca">Explora un món en 3D</span><span lang="en">Explore a world in 3D</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-          <a class="btn" href="../quadern/"><span lang="ca">Llegeix el quadern</span><span lang="en">Read the notebook</span></a>
+          <a class="btn" href="viu/"><span lang="ca">Simula el teu món digital</span><span lang="en">Simulate your own digital world</span></a>
+          <a class="btn btn-ghost" href="../quadern/"><span lang="ca">Llegeix el quadern</span><span lang="en">Read the notebook</span></a>
         </div>
         <dl class="specs">
           <div class="spec"><dt>131.072</dt><dd><span lang="ca">programes en una sopa</span><span lang="en">programs in a soup</span></dd></div>
@@ -63,63 +65,70 @@
       </figure>
     </section>
 
-    <section class="section" id="vida" data-reveal>
-      <div class="sec-head">
+    <section class="section block" id="vida" data-reveal>
+      <div class="block-head">
         <span class="sec-index micro">01</span>
         <h2 class="h2"><span lang="ca">Què vol dir “vida” aquí</span><span lang="en">What “life” means here</span></h2>
         <p class="sec-intro"><span lang="ca">És un criteri de treball, no cap afirmació sobre la vida biològica.</span><span lang="en">It is an operational criterion, not a claim about biological life.</span></p>
       </div>
-      <div class="sec-body">
-        <dl class="defs">
-          <div class="def"><dt><span lang="ca">Un replicador hereditari</span><span lang="en">A heritable replicator</span></dt><dd><span lang="ca">és un programa que es copia en un company, i la còpia també es copia.</span><span lang="en">is a program that copies itself into a partner, and whose copy copies itself in turn.</span></dd></div>
-          <div class="def"><dt><span lang="ca">La vida s’ha establert</span><span lang="en">Life is established</span></dt><dd><span lang="ca">quan, en dos censos seguits (un cada 250 èpoques), almenys l’1&nbsp;% d’una mostra de 2.048 cel·les en són.</span><span lang="en">when at least 1&nbsp;% of a sample of 2,048 cells are heritable replicators, in two consecutive censuses taken 250 epochs apart.</span></dd></div>
-        </dl>
+      <div class="cards two">
+        <div class="card"><h3><span lang="ca">Un replicador hereditari</span><span lang="en">A heritable replicator</span></h3><p><span lang="ca">és un programa que es copia en un company, i la còpia també es copia.</span><span lang="en">is a program that copies itself into a partner, and whose copy copies itself in turn.</span></p></div>
+        <div class="card"><h3><span lang="ca">La vida s’ha establert</span><span lang="en">Life is established</span></h3><p><span lang="ca">quan, en dos censos seguits (un cada 250 èpoques), almenys l’1&nbsp;% d’una mostra de 2.048 cel·les en són.</span><span lang="en">when at least 1&nbsp;% of a sample of 2,048 cells are heritable replicators, in two consecutive censuses taken 250 epochs apart.</span></p></div>
       </div>
     </section>
 
-    <section class="section" id="que-es" data-reveal>
-      <div class="sec-head">
+    <section class="section block" id="que-es" data-reveal>
+      <div class="block-head">
         <span class="sec-index micro">02</span>
         <h2 class="h2"><span lang="ca">Què és</span><span lang="en">What it is</span></h2>
       </div>
-      <div class="sec-body prose">
+      <div class="block-text prose">
         <p lang="ca">Tierra (1991) i Avida (1994) van estudiar l’evolució digital, però hi començava un organisme escrit a mà. El 2024, <em>Computational Life</em> (Agüera y Arcas i altres) va mostrar que en una sopa de programes molt senzills, en llenguatge BFF, hi apareixen replicadors sols: en un 40&nbsp;% de les sopes. Aquest projecte parteix d’aquí i es pregunta el que queda obert:</p>
         <p lang="en">Tierra (1991) and Avida (1994) studied digital evolution, but they started from a hand-written organism. In 2024, <em>Computational Life</em> (Agüera y Arcas et al.) showed that replicators appear on their own in a soup of very simple programs written in the BFF language: in about 40&nbsp;% of the soups. This project starts from there and asks what remains open:</p>
-        <ol class="questions">
-          <li><span class="n">1</span><span><span lang="ca">Quines propietats de la química i de l’entorn calen perquè hi aparegui la vida.</span><span lang="en">Which properties of the chemistry and of the environment are needed for life to appear.</span></span></li>
-          <li><span class="n">2</span><span><span lang="ca">De què depèn que s’estableixi i que duri.</span><span lang="en">What makes it become established, and last.</span></span></li>
-          <li><span class="n">3</span><span><span lang="ca">Si després hi ha evolució darwiniana sostinguda.</span><span lang="en">Whether sustained Darwinian evolution follows.</span></span></li>
-          <li><span class="n">4</span><span><span lang="ca">Si els resultats són generals o propis d’aquest llenguatge.</span><span lang="en">Whether the results are general or specific to this language.</span></span></li>
-        </ol>
       </div>
+      <ol class="cards four questions">
+        <li class="card"><span class="n">1</span><p><span lang="ca">Quines propietats de la química i de l’entorn calen perquè hi aparegui la vida.</span><span lang="en">Which properties of the chemistry and of the environment are needed for life to appear.</span></p></li>
+        <li class="card"><span class="n">2</span><p><span lang="ca">De què depèn que s’estableixi i que duri.</span><span lang="en">What makes it become established, and last.</span></p></li>
+        <li class="card"><span class="n">3</span><p><span lang="ca">Si després hi ha evolució darwiniana sostinguda.</span><span lang="en">Whether sustained Darwinian evolution follows.</span></p></li>
+        <li class="card"><span class="n">4</span><p><span lang="ca">Si els resultats són generals o propis d’aquest llenguatge.</span><span lang="en">Whether the results are general or specific to this language.</span></p></li>
+      </ol>
       <div class="rule">
-        <span class="micro"><span lang="ca">La regla principal</span><span lang="en">The main rule</span></span>
-        <div class="rule-main">
-          <p class="rule-statement"><span lang="ca">Dissenyem les lleis, mai els organismes.</span><span lang="en">We design the laws, never the organisms.</span></p>
-          <p><span lang="ca">No hi ha replicadors inicials, ni premis per copiar-se, ni cap instrucció que copiï un programa sencer d’un sol cop. Els organismes són bytes executats pel nostre intèrpret, en un univers tancat: sense accés al sistema, a la xarxa ni als fitxers.</span><span lang="en">There are no seeded replicators, no rewards for copying, and no instruction that copies a whole program at once. The organisms are bytes run by our interpreter, in a closed universe: no access to the system, the network or the files.</span></p>
-        </div>
+        <p lang="ca"><b>La regla principal: dissenyem les lleis, mai els organismes.</b> No hi ha replicadors inicials, ni premis per copiar-se, ni cap instrucció que copiï un programa sencer d’un sol cop. Els organismes són bytes executats pel nostre intèrpret, en un univers tancat: sense accés al sistema, a la xarxa ni als fitxers.</p>
+        <p lang="en"><b>The main rule: we design the laws, never the organisms.</b> There are no seeded replicators, no rewards for copying, and no instruction that copies a whole program at once. The organisms are bytes run by our interpreter, in a closed universe: no access to the system, the network or the files.</p>
       </div>
     </section>
 
-    <section class="section" id="instruccions" data-reveal>
-      <div class="sec-head">
+    <section class="section block" id="instruccions" data-reveal>
+      <div class="block-head">
         <span class="sec-index micro">03</span>
         <h2 class="h2"><span lang="ca">La química: 10 instruccions</span><span lang="en">The chemistry: 10 instructions</span></h2>
       </div>
-      <div class="sec-body prose">
+      <div class="block-text prose">
         <p lang="ca">Cada programa són 64 bytes. Dos programes es posen l’un al costat de l’altre en una cinta de 128 bytes, i la cinta s’executa: el codi i les dades hi viuen junts, de manera que un programa es pot reescriure a si mateix i també el seu veí. Hi ha dos caps que llegeixen i escriuen. Qualsevol altre byte no fa res: són dades.</p>
         <p lang="en">Each program is 64 bytes. Two programs are placed side by side on a 128-byte tape, and the tape is run: code and data live together, so a program can rewrite itself and its neighbour. Two heads read and write. Any other byte does nothing: it is data.</p>
       </div>
-      <figure class="tape-fig">
-        <div class="tape-top" aria-hidden="true">
-          <span class="head-mark g-h0" style="left: 9%"><span lang="ca">cap 0</span><span lang="en">head 0</span><i></i></span>
-          <span class="head-mark g-h1" style="left: 71%"><span lang="ca">cap 1</span><span lang="en">head 1</span><i></i></span>
+      <figure class="tape-fig" id="tape" data-bytes="423042bac9ef7c31f562e39090f1cb0e0e48ae5f7baeeaf03869483838af5b817d88d1e42a3cc8d1d9f5762c5d7d2c3c5b5b5b165b271bc381ae9aa82f42a1e142304238c9ef7c31f562e39090f1cb0e0e48ae5f7baeeaf03869483838af5b817d80d1e42a3cc8d1d9f5762c480e3dcbf19090e362f5317cefc93842fd421a42">
+        <div class="tape-bar">
+          <p class="tape-now"><span class="micro"><span lang="ca">La cinta</span><span lang="en">The tape</span></span><span><span lang="ca">Pas</span><span lang="en">Step</span> <b id="tape-step">0</b> <span lang="ca">de</span><span lang="en">of</span> <span class="mono" id="tape-steps">8.192</span></span><span><span lang="ca">B porta</span><span lang="en">B carries</span> <b id="tape-copied">0</b> <span lang="ca">dels 64 bytes d’A, al revés</span><span lang="en">of A’s 64 bytes, reversed</span></span></p>
+          <div class="tape-ctl">
+            <button class="btn btn-sm btn-primary" id="tape-play" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path class="ic-fill" d="M7 4.5v15l12.5-7.5z"></path></svg><span class="when-paused"><span lang="ca">Executa</span><span lang="en">Run</span></span><span class="when-playing"><span lang="ca">Atura</span><span lang="en">Pause</span></span></button>
+            <button class="btn btn-sm" id="tape-reset" type="button"><span lang="ca">Torna a començar</span><span lang="en">Start again</span></button>
+          </div>
         </div>
-        <div class="tape" aria-hidden="true"><div></div><div></div></div>
-        <div class="tape-bottom" aria-hidden="true"><span>0 · 64 bytes</span><span>64 · 64 bytes · 127</span></div>
+        <p class="tape-label"><span><b>A</b> · <span lang="ca">la cel·la (410, 155), de la família 1</span><span lang="en">cell (410, 155), of family 1</span></span><span class="mono">0–63</span></p>
+        <div class="tape-row" id="tape-a" aria-hidden="true"></div>
+        <p class="tape-label"><span><b>B</b> · <span lang="ca">la cel·la (412, 156), sense família</span><span lang="en">cell (412, 156), with no family</span></span><span class="mono">64–127</span></p>
+        <div class="tape-row" id="tape-b" aria-hidden="true"></div>
+        <div class="tape-track"><input type="range" id="tape-scrub" min="0" max="8192" step="1" value="0" aria-label="Pas / Step"><i class="tape-mark" id="tape-mark"></i></div>
+        <ul class="tape-legend">
+          <li><i class="lg-pc"></i><span lang="ca">la instrucció que s’executa</span><span lang="en">the instruction being run</span></li>
+          <li><i class="lg-h0"></i><span lang="ca">cap 0</span><span lang="en">head 0</span></li>
+          <li><i class="lg-h1"></i><span lang="ca">cap 1</span><span lang="en">head 1</span></li>
+          <li><i class="lg-copy"></i><span lang="ca">els bytes d’A, la família 1</span><span lang="en">A’s bytes, family 1</span></li>
+        </ul>
         <figcaption class="tape-caption">
-          <span><span lang="ca">Una cinta de 128 bytes: dos programes, l’un al costat de l’altre.</span><span lang="en">A 128-byte tape: two programs, side by side.</span></span>
-          <span><span lang="ca">Il·lustratiu: els caps poden ser a qualsevol byte.</span><span lang="en">Illustrative: the heads can be on any byte.</span></span>
+          <span lang="ca">Dues cel·les veïnes del món 1006 a l’època 3.500, triades a l’atzar (llavor 20261030) entre les 254.776 parelles d’una cel·la de la família 1 amb un veí sense família. La cinta l’executa l’intèrpret del simulador: A es copia al revés a la meitat de B, i al pas <span class="mono">926</span> la còpia ja és sencera. Passa en el 73&nbsp;% d’aquestes parelles. Al principi, B ja s’assemblava a A: 43 dels seus 64 bytes eren els d’A, als mateixos llocs.</span>
+          <span lang="en">Two neighbouring cells of world 1006 at epoch 3,500, picked at random (seed 20261030) among the 254,776 pairs of a cell of family 1 with a neighbour that has no family. The tape is run by the simulator’s interpreter: A copies itself, reversed, onto B’s half, and by step <span class="mono">926</span> the copy is complete. This happens in 73&nbsp;% of these pairs. At the start, B already resembled A: 43 of its 64 bytes were A’s, in the same places.</span>
         </figcaption>
       </figure>
       <div class="specimens">
@@ -210,11 +219,12 @@
   </main>
 
   <footer class="site-foot">
-    <div class="foot-brand"><span class="brand">claude-origins</span><span class="micro"><span lang="ca">Abiogènesi digital</span><span lang="en">Digital abiogenesis</span></span></div>
+    <div class="foot-brand"><span class="brand"><span class="brand-name">Genesis</span></span><span class="micro"><span lang="ca">Abiogènesi digital</span><span lang="en">Digital abiogenesis</span></span></div>
     <p class="foot-text"><span lang="ca">Codi: Apache 2.0. Quadern, documentació i dades: CC BY 4.0. El simulador és una reimplementació independent del llenguatge BFF de <em>Computational Life</em> (Agüera y Arcas i altres, 2024, <span class="mono">arXiv:2406.19108</span>), contrastada amb cubff, la seva implementació de referència.</span><span lang="en">Code: Apache 2.0. Notebook, documentation and data: CC BY 4.0. The simulator is an independent reimplementation of the BFF language of <em>Computational Life</em> (Agüera y Arcas et al., 2024, <span class="mono">arXiv:2406.19108</span>), checked against cubff, its reference implementation.</span></p>
     <ul class="foot-links">
       <li><a href="explorador/" data-i18n="nav.explorer">Explorador 3D</a></li>
       <li><a href="2d/" data-i18n="nav.map">Vista 2D</a></li>
+      <li><a href="viu/" data-i18n="nav.live">El teu món, en viu</a></li>
       <li><a href="../quadern/" data-i18n="nav.notebook">Quadern</a></li>
       <li><a href="https://github.com/xavig-icv/genesis" data-i18n="nav.repo">Codi</a></li>
     </ul>

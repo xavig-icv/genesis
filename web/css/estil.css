@@ -1,4 +1,4 @@
-/* claude-origins · el sistema «Instrument»: les fitxes dels dos temes i els components de la portada, l'explorador 3D i
+/* Genesis · el sistema «Instrument»: les fitxes dels dos temes i els components de la portada, l'explorador 3D i
    la vista 2D. La interfície és gairebé neutra: el color és de les dades (famílies i instruccions), i la interacció va
    en tinta. El tema és el del sistema; [data-theme="light"|"dark"] a <html> el força (el desa js/tema.js).
    Amb paper i tinta, com fase1/style.css. Les fonts són a fonts.css. */
@@ -44,6 +44,9 @@
   /* L'escenari (el llenç): fons i boira, terra, oceà, atmosfera, estrelles, la cel·la sota el punter */
   --stage-bg: #ecebe5;
   --stage-grid: rgba(11, 11, 11, 0.07);
+  /* La portada: el fons del planeta i el dels pous dels sòlids (al clar, gairebé el paper) */
+  --hero-bg: #f9f9f7;
+  --well-bg: rgba(11, 11, 11, 0.022);
   --ocean-deep: #93a8b6;
   --ocean-shallow: #b3c3cd;
   --atmos: #d9e3e9;
@@ -117,6 +120,8 @@
 
   --stage-bg: #111110;
   --stage-grid: rgba(255, 255, 255, 0.06);
+  --hero-bg: #111110;
+  --well-bg: #111110;
   --ocean-deep: #0d171e;
   --ocean-shallow: #1d3240;
   --atmos: #8fb2cc;
@@ -151,7 +156,7 @@
     --f1: #dc6294;  --f2: #feda7c;  --f3: #bca8fd;  --f4: #f7a3a8;
     --f5: #946ade;  --f6: #be9021;  --f7: #ca85e2;  --f8: #b6c963;
     --f9: #efc8aa;  --f10: #e1c0ec; --f11: #8e894e; --f12: #ac6bac;
-    --stage-bg: #111110; --stage-grid: rgba(255, 255, 255, 0.06);
+    --stage-bg: #111110; --stage-grid: rgba(255, 255, 255, 0.06); --hero-bg: #111110; --well-bg: #111110;
     --ocean-deep: #0d171e; --ocean-shallow: #1d3240; --atmos: #8fb2cc; --stars: 1;
     --hover-outline: #f4f3ef; --hover-halo: #111110; --board-tint: 38%;
     --e-1: none;
@@ -360,6 +365,9 @@ html[lang="ca"] [lang="en"]:not(html), html[lang="en"] [lang="ca"]:not(html) { d
 }
 .co .insp[hidden] { display: none; }
 .co .insp.is-pinned { pointer-events: auto; }
+/* A l'escriptori, fix a la dreta, a sota del panell (ui.js en calcula la posició), sempre de la mateixa alçada */
+.co .insp.is-docked { right: var(--gap-tray); width: var(--w-panel); min-height: 176px; box-shadow: var(--e-1); pointer-events: auto; }
+.co .insp-empty { margin: 0; font-size: 13px; line-height: 1.55; color: var(--c-ink-3); }
 .co .insp-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 22px; }
 .co .insp-right { display: flex; align-items: center; gap: 6px; }
 .co .insp-cell { font-size: 13px; color: var(--c-ink-2); }
@@ -487,7 +495,10 @@ body.viewer { position: relative; height: 100vh; height: 100dvh; overflow: hidde
 .co .t-left, .co .t-right, .co .panel, .co .tl, .co .scale { z-index: 5; }
 .co .t-left { position: absolute; left: var(--gap-tray); top: var(--gap-tray); height: var(--h-topbar); display: flex; align-items: center; gap: 10px; max-width: calc(100% - 2 * var(--gap-tray)); padding: 0 6px 0 14px; }
 .co .t-right { position: absolute; right: var(--gap-tray); top: var(--gap-tray); height: var(--h-topbar); display: flex; align-items: center; gap: 6px; padding: 0 6px; }
-.co .brand { font-size: 14px; font-weight: 650; letter-spacing: -0.01em; text-decoration: none; white-space: nowrap; }
+/* La marca: GENESIS i, a la portada, el subtítol */
+.co .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; white-space: nowrap; }
+.co .brand-name { font-size: 13.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+.co .brand-sub { padding-left: 10px; border-left: 1px solid var(--c-line-strong); font-size: 13px; font-weight: 500; color: var(--c-ink-3); }
 .co .here { font-size: 13.5px; color: var(--c-ink-2); white-space: nowrap; }
 .co .t-left .select { width: 248px; }
 .co .panel {

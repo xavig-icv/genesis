@@ -65,21 +65,17 @@ export function createUI({ base = '../dades', onWorld, onFrame, onTheme }) {
     return x >= 0 && y >= 0 && x < W && y < H ? { x, y, c: y * W + x } : null;
   };
 
-  // el punter: a sobre d'una cel·la (p = [u, v] en cel·les, o null), al punt (x, y) del llenç. Un clic fixa la cel·la
-  // (un altre clic a la mateixa, o fora del món, la deixa anar)
-  let pointer = null;
-  function hover(p, x, y) {
-    pointer = p ? { x, y } : null;
+  // el punter: a sobre d'una cel·la (p = [u, v] en cel·les, o null). Un clic fixa la cel·la (un altre clic a la mateixa,
+  // o fora del món, la deixa anar)
+  function hover(p) {
     if (state.pinned) return;
     state.hover = cellOf(p);
     drawInspector();
   }
-  function pick(p, x, y) {
+  function pick(p) {
     const c = cellOf(p);
-    // la cel·la fixada, amb el punt de la pantalla on s'ha fixat (at)
-    state.pinned = !c || (state.pinned && state.pinned.c === c.c) ? null : { ...c, at: { x, y } };
+    state.pinned = !c || (state.pinned && state.pinned.c === c.c) ? null : c;
     state.hover = state.pinned ?? c;
-    if (c) pointer = { x, y };
     drawInspector();
   }
   function unpin() { state.pinned = null; state.hover = null; drawInspector(); }
@@ -243,11 +239,18 @@ export function createUI({ base = '../dades', onWorld, onFrame, onTheme }) {
     }));
   }
 
-  // l'inspector: segueix el punter, sense tapar mai la línia de temps ni el panell; fixat, té un botó per tancar-lo
+  // l'inspector: a l'escriptori, fix a la dreta, a sota del panell (sense cap cel·la, diu què s'hi veurà); al mòbil, a
+  // dalt, només amb una cel·la. Fixat, té un botó per tancar-lo
   const closeIcon = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>';
   function drawInspector() {
-    const box = $('inspector'), cell = state.hover, w = state.world;
-    if (!cell || !w) { box.hidden = true; return; }
+    const box = $('inspector'), cell = state.hover, w = state.world, docked = !mobile.matches;
+    box.classList.toggle('is-docked', docked);
+    if (!cell || !w) {
+      box.hidden = !(docked && w);
+      if (!box.hidden) { box.classList.remove('is-pinned'); box.replaceChildren(el('p', 'insp-empty', t('inspector.empty'))); }
+      placeInspector();
+      return;
+    }
     const { i } = frameIndex(), f = w.familyAt(i, cell.c), k = w.k(i)[cell.c];
     box.hidden = false;
     box.classList.toggle('is-pinned', !!state.pinned);
@@ -282,18 +285,17 @@ export function createUI({ base = '../dades', onWorld, onFrame, onTheme }) {
     } else if (w.codeEpochs.length) box.append(el('p', 'insp-note', t('inspector.nocode', { e: num(w.codeEpochs[0]) })));
     placeInspector();
   }
+  // A l'escriptori, el panell i l'inspector fan una columna a la dreta, entre la barra de dalt i la línia de temps: el
+  // panell s'encongeix (i el seu cos es desplaça) perquè l'inspector hi càpiga sempre a sota. Si el panell és tancat,
+  // l'inspector puja fins a sota de la barra
   function placeInspector() {
-    const box = $('inspector'), at = state.pinned ? state.pinned.at : pointer;
-    if (box.hidden || !at || mobile.matches) { box.style.left = box.style.top = ''; return; }
-    const gap = 12, off = 18, vw = innerWidth, side = $('side');
-    const right = !side.classList.contains('is-closed') ? side.getBoundingClientRect().left - gap : vw - gap;
-    const bottom = $('timeline').getBoundingClientRect().top - gap;
-    const w = box.offsetWidth, h = box.offsetHeight;
-    let x = at.x + off, y = at.y + off;
-    if (x + w > right) x = at.x - off - w;
-    if (y + h > bottom) y = at.y - off - h;
-    box.style.left = `${Math.max(gap, Math.min(x, vw - gap - w))}px`;
-    box.style.top = `${Math.max(gap * 2 + 44, y)}px`;
+    const box = $('inspector'), side = $('side');
+    if (box.hidden || mobile.matches) { box.style.top = ''; side.style.maxHeight = ''; return; }
+    const gap = parseFloat(getComputedStyle(document.body).getPropertyValue('--gap-tray')) || 12;
+    const bar = document.querySelector('.t-right').getBoundingClientRect().bottom, end = $('timeline').getBoundingClientRect().top;
+    const open = !side.classList.contains('is-closed');
+    side.style.maxHeight = open ? `${Math.max(120, end - bar - box.offsetHeight - gap * 3)}px` : '';
+    box.style.top = `${(open ? side.getBoundingClientRect().bottom : bar) + gap}px`;
   }
 
   // la línia de temps: un cens cada 250 èpoques, una etiqueta cada 1.000 (cada 2.000, si la història és llarga), i
@@ -348,6 +350,8 @@ export function createUI({ base = '../dades', onWorld, onFrame, onTheme }) {
   const showSheet = (on) => { dock.classList.toggle('is-open', on); grab.setAttribute('aria-expanded', String(on)); };
   showPanel(true);
   showSheet(false);
+  // quan el panell canvia d'alçada (una altra pestanya, les famílies), l'inspector el segueix
+  new ResizeObserver(() => placeInspector()).observe(side);
   panelBtn?.addEventListener('click', () => showPanel(side.classList.contains('is-closed')));
   grab.addEventListener('click', () => showSheet(!dock.classList.contains('is-open')));
   $('sum').addEventListener('click', () => showSheet(true));

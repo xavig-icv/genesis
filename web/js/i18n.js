@@ -2,7 +2,7 @@
 // desar) o del navegador: català si el navegador en demana, i si no, anglès.
 const TEXTS = {
   ca: {
-    'site.title': 'claude-origins · Abiogènesi digital',
+    'site.title': 'Genesis · Abiogènesi digital',
     'nav.home': 'Inici', 'nav.explorer': 'Explorador 3D', 'nav.notebook': 'Quadern', 'nav.repo': 'Codi',
     'nav.map': 'Vista 2D', 'nav.live': 'El teu món, en viu',
     'zoom.code2d': 'Fes zoom per veure els bytes de cada programa',
@@ -22,6 +22,7 @@ const TEXTS = {
     'inspector.cell': 'Cel·la ({x}, {y})', 'inspector.family': 'Família {id}', 'inspector.nofamily': 'Sense família',
     'inspector.instructions': '{k} instruccions de 64', 'inspector.code': 'El codi, a l’època {e}',
     'inspector.nocode': 'De prop, el codi es veu a partir de l’època {e}.', 'inspector.close': 'Tanca',
+    'inspector.empty': 'Passa el punter per sobre d’una cel·la per veure’n la família i el codi. Amb un clic, la fixes.',
     'scale.cells': '{n} cel·les', 'scale.cell': '{n} cel·la', 'scale.label': 'Escala', 'minimap.label': 'Mapa · proposta',
     'zoom.code': 'Apropa’t per veure el codi de cada cel·la',
     'help.title': 'Com et pots moure',
@@ -40,7 +41,7 @@ const TEXTS = {
     'source': 'Les dades surten de tornar a fer la simulació amb la mateixa llavor: la història és la del registre (es comprova amb les SHA-256 de les captures).',
   },
   en: {
-    'site.title': 'claude-origins · Digital abiogenesis',
+    'site.title': 'Genesis · Digital abiogenesis',
     'nav.home': 'Home', 'nav.explorer': '3D explorer', 'nav.notebook': 'Notebook', 'nav.repo': 'Code',
     'nav.map': '2D view', 'nav.live': 'Your own world, live',
     'zoom.code2d': 'Zoom in to see the bytes of each program',
@@ -60,6 +61,7 @@ const TEXTS = {
     'inspector.cell': 'Cell ({x}, {y})', 'inspector.family': 'Family {id}', 'inspector.nofamily': 'No family',
     'inspector.instructions': '{k} instructions out of 64', 'inspector.code': 'The code, at epoch {e}',
     'inspector.nocode': 'Up close, the code is shown from epoch {e}.', 'inspector.close': 'Close',
+    'inspector.empty': 'Hover over a cell to see its family and its code. Click to pin it.',
     'scale.cells': '{n} cells', 'scale.cell': '{n} cell', 'scale.label': 'Scale', 'minimap.label': 'Map · proposal',
     'zoom.code': 'Zoom in to see the code of each cell',
     'help.title': 'How to move around',

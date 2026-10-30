@@ -1,4 +1,5 @@
-// Proves de l'eina de les dades del lloc web (eines/web-dades.mjs). Executa: node test/web.mjs
+// Proves de l'eina de les dades del lloc web (eines/web-dades.mjs) i de la cinta de la portada (web/js/cinta.js).
+// Executa: node test/web.mjs
 // Fa servir els retalls de 32 × 32 cel·les amb vida de test/fixtures com si fossin les captures d'una execució.
 import assert from 'assert';
 import { spawnSync } from 'child_process';
@@ -9,7 +10,9 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { KIND } from '../fase1/bff.js';
+import { makeRng } from '../fase1/soup.js';
 import { CLASS, PALETTE_SIZE } from '../eines/web-dades.mjs';
+import { trace, check, mirrorStep } from '../web/js/cinta.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const tool = join(root, 'eines', 'web-dades.mjs');
@@ -108,6 +111,44 @@ const tests = {
     assert.strictEqual(r.status, 1);
     assert.match(r.stderr, /no és la mateixa història/);
     assert.ok(!existsSync(join(dir, 'mon.json')) && !existsSync(join(dir, 'mapes.z')) && !existsSync(join(dir, 'codi')));
+  },
+  'la cinta de la portada: el traçat coincideix amb l’intèrpret a cada pas, i els peus diuen el que hi passa': () => {
+    const html = readFileSync(join(root, 'web/index.html'), 'utf8');
+    const bytes = Uint8Array.from(Buffer.from(html.match(/id="tape" data-bytes="([0-9a-f]{256})"/)[1], 'hex'));
+    const tr = trace(bytes);
+    assert.strictEqual(check(bytes, tr, 1), -1, 'el traçat no coincideix amb evaluate()');
+    assert.strictEqual(tr.steps, 8192);
+    // el pas on la còpia al revés és sencera, als dos peus
+    const done = mirrorStep(bytes, tr);
+    const ca = html.match(/al pas <span class="mono">(\d+)<\/span> la còpia ja és sencera/), en = html.match(/by step <span class="mono">(\d+)<\/span> the copy is complete/);
+    assert.ok(ca && en, 'els peus de la cinta');
+    assert.strictEqual(Number(ca[1]), done);
+    assert.strictEqual(Number(en[1]), done);
+    // A no canvia, i al final B és A al revés
+    for (let k = 0; k < 64; k++) {
+      assert.strictEqual(tr.final[k], bytes[k], `el byte ${k} d'A`);
+      assert.strictEqual(tr.final[64 + k], bytes[63 - k], `el byte ${64 + k} de B`);
+    }
+    // al principi, quants bytes de B són els d'A als mateixos llocs
+    let same = 0;
+    for (let k = 0; k < 64; k++) if (bytes[k] === bytes[64 + k]) same++;
+    assert.match(html, new RegExp(`${same} dels seus 64 bytes eren els d’A`));
+    assert.match(html, new RegExp(`${same} of its 64 bytes were A’s`));
+  },
+  'el traçat de la cinta coincideix amb l’intèrpret en cintes a l’atzar i en parelles de cel·les amb vida': () => {
+    const rng = makeRng(20261030, 'v2');
+    // pas a pas si l'execució és curta; si no, cada 61 passos (i al final)
+    const ok = (t, what) => { const tr = trace(t); assert.strictEqual(check(t, tr, tr.steps < 1000 ? 1 : 61), -1, what); };
+    for (let k = 0; k < 200; k++) ok(Uint8Array.from({ length: 128 }, () => (rng() * 256) | 0), `la cinta a l'atzar ${k}`);
+    for (const src of [a, b]) {
+      for (let k = 0; k < 40; k++) {
+        const x = (rng() * 31) | 0, y = (rng() * 31) | 0, p = y * 32 + x, q = rng() < 0.5 ? p + 1 : p + 32;
+        const t = new Uint8Array(128);
+        t.set(src.subarray(p * 64, p * 64 + 64), 0);
+        t.set(src.subarray(q * 64, q * 64 + 64), 64);
+        ok(t, `la parella ${p}-${q}`);
+      }
+    }
   },
 };
 
