@@ -1,4 +1,5 @@
-// Proves de l'eina de les dades del lloc web (eines/web-dades.mjs) i de la cinta de la portada (web/js/cinta.js).
+// Proves de l'eina de les dades del lloc web (eines/web-dades.mjs), de la cinta de la portada (web/js/cinta.js) i del
+// motor del món en viu (web/js/viu-motor.js).
 // Executa: node test/web.mjs
 // Fa servir els retalls de 32 × 32 cel·les amb vida de test/fixtures com si fossin les captures d'una execució.
 import assert from 'assert';
@@ -9,10 +10,12 @@ import { inflateSync } from 'zlib';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
-import { KIND } from '../fase1/bff.js';
+import { KIND, runPairs } from '../fase1/bff.js';
 import { makeRng } from '../fase1/soup.js';
 import { CLASS, PALETTE_SIZE } from '../eines/web-dades.mjs';
 import { trace, check, mirrorStep } from '../web/js/cinta.js';
+import { createWorld, step, runHere, runInWorkers, fingerprint, command, CENSUS_EVERY } from '../web/js/viu-motor.js';
+import { createCensus } from '../fase2/census.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const tool = join(root, 'eines', 'web-dades.mjs');
@@ -150,11 +153,29 @@ const tests = {
       }
     }
   },
+  'el món en viu fa la mateixa història que sim.mjs, amb un fil o amb tres: els censos i l’empremta': async () => {
+    // tres treballadors de mentida, que executen les cintes com fase1/worker.js i responen més tard
+    const fake = () => ({ onmessage: null, onerror: null, postMessage(msg) { runPairs(new Uint8Array(msg.buffer), msg.nPairs); setImmediate(() => this.onmessage({ data: { buffer: msg.buffer } })); } });
+    for (const [width, height, seed, mixing, epochs] of [[32, 16, 7, 0, 600], [24, 24, 11, 0.01, 600]]) {
+      const p = { seed, width, height, mixing }, json = join(tmp, `viu-${seed}.jsonl`);
+      // l'ordre que la pàgina diu que fa el mateix món
+      const r = spawnSync(process.execPath, [join(root, 'sim.mjs'), ...command(p, epochs).split(' ').slice(2), '--json', json], { cwd: root, encoding: 'utf8' });
+      assert.strictEqual(r.status, 0, r.stderr);
+      const recs = readFileSync(json, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+      const want = recs.filter((x) => x.type === 'census'), end = recs.find((x) => x.type === 'end');
+      for (const run of [runHere, runInWorkers([fake(), fake(), fake()])]) {
+        const w = createWorld(p), census = createCensus({ version: 'v3', width, radius: 2 }), got = [];
+        while (w.epoch < epochs) { await step(w, run); if (w.epoch % CENSUS_EVERY === 0) got.push(census.run(w.soup, w.n, w.epoch)); }
+        assert.strictEqual(fingerprint(w.soup), end.fingerprint, `l'empremta de la llavor ${seed}`);
+        assert.deepStrictEqual(got.map((c) => [c.epoch, c.sample, c.heritable, c.replicating, JSON.stringify(c.families)]), want.map((c) => [c.epoch, c.sample, c.heritable, c.replicating, JSON.stringify(c.families)]));
+      }
+    }
+  },
 };
 
 let failed = 0;
 for (const [name, fn] of Object.entries(tests)) {
-  try { fn(); console.log(`  ok   ${name}`); } catch (e) { failed++; console.log(`  FALLA ${name}\n       ${e.message}`); }
+  try { await fn(); console.log(`  ok   ${name}`); } catch (e) { failed++; console.log(`  FALLA ${name}\n       ${e.message}`); }
 }
 rmSync(tmp, { recursive: true, force: true });
 if (failed) { console.log(`\n${failed} proves fallades`); process.exit(1); }

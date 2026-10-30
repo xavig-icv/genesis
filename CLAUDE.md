@@ -100,7 +100,13 @@ resultats dels experiments al quadern (`quadern/index.html`). Llegeix-los abans 
   - **Els exemples:** quan una imatge compara condicions, es trien a l'atzar amb una llavor declarada
     (`node eines/tria.mjs LLAVOR N elements...`), no els que es veuen bé.
   - **Les afirmacions dels peus** es comproven amb dades abans de publicar-les.
-- El lloc web (`web/`, sense dependències): la portada, en català i en anglès, l'explorador 3D (WebGL2) i la vista 2D.
+- El lloc web (`web/`, sense dependències): la portada, en català i en anglès, l'explorador 3D (WebGL2), la vista 2D i el
+  món en viu (`web/viu/`). Fa servir els fitxers del simulador (`fase1/`, `fase2/`): s'ha de servir amb l'arrel del repositori.
+  - **El món en viu** corre al navegador amb `web/js/viu-motor.js`, el mateix ordre de passos que `sim.mjs`, i el cens v3 de
+    `fase2/census.js`: cada cens en dona l'empremta i l'ordre de `sim.mjs` que fa el mateix món (`test/web.mjs` ho comprova).
+    No hi ha cap botó per plantar replicadors.
+  - **La cinta de la portada:** bytes de dues cel·les reals, que s'executen amb `fase1/bff.js`. Es trien i se'n comproven les
+    xifres del peu amb `node eines/web-cinta.mjs captura.bin web/dades/1006 3500 20261030` (`web/img/README.md`).
   - **Els colors** són fitxes de `web/css/estil.css`, amb un tema clar i un de fosc (per defecte, el del sistema); els dibuixos
     les llegeixen amb `web/js/tema.js`. El color és de les dades: la interfície va en tinta. Les dades diuen la posició de
     cada família a la paleta, no el color. Les imatges de `web/img/` diuen d'on surten (`web/img/README.md`).

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>El teu món, en viu · Genesis</title>
+  <meta name="description" content="Un món digital nou, de bytes a l'atzar, que corre al teu navegador amb el mateix simulador i les mateixes lleis que les sèries del projecte.">
+  <!-- el tema desat, abans del primer pintat -->
+  <script>try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+  <link rel="preload" href="../fonts/inter-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/fonts.css">
+  <link rel="stylesheet" href="../css/estil.css">
+</head>
+<body class="co viewer live">
+  <canvas id="view" data-i18n-aria="live.title"></canvas>
+
+  <header class="tray t-left">
+    <a class="brand" href="../"><span class="brand-name">Genesis</span></a>
+    <span class="here" data-i18n="nav.live">El teu món, en viu</span>
+  </header>
+
+  <div class="tray t-right">
+    <a class="btn btn-sm" href="../explorador/" data-i18n="nav.explorer">Explorador 3D</a>
+    <a class="btn btn-sm btn-ghost only-desk" href="../2d/" data-i18n="nav.map">Vista 2D</a>
+    <span class="vsep only-desk" aria-hidden="true"></span>
+    <button class="btn btn-icon only-desk" id="panel-btn" type="button" data-i18n-title="panel.toggle" aria-controls="side" aria-expanded="true"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.5"></rect><path d="M15 4v16"></path></svg></button>
+    <span class="vsep only-desk" aria-hidden="true"></span>
+    <div class="seg seg-mono only-desk" role="group" aria-label="Llengua / Language"><button type="button" data-lang="ca" aria-pressed="true">CA</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+    <div class="seg seg-icons only-desk" role="group" data-i18n-aria="theme.label">
+      <button type="button" data-theme-value="system" data-i18n-title="theme.system"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"></rect><path d="M8 20h8M12 16v4"></path></svg></button>
+      <button type="button" data-theme-value="light" data-i18n-title="theme.light"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg></button>
+      <button type="button" data-theme-value="dark" data-i18n-title="theme.dark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg></button>
+    </div>
+  </div>
+
+  <div class="dock" id="dock">
+    <button class="grab-btn" id="grab" type="button" data-i18n-title="panel.toggle" aria-controls="side" aria-expanded="false"><span class="grab"></span></button>
+    <footer class="tray tl" id="timeline">
+      <button class="play" id="play" type="button" data-i18n-title="live.run"><svg class="ic" id="play-icon" viewBox="0 0 24 24" aria-hidden="true"><path class="ic-fill" d="M7 4.5v15l12.5-7.5z"></path></svg></button>
+      <div class="track live-track" aria-hidden="true"><div class="rail"></div><div class="fill" id="fill"></div><div id="ticks"></div><div id="bars"></div><div class="est" id="est" hidden><span></span><i></i></div><div class="playhead" id="playhead"></div></div>
+      <div class="epoch"><span class="micro" data-i18n="time.epoch">Època</span><output id="epoch">0</output></div>
+      <span class="vsep" aria-hidden="true"></span>
+      <div class="epoch rate"><span class="micro" data-i18n="live.rate">Èpoques/s</span><output id="rate">—</output></div>
+    </footer>
+    <button class="m-sum" id="sum" type="button"><span class="t" id="sum-title"></span><span class="mini" id="sum-fams"></span></button>
+    <aside class="tray panel" id="side" data-i18n-aria="panel.label">
+      <div class="panel-head">
+        <h2 class="panel-title" data-i18n="live.title">El teu món</h2>
+        <p class="live-lead" data-i18n="live.lead"></p>
+      </div>
+      <div class="m-row only-mob"></div>
+      <div class="seg tabs" role="tablist" data-i18n-aria="panel.label">
+        <button type="button" role="tab" id="tab-world" aria-controls="tp-world" aria-selected="true" data-i18n="panel.world">El món</button>
+        <button type="button" role="tab" id="tab-census" aria-controls="tp-census" aria-selected="false" data-i18n="live.tab.census">El cens</button>
+        <button type="button" role="tab" id="tab-fams" aria-controls="tp-fams" aria-selected="false"><span data-i18n="panel.families">Famílies</span> <span class="count" id="fam-count"></span></button>
+      </div>
+      <div class="panel-body">
+        <div role="tabpanel" id="tp-world" aria-labelledby="tab-world">
+          <form class="live-form" id="form">
+            <div class="field">
+              <label class="micro" for="seed" data-i18n="live.seed">Llavor</label>
+              <span class="field-row"><input class="input mono" id="seed" type="number" min="0" max="4294967295" step="1" inputmode="numeric" required><button class="btn btn-sm" id="reseed" type="button" data-i18n="live.reseed">Una altra</button></span>
+            </div>
+            <div class="field">
+              <span class="micro" data-i18n="live.law">Llei</span>
+              <div class="seg seg-fill" role="group" id="laws" data-i18n-aria="live.law"><button type="button" data-mixing="0" aria-pressed="true" data-i18n="live.quiet">Quiet</button><button type="button" data-mixing="0.01" aria-pressed="false" data-i18n="live.current">Corrent feble</button></div>
+            </div>
+            <div class="field">
+              <span class="micro" data-i18n="live.size">Mida</span>
+              <div class="seg seg-fill seg-mono" role="group" id="sizes" data-i18n-aria="live.size"><button type="button" data-size="512x256" aria-pressed="true">512 × 256</button><button type="button" data-size="256x128" aria-pressed="false">256 × 128</button></div>
+            </div>
+            <button class="btn btn-sm btn-primary" id="apply" type="submit" data-i18n="live.apply">Comença un món nou</button>
+          </form>
+          <p class="note" data-i18n="live.odds"></p>
+          <button class="btn btn-sm" id="try-1006" type="button" data-i18n="live.try1006">Prova la llavor 1006</button>
+          <p class="note" data-i18n="live.foot"></p>
+        </div>
+        <div role="tabpanel" id="tp-census" aria-labelledby="tab-census" hidden>
+          <p class="live-status" id="status"></p>
+          <p id="last-census"></p>
+          <p class="note" data-i18n="live.criterion"></p>
+          <h3 data-i18n="live.tab.check">Comprova-ho</h3>
+          <p id="check-text"></p>
+          <div id="check-more" hidden>
+            <p data-i18n="live.check.cmd"></p>
+            <pre class="cmd"><code id="cmd"></code></pre>
+            <p id="check-end"></p>
+            <pre class="cmd"><code id="line"></code></pre>
+          </div>
+        </div>
+        <div role="tabpanel" id="tp-fams" aria-labelledby="tab-fams" hidden><p class="note" data-i18n="families.note"></p><ul class="fams" id="families"></ul></div>
+      </div>
+      <div class="m-foot only-mob">
+        <a class="btn btn-sm" href="../2d/" data-i18n="nav.map">Vista 2D</a>
+        <div class="seg seg-mono" role="group" aria-label="Llengua / Language"><button type="button" data-lang="ca" aria-pressed="true">CA</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+        <div class="seg seg-icons" role="group" data-i18n-aria="theme.label">
+          <button type="button" data-theme-value="system" data-i18n-title="theme.system"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"></rect><path d="M8 20h8M12 16v4"></path></svg></button>
+          <button type="button" data-theme-value="light" data-i18n-title="theme.light"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg></button>
+          <button type="button" data-theme-value="dark" data-i18n-title="theme.dark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg></button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="insp" id="inspector" role="status" hidden></div>
+  <p class="hint" id="hint"></p>
+
+  <div class="state status-card" id="error" role="alert" hidden>
+    <h2><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z"></path><path d="M12 10v4.5M12 17.2v.3"></path></svg><span id="error-text"></span></h2>
+    <div class="status-actions"><a class="btn btn-sm" href="../" data-i18n="nav.home">Inici</a></div>
+  </div>
+
+  <script type="module" src="../js/viu.js"></script>
+</body>
+</html>

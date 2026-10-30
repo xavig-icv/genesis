@@ -650,6 +650,24 @@ body.viewer { position: relative; height: 100vh; height: 100dvh; overflow: hidde
   .co .scale { bottom: 164px; height: 30px; }
 }
 
+/* ───────────────────────── El teu món, en viu (web/viu/) ───────────────────────── */
+.co .live-lead { margin: 0; font-size: 13px; line-height: 1.5; color: var(--c-ink-2); }
+.co .live-form { display: grid; gap: 12px; margin: 2px 0 14px; }
+.co .field { display: grid; gap: 6px; }
+.co .field-row { display: flex; gap: 6px; }
+.co .input { flex: 1; min-width: 0; height: var(--h-control); padding: 0 10px; border: 0; border-radius: var(--r-3); background: var(--c-ctl); color: var(--c-ink); font: 500 13.5px/1 var(--font-mono); }
+.co .input:hover { background: var(--c-ctl-hover); }
+.co .panel-body .live-status { margin: 0 0 6px; font: 600 15px/1.4 var(--font-sans); color: var(--c-ink); }
+.co .live-status.is-alive::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--c-ink); vertical-align: 1px; }
+.co .panel-body #try-1006 { margin: 0 0 12px; }
+.co pre.cmd { margin: 0 0 10px; padding: 9px 10px; border-radius: var(--r-3); background: var(--c-well); font: 500 11.5px/1.5 var(--font-mono); color: var(--c-ink); white-space: pre-wrap; word-break: break-all; }
+.co .fam.no-spark { grid-template-columns: 10px minmax(0, 1fr) 56px; cursor: default; }
+.co .fam.no-spark:hover { background: transparent; }
+/* la barra de baix: un cens cada 250 èpoques, amb l'alçada dels replicadors hereditaris (en tinta, des de l'1 %) */
+.co .live-track .cbar { position: absolute; bottom: 24px; width: 2px; margin-left: -1px; border-radius: 1px 1px 0 0; background: var(--c-line-strong); }
+.co .live-track .cbar.is-on { background: var(--c-ink); }
+.co .live .epoch.rate { min-width: 64px; }
+
 /* ───────────────────────── Moviment reduït: tot quiet ───────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .co *, .co *::before, .co *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
