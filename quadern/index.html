@@ -1273,7 +1273,7 @@
     <p><strong>La segona prova, contra el placebo: es confirma.</strong> Amb <code>zeros-data</code>, <em>g</em> és més alt que amb el placebo als 8 mons de prova. La prova de signes dona <em>p</em> = 0,0039, per sota del llindar de Holm (0,0125).</p>
     <ul>
       <li><strong>Com es diu:</strong> als mons de prova, entre els que tenen una diferència, predominen els que la vida baixa menys, o creix més, del començament al primer cens amb <code>zeros-data</code> que amb el placebo, aparellat cel·la per cel·la (en part a les cel·les saturades).</li>
-      <li><strong>Què vol dir:</strong> no n'hi ha prou de tocar les cel·les; el que hi fa és treure els zeros. El placebo toca les mateixes cel·les i hi canvia el mateix nombre de bytes, però de dades, i la vida hi baixa com al món sense tocar: a 7 mons, <em>g</em> va de 0,20 a 0,39 amb el placebo, i de 0,19 a 0,39 sense tocar res.</li>
+      <li><strong>Què vol dir:</strong> no n'hi ha prou de tocar les cel·les; el que hi fa és treure els zeros. El placebo toca les mateixes cel·les i hi canvia gairebé el mateix nombre de bytes (a les cel·les saturades, menys), però de dades, i la vida hi baixa com al món sense tocar: a 7 mons, <em>g</em> va de 0,20 a 0,39 amb el placebo, i de 0,19 a 0,39 sense tocar res.</li>
       <li><strong>Dins d'aquests mons, és causal:</strong> els braços parteixen de la mateixa captura, amb les mateixes llavors, i només els separa la transformació.</li>
       <li><strong>No diu res de mons nous.</strong> Els 8 mons es van triar després de veure'n les dades.</li>
     </ul>
@@ -1326,7 +1326,7 @@
 
     <h2>Què en traiem</h2>
     <ul>
-      <li><strong>En aquests 8 mons, els zeros contribueixen a fer baixar la vida just després d'establir-se.</strong> Canviar-los per bytes de dades fa que baixi menys que un placebo que toca les mateixes cel·les, als 8 mons. És la hipòtesi de l'autoenverinament, posada a prova amb una intervenció preregistrada, i no només mirant les dades.</li>
+      <li><strong>En aquests 8 mons, els zeros contribueixen a fer baixar la vida just després d'establir-se.</strong> Canviar-los per bytes de dades fa que baixi menys, o creixi més, que amb un placebo que toca les mateixes cel·les, als 8 mons. És la hipòtesi de l'autoenverinament, posada a prova amb una intervenció preregistrada, i no només mirant les dades.</li>
       <li><strong>Comparat amb el món sense tocar,</strong> les dades apunten al mateix lloc (7 de 8), però la prova no permet afirmar-ho.</li>
       <li><strong>No diu res de mons nous.</strong> Per saber si els zeros prediuen la fragilitat d'un món que no hem vist, caldria una cohort nova, preregistrada.</li>
       <li><strong>No és un descobriment.</strong> Que els zeros aturen les còpies ja ho vam veure a la fase 1 (entrada 2), i l'article de 2024 en descriu el fenomen. La revisió de la bibliografia ja deia què hi podia afegir aquesta prova: la prova causal, amb una intervenció des d'una mateixa captura i un control. Seria una nota curta (<code>docs/estat-questio.md</code>, §11).</li>
@@ -1365,6 +1365,15 @@
       <li><strong>Una pregunta que en surt:</strong> per què, sense zeros, hi ha més branques on una altra família ocupa el món en 250 èpoques. Són poques, i ho hem vist després.</li>
       <li><strong>La sèrie de la maduració</strong> (<code>docs/protocol-maduracio.md</code>): l'envelliment dels 180 mons corre des del 29-10-2026. El manifest es prepararà després de l'auditoria 22.</li>
     </ul>
+
+    <div class="pending">
+      <p><strong>Correccions de l'auditoria 23 (30-10-2026).</strong> Tots dos auditors van reproduir la decisió byte a byte, des d'una còpia de l'etiqueta. L'auditor 1 en va refer el càlcul sense cap funció del programa, amb els mateixos 44 valors de <em>g</em>, i les xifres d'aquesta entrada, tornades a calcular des dels registres, són totes iguals. L'auditor 2 en va refer les <em>p</em>. L'auditor 1 va demanar dir el resultat amb més precisió, sense canviar cap dada (AUD-135):</p>
+      <ul>
+        <li><strong>"Baixa menys".</strong> A "Què en traiem", dèiem que canviar els zeros per bytes de dades "fa que baixi menys que un placebo". La frase preregistrada és "baixa menys, o creix més": amb <code>zeros-data</code>, la vida creix en 5 dels 8 mons (<em>g</em> d'1,65 a 3,58).</li>
+        <li><strong>El placebo.</strong> A "Què vol dir", dèiem que "hi canvia el mateix nombre de bytes". A les cel·les saturades en canvia menys, com diem als resultats.</li>
+        <li><strong>El README</strong> deia "treure els zeros fa que la vida baixi menys", sense "o creixi més" ni la condició del placebo, i en deia el mecanisme: "És la hipòtesi de l'autoenverinament". La prova diu que els zeros hi contribueixen, no per quina via. És compatible amb la hipòtesi, i els zeros també poden adormir les còpies que els porten (<code>docs/protocol-zeros.md</code>, §1). Corregit al README i al README.en.</li>
+      </ul>
+    </div>
   </article>
 
   <script type="module" src="quadern.js"></script>

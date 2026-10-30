@@ -106,13 +106,16 @@ See notebook entry 10, in Catalan.
 many more zero bytes when it becomes established (notebook entry 11, in Catalan). In 8 worlds where life drops
 right after becoming established, we restarted each world from the same instant, in four ways and with the
 same randomness: 132 branches ([protocol](docs/protocol-zeros.md), in Catalan).
-- **Against a placebo, removing the zeros makes life drop less:** confirmed, in all 8 worlds (p = 0.004, with
-  Holm's correction).
+- **Against a placebo, removing the zeros makes life drop less, or grow more:** confirmed, in all 8 worlds (p = 0.004,
+  with Holm's correction). With the zeros changed, life grows in 5 of the 8.
   - **What is done:** the zeros of the cells that do not replicate become data bytes. The placebo changes, in
-    the same cells, as many data bytes as there are zeros, and leaves the zeros in place.
-  - **What it means:** within these worlds, the zeros contribute to the drop of life. This is the
+    the same cells, as many data bytes as there are zeros, and leaves the zeros in place. It is matched cell by
+    cell, partly at the saturated cells: in cells with more zeros than data bytes it falls short, and leaves
+    between 0.5% and 5.0% of each world's zeros unmatched.
+  - **What it means:** within these worlds, the zeros contribute to the drop of life. This is compatible with the
     self-poisoning hypothesis: the replicator leaves behind broken copies full of zeros, and this debris stops
-    the next copies.
+    the next copies. The test does not tell the mechanism: the zeros may also put to sleep the copies that carry
+    them.
 - **Against the untouched world:** inconclusive (7 worlds for and 1 against, p = 0.035, with a threshold of
   0.025).
 - **It says nothing about new worlds,** because these were chosen after seeing their data.

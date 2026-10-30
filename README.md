@@ -183,13 +183,15 @@ Als mons on la vida es torna a perdre, quan s'hi estableix ja hi ha molts més b
 ([entrada 11](quadern/index.html#entrada-11)). En 8 mons on la vida baixa just després d'establir-se, hem tornat a
 engegar cada món des del mateix instant, de quatre maneres i amb el mateix atzar: 132 branques
 ([protocol](docs/protocol-zeros.md)).
-- **Contra un placebo, treure els zeros fa que la vida baixi menys:** confirmat, als 8 mons (*p* = 0,004, amb la
-  correcció de Holm).
+- **Contra un placebo, treure els zeros fa que la vida baixi menys, o creixi més:** confirmat, als 8 mons (*p* = 0,004, amb
+  la correcció de Holm). Amb els zeros canviats, la vida creix en 5 dels 8.
   - **Què es fa:** els zeros de les cel·les que no es repliquen passen a bytes de dades. El placebo canvia, a les mateixes
-    cel·les, tants bytes de dades com zeros hi ha, i hi deixa els zeros.
-  - **Què vol dir:** dins d'aquests mons, els zeros contribueixen a fer baixar la vida. És la hipòtesi de
+    cel·les, tants bytes de dades com zeros hi ha, i hi deixa els zeros. És aparellat cel·la per cel·la, en part a les
+    cel·les saturades: a les que tenen més zeros que bytes de dades no hi arriba, i deixa sense aparellar entre el 0,5 % i
+    el 5,0 % dels zeros de cada món.
+  - **Què vol dir:** dins d'aquests mons, els zeros contribueixen a fer baixar la vida. És compatible amb la hipòtesi de
     l'autoenverinament: el replicador deixa còpies trencades plenes de zeros, i aquestes deixalles aturen les còpies
-    següents.
+    següents. La prova no en diu el mecanisme: els zeros també poden adormir les còpies que els porten.
 - **Contra el món sense tocar:** no concloent (7 mons a favor i 1 en contra, *p* = 0,035, amb un llindar de 0,025).
 - **No diu res de mons nous,** perquè aquests es van triar després de veure'n les dades.
 - **No és un descobriment:** l'enverinament per zeros ja és a l'article de 2024. El que hi afegeix la sèrie és la prova
