@@ -1,7 +1,10 @@
-# claude-origins
+# Genesis
 
 **Abiogènesi digital:** un univers de joguina on intentem que la vida sorgeixi sola, sense que ningú
 n'escrigui el primer organisme.
+
+*Fins al 30 d'octubre de 2026 es deia claude-origins, el nom que encara surt als registres dels experiments i a les
+auditories.*
 
 **English:** [README.en.md](README.en.md) · **Glossari català–anglès:** [docs/glossari.md](docs/glossari.md)
 
@@ -18,7 +21,7 @@ de la llei 2, i s'ha triat perquè la colònia s'hi veu bé: és un exemple, no 
 - **La vida s'ha establert** quan, en dos censos seguits (un cada 250 èpoques), almenys l'1 % d'una mostra de
   2.048 cel·les en són.
 
-> **English summary.** claude-origins is a digital abiogenesis project, started in October 2026. Programs in
+> **English summary.** Genesis is a digital abiogenesis project, started in October 2026. Programs in
 > a random "primordial soup" (the BFF language of Agüera y Arcas et al., 2024) interact and mutate, and
 > heritable self-replicators sometimes emerge with no designed ancestor and no reward for copying. We design
 > the laws of the world — space, currents, flow — never the organisms. The first preregistered series (160

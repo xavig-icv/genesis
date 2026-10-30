@@ -68,13 +68,13 @@ d'una còpia idèntica al commit de l'etiqueta del preregistre (`docs/protocol-e
 ```bash
 git worktree add --detach ../preregistre preregistre-llei2
 cd ../preregistre
-node fase2/estadistica.mjs --etapa 2 ../claude-origins/fase2/resultats/serie-llei2/A ../claude-origins/fase2/resultats/serie-llei2/B > /tmp/etapa2.txt
-diff /tmp/etapa2.txt ../claude-origins/fase2/resultats/serie-llei2/etapa2-sortida.txt && echo idèntica
-cd ../claude-origins && git worktree remove ../preregistre
+node fase2/estadistica.mjs --etapa 2 ../genesis/fase2/resultats/serie-llei2/A ../genesis/fase2/resultats/serie-llei2/B > /tmp/etapa2.txt
+diff /tmp/etapa2.txt ../genesis/fase2/resultats/serie-llei2/etapa2-sortida.txt && echo idèntica
+cd ../genesis && git worktree remove ../preregistre
 ```
 
-- **El camí:** `../claude-origins` és la carpeta del repositori. Si el vostre clon es diu d'una altra manera,
-  canvieu-lo.
+- **El camí:** `../genesis` és la carpeta del repositori, com la d'un clon de GitHub. Si el vostre es diu d'una altra
+  manera, canvieu-lo.
 - **La sortida** ha de ser idèntica a la desada.
 - **Una excepció possible:** la línia de sensibilitat de l'HOE pot canviar si la vostra versió de Node porta
   un altre zlib. La decisió no en depèn.

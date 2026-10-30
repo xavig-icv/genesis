@@ -15,9 +15,9 @@ cd cubff
 git checkout f212e849027c98fcf4b242eccfb5fed435223e23
 make CUDA=0 LINK_FLAGS="-lbrotlienc -lbrotlicommon"
 bash test.sh bff_noheads
-cp ruta/a/claude-origins/eines/cubff/oracle.cc .
+cp ruta/a/genesis/eines/cubff/oracle.cc .
 g++ -std=c++17 -O2 -fopenmp -xc++ oracle.cc -xnone build/common.o -lbrotlienc -lbrotlicommon -o oracle
-node ruta/a/claude-origins/eines/cubff/compara.mjs ./oracle 50000
+node ruta/a/genesis/eines/cubff/compara.mjs ./oracle 50000
 ```
 
 - **La compilació** necessita `LINK_FLAGS`, perquè la VM no té `pkg-config`.
@@ -62,7 +62,7 @@ partir dels resultats de cubff desats a `test/fixtures/cubff-oracle.bin`, i no n
 Aquestes dues parts no es poden executar per separat a cubff. Les hem comparat línia per línia amb
 `fase2/world.js` i `fase1/soup.js`:
 
-| | cubff (`main.cc`, `common_language.h`, `make_2d_pattern.py`) | claude-origins |
+| | cubff (`main.cc`, `common_language.h`, `make_2d_pattern.py`) | Genesis |
 |---|---|---|
 | Veïns permesos | Quadrat de 5 × 5 sense la mateixa cel·la, sense donar la volta al mapa | Igual (`pairNeighbors`, radi 2) |
 | Ordre | Totes les cel·les barrejades a l'atzar a cada època | Igual |
