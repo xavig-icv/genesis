@@ -109,6 +109,106 @@ export function evaluate(t, base, maxSteps = MAX_STEPS) {
   return ops;
 }
 
+// Les químiques de B1, les ablacions (docs/pla-b1.md, §2): cadascuna canvia una sola regla, i C0 és BFF tal com és.
+//  - nop: les instruccions ablades. No fan res i consumeixen el pas, com un byte de dades, i no compten com a operació.
+//  - block: quines escriptures no fan res. La posició escrita és h1 per a '.', i h0 per a ',', '+' i '-'. La "meitat del
+//    punter" és la meitat de la cinta on és el punter d'instruccions (de 0 a 63, o de 64 a 127):
+//      pc-half, a la meitat del punter; other-half, a l'altra meitat; first, a les posicions 0-63; second, a les 64-127.
+//  - noReadOther: una còpia que llegeix de l'altra meitat que la del punter no fa res (llegeix h0 '.', i h1 ',').
+//  - h1: on comença h1.
+// Una escriptura bloquejada, o una còpia que no es pot fer, no canvia la cinta, consumeix el pas i compta com a operació.
+export const CHEMISTRIES = Object.freeze({
+  C0: { description: 'BFF, tal com és' },
+  K0: { nop: '.,', description: "'.' i ',' no fan res (control: sense còpia)" },
+  L0: { nop: '[]', description: "'[' i ']' no fan res (control: sense bucles)" },
+  S4: { block: 'other-half', description: "escriure a l'altra meitat que la del punter no fa res (control)" },
+  K1: { nop: '.', description: "'.' no fa res" },
+  K2: { nop: ',', description: "',' no fa res" },
+  R0: { nop: '+-', description: "'+' i '-' no fan res" },
+  S1: { block: 'pc-half', description: 'escriure a la meitat del punter no fa res (sense automodificació)' },
+  S2: { block: 'first', description: 'escriure a les posicions 0-63 no fa res (el primer programa no es toca)' },
+  S3: { block: 'second', description: 'escriure a les posicions 64-127 no fa res (el segon programa no es toca)' },
+  X1: { noReadOther: true, description: "una còpia que llegeix de l'altra meitat que la del punter no fa res" },
+  H64: { h1: 64, description: 'h1 comença a 64, i no a 0' },
+});
+const BLOCKS = { none: 0, 'pc-half': 1, 'other-half': 2, first: 3, second: 4 };
+
+// L'intèrpret d'una química, amb els mateixos arguments que evaluate. Amb C0, és evaluate, la mateixa funció: la sopa, el
+// món i el cens no canvien
+export function evaluator(name) {
+  const c = Object.prototype.hasOwnProperty.call(CHEMISTRIES, name) ? CHEMISTRIES[name] : null;
+  if (!c) throw new Error(`química desconeguda: ${name}`);
+  if (name === 'C0') return evaluate;
+  const kind = KIND.slice();
+  for (const ch of c.nop ?? '') kind[ch.charCodeAt(0)] = NOP;
+  const block = BLOCKS[c.block ?? 'none'], noReadOther = c.noReadOther === true, h1Start = c.h1 ?? 0;
+  return (t, base, maxSteps = MAX_STEPS) => evaluateWith(t, base, maxSteps, kind, block, noReadOther, h1Start);
+}
+
+// Com evaluate, amb les regles d'una química: la taula dels tipus, quines escriptures no fan res, si una còpia pot llegir de
+// l'altra meitat i on comença h1. Les mateixes dues optimitzacions. Una escriptura bloquejada també marca dirty, com totes les
+// instruccions que no són claudàtors: el resultat és el de la versió de referència (test/quimiques.mjs)
+function evaluateWith(t, base, maxSteps, kind, block, noReadOther, h1Start) {
+  let pc = 0, h0 = 0, h1 = h1Start, ops = 0, steps = 0;
+  let lastEnd = -1, lastEndSteps = 0, lastEndOps = 0, dirty = true;
+  // si es pot escriure a la posició p, amb el punter a la meitat half (0 o 1)
+  const writable = (p, half) => block === 0 || (block === 1 ? p >> 6 !== half : block === 2 ? p >> 6 === half : block === 3 ? p >= PROGRAM_SIZE : p < PROGRAM_SIZE);
+  while (steps < maxSteps) {
+    const k = kind[t[base + pc]];
+    if (k === NOP) {
+      do {
+        steps++;
+        if (++pc >= TAPE_SIZE) return ops;
+      } while (steps < maxSteps && kind[t[base + pc]] === NOP);
+      continue;
+    }
+    ops++;
+    if (k === LOOP) {
+      if (t[base + h0] === 0) {
+        let depth = 1;
+        while (depth > 0) {
+          if (++pc >= TAPE_SIZE) return ops;
+          const q = kind[t[base + pc]];
+          if (q === LOOP) depth++;
+          else if (q === END) depth--;
+        }
+      }
+    } else if (k === END) {
+      if (t[base + h0] !== 0) {
+        if (pc === lastEnd && !dirty) {
+          const period = steps - lastEndSteps;
+          const periodOps = ops - lastEndOps;
+          const cycles = Math.floor((maxSteps - steps - 1) / period);
+          steps += cycles * period;
+          ops += cycles * periodOps;
+        }
+        lastEnd = pc; lastEndSteps = steps; lastEndOps = ops; dirty = false;
+        let depth = 1;
+        while (depth > 0) {
+          if (--pc < 0) return ops;
+          const q = kind[t[base + pc]];
+          if (q === END) depth++;
+          else if (q === LOOP) depth--;
+        }
+      }
+    } else {
+      dirty = true;
+      const half = pc >> 6;
+      if (k === DOT) { if (writable(h1, half) && (!noReadOther || h0 >> 6 === half)) t[base + h1] = t[base + h0]; }
+      else if (k === COM) { if (writable(h0, half) && (!noReadOther || h1 >> 6 === half)) t[base + h0] = t[base + h1]; }
+      else if (k === GT) h0 = (h0 + 1) & MASK;
+      else if (k === LT) h0 = (h0 - 1) & MASK;
+      else if (k === RB) h1 = (h1 + 1) & MASK;
+      else if (k === LB) h1 = (h1 - 1) & MASK;
+      else if (k === INC) { if (writable(h0, half)) t[base + h0]++; }
+      else if (writable(h0, half)) t[base + h0]--; // DEC
+    }
+    steps++;
+    if (++pc >= TAPE_SIZE) return ops;
+  }
+  return ops;
+}
+
 // Executa nPairs cintes consecutives d'un buffer i retorna el total d'operacions.
 export function runPairs(buf, nPairs, maxSteps = MAX_STEPS) {
   let ops = 0;

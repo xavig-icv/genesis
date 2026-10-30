@@ -1,7 +1,7 @@
 # B1, les ablacions de la química · el nivell 1, la densitat de replicadors
 
-**Versió: v0.1, esborrany (30-10-2026), per a l'auditoria 25.** No s'ha calculat res, llevat del temps que triga la prova, sense
-cap recompte (§8). El codi encara no hi és (§9).
+**Versió: v0.1, esborrany (31-10-2026), per a l'auditoria 25.** No s'ha calculat res, llevat del temps que triga la prova, sense
+cap recompte (§8). El codi és a la mateixa branca, amb les proves (§9).
 - **D'on surt:**
   - el full de ruta (`docs/disseny.md`, §4; AUD-40): després de la sèrie confirmatòria, un eix de química amb ablacions, per saber
     quins ingredients calen;
@@ -102,9 +102,9 @@ variant (AUD-65). Cap prova nova (AUD-02).
 ## 5. Els programes, les llavors i la mida
 
 **Els mateixos programes a totes les variants** (un disseny aparellat).
-- **El programa i:** es fa amb un generador propi, amb la llavor del pla i l'índex *i*. Els 8 de soroll, també.
-- **L'atzar de la prova del programa i:** un generador propi, amb una altra llavor i el mateix índex. Així, el resultat d'un
-  programa només depèn de la llavor, de l'índex i de la variant, i no del que han gastat els anteriors.
+- **El programa i:** es fa amb un generador propi (el v2), amb la llavor del pla més 2*i*. Els 8 de soroll, també.
+- **L'atzar de la prova del programa i:** un altre generador propi, amb la llavor més 2*i* + 1. Així, el resultat d'un programa
+  només depèn de la llavor, de l'índex i de la variant, i no del que han gastat els anteriors.
 - **Per què:** una diferència entre dues variants, programa a programa, només pot ser de la química. I el càlcul es pot repartir
   en trossos, en qualsevol ordre i a qualsevol màquina, amb el mateix resultat.
 
@@ -151,30 +151,43 @@ uns 0,8 ms per programa i fil, amb Du i amb D½.
   PC. La màquina virtual comparteix els mateixos fils, i no hi afegeix gaire.
 - **Gairebé tot el temps** és de les finestres de 16 bytes, que es comparen com a text. Una versió més ràpida de
   `fase2/replication.js` hauria de donar els mateixos resultats, comprovats amb les empremtes. Ara no la proposem.
+- **El que hem vist sense voler** (31-10-2026), en provar l'eina (§9) amb una llavor de prova (777) i 300 programes, amb C0 i D½: el
+  JSONL tenia almenys un programa que es replica. No n'hem mirat quants, ni si són hereditaris. La llavor de prova no és la del pla,
+  i les proves de l'eina no miren mai cap recompte.
 
 ## 9. La implementació, en una PR
 
-- **`fase1/bff.js`:**
-  - les químiques, amb el nom i la definició de la §2;
-  - una funció que en dona l'intèrpret.
+És a la branca `b1-ablacions`, amb el pla. No canvia res del que ja hi havia: les empremtes de `test/determinisme.mjs`, l'oracle de
+cubff i les proves de l'intèrpret i del món passen igual.
+- **`fase1/bff.js`:** les químiques de la §2 (`CHEMISTRIES`), i `evaluator(nom)`, que en dona l'intèrpret.
   - **Amb C0,** és la funció `evaluate` d'ara, la mateixa: la sopa, el món i el cens no canvien.
-- **Una prova de cada variant:**
-  - contra un intèrpret de referència lent i evident, amb la mateixa definició;
-  - amb milers de cintes a l'atzar, també riques en instruccions i en bucles.
-  - **L'oracle de cubff,** només per a C0, com ara.
-- **`fase2/replication.js`:** una opció amb l'intèrpret.
-  - **Per defecte,** el d'ara.
-  - **Una prova:** les empremtes i els valors del cens no canvien.
+  - **Amb les altres,** una còpia d'`evaluate` amb les regles de la química, i les mateixes dues optimitzacions.
+- **`fase2/replication.js`:** l'opció `evaluate`, amb l'intèrpret de la química. Per defecte, el d'ara.
 - **`eines/densitat.mjs`, l'eina del nivell 1:**
-  - les opcions: la variant, la distribució, la llavor, i un tros de l'índex dels programes (de *i* a *j*);
-  - un JSONL com el de `sim.mjs`: la línia d'inici amb el codi i l'ordre, els recomptes cada 10⁵ programes, els replicadors trobats
-    i la línia final, amb una empremta de tots els resultats;
-  - els trossos, amb `eines/llanca-lot.sh`.
-- **L'AUD-65, amb una prova:**
-  - un replicador conegut (de les captures de les proves) és hereditari amb C0 i no amb K0;
-  - amb cada variant, `replicationTest` amb l'intèrpret de la variant dona el mateix que amb el de referència.
-- **La determinació:** el mateix tros, dues vegades i a les dues màquines, dona el mateix JSONL, llevat del temps.
-- **L'anàlisi** (`eines/densitat-analisi.mjs`): escrita i provada amb dades sintètiques abans de calcular res.
+  - **les opcions:** la química, la distribució, la llavor, quants programes, des de quin índex (`--de`), quants fils (`--fils`) i
+    cada quants programes un recompte (`--tros`);
+  - **un JSONL com el de `sim.mjs`:** la línia d'inici, amb el codi i l'ordre; els replicadors trobats, amb els bytes; els recomptes
+    acumulats; i la línia final, amb una empremta dels resultats;
+  - **el resultat no depèn dels fils:** cada programa té el seu atzar (§5), i els resultats s'escriuen en ordre;
+  - **una ordre per química,** amb fils (`worker_threads`), en lloc d'`eines/llanca-lot.sh`, que només executa `sim.mjs`;
+  - **no sobreescriu cap fitxer,** i a la consola només hi escriu el progrés.
+- **`eines/densitat-analisi.mjs`, l'anàlisi de la §6:** escrita i provada amb dades sintètiques abans de calcular res.
+  - **Valida els registres:** cada fitxer sencer i coherent, amb l'empremta; tots del mateix commit, sense canvis; la mateixa
+    llavor; i, per a cada distribució, totes les químiques amb els mateixos programes, de 0 a *N*, sense forats.
+  - **L'interval de Clopper-Pearson** suma els termes de la binomial, sense cap taula, i serveix amb *n* = 10⁸. A 10⁶, dona el valor
+    exacte, fet amb racionals, fins a 10⁻¹².
+  - **Els controls:** si cap té hereditaris, ho diu, i no aplica ni l'ampliació ni la regla del nivell 2.
+- **Les proves:**
+  - **`test/quimiques.mjs`:**
+    - cada regla, amb una cinta feta a mà;
+    - cada química, contra una versió de referència lenta, adaptada de la de cubff, en 10.000 cintes a l'atzar;
+    - **l'AUD-65:** els tres replicadors reals de les proves són hereditaris amb C0 i no amb K0. Amb cada química, la prova de
+      replicació dona el mateix amb el seu intèrpret que amb el de referència. Sense l'opció, és la de sempre.
+    - **Que les proves atrapen els errors:** amb un error posat a propòsit a la regla de S1, en fallen tres.
+  - **`test/densitat.mjs`:** les opcions, que el resultat no depèn dels fils ni dels trossos, el JSONL, les distribucions i l'AUD-65 a
+    l'eina.
+  - **`test/densitat-analisi.mjs`:** l'interval, un resultat conegut, els controls, l'ampliació i cada manera com la validació s'hi
+    ha de negar.
 
 ## 10. El nivell 2, la sopa (esbós)
 
@@ -190,7 +203,7 @@ uns 0,8 ms per programa i fil, amb Du i amb D½.
 
 ## 11. El calendari
 
-1. **Durant la sèrie de la maduració:** aquest pla, revisat a l'auditoria 25, i la PR de la §9, amb les proves.
+1. **Durant la sèrie de la maduració:** aquest pla i la PR de la §9, revisats a l'auditoria 25.
 2. **Després de la sèrie,** quan el PC i la màquina virtual siguin lliures: el nivell 1, unes 4 h.
 3. **Després:** el disseny del nivell 2.
 
