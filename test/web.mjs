@@ -1,5 +1,5 @@
-// Proves de l'eina de les dades del lloc web (eines/web-dades.mjs), de la cinta de la portada (web/js/cinta.js) i del
-// motor del món en viu (web/js/viu-motor.js).
+// Proves de les eines de les dades i de les imatges del lloc web (eines/web-dades.mjs i eines/web-imatges.mjs), de la cinta
+// de la portada (web/js/cinta.js) i del motor del món en viu (web/js/viu-motor.js).
 // Executa: node test/web.mjs
 // Fa servir els retalls de 32 × 32 cel·les amb vida de test/fixtures com si fossin les captures d'una execució.
 import assert from 'assert';
@@ -171,6 +171,29 @@ const tests = {
       }
     }
   },
+  "l'eina de les imatges valida les opcions i no sobreescriu res, abans d'obrir Chrome": () => {
+    const images = (...args) => spawnSync(process.execPath, [join(root, 'eines', 'web-imatges.mjs'), ...args], { encoding: 'utf8' });
+    assert.strictEqual(images('--help').status, 0);
+    // un fitxer qualsevol fa de Chrome: l'eina s'ha d'aturar abans de fer-lo servir
+    const chrome = process.execPath, dir = join(tmp, 'imatges');
+    const bad = [
+      ['--sortida', dir],
+      ['--chrome', join(tmp, 'no-hi-es.exe'), '--sortida', dir],
+      ['--chrome', chrome, '--sortida', dir, '--color', 'blau'],
+      ['--chrome', chrome, '--sortida', dir, '--mon', 'u'],
+      ['--chrome', chrome, '--sortida', dir, '--camera3d', '380'],
+      ['--chrome', chrome, '--sortida', dir, '--url', 'http://exemple.cat/web/'],
+      ['--chrome', chrome, '--sortida', dir, '--sortida', dir],
+      ['--chrome', chrome],
+    ];
+    for (const args of bad) assert.strictEqual(images(...args).status, 2, args.join(' '));
+    mkdirSync(dir, { recursive: true });
+    writeFileSync(join(dir, 'entrada-2d-fosc.jpg'), 'abans');
+    const r = images('--chrome', chrome, '--sortida', dir);
+    assert.strictEqual(r.status, 2);
+    assert.match(r.stderr, /ja existeix .*entrada-2d-fosc\.jpg/);
+    assert.strictEqual(readFileSync(join(dir, 'entrada-2d-fosc.jpg'), 'utf8'), 'abans');
+  },
 };
 
 let failed = 0;
@@ -179,4 +202,4 @@ for (const [name, fn] of Object.entries(tests)) {
 }
 rmSync(tmp, { recursive: true, force: true });
 if (failed) { console.log(`\n${failed} proves fallades`); process.exit(1); }
-console.log(`\nTotes les ${Object.keys(tests).length} proves de les dades del lloc web passen.`);
+console.log(`\nTotes les ${Object.keys(tests).length} proves del lloc web passen.`);

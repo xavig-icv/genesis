@@ -19,6 +19,17 @@ finestra de 24 × 24 cel·les i hi ha més instruccions per cel·la; la 2D, a la
 càmera 3D es posa directament a la seva posició. Amb l'aproximació suau, s'hi atura amb un error d'arrodoniment que canvia
 d'una execució a l'altra, i les imatges no sempre surten iguals.
 
+**Com es fan:** amb el servidor engegat a l'arrel del repositori (`node server.mjs`),
+
+```
+node eines/web-imatges.mjs --chrome CAMI-DE-CHROME --sortida CARPETA
+```
+
+- **Els valors per defecte són els d'aquestes imatges:** `--mon 1006 --epoca 3500 --camera3d 380,108 --centre2d 200,93`. La vista
+  2D té el centre a la cel·la (200, 93), i comença a la (0, 0).
+- **No sobreescriu cap fitxer.** Per comprovar les d'aquí, es fan en una altra carpeta i se'n comparen les SHA-256.
+- **Comprovat el 31-10-2026,** amb Chrome 156.0.8078.73: les quatre surten idèntiques, byte a byte, a les d'aquesta carpeta.
+
 **Les primeres versions** (30-10-2026) eren de l'època 2.750. Es van fer abans que acabés la simulació sencera, amb unes dades
 de prova, i fins a aquesta època les dades completes en són idèntiques (les SHA-256 de les 55 captures, els mapes, el codi i
 els colors de les famílies), com també les imatges refetes. Es van canviar per l'època 3.500 perquè a la 2.750 la major part

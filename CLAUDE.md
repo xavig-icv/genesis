@@ -111,7 +111,8 @@ Llegeix-los abans de proposar canvis.
     xifres del peu amb `node eines/web-cinta.mjs captura.bin web/dades/1006 3500 20261030` (`web/img/README.md`).
   - **Els colors** són fitxes de `web/css/estil.css`, amb un tema clar i un de fosc (per defecte, el del sistema); els dibuixos
     les llegeixen amb `web/js/tema.js`. El color és de les dades: la interfície va en tinta. Les dades diuen la posició de
-    cada família a la paleta, no el color. Les imatges de `web/img/` diuen d'on surten (`web/img/README.md`).
+    cada família a la paleta, no el color. Les imatges de `web/img/` diuen d'on surten (`web/img/README.md`), i es tornen a
+    fer, byte a byte, amb `node eines/web-imatges.mjs --chrome CAMI-DE-CHROME --sortida carpeta` i el servidor engegat.
   - **Les dades de cada món:** `node eines/web-dades.mjs web/dades/ID/fitxa.json carpeta-de-captures`, a partir de les
     captures d'una execució amb `--save-every` (l'ordre és a la fitxa). Només les escriu si la història és la del registre:
     les SHA-256 de les captures (`docs/captures.sha256`) i els censos i l'empremta de la sèrie. No van a git.
