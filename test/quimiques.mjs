@@ -1,16 +1,17 @@
 // Proves de les químiques de B1 (fase1/bff.js, docs/pla-b1.md, §2):
 //   - C0 és evaluate, la mateixa funció, i una química desconeguda és un error;
-//   - cada regla, amb una cinta feta a mà;
+//   - cada regla, amb una cinta feta a mà, també a les fronteres de les meitats (posicions 63 i 64);
 //   - cada química, contra una versió de referència lenta i directa, amb les mateixes regles, en cintes a l'atzar;
 //   - la prova de replicació amb la química (AUD-65): els replicadors reals són hereditaris amb C0 i no amb K0, i amb cada
-//     química la prova dona el mateix amb el seu intèrpret que amb el de referència. Sense l'opció, és la de sempre.
+//     química la prova dona el mateix amb el seu intèrpret que amb el de referència. Sense l'opció, és la de sempre;
+//   - l'AUD-140: amb S4, el codi del company s'hi pot copiar el programa, i amb X0, no.
 // Executa: node test/quimiques.mjs
 import assert from 'assert';
 import { readFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { evaluate, evaluator, CHEMISTRIES, TAPE_SIZE, PROGRAM_SIZE, MAX_STEPS } from '../fase1/bff.js';
 import { createRng, makeRng } from '../fase1/soup.js';
-import { replicationTest } from '../fase2/replication.js';
+import { replicationTest, windowsOf, hasWindow } from '../fase2/replication.js';
 
 const NAMES = Object.keys(CHEMISTRIES);
 function tape(code, fill = 1) {
@@ -78,7 +79,7 @@ function mixedSoup(program, seed) {
 const tests = {
   'C0 és evaluate, la mateixa funció, i una química desconeguda és un error'() {
     assert.strictEqual(evaluator('C0'), evaluate);
-    assert.deepStrictEqual(NAMES, ['C0', 'K0', 'L0', 'S4', 'K1', 'K2', 'R0', 'S1', 'S2', 'S3', 'X1', 'H64']);
+    assert.deepStrictEqual(NAMES, ['C0', 'K0', 'L0', 'X0', 'K1', 'K2', 'R0', 'S1', 'S2', 'S3', 'S4', 'X1', 'H64']);
     for (const bad of ['c0', 'K9', 'toString', '__proto__', '']) assert.throws(() => evaluator(bad), /química desconeguda/);
   },
   "les instruccions ablades no fan res, no compten i consumeixen el pas (K0, K1, K2, R0 i L0)"() {
@@ -107,15 +108,15 @@ const tests = {
     assert.strictEqual(run('K1', t, 2), 0);
     assert.strictEqual(t[0], '.'.charCodeAt(0));
   },
-  "les escriptures bloquejades no canvien la cinta, però compten (S1, S2, S3 i S4)"() {
+  "les escriptures bloquejades no canvien la cinta, però compten (S1, S2, S3, S4 i X0)"() {
     // '+' a la posició 0, amb el punter a la mateixa meitat
-    for (const [name, changed] of [['C0', true], ['S1', false], ['S2', false], ['S3', true], ['S4', true]]) {
+    for (const [name, changed] of [['C0', true], ['S1', false], ['S2', false], ['S3', true], ['S4', true], ['X0', true]]) {
       const t = tape('+');
       assert.strictEqual(run(name, t), 1, name);
       assert.strictEqual(t[0], changed ? 44 : 43, name);
     }
     // '.' a la posició 127, des de la primera meitat. Si s'hi escriu, el punter hi troba el '{' copiat, i també s'executa
-    for (const [name, changed] of [['C0', true], ['S1', true], ['S2', true], ['S3', false], ['S4', false]]) {
+    for (const [name, changed] of [['C0', true], ['S1', true], ['S2', true], ['S3', false], ['S4', false], ['X0', false]]) {
       const t = tape('{.');
       assert.strictEqual(run(name, t), changed ? 3 : 2, name);
       assert.strictEqual(t[TAPE_SIZE - 1], changed ? '{'.charCodeAt(0) : 1, name);
@@ -128,6 +129,18 @@ const tests = {
     t = tape('[+]');
     assert.strictEqual(run('S2', t), MAX_STEPS);
     assert.strictEqual(t[0], '['.charCodeAt(0));
+  },
+  "les fronteres: un '.' que escriu a la posició 63 o a la 64, des de la mateixa posició (S1, S2, S3, S4, X1 i X0)"() {
+    // 63 '}' porten h1 a 63, i el '.' de la posició 63 hi copia t[h0 = 0]: tot és a la primera meitat. Amb 64 '}', el '.' és a
+    // la 64 i escriu a la 64, a la segona meitat, però llegeix de la primera: és la còpia de l'AUD-140, que S4 deixa fer
+    const cases = { 63: { C0: true, S1: false, S2: false, S3: true, S4: true, X1: true, X0: true }, 64: { C0: true, S1: false, S2: true, S3: false, S4: true, X1: false, X0: false } };
+    for (const [p, expected] of Object.entries(cases)) {
+      for (const [name, changed] of Object.entries(expected)) {
+        const t = tape('}'.repeat(Number(p)) + '.');
+        assert.strictEqual(run(name, t), Number(p) + 1, `${name}, ${p}`);
+        assert.strictEqual(t[p], changed ? '}'.charCodeAt(0) : '.'.charCodeAt(0), `${name}, ${p}`);
+      }
+    }
   },
   "X1: una còpia que llegeix de l'altra meitat no fa res, i H64: h1 comença a 64"() {
     // '.' llegeix h0 = 127, de l'altra meitat que el punter
@@ -206,6 +219,32 @@ const tests = {
         assert.deepStrictEqual(a, b, `${name}, programa ${k}`);
       });
     }
+  },
+  "AUD-140: amb S4, el codi del company s'hi pot copiar el programa; amb X0, no"() {
+    // El programa de l'auditor 1: 20 bytes de dades, '{>[>{' (un palíndrom) i 39 bytes de dades. El company, de bytes de dades,
+    // amb un '.' a la posició 5 i un ']' a la 8: el bucle del programa es tanca al company, i el '.' del company, des de la seva
+    // meitat, s'hi copia el programa. Amb S4 no hi ha cap escriptura bloquejada, i el fill i el nét en porten una finestra
+    const OPS = '<>{}-+.,[]', DATA = Array.from({ length: 255 }, (_, i) => i + 1).filter((b) => !OPS.includes(String.fromCharCode(b)));
+    const A = Uint8Array.from([...DATA.slice(0, 20), ...tape('{>[>{').subarray(0, 5), ...DATA.slice(20, 59)]);
+    const partner = () => { const p = Uint8Array.from({ length: PROGRAM_SIZE }, (_, i) => DATA[100 + (i % 100)]); p[5] = 46; p[8] = 93; return p; };
+    const meet = (first, name) => { const t = new Uint8Array(TAPE_SIZE); t.set(first, 0); t.set(partner(), PROGRAM_SIZE); run(name, t); return t.slice(PROGRAM_SIZE); };
+    const set = windowsOf(A);
+    for (const name of ['C0', 'S4']) {
+      const child = meet(A, name);
+      assert.ok(hasWindow(child, set) && hasWindow(meet(child, name), set), name);
+    }
+    for (const name of ['X1', 'X0']) assert.deepStrictEqual(meet(A, name), partner(), name);
+    // i la prova del cens de veritat, amb 8 programes de soroll uniformes (la llavor 880 de l'script de l'auditor 1): amb S4, el
+    // programa és hereditari; amb X0, ni tan sols es replica
+    const census = (name) => {
+      const soup = new Uint8Array(PROGRAM_SIZE * 9), rng = makeRng(1000000 + 880, 'v2');
+      soup.set(A, 0);
+      for (let i = PROGRAM_SIZE; i < soup.length; i++) soup[i] = (rng() * 256) | 0;
+      return replicationTest(soup, 0, makeRng(2000000 + 880, 'v2'), { heredity: true, complete: true, evaluate: evaluator(name) });
+    };
+    assert.ok(census('S4').heritableSolo);
+    const x0 = census('X0');
+    assert.ok(!x0.solo && !x0.context && !x0.heritable, JSON.stringify(x0));
   },
   "sense l'opció, la prova de replicació és la de sempre (l'esclat, 64 cel·les)"() {
     const soup = new Uint8Array(readFileSync(fileURLToPath(new URL('fixtures/esclat-32x32.bin', import.meta.url))));

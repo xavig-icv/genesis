@@ -13,10 +13,10 @@
 // Les distribucions (§3 del pla): d-mig, cada byte és, amb probabilitat ½, una de les 10 instruccions, a l'atzar, i si no, un
 // dels altres 246 valors, a l'atzar; uniforme, bytes uniformes, com els de la sopa del començament.
 //
-// El JSONL (no sobreescriu cap fitxer): la línia d'inici, amb el codi, l'ordre i els paràmetres; una línia per a cada programa
-// que es replica, amb els seus bytes i les quatre proves; un recompte acumulat cada --tros programes (100.000 per defecte); i
-// la línia final, amb els totals, l'empremta dels resultats (la SHA-256 de les línies dels replicadors i dels recomptes, que no
-// depèn dels fils) i els segons. A la consola, només el progrés, sense cap recompte.
+// El JSONL (no sobreescriu cap fitxer): la línia d'inici, amb el codi, la SHA-256 dels mòduls que fan el càlcul, l'ordre i els
+// paràmetres; una línia per a cada programa que es replica, amb els seus bytes i les quatre proves; un recompte acumulat cada
+// --tros programes (100.000 per defecte); i la línia final, amb els totals, l'empremta dels resultats (la SHA-256 de les línies
+// dels replicadors i dels recomptes, que no depèn dels fils) i els segons. A la consola, només el progrés, sense cap recompte.
 import { openSync, writeSync, closeSync, readFileSync } from 'fs';
 import { execSync } from 'child_process';
 import { createHash } from 'crypto';
@@ -29,6 +29,11 @@ import { replicationTest } from '../fase2/replication.js';
 
 export const NOISE = 8;            // els programes de soroll de la sopa de la prova
 export const MAX_PROGRAMS = 1e9;   // l'índex més gran: la llavor més 2i ha de cabre en 32 bits
+export const TEST = 'fase2/replication.js, heredity, complete';
+// Els mòduls de què depèn el resultat d'un programa: la seva SHA-256 va a la línia d'inici, i l'anàlisi la compara amb la dels
+// de la seva còpia (AUD-139, AU2-102). A la màquina virtual, sense git, és l'única manera de veure-hi un canvi
+export const MODULES = ['fase1/bff.js', 'fase1/soup.js', 'fase2/replication.js', 'eines/densitat.mjs'];
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const INSTRUCTIONS = [...OPCODES].map((c) => c.charCodeAt(0));
 const OTHERS = Array.from({ length: 256 }, (_, b) => b).filter((b) => !INSTRUCTIONS.includes(b));
 export const DISTRIBUTIONS = Object.freeze({
@@ -67,16 +72,20 @@ export function testRange(from, to, { seed, distribution, chemistry }) {
 }
 
 // Quina versió del codi fa el càlcul, com a sim.mjs: el commit de git, amb "+canvis" si el codi té canvis sense desar; o, si
-// no hi ha git (a la màquina virtual), el fitxer VERSIO
+// no hi ha git (a la màquina virtual), el fitxer VERSIO. Git es crida des de l'arrel del repositori: des d'eines/, els patrons
+// només hi miraven aquesta carpeta, i un canvi a fase1/ o a fase2/ no hi sortia (AUD-139, AU2-102)
 function codeVersion() {
-  const here = fileURLToPath(new URL('.', import.meta.url));
-  const run = (cmd) => execSync(cmd, { cwd: here, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+  const run = (cmd) => execSync(cmd, { cwd: ROOT, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
   try {
     const hash = run('git rev-parse --short HEAD');
     return hash + (run('git status --porcelain -- "*.js" "*.mjs"') ? '+canvis' : '');
   } catch {
-    try { return readFileSync(join(here, '..', 'VERSIO'), 'utf8').trim(); } catch { return 'desconeguda'; }
+    try { return readFileSync(join(ROOT, 'VERSIO'), 'utf8').trim(); } catch { return 'desconeguda'; }
   }
+}
+// La SHA-256 de cada mòdul de MODULES, tal com és a la còpia de root
+export function moduleHashes(root = ROOT) {
+  return Object.fromEntries(MODULES.map((m) => [m, createHash('sha256').update(readFileSync(join(root, m))).digest('hex')]));
 }
 
 const OPTIONS = {
@@ -134,9 +143,9 @@ async function main() {
   const result = (o) => { const s = JSON.stringify(o); hash.update(s + '\n'); writeSync(fd, s + '\n'); };
   const from = opts.de, to = opts.de + opts.programes;
   line({
-    type: 'start', code: codeVersion(), node: process.version, command: `node eines/densitat.mjs ${argv.join(' ')}`,
+    type: 'start', code: codeVersion(), modules: moduleHashes(), node: process.version, command: `node eines/densitat.mjs ${argv.join(' ')}`,
     chemistry: opts.quimica, description: CHEMISTRIES[opts.quimica].description, distribution: opts.distribucio, seed: opts.llavor,
-    from, to, programs: opts.programes, noise: NOISE, chunk: opts.tros, test: 'fase2/replication.js, heredity, complete',
+    from, to, programs: opts.programes, noise: NOISE, chunk: opts.tros, test: TEST,
   });
   const jobs = [];
   for (let a = from; a < to; a += opts.tros) jobs.push([a, Math.min(to, a + opts.tros)]);

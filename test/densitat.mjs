@@ -1,15 +1,16 @@
 // Proves d'eines/densitat.mjs, el nivell 1 de B1 (docs/pla-b1.md). Cap no mira quants replicadors hi ha: només que les
 // opcions es validin, que el resultat no depengui dels fils ni dels trossos, que la sopa de cada programa només depengui de
-// la llavor i de l'índex, que la prova sigui la del cens amb la química (AUD-65), i que el JSONL sigui complet i coherent.
+// la llavor i de l'índex, que la prova sigui la del cens amb la química (AUD-65), que el JSONL sigui complet i coherent, i que
+// el codi i la SHA-256 dels mòduls de la línia d'inici vegin els canvis de tot el repositori (AUD-139).
 // Executa: node test/densitat.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
 import { createHash } from 'crypto';
-import { mkdtempSync, rmSync, readFileSync, writeFileSync } from 'fs';
+import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, copyFileSync } from 'fs';
 import { tmpdir } from 'os';
-import { join } from 'path';
+import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { soupFor, testSoup, testRange, DISTRIBUTIONS, NOISE } from '../eines/densitat.mjs';
+import { soupFor, testSoup, testRange, moduleHashes, DISTRIBUTIONS, NOISE, MODULES, TEST } from '../eines/densitat.mjs';
 import { evaluator, OPCODES, PROGRAM_SIZE } from '../fase1/bff.js';
 import { replicationTest } from '../fase2/replication.js';
 import { makeRng } from '../fase1/soup.js';
@@ -80,6 +81,8 @@ const tests = {
       assert.strictEqual(start.type, 'start');
       assert.deepStrictEqual([start.chemistry, start.distribution, start.seed, start.from, start.to, start.programs, start.noise, start.chunk], ['K2', 'uniforme', SEED, 7, 157, 150, NOISE, 50]);
       assert.match(start.code, /^[0-9a-f]{7}/);
+      assert.deepStrictEqual(start.modules, moduleHashes());
+      assert.strictEqual(start.test, TEST);
       assert.strictEqual(start.command, `node eines/densitat.mjs --quimica K2 --distribucio uniforme --llavor ${SEED} --programes 150 --de 7 --tros 50 --json ${out}`);
       assert.strictEqual(end.type, 'end');
       assert.deepStrictEqual([end.from, end.to, end.tested], [7, 157, 150]);
@@ -104,6 +107,44 @@ const tests = {
       const hash = createHash('sha256');
       for (const o of ls.slice(1, -1)) hash.update(JSON.stringify(o) + '\n');
       assert.strictEqual(end.fingerprint, hash.digest('hex'));
+    });
+  },
+  "el codi: git, des de l'arrel, veu un canvi a fase1/ i a fase2/, i la SHA-256 dels mòduls també el veu sense git (AUD-139, AU2-102)"() {
+    withTmp((tmp) => {
+      // una còpia mínima del repositori, amb git, on es poden canviar els mòduls
+      for (const f of ['package.json', ...MODULES]) { mkdirSync(dirname(join(tmp, f)), { recursive: true }); copyFileSync(join(root, f), join(tmp, f)); }
+      const env = { ...process.env, GIT_CEILING_DIRECTORIES: dirname(tmp) };
+      const git = (...a) => spawnSync('git', ['-c', 'user.name=prova', '-c', 'user.email=prova@exemple.invalid', ...a], { cwd: tmp, encoding: 'utf8', env });
+      for (const a of [['init', '-q'], ['add', '-A'], ['commit', '-q', '-m', 'prova']]) assert.strictEqual(git(...a).status, 0, a.join(' '));
+      const hash = git('rev-parse', '--short', 'HEAD').stdout.trim();
+      // un sol programa de K0 amb bytes uniformes, on no hi pot haver cap replicador: només se'n llegeix la línia d'inici
+      let n = 0;
+      const start = () => {
+        const out = join(tmp, `r${n++}.jsonl`);
+        const r = spawnSync(process.execPath, [join(tmp, 'eines', 'densitat.mjs'), '--quimica', 'K0', '--distribucio', 'uniforme', '--llavor', '1', '--programes', '1', '--json', out], { cwd: tmp, encoding: 'utf8', env });
+        assert.strictEqual(r.status, 0, r.stderr);
+        return lines(out)[0];
+      };
+      const clean = start();
+      assert.strictEqual(clean.code, hash);
+      assert.deepStrictEqual(clean.modules, moduleHashes(tmp));
+      assert.deepStrictEqual(clean.modules, moduleHashes(root));
+      for (const f of ['fase1/bff.js', 'fase2/replication.js']) {
+        const before = readFileSync(join(tmp, f));
+        writeFileSync(join(tmp, f), Buffer.concat([before, Buffer.from('\n// canvi\n')]));
+        const changed = start();
+        assert.strictEqual(changed.code, `${hash}+canvis`, f);
+        assert.notStrictEqual(changed.modules[f], clean.modules[f], f);
+        writeFileSync(join(tmp, f), before);
+      }
+      assert.strictEqual(start().code, hash);
+      // sense git, el codi és el del fitxer VERSIO, i el canvi només es veu a la SHA-256 dels mòduls
+      rmSync(join(tmp, '.git'), { recursive: true, force: true });
+      writeFileSync(join(tmp, 'VERSIO'), 'abc1234\n');
+      writeFileSync(join(tmp, 'fase1', 'bff.js'), readFileSync(join(tmp, 'fase1', 'bff.js'), 'utf8') + '\n// canvi\n');
+      const noGit = start();
+      assert.strictEqual(noGit.code, 'abc1234');
+      assert.notStrictEqual(noGit.modules['fase1/bff.js'], clean.modules['fase1/bff.js']);
     });
   },
   'la sopa i la prova de cada programa només depenen de la llavor i de l\'índex'() {

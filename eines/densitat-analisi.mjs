@@ -7,18 +7,32 @@
 // La validació (si hi ha cap problema, els llista i no analitza res):
 //   - cada fitxer, sencer: la línia d'inici, els replicadors en ordre i dins del seu tros, els recomptes acumulats, la línia
 //     final amb els totals i l'empremta, tornada a calcular;
-//   - tots, del mateix commit, sense "+canvis", amb la mateixa llavor i el mateix soroll;
+//   - la línia d'inici: una química i una distribució conegudes, la prova del cens, i l'ordre que diu el mateix que els camps; i
+//     els bytes de cada replicador, els del programa que en donen la llavor i l'índex;
+//   - tots, del mateix commit, sense "+canvis", i amb la SHA-256 dels mòduls que fan el càlcul igual que la dels d'aquesta còpia
+//     (AUD-139, AU2-102);
+//   - el pla sencer, ni més ni menys (AUD-142, AU2-103): la llavor i el soroll del pla, les dues distribucions, totes les
+//     químiques de cadascuna, i una N que el pla preveu (10⁷, o 10⁸ després de l'ampliació, amb d-mig);
 //   - per a cada distribució i química, els trossos cobreixen de 0 a N sense forats ni solapaments, i totes les químiques
 //     d'una distribució tenen la mateixa N: són els mateixos programes (§5).
 // Tot és descriptiu (§6): els intervals són de Clopper-Pearson, del 95 %. El del quocient de dues densitats és el de dos
-// recomptes de Poisson independents (la binomial condicionada); amb els mateixos programes, és conservador.
+// recomptes de Poisson independents (la binomial condicionada); amb els mateixos programes, és conservador (la cobertura, per
+// simulació: node eines/densitat-cobertura.mjs).
 import { readFileSync, readdirSync } from 'fs';
 import { createHash } from 'crypto';
 import { join } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
-import { OPCODES, CHEMISTRIES } from '../fase1/bff.js';
+import { OPCODES, CHEMISTRIES, PROGRAM_SIZE } from '../fase1/bff.js';
+import { soupFor, moduleHashes, MODULES, NOISE, DISTRIBUTIONS, TEST } from './densitat.mjs';
 
-export const CONTROLS = ['K0', 'L0', 'S4'];  // han de donar 0 (§2)
+// El pla (§5): la llavor, el soroll de la prova, i, per a cada distribució, les químiques i les N possibles. Si hi falta o hi
+// sobra res, no s'analitza res (AUD-142, AU2-103)
+export const PLAN = Object.freeze({
+  seed: 20261101,
+  noise: NOISE,
+  distributions: { 'd-mig': { chemistries: Object.keys(CHEMISTRIES), sizes: [1e7, 1e8] }, uniforme: { chemistries: ['C0', 'K0'], sizes: [1e7] } },
+});
+export const CONTROLS = ['K0', 'L0', 'X0'];  // han de donar 0 (§2). S4 no: el company hi pot copiar el programa (AUD-140)
 export const EXTEND_BELOW = 30;              // si C0 en té menys, amb d-mig, totes les variants passen a 10⁸ programes (§5)
 const KEYS = ['tested', 'replicates', 'heritable', 'heritableSolo', 'heritableContext'];
 
@@ -58,6 +72,16 @@ export function readRun(file) {
   try { ls = readFileSync(file, 'utf8').trim().split('\n').map((l) => JSON.parse(l)); } catch { return { problems: [`${name}: no es pot llegir`] }; }
   const start = ls[0], end = ls[ls.length - 1];
   if (start?.type !== 'start' || end?.type !== 'end' || ls.length < 3) return { problems: [`${name}: no és sencer (sense la línia d'inici o la final)`] };
+  // la línia d'inici: el que diuen els camps ho ha de dir l'ordre, i la SHA-256 dels mòduls hi ha de ser
+  const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+  const known = has(CHEMISTRIES, start.chemistry) && has(DISTRIBUTIONS, start.distribution) && Number.isInteger(start.seed);
+  const arg = (k, d) => { const m = new RegExp(`(?:^| )--${k} (\\S+)`).exec(start.command ?? ''); return m ? m[1] : d; };
+  if (!known) problems.push(`${name}: una química, una distribució o una llavor desconegudes (${start.chemistry}, ${start.distribution}, ${start.seed})`);
+  if (!/^node eines\/densitat\.mjs /.test(start.command ?? '') || arg('quimica') !== start.chemistry || arg('distribucio') !== start.distribution ||
+      Number(arg('llavor')) !== start.seed || Number(arg('programes')) !== start.programs || Number(arg('de', '0')) !== start.from) problems.push(`${name}: l'ordre no diu el mateix que els camps de la línia d'inici`);
+  if (start.test !== TEST) problems.push(`${name}: la prova no és la del cens (${start.test})`);
+  if (typeof start.modules !== 'object' || start.modules === null || Object.keys(start.modules).length !== MODULES.length ||
+      MODULES.some((m) => !/^[0-9a-f]{64}$/.test(start.modules[m] ?? ''))) problems.push(`${name}: sense la SHA-256 dels mòduls (${MODULES.join(', ')})`);
   const totals = Object.fromEntries(KEYS.map((k) => [k, 0])), found = [], hash = createHash('sha256');
   let last = start.from - 1, upTo = start.from;
   for (const o of ls.slice(1, -1)) {
@@ -66,6 +90,8 @@ export function readRun(file) {
       if (!(Number.isInteger(o.index) && o.index > last && o.index >= upTo && o.index < start.to)) problems.push(`${name}: un replicador fora d'ordre o del seu tros (${o.index})`);
       // l'herència sola demana la replicació sola, i la de context, la de context
       if (!(o.solo || o.context) || (o.heritableSolo && !o.solo) || (o.heritableContext && !o.context) || !/^[0-9a-f]{128}$/.test(o.bytes ?? '')) problems.push(`${name}: el replicador ${o.index} no és coherent`);
+      // els bytes, els del programa de la llavor i l'índex: lliga el registre al generador (auditor 1)
+      else if (known && Number.isInteger(o.index) && o.bytes !== Buffer.from(soupFor(o.index, start.seed, start.distribution).subarray(0, PROGRAM_SIZE)).toString('hex')) problems.push(`${name}: els bytes del replicador ${o.index} no són els del seu programa`);
       last = o.index;
       found.push(o);
       totals.replicates++;
@@ -87,8 +113,9 @@ export function readRun(file) {
   return { name, start, end, found, problems };
 }
 
-// Llegeix la carpeta i la valida sencera. Retorna { groups, problems }: groups[distribució][química] = { n, found }
-export function readFolder(dir) {
+// Llegeix la carpeta i la valida sencera, contra el pla i els mòduls d'aquesta còpia (les proves hi passen els seus). Retorna
+// { groups, problems }: groups[distribució][química] = { n, found }
+export function readFolder(dir, { plan = PLAN, modules = moduleHashes() } = {}) {
   const problems = [], groups = {};
   const files = readdirSync(dir).filter((f) => f.endsWith('.jsonl')).sort();
   if (!files.length) return { groups, problems: [`${dir}: cap JSONL`] };
@@ -97,11 +124,21 @@ export function readFolder(dir) {
   if (problems.length) return { groups, problems };
   const first = runs[0].start;
   for (const r of runs) {
-    if (r.start.code !== first.code || /canvis|desconeguda/.test(r.start.code)) problems.push(`${r.name}: el codi és ${r.start.code}, i ha de ser el mateix commit a tots, sense canvis (${first.code})`);
-    if (r.start.seed !== first.seed || r.start.noise !== first.noise) problems.push(`${r.name}: una altra llavor o un altre soroll`);
+    if (r.start.code !== first.code || !/^[0-9a-f]{7,40}$/.test(r.start.code)) problems.push(`${r.name}: el codi és ${r.start.code}, i ha de ser el mateix commit a tots, sense canvis (${first.code})`);
+    if (r.start.seed !== plan.seed || r.start.noise !== plan.noise) problems.push(`${r.name}: la llavor o el soroll no són els del pla (${plan.seed}, ${plan.noise})`);
+    const other = MODULES.filter((m) => r.start.modules[m] !== modules[m]);
+    if (other.length) problems.push(`${r.name}: ${other.join(', ')}, amb una altra SHA-256 que a aquesta còpia: el registre és d'un altre codi`);
   }
   const pieces = {};
   for (const r of runs) ((pieces[r.start.distribution] ??= {})[r.start.chemistry] ??= []).push(r);
+  // el pla sencer: totes les químiques de cada distribució, i cap més
+  for (const [dist, spec] of Object.entries(plan.distributions)) {
+    const have = Object.keys(pieces[dist] ?? {});
+    const missing = spec.chemistries.filter((c) => !have.includes(c)), extra = have.filter((c) => !spec.chemistries.includes(c));
+    if (missing.length) problems.push(`${dist}: hi falten les químiques ${missing.join(', ')}`);
+    if (extra.length) problems.push(`${dist}: les químiques ${extra.join(', ')} no són del pla`);
+  }
+  for (const dist of Object.keys(pieces)) if (!plan.distributions[dist]) problems.push(`la distribució ${dist} no és del pla`);
   for (const [dist, byChem] of Object.entries(pieces)) {
     groups[dist] = {};
     let n = null;
@@ -116,6 +153,8 @@ export function readFolder(dir) {
       n ??= at;
       groups[dist][chem] = { n: at, found: rs.flatMap((r) => r.found) };
     }
+    const sizes = plan.distributions[dist]?.sizes;
+    if (sizes && n !== null && !sizes.includes(n)) problems.push(`${dist}: ${n} programes, i el pla en preveu ${sizes.join(' o ')}`);
   }
   return { groups, problems };
 }
@@ -166,10 +205,14 @@ export function analyse(groups) {
     if (main.C0.n >= 1e8) out.push(`Ampliació (§5): ja són ${main.C0.n} programes`);
     else if (k0 < EXTEND_BELOW) out.push(`Ampliació (§5): C0 hi té ${k0} hereditaris, menys de ${EXTEND_BELOW}: totes les variants passen a 10⁸ programes, els mateixos`);
     else out.push(`Ampliació (§5): C0 hi té ${k0} hereditaris: no cal`);
-    const level2 = byPlan(Object.keys(main)).filter((c) => c === 'C0' || heritableOf(main[c]).length > 0);
-    out.push(`Al nivell 2 (§6), amb d-mig: ${level2.join(', ')}`);
-    const none = byPlan(Object.keys(main)).filter((c) => !level2.includes(c));
-    if (none.length) out.push(`Sense cap hereditari en ${main.C0.n} programes: ${none.join(', ')} (la cota del 95 %, ${sci(clopperPearson(0, main.C0.n)[1])})`);
+    // amb l'ampliació pendent, la llista del nivell 2 no surt: es fa amb els 10⁸ programes (AUD-142)
+    if (main.C0.n < 1e8 && k0 < EXTEND_BELOW) out.push("Al nivell 2 (§6): es decidirà amb els 10⁸ programes, després de l'ampliació");
+    else {
+      const level2 = byPlan(Object.keys(main)).filter((c) => c === 'C0' || heritableOf(main[c]).length > 0);
+      out.push(`Al nivell 2 (§6), amb d-mig: ${level2.join(', ')}`);
+      const none = byPlan(Object.keys(main)).filter((c) => !level2.includes(c));
+      if (none.length) out.push(`Sense cap hereditari en ${main.C0.n} programes: ${none.join(', ')} (la cota del 95 %, ${sci(clopperPearson(0, main.C0.n)[1])})`);
+    }
   }
   return out;
 }

@@ -116,18 +116,21 @@ export function evaluate(t, base, maxSteps = MAX_STEPS) {
 //      pc-half, a la meitat del punter; other-half, a l'altra meitat; first, a les posicions 0-63; second, a les 64-127.
 //  - noReadOther: una còpia que llegeix de l'altra meitat que la del punter no fa res (llegeix h0 '.', i h1 ',').
 //  - h1: on comença h1.
+// El control X0 té dues regles alhora, block: 'other-half' i noReadOther (S4 i X1): cap còpia ni cap escriptura d'una meitat a
+// l'altra. Amb S4 sola, el codi del company encara hi pot copiar el programa, des de la seva meitat (AUD-140).
 // Una escriptura bloquejada, o una còpia que no es pot fer, no canvia la cinta, consumeix el pas i compta com a operació.
 export const CHEMISTRIES = Object.freeze({
   C0: { description: 'BFF, tal com és' },
   K0: { nop: '.,', description: "'.' i ',' no fan res (control: sense còpia)" },
   L0: { nop: '[]', description: "'[' i ']' no fan res (control: sense bucles)" },
-  S4: { block: 'other-half', description: "escriure a l'altra meitat que la del punter no fa res (control)" },
+  X0: { block: 'other-half', noReadOther: true, description: "cap còpia ni cap escriptura d'una meitat a l'altra (control: S4 i X1 alhora)" },
   K1: { nop: '.', description: "'.' no fa res" },
   K2: { nop: ',', description: "',' no fa res" },
   R0: { nop: '+-', description: "'+' i '-' no fan res" },
   S1: { block: 'pc-half', description: 'escriure a la meitat del punter no fa res (sense automodificació)' },
   S2: { block: 'first', description: 'escriure a les posicions 0-63 no fa res (el primer programa no es toca)' },
   S3: { block: 'second', description: 'escriure a les posicions 64-127 no fa res (el segon programa no es toca)' },
+  S4: { block: 'other-half', description: "escriure a l'altra meitat que la del punter no fa res (cada programa només escriu a la seva meitat)" },
   X1: { noReadOther: true, description: "una còpia que llegeix de l'altra meitat que la del punter no fa res" },
   H64: { h1: 64, description: 'h1 comença a 64, i no a 0' },
 });
