@@ -196,6 +196,16 @@ const tests = {
     }
     // i el pla sencer, sense res de més ni de menys, passa
     withTmp((tmp) => { all(tmp); assert.deepStrictEqual(check(tmp).problems, []); });
+    // l'ampliació, segons l'etapa: 2.000 programes (la N gran d'aquest pla) només si, amb els primers 1.000, C0 en tenia menys de 30
+    const plan = { seed: 5, noise: 8, distributions: { 'd-mig': { chemistries: ['C0', 'K0'], sizes: [1000, 2000] } } };
+    for (const [first, ok] of [[30, false], [29, true]]) {
+      withTmp((tmp) => {
+        writeRun(tmp, { chemistry: 'C0', to: 2000, reps: heritable([...range(0, first), 1500]) });
+        writeRun(tmp, { chemistry: 'K0', to: 2000 });
+        const { problems } = check(tmp, plan);
+        assert.deepStrictEqual(problems, ok ? [] : ["d-mig: 2000 programes, però amb els primers 1000 C0 ja hi tenia 30 hereditaris: l'ampliació no tocava (§5)"], `${first}`);
+      });
+    }
   },
   "la línia d'ordres, amb el pla de veritat: amb problemes, codi 1 i cap anàlisi; sense carpeta, codi 2; i un resultat bo, codi 0"() {
     const cli = (...a) => spawnSync(process.execPath, [join(root, 'eines', 'densitat-analisi.mjs'), ...a], { encoding: 'utf8' });

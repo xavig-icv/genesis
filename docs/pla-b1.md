@@ -155,8 +155,9 @@ variant (AUD-65). Cap prova nova (AUD-02).
 - **els programes que canvien:** els que són replicadors a una variant i no a l'altra. Si una ablació en crea de nous, ho diu.
 
 **Només amb el pla sencer** (AUD-142, AU2-103): les 13 químiques amb D½, C0 i K0 amb Du, la llavor del pla, i 10⁷ programes (o
-10⁸, amb D½, després de l'ampliació). Si en falta o en sobra res, l'anàlisi llista els problemes i no analitza res. Tampoc no hi
-passa cap registre fet amb uns altres mòduls que els de la seva còpia (AUD-139, AU2-102).
+10⁸, amb D½, després de l'ampliació, i només si amb els primers 10⁷ C0 en tenia menys de 30). Si en falta o en sobra res, l'anàlisi
+llista els problemes i no analitza res. Tampoc no hi passa cap registre fet amb uns altres mòduls que els de la seva còpia
+(AUD-139, AU2-102).
 
 **Els controls primer.** Si K0, L0 o X0 donen cap replicador hereditari, no s'interpreta res més fins que no s'hagin mirat un a un:
 són falsos positius de la prova, o una via que no hem previst. S4 ja no hi és (AUD-140).
@@ -230,7 +231,8 @@ cubff i les proves de l'intèrpret i del món passen igual.
     - els bytes de cada replicador, els del programa que en donen la llavor i l'índex (auditor 1);
     - tots del mateix commit, sense canvis, i amb la SHA-256 dels mòduls igual que la dels de la còpia on es fa l'anàlisi;
     - el pla sencer (`PLAN`): la llavor i el soroll, les dues distribucions, totes les químiques de cadascuna i cap més, i una *N*
-      prevista. Cap mode parcial;
+      prevista; 10⁸, només si amb els primers 10⁷ programes C0 en tenia menys de 30 (les N segons l'etapa, auditor 2). Cap mode
+      parcial;
     - per a cada distribució, totes les químiques amb els mateixos programes, de 0 a *N*, sense forats.
   - **L'interval de Clopper-Pearson** suma els termes de la binomial, sense cap taula, i serveix amb *n* = 10⁸. A 10⁶, dona el valor
     exacte, fet amb racionals, fins a 10⁻¹².

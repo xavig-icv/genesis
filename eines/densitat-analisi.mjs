@@ -156,6 +156,13 @@ export function readFolder(dir, { plan = PLAN, modules = moduleHashes() } = {}) 
     const sizes = plan.distributions[dist]?.sizes;
     if (sizes && n !== null && !sizes.includes(n)) problems.push(`${dist}: ${n} programes, i el pla en preveu ${sizes.join(' o ')}`);
   }
+  // l'ampliació (§5): la N gran només si, amb la petita, C0 hi tenia menys de EXTEND_BELOW hereditaris. Són els mateixos
+  // programes, i els primers ho diuen (AU2-103: les N, segons l'etapa)
+  const [small, large] = plan.distributions['d-mig']?.sizes ?? [], c0 = groups['d-mig']?.C0;
+  if (large && c0?.n === large) {
+    const before = c0.found.filter((o) => o.index < small && (o.heritableSolo || o.heritableContext)).length;
+    if (before >= EXTEND_BELOW) problems.push(`d-mig: ${large} programes, però amb els primers ${small} C0 ja hi tenia ${before} hereditaris: l'ampliació no tocava (§5)`);
+  }
   return { groups, problems };
 }
 
