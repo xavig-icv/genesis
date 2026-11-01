@@ -232,7 +232,9 @@ Abans del GO de l'auditoria 24, per avançar feina. Les comprovacions es tornen 
 - **Quan:** a les 15:28:54, quan el bloc ja tenia 6 confirmacions, el calendari va donar la prova completa.
 - **La comprovació,** a les 15:29 (`verifica-ots.py`): l'arrel de Merkle del bloc coincideix amb el missatge atestat
   (blockstream.info), i el fitxer segellat és l'objecte de l'etiqueta.
-- **La segona atestació,** la de `btc.calendar.catallaxy.com`, encara era pendent quan es van llançar les branques.
+- **La segona atestació:** la de `btc.calendar.catallaxy.com`, al bloc 974.152, de les 16:50:09 (la transacció `185247b7…`).
+  Quan es van llançar les branques, encara era pendent. El calendari la va donar a les 17:51, i l'arrel de Merkle coincideix.
+  No hi canvia res: la que data l'etiqueta és la del bloc 974.134.
 - **El detall:** `docs/preregistre-maduracio/LLEGEIX-ME.md`.
 
 **El llançament** (hores de les màquines, +01:00):

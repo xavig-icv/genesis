@@ -25,8 +25,11 @@
     `e250cf36478e1dcded8a8f54757e1b38a52b8771c17cf2157cdbf0b083fe18ba`.
     - **Quan la dona el calendari:** quan el bloc té 6 confirmacions.
     - **La comprovació:** l'arrel de Merkle del bloc coincideix amb el missatge atestat (comprovat amb blockstream.info).
-    - **La segona,** la de `btc.calendar.catallaxy.com`, encara era pendent quan es van llançar les branques. L'afegirem al
-      fitxer quan el calendari la doni. La que data l'etiqueta és la primera.
+    - **La segona:** de `btc.calendar.catallaxy.com`, amb la transacció
+      `185247b75ab731912e57f01de4843ec49026df72beb0b4393423b072b4c5c5d2`, al bloc 974.152. Quan es van llançar les branques,
+      encara era pendent. La vam afegir al fitxer el mateix dia, quan el calendari la va donar, i l'arrel de Merkle del bloc
+      també coincideix.
+    - **Per què dues:** la prova no depèn d'un sol calendari. La que data l'etiqueta és la primera, la del bloc més antic.
 
 **L'ordre, hora a hora (UTC, l'1-11-2026):**
 - **13:31:02:** l'etiqueta.
@@ -39,6 +42,8 @@
 - **15:31:32:** el primer intent de llançament, que el llançador rebutja sense escriure res (l'acta, la incidència 1).
 - **15:36:56:** comença el lot del PC, després d'un altre `--comprova`.
 - **15:37:10:** comença el lot de la màquina virtual, també després d'un altre `--comprova`.
+- **16:50:09:** l'hora del bloc 974.152, el de la segona atestació.
+- **17:51:10:** el segon calendari en dona la prova. Tot seguit en comprovem l'arrel de Merkle.
 
 **El que demostra:**
 - **Bitcoin,** sense confiar en ningú, demostra que l'etiqueta existia quan es va minar el bloc que l'ancora.
