@@ -287,3 +287,10 @@ Abans del GO de l'auditoria 24, per avançar feina. Les comprovacions es tornen 
   llista d'1 MB, que amb el llançador de `416f720` falla. Va a la revisió dels auditors, i no canvia res de la sèrie.
 - **Els altres `grep -q` dels lots** (a `experiments.sh` i `seguiment.sh`) llegeixen la primera o l'última línia d'un JSONL, que
   s'escriu d'un sol cop: al pilot de la maduració, com a molt 837 i 131 bytes. No els afecta.
+- **L'auditoria 25** (01-11-2026, l'AUD-141): tots dos auditors donen la correcció per bona, i l'auditor 1 no troba cap altre script
+  amb el problema. Llançar la sèrie amb la còpia no canvia res del que es calcula.
+  - **La còpia, a git:** perquè se'n pugui comprovar la SHA-256, és a `incidencia-1/`, tal com és
+    (`llanca-lot-416f720-corregit.sh`, `a7285786…`), amb el diferencial amb `eines/llanca-lot.sh` de `416f720`
+    (`llanca-lot-416f720-corregit.diff`): la capçalera, el `cd` i la comprovació.
+  - **La desviació de la lletra del protocol** (§7, pas 8, "`eines/llanca-lot.sh`, des de la carpeta del commit de l'etiqueta"):
+    l'entrada de la decisió també ho dirà.
