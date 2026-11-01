@@ -246,8 +246,8 @@ cubff i les proves de l'intèrpret i del món passen igual.
       replicació dona el mateix amb el seu intèrpret que amb el de referència. Sense l'opció, és la de sempre.
     - **l'AUD-140:** amb el programa fet a mà de l'auditor 1, el codi del company s'hi copia el programa amb S4, i amb X0 no; i, a la
       prova del cens, amb S4 és hereditari, i amb X0 ni tan sols es replica.
-    - **Que les proves atrapen els errors:** amb un error posat a propòsit a la regla de S1, en fallen tres. L'auditor 1 n'hi va
-      posar quatre, i les proves els van atrapar tots.
+    - **Que les proves atrapen els errors:** amb un error posat a propòsit a la regla de S1, en fallen quatre (a la v0.2, tres; la
+      quarta és la de les fronteres). L'auditor 1 n'hi va posar quatre, i les proves els van atrapar tots.
   - **`test/densitat.mjs`:** les opcions, que el resultat no depèn dels fils ni dels trossos, el JSONL, les distribucions, l'AUD-65 a
     l'eina, i que el codi i la SHA-256 dels mòduls vegin un canvi a `fase1/` i a `fase2/`, amb git i sense (AUD-139).
   - **`test/densitat-analisi.mjs`:** l'interval, un resultat conegut, els controls, l'ampliació, la llista del nivell 2, la línia
