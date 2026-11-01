@@ -188,7 +188,7 @@ engegar cada món des del mateix instant, de quatre maneres i amb el mateix atza
   - **Què es fa:** els zeros de les cel·les que no es repliquen passen a bytes de dades. El placebo canvia, a les mateixes
     cel·les, tants bytes de dades com zeros hi ha, i hi deixa els zeros. És aparellat cel·la per cel·la, en part a les
     cel·les saturades: a les que tenen més zeros que bytes de dades no hi arriba, i deixa sense aparellar entre el 0,5 % i
-    el 5,0 % dels zeros de cada món.
+    el 5,0 % dels zeros que canvia `zeros-data` a cada món.
   - **Què vol dir:** dins d'aquests mons, els zeros contribueixen a fer baixar la vida. És compatible amb la hipòtesi de
     l'autoenverinament: el replicador deixa còpies trencades plenes de zeros, i aquestes deixalles aturen les còpies
     següents. La prova no en diu el mecanisme: els zeros també poden adormir les còpies que els porten.

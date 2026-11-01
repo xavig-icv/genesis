@@ -111,7 +111,7 @@ same randomness: 132 branches ([protocol](docs/protocol-zeros.md), in Catalan).
   - **What is done:** the zeros of the cells that do not replicate become data bytes. The placebo changes, in
     the same cells, as many data bytes as there are zeros, and leaves the zeros in place. It is matched cell by
     cell, partly at the saturated cells: in cells with more zeros than data bytes it falls short, and leaves
-    between 0.5% and 5.0% of each world's zeros unmatched.
+    unmatched between 0.5% and 5.0% of the zeros that `zeros-data` changes in each world.
   - **What it means:** within these worlds, the zeros contribute to the drop of life. This is compatible with the
     self-poisoning hypothesis: the replicator leaves behind broken copies full of zeros, and this debris stops
     the next copies. The test does not tell the mechanism: the zeros may also put to sleep the copies that carry
