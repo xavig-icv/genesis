@@ -1,7 +1,9 @@
 # B1, les ablacions de la química · el nivell 1, la densitat de replicadors
 
-**Versió: v0.1, esborrany (31-10-2026), per a l'auditoria 25.** No s'ha calculat res, llevat del temps que triga la prova, sense
+**Versió: v0.2, esborrany (01-11-2026), per a l'auditoria 25.** No s'ha calculat res, llevat del temps que triga la prova, sense
 cap recompte (§8). El codi és a la mateixa branca, amb les proves (§9).
+- **De la v0.1 a la v0.2:** les decisions del responsable (§12) i una proposta nova, la composició de bytes i el possible
+  descobriment (§13). La química, la mesura i el codi no canvien.
 - **D'on surt:**
   - el full de ruta (`docs/disseny.md`, §4; AUD-40): després de la sèrie confirmatòria, un eix de química amb ablacions, per saber
     quins ingredients calen;
@@ -10,14 +12,18 @@ cap recompte (§8). El codi és a la mateixa branca, amb les proves (§9).
   - l'auditoria 9: els dos nivells, i el cens amb la mateixa química (auditor 1, AUD-65); un eix cada vegada (auditor 2, §6.2);
   - l'estat de la qüestió (`docs/estat-questio.md`, §2): la densitat d'instruccions i l'alineació dels caps (Knierim i altres,
     2026);
-  - la decisió del responsable del 30-10-2026: començar el disseny de B1 mentre corre la sèrie de la maduració.
+  - la decisió del responsable del 30-10-2026: començar el disseny de B1 mentre corre la sèrie de la maduració;
+  - la valoració del responsable de l'1-11-2026:
+    - els dos nivells, d'acord;
+    - les variants, les decidiran els dos auditors i Claude;
+    - buscar en quines circumstàncies l'eina troba més replicadors, i quin pot ser el descobriment nou (§13).
 
 ## 1. La pregunta
 
 **Quins ingredients de la química calen perquè hi hagi vida** (`docs/disseny.md`, §7)? És la pregunta oberta de l'article: per què
 en BFF hi neix vida i en altres llenguatges no.
 
-**Dos nivells** (auditor 1, auditoria 9):
+**Dos nivells** (auditor 1, auditoria 9; el responsable hi està d'acord, 01-11-2026):
 1. **La densitat de replicadors** a l'espai de programes, per a cada variant de la química. És aquest pla.
 2. **La sopa,** només amb les variants que en tenen, i amb el cens de la mateixa química (§10). Es dissenyarà amb els resultats
    del nivell 1.
@@ -84,7 +90,8 @@ variants: el que canvia és la química, no els programes.
 - **Du, uniforme:** la de la sopa del començament. Només amb C0 i K0, per acotar la densitat al principi d'una sopa.
 - **Ds, l'histograma d'una sopa envellida (proposta, per decidir):** els bytes amb la freqüència d'una sopa de l'època 8.000 sense
   vida. Lligaria B1 amb la maduració: si la composició envellida fa més probables els replicadors. Però és una altra pregunta, i
-  la sopa envellida depèn de la química.
+  la sopa envellida depèn de la química. A la v0.2, aquesta pregunta passa a ser la proposta de la §13, que no demana cap
+  tirada a part amb Ds.
 
 ## 4. La mesura
 
@@ -205,17 +212,95 @@ cubff i les proves de l'intèrpret i del món passen igual.
 ## 11. El calendari
 
 1. **Durant la sèrie de la maduració:** aquest pla i la PR de la §9, revisats a l'auditoria 25.
-2. **Després de la sèrie,** quan el PC i la màquina virtual siguin lliures: el nivell 1, unes 4 h.
-3. **Després:** el disseny del nivell 2.
+2. **Si s'aprova la §13:** el codi, amb una revisió breu, abans de la decisió de la sèrie si ha de ser una predicció.
+3. **Després de la sèrie,** quan el PC i la màquina virtual siguin lliures: el nivell 1, unes 4 h, i la §13, unes 5 h més.
+4. **Després:** el disseny del nivell 2.
 
-## 12. Per decidir (auditoria 25 i el responsable)
+## 12. Per decidir (auditoria 25)
 
+**Ja decidit pel responsable (01-11-2026):** els dos nivells (§1).
+
+**Per decidir entre els dos auditors i Claude:**
 1. **Les variants:** si n'hi falta cap o n'hi sobra cap, i les definicions de X1 i S4 (de les propostes de l'auditor 2).
+   - **La proposta de Claude:** cap variant de química més al nivell 1.
+   - **Les que podrien faltar:**
+     - dos controls més, sense moure `h0` (`<` i `>`) o sense moure `h1` (`{` i `}`), que han de donar 0 per la mateixa raó que K0;
+     - les variants per cap, que ja depenen de S1 (§2).
+   - **L'eix nou** és la composició (§13), no la química.
 2. **Les distribucions:**
    - D½ com a principal;
    - Du, només amb C0 i K0;
-   - Ds, sí o no.
-3. **La mida:** 10⁷ programes, amb l'ampliació a 10⁸ si C0 en té menys de 30.
-4. **El disseny aparellat:** els mateixos programes a totes les variants.
-5. **Els companys de soroll** en context, en lloc d'un veí d'un món.
-6. **La llavor,** que es fixarà quan el pla sigui definitiu.
+   - Ds: a la v0.2, dins de la §13.
+3. **La composició de bytes i el possible descobriment** (§13):
+   - si val la pena, i amb quin disseny;
+   - si ha de ser una predicció, fixada abans de la decisió de la sèrie de la maduració.
+4. **La mida:** 10⁷ programes, amb l'ampliació a 10⁸ si C0 en té menys de 30.
+5. **El disseny aparellat:** els mateixos programes a totes les variants.
+6. **Els companys de soroll** en context, en lloc d'un veí d'un món.
+7. **La llavor,** que es fixarà quan el pla sigui definitiu.
+
+## 13. La composició de bytes, i què podria ser nou (proposta per a l'auditoria 25)
+
+**La pregunta del responsable:** si, en unes altres circumstàncies, l'eina trobaria més replicadors. En provar-la amb 300 programes,
+ja n'hi havia algun que es replicava (§8). No sabem com canvia amb les circumstàncies.
+
+**Quines circumstàncies:** sense tocar la química, es poden canviar la composició dels bytes, la mida del programa, el pressupost
+de passos i el company. Proposem només la composició:
+- **la proposen Knierim i altres (2026):** la densitat d'instruccions;
+- **és la que canvia a la sopa abans de la vida,** i la que separa els braços de la sèrie de la maduració: barrejar els bytes
+  conserva la composició i desfà l'estructura;
+- **les altres tres** canvien la regla del joc, no els programes.
+
+**Una propietat exacta, que fa el càlcul possible.** Sigui D_p la distribució en què cada byte és, amb probabilitat p, una de les
+10 instruccions, i si no, un dels altres 246 valors. D½ és p = ½.
+- **Condicionat a k,** el nombre de bytes d'instrucció del programa, tots els programes amb k instruccions són igual de probables,
+  sigui quin sigui p: els k llocs, a l'atzar, i els bytes, uniformes dins de cada classe.
+- **Du és D_p amb p = 10/256.**
+- **Per tant,** ρ(p) = Σₖ C(64, k) · pᵏ · (1 − p)⁶⁴⁻ᵏ · rₖ.
+  - **Què és rₖ:** la part de replicadors hereditaris entre els programes amb exactament k instruccions.
+  - **Què permet:** si es mesuren els rₖ (un disseny estratificat per k), es té la densitat per a qualsevol p, Du inclosa.
+    Directament, amb Du, potser 10⁷ programes no en donen cap (§3).
+- **Per a qualsevol altra composició** (una sopa envellida, Ds, o l'histograma d'una sopa a cada època):
+  - **com:** cada replicador trobat, amb un pes dins del seu estrat, el quocient de les probabilitats de les seves instruccions i
+    dels seus altres bytes;
+  - **el que en surt:** un estimador sense biaix. El límit és la variància, i es dona sempre.
+- **Una comprovació:** la ρ(½) de la tirada principal, amb D½, ha de coincidir, dins dels intervals, amb la dels rₖ.
+
+**Les prediccions:**
+- **Amb p petit, ρ creix com pᵐ,** on m és el nombre d'instruccions dels replicadors més curts. El JSONL els desa sencers, i m es
+  pot comprovar llegint-los.
+- **Amb p a prop d'1, baixa:** les instruccions de més es destorben. Hi ha d'haver un p\* on ρ és màxima, que respon la pregunta
+  del responsable.
+- **La sopa del començament és a p ≈ 0,039,** molt per sota de p\*.
+
+**Què podria ser nou** (per ordenar entre els tres):
+1. **Si la composició explica quan apareix la vida.**
+   - **La idea:** amb ρ a la composició de cada època, la cerca a l'atzar prediu el risc d'aparició d'una sopa, o d'un món. Si
+     coincideix amb l'observat, la composició ho explica. Si la sopa va més de pressa, hi ha alguna altra cosa: l'estructura que
+     acumula.
+   - **És la pregunta de la sèrie de la maduració, per un camí independent:** la sèrie ho prova amb una intervenció, i B1 ho
+     calcularia sense simular cap sopa.
+   - **Què hi ha de nou:** Knierim i altres comparen la sopa amb la mutació a partir d'un histograma madur (§1 de l'estat de la
+     qüestió). No hem trobat enlloc el risc d'aparició predit època a època, ni comparat amb una intervenció (§11).
+   - **Per ser una predicció de veritat:** el mètode, els estrats i les composicions s'haurien de fixar abans de la decisió de la
+     sèrie. No s'hi fa servir cap resultat de la sèrie.
+2. **Els ingredients necessaris:** les ablacions de la §2, la pregunta d'origen de B1.
+3. **L'alineació dels caps (H64):** si multiplica la densitat, i si canvia m o només el factor de davant.
+4. **Els replicadors mínims:** el catàleg dels més curts de cada química.
+
+**La recomanació de Claude:** la 1, amb el disseny estratificat, i la 2, tal com era.
+- **Per què:** la 1 és la que pot donar un resultat nou.
+- **La 3 i la 4** surten gairebé soles de les mateixes dades.
+
+**El cost**, amb el temps de la §8:
+- **els estrats de k = 2 a 64,** amb 10⁶ programes cadascun i C0: 6,3·10⁷ proves, unes 15 h de fil, 2 h amb els 8 fils del PC;
+- **els estrats que pesen a Du** (k de 3 a 12): potser 10⁷ programes cadascun, unes 3 h més.
+
+**El que cal decidir:**
+- si val la pena, i si els estrats han de ser més fins o més gruixuts;
+- d'on surt Ds: proposem les sopes envellides del pilot de la maduració, que ja són analitzades, i no les de la sèrie;
+- si el company de la prova també ha de tenir la composició que s'estudia, en lloc de bytes uniformes;
+- si la comparació amb les sopes és exploratòria o preregistrada.
+
+**El codi** vindrà després de l'auditoria 25, segons el que es decideixi, amb proves i amb una revisió breu abans de calcular. A la
+v0.2 no se n'ha escrit cap.
