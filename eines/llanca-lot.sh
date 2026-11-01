@@ -29,7 +29,10 @@ if ! [[ "$PARALLEL" =~ ^[0-9]+$ ]] || (( PARALLEL < 1 || PARALLEL > 16 )); then
   echo "llanca-lot.sh: el nombre d'experiments alhora ha de ser un enter d'1 a 16 (és '$PARALLEL')" >&2; exit 2
 fi
 [[ -f "$LIST" ]] || { echo "llanca-lot.sh: no existeix la llista $LIST" >&2; exit 2; }
-if ! grep -v '^[[:space:]]*$' "$LIST" | grep -qv '^[[:space:]]*#'; then
+# Sense "grep -q": el segon grep ha de llegir la llista sencera. Si sortia a la primera coincidència, el primer rebia un
+# SIGPIPE quan encara li quedava llista per escriure (més de 64 KB), i amb pipefail la comprovació fallava (la incidència 1
+# de la sèrie de la maduració)
+if ! grep -v '^[[:space:]]*$' "$LIST" | grep -v '^[[:space:]]*#' > /dev/null; then
   echo "llanca-lot.sh: la llista $LIST no té cap experiment" >&2; exit 2
 fi
 mkdir -p "$DIR"
