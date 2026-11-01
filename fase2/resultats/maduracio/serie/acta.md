@@ -1,6 +1,7 @@
 # Acta de la sèrie preregistrada de la maduració
 
-**El protocol:** `docs/protocol-maduracio.md` (v0.4), revisat a les auditories 19 a 22. La sèrie compara tres braços, `continue`,
+**El protocol:** `docs/protocol-maduracio.md`, la v0.5 a l'etiqueta, revisat a les auditories 19 a 24. La preparació es va fer amb
+la v0.4, i la v0.5 només hi canvia el text (§10 del protocol). La sèrie compara tres braços, `continue`,
 `shuffle-all` i `reinit`, en 150 mons nous envellits fins a l'època 8.000, amb dues llavors per braç: 900 branques.
 
 Les hores d'aquesta acta són les del PC (+01:00), si no es diu el contrari.
@@ -125,9 +126,11 @@ un descriptiu predefinit, i no cap resultat de la sèrie. Els valors de cada mó
 | Braç | Bytes canviats (de 8.388.608) | Cel·les que es repliquen | Cel·les hereditàries | Hereditàries soles |
 |---|---|---|---|---|
 | `continue` | 0 | d'11 a 35 (mediana 23) | cap, a cap món | cap |
-| `shuffle-all` | de 8.337.573 a 8.340.643 (99,4 %) | de 596 a 831 (mediana 700) | 1.025, a tots 150 mons (d'1 a 16; mediana 6) | 99, a 77 mons |
+| `shuffle-all` | de 8.337.573 a 8.340.643 (99,4 %) | de 596 a 831 (mediana 700,5) | 1.025, a tots 150 mons (d'1 a 16; mediana 6) | 99, a 77 mons |
 | `reinit` | de 8.355.445 a 8.356.345 (99,6 %) | de 91 a 155 (mediana 117) | 62, a 49 mons (de 0 a 3) | 17, a 16 mons |
 
+- **Corregit (31-10-2026):** la mediana de les cel·les que es repliquen a `shuffle-all` és 700,5: són 150 mons, i és la mitjana
+  dels dos del mig. L'acta deia 700.
 - **`continue`:** la captura envellida tal com és. Les 150 tenen la SHA-256 de la captura d'origen, i el seu escaneig és el de
   l'edat.
 - **Com al pilot:** `shuffle-all` hi crea replicadors hereditaris a tots els mons (6,8 cel·les per món, i 7,7 al pilot), i
@@ -148,3 +151,137 @@ un descriptiu predefinit, i no cap resultat de la sèrie. Els valors de cada mó
 **Les captures** no van a git: les 265 de l'envelliment (les 196 finals i 69 dels esdeveniments) i les 450 de transformades,
 6,0 GB. Es regeneren amb el commit, les llavors i les ordres de les llistes. Els registres de l'envelliment i de les
 transformacions, els escanejos, el manifest i les llistes, sí.
+
+## Els escanejos repetits (AUD-136, exploratoris)
+
+- **Per a l'auditoria 23,** 344 escanejos més de les captures envellides, amb llavors noves: dues per a cadascun dels 150 mons
+  inclosos (300) i dels 19 exclosos per una sola cel·la (38), i sis més per al 6047 (les llavors 3 a 8). Des de la còpia de
+  treball del PC, amb prioritat baixa, el 29-10-2026 de les 21:14 a les 23:35, sense cap fallada.
+- **El que hi surt:** un escaneig hi veu alguna cel·la hereditària en un 9 % dels casos als inclosos (27 de 300; cap món a totes
+  dues llavors, i mai més d'una cel·la), i en un 8 % als exclosos d'una sola cel·la (3 de 38).
+- **No hi canvia res:** la cohort és la d'un sol escaneig, el de l'època 8.000 (§8 del protocol), i aquests escanejos no entren
+  a l'anàlisi.
+- **On són:** a l'annex de l'auditoria 23, fora del repositori. `escanejos.sha256`, la llista de les seves SHA-256, té la
+  SHA-256 `319a600a206f4adeef51cc1478d5286889639a1fbfb5c0061447d95276772a48`.
+
+## Abans de l'etiqueta (31-10-2026)
+
+Abans del GO de l'auditoria 24, per avançar feina. Les comprovacions es tornen a passar just abans del llançament (§7).
+
+- **La còpia de treball del PC,** a `416f720`, des de `d775174`. Hi canvien `docs/protocol-maduracio.md`,
+  `fase2/maduracio-confirmacio.mjs`, `test/maduracio-serie.mjs` i `test/pilot.mjs`, i les captures no es mouen. No hi ha cap
+  fitxer seguit canviat, ni cap de sense seguir fora de les captures, i les 13 SHA-256 del missatge de l'etiqueta hi coincideixen.
+- **`node eines/llindars-maduracio.mjs --comprova-certificat`,** amb Node v16.15.1: codi 0, en 12 s. La sortida:
+
+  ```
+  302 llindars (m de 0 a 150, els dos passos). La cota superior, com a molt α: 302; com a molt α·(1 − 10⁻⁴), el criteri de la taula: 302
+    el més a prop d'α al pas 1: m = 77, el suprem entre 1.249691 % i 1.249692 % (0.999753·α)
+    el més a prop d'α al pas 2: m = 108, el suprem entre 2.499740 % i 2.499740 % (0.999896·α)
+  K és el més gran (el suprem del recompte següent passa del criteri): 289 de 289 (els altres 13, sense cap recompte més fins al nominal)
+  El recompte següent seria vàlid, i només el marge de 10⁻⁴ l'exclou: 3
+    m = 55, pas 2: el suprem del recompte següent entre 2.49998 % i 2.49999 %
+    m = 121, pas 1: el suprem del recompte següent entre 1.24989 % i 1.24993 %
+    m = 140, pas 2: el suprem del recompte següent entre 2.49980 % i 2.49984 %
+  particions: 7366
+  El certificat és el de la taula, totes les cotes són com a molt α, i les files de m = 0 a 150 són les que surten del càlcul.
+  ```
+- **La màquina virtual** (`~/claude-origins-416f720`, amb `VERSIO` `416f720`): les captures dels seus 60 mons, les 60
+  envellides i les 180 transformades (240 fitxers, 2,01 GB), copiades des del PC. Totes 240 tenen la SHA-256 del manifest
+  (`sha256sum -c`).
+- **Les comprovacions,** amb el codi de `416f720`, de les 10:55 a les 10:58:
+  - **a la màquina virtual,** amb Node v20.19.2: `node eines/pilot.mjs serie --comprova-captures --maquina vm` i `--comprova
+    --maquina vm`, "tot correcte" (codi 0);
+  - **al PC,** amb Node v16.15.1: `--comprova-captures --maquina pc` i `--comprova --maquina pc`, "tot correcte" (codi 0).
+
+## L'etiqueta i el segell (01-11-2026)
+
+- **El GO:** dels dos auditors, a l'auditoria 24, tots dos de l'1-11-2026. El responsable va aprovar l'etiqueta i el segell el
+  mateix dia.
+- **Abans de crear-la,** a la còpia de treball del PC (`416f720`, neta, sense `assume-unchanged` ni `skip-worktree`, i amb
+  `NODE_OPTIONS` buit):
+  - `git diff --name-only d775174 416f720` dona exactament els quatre fitxers del missatge, i cap de la carpeta de la sèrie;
+  - les 13 SHA-256, tornades a calcular sobre els fitxers de `416f720`, coincideixen totes;
+  - `node eines/llindars-maduracio.mjs --comprova-certificat`, amb Node v16.15.1: codi 0, en 12 s. La sortida és la de "Abans de
+    l'etiqueta", byte a byte: deu línies, 932 bytes, SHA-256 `636bb0d1067520d0033b9845f5d662f42366f2dedddc20eb1f618705d343073f`. És
+    la mateixa que van obtenir tots dos auditors.
+- **El missatge:** l'esborrany revisat a l'auditoria 24, amb les dues marques plenes.
+  - **La data del GO:** "01-11-2026".
+  - **El certificat:** la sortida sencera de `--comprova-certificat`, les deu línies. L'auditor 1 la demanava sencera (AUD-138), i
+    l'auditor 2, la darrera línia, sense canviar l'abast: la sortida sencera la conté.
+  - **L'assaig,** amb els bytes definitius, en un clon d'un sol ús sense remot: `--decideix` passa el preregistre i s'atura,
+    perquè no hi ha cap registre.
+- **L'etiqueta:** `preregistre-maduracio`, anotada, sobre `416f72095bbc2fb3fdb49e46350994cf66ddb0a8`, creada a les 14:31:02.
+  - **El commit, comprovat** (AUD-138): `git rev-parse preregistre-maduracio^{commit}` dona `416f72095bbc2fb3fdb49e46350994cf66ddb0a8`.
+  - **L'objecte:** `6e95a287ad7a92d3f0b5c39e3ed6658a0a141589`, de 3.771 bytes. SHA-256
+    `20d3451a94cf73fc4b1ad62f6b2fe49511750c6af694482348204ef62fddb724`.
+  - **El programa de la decisió l'accepta:** a la còpia de treball del PC, `--decideix` passa la comprovació del preregistre i
+    s'atura, perquè encara no hi ha cap de les 900 branques ("La sèrie no és la del manifest (900 problemes)").
+  - **A GitHub:** pujada a les 14:31:12. `git ls-remote` en dona l'objecte i el commit.
+- **El segell:** de l'objecte de l'etiqueta (`docs/preregistre-maduracio/preregistre-maduracio.tag`), amb OpenTimestamps, a les
+  14:32:24.
+  - **Els calendaris que van respondre:** `b.pool.opentimestamps.org` i `ots.btc.catallaxy.com`. Els altres dos de la llista per
+    defecte tenien el certificat caducat, com als zeros.
+  - **L'entorn:** un entorn virtual de Python nou, amb el permís del responsable, amb `opentimestamps-client` 0.8.0 i la biblioteca
+    `opentimestamps` 0.5.0 (als zeros, la 0.7.2 i la 0.4.5). Els scripts són els dels zeros, i només fan servir la biblioteca base.
+
+## L'ancoratge i el llançament (01-11-2026)
+
+**L'ancoratge** (hores en UTC):
+- **El bloc:** el 974.134, de les 14:21:50 (`000000000000000000006608e30a841e01ab0e22cf40f9d7e57c845e4b4d79e9`). El calendari
+  `bob.btc.calendar.opentimestamps.org` hi va posar el segell amb la transacció `e250cf36…`.
+- **Quan:** a les 15:28:54, quan el bloc ja tenia 6 confirmacions, el calendari va donar la prova completa.
+- **La comprovació,** a les 15:29 (`verifica-ots.py`): l'arrel de Merkle del bloc coincideix amb el missatge atestat
+  (blockstream.info), i el fitxer segellat és l'objecte de l'etiqueta.
+- **La segona atestació,** la de `btc.calendar.catallaxy.com`, encara era pendent quan es van llançar les branques.
+- **El detall:** `docs/preregistre-maduracio/LLEGEIX-ME.md`.
+
+**El llançament** (hores de les màquines, +01:00):
+- **Just abans,** a cada màquina: `node eines/pilot.mjs serie --comprova --maquina pc`, a les 16:29:41 (Node v16.15.1), i
+  `--maquina vm`, a les 16:30:32 (Node v20.19.2), "tot correcte" (codi 0). La còpia de treball del PC, a `416f720` i sense cap
+  canvi; a la màquina virtual, `VERSIO` diu `416f720`. Cap branca no havia començat.
+- **El primer intent,** a les 16:31:32 (PC) i a les 16:31:33 (màquina virtual), amb `bash eines/llanca-lot.sh`: els dos
+  llançadors van sortir amb el codi 2, sense escriure res (la incidència 1).
+- **Just abans del segon,** `--comprova` una altra vegada, "tot correcte": al PC, acabada a les 16:36:44, i a la màquina virtual,
+  a les 16:37.
+- **El PC:** el lot, a les 16:36:56, en una finestra oculta i amb prioritat baixa, com l'envelliment (els processos de Node
+  l'hereten), des de la còpia de treball de `416f720`: `bash llanca-lot-416f720-corregit.sh 6
+  fase2/resultats/maduracio/serie/branques fase2/resultats/maduracio/serie/llista-pc.txt`. 540 branques, 6 alhora. La primera
+  línia del lot diu `codi=416f720`.
+- **La màquina virtual:** el lot, a les 16:37:10, amb `nohup`, des de `~/claude-origins-416f720`: el mateix llançador, amb 4
+  branques alhora i `llista-vm.txt`. 360 branques. La primera línia del lot diu `codi=416f720`.
+- **El codi d'una branca de cada màquina,** just després de llançar: només el camp `code` de la línia d'inici del JSONL, sense
+  llegir-ne res més.
+  - **Al PC,** `6001-continue-a`: `416f720`.
+  - **A la màquina virtual,** `6005-continue-a`: `416f720`.
+- **Durant la sèrie:** només `bash eines/seguiment.sh --agregat`. Cap `--prova`, i no es mira cap resultat fins a la decisió,
+  que es pren des d'una còpia de l'etiqueta.
+
+### La incidència 1: el llançador rebutjava les llistes de la sèrie
+
+- **Què va passar:** `eines/llanca-lot.sh` comprova, abans de començar, que la llista tingui algun experiment, amb
+  `grep -v … "$LIST" | grep -qv …` i `set -o pipefail`. El segon `grep` surt a la primera línia que coincideix. Si la llista
+  passa de 64 KB, la mida de la canonada, el primer encara hi escriu, rep un SIGPIPE i surt amb el codi 141, i amb `pipefail` la
+  comprovació falla: "la llista … no té cap experiment", codi 2.
+  - **Les llistes de la sèrie** fan 161 KB (PC) i 107 KB (màquina virtual). Les de les sèries anteriors en feien menys de 64
+    (la de l'envelliment, 46 KB).
+  - **Quan falla:** a la màquina virtual, sempre (3 de 3). Al PC, amb la llista del PC, també; amb la de la màquina virtual,
+    no sempre.
+- **El que no va passar:** cap branca no va començar, i no es va escriure res: ni la carpeta de les branques ni el fitxer del lot.
+- **La solució, sense tocar el commit de l'etiqueta:** una còpia del llançador fora del repositori, `llanca-lot-416f720-corregit.sh`,
+  amb la SHA-256 `a7285786b546d0019685941c82397ade539ce23242a0d0e4ae3024539aae6d9e` a totes dues màquines. Respecte de
+  `eines/llanca-lot.sh` de `416f720`, només hi canvien dues línies, a més d'una capçalera que ho explica:
+  - **la comprovació,** sense `-q`: `grep -v '^[[:space:]]*$' "$LIST" | grep -v '^[[:space:]]*#' > /dev/null`. El segon `grep`
+    llegeix la llista sencera, i el resultat és el mateix;
+  - **el `cd`** a la carpeta del repositori, que la còpia, fora del repositori, no pot fer: en lloc seu, comprova que es llança des
+    de l'arrel del repositori.
+
+  `experiments.sh`, `sim.mjs` i les llistes són els de `416f720`, sense cap canvi, i les còpies de treball continuen netes. Per
+  això els lots i les branques diuen `416f720`, sense `+canvis`.
+- **Abans de fer-la servir,** a cada màquina: amb les dues llistes de la sèrie i un `experiments.sh` de prova que només compta les
+  línies (en una carpeta temporal, sense simular res), 30 llançaments de 30 amb 540 i 360 experiments. Una llista sense cap
+  experiment, rebutjada amb el codi 2.
+- **Si s'ha de tornar a llançar un lot** (§7 del protocol, pas 9): amb la mateixa còpia.
+- **La correcció al repositori:** la branca `llanca-lot-llistes-grans` (`c6dd9f6`), amb la mateixa línia i una prova amb una
+  llista d'1 MB, que amb el llançador de `416f720` falla. Va a la revisió dels auditors, i no canvia res de la sèrie.
+- **Els altres `grep -q` dels lots** (a `experiments.sh` i `seguiment.sh`) llegeixen la primera o l'última línia d'un JSONL, que
+  s'escriu d'un sol cop: al pilot de la maduració, com a molt 837 i 131 bytes. No els afecta.

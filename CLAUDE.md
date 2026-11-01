@@ -90,9 +90,13 @@ Llegeix-los abans de proposar canvis.
   la branca del manifest, i només és bona si en surten els mateixos censos i la mateixa empremta final.
   - **`--prova`** no llegeix cap registre de la sèrie (AU2-98, AUD-132): ni pels àlies dels fitxers, ni amb un manifest que digui
     un altre `dir`, ni des d'una altra còpia del repositori, ni en una còpia dels fitxers, i no s'executa en una còpia on la sèrie
-    ja té registres. D'un registre en llegeix primer només la primera línia, i es nega si l'ordre de la branca l'escriu a la
-    carpeta de la sèrie. Les proves amb dades sintètiques, amb una altra carpeta a les ordres. **Des de l'etiqueta fins a la
+    ja té registres. D'un registre en llegeix primer, byte a byte, la primera línia no buida, i ni un byte més (AU2-100,
+    AUD-133). Es nega si l'ordre de la branca l'escriu a la carpeta de la sèrie, o si no hi ha cap línia d'inici sencera en els
+    primers 64 KiB. Les proves amb dades sintètiques, amb una altra carpeta a les ordres. **Des de l'etiqueta fins a la
     decisió, cap `--prova`**, i els registres només es copien a la carpeta del commit de l'etiqueta.
+  - **L'etiqueta** (`preregistre-maduracio`, a `416f720`, 01-11-2026): l'objecte i el segell, a `docs/preregistre-maduracio/`.
+    La sèrie corre des de l'1-11-2026, llançada amb una còpia corregida de `eines/llanca-lot.sh`, fora del repositori: el de
+    `416f720` rebutjava les llistes de més de 64 KB (l'acta, la incidència 1). Si cal tornar a llançar un lot, amb la mateixa còpia.
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
