@@ -41,7 +41,7 @@ function readParams() {
   return {
     seed: /^\d{1,10}$/.test(s) && Number(s) <= 4294967295 ? Number(s) : randomSeed(),
     mixing: q.get('llei') === 'corrent' ? 0.01 : 0,
-    size: SIZES[q.get('mida')] ? q.get('mida') : '512x256',
+    size: SIZES[q.get('mida')] ? q.get('mida') : mobile.matches ? '256x128' : '512x256',
   };
 }
 function writeParams(p) {
@@ -50,8 +50,8 @@ function writeParams(p) {
   history.replaceState(null, '', `?${q}`);
 }
 
-// ───────── el món i els treballadors
-const threads = Math.max(1, Math.min(6, (navigator.hardwareConcurrency || 4) - 2));
+// ───────── el món i els treballadors (al mòbil, com a molt dos fils: AUD-170)
+const threads = Math.max(1, Math.min(mobile.matches ? 2 : 6, (navigator.hardwareConcurrency || 4) - 2));
 let world = null, current = null, generation = 0, running = false, workers = [], runner = null, analyst = null;
 let pending = 0, drain = null;
 // el que diu l'anàlisi: el mapa de famílies (de l'època famEpoch), les famílies, els censos i l'establiment
@@ -90,7 +90,7 @@ function reset(p) {
   baseStale = true; codeKey = '';
   resizeBase();
   fit(true);
-  panel(); timeline(); drawInspector(); hint();
+  panel(); timeline(); drawInspector(); hint(); tryNote();
 }
 
 // les èpoques, una rere l'altra mentre es reprodueix; cada 50, una còpia per a l'anàlisi (com a molt dues pendents)
@@ -116,6 +116,13 @@ function setPlaying(on) {
   apply($('play').parentElement);
   hint();
   if (on && !was) { rate = { t: performance.now(), e: world.epoch, value: rate.value }; loop(generation); }
+}
+// la llavor 1006: la vida hi neix a l'època 2.250, com a la sèrie; mentre corre, quant falta al ritme d'ara (AUD-170)
+const BIRTH_1006 = 2250;
+function tryNote() {
+  const is1006 = current?.seed === 1006 && current.mixing === 0 && current.size === '512x256';
+  const eta = is1006 && running && rate.value > 0 && !established && world.epoch < BIRTH_1006;
+  $('try-note').textContent = eta ? t('live.eta1006', { m: num(Math.max(1, Math.round((BIRTH_1006 - world.epoch) / rate.value / 60))) }) : t('live.try1006.note', { e: num(BIRTH_1006) });
 }
 function hint() {
   const h = $('hint');
@@ -470,7 +477,12 @@ $('panel-btn')?.addEventListener('click', () => showPanel(side.classList.contain
 $('grab').addEventListener('click', () => showSheet(!dock.classList.contains('is-open')));
 $('sum').addEventListener('click', () => showSheet(true));
 mobile.addEventListener?.('change', () => drawInspector());
-onLang(() => { panel(); timeline(); hint(); drawInspector(); });
+onLang(() => { panel(); timeline(); hint(); drawInspector(); tryNote(); });
+// amb la pestanya amagada, el món s'atura, i torna a córrer quan es torna a veure (AUD-170)
+let resumeOnShow = false;
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { if (running) { resumeOnShow = true; setPlaying(false); } } else if (resumeOnShow) { resumeOnShow = false; setPlaying(true); }
+});
 
 // ───────── el dibuix
 let rate = { t: 0, e: 0, value: null }, before = performance.now();
@@ -551,6 +563,7 @@ function draw(now) {
       rate.value = running ? ((world.epoch - rate.e) * 1000) / (now - rate.t) : null;
       rate.t = now; rate.e = world.epoch;
       $('rate').textContent = rate.value === null ? '—' : num(rate.value, rate.value < 10 ? 1 : 0);
+      tryNote();
     }
     if (world.epoch > span) timeline();
     const p = `${(world.epoch / span) * 100}%`;

@@ -652,6 +652,9 @@ body.viewer { position: relative; height: 100vh; height: 100dvh; overflow: hidde
 
 /* ───────────────────────── El teu món, en viu (web/viu/) ───────────────────────── */
 .co .live-lead { margin: 0; font-size: 13px; line-height: 1.5; color: var(--c-ink-2); }
+/* la llavor 1006, a dalt del panell, i el que falta perquè hi neixi la vida (AUD-170) */
+.co .try-box { display: grid; gap: 6px; justify-items: start; margin: 2px 0 14px; padding-bottom: 14px; border-bottom: 1px solid var(--c-line); }
+.co .try-box .note { margin: 0; }
 .co .live-form { display: grid; gap: 12px; margin: 2px 0 14px; }
 .co .field { display: grid; gap: 6px; }
 .co .field-row { display: flex; gap: 6px; }

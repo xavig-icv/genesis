@@ -57,6 +57,10 @@
       </div>
       <div class="panel-body">
         <div role="tabpanel" id="tp-world" aria-labelledby="tab-world">
+          <div class="try-box">
+            <button class="btn btn-sm btn-primary" id="try-1006" type="button" data-i18n="live.try1006">Prova la llavor 1006</button>
+            <p class="note" id="try-note" aria-live="polite"></p>
+          </div>
           <form class="live-form" id="form">
             <div class="field">
               <label class="micro" for="seed" data-i18n="live.seed">Llavor</label>
@@ -70,10 +74,9 @@
               <span class="micro" data-i18n="live.size">Mida</span>
               <div class="seg seg-fill seg-mono" role="group" id="sizes" data-i18n-aria="live.size"><button type="button" data-size="512x256" aria-pressed="true">512 × 256</button><button type="button" data-size="256x128" aria-pressed="false">256 × 128</button></div>
             </div>
-            <button class="btn btn-sm btn-primary" id="apply" type="submit" data-i18n="live.apply">Comença un món nou</button>
+            <button class="btn btn-sm" id="apply" type="submit" data-i18n="live.apply">Comença un món nou</button>
           </form>
           <p class="note" data-i18n="live.odds"></p>
-          <button class="btn btn-sm" id="try-1006" type="button" data-i18n="live.try1006">Prova la llavor 1006</button>
           <p class="note" data-i18n="live.foot"></p>
         </div>
         <div role="tabpanel" id="tp-census" aria-labelledby="tab-census" hidden>
