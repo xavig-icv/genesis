@@ -367,7 +367,8 @@ canvas.addEventListener('touchcancel', touchEnd);
 window.addEventListener('keydown', (e) => {
   if (e.target.closest?.('input, select, textarea')) return;
   if (e.key === ' ' && !e.target.closest?.('button, a')) { e.preventDefault(); setPlaying(!running); }
-  if (e.key === 'Escape' && state.pinned) { state.pinned = state.hover = null; drawInspector(); }
+  if (e.key === 'Escape' && state.pinned) { state.pinned = state.hover = null; drawInspector(); announce(); }
+  if (e.key === 'Enter' && e.target === canvas && world) pick(cellAt(canvas.clientWidth / 2, canvas.clientHeight / 2));
   if (e.key === 'Home' && world) fit();
 });
 
@@ -384,6 +385,12 @@ function pick(p) {
   state.pinned = !c || (state.pinned && state.pinned.c === c.c) ? null : c;
   state.hover = state.pinned ?? c;
   drawInspector();
+  announce();
+}
+// el lector de pantalla només diu la cel·la quan es fixa, no a cada moviment del punter (AUD-165)
+function announce() {
+  const c = state.pinned, j = c && famMap ? famMap[c.c] : 0, f = j ? families[j - 1] : null;
+  $('sr-live').textContent = c ? t('inspector.pinnedLive', { x: c.x, y: c.y, f: f ? t('inspector.family', { id: f.id }) : t('inspector.nofamily') }).replace(/: (p{Lu})/u, (m, l) => `: ${l.toLowerCase()}`) : t('inspector.released');
 }
 const closeIcon = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>';
 function drawInspector() {

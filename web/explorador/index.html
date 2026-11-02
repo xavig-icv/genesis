@@ -14,7 +14,9 @@
   <link rel="stylesheet" href="../css/estil.css">
 </head>
 <body class="co viewer">
-  <canvas id="view" aria-label="El món en 3D"></canvas>
+<main>
+  <h1 class="sr-only" data-i18n="nav.explorer">Explorador 3D</h1>
+  <canvas id="view" tabindex="0" data-i18n-aria="canvas.explorer" aria-label="El món en 3D"></canvas>
 
   <header class="tray t-left">
     <a class="brand" href="../"><span class="brand-name">Genesis</span></a>
@@ -76,7 +78,8 @@
     </aside>
   </div>
 
-  <div class="insp" id="inspector" role="status" hidden></div>
+  <div class="insp" id="inspector" hidden></div>
+  <p class="sr-only" id="sr-live" aria-live="polite"></p>
   <p class="hint off" id="hint" data-i18n="zoom.code"></p>
 
   <div class="state loading" id="loading"><p data-i18n="loading">Carregant el món…</p><div class="progress"><i></i></div><p class="micro" id="loading-name"></p></div>
@@ -100,6 +103,7 @@
     <form method="dialog" class="dialog-foot"><button class="btn btn-sm btn-primary" data-i18n="help.close">Entesos</button></form>
   </dialog>
 
+</main>
   <script type="module" src="../js/explorador.js"></script>
 </body>
 </html>

@@ -141,10 +141,16 @@ export function createCamera(canvas, { onPick, onHover, onChange } = {}) {
   canvas.addEventListener('touchend', touchEnd);
   canvas.addEventListener('touchcancel', touchEnd);
 
-  // el teclat (quan el focus no és en un camp de text)
+  // el teclat: només amb el focus al visor (o enlloc), no en un botó, un enllaç o un camp (AU2-132). Retorn fixa la
+  // cel·la del centre, i mentre es mou amb el teclat, l'inspector diu quina és (AUD-165)
+  const free = (e) => e.target === canvas || e.target === document.body;
+  const center = () => [canvas.clientWidth / 2, canvas.clientHeight / 2];
+  const hoverCenter = () => { const [x, y] = center(); onHover?.(mapAt(x, y), x, y); };
+  canvas.addEventListener('focus', () => { if (canvas.matches(':focus-visible')) hoverCenter(); });
   window.addEventListener('keydown', (e) => {
-    if (e.target.closest?.('input, select, textarea')) return;
+    if (!free(e)) return;
     const k = e.key.toLowerCase();
+    if (k === 'enter' && e.target === canvas) { const [x, y] = center(); onPick?.(mapAt(x, y), x, y); }
     if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'w', 'a', 's', 'd', 'q', 'e', 'r', 'f', '+', '-', '='].includes(k)) { keys.add(k); e.preventDefault(); }
     if (k === 'home') { Object.assign(goal, { ...HOME, planet: goal.planet, d: goal.planet > 0.5 ? 900 : HOME.d }); onChange?.(); }
   });
@@ -165,6 +171,7 @@ export function createCamera(canvas, { onPick, onHover, onChange } = {}) {
     if (has('-')) zoomAt(Math.exp(2.2 * dt));
     clampGoal();
     onChange?.();
+    if (document.activeElement === canvas) hoverCenter();
   }
 
   return {

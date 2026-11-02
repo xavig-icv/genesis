@@ -151,10 +151,15 @@ const touchEnd = (e) => {
 };
 canvas.addEventListener('touchend', touchEnd);
 canvas.addEventListener('touchcancel', touchEnd);
+// el teclat: només amb el focus al visor (o enlloc), no en un botó, un enllaç o un camp (AU2-132). Retorn fixa la cel·la
+// del centre, i mentre es mou amb el teclat, l'inspector diu quina és (AUD-165)
 const keys = new Set();
+const hoverCenter = () => { const { w, h } = size(); ui.hover(cellAt(w / 2, h / 2), w / 2, h / 2); };
+canvas.addEventListener('focus', () => { if (canvas.matches(':focus-visible')) hoverCenter(); });
 window.addEventListener('keydown', (e) => {
-  if (e.target.closest?.('input, select, textarea')) return;
+  if (e.target !== canvas && e.target !== document.body) return;
   const k = e.key.toLowerCase();
+  if (k === 'enter' && e.target === canvas) { const { w, h } = size(); ui.pick(cellAt(w / 2, h / 2), w / 2, h / 2); }
   if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'w', 'a', 's', 'd', '+', '-', '='].includes(k)) { keys.add(k); e.preventDefault(); }
   if (k === 'home') fit();
 });
@@ -170,6 +175,7 @@ function keyboard(dt) {
   if (has('+', '=')) zoomAt(Math.exp(2 * dt), w / 2, h / 2);
   if (has('-')) zoomAt(Math.exp(-2 * dt), w / 2, h / 2);
   clamp();
+  if (document.activeElement === canvas) hoverCenter();
 }
 
 // el codi de les cel·les que es veuen, a un píxel per byte (es refà només quan canvia la regió, el codi o el tema)
