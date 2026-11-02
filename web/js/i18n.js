@@ -2,7 +2,15 @@
 // desar) o del navegador: català si el navegador en demana, i si no, anglès.
 const TEXTS = {
   ca: {
-    'site.title': 'Genesis · Abiogènesi digital',
+    // el títol i la descripció de cada pàgina (AUD-166)
+    'page.home.title': 'Genesis · Abiogènesi digital',
+    'page.home.desc': 'Un univers de joguina on la vida sorgeix sola: programes aleatoris que es tornen replicadors, sense que ningú n’escrigui el primer. Dissenyem les lleis, mai els organismes.',
+    'page.explorer.title': 'Explorador 3D · Genesis',
+    'page.explorer.desc': 'Un món digital on la vida sorgeix sola, en 3D: les famílies de replicadors i el codi de cada cel·la.',
+    'page.view2d.title': 'Vista 2D · Genesis',
+    'page.view2d.desc': 'Un món digital on la vida sorgeix sola, vist des de dalt: del món sencer fins als bytes de cada programa.',
+    'page.live.title': 'El teu món, en viu · Genesis',
+    'page.live.desc': 'Un món digital nou, de bytes a l’atzar, que corre al teu navegador amb el mateix simulador i les mateixes lleis que les sèries del projecte.',
     'nav.home': 'Inici', 'nav.explorer': 'Explorador 3D', 'nav.notebook': 'Quadern', 'nav.repo': 'Codi',
     'nav.map': 'Vista 2D', 'nav.live': 'El teu món, en viu',
     'zoom.code2d': 'Fes zoom per veure els bytes de cada programa',
@@ -75,8 +83,15 @@ const TEXTS = {
     'live.error': 'El món no pot córrer en aquest navegador: {m}',
   },
   en: {
-    'site.title': 'Genesis · Digital abiogenesis',
-    'nav.home': 'Home', 'nav.explorer': '3D explorer', 'nav.notebook': 'Notebook', 'nav.repo': 'Code',
+    'page.home.title': 'Genesis · Digital abiogenesis',
+    'page.home.desc': 'A toy universe where life arises on its own: random programs that become replicators, without anyone writing the first one. We design the laws, never the organisms.',
+    'page.explorer.title': '3D explorer · Genesis',
+    'page.explorer.desc': 'A digital world where life arises on its own, in 3D: the families of replicators and the code of each cell.',
+    'page.view2d.title': '2D view · Genesis',
+    'page.view2d.desc': 'A digital world where life arises on its own, seen from above: from the whole world down to the bytes of each program.',
+    'page.live.title': 'Your own world, live · Genesis',
+    'page.live.desc': 'A new digital world, of random bytes, that runs in your browser with the same simulator and the same laws as the project’s series.',
+    'nav.home': 'Home', 'nav.explorer': '3D explorer', 'nav.notebook': 'Notebook (Catalan)', 'nav.repo': 'Code',
     'nav.map': '2D view', 'nav.live': 'Your own world, live',
     'zoom.code2d': 'Zoom in to see the bytes of each program',
     'help.dbl2d': 'Double-click to zoom in on a point.',
@@ -183,10 +198,12 @@ export function setLang(l) {
   apply();
   for (const f of listeners) f(l);
 }
-// Els elements amb data-i18n="clau" (el text) i data-i18n-title="clau" (el títol i l'etiqueta accessible)
+// Els elements amb data-i18n="clau" (el text, també el títol de la pàgina), data-i18n-content="clau" (la descripció de la
+// pàgina) i data-i18n-title="clau" (el títol i l'etiqueta accessible)
 export function apply(root = document) {
   document.documentElement.lang = lang;
   for (const el of root.querySelectorAll('[data-i18n]')) el.textContent = t(el.dataset.i18n);
+  for (const el of root.querySelectorAll('[data-i18n-content]')) el.setAttribute('content', t(el.dataset.i18nContent));
   for (const el of root.querySelectorAll('[data-i18n-html]')) el.innerHTML = t(el.dataset.i18nHtml);
   for (const el of root.querySelectorAll('[data-i18n-title]')) { el.title = t(el.dataset.i18nTitle); el.setAttribute('aria-label', el.title); }
   for (const el of root.querySelectorAll('[data-i18n-aria]')) el.setAttribute('aria-label', t(el.dataset.i18nAria));
