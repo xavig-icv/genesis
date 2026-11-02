@@ -85,7 +85,7 @@ export function createUI({ base = '../dades', onWorld, onFrame, onTheme }) {
     const c = state.pinned, w = state.world;
     if (!c) { $('sr-live').textContent = t('inspector.released'); return; }
     const { i } = frameIndex(), f = w.familyAt(i, c.c);
-    $('sr-live').textContent = t('inspector.pinned', { x: c.x, y: c.y, f: f ? t('inspector.family', { id: f.id }) : t('inspector.nofamily'), k: w.k(i)[c.c] }).replace(/: (p{Lu})/u, (m, l) => `: ${l.toLowerCase()}`);
+    $('sr-live').textContent = t('inspector.pinned', { x: c.x, y: c.y, f: f ? t('inspector.family', { id: f.id }) : t('inspector.nofamily'), k: w.k(i)[c.c] }).replace(/: (\p{Lu})/u, (m, l) => `: ${l.toLowerCase()}`);
   }
 
   // els missatges d'estat: carregant, un error, o res

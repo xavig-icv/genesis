@@ -390,7 +390,7 @@ function pick(p) {
 // el lector de pantalla només diu la cel·la quan es fixa, no a cada moviment del punter (AUD-165)
 function announce() {
   const c = state.pinned, j = c && famMap ? famMap[c.c] : 0, f = j ? families[j - 1] : null;
-  $('sr-live').textContent = c ? t('inspector.pinnedLive', { x: c.x, y: c.y, f: f ? t('inspector.family', { id: f.id }) : t('inspector.nofamily') }).replace(/: (p{Lu})/u, (m, l) => `: ${l.toLowerCase()}`) : t('inspector.released');
+  $('sr-live').textContent = c ? t('inspector.pinnedLive', { x: c.x, y: c.y, f: f ? t('inspector.family', { id: f.id }) : t('inspector.nofamily') }).replace(/: (\p{Lu})/u, (m, l) => `: ${l.toLowerCase()}`) : t('inspector.released');
 }
 const closeIcon = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>';
 function drawInspector() {
