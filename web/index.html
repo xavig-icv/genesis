@@ -59,7 +59,7 @@
           <canvas id="hero" aria-hidden="true"></canvas>
           <p class="readout l micro"><span lang="ca">Llavor 1006 · època 3.500</span><span lang="en">Seed 1006 · epoch 3,500</span></p>
           <p class="readout r micro">512 × 256 <span lang="ca">cel·les</span><span lang="en">cells</span></p>
-          <button class="btn btn-sm motion-btn" type="button" data-motion aria-pressed="false"><span class="when-running"><span lang="ca">Atura el moviment</span><span lang="en">Pause the motion</span></span><span class="when-stopped"><span lang="ca">Reprèn el moviment</span><span lang="en">Resume the motion</span></span></button>
+          <button class="btn btn-sm motion-btn" type="button" data-motion aria-pressed="false" hidden><span class="when-running"><span lang="ca">Atura el moviment</span><span lang="en">Pause the motion</span></span><span class="when-stopped"><span lang="ca">Reprèn el moviment</span><span lang="en">Resume the motion</span></span></button>
         </div>
         <figcaption>
           <span lang="ca">El món de la llavor 1006, que gira com un planeta: hi ha nascut una colònia de replicadors. És un exemple triat perquè es veu bé, no una mostra.</span>
@@ -134,7 +134,7 @@
           <span lang="en">Two neighbouring cells of world 1006 at epoch 3,500, picked at random (seed 20261030) among the 254,776 pairs of a cell of family 1 with a neighbour that has no family. The tape is run by the simulator’s interpreter: A copies itself, reversed, onto B’s half, and by step <span class="mono">926</span> the copy is complete. This happens in 73&nbsp;% of these pairs, with the family’s cell first on the tape. At the start, B already resembled A: 43 of its 64 bytes were A’s, in the same places. But the copy is reversed, and the counter shows how many of B’s bytes are A’s read backwards: at the start, 3.</span>
         </figcaption>
       </figure>
-      <p class="motion-row"><button class="btn btn-sm " type="button" data-motion aria-pressed="false"><span class="when-running"><span lang="ca">Atura el moviment</span><span lang="en">Pause the motion</span></span><span class="when-stopped"><span lang="ca">Reprèn el moviment</span><span lang="en">Resume the motion</span></span></button></p>
+      <p class="motion-row" hidden><button class="btn btn-sm" type="button" data-motion aria-pressed="false"><span class="when-running"><span lang="ca">Atura el moviment</span><span lang="en">Pause the motion</span></span><span class="when-stopped"><span lang="ca">Reprèn el moviment</span><span lang="en">Resume the motion</span></span></button></p>
       <div class="specimens">
         <canvas id="gallery" aria-hidden="true"></canvas>
         <figure class="specimen"><div class="specimen-well" data-cls="2"></div><div class="specimen-row"><span class="glyph g-h0">&lt;</span><span class="micro"><span lang="ca">Cap 0</span><span lang="en">Head 0</span></span></div><figcaption class="meaning"><span lang="ca">cap 0 a l’esquerra</span><span lang="en">head 0 left</span></figcaption></figure>

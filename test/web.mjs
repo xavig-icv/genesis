@@ -81,6 +81,39 @@ const tests = {
     assert.strictEqual(r.status, 0, r.stderr);
     for (const f of ['mon.json', 'mapes.z', 'codi/100.z', 'codi/150.z']) assert.strictEqual(sha(readFileSync(join(two, f))), sha(readFileSync(join(one, f))), f);
   },
+  'els fotogrames sols (AUD-161): cadascun, igual que el seu tros dels mapes, amb la SHA-256 a mon.json': () => {
+    const dir = join(tmp, 'sols'), r = run(fitxa(dir, { sols: [100] }));
+    assert.strictEqual(r.status, 0, r.stderr);
+    const mon = JSON.parse(readFileSync(join(dir, 'mon.json'), 'utf8')), maps = inflateSync(readFileSync(join(dir, 'mapes.z')));
+    const z = readFileSync(join(dir, 'sols', '100.z'));
+    assert.deepStrictEqual(mon.solsFitxers, { 100: { fitxer: 'sols/100.z', sha256: sha(z), bytes: z.length } });
+    assert.ok(inflateSync(z).equals(maps.subarray(1 * 2 * N, 2 * 2 * N)), 'el fotograma de l\'època 100 és el segon dels mapes');
+    // una època que no és de cap fotograma: no s'escriu res
+    const bad = join(tmp, 'sols-mal'), q = run(fitxa(bad, { sols: [75] }));
+    assert.strictEqual(q.status, 1);
+    assert.match(q.stderr, /no és de cap fotograma/);
+    assert.ok(!existsSync(join(bad, 'mon.json')));
+  },
+  '--refresca torna a fer mon.json amb la fitxa, sense les captures, i en surt el mateix que de les captures': () => {
+    const a = join(tmp, 'refresca'), b = join(tmp, 'refresca-referencia');
+    assert.strictEqual(run(fitxa(a)).status, 0);
+    const maps = sha(readFileSync(join(a, 'mapes.z')));
+    // la fitxa, amb un text nou, un avís i un fotograma sol
+    const extra = { text: { ca: 'Un text nou', en: 'A new text' }, avisos: [{ des: 100, fins: 100, ca: 'Un avís', en: 'A notice' }], sols: [150] };
+    fitxa(a, extra);
+    const r = spawnSync(process.execPath, [tool, '--refresca', join(a, 'fitxa.json')], { encoding: 'utf8' });
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.strictEqual(run(fitxa(b, extra)).status, 0);
+    for (const f of ['mon.json', 'sols/150.z']) assert.strictEqual(sha(readFileSync(join(a, f))), sha(readFileSync(join(b, f))), f);
+    assert.strictEqual(sha(readFileSync(join(a, 'mapes.z'))), maps, 'els mapes no es toquen');
+    // si la fitxa canvia el que surt de les captures, s'atura, i mon.json no canvia
+    const before = sha(readFileSync(join(a, 'mon.json')));
+    fitxa(a, { ...extra, epoques: { des: 50, fins: 100, cada: 50 } });
+    const q = spawnSync(process.execPath, [tool, '--refresca', join(a, 'fitxa.json')], { encoding: 'utf8' });
+    assert.strictEqual(q.status, 1);
+    assert.match(q.stderr, /canvia «epoques»/);
+    assert.strictEqual(sha(readFileSync(join(a, 'mon.json'))), before);
+  },
   'no sobreescriu res': () => {
     const before = sha(readFileSync(join(one, 'mon.json')));
     const r = run(join(one, 'fitxa.json'));

@@ -1,6 +1,6 @@
 // Les dades d'un món de l'explorador (les escriu eines/web-dades.mjs): la fitxa amb els fotogrames i les famílies
-// (mon.json), els mapes de tots els fotogrames (mapes.z) i el codi d'algunes èpoques (codi/E.z). Cada fitxer es
-// comprova amb la seva SHA-256 de mon.json abans de fer-lo servir.
+// (mon.json), els mapes de tots els fotogrames (mapes.z), el codi d'algunes èpoques (codi/E.z) i, per a la portada,
+// algun fotograma sol (sols/E.z). Cada fitxer es comprova amb la seva SHA-256 de mon.json abans de fer-lo servir.
 async function inflate(buffer) {
   const stream = new Blob([buffer]).stream().pipeThrough(new DecompressionStream('deflate'));
   return new Response(stream).arrayBuffer();
@@ -16,6 +16,33 @@ async function fetchChecked(url, expected) {
   const buf = await r.arrayBuffer(), got = await sha256(buf);
   if (got !== null && got !== expected) throw new Error(`${url} no té la SHA-256 de mon.json`);
   return { buf, checked: got !== null };
+}
+
+export async function loadMeta(base) {
+  const r = await fetch(`${base}/mon.json`);
+  if (!r.ok) throw new Error(`${base}/mon.json: ${r.status}`);
+  return r.json();
+}
+// Un fotograma sol (AUD-161): la portada en pinta un, i no baixa els mapes de tots. Té la forma d'un món d'un sol
+// fotograma: fam(0), k(0), palette(0, colors) i familyAt(0, cel·la)
+export async function loadFrame(base, meta, e) {
+  const [W, H] = meta.mida, n = W * H, f = meta.solsFitxers?.[e], i = meta.fotogrames.findIndex((x) => x.e === e);
+  if (!f || i < 0) throw new Error(`${base}: no hi ha el fotograma sol de l'època ${e}`);
+  const { buf, checked } = await fetchChecked(`${base}/${f.fitxer}`, f.sha256);
+  const map = new Uint8Array(await inflate(buf));
+  if (map.length !== 2 * n) throw new Error(`el fotograma de l'època ${e} no té la mida del món`);
+  const families = new Map(meta.families.map((x) => [x.id, x])), list = meta.fotogrames[i].f;
+  return {
+    meta, W, H, n, checked, families, epochs: [e],
+    fam: () => map.subarray(0, n),
+    k: () => map.subarray(n, 2 * n),
+    palette(_, colors, out = new Uint8Array(256 * 4)) {
+      out.fill(0);
+      list.forEach((id, j) => { const c = colors[families.get(id).paleta % colors.length]; out.set([c[0] * 255, c[1] * 255, c[2] * 255, 255], (j + 1) * 4); });
+      return out;
+    },
+    familyAt(_, cell) { const j = map[cell]; return j ? families.get(list[j - 1]) : null; },
+  };
 }
 
 export async function loadWorld(base) {

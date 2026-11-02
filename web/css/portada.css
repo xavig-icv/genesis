@@ -35,7 +35,14 @@
 /* El fons del planeta és --hero-bg: al tema clar, el mateix paper de la pàgina; al fosc, el de l'escenari */
 .co .viewport { grid-column: 6 / span 7; position: relative; min-height: 640px; margin: 0; overflow: hidden; border: 1px solid var(--c-line); border-radius: var(--r-5); background: var(--hero-bg); }
 .co .viewport-stage { position: absolute; inset: 0; }
+/* La imatge fixa del planeta (web/img/planeta-*.jpg, el mateix dibuix, quiet): es veu de seguida, i sempre sense WebGL2 o
+   sense JavaScript. Ajustada a l'alçada, com el dibuix, que fixa el camp de visió vertical (AUD-161, AU2-133) */
+.co .viewport-stage { background: var(--hero-bg) url("../img/planeta-clar.jpg") center / auto 100% no-repeat; }
+:root[data-theme="dark"] .co .viewport-stage { background-image: url("../img/planeta-fosc.jpg"); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .co .viewport-stage { background-image: url("../img/planeta-fosc.jpg"); } }
 .co .viewport canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.co .viewport #hero { opacity: 0; transition: opacity var(--d-slow) var(--ease-out); }
+.co .viewport #hero.is-drawn { opacity: 1; }
 .co .readout { position: absolute; top: 18px; margin: 0; }
 .co .readout.l { left: 20px; }
 .co .readout.r { right: 20px; }
@@ -43,6 +50,7 @@
    cal (AUD-165) */
 .co .motion-btn { position: absolute; right: 16px; bottom: 14px; z-index: 2; }
 .co .motion-row { display: flex; justify-content: flex-end; margin: 24px 0 -16px; }
+.co [data-motion][hidden], .co .motion-row[hidden] { display: none; }
 .co [data-motion][aria-pressed="true"] .when-running, .co [data-motion][aria-pressed="false"] .when-stopped { display: none; }
 @media (prefers-reduced-motion: reduce) { .co [data-motion], .co .motion-row { display: none; } }
 /* l'enllaç per saltar la navegació, visible només amb el focus (AUD-165) */

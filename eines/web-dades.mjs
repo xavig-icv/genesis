@@ -4,22 +4,27 @@
 // (eines/imatges.mjs). Sense dependències.
 //
 //   node eines/web-dades.mjs web/dades/ID/fitxa.json carpeta-de-captures
+//   node eines/web-dades.mjs --refresca web/dades/ID/fitxa.json
 //
-// La fitxa, escrita a mà, diu quin món és i per què es mostra (vegeu web/dades/README.md). L'eina hi escriu, al
-// costat:
+// La fitxa, escrita a mà, diu quin món és i per què es mostra. L'eina hi escriu, al costat:
 //   mon.json       la fitxa, amb els fotogrames, les famílies, la procedència de cada captura i les SHA-256
 //   mapes.z        per a cada fotograma, la família de cada cel·la (l'índex a la llista del fotograma, 0 = cap) i el
 //                  seu nombre d'instruccions (de 0 a 64): 2 bytes per cel·la, comprimits amb zlib
 //   codi/E.z       el codi de l'època E: la classe de cada byte (0 = dada, 1 = zero, 2 a 11 = les instruccions
 //                  <>{}-+.,[] en aquest ordre), comprimit amb zlib
+//   sols/E.z       si la fitxa en diu les èpoques ("sols"), el fotograma de l'època E tot sol, igual que el seu tros de
+//                  mapes.z: la portada en pinta un, i no ha de baixar-los tots (AUD-161)
 // Abans de res, l'eina comprova que la història sigui la del registre, i si no ho és, no escriu res:
 //   "comprova"   les captures que porten SHA-256 (de docs/captures.sha256), comparades amb les de la carpeta;
 //   "registre"   els censos del JSONL de l'execució (--json, a la carpeta de les captures), comparats amb els del
 //                registre de la sèrie, i l'empremta final si totes dues acaben a la mateixa època.
-// "epoques" i "codi" són un tram ({ des, fins, cada }) o una llista de trams. Mai no sobreescriu cap fitxer.
+// "epoques" i "codi" són un tram ({ des, fins, cada }) o una llista de trams. Mai no sobreescriu cap fitxer, llevat de
+// mon.json amb --refresca: llavors no llegeix cap captura, i torna a escriure la fitxa (els textos, els avisos, els
+// fotogrames sols) amb tot el que ja hi havia calculat. Si la fitxa canvia el que surt de les captures (les èpoques, el
+// codi, les captures, les comprovacions o el registre), s'atura: cal refer-ho tot amb les captures.
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { createHash } from 'crypto';
-import { deflateSync } from 'zlib';
+import { deflateSync, inflateSync } from 'zlib';
 import { dirname, join, relative, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { PROGRAM_SIZE, KIND, OPCODES } from '../fase1/bff.js';
@@ -65,12 +70,34 @@ function checkRecord(reg, captures) {
   return { censos: n, fins: last, empremta: fingerprint ? ea.fingerprint : null };
 }
 
+// Els fotogrames sols de la fitxa ("sols"), cadascun igual que el seu tros dels mapes. Si el fitxer ja hi és, ha de ser
+// el mateix: no se sobreescriu
+function writeSols(dir, fitxa, epochs, maps, n) {
+  if (!fitxa.sols) return null;
+  const out = {};
+  for (const e of fitxa.sols) {
+    const i = epochs.indexOf(e), file = join(dir, 'sols', `${e}.z`);
+    if (i < 0) fail(`el fotograma sol de l'època ${e} no és de cap fotograma`);
+    const z = deflateSync(maps.subarray(i * 2 * n, (i + 1) * 2 * n), { level: 9 });
+    if (existsSync(file)) { if (sha256(readFileSync(file)) !== sha256(z)) fail(`${file} ja existeix i és diferent: no es torna a fer`); }
+    else { mkdirSync(join(dir, 'sols'), { recursive: true }); writeFileSync(file, z, { flag: 'wx' }); }
+    out[e] = { fitxer: `sols/${e}.z`, sha256: sha256(z), bytes: z.length };
+  }
+  return out;
+}
+// mon.json: la fitxa, i després el que surt de les captures, sempre en el mateix ordre (build i refresh en treuen el mateix)
+const monOf = (fitxa, c) => ({
+  ...fitxa, format: c.format, eina: c.eina, comprovat: c.comprovat, mapes: c.mapes, codiFitxers: c.codiFitxers,
+  ...(c.solsFitxers ? { solsFitxers: c.solsFitxers } : {}), fotogrames: c.fotogrames, families: c.families, fonts: c.fonts,
+});
+
 export function build(fitxaPath, captures) {
   const dir = dirname(fitxaPath), fitxa = JSON.parse(readFileSync(fitxaPath, 'utf8'));
   const [W, H] = fitxa.mida, n = W * H;
-  for (const f of ['mon.json', 'mapes.z', 'codi']) if (existsSync(join(dir, f))) fail(`${join(dir, f)} ja existeix: no es torna a fer`);
+  for (const f of ['mon.json', 'mapes.z', 'codi', 'sols']) if (existsSync(join(dir, f))) fail(`${join(dir, f)} ja existeix: no es torna a fer`);
   const epochs = range(fitxa.epoques), codeEpochs = new Set(fitxa.codi ? range(fitxa.codi) : []);
   for (const e of codeEpochs) if (!epochs.includes(e)) fail(`el codi de l'època ${e} no és de cap fotograma`);
+  for (const e of fitxa.sols ?? []) if (!epochs.includes(e)) fail(`el fotograma sol de l'època ${e} no és de cap fotograma`);
   // les captures que s'han de comprovar, abans de res
   for (const c of fitxa.comprova ?? []) {
     const file = join(captures, captureName(fitxa.captures, c.epoca));
@@ -133,18 +160,42 @@ export function build(fitxaPath, captures) {
     codi[e] = { fitxer: `codi/${e}.z`, sha256: sha256(z), bytes: z.length };
   }
   writeFileSync(join(dir, 'mapes.z'), mapsZ, { flag: 'wx' });
-  const mon = {
-    ...fitxa, format: 1,
+  const mon = monOf(fitxa, {
+    format: 1,
     eina: { programa: 'eines/web-dades.mjs', registre: 'fase2/families.js (createFamilyTracker, per defecte)' },
     comprovat: { captures: (fitxa.comprova ?? []).length, ...(record ? { registre: record } : {}) },
     mapes: { fitxer: 'mapes.z', sha256: sha256(mapsZ), bytes: mapsZ.length },
-    codiFitxers: codi, fotogrames: frames, families: [...families.values()].sort((a, b) => a.neix - b.neix || a.id - b.id), fonts,
-  };
+    codiFitxers: codi, solsFitxers: writeSols(dir, fitxa, epochs, maps, n),
+    fotogrames: frames, families: [...families.values()].sort((a, b) => a.neix - b.neix || a.id - b.id), fonts,
+  });
   writeFileSync(join(dir, 'mon.json'), JSON.stringify(mon) + '\n', { flag: 'wx' });
   return { frames: frames.length, families: families.size, mapsBytes: mapsZ.length, codeBytes: Object.values(codi).reduce((s, c) => s + c.bytes, 0), dir: relative(ROOT, dir) };
 }
 
+// --refresca: la fitxa d'ara (els textos, els avisos, els fotogrames sols), amb el que ja hi ha calculat a mon.json, sense
+// llegir cap captura. Comprova abans la SHA-256 dels mapes
+export function refresh(fitxaPath) {
+  const dir = dirname(fitxaPath), fitxa = JSON.parse(readFileSync(fitxaPath, 'utf8')), monPath = join(dir, 'mon.json');
+  if (!existsSync(monPath)) fail(`no hi ha ${monPath}: primer cal fer les dades amb les captures`);
+  const mon = JSON.parse(readFileSync(monPath, 'utf8'));
+  for (const k of ['id', 'mida', 'captures', 'epoques', 'codi', 'comprova', 'registre']) {
+    if (JSON.stringify(fitxa[k]) !== JSON.stringify(mon[k])) fail(`la fitxa canvia «${k}», que surt de les captures: cal refer les dades amb les captures`);
+  }
+  const mapsZ = readFileSync(join(dir, mon.mapes.fitxer));
+  if (sha256(mapsZ) !== mon.mapes.sha256) fail(`${mon.mapes.fitxer} no té la SHA-256 de mon.json`);
+  const [W, H] = mon.mida, sols = writeSols(dir, fitxa, mon.fotogrames.map((f) => f.e), inflateSync(mapsZ), W * H);
+  writeFileSync(monPath, JSON.stringify(monOf(fitxa, { ...mon, solsFitxers: sols })) + '\n');
+  return { dir: relative(ROOT, dir), sols: Object.keys(sols ?? {}).length };
+}
+
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  if (process.argv[2] === '--refresca') {
+    const [, fitxa, ...rest] = process.argv.slice(2);
+    if (!fitxa || rest.length) fail('Ús: node eines/web-dades.mjs --refresca web/dades/ID/fitxa.json');
+    const r = refresh(fitxa);
+    console.log(`${r.dir}: mon.json, refet amb la fitxa; ${r.sols} fotogrames sols`);
+    process.exit(0);
+  }
   const [fitxa, captures, ...rest] = process.argv.slice(2);
   if (!fitxa || !captures || rest.length) fail('Ús: node eines/web-dades.mjs web/dades/ID/fitxa.json carpeta-de-captures');
   const r = build(fitxa, captures);

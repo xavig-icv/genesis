@@ -2,7 +2,7 @@
 // (js/cinta.js) i el sòlid de cada instrucció, que gira al pou del seu espècimen. Sense controls al planeta, perquè la
 // pàgina es pugui desplaçar. Amb moviment reduït, tot quiet.
 import { createRenderer } from './render.js';
-import { loadWorld } from './dades.js';
+import { loadMeta, loadFrame } from './dades.js';
 import { R } from './geo.js';
 import { v3, perspective, lookAt, multiply } from './mat4.js';
 import { compile } from './gl.js';
@@ -30,6 +30,8 @@ function setMotion(paused) {
   for (const b of document.querySelectorAll('[data-motion]')) b.setAttribute('aria-pressed', String(paused));
 }
 for (const b of document.querySelectorAll('[data-motion]')) b.addEventListener('click', () => setMotion(!motion.paused));
+// els botons, només quan alguna cosa es mou: sense WebGL2 (o sense JavaScript), el planeta és la imatge fixa i no cal
+const motionShown = () => { for (const b of document.querySelectorAll('[data-motion]')) { b.hidden = false; b.closest('.motion-row')?.removeAttribute('hidden'); } };
 const SUN = v3.normalize([0.55, 0.75, -0.35]);
 
 // Dibuixa només quan el llenç es veu (i el navegador ja s'atura quan la pestanya no es veu)
@@ -39,11 +41,14 @@ function whenVisible(el) {
   return s;
 }
 
-// 1. El planeta: el fotograma de l'època del peu de la figura, del primer món de la llista amb la seva llavor. El fons és
-// el de la figura (--hero-bg: al tema clar, el paper de la pàgina), i al tema fosc hi ha més estrelles que als visors
+// 1. El planeta: el fotograma de l'època del peu de la figura, del primer món de la llista amb la seva llavor, tot sol
+// (sols/E.z, uns 94 kB, i no els mapes de tots els fotogrames: AUD-161). El fons és el de la figura (--hero-bg: al tema
+// clar, el paper de la pàgina), i al tema fosc hi ha més estrelles que als visors. Fins que no hi ha dibuix, i sempre sense
+// WebGL2, es veu la imatge fixa del planeta (web/img/planeta-*.jpg), que és el mateix dibuix
 async function hero() {
   const canvas = document.getElementById('hero'), r = createRenderer(canvas, { starCount: 16000 });
   if (!r) return;
+  motionShown();
   const fig = canvas.closest('[data-seed]'), seed = fig.dataset.seed;
   const withBackground = (tk) => ({ ...tk, background: parseColor(getComputedStyle(fig).getPropertyValue('--hero-bg')) });
   r.setTheme(withBackground(tokens));
@@ -51,24 +56,30 @@ async function hero() {
   const list = await (await fetch('dades/mons.json')).json();
   let w = null;
   for (const m of list) {
-    try { const c = await loadWorld(`dades/${m.id}`); if (new RegExp(`--seed ${seed}\\b`).test(c.meta.ordre)) { w = c; break; } } catch { /* el següent */ }
+    try {
+      const meta = await loadMeta(`dades/${m.id}`);
+      // l'època del peu de la figura (data-epoch); si el món no en té el fotograma sol, no es dibuixa res
+      if (new RegExp(`--seed ${seed}\\b`).test(meta.ordre)) { w = await loadFrame(`dades/${m.id}`, meta, Number(fig.dataset.epoch)); break; }
+    } catch { /* el següent */ }
   }
   if (!w) return;
-  // l'època del peu de la figura (data-epoch); si el món no la té, no es dibuixa res
-  const i = w.epochs.indexOf(Number(fig.dataset.epoch));
-  if (i < 0) return;
-  const frame = () => ({ fam: w.fam(i), k: w.k(i), palette: w.palette(i, tokens.families) });
+  const frame = () => ({ fam: w.fam(0), k: w.k(0), palette: w.palette(0, tokens.families) });
   r.setFrames(frame(), frame());
   themed.push(() => r.setFrames(frame(), frame()));
   const vis = whenVisible(canvas);
-  const resize = () => { const dpr = Math.min(1.5, devicePixelRatio || 1); r.resize(Math.round(canvas.clientWidth * dpr), Math.round(canvas.clientHeight * dpr)); };
-  addEventListener('resize', resize);
+  // la mida del dibuix, la del llenç: es comprova a cada volta, perquè la figura canvia de mida sense que canviï la finestra
+  // (quan arriben les fonts, per exemple), i si no, el navegador estiraria el dibuix d'abans
+  const resize = () => {
+    const dpr = Math.min(1.5, devicePixelRatio || 1), w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
+    if (w !== canvas.width || h !== canvas.height) r.resize(w, h);
+  };
   resize();
   // ~20 fotogrames per segon, que n'hi ha prou: el planeta gira com a molt 1,4° per segon. I cap, si no ha canviat res
   // (aturat, amb moviment reduït o sense canvis de mida ni de tema)
   const center = [0, -R, 0], t0 = performance.now();
   let last = -Infinity, drawn = '';
   const loop = (now) => {
+    resize();
     const t = reducedMotion.matches ? 0 : (clock(now) - t0) / 1000, key = `${t}|${canvas.width}|${canvas.height}|${themeStamp}`;
     if (vis.on && key !== drawn && now - last >= 48) {
       last = now; drawn = key;
@@ -82,6 +93,7 @@ async function hero() {
         viewProj: multiply(proj, lookAt(eye, center, [0, 0, -1])), eye, planet: 1, sun: SUN, fog: 1 / (D * 4),
         height: 3, t: 0, time: t, codeMix: 0, gridMix: 0, hover: -1, pixel: Math.min(1.5, devicePixelRatio || 1),
       });
+      canvas.classList.add('is-drawn');
     }
     requestAnimationFrame(loop);
   };
@@ -128,6 +140,7 @@ const mat = {
 function gallery() {
   const canvas = document.getElementById('gallery'), gl = canvas.getContext('webgl2', { antialias: true, alpha: true, premultipliedAlpha: true });
   if (!gl) return;
+  motionShown();
   const p = compile(gl, GALLERY_VS, GALLERY_FS);
   const wells = [...document.querySelectorAll('.specimen-well[data-cls]')];
   const vaos = wells.map((well) => {
