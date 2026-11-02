@@ -185,6 +185,10 @@ export function createUI({ base = '../dades', onWorld, onFrame, onTheme }) {
   let axis = null;
   function families() {
     const ul = $('families'), w = state.world, fams = w.meta.families;
+    // els avisos de la fitxa, com el de la família 2 del 1006 (AUD-162)
+    const av = w.meta.avisos ?? [];
+    $('fam-avisos').hidden = !av.length;
+    $('fam-avisos').textContent = av.map((a) => a[lang]).join(' ');
     ul.replaceChildren();
     $('fam-count').textContent = fams.length ? String(fams.length) : '';
     if (!fams.length) { ul.append(el('li', 'empty', t('families.none'))); updateFamilies(); return; }

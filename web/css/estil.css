@@ -525,6 +525,8 @@ body.viewer { position: relative; height: 100vh; height: 100dvh; overflow: hidde
 .co .panel-body p { margin: 0 0 10px; font-size: 13.5px; line-height: 1.55; color: var(--c-ink-2); }
 .co .panel-body h3 { margin: 4px 0 6px; font-size: 13px; font-weight: 600; color: var(--c-ink); }
 .co .panel-body .note { font-size: 12px; line-height: 1.5; color: var(--c-ink-3); }
+/* un avís de la fitxa (AUD-162): amb un filet a l'esquerra, en tinta */
+.co .panel-body .note.warn { padding-left: 10px; border-left: 2px solid var(--c-ink); color: var(--c-ink-2); }
 .co .panel-body [role="tabpanel"][hidden] { display: none; }
 .co .panel-foot { flex: none; margin: 4px 0 0; padding: 10px 16px 14px; border-top: 1px solid var(--c-line); font-size: 11.5px; line-height: 1.5; color: var(--c-ink-3); }
 .co .legend { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin: 0; }
