@@ -150,12 +150,15 @@ function gallery() {
   requestAnimationFrame(loop);
 }
 
-// 3. L'aparició suau de les seccions, una sola vegada
+// 3. L'aparició suau de les seccions, una sola vegada: només s'amaguen les que encara són sota la pantalla, i res amb
+// moviment reduït (AUD-160)
 function reveal() {
+  if (reducedMotion.matches) return;
+  const below = [...document.querySelectorAll('[data-reveal]')].filter((el) => el.getBoundingClientRect().top > innerHeight);
   const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.remove('is-out'); io.unobserve(e.target); }
   }, { rootMargin: '0px 0px -8% 0px' });
-  for (const el of document.querySelectorAll('[data-reveal]')) io.observe(el);
+  for (const el of below) { el.classList.add('is-out'); io.observe(el); }
 }
 
 reveal();
