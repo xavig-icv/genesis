@@ -1,7 +1,14 @@
 # B1, les ablacions de la química · el nivell 1, la densitat de replicadors
 
-**Versió: v0.3 (01-11-2026), després de l'auditoria 25, per a l'auditoria 26.** No s'ha calculat res, llevat del temps que triga
-la prova, sense cap recompte (§8). El codi és a la mateixa branca, amb les proves (§9).
+**Versió: v0.4 (02-11-2026), després de l'auditoria 26: GO de tots dos per calcular el nivell 1 quan acabi la sèrie de la
+maduració.** No s'ha calculat res, llevat del temps que triga la prova, sense cap recompte (§8). El codi és el de la PR #30
+(`0bb753e`, a `main` des del 02-11-2026, amb el merge `881924a`), amb les proves (§9).
+- **De la v0.3 a la v0.4** (les decisions de l'auditoria 26, §12). Només el text: el codi no canvia.
+  - **X0** dona 0 a la pràctica, no per construcció (AUD-144, §2);
+  - **el cost de l'ampliació,** i el vistiplau del responsable (AUD-145, §8);
+  - **les llavors** de la §13, i una xifra de la §5 (AUD-146);
+  - **per què l'interval del quocient és conservador** (§6);
+  - **el que es desa amb els registres,** i com es comprova que s'han fet (§11).
 - **De la v0.2 a la v0.3** (les decisions de l'auditoria 25, §12):
   - **el control S4 no ho era** (AUD-140, AU2-104): el codi del company s'hi pot copiar el programa. El control és X0, cap còpia
     ni cap escriptura d'una meitat a l'altra, i S4 passa a ser una variant;
@@ -68,7 +75,7 @@ hereditaris. És si els replicadors curts **existeixen i són abundants**.
 | **C0** | BFF, tal com és | La referència | Replicadors, amb la distribució D½ |
 | **K0** | `.` i `,` no fan res | **Control:** sense còpia | 0, a la pràctica. Només `+` i `-` escriuen, i refer així 16 bytes d'un altre programa és molt improbable |
 | **L0** | `[` i `]` no fan res | **Control:** sense bucles | 0, a la pràctica. Cada instrucció s'executa com a molt un cop, i 64 bytes a l'atzar gairebé mai no tenen prou instruccions de còpia per copiar-ne 16 un a un |
-| **X0** | Cap còpia ni cap escriptura d'una meitat a l'altra: una escriptura a l'altra meitat que la del punter no fa res, ni una còpia que hi llegeix (S4 i X1 alhora) | **Control:** cap byte no passa d'una meitat a l'altra | 0, a la pràctica. Només el flux de control (un bucle que mira l'altra meitat) en passa informació, i refer així una finestra de 16 bytes és, a la pràctica, impossible. És el control que S4 no era (auditor 1, AUD-140) |
+| **X0** | Cap còpia ni cap escriptura d'una meitat a l'altra: una escriptura a l'altra meitat que la del punter no fa res, ni una còpia que hi llegeix (S4 i X1 alhora) | **Control:** cap byte no passa d'una meitat a l'altra | 0, a la pràctica, no per construcció (tots dos, AUD-144). Només el flux de control en passa informació: un valor hi pot passar comptant, amb un bucle que s'obre en un programa i es tanca a l'altre, i amb codi dels dos. Amb una parella feta a mà, el company acaba portant 16 bytes del programa. Els companys de la prova són de soroll, i no hi posen aquest codi. És el control que S4 no era (auditor 1, AUD-140) |
 | **K1** | `.` no fa res | Hi ha replicació només amb `,`? | Sí: `,` també copia d'una meitat a l'altra, si `h0` va enrere (`<`) |
 | **K2** | `,` no fa res | Hi ha replicació només amb `.`? | Sí, amb `{`. No és el mirall de K1: `[`, `]`, `+` i `-` són de `h0` |
 | **R0** | `+` i `-` no fan res | Cal l'aritmètica? | Sí que n'hi ha: copiar no demana canviar bytes |
@@ -136,8 +143,8 @@ variant (AUD-65). Cap prova nova (AUD-02).
   10⁸ programes, els mateixos.
 - **Amb Du:** 10⁷ programes, amb C0 i K0.
 - **La llavor: 20261101,** fixada a la v0.3, abans de calcular res amb cap llavor que no fos la de prova (777, §8). Els programes del
-  nivell 1 fan servir els generadors de 20.261.101 a 20.261.101 + 2·10⁸ + 1; la §13 en tindrà una de pròpia. L'anàlisi comprova
-  que tots els registres siguin d'aquesta llavor.
+  nivell 1 fan servir els generadors de 20.261.101 a 20.261.101 + 2·10⁸ − 1, amb 10⁸ programes (a la v0.3 hi deia "+ 1"; AUD-146).
+  Les llavors de la §13 en seran fora. L'anàlisi comprova que tots els registres siguin d'aquesta llavor.
 
 ## 6. L'anàlisi, escrita abans de calcular
 
@@ -147,11 +154,16 @@ variant (AUD-65). Cap prova nova (AUD-02).
 - **la taula de 2 × 2:** els programes hereditaris a totes dues variants, només a C0, només a la variant, o a cap;
 - **el quocient de les densitats,** amb el seu interval: el de dos recomptes de Poisson independents (la binomial condicionada), que
   amb els mateixos programes és conservador.
-  - **Comprovat** (l'auditor 2 ho demanava justificat): `node eines/densitat-cobertura.mjs` en mesura la cobertura amb recomptes
-    sintètics, i la mateixa funció de l'anàlisi. Amb 30 o 100 hereditaris esperats a C0, quocients de 0,1 a 2, i un solapament
-    entre els hereditaris de les dues químiques de cap a total, la cobertura del 95 % nominal va del 95,7 % al 100 %.
-  - **Amb solapament,** l'interval és més ample del que caldria. Per descriure, n'hi ha prou (auditor 1), i la taula de 2 × 2 dona
-    els programes que canvien.
+  - **Sense solapament, ho és sempre** (auditor 1, auditoria 26): condicionat al total, el recompte de la variant és binomial, i
+    l'interval de Clopper-Pearson cobreix almenys el 95 % per a cada total.
+  - **Amb solapament** entre els hereditaris de les dues químiques, l'interval és més ample del que caldria. Ho hem comprovat, però
+    no ho hem demostrat (auditor 2):
+    - **calculada exactament** (auditor 1), la cobertura del 95 % nominal no baixa del 95 % en cap de 90 escenaris: de 3 a 300
+      hereditaris esperats a C0, quocients de 0,01 a 10, i un solapament de cap, de la meitat o total. La més baixa, el 95,34 %,
+      és sense solapament;
+    - **`node eines/densitat-cobertura.mjs`** la mesura per simulació, amb la mateixa funció de l'anàlisi, en 24 d'aquests
+      escenaris, i hi coincideix.
+  - **Per descriure, n'hi ha prou** (auditor 1), i la taula de 2 × 2 dona els programes que canvien.
 - **els programes que canvien:** els que són replicadors a una variant i no a l'altra. Si una ablació en crea de nous, ho diu.
 
 **Només amb el pla sencer** (AUD-142, AU2-103): les 13 químiques amb D½, C0 i K0 amb Du, la llavor del pla, i 10⁷ programes (o
@@ -191,6 +203,9 @@ uns 0,8 ms per programa i fil, amb Du i amb D½.
 - **10⁷ programes,** unes 2,3 h en un fil.
 - **Tot el nivell 1:** 13 variants amb D½ (12 a la v0.2, i X0 a la v0.3), més C0 i K0 amb Du. Són 1,5·10⁸ proves, unes 33 h de
   fil: unes 4,2 h amb els 8 fils del PC. La màquina virtual comparteix els mateixos fils, i no hi afegeix gaire.
+- **Si cal l'ampliació** (§5): les 13 variants amb D½ passen a 10⁸ programes. Són 1,17·10⁹ proves més, unes 260 h de fil: unes 33 h
+  més amb els 8 fils, un dia i mig en total (auditor 1, AUD-145).
+  El responsable hi va donar el vistiplau el 02-11-2026, abans de calcular res.
 - **Gairebé tot el temps** és de les finestres de 16 bytes, que es comparen com a text. Una versió més ràpida de
   `fase2/replication.js` hauria de donar els mateixos resultats, comprovats amb les empremtes. Ara no la proposem.
 - **El que hem vist sense voler** (31-10-2026), en provar l'eina (§9) amb una llavor de prova (777) i 300 programes, amb C0 i D½: el
@@ -202,6 +217,10 @@ uns 0,8 ms per programa i fil, amb Du i amb D½.
   - **Un programa fet a mà:** l'auditor 1 en va posar a prova un amb S4, C0, K0 i L0 (AUD-140). No és cap programa a l'atzar, i no
     diu res de cap densitat. Les proves de `test/quimiques.mjs` el fan servir.
   - **La cobertura de l'interval del quocient** (§6): amb recomptes sintètics, sense cap programa.
+- **A l'auditoria 26** (02-11-2026), tampoc cap programa a l'atzar:
+  - **l'auditor 1:** l'eina amb un sol programa de K0, bytes uniformes i la llavor 777, només per al camp `code` i els mòduls; una
+    parella de programes fets a mà, amb X0 (AUD-144); i la cobertura exacta de l'interval, sense sortejar res;
+  - **l'auditor 2:** registres sintètics i quatre cintes fetes a mà.
 
 ## 9. La implementació, en una PR
 
@@ -250,6 +269,9 @@ cubff i les proves de l'intèrpret i del món passen igual.
       prova del cens, amb S4 és hereditari, i amb X0 ni tan sols es replica.
     - **Que les proves atrapen els errors:** amb un error posat a propòsit a la regla de S1, en fallen quatre (a la v0.2, tres; la
       quarta és la de les fronteres). L'auditor 1 n'hi va posar quatre, i les proves els van atrapar tots.
+      A l'auditoria 26, en va posar 15 més a les correccions, i també els van atrapar tots. Dos, X0 amb una sola de les seves dues
+      regles, només els atrapen les cintes fetes a mà: la referència llegeix la definició de `CHEMISTRIES`, i comprova l'intèrpret,
+      no la definició.
   - **`test/densitat.mjs`:** les opcions, que el resultat no depèn dels fils ni dels trossos, el JSONL, les distribucions, l'AUD-65 a
     l'eina, i que el codi i la SHA-256 dels mòduls vegin un canvi a `fase1/` i a `fase2/`, amb git i sense (AUD-139).
   - **`test/densitat-analisi.mjs`:** l'interval, un resultat conegut, els controls, l'ampliació, la llista del nivell 2, la línia
@@ -270,13 +292,24 @@ cubff i les proves de l'intèrpret i del món passen igual.
 ## 11. El calendari
 
 1. **Durant la sèrie de la maduració:** aquest pla i la PR de la §9, revisats a l'auditoria 25, i les seves correccions, a l'auditoria
-   26, breu.
-2. **Després de la sèrie,** quan el PC i la màquina virtual siguin lliures, des d'un commit net amb aquest pla: el nivell 1, unes 4,2 h
-   (13 químiques amb D½, i 2 amb Du).
-3. **La §13:** el codi en una PR a part, amb una revisió breu abans de calcular; el càlcul, unes 5 h.
+   26: GO de tots dos (02-11-2026).
+2. **Després de la sèrie i de la seva decisió,** quan el PC i la màquina virtual siguin lliures: el nivell 1, unes 4,2 h (13 químiques
+   amb D½, i 2 amb Du), i unes 33 h més si cal l'ampliació (§8).
+   - **D'on:** d'una còpia neta d'un commit de `main` amb aquest pla i els quatre mòduls de `0bb753e`, idèntics (auditor 2).
+   - **Abans de llançar:** la llista de les 15 ordres, a git, amb la seva SHA-256 (auditor 2).
+   - **Mentre corren:** cap recompte. El seguiment, només agregat.
+   - **Al costat dels registres:** el commit, la versió de Node, la llista i la SHA-256 de cada registre (auditor 2).
+   - **Abans d'analitzar, si s'han fet de debò** (auditor 2): es tornen a fer 3 trossos de 10⁵ programes de cada tirada (els de
+     `--tros`), triats amb `eines/tria.mjs` i una llavor declarada que no és la del pla. Els replicadors i els recomptes hi han de
+     coincidir.
+   - **L'anàlisi,** des d'una còpia amb els quatre mòduls idèntics: el commit del càlcul, o un de posterior que no els toqui. Un
+     canvi qualsevol a `eines/densitat.mjs` després de calcular, encara que sigui un comentari, fa que l'anàlisi rebutgi els
+     registres (auditor 1).
+3. **La §13:** el codi en una PR a part, amb les llavors fora de l'interval del nivell 1 (AUD-146) i una revisió breu abans de
+   calcular; el càlcul, unes 5 h.
 4. **Després:** el disseny del nivell 2.
 
-## 12. Les decisions (auditoria 25)
+## 12. Les decisions (auditories 25 i 26)
 
 **Ja decidit pel responsable (01-11-2026):** els dos nivells (§1).
 
@@ -296,6 +329,17 @@ cubff i les proves de l'intèrpret i del món passen igual.
 
 **Per a l'auditoria 26,** breu: les correccions (§2, §5, §6 i §9), les decisions de la §13, i si el nivell 1 es pot calcular quan acabi
 la sèrie.
+
+**Decidit a l'auditoria 26** (02-11-2026). Els dos auditors coincideixen en tot el que importa:
+
+| Què | Auditor 1 | Auditor 2 | Ara |
+|---|---|---|---|
+| **GO** | GO, sense cap canvi de codi | GO focalitzat: el merge, amb els mòduls de `0bb753e` | GO: el càlcul, després de la sèrie i de la seva decisió (§11) |
+| **X0** | Un bon control: 0 a la pràctica, no per construcció (AUD-144) | Un control operacional, no un teorema de zero | X0 es queda, amb la frase de l'AUD-144 (§2) |
+| **L'ampliació** | El cost, abans; el vistiplau del responsable, o una regla nova ara (AUD-145) | La regla, tal com és | La regla no canvia; el vistiplau del responsable, el 02-11-2026 (§8) |
+| **Les llavors** | Les de la §13, fora de l'interval del nivell 1, i una per estrat (AUD-146) | — | A la §13 |
+| **L'interval del quocient** | Exacte en 90 escenaris, i demostrat sense solapament | Els escenaris no ho demostren en general | Les dues coses (§6) |
+| **El que es desa** | L'anàlisi, amb els mòduls idèntics | El commit, Node, les ordres i les sumes; reproduir mostres | Tot (§11) |
 
 ## 13. La composició de bytes, i què podria ser nou (decidida a l'auditoria 25)
 
@@ -345,7 +389,9 @@ de passos i el company. Proposem només la composició:
   - **els estrats:** de k = 0 a 64, tots, amb 10⁶ programes cadascun (auditor 2), i 10⁷ als de k = 3 a 12, on pesen Du i les sopes
     envellides (Claude i l'auditor 1);
   - **el company:** de bytes uniformes, com al nivell 1 (tots dos);
-  - **la llavor:** una de pròpia, diferent de la del nivell 1;
+  - **les llavors** (AUD-146): fora de l'interval dels generadors del nivell 1, [20.261.101, 20.261.101 + 2·10⁸), i un interval
+    propi per a cada estrat, sense solapaments. Amb el generador v2, una llavor dins de l'interval en tornaria a fer servir les
+    seqüències, i les mostres no serien independents (auditor 1). L'eina de la cobertura, també amb una altra llavor que la del pla;
   - **una ampliació,** si cal, només amb una regla escrita abans dels resultats (auditor 2).
 - **Les sopes envellides (Ds):** del pilot de la maduració, i no de la sèrie (tots dos).
   - **La composició de cadascun dels 22 mons,** i no només la mitjana (auditor 1), amb la definició de la sopa i l'època fixades a la
@@ -353,7 +399,8 @@ de passos i el company. Proposem només la composició:
   - **Per a cadascuna,** estrats fets amb la seva composició (AUD-143).
 - **El company amb la composició de la sopa:** un estudi a part, una anàlisi de sensibilitat en tirades directes, amb unes quantes
   composicions: Du, les sopes envellides i D½ (tots dos).
-- **El risc per època** no és ρ sola: demana un model de quants programes nous prova la sopa a cada època (tots dos).
+- **El risc per època** no és ρ sola: demana un model de quants programes nous prova la sopa a cada època (tots dos). Una afirmació
+  causal sobre la probabilitat d'origen a la sopa demanarà un disseny propi, amb els veïns i la dependència en el temps (auditor 2).
   - **Si es fa:** exploratori, ajustat amb unes dades i validat amb unes altres.
   - **Una primera comprovació, sense la sèrie** (auditor 1): la ρ a la composició de cada sopa del pilot, amb companys de la mateixa
     composició, contra la part de cel·les que es repliquen just després de barrejar-la (AUD-121 i AUD-122).
