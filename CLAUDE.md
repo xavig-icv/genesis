@@ -102,8 +102,8 @@ Llegeix-los abans de proposar canvis.
 - B1, les ablacions de la química (`docs/pla-b1.md`), el nivell 1: `node eines/densitat.mjs --quimica C0|K0|… --distribucio
   d-mig|uniforme --llavor N --programes N --json fitxer.jsonl [--de I] [--fils F]`, i l'anàlisi, `node eines/densitat-analisi.mjs
   carpeta`. Les químiques són a `fase1/bff.js` (`CHEMISTRIES` i `evaluator`), i C0 és l'intèrpret de sempre. La prova de
-  replicació és la del cens, amb la mateixa química (l'opció `evaluate` de `replicationTest`, AUD-65). No es calcula res fins
-  que el pla no és aprovat.
+  replicació és la del cens, amb la mateixa química (l'opció `evaluate` de `replicationTest`, AUD-65). El pla v0.4 té el GO de les
+  auditories 25 i 26: el nivell 1 es calcula quan acabi la sèrie de la maduració i se n'hagi pres la decisió, com diu la §11 del pla.
   - **L'anàlisi només es fa amb el pla sencer** (`PLAN`: les 13 químiques amb `d-mig`, C0 i K0 amb `uniforme`, la llavor 20261101 i
     les N del pla), i amb registres fets amb els mòduls de la seva còpia (la SHA-256 de la línia d'inici; AUD-139, AUD-142).
   - **Els controls** són K0, L0 i X0. S4 és una variant: el codi del company s'hi pot copiar el programa (AUD-140).
@@ -168,6 +168,8 @@ Llegeix-los abans de proposar canvis.
   revisar). Quan arribi l'informe de l'auditor, comprova'n les afirmacions amb dades i respon a
   `resposta-equip.md`. Les troballes conserven l'identificador entre auditories. Cada troballa nova, amb una
   línia i la resolució, va a l'índex públic `docs/auditories.md`, sense cap dada interna.
+  - **Mentre una auditoria és oberta** (del paquet als informes), `main` no es toca: els merges, després dels informes. Així
+    `main` és el que diu el traspàs.
 - El protocol de la sèrie confirmatòria (`docs/protocol-estadistic.md`) no es llança fins que l'auditoria
   l'hagi revisat.
 
