@@ -76,4 +76,4 @@ function frame(now) {
 requestAnimationFrame(frame);
 ui.start();
 // per provar-lo des de la consola del navegador
-window.explorador = { state: ui.state, camera, renderer };
+window.explorador = { state: ui.state, camera, renderer, get shownCode() { return shown.code; } };
