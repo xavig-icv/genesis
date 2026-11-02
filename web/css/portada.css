@@ -39,6 +39,16 @@
 .co .readout { position: absolute; top: 18px; margin: 0; }
 .co .readout.l { left: 20px; }
 .co .readout.r { right: 20px; }
+/* el moviment de la portada es pot aturar (WCAG 2.2.2): el botó diu el que farà; amb moviment reduït, res no es mou i no
+   cal (AUD-165) */
+.co .motion-btn { position: absolute; right: 16px; bottom: 14px; z-index: 2; }
+.co .motion-row { display: flex; justify-content: flex-end; margin: 24px 0 -16px; }
+.co [data-motion][aria-pressed="true"] .when-running, .co [data-motion][aria-pressed="false"] .when-stopped { display: none; }
+@media (prefers-reduced-motion: reduce) { .co [data-motion], .co .motion-row { display: none; } }
+/* l'enllaç per saltar la navegació, visible només amb el focus (AUD-165) */
+.co .skip-link { position: absolute; left: 12px; top: -60px; z-index: 100; padding: 10px 14px; border-radius: var(--r-3); background: var(--c-ink); color: var(--c-on-ink); font-weight: 600; text-decoration: none; }
+.co .skip-link:focus { top: 12px; }
+.co main:focus { outline: none; }
 .co .viewport figcaption { position: absolute; left: 20px; bottom: 18px; width: 300px; font-size: 12.5px; line-height: 1.5; color: var(--c-ink-2); }
 
 /* Les seccions */

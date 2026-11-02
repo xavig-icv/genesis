@@ -16,7 +16,20 @@ for (const b of document.querySelectorAll('[data-lang]')) b.addEventListener('cl
 bindThemeSwitch();
 let tokens = readStageTokens();
 const themed = [];
-window.addEventListener('themechange', () => { tokens = readStageTokens(); for (const f of themed) f(tokens); });
+let themeStamp = 0;
+window.addEventListener('themechange', () => { tokens = readStageTokens(); themeStamp++; for (const f of themed) f(tokens); });
+
+// El moviment de la portada (el planeta i els sòlids) es pot aturar, i es reprèn on era (WCAG 2.2.2, AUD-165): mentre és
+// aturat, el rellotge de les animacions no avança
+const motion = { paused: false, since: 0, lost: 0 };
+const clock = (now) => (motion.paused ? motion.since : now) - motion.lost;
+function setMotion(paused) {
+  const now = performance.now();
+  if (paused) motion.since = now; else motion.lost += now - motion.since;
+  motion.paused = paused;
+  for (const b of document.querySelectorAll('[data-motion]')) b.setAttribute('aria-pressed', String(paused));
+}
+for (const b of document.querySelectorAll('[data-motion]')) b.addEventListener('click', () => setMotion(!motion.paused));
 const SUN = v3.normalize([0.55, 0.75, -0.35]);
 
 // Dibuixa només quan el llenç es veu (i el navegador ja s'atura quan la pestanya no es veu)
@@ -51,10 +64,14 @@ async function hero() {
   const resize = () => { const dpr = Math.min(1.5, devicePixelRatio || 1); r.resize(Math.round(canvas.clientWidth * dpr), Math.round(canvas.clientHeight * dpr)); };
   addEventListener('resize', resize);
   resize();
+  // ~20 fotogrames per segon, que n'hi ha prou: el planeta gira com a molt 1,4° per segon. I cap, si no ha canviat res
+  // (aturat, amb moviment reduït o sense canvis de mida ni de tema)
   const center = [0, -R, 0], t0 = performance.now();
+  let last = -Infinity, drawn = '';
   const loop = (now) => {
-    if (vis.on) {
-      const t = reducedMotion.matches ? 0 : (now - t0) / 1000;
+    const t = reducedMotion.matches ? 0 : (clock(now) - t0) / 1000, key = `${t}|${canvas.width}|${canvas.height}|${themeStamp}`;
+    if (vis.on && key !== drawn && now - last >= 48) {
+      last = now; drawn = key;
       // la càmera gira al voltant de l'eix dels pols (z), una mica per sobre de l'equador, i el nord queda amunt
       const a = 0.5 * Math.sin(t * 0.05) - 0.15, tilt = 0.32, D = R * 4.3;
       const eye = v3.add(center, v3.scale([Math.cos(tilt) * Math.sin(a), Math.cos(tilt) * Math.cos(a), -Math.sin(tilt)], D));
@@ -123,9 +140,16 @@ function gallery() {
     return { vao, count: SHAPES[cls].count, cls, well };
   });
   const vis = whenVisible(canvas), t0 = performance.now();
+  let drawn = '';
   const loop = (now) => {
-    if (vis.on) {
-      const dpr = Math.min(2, devicePixelRatio || 1), w = canvas.clientWidth, h = canvas.clientHeight;
+    const dpr = Math.min(2, devicePixelRatio || 1), w = canvas.clientWidth, h = canvas.clientHeight;
+    // la clau porta també on són el primer i l'últim pou respecte del llenç: si les fonts o la mida mouen els pous, es redibuixa
+    const o = canvas.getBoundingClientRect(), p0 = vaos[0]?.well.getBoundingClientRect(), p1 = vaos.at(-1)?.well.getBoundingClientRect();
+    const t = reducedMotion.matches ? 0.6 : (clock(now) - t0) / 1000;
+    const key = `${t}|${w}|${h}|${dpr}|${themeStamp}|${p0?.left - o.left}|${p0?.top - o.top}|${p1?.left - o.left}|${p1?.top - o.top}|${p0?.width}`;
+    // cap fotograma si no ha canviat res (aturat, amb moviment reduït o sense canvis de mida ni de tema)
+    if (vis.on && key !== drawn) {
+      drawn = key;
       if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(0, 0, 0, 0);
@@ -134,7 +158,7 @@ function gallery() {
       gl.useProgram(p.program);
       gl.uniformMatrix4fv(p.u.uProj, false, mat.ortho(w, h));
       gl.uniform3fv(p.u.uLight, v3.normalize([0.4, 0.75, 0.6]));
-      const t = reducedMotion.matches ? 0.6 : (now - t0) / 1000, origin = canvas.getBoundingClientRect();
+      const origin = canvas.getBoundingClientRect();
       vaos.forEach((v, k) => {
         const rect = v.well.getBoundingClientRect();
         // el centre del pou, en píxels des de la cantonada de sota a l'esquerra del llenç
