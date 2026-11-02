@@ -44,8 +44,10 @@ export function hasWindow(P, set) {
 }
 
 // Prova la cel·la c. Opcions: width (0 = sopa barrejada), radius (radi d'interacció del món),
-// complete (si és false, para al primer èxit, com fa el registre de famílies per anar de pressa) i
-// heredity (fa també la prova de segona generació; sense, l'atzar que es consumeix és el de sempre).
+// complete (si és false, para al primer èxit, com fa el registre de famílies per anar de pressa),
+// heredity (fa també la prova de segona generació; sense, l'atzar que es consumeix és el de sempre) i
+// evaluate (l'intèrpret d'una química de B1, de fase1/bff.js: la prova ha de fer servir la mateixa química
+// que el món, AUD-65; per defecte, el de BFF).
 // Retorna { solo, context, heritable, heritableSolo, heritableContext }: si s'ha replicat sol, si s'ha
 // replicat en context i (només amb heredity) si alguna de les seves còpies també s'ha replicat:
 // heritableSolo si l'herència s'ha demostrat sol, heritableContext si només s'ha demostrat en context
@@ -59,7 +61,7 @@ export function hasWindow(P, set) {
 // Envoltat de "lectors" (programes que copien el company dins seu), fins i tot un bloc de dades sense
 // cap instrucció surt hereditari en context. Per això es distingeix heritableSolo de heritableContext, i
 // el protocol estadístic té una anàlisi de sensibilitat només amb l'herència sola.
-export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete = true, heredity = false } = {}) {
+export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete = true, heredity = false, evaluate: interpret = evaluate } = {}) {
   const n = soup.length / PROGRAM_SIZE;
   const height = width ? n / width : 0;
   const side = 2 * radius + 1;
@@ -82,7 +84,7 @@ export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete 
   const run = (first, second, partnerOffset) => {
     tape.set(first, 0);
     tape.set(second, PROGRAM_SIZE);
-    evaluate(tape, 0);
+    interpret(tape, 0);
     const partner = tape.subarray(partnerOffset, partnerOffset + PROGRAM_SIZE);
     return hasWindow(partner, set) ? partner.slice() : null;
   };
