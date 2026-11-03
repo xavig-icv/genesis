@@ -238,6 +238,7 @@ uniform vec3 uEye;
 uniform vec3 uSun;
 uniform float uPlanet;
 uniform vec3 uAtmos;
+uniform float uGain;
 in vec3 vWorld;
 in vec3 vNormal;
 out vec4 outColor;
@@ -245,7 +246,7 @@ void main() {
   vec3 n = normalize(vNormal), v = normalize(uEye - vWorld);
   float rim = pow(1.0 - max(dot(n, v), 0.0), 3.0);
   float day = 0.35 + 0.65 * max(dot(n, uSun), 0.0);
-  float a = clamp(rim * day * uPlanet * 0.9, 0.0, 1.0);
+  float a = clamp(rim * day * uPlanet * 0.9 * uGain, 0.0, 1.0);
   outColor = vec4(uAtmos * a, a);
 }
 `;
@@ -278,9 +279,10 @@ function sphereGrid(nLon, nLat) {
   return { vertices: new Float32Array(v), indices: new Uint32Array(idx) };
 }
 
-// starCount: les estrelles del tema fosc (el planeta de la portada en té més)
-export function createRenderer(canvas, { starCount = 2600 } = {}) {
-  const gl = canvas.getContext('webgl2', { antialias: true, alpha: false, powerPreference: 'high-performance' });
+// starCount: les estrelles del tema fosc. transparent: sense fons ni estrelles, perquè es vegi el cel de la pàgina (la
+// portada de l'Observatori)
+export function createRenderer(canvas, { starCount = 2600, transparent = false } = {}) {
+  const gl = canvas.getContext('webgl2', { antialias: true, alpha: transparent, powerPreference: 'high-performance' });
   if (!gl) return null;
   const P = {
     column: compile(gl, COLUMN_VS, COLUMN_FS),
@@ -406,7 +408,7 @@ export function createRenderer(canvas, { starCount = 2600 } = {}) {
     resize(width, height) { canvas.width = width; canvas.height = height; gl.viewport(0, 0, width, height); },
     draw(v) {
       const fogColor = rgb(theme.background);
-      gl.clearColor(...fogColor, 1);
+      if (transparent) gl.clearColor(0, 0, 0, 0); else gl.clearColor(...fogColor, 1);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
       gl.enable(gl.DEPTH_TEST);
       gl.depthFunc(gl.LEQUAL);
@@ -420,8 +422,8 @@ export function createRenderer(canvas, { starCount = 2600 } = {}) {
         if (p.u.uFog) gl.uniform1f(p.u.uFog, v.fog);
         if (p.u.uHeight) gl.uniform1f(p.u.uHeight, v.height);
       };
-      // 1. les estrelles, només al tema fosc
-      if (theme.stars) {
+      // 1. les estrelles, només al tema fosc (i no si el fons és el de la pàgina)
+      if (theme.stars && !transparent) {
         gl.depthMask(false);
         common(P.star);
         gl.uniform1f(P.star.u.uPixel, v.pixel);
@@ -483,6 +485,8 @@ export function createRenderer(canvas, { starCount = 2600 } = {}) {
         gl.depthMask(false);
         common(P.atmo);
         gl.uniform3fv(P.atmo.u.uAtmos, rgb(theme.atmosphere));
+        // la intensitat: 1 als visors; a la portada, puja a cada tall del naixement (el seu esclat de llum)
+        gl.uniform1f(P.atmo.u.uGain, v.atmos ?? 1);
         gl.bindVertexArray(gridVao);
         gl.drawElements(gl.TRIANGLES, grid.indices.length, gl.UNSIGNED_INT, 0);
         gl.depthMask(true);

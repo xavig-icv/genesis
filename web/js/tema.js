@@ -60,8 +60,9 @@ export const cssColor = (c, a = c[3] ?? 1) => `rgba(${Math.round(c[0] * 255)},${
 const KINDS = [null, 'zero', 'head0', 'head0', 'head1', 'head1', 'arith', 'arith', 'copy', 'copy', 'loop', 'loop'];
 
 // Les fitxes de l'escenari del tema que es veu, ja convertides
+// (de l'arrel de l'Observatori, .ob, si la pàgina en té; si no, de l'arrel del document, com a estil.css)
 export function readStageTokens() {
-  const cs = getComputedStyle(document.documentElement);
+  const cs = getComputedStyle(document.querySelector('.ob') ?? document.documentElement);
   const v = (name) => cs.getPropertyValue(name).trim(), c = (name) => parseColor(v(name));
   return {
     theme: effectiveTheme(),
@@ -70,7 +71,7 @@ export function readStageTokens() {
     oceanDeep: c('--ocean-deep'),
     oceanShallow: c('--ocean-shallow'),
     atmosphere: c('--atmos'),
-    stars: v('--stars') === '1',
+    stars: v('--stars') === '1' || v('--o-stars') === '1',
     cellLow: c('--cell-lo'),
     cellHigh: c('--cell-hi'),
     hoverOutline: c('--hover-outline'),
