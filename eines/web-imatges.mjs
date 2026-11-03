@@ -1,6 +1,8 @@
-// Les imatges del lloc (web/img/): les de les entrades als visors de la portada (entrada-*.jpg), els dibuixos de veritat de
-// l'explorador 3D i de la vista 2D, sense els controls, i la imatge fixa del planeta de la portada (planeta-*.jpg), el
-// mateix dibuix, quiet. En tema clar i fosc, amb Chrome sense finestra i el protocol de DevTools, sense dependències.
+// Les imatges del lloc (web/img/): les de les finestres del laboratori de la portada (entrada-*.jpg), els dibuixos de veritat
+// de l'explorador 3D i de la vista 2D, sense els controls (la del món en viu és la vista 2D a l'època 1.650, on encara només
+// hi ha soroll); i els pòsters del naixement de la capçalera (naixement/TEMA-ÈPOCA.webp), els 7 fotogrames del planeta tal
+// com els dibuixa la portada, quiets i sense fons, perquè s'hi vegin el cel i la llum de la pàgina. En tema clar i fosc, amb
+// Chrome sense finestra i el protocol de DevTools, sense dependències.
 // Les càmeres es posen directament a la seva posició, i cada captura espera que el dibuix hi sigui (el codi carregat i
 // dibuixat), no un temps fix: així dues execucions donen els mateixos fitxers, byte a byte, amb la mateixa versió de Chrome,
 // encara que la màquina vagi carregada (AUD-167). Al final, les compara amb web/img/SHA256SUMS, i si no hi són iguals, ho
@@ -29,7 +31,10 @@ const OPTIONS = {
   '--centre2d': [/^\d{1,4},\d{1,4}$/, '200,93'],
   '--url': [/^http:\/\/(localhost|127\.0\.0\.1):\d{1,5}\/web\/$/, 'http://localhost:8420/web/'],
 };
-const FILES = ['entrada-3d-clar.jpg', 'entrada-2d-clar.jpg', 'planeta-clar.jpg', 'entrada-3d-fosc.jpg', 'entrada-2d-fosc.jpg', 'planeta-fosc.jpg'];
+// els fotogrames del naixement, en l'ordre que els passa el botó de la capçalera amb moviment reduït (del pòster, 3.500,
+// endavant; després del darrer, torna al primer)
+const BIRTH = [3500, 4500, 6000, 1650, 2250, 2500, 3000];
+const FILES = ['clar', 'fosc'].flatMap((t) => [`entrada-3d-${t}.jpg`, `entrada-2d-${t}.jpg`, `entrada-viu-${t}.jpg`, ...BIRTH.map((e) => `naixement/${t}-${e}.webp`)]);
 const SUMS = fileURLToPath(new URL('../web/img/SHA256SUMS', import.meta.url));
 const fail = (msg, code = 2) => { console.error(`${msg}\n${USAGE}`); process.exit(code); };
 
@@ -120,7 +125,7 @@ function connect(url) {
 if (await status(`${base}index.html`) !== 200) fail(`el servidor no respon a ${base}: engega node server.mjs a l'arrel del repositori`, 1);
 if (await status(`${base}dades/${opt['--mon']}/mon.json`) !== 200) fail(`no hi ha les dades del món ${opt['--mon']} (web/dades/${opt['--mon']})`, 1);
 
-mkdirSync(out, { recursive: true });
+mkdirSync(join(out, 'naixement'), { recursive: true });
 // Un perfil d'un sol ús, i el port que triï Chrome (el diu al fitxer DevToolsActivePort del perfil)
 const profile = mkdtempSync(join(tmpdir(), 'web-imatges-'));
 const chrome = spawn(opt['--chrome'], ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--hide-scrollbars',
@@ -143,8 +148,8 @@ try {
   const theme = (t) => run(`(() => { document.documentElement.dataset.theme = '${t}'; window.dispatchEvent(new CustomEvent('themechange')); return 1; })()`);
   const bare = () => run(`(() => { const s = document.createElement('style'); s.textContent = '.t-left,.t-right,.dock,.hint,.insp,.scale,.state{display:none!important}'; document.head.append(s); return 1; })()`);
   const made = {};
-  const jpg = async (name, params = { quality: 86 }) => {
-    const { data } = await cdp.send('Page.captureScreenshot', { format: 'jpeg', ...params });
+  const jpg = async (name, params = { quality: 86 }, format = 'jpeg') => {
+    const { data } = await cdp.send('Page.captureScreenshot', { format, ...params });
     const bytes = Buffer.from(data, 'base64');
     writeFileSync(join(out, name), bytes, { flag: 'wx' });
     made[name] = crypto.createHash('sha256').update(bytes).digest('hex');
@@ -174,18 +179,30 @@ try {
     await run(`(() => { vista2d.state.time = ${epoch}; const { goal, cur } = vista2d; goal.s = 3; goal.x0 = ${x2} - 600 / 3; goal.y0 = ${y2} - 280 / 3; Object.assign(cur, goal); return 1; })()`);
     await waitFor('la vista 2D, quieta', `(() => { const { goal, cur } = vista2d; return cur.s === goal.s && cur.x0 === goal.x0 && cur.y0 === goal.y0; })()`);
     await jpg(`entrada-2d-${t}.jpg`);
-    // el planeta de la portada, quiet (amb moviment reduït), tal com el dibuixa la portada a 1.440 × 900, sense els rètols i
-    // sense la imatge fixa de sota (a les vores, la captura la barrejaria amb el dibuix, i dependria de la que ja hi ha)
+    // la del món en viu: la mateixa vista, a l'època 1.650, on encara només hi ha soroll (així comença un món)
+    await run('(() => { vista2d.state.time = 1650; return 1; })()');
+    await run('new Promise((r) => setTimeout(r, 300))');
+    await run('new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(1))))');
+    await jpg(`entrada-viu-${t}.jpg`);
+    // els 7 fotogrames del naixement: el planeta de la portada, quiet (amb moviment reduït), tal com el dibuixa a 1.440 × 900,
+    // sense el fons (transparent), ni el cel, ni l'halo i la vora de CSS, ni els rètols, ni els pòsters de sota
     await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
     await cdp.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
     const { identifier } = await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source: `try { localStorage.setItem('theme', '${name}'); } catch {}` });
     await go(base, 500);
     // dibuixat, amb les fonts ja carregades i el dibuix de la mida del llenç (si la figura ha canviat de mida, s'ha redibuixat)
-    await waitFor('el planeta de la portada, dibuixat', "(() => { const c = document.getElementById('hero'), d = Math.min(1.5, devicePixelRatio || 1); return document.fonts.status === 'loaded' && c?.classList.contains('is-drawn') && c.width === Math.round(c.clientWidth * d) && c.height === Math.round(c.clientHeight * d); })()");
-    await run(`(() => { const s = document.createElement('style'); s.textContent = '.viewport .readout,.viewport figcaption,.motion-btn{visibility:hidden!important}.viewport-stage{background-image:none!important}'; document.head.append(s); return 1; })()`);
-    await run('new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(1))))');
-    const clip = await run(`(() => { const b = document.getElementById('hero').getBoundingClientRect(); return { x: b.left, y: b.top + scrollY, width: b.width, height: b.height, scale: 1 }; })()`);
-    await jpg(`planeta-${t}.jpg`, { quality: 80, clip });
+    const drawn = (e) => `(() => { const c = document.getElementById('hero'), d = Math.min(1.5, devicePixelRatio || 1); return document.fonts.status === 'loaded' && c?.dataset.epoch === '${e}' && c.width === Math.round(c.clientWidth * d) && c.height === Math.round(c.clientHeight * d); })()`;
+    await waitFor('el planeta de la portada, dibuixat', drawn(BIRTH[0]));
+    await run(`(() => { const s = document.createElement('style'); s.textContent = 'html,body{background:transparent!important}.ob-sky,.ob-planet__halo,.ob-planet__rim,.ob-planet__poster{visibility:hidden!important}'; document.head.append(s); return 1; })()`);
+    await cdp.send('Emulation.setDefaultBackgroundColorOverride', { color: { r: 0, g: 0, b: 0, a: 0 } });
+    for (const [k, e] of BIRTH.entries()) {
+      // el botó de la capçalera passa al fotograma següent, amb un tall (amb moviment reduït no es reprodueix sol)
+      if (k) await run("(() => { document.querySelector('[data-pm=\"birth\"] [data-b=\"toggle\"]').click(); return 1; })()");
+      await waitFor(`el fotograma de l'època ${e}, dibuixat`, drawn(e));
+      const clip = await run(`(() => { const b = document.getElementById('hero').getBoundingClientRect(); return { x: b.left, y: b.top + scrollY, width: b.width, height: b.height, scale: 1 }; })()`);
+      await jpg(`naixement/${t}-${e}.webp`, { quality: 80, clip }, 'webp');
+    }
+    await cdp.send('Emulation.setDefaultBackgroundColorOverride', {});
     await cdp.send('Page.removeScriptToEvaluateOnNewDocument', { identifier });
     await cdp.send('Emulation.setEmulatedMedia', { features: [] });
   }
@@ -195,7 +212,7 @@ try {
   if (diff.length) {
     console.log(`No són les de web/img: ${diff.join(', ')}. Si el canvi és a propòsit, posa-les a web/img i posa al dia web/img/SHA256SUMS.`);
     process.exitCode = 1;
-  } else console.log('Totes sis, iguals a les de web/img (web/img/SHA256SUMS).');
+  } else console.log(`Totes ${FILES.length}, iguals a les de web/img (web/img/SHA256SUMS).`);
 } catch (e) {
   console.error(`No s'han pogut fer les imatges: ${e.message}`);
   process.exitCode = 1;

@@ -103,6 +103,10 @@ export function mirrorStep(bytes, tr) {
 // La figura de la portada: les dues files de bytes, el pas, els controls i la barra per moure's pels passos. Es
 // reprodueix sola el primer cop que es veu (amb moviment reduït, no), fins al pas on la còpia és sencera; després, si es
 // continua, va més de pressa fins al final.
+// L'esdeveniment (encàrrec 2): A entra des de l'esquerra i B des de la dreta (data-tape-enter), al pas de la còpia
+// sencera s'atura, entra el final (.is-done) i els bytes copiats pugen de llum una vegada (.is-sweep); aturada després
+// d'aquest pas, el botó diu «Continua» (.is-after). Amb moviment reduït es mostra directament aquest pas, sense pols de
+// llum. La pestanya amagada l'atura; Re Pàg / Av Pàg mouen la barra de 100 en 100.
 const OPS = '<>{}-+.,[]';
 const GLYPH = '<>{}−+.,[]';
 const COLOR = ['g-h0', 'g-h0', 'g-h1', 'g-h1', 'g-ar', 'g-ar', 'g-cp', 'g-cp', 'g-lp', 'g-lp'];
@@ -120,12 +124,13 @@ export function mountTape(fig, { num, onLang, reducedMotion }) {
   const done = mirrorStep(bytes, tr), A = bytes.slice(0, PROGRAM_SIZE);
   const $ = (id) => fig.querySelector(`#${id}`);
   const cells = [];
-  for (const row of [$('tape-a'), $('tape-b')]) for (let i = 0; i < PROGRAM_SIZE; i++) { const c = document.createElement('span'); row.append(c); cells.push(c); }
+  for (const row of [$('tape-a'), $('tape-b')]) for (let i = 0; i < PROGRAM_SIZE; i++) { const c = document.createElement('span'); c.style.setProperty('--k', String(i)); row.append(c); cells.push(c); }
   const scrub = $('tape-scrub');
   scrub.max = String(tr.steps);
   $('tape-mark').style.left = `${(done / tr.steps) * 100}%`;
   // la cinta del pas actual, i a quin pas es va escriure cada byte per últim cop
   let s = 0, cur = Uint8Array.from(bytes), wroteAt = new Int32Array(TAPE_SIZE).fill(-99);
+  let playing = false, last = 0, carry = 0;
   function goTo(target) {
     if (target < s) { s = 0; cur = Uint8Array.from(bytes); wroteAt.fill(-99); }
     for (; s < target; ) { s++; const w = tr.written[s]; if (w >= 0) { cur[w] = tr.value[s]; wroteAt[w] = s; } }
@@ -140,7 +145,7 @@ export function mountTape(fig, { num, onLang, reducedMotion }) {
       if (i >= PROGRAM_SIZE && isA) copied++;
       let cls = color;
       if (isA) cls += ' is-a';
-      if (s - wroteAt[i] < 6) cls += ' is-new';
+      if (!reducedMotion.matches && s - wroteAt[i] < 6) cls += ' is-new';
       if (tr.pc[s] === i) cls += ' is-pc';
       if (tr.h0[s] === i) cls += ' is-h0';
       if (tr.h1[s] === i) cls += ' is-h1';
@@ -150,17 +155,27 @@ export function mountTape(fig, { num, onLang, reducedMotion }) {
     $('tape-step').textContent = num(s);
     $('tape-copied').textContent = String(copied);
     scrub.value = String(s);
+    fig.classList.toggle('is-done', s >= done);
+    fig.classList.toggle('is-after', !playing && s >= done && s < tr.steps);
   }
   const steps = () => { $('tape-steps').textContent = num(tr.steps); };
   steps();
   onLang?.(() => { steps(); render(); });
 
-  let playing = false, last = 0, carry = 0;
   const setPlaying = (on) => {
     const was = playing;
     playing = on;
     fig.classList.toggle('is-playing', on);
+    fig.classList.toggle('is-after', !on && s >= done && s < tr.steps);
     if (on && !was) { last = performance.now(); carry = 0; requestAnimationFrame(frame); }
+  };
+  // en arribar al pas de la còpia sencera, els bytes copiats pugen de llum una sola vegada (750 ms, en escala)
+  const sweep = () => {
+    if (reducedMotion.matches) return;
+    fig.classList.remove('is-sweep');
+    void fig.offsetWidth;
+    fig.classList.add('is-sweep');
+    setTimeout(() => fig.classList.remove('is-sweep'), 1700);
   };
   function frame(now) {
     if (!playing) return;
@@ -171,8 +186,10 @@ export function mountTape(fig, { num, onLang, reducedMotion }) {
     const n = Math.floor(carry);
     carry -= n;
     let target = Math.min(tr.steps, s + n);
-    if (s < done && target >= done) { target = done; setPlaying(false); }
+    const arrive = s < done && target >= done;
+    if (arrive) target = done;
     goTo(target);
+    if (arrive) { playing = false; fig.classList.remove('is-playing'); render(); sweep(); return; }
     render();
     if (s >= tr.steps) setPlaying(false);
     if (playing) requestAnimationFrame(frame);
@@ -180,10 +197,30 @@ export function mountTape(fig, { num, onLang, reducedMotion }) {
   $('tape-play').addEventListener('click', () => { if (!playing && s >= tr.steps) { goTo(0); render(); } setPlaying(!playing); });
   $('tape-reset').addEventListener('click', () => { setPlaying(false); goTo(0); render(); });
   scrub.addEventListener('input', () => { setPlaying(false); goTo(Number(scrub.value)); render(); });
+  scrub.addEventListener('keydown', (e) => {
+    if (e.key !== 'PageUp' && e.key !== 'PageDown') return;
+    e.preventDefault();
+    setPlaying(false);
+    goTo(Math.max(0, Math.min(tr.steps, s + (e.key === 'PageUp' ? 100 : -100))));
+    render();
+  });
+  // la pestanya amagada l'atura; en tornar, continua si corria
+  let wasPlaying = false;
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { wasPlaying = playing; setPlaying(false); } else if (wasPlaying) { wasPlaying = false; setPlaying(true); }
+  });
+  // amb moviment reduït, el pas de la còpia sencera, quiet
+  if (reducedMotion.matches) goTo(done);
   render();
-  // la primera vegada que es veu, es reprodueix sola (si no hi ha moviment reduït)
+  // la primera vegada que es veu: l'entrada (600 ms) i, després, es reprodueix sola (si no hi ha moviment reduït)
   if (!reducedMotion.matches) {
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { io.disconnect(); if (s === 0) setPlaying(true); } }, { threshold: 0.6 });
+    fig.dataset.tapeEnter = 'pre';
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      fig.dataset.tapeEnter = 'in';
+      setTimeout(() => { delete fig.dataset.tapeEnter; if (s === 0) setPlaying(true); }, 780);
+    }, { threshold: 0.6 });
     io.observe(fig);
   }
 }

@@ -1,0 +1,827 @@
+/* Genesis · sistema «Observatori» (encàrrec 2, direcció A).
+   Un observatori nocturn de la vida digital: l'espai fosc primer (el clar, amb la mateixa cura), el text molt gran i la
+   llum com a material. El color continua sent només de les dades (12 famílies i 6 classes d'instrucció); la llum és
+   blanca o de tinta, mai un to nou. Arrel: .ob (i .ob.site a la portada, .ob.viewer als visors).
+   Tema: fosc per defecte; .theme-light als taulers, i a producció data-theme="light" a <html> o el sistema.
+   Fonts (fonts.css): Archivo (titulars i etiquetes), Inter (text), JetBrains Mono (lectures i dades). */
+
+/* ───────────── Fitxes comunes ───────────── */
+.ob {
+  --o-font-display: "Archivo", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --o-font-text: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --o-font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --o-display-1: 96px;
+  --o-display-2: 64px;
+  --o-display-3: 40px;
+  --o-title: 22px;
+  --o-body-l: 18px;
+  --o-body: 16px;
+  --o-small: 13.5px;
+  --o-hud: 11px;
+  --o-s1: 4px;
+  --o-s2: 8px;
+  --o-s3: 12px;
+  --o-s4: 16px;
+  --o-s5: 24px;
+  --o-s6: 32px;
+  --o-s7: 48px;
+  --o-s8: 64px;
+  --o-s9: 96px;
+  --o-s10: 160px;
+  --o-page: 64px;
+  --o-gutter: 24px;
+  --o-gap-tray: 12px;
+  --o-r1: 2px;
+  --o-r2: 3px;
+  --o-r-round: 999px;
+  --o-h-control: 36px;
+  --o-h-touch: 44px;
+  --o-h-cta: 48px;
+  --o-w-panel: 344px;
+  --o-h-topbar: 52px;
+  --o-h-chrono: 92px;
+  --t-cut: 0ms;
+  --t-instant: 80ms;
+  --t-fast: 140ms;
+  --t-base: 220ms;
+  --t-slow: 360ms;
+  --t-scan: 420ms;
+  --t-enter: 600ms;
+  --t-flare: 750ms;
+  --t-portal: 700ms;
+  --t-morph: 900ms;
+  --t-zoom: 1200ms;
+  --t-tray: 220ms;
+  --t-stagger: 40ms;
+  --t-specimen: 480ms;
+  --t-specimen-stagger: 60ms;
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --ease-camera: cubic-bezier(.45, 0, .2, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --ease-scan: cubic-bezier(.3, 0, .2, 1);
+}
+/* ───────────── Fitxes · fosc (per defecte) ───────────── */
+.ob, .ob.theme-dark {
+  --o-space: #050506;
+  --o-space-2: #0b0c0e;
+  --o-space-3: #131417;
+  --o-space-4: #1b1c20;
+  --o-vign: #050506;
+  --o-ink: #f4f3ef;
+  --o-ink-2: #c3c2b7;
+  --o-ink-3: #8f8e86;
+  --o-on-ink: #050506;
+  --o-line: rgb(244 243 239 / .12);
+  --o-line-2: rgb(244 243 239 / .28);
+  --o-line-3: rgb(244 243 239 / .5);
+  --o-hover: rgb(244 243 239 / .07);
+  --o-pressed: rgb(244 243 239 / .14);
+  --o-focus: #f4f3ef;
+  --o-scrim: rgb(0 0 0 / .62);
+  --o-glow: 244 243 239;
+  --o-halo-peak: .22;
+  --o-halo-rest: .5;
+  --o-rim: .75;
+  --o-scan: .75;
+  --o-scan-ramp: 28px;
+  --o-star: #f4f3ef;
+  --o-stars: 1;
+  --f1: #dc6294;
+  --f2: #feda7c;
+  --f3: #bca8fd;
+  --f4: #f7a3a8;
+  --f5: #946ade;
+  --f6: #be9021;
+  --f7: #ca85e2;
+  --f8: #b6c963;
+  --f9: #efc8aa;
+  --f10: #e1c0ec;
+  --f11: #8e894e;
+  --f12: #ac6bac;
+  --i-head0: #42ac7f;
+  --i-head0-fill: #098a60;
+  --i-head0-lit: #65febf;
+  --i-head1: #17d1d3;
+  --i-head1-fill: #44b5b6;
+  --i-head1-lit: #15c6c8;
+  --i-arith: #f4f3ef;
+  --i-arith-fill: #e9e8e3;
+  --i-arith-lit: #f2f5f9;
+  --i-copy: #1884f7;
+  --i-copy-fill: #1984f6;
+  --i-copy-lit: #4e93ec;
+  --i-loop: #e76534;
+  --i-loop-fill: #d85825;
+  --i-loop-lit: #fd783b;
+  --i-zero: #858fa4;
+  --i-zero-fill: #5a6377;
+  --i-zero-lit: #6b7488;
+  --i-data: #4a4945;
+  --cell-lo: #1d1d1c;
+  --cell-hi: #55534d;
+  --stage-bg: #050506;
+  --stage-grid: rgb(255 255 255 / .06);
+  --ocean-deep: #0d171e;
+  --ocean-shallow: #1d3240;
+  --atmos: #f4f3ef;
+  --atmos-intensity: .35;
+  --atmos-flare: .9;
+  --atmos-falloff: 3;
+  --atmos-thickness: .06;
+  --rim-color: #ffffff;
+  --rim-intensity: .6;
+  --rim-width: .015;
+  --rim-dir: -0.6 0.5 0.6;
+  --stars-density: 0.6 0.25 0.08;
+  --stars-size: 1 1.5 2;
+  --stars-parallax: 0.02 0.05 0.1;
+  --colony-emissive: 1.25;
+  --dim-others: .28;
+  --hover-outline: #f4f3ef;
+  --hover-halo: #050506;
+  --board-tint: 38%;
+  color-scheme: dark;
+}
+/* ───────────── Fitxes · clar ───────────── */
+.ob.theme-light, :root[data-theme="light"] .ob {
+  --o-space: #f3f3f0;
+  --o-space-2: #fcfcfb;
+  --o-space-3: #ebebe6;
+  --o-space-4: #e2e1db;
+  --o-vign: #e4e4df;
+  --o-ink: #0b0b0b;
+  --o-ink-2: #52514e;
+  --o-ink-3: #63625d;
+  --o-on-ink: #f3f3f0;
+  --o-line: rgb(11 11 11 / .12);
+  --o-line-2: rgb(11 11 11 / .28);
+  --o-line-3: rgb(11 11 11 / .5);
+  --o-hover: rgb(11 11 11 / .05);
+  --o-pressed: rgb(11 11 11 / .09);
+  --o-focus: #0b0b0b;
+  --o-scrim: rgb(11 11 11 / .32);
+  --o-glow: 255 255 255;
+  --o-halo-peak: .95;
+  --o-halo-rest: .5;
+  --o-rim: .95;
+  --o-scan: .6;
+  --o-scan-ramp: 28px;
+  --o-star: #f4f3ef;
+  --o-stars: 0;
+  --f1: #c0417b;
+  --f2: #a97f05;
+  --f3: #5939a1;
+  --f4: #69243a;
+  --f5: #8b79d1;
+  --f6: #875800;
+  --f7: #984697;
+  --f8: #b96c7d;
+  --f9: #6c411a;
+  --f10: #4f2c5d;
+  --f11: #84743a;
+  --f12: #94719f;
+  --i-head0: #12724e;
+  --i-head0-fill: #1caf7a;
+  --i-head0-lit: #1caf7a;
+  --i-head1: #01494c;
+  --i-head1-fill: #07777e;
+  --i-head1-lit: #07777e;
+  --i-arith: #0b0b0b;
+  --i-arith-fill: #0b0b0b;
+  --i-arith-lit: #2a2a28;
+  --i-copy: #066cd3;
+  --i-copy-fill: #0f7df1;
+  --i-copy-lit: #0f7df1;
+  --i-loop: #be4406;
+  --i-loop-fill: #eb6834;
+  --i-loop-lit: #eb6834;
+  --i-zero: #5a6377;
+  --i-zero-fill: #8d96a7;
+  --i-zero-lit: #8d96a7;
+  --i-data: #a29f96;
+  --cell-lo: #f6f5f1;
+  --cell-hi: #c2bfb4;
+  --stage-bg: #f3f3f0;
+  --stage-grid: rgb(11 11 11 / .07);
+  --ocean-deep: #b3c3cd;
+  --ocean-shallow: #c9d6dd;
+  --atmos: #ffffff;
+  --atmos-intensity: .35;
+  --atmos-flare: .9;
+  --atmos-falloff: 3;
+  --atmos-thickness: .06;
+  --rim-color: #ffffff;
+  --rim-intensity: .8;
+  --rim-width: .015;
+  --rim-dir: -0.6 0.5 0.6;
+  --stars-density: 0 0 0;
+  --stars-size: 1 1.5 2;
+  --stars-parallax: 0.02 0.05 0.1;
+  --colony-emissive: 1.25;
+  --dim-others: .28;
+  --hover-outline: #0b0b0b;
+  --hover-halo: #fcfcfb;
+  --board-tint: 32%;
+  color-scheme: light;
+}
+/* El sistema demana clar i no s'ha triat el fosc (cal mantenir-lo igual que el bloc de dalt) */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .ob:not(.theme-dark) {
+    --o-space: #f3f3f0;
+    --o-space-2: #fcfcfb;
+    --o-space-3: #ebebe6;
+    --o-space-4: #e2e1db;
+    --o-vign: #e4e4df;
+    --o-ink: #0b0b0b;
+    --o-ink-2: #52514e;
+    --o-ink-3: #63625d;
+    --o-on-ink: #f3f3f0;
+    --o-line: rgb(11 11 11 / .12);
+    --o-line-2: rgb(11 11 11 / .28);
+    --o-line-3: rgb(11 11 11 / .5);
+    --o-hover: rgb(11 11 11 / .05);
+    --o-pressed: rgb(11 11 11 / .09);
+    --o-focus: #0b0b0b;
+    --o-scrim: rgb(11 11 11 / .32);
+    --o-glow: 255 255 255;
+    --o-halo-peak: .95;
+    --o-halo-rest: .5;
+    --o-rim: .95;
+    --o-scan: .6;
+    --o-scan-ramp: 28px;
+    --o-star: #f4f3ef;
+    --o-stars: 0;
+    --f1: #c0417b;
+    --f2: #a97f05;
+    --f3: #5939a1;
+    --f4: #69243a;
+    --f5: #8b79d1;
+    --f6: #875800;
+    --f7: #984697;
+    --f8: #b96c7d;
+    --f9: #6c411a;
+    --f10: #4f2c5d;
+    --f11: #84743a;
+    --f12: #94719f;
+    --i-head0: #12724e;
+    --i-head0-fill: #1caf7a;
+    --i-head0-lit: #1caf7a;
+    --i-head1: #01494c;
+    --i-head1-fill: #07777e;
+    --i-head1-lit: #07777e;
+    --i-arith: #0b0b0b;
+    --i-arith-fill: #0b0b0b;
+    --i-arith-lit: #2a2a28;
+    --i-copy: #066cd3;
+    --i-copy-fill: #0f7df1;
+    --i-copy-lit: #0f7df1;
+    --i-loop: #be4406;
+    --i-loop-fill: #eb6834;
+    --i-loop-lit: #eb6834;
+    --i-zero: #5a6377;
+    --i-zero-fill: #8d96a7;
+    --i-zero-lit: #8d96a7;
+    --i-data: #a29f96;
+    --cell-lo: #f6f5f1;
+    --cell-hi: #c2bfb4;
+    --stage-bg: #f3f3f0;
+    --stage-grid: rgb(11 11 11 / .07);
+    --ocean-deep: #b3c3cd;
+    --ocean-shallow: #c9d6dd;
+    --atmos: #ffffff;
+    --atmos-intensity: .35;
+    --atmos-flare: .9;
+    --atmos-falloff: 3;
+    --atmos-thickness: .06;
+    --rim-color: #ffffff;
+    --rim-intensity: .8;
+    --rim-width: .015;
+    --rim-dir: -0.6 0.5 0.6;
+    --stars-density: 0 0 0;
+    --stars-size: 1 1.5 2;
+    --stars-parallax: 0.02 0.05 0.1;
+    --colony-emissive: 1.25;
+    --dim-others: .28;
+    --hover-outline: #0b0b0b;
+    --hover-halo: #fcfcfb;
+    --board-tint: 32%;
+    color-scheme: light;
+  }
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+.ob, .ob *, .ob *::before, .ob *::after { box-sizing: border-box; }
+.ob {
+  font-family: var(--o-font-text);
+  font-optical-sizing: auto;
+  font-size: var(--o-body);
+  line-height: 1.5;
+  color: var(--o-ink);
+  background: var(--o-space);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.ob a { color: inherit; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.ob button, .ob input, .ob select { font: inherit; color: inherit; }
+.ob :focus-visible { outline: 2px solid var(--o-focus); outline-offset: 3px; }
+.ob .ob-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ob .ic { width: 16px; height: 16px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ob .ic-fill { fill: currentColor; stroke: none; }
+.ob .ob-mono { font-family: var(--o-font-mono); font-variant-numeric: tabular-nums; }
+/* Les lectures (HUD): només valors reals, en mono i majúscules */
+.ob .ob-hud { font: 500 var(--o-hud)/1.2 var(--o-font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--o-ink-3); }
+.ob .ob-hud.is-value { color: var(--o-ink); }
+/* Les etiquetes (botons, navegació, pestanyes): Archivo ample */
+.ob .ob-label { font-family: var(--o-font-display); font-stretch: 112%; font-weight: 620; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
+/* Els titulars: Archivo estret, en majúscules, molt grans */
+.ob .ob-display { margin: 0; font-family: var(--o-font-display); font-stretch: 68%; font-weight: 700; text-transform: uppercase; line-height: .9; letter-spacing: -.004em; text-wrap: balance; }
+.ob .ob-d1 { font-size: var(--o-display-1); }
+.ob .ob-d2 { font-size: var(--o-display-2); line-height: .92; }
+.ob .ob-d3 { font-size: var(--o-display-3); line-height: .95; }
+.ob .ob-title { margin: 0; font-family: var(--o-font-display); font-stretch: 100%; font-weight: 650; font-size: var(--o-title); line-height: 1.2; letter-spacing: .005em; }
+.ob .ob-lede { margin: 0; font-size: var(--o-body-l); line-height: 1.55; color: var(--o-ink-2); }
+.ob .ob-text { margin: 0; font-size: var(--o-body); line-height: 1.62; color: var(--o-ink-2); }
+.ob .ob-text em, .ob .ob-lede em { font-style: italic; color: var(--o-ink); }
+.ob .ob-small { margin: 0; font-size: var(--o-small); line-height: 1.5; color: var(--o-ink-3); }
+/* Els textos en les dues llengües: només es veu la de la pàgina */
+html[lang="ca"] .ob [lang="en"]:not(html), html[lang="en"] .ob [lang="ca"]:not(html) { display: none !important; }
+
+/* ───────────────────────── Botons ───────────────────────── */
+.ob .ob-btn {
+  --h: var(--o-h-cta);
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: var(--h); padding: 0 22px;
+  border: 1px solid var(--o-line-2); border-radius: var(--o-r1);
+  background: transparent; color: var(--o-ink);
+  font-family: var(--o-font-display); font-stretch: 108%; font-weight: 620; font-size: 13.5px; letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color var(--t-instant) var(--ease-out), border-color var(--t-instant) var(--ease-out), color var(--t-instant) var(--ease-out);
+}
+.ob .ob-btn:hover { background: var(--o-hover); border-color: var(--o-line-3); }
+.ob .ob-btn:active { transform: translateY(1px); }
+.ob .ob-btn[disabled], .ob .ob-btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; transform: none; }
+.ob .ob-btn.is-primary { background: var(--o-ink); border-color: var(--o-ink); color: var(--o-on-ink); }
+.ob .ob-btn.is-primary:hover { background: var(--o-ink-2); border-color: var(--o-ink-2); }
+.ob .ob-btn.is-link { height: auto; min-height: 44px; padding: 0 2px; border-color: transparent; color: var(--o-ink-2); text-decoration: underline; text-decoration-color: var(--o-line-2); text-underline-offset: 6px; }
+.ob .ob-btn.is-link:hover { background: none; color: var(--o-ink); text-decoration-color: var(--o-ink); }
+.ob .ob-btn.is-sm { --h: var(--o-h-control); padding: 0 14px; font-size: 12px; }
+.ob .ob-iconbtn {
+  flex: none; width: 44px; height: 44px; display: grid; place-items: center;
+  border: 1px solid var(--o-line-2); border-radius: 50%; background: var(--o-space-2); color: var(--o-ink); cursor: pointer;
+  transition: background-color var(--t-instant) var(--ease-out), border-color var(--t-instant) var(--ease-out);
+}
+.ob .ob-iconbtn:hover { background: var(--o-space-3); border-color: var(--o-line-3); }
+.ob .ob-iconbtn.is-square { border-radius: var(--o-r1); }
+.ob .ob-iconbtn.is-sm { width: var(--o-h-control); height: var(--o-h-control); }
+.ob .ob-iconbtn[aria-pressed="true"], .ob .ob-iconbtn[aria-expanded="true"] { background: var(--o-pressed); }
+.ob .ob-iconbtn[disabled] { opacity: .45; cursor: not-allowed; }
+
+/* ───────────────────────── Control segmentat, pestanyes i selector ───────────────────────── */
+.ob .ob-seg { display: inline-flex; gap: 2px; height: var(--o-h-control); padding: 2px; border: 1px solid var(--o-line-2); border-radius: var(--o-r2); background: var(--o-space-2); }
+.ob .ob-seg > button {
+  min-width: 32px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: 0; border-radius: var(--o-r1); background: transparent; color: var(--o-ink-3); cursor: pointer;
+  font-family: var(--o-font-display); font-stretch: 112%; font-weight: 600; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase;
+  transition: background-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out);
+}
+.ob .ob-seg > button:hover { color: var(--o-ink); }
+.ob .ob-seg > button[aria-pressed="true"], .ob .ob-seg > button[aria-selected="true"] { background: var(--o-pressed); color: var(--o-ink); }
+.ob .ob-seg > button[disabled] { opacity: .45; cursor: not-allowed; }
+.ob .ob-seg.is-mono > button { font: 500 11.5px/1 var(--o-font-mono); letter-spacing: 0; text-transform: none; }
+.ob .ob-seg.is-fill { display: flex; }
+.ob .ob-seg.is-fill > button { flex: 1; }
+.ob .ob-tabs { display: flex; border-bottom: 1px solid var(--o-line); }
+.ob .ob-tabs > button {
+  flex: auto; height: 44px; padding: 0 8px; display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; background: transparent; color: var(--o-ink-3); cursor: pointer; white-space: nowrap;
+  font-family: var(--o-font-display); font-stretch: 112%; font-weight: 620; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase;
+}
+.ob .ob-tabs > button:hover { color: var(--o-ink); }
+.ob .ob-tabs > button[aria-selected="true"] { color: var(--o-ink); border-bottom-color: var(--o-ink); }
+.ob .ob-count { font: 500 11px/1 var(--o-font-mono); letter-spacing: 0; color: var(--o-ink-3); }
+.ob .ob-select { position: relative; display: inline-flex; align-items: center; min-width: 0; }
+.ob .ob-select select, .ob .ob-select .ob-select__v {
+  appearance: none; -webkit-appearance: none; width: 100%; height: var(--o-h-control); padding: 0 34px 0 12px;
+  display: flex; align-items: center; gap: 10px;
+  border: 1px solid var(--o-line-2); border-radius: var(--o-r2); background: var(--o-space-2); color: var(--o-ink);
+  font: 500 13.5px/1 var(--o-font-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;
+}
+.ob .ob-select > .ic { position: absolute; right: 10px; pointer-events: none; color: var(--o-ink-2); }
+
+/* ───────────────────────── Superfícies: panell, reticle, etiqueta de ranura ───────────────────────── */
+.ob .ob-panel { background: var(--o-space-2); border: 1px solid var(--o-line); border-radius: var(--o-r1); }
+.ob .ob-brk { position: absolute; width: 22px; height: 22px; border: 0 solid var(--o-line-2); pointer-events: none; }
+.ob .ob-brk.tl { border-left-width: 1px; border-top-width: 1px; }
+.ob .ob-brk.tr { border-right-width: 1px; border-top-width: 1px; }
+.ob .ob-brk.bl { border-left-width: 1px; border-bottom-width: 1px; }
+.ob .ob-brk.br { border-right-width: 1px; border-bottom-width: 1px; }
+/* Només als prototips: marca el que pinta el renderer i el text nou per verificar */
+.ob .ob-slot { position: absolute; z-index: 4; padding: 5px 7px; border: 1px dashed var(--o-line-2); border-radius: var(--o-r2); background: var(--o-space); font: 500 10px/1.25 var(--o-font-mono); color: var(--o-ink-3); white-space: nowrap; }
+.ob .ob-new { text-decoration: underline dashed 1px; text-underline-offset: 4px; }
+.ob .ob-new::after { content: "⁺"; font-weight: 400; }
+
+/* ───────────────────────── El planeta: la ranura WebGL2 i la seva llum ───────────────────────── */
+.ob .ob-sky { position: absolute; inset: 0; pointer-events: none; opacity: var(--o-stars); }
+.ob .ob-sky i { position: absolute; border-radius: 50%; background: var(--o-star); }
+.ob .ob-planet { position: relative; margin: 0; }
+.ob .ob-planet__vign { position: absolute; inset: -60%; border-radius: 50%; background: radial-gradient(closest-side, var(--o-vign) 46%, transparent 100%); pointer-events: none; }
+.ob .ob-planet__halo {
+  position: absolute; inset: -18%; border-radius: 50%; pointer-events: none; opacity: var(--o-halo-rest);
+  background: radial-gradient(closest-side, rgb(var(--o-glow) / 0) 71.5%, rgb(var(--o-glow) / var(--o-halo-peak)) 74.2%,
+    rgb(var(--o-glow) / calc(var(--o-halo-peak) * .32)) 82%, rgb(var(--o-glow) / calc(var(--o-halo-peak) * .07)) 92%, rgb(var(--o-glow) / 0) 100%);
+}
+.ob .ob-planet__globe { position: absolute; inset: 0; }
+.ob .ob-planet__globe img, .ob .ob-planet__globe canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.ob .ob-planet__rim {
+  position: absolute; inset: .6%; border-radius: 50%; pointer-events: none; opacity: var(--o-halo-rest);
+  box-shadow: inset 0 0 0 1.5px rgb(var(--o-glow) / var(--o-rim));
+  -webkit-mask: linear-gradient(140deg, #000 8%, transparent 46%); mask: linear-gradient(140deg, #000 8%, transparent 46%);
+}
+
+/* ───────────────────────── El cronoscopi: l'època del fotograma que es veu ───────────────────────── */
+.ob .ob-chrono { display: flex; align-items: center; gap: 22px; }
+.ob .ob-chrono__ep { position: relative; flex: none; }
+.ob .ob-chrono__ep > .ob-hud { display: block; margin-bottom: 6px; }
+.ob .ob-chrono__digits { position: relative; display: block; font-family: var(--o-font-display); font-stretch: 100%; font-weight: 300; font-size: 42px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.ob .ob-chrono__cap { flex: none; }
+.ob .ob-chrono__cap p { margin: 0; }
+.ob .ob-chrono__now { font-size: 14px; line-height: 1.45; color: var(--o-ink); }
+.ob .ob-chrono__qual { margin-top: 4px !important; font-size: 12.5px; line-height: 1.5; color: var(--o-ink-3); }
+.ob .ob-scale { position: relative; flex: none; height: 44px; }
+.ob .ob-scale__base { position: absolute; left: 0; right: 0; top: 24px; height: 1px; background: var(--o-line-2); }
+.ob .ob-scale__t { position: absolute; top: 20px; width: 1px; height: 4px; background: var(--o-line-2); }
+.ob .ob-scale__t.is-k { top: 16px; height: 8px; background: var(--o-ink-3); }
+.ob .ob-scale__lb { position: absolute; top: 32px; transform: translateX(-50%); font: 500 10px/1 var(--o-font-mono); color: var(--o-ink-3); white-space: nowrap; }
+.ob .ob-scale__lb.is-first { transform: none; }
+.ob .ob-scale__lb.is-last { transform: translateX(-100%); }
+/* les exposicions: un fotograma real cada una; la que es veu, encesa */
+.ob .ob-scale__x { position: absolute; top: 12px; width: 5px; height: 12px; margin-left: -2.5px; background: var(--o-ink); opacity: .32; }
+.ob .ob-scale__x.is-past { opacity: .6; }
+.ob .ob-scale__x.is-current { opacity: 1; }
+.ob .ob-scale__est { position: absolute; top: -6px; transform: translateX(-50%); font: 500 9.5px/1 var(--o-font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--o-ink-2); white-space: nowrap; }
+.ob .ob-scale__fill { position: absolute; left: 0; top: 23px; height: 3px; background: var(--o-ink); }
+.ob .ob-scale__head { position: absolute; left: 0; top: 6px; width: 1px; height: 26px; background: var(--o-ink); }
+.ob .ob-scale__pin { position: absolute; top: -2px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 3px; white-space: nowrap; font-family: var(--o-font-display); font-stretch: 112%; font-weight: 620; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--o-ink-2); }
+.ob .ob-scale__pin i { width: 1px; height: 12px; background: var(--o-ink-2); }
+
+/* ───────────────────────── L'escala del descens: Món · Colònia · Cel·la · Byte ───────────────────────── */
+.ob .ob-ladder { display: flex; flex-direction: column; gap: 2px; padding: 4px; }
+.ob .ob-ladder > button {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px; min-width: 148px; height: 40px; padding: 0 12px;
+  border: 1px solid transparent; border-radius: var(--o-r1); background: transparent; color: var(--o-ink-3); cursor: pointer; text-align: left;
+  font-family: var(--o-font-display); font-stretch: 112%; font-weight: 620; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase;
+}
+.ob .ob-ladder > button:hover { color: var(--o-ink); }
+.ob .ob-ladder > button[aria-current="true"] { border-color: var(--o-line-2); background: var(--o-space-3); color: var(--o-ink); }
+.ob .ob-ladder .ob-mono { font-size: 10.5px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--o-ink-3); }
+
+/* ───────────────────────── L'obertura guiada: tres moments ───────────────────────── */
+.ob .ob-chapters { display: flex; flex-wrap: wrap; gap: 10px; }
+.ob .ob-chapter {
+  display: flex; align-items: center; gap: 12px; height: 72px; padding: 0 16px 0 8px;
+  border: 1px solid var(--o-line-2); border-radius: var(--o-r1); background: var(--o-space-2); color: var(--o-ink); text-align: left; cursor: pointer;
+}
+.ob .ob-chapter img { width: 56px; height: 56px; display: block; }
+.ob .ob-chapter b { display: block; font-family: var(--o-font-display); font-stretch: 112%; font-weight: 650; font-size: 13px; letter-spacing: .09em; text-transform: uppercase; }
+.ob .ob-chapter .e { display: block; margin-top: 4px; font-family: var(--o-font-display); font-weight: 400; font-size: 20px; line-height: 1; font-variant-numeric: tabular-nums; }
+.ob .ob-chapter:hover { border-color: var(--o-line-3); }
+.ob .ob-chapter[aria-pressed="true"] { border-color: var(--o-ink); box-shadow: inset 0 0 0 1px var(--o-ink); }
+
+/* ───────────────────────── L'inspector: Història · Famílies · Codi · Evidència ───────────────────────── */
+.ob .ob-insp { display: flex; flex-direction: column; overflow: hidden; }
+.ob .ob-insp__head { padding: 18px 20px 14px; border-bottom: 1px solid var(--o-line); }
+.ob .ob-insp__head h2 { margin: 0 0 6px; font-family: var(--o-font-display); font-stretch: 90%; font-weight: 620; font-size: 19px; letter-spacing: .01em; }
+.ob .ob-verified { display: flex; align-items: center; gap: 8px; margin: 10px 0 0; font-size: 12.5px; color: var(--o-ink-2); }
+.ob .ob-insp__body { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+.ob .ob-insp__foot { margin: 0; padding: 14px 20px 16px; border-top: 1px solid var(--o-line); font-size: 11.5px; line-height: 1.5; color: var(--o-ink-3); }
+.ob .ob-ev { position: relative; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 14px; padding: 14px 20px; border-bottom: 1px solid var(--o-line); }
+.ob .ob-ev .e { font-family: var(--o-font-display); font-weight: 500; font-size: 15px; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.ob .ob-ev p { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--o-ink-2); }
+.ob .ob-ev .ob-hud { grid-column: 2; margin-top: 4px; }
+.ob .ob-ev.is-current { background: var(--o-hover); }
+.ob .ob-ev.is-current::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--o-ink); }
+.ob .ob-fam { position: relative; display: grid; grid-template-columns: 12px minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; width: 100%; padding: 12px 20px; border: 0; border-bottom: 1px solid var(--o-line); background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.ob .ob-fam:hover { background: var(--o-hover); }
+.ob .ob-fam[aria-pressed="true"] { background: var(--o-hover); box-shadow: inset 2px 0 0 var(--o-ink); }
+.ob .ob-fam .sw { width: 12px; height: 12px; border-radius: 2px; background: var(--fc); }
+.ob .ob-fam.is-ended .sw { background: transparent; box-shadow: inset 0 0 0 2px var(--fc); }
+.ob .ob-fam b { font-size: 13.5px; font-weight: 600; }
+.ob .ob-fam .meta { grid-column: 2; font-size: 12px; color: var(--o-ink-3); }
+.ob .ob-fam .share { grid-row: 1 / span 2; grid-column: 3; font: 500 13px/1 var(--o-font-mono); }
+.ob .ob-prog { display: grid; grid-template-columns: 26px repeat(8, minmax(0, 1fr)); gap: 2px; padding: 8px; border-radius: var(--o-r1); background: var(--o-space); font: 600 13px/26px var(--o-font-mono); text-align: center; }
+.ob .ob-prog .off { font-size: 9.5px; font-weight: 500; color: var(--o-ink-3); text-align: left; }
+.ob .ob-prov { margin: 0; }
+.ob .ob-prov > div { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 12px; padding: 10px 20px; border-bottom: 1px solid var(--o-line); }
+.ob .ob-prov dt { padding-top: 2px; }
+.ob .ob-prov dd { margin: 0; font-size: 13.5px; line-height: 1.45; }
+/* els glifs de les instruccions (text: AA sobre els panells) */
+.ob .g-h0 { color: var(--i-head0); } .ob .g-h1 { color: var(--i-head1); } .ob .g-ar { color: var(--i-arith); }
+.ob .g-cp { color: var(--i-copy); } .ob .g-lp { color: var(--i-loop); } .ob .g-z { color: var(--i-zero); font-weight: 400; } .ob .g-d { color: var(--i-data); font-weight: 400; }
+
+/* ───────────────────────── Zoom, indicació i estats ───────────────────────── */
+.ob .ob-zoom { display: flex; flex-direction: column; gap: 6px; }
+.ob .ob-zoom > button { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--o-line-2); border-radius: var(--o-r1); background: var(--o-space-2); color: var(--o-ink); cursor: pointer; }
+.ob .ob-zoom > button:hover { background: var(--o-space-3); }
+.ob .ob-zoom > button[disabled] { opacity: .45; cursor: not-allowed; }
+.ob .ob-tip { position: absolute; z-index: 7; padding: 6px 9px; border-radius: var(--o-r1); background: var(--o-ink); color: var(--o-on-ink); font: 500 12px/1.3 var(--o-font-mono); white-space: nowrap; pointer-events: none; }
+.ob .ob-card { padding: 22px 24px; background: var(--o-space-2); border: 1px solid var(--o-line-2); border-radius: var(--o-r1); }
+.ob .ob-card h2 { display: flex; gap: 10px; align-items: flex-start; margin: 0; font: 600 15px/1.45 var(--o-font-text); }
+.ob .ob-card p { margin: 8px 0 0 26px; font-size: 13.5px; line-height: 1.5; color: var(--o-ink-2); }
+.ob .ob-card .ob-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 0 26px; }
+.ob .ob-progress { position: relative; width: 200px; height: 1px; background: var(--o-line-2); overflow: hidden; }
+.ob .ob-progress i { position: absolute; left: 0; top: 0; bottom: 0; width: 38%; background: var(--o-ink); animation: ob-progress 1.4s var(--ease-in-out) infinite; }
+@keyframes ob-progress { from { transform: translateX(-100%); } to { transform: translateX(270%); } }
+
+/* ───────────────────────── L'estat d'un resultat o d'un món: una forma i les paraules del text ───────────────────────── */
+.ob .ob-status { display: inline-flex; align-items: center; gap: 8px; min-height: 28px; padding: 4px 10px 4px 8px; border: 1px solid var(--o-line-2); border-radius: var(--o-r1); font: 500 12.5px/1.3 var(--o-font-text); color: var(--o-ink); }
+.ob .ob-status svg { width: 12px; height: 12px; flex: none; }
+
+/* ───────────────────────── La cinta: dues meitats de 64 bytes que s'executen ───────────────────────── */
+.ob .ob-tape { position: relative; }
+.ob .ob-tape__bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; }
+.ob .ob-tape__now { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 26px; margin: 0; font-size: 14px; color: var(--o-ink-2); }
+.ob .ob-tape__now b { font: 500 22px/1 var(--o-font-display); font-variant-numeric: tabular-nums; color: var(--o-ink); }
+.ob .ob-tape__ctl { display: flex; gap: 8px; }
+.ob .ob-tape__label { display: flex; justify-content: space-between; gap: 12px; margin: 22px 0 8px; font-size: 13px; color: var(--o-ink-2); }
+.ob .ob-tape__label b { font-weight: 650; color: var(--o-ink); }
+.ob .ob-tape__row { display: grid; grid-template-columns: repeat(64, minmax(0, 1fr)); border: 1px solid var(--o-line-2); border-radius: var(--o-r1); overflow: hidden; background: var(--o-space); }
+.ob .ob-tape__row > span { position: relative; display: grid; place-items: center; height: 34px; border-right: 1px solid var(--o-line); font: 600 13px/1 var(--o-font-mono); transition: background-color var(--t-slow) var(--ease-out); }
+.ob .ob-tape__row > span:nth-child(64n) { border-right: 0; }
+/* els bytes d'A (el color de la família 1), el byte que s'acaba d'escriure, la instrucció que s'executa (un punt de llum) i els caps */
+.ob .ob-tape__row > .is-a { background: color-mix(in srgb, var(--f1) 18%, transparent); }
+.ob .ob-tape__row > .is-new { background: color-mix(in srgb, var(--f1) 55%, transparent); transition: none; }
+.ob .ob-tape__row > .is-pc { background: var(--o-ink); color: var(--o-on-ink); transition: none; }
+.ob .ob-tape__row > .is-h0::after, .ob .ob-tape__row > .is-h1::before { content: ""; position: absolute; left: 0; right: 0; height: 4px; }
+.ob .ob-tape__row > .is-h0::after { bottom: 0; background: var(--i-head0-fill); }
+.ob .ob-tape__row > .is-h1::before { top: 0; background: var(--i-head1-fill); }
+.ob .ob-tape__track { position: relative; height: 44px; margin-top: 12px; }
+.ob .ob-tape__track input { position: absolute; inset: 0; width: 100%; margin: 0; accent-color: var(--o-ink); cursor: pointer; }
+.ob .ob-tape__mark { position: absolute; top: 6px; bottom: 6px; width: 2px; margin-left: -1px; background: var(--f1); pointer-events: none; }
+.ob .ob-tape__legend { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--o-ink-2); }
+.ob .ob-tape__legend li { display: inline-flex; align-items: center; gap: 8px; }
+.ob .ob-tape__legend i { position: relative; display: inline-block; width: 14px; height: 16px; border: 1px solid var(--o-line-2); border-radius: 2px; background: var(--o-space); }
+.ob .ob-tape__legend .lg-pc { background: var(--o-ink); border-color: var(--o-ink); }
+.ob .ob-tape__legend .lg-h0::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--i-head0-fill); }
+.ob .ob-tape__legend .lg-h1::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--i-head1-fill); }
+.ob .ob-tape__legend .lg-copy { background: color-mix(in srgb, var(--f1) 40%, var(--o-space)); }
+/* el final: la còpia és sencera */
+.ob .ob-tape__end { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 16px 20px; border: 1px solid var(--o-ink); border-radius: var(--o-r1); }
+.ob .ob-tape__end b { font-family: var(--o-font-display); font-stretch: 72%; font-weight: 700; font-size: 34px; line-height: 1; text-transform: uppercase; }
+.ob .ob-tape__end p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--o-ink-2); }
+
+/* ───────────────────────── Els espècimens: un sòlid per instrucció ───────────────────────── */
+.ob .ob-specimens { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-top: 1px solid var(--o-line); border-left: 1px solid var(--o-line); }
+.ob .ob-specimen { position: relative; margin: 0; padding: 0 0 20px; border-right: 1px solid var(--o-line); border-bottom: 1px solid var(--o-line); }
+.ob .ob-specimen__well { position: relative; height: 176px; display: grid; place-items: center; background: radial-gradient(closest-side, rgb(var(--o-glow) / .07), rgb(var(--o-glow) / 0) 72%); }
+.ob .ob-specimen__well img { width: 112px; height: 112px; display: block; }
+.ob .ob-specimen__row { display: flex; align-items: baseline; gap: 12px; padding: 14px 16px 0; }
+.ob .ob-specimen__glyph { font: 600 30px/1 var(--o-font-mono); }
+.ob .ob-specimen .ob-hud { font-size: 10px; letter-spacing: .1em; }
+.ob .ob-specimen figcaption { margin: 8px 16px 0; font-size: 13.5px; line-height: 1.4; color: var(--o-ink-2); }
+
+/* ───────────────────────── Les finestres del laboratori ───────────────────────── */
+.ob .ob-windows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.ob .ob-window { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border: 1px solid var(--o-line-2); border-radius: var(--o-r1); background: var(--o-space-2); color: inherit; text-decoration: none; transition: border-color var(--t-fast) var(--ease-out); }
+.ob .ob-window:hover { border-color: var(--o-line-3); }
+.ob .ob-window__media { position: relative; height: 320px; overflow: hidden; background: var(--o-space); }
+.ob .ob-window__media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.ob .ob-window__hud { position: absolute; left: 14px; top: 12px; z-index: 2; }
+.ob .ob-window__body { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 20px; padding: 22px 22px 24px; border-top: 1px solid var(--o-line); }
+.ob .ob-window__body h3 { margin: 0; }
+.ob .ob-window__body p { grid-column: 1; margin: 0; font-size: 15px; line-height: 1.55; color: var(--o-ink-2); }
+.ob .ob-go { grid-column: 2; grid-row: 1 / span 2; align-self: end; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--o-line-2); border-radius: 50%; transition: background-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out); }
+.ob .ob-window:hover .ob-go { background: var(--o-ink); border-color: var(--o-ink); color: var(--o-on-ink); }
+
+/* ───────────────────────── La portada: navegació, actes, peu ───────────────────────── */
+.ob.site { container: ob / inline-size; }
+.ob .ob-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 28px; height: 64px; padding: 0 var(--o-page) 0 48px; background: var(--o-space); border-bottom: 1px solid var(--o-line); }
+.ob .ob-brand { display: inline-flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; white-space: nowrap; }
+.ob .ob-brand svg { width: 22px; height: 22px; flex: none; }
+.ob .ob-brand b { font-family: var(--o-font-display); font-stretch: 125%; font-weight: 700; font-size: 15px; letter-spacing: .34em; text-transform: uppercase; }
+.ob .ob-nav__sub { padding-left: 16px; border-left: 1px solid var(--o-line-2); font-size: 13px; color: var(--o-ink-3); white-space: nowrap; }
+.ob .ob-nav__links { display: flex; gap: 2px; margin: 0 0 0 auto; padding: 0; list-style: none; }
+.ob .ob-nav__links a { display: block; padding: 12px 10px; font-family: var(--o-font-display); font-stretch: 112%; font-weight: 580; font-size: 12px; letter-spacing: .11em; text-transform: uppercase; color: var(--o-ink-2); text-decoration: none; white-space: nowrap; }
+.ob .ob-nav__links a:hover, .ob .ob-nav__links a[aria-current="page"] { color: var(--o-ink); }
+.ob .ob-nav__tools { display: flex; align-items: center; gap: 8px; }
+/* Acte 1 · la pregunta */
+.ob .ob-hero { position: relative; display: grid; grid-template-columns: 590px minmax(0, 1fr); min-height: calc(900px - 64px); padding: 0 var(--o-page); overflow: hidden; }
+.ob .ob-hero__text { position: relative; z-index: 2; align-self: center; padding: 40px 0 150px; }
+.ob .ob-hero__stage { position: relative; }
+.ob .ob-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 26px; }
+.ob .ob-eyebrow::before { content: ""; width: 36px; height: 1px; background: currentColor; }
+.ob .ob-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 34px; }
+.ob .ob-hero__chrono { position: absolute; left: var(--o-page); right: var(--o-page); bottom: 26px; z-index: 3; }
+.ob .ob-specs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 var(--o-page); border-top: 1px solid var(--o-line); border-bottom: 1px solid var(--o-line); }
+.ob .ob-spec { margin: 0; padding: 26px 24px 28px; border-left: 1px solid var(--o-line); }
+.ob .ob-spec:first-child { border-left: 0; padding-left: 0; }
+.ob .ob-spec dt { font-family: var(--o-font-display); font-weight: 300; font-size: 44px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.ob .ob-spec dd { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; color: var(--o-ink-3); }
+/* els actes */
+.ob .ob-act { padding: var(--o-s10) var(--o-page) 0; scroll-margin-top: 64px; }
+.ob .ob-act__label { display: flex; align-items: center; gap: 14px; margin: 0 0 22px; }
+.ob .ob-act__label::before { content: ""; width: 36px; height: 1px; background: currentColor; }
+.ob .ob-act__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--o-gutter); align-items: end; }
+.ob .ob-act__head > .ob-display { grid-column: 1 / span 7; }
+.ob .ob-act__head > .ob-lede { grid-column: 8 / span 5; }
+.ob .ob-defs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 56px; }
+.ob .ob-def { padding: 26px 28px 28px; border: 1px solid var(--o-line-2); border-radius: var(--o-r1); }
+.ob .ob-def h3 { margin: 0 0 10px; }
+.ob .ob-def p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--o-ink-2); }
+.ob .ob-questions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 40px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--o-line); }
+.ob .ob-questions li { padding: 22px 24px 26px 0; border-right: 1px solid var(--o-line); }
+.ob .ob-questions li + li { padding-left: 24px; }
+.ob .ob-questions li:last-child { border-right: 0; }
+.ob .ob-questions .n { display: block; margin-bottom: 14px; font-family: var(--o-font-display); font-weight: 300; font-size: 34px; line-height: 1; }
+.ob .ob-questions p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--o-ink); }
+.ob .ob-rule { margin-top: 48px; padding: 28px 32px 30px; border: 1px solid var(--o-ink); border-radius: var(--o-r1); }
+.ob .ob-rule p { margin: 0; max-width: 90ch; font-size: 17px; line-height: 1.65; color: var(--o-ink-2); }
+.ob .ob-rule b { display: block; margin-bottom: 10px; font-family: var(--o-font-display); font-stretch: 72%; font-weight: 700; font-size: 34px; line-height: 1; text-transform: uppercase; color: var(--o-ink); }
+/* els resultats */
+.ob .ob-results { margin: 56px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--o-ink); }
+.ob .ob-result { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--o-gutter); padding: 32px 0 34px; border-bottom: 1px solid var(--o-line); }
+.ob .ob-result__meta { grid-column: 1 / span 3; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.ob .ob-result__main { grid-column: 4 / span 7; }
+.ob .ob-result h3 { margin: 0 0 12px; font-family: var(--o-font-display); font-stretch: 80%; font-weight: 700; font-size: 30px; line-height: 1; text-transform: uppercase; }
+.ob .ob-result p { margin: 0; max-width: 66ch; font-size: 16px; line-height: 1.62; color: var(--o-ink-2); }
+.ob .ob-result__link { grid-column: 11 / span 2; justify-self: end; align-self: start; }
+.ob .ob-result.is-now { margin: 0 calc(-1 * var(--o-page)); padding-left: var(--o-page); padding-right: var(--o-page); background: var(--o-space-2); }
+/* com es treballa, estat i límits, peu */
+.ob .ob-method { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--o-gutter); margin-top: 48px; }
+.ob .ob-method > div { padding-top: 22px; border-top: 1px solid var(--o-ink); }
+.ob .ob-method h3 { margin: 0 0 12px; }
+.ob .ob-method p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--o-ink-2); }
+.ob .ob-limits__text { margin: 0; max-width: 32em; font-size: 26px; line-height: 1.45; letter-spacing: -.01em; color: var(--o-ink); }
+.ob .ob-foot { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--o-gutter); margin-top: var(--o-s10); padding: 36px var(--o-page) 56px; border-top: 1px solid var(--o-line); }
+.ob .ob-foot__brand { grid-column: 1 / span 3; display: flex; flex-direction: column; gap: 10px; }
+.ob .ob-foot__text { grid-column: 4 / span 6; margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--o-ink-2); }
+.ob .ob-foot__links { grid-column: 11 / span 2; display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.ob .ob-foot__links a { display: inline-block; padding: 6px 0; font-size: 13.5px; color: var(--o-ink-2); text-decoration: none; }
+.ob .ob-foot__links a:hover { color: var(--o-ink); text-decoration: underline; }
+
+/* ───────────────────────── Visors: explorador 3D, vista 2D, món en viu ───────────────────────── */
+.ob.viewer { position: relative; height: 100vh; height: 100dvh; overflow: hidden; background: var(--stage-bg); container: ob / inline-size; }
+.ob .ob-bar { position: absolute; z-index: 5; top: var(--o-gap-tray); height: var(--o-h-topbar); display: flex; align-items: center; gap: 10px; padding: 0 8px 0 16px; background: var(--o-space-2); border: 1px solid var(--o-line); border-radius: var(--o-r1); }
+.ob .ob-bar.is-left { left: var(--o-gap-tray); }
+.ob .ob-bar.is-right { right: var(--o-gap-tray); padding-left: 8px; }
+.ob .ob-bar .ob-brand b { font-size: 13.5px; letter-spacing: .3em; }
+.ob .ob-bar .ob-here { font-family: var(--o-font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--o-ink-2); white-space: nowrap; }
+.ob .ob-vsep { flex: none; width: 1px; height: 22px; margin: 0 2px; background: var(--o-line); }
+.ob .ob-side { position: absolute; z-index: 5; right: var(--o-gap-tray); top: calc(var(--o-gap-tray) * 2 + var(--o-h-topbar)); bottom: calc(var(--o-gap-tray) * 2 + var(--o-h-chrono)); width: var(--o-w-panel); }
+.ob .ob-timeline { position: absolute; z-index: 5; left: var(--o-gap-tray); right: var(--o-gap-tray); bottom: var(--o-gap-tray); height: var(--o-h-chrono); display: flex; align-items: center; gap: 20px; padding: 0 20px; background: var(--o-space-2); border: 1px solid var(--o-line); border-radius: var(--o-r1); }
+.ob .ob-timeline .ob-scale { flex: 1; height: 52px; }
+.ob .ob-timeline .ob-scale__base { top: 30px; }
+.ob .ob-timeline .ob-scale__fill { top: 29px; }
+.ob .ob-timeline .ob-scale__t { top: 26px; }
+.ob .ob-timeline .ob-scale__t.is-k { top: 22px; }
+.ob .ob-timeline .ob-scale__lb { top: 38px; }
+.ob .ob-timeline .ob-scale__head { top: 18px; width: 2px; margin-left: -1px; height: 24px; }
+.ob .ob-epoch { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: none; }
+.ob .ob-epoch output { font-family: var(--o-font-display); font-weight: 300; font-size: 36px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.ob .ob-viewer-zoom { position: absolute; z-index: 5; right: calc(var(--o-gap-tray) * 2 + var(--o-w-panel)); top: 50%; transform: translateY(-50%); }
+.ob .ob-opening { position: absolute; z-index: 5; left: calc(var(--o-gap-tray) * 2); bottom: calc(var(--o-gap-tray) * 2 + var(--o-h-chrono)); }
+/* la vista 2D: escala, aument i mapa petit; la cortina abans/després */
+.ob .ob-scalebar { position: absolute; z-index: 5; left: var(--o-gap-tray); bottom: calc(var(--o-gap-tray) * 2 + var(--o-h-chrono)); display: flex; align-items: center; gap: 16px; height: 56px; padding: 0 16px; background: var(--o-space-2); border: 1px solid var(--o-line); border-radius: var(--o-r1); }
+.ob .ob-scalebar__bar { display: flex; align-items: center; gap: 10px; font: 500 11.5px/1 var(--o-font-mono); color: var(--o-ink-2); }
+.ob .ob-scalebar__bar i { display: block; height: 8px; border: 1px solid var(--o-ink); border-top: 0; }
+.ob .ob-mag { font-family: var(--o-font-display); font-weight: 300; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
+.ob .ob-minimap { position: relative; overflow: hidden; border: 1px solid var(--o-line-2); border-radius: var(--o-r1); background: var(--stage-bg); }
+.ob .ob-minimap img { display: block; width: 100%; }
+.ob .ob-minimap__view { position: absolute; border: 1.5px solid var(--o-ink); box-shadow: 0 0 0 1px var(--o-space); }
+.ob .ob-curtain { position: absolute; z-index: 3; top: 0; bottom: 0; width: 0; }
+.ob .ob-curtain__line { position: absolute; top: 0; bottom: 0; left: -1px; width: 2px; background: var(--o-ink); box-shadow: 0 0 0 1px var(--o-space); }
+.ob .ob-curtain__handle { position: absolute; top: 50%; left: -22px; width: 44px; height: 44px; margin-top: -22px; display: grid; place-items: center; border: 1px solid var(--o-ink); border-radius: 50%; background: var(--o-space-2); color: var(--o-ink); cursor: ew-resize; }
+.ob .ob-curtain__ep { position: absolute; top: 76px; padding: 8px 12px; background: var(--o-space-2); border: 1px solid var(--o-line-2); border-radius: var(--o-r1); white-space: nowrap; }
+.ob .ob-curtain__ep.is-before { right: 16px; text-align: right; }
+.ob .ob-curtain__ep.is-after { left: 16px; }
+.ob .ob-curtain__ep b { display: block; margin-top: 4px; font-family: var(--o-font-display); font-weight: 400; font-size: 26px; line-height: 1; font-variant-numeric: tabular-nums; }
+/* el món en viu */
+.ob .ob-field { display: grid; gap: 8px; }
+.ob .ob-field-row { display: flex; gap: 8px; }
+.ob .ob-input { flex: 1; min-width: 0; height: var(--o-h-touch); padding: 0 12px; border: 1px solid var(--o-line-2); border-radius: var(--o-r2); background: var(--o-space); color: var(--o-ink); font: 500 15px/1 var(--o-font-mono); }
+.ob .ob-input:hover { border-color: var(--o-line-3); }
+.ob .ob-try { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 24px; align-items: center; padding: 22px 24px; border: 1px solid var(--o-ink); border-radius: var(--o-r1); }
+.ob .ob-try h3 { margin: 0; }
+.ob .ob-try p { grid-column: 1; margin: 0; font-size: 14px; line-height: 1.5; color: var(--o-ink-2); }
+.ob .ob-live-status { display: flex; align-items: center; gap: 12px; margin: 0; font: 600 16px/1.35 var(--o-font-text); }
+.ob .ob-live-status svg { width: 14px; height: 14px; flex: none; }
+.ob .ob-steps { margin: 0; padding: 0; list-style: none; counter-reset: s; }
+.ob .ob-steps li { position: relative; padding: 12px 0 12px 44px; border-top: 1px solid var(--o-line); font-size: 14px; line-height: 1.5; color: var(--o-ink-2); counter-increment: s; }
+.ob .ob-steps li::before { content: counter(s); position: absolute; left: 0; top: 10px; width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid var(--o-line-2); border-radius: 50%; font: 500 12px/1 var(--o-font-mono); color: var(--o-ink-2); }
+.ob .ob-steps li.is-done::before { background: var(--o-ink); border-color: var(--o-ink); color: var(--o-on-ink); }
+.ob .ob-steps li.is-now { color: var(--o-ink); }
+.ob .ob-steps li.is-now::before { border-color: var(--o-ink); color: var(--o-ink); }
+.ob .ob-census { position: relative; height: 64px; }
+.ob .ob-census i { position: absolute; bottom: 0; width: 3px; margin-left: -1.5px; background: var(--o-line-3); }
+.ob .ob-census i.is-on { background: var(--o-ink); }
+.ob .ob-census .ob-census__thr { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--o-line-3); }
+.ob pre.ob-cmd { margin: 0; padding: 10px 12px; border: 1px solid var(--o-line); border-radius: var(--o-r1); background: var(--o-space); font: 500 11.5px/1.55 var(--o-font-mono); color: var(--o-ink); white-space: pre-wrap; word-break: break-all; }
+/* el full inferior del mòbil: tres posicions (plegat, a mitges, sencer) */
+.ob .ob-sheet { position: absolute; z-index: 6; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; background: var(--o-space-2); border-top: 1px solid var(--o-line-2); transition: height var(--t-base) var(--ease-out); }
+.ob .ob-sheet[data-pos="peek"] { height: 156px; }
+.ob .ob-sheet[data-pos="half"] { height: 54%; }
+.ob .ob-sheet[data-pos="full"] { height: calc(100% - 72px); }
+.ob .ob-sheet__grab { flex: none; width: 100%; height: 28px; display: grid; place-items: center; border: 0; background: transparent; cursor: grab; }
+.ob .ob-sheet__grab i { display: block; width: 40px; height: 4px; border-radius: 2px; background: var(--o-line-3); }
+
+/* ───────────────────────── Mode espectador: subtítols i sortida ───────────────────────── */
+.ob .ob-tour { position: absolute; z-index: 8; left: 50%; bottom: 36px; transform: translateX(-50%); display: flex; align-items: center; gap: 20px; width: min(880px, calc(100% - 32px)); padding: 16px 18px 16px 22px; background: var(--o-space-2); border: 1px solid var(--o-line-2); border-radius: var(--o-r1); }
+.ob .ob-tour p { flex: 1; margin: 0; font-size: 17px; line-height: 1.45; }
+.ob .ob-tour__bar { position: absolute; left: 0; right: 0; top: -1px; height: 2px; background: var(--o-line); }
+.ob .ob-tour__bar i { display: block; height: 100%; background: var(--o-ink); }
+
+/* ───────────────────────── Entrades (una vegada) i pausa ───────────────────────── */
+/* Sense JavaScript, tot es veu: només s'amaga si <html class="js"> (un script al <head>) */
+.js .ob [data-enter]:not(.is-in) { opacity: 0; transform: translateY(14px); }
+.ob [data-enter] { transition: opacity var(--t-enter) var(--ease-out), transform var(--t-enter) var(--ease-out); transition-delay: calc(var(--i, 0) * var(--t-stagger)); }
+.ob .is-paused, .ob .is-paused * { animation-play-state: paused !important; }
+
+/* ───────────────────────── Moviment reduït: tot quiet, els canvis són talls ───────────────────────── */
+/* ───────────────────────── La cinta com a esdeveniment (cinta.js): l'entrada, el final, l'escombrat i «Continua» ───────────────────────── */
+.ob .ob-tape__row, .ob .ob-tape__label { transition: transform var(--t-enter) var(--ease-out), opacity var(--t-enter) var(--ease-out); }
+.ob .ob-tape__label { transition-delay: 160ms; }
+.ob .ob-tape[data-tape-enter="pre"] .is-from-left { opacity: 0; transform: translateX(-48px); transition: none; }
+.ob .ob-tape[data-tape-enter="pre"] .is-from-right { opacity: 0; transform: translateX(48px); transition: none; }
+.js .ob .ob-tape:not(.is-done) .ob-tape__end { display: none; }
+.ob .ob-tape.is-done .ob-tape__end { animation: ob-tape-in var(--t-slow) var(--ease-out) both; }
+.ob .ob-tape.is-sweep .ob-tape__row.is-from-right > .is-a { animation: ob-tape-lift var(--t-flare) var(--ease-out) both; animation-delay: calc(var(--k, 0) * 9ms); }
+@keyframes ob-tape-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes ob-tape-lift { 0%, 100% { background-color: color-mix(in srgb, var(--f1) 18%, transparent); } 35% { background-color: color-mix(in srgb, var(--f1) 72%, transparent); } }
+.ob .ob-tape .when-after { display: none; }
+.ob .ob-tape.is-after .when-after { display: inline; }
+.ob .ob-tape.is-after .when-paused, .ob .ob-tape.is-playing .when-paused, .ob .ob-tape:not(.is-playing) .when-playing { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ob *, .ob *::before, .ob *::after { transition-duration: 0s !important; transition-delay: 0s !important; animation: none !important; scroll-behavior: auto !important; }
+  .js .ob [data-enter]:not(.is-in) { opacity: 1; transform: none; }
+}
+
+/* ───────────────────────── Pantalla tàctil: objectius de 44 px ───────────────────────── */
+@media (pointer: coarse) {
+  .ob { --o-h-control: 44px; }
+}
+
+/* ───────────────────────── Portada a 390 px (consulta de contenidor sobre .ob.site) ───────────────────────── */
+@container ob (max-width: 640px) {
+  .ob .ob-nav { flex-wrap: wrap; height: auto; gap: 0; padding: 6px 16px 0; }
+  .ob .ob-nav > .ob-brand { flex: 1; height: 50px; }
+  .ob .ob-nav__sub { display: none; }
+  .ob .ob-nav__tools { gap: 6px; }
+  .ob .ob-nav__tools .ob-seg { height: 44px; }
+  .ob .ob-nav__links { order: 3; width: calc(100% + 32px); margin: 6px -16px 0; padding: 0 6px; overflow-x: auto; border-top: 1px solid var(--o-line); }
+  .ob .ob-hero { display: block; min-height: 0; padding: 0 16px; }
+  .ob .ob-hero__text { padding: 24px 0 0; }
+  .ob .ob-d1 { font-size: 46px; line-height: .92; }
+  .ob .ob-d2 { font-size: 40px; }
+  .ob .ob-d3 { font-size: 30px; }
+  .ob .ob-lede { font-size: 16.5px; }
+  .ob .ob-cta { flex-direction: column; align-items: stretch; }
+  .ob .ob-hero__chrono { position: static; margin-top: 20px; }
+  .ob .ob-specs { grid-template-columns: 1fr 1fr; margin: 0 16px; }
+  .ob .ob-spec { padding: 18px 16px 20px; }
+  .ob .ob-spec:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .ob .ob-spec:nth-child(n + 3) { border-top: 1px solid var(--o-line); }
+  .ob .ob-spec dt { font-size: 32px; }
+  .ob .ob-act { padding: var(--o-s9) 16px 0; }
+  .ob .ob-act__head { display: block; }
+  .ob .ob-act__head > .ob-lede { margin-top: 18px; }
+  .ob .ob-defs { grid-template-columns: 1fr; gap: 14px; margin-top: 36px; }
+  .ob .ob-def { padding: 20px 20px 22px; }
+  .ob .ob-questions { grid-template-columns: 1fr; }
+  .ob .ob-questions li, .ob .ob-questions li + li { padding: 18px 0 20px; border-right: 0; border-bottom: 1px solid var(--o-line); }
+  .ob .ob-rule { padding: 22px 20px 24px; }
+  .ob .ob-rule b { font-size: 28px; }
+  .ob .ob-rule p { font-size: 16px; }
+  .ob .ob-tape__row { grid-template-columns: repeat(16, minmax(0, 1fr)); }
+  .ob .ob-tape__row > span { height: 26px; font-size: 12px; }
+  .ob .ob-tape__row > span:nth-child(16n) { border-right: 0; }
+  .ob .ob-tape__row > span:nth-child(n + 17) { border-top: 1px solid var(--o-line); }
+  .ob .ob-tape__ctl { width: 100%; }
+  .ob .ob-tape__ctl .ob-btn { flex: 1; }
+  .ob .ob-tape__end { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .ob .ob-tape__end b { font-size: 28px; }
+  .ob .ob-specimens { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ob .ob-specimen__well { height: 132px; }
+  .ob .ob-specimen__well img { width: 88px; height: 88px; }
+  .ob .ob-windows { grid-template-columns: 1fr; gap: 16px; }
+  .ob .ob-window__media { height: 220px; }
+  .ob .ob-result { display: block; padding: 24px 0 26px; }
+  .ob .ob-result__meta { flex-direction: row; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+  .ob .ob-result h3 { font-size: 26px; }
+  .ob .ob-result__link { display: inline-flex; margin-top: 12px; }
+  .ob .ob-result.is-now { margin: 0 -16px; padding: 24px 16px 26px; }
+  .ob .ob-method { grid-template-columns: 1fr; gap: 28px; }
+  .ob .ob-limits__text { font-size: 20px; }
+  .ob .ob-foot { display: block; padding: 28px 16px 40px; margin-top: var(--o-s9); }
+  .ob .ob-foot__text { margin: 18px 0; }
+  .ob .ob-foot__links { flex-direction: row; flex-wrap: wrap; gap: 4px 18px; }
+  .ob .ob-foot__links a { padding: 11px 0; }
+}
+
+/* ───────────────────────── Visors a 390 px: el panell i la línia de temps en un full inferior ───────────────────────── */
+@container ob (max-width: 820px) {
+  .ob .ob-bar { --o-gap-tray: 8px; height: 56px; }
+  .ob .ob-bar .ob-here, .ob .ob-bar .only-desk { display: none; }
+  .ob .ob-viewer-zoom { right: 8px; top: auto; bottom: 168px; transform: none; }
+  .ob .ob-timeline { position: static; height: 72px; padding: 0 16px; border: 0; border-radius: 0; background: none; gap: 14px; }
+  .ob .ob-timeline .ob-epoch output { font-size: 26px; }
+}

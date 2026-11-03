@@ -1,15 +1,30 @@
-// La portada: al visor de la capçalera, un món com un planeta que gira lentament; i, a la química, la cinta que s'executa
-// (js/cinta.js) i el sòlid de cada instrucció, que gira al pou del seu espècimen. Sense controls al planeta, perquè la
-// pàgina es pugui desplaçar. Amb moviment reduït, tot quiet.
+// La portada amb l'Observatori (l'encàrrec 2). A la capçalera, el naixement del món 1006 en 7 fotogrames reals
+// (js/naixement.js): amb WebGL2, els dibuixa el renderer dels visors damunt d'un fons transparent, perquè es vegin el cel i
+// la llum de la pàgina; sense, són els pòsters. La cinta que s'executa (js/cinta.js); el sòlid de cada instrucció, que entra
+// al seu pou una vegada i s'hi queda quiet; i les entrades de cada part, una sola vegada. Res no es mou més de 5 s sense
+// un botó per aturar-ho: el planeta només gira mentre es reprodueix el naixement. Amb moviment reduït, tot quiet.
 import { createRenderer } from './render.js';
 import { loadMeta, loadFrame } from './dades.js';
 import { R } from './geo.js';
 import { v3, perspective, lookAt, multiply } from './mat4.js';
 import { compile } from './gl.js';
 import { SHAPES } from './formes.js';
-import { apply, setLang, num, onLang } from './i18n.js';
-import { bindThemeSwitch, readStageTokens, reducedMotion, parseColor } from './tema.js';
+import { apply, setLang, num, pct, t, onLang } from './i18n.js';
+import { bindThemeSwitch, readStageTokens, reducedMotion } from './tema.js';
 import { mountTape } from './cinta.js';
+import { mountBirth, EPOCHS } from './naixement.js';
+
+// Les entrades, primer: si alguna cosa de més avall falla, el contingut es continua veient (AUD-160). Només s'amaga el que
+// encara és sota la pantalla, i res amb moviment reduït
+function entrances() {
+  if (reducedMotion.matches) return;
+  const below = [...document.querySelectorAll('[data-enter]')].filter((el) => el.getBoundingClientRect().top > innerHeight);
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.remove('is-out'); e.target.classList.add('is-in'); io.unobserve(e.target); }
+  }, { rootMargin: '0px 0px -8% 0px' });
+  for (const el of below) { el.classList.add('is-out'); io.observe(el); }
+}
+entrances();
 
 apply();
 for (const b of document.querySelectorAll('[data-lang]')) b.addEventListener('click', () => setLang(b.dataset.lang));
@@ -18,20 +33,6 @@ let tokens = readStageTokens();
 const themed = [];
 let themeStamp = 0;
 window.addEventListener('themechange', () => { tokens = readStageTokens(); themeStamp++; for (const f of themed) f(tokens); });
-
-// El moviment de la portada (el planeta i els sòlids) es pot aturar, i es reprèn on era (WCAG 2.2.2, AUD-165): mentre és
-// aturat, el rellotge de les animacions no avança
-const motion = { paused: false, since: 0, lost: 0 };
-const clock = (now) => (motion.paused ? motion.since : now) - motion.lost;
-function setMotion(paused) {
-  const now = performance.now();
-  if (paused) motion.since = now; else motion.lost += now - motion.since;
-  motion.paused = paused;
-  for (const b of document.querySelectorAll('[data-motion]')) b.setAttribute('aria-pressed', String(paused));
-}
-for (const b of document.querySelectorAll('[data-motion]')) b.addEventListener('click', () => setMotion(!motion.paused));
-// els botons, només quan alguna cosa es mou: sense WebGL2 (o sense JavaScript), el planeta és la imatge fixa i no cal
-const motionShown = () => { for (const b of document.querySelectorAll('[data-motion]')) { b.hidden = false; b.closest('.motion-row')?.removeAttribute('hidden'); } };
 const SUN = v3.normalize([0.55, 0.75, -0.35]);
 
 // Dibuixa només quan el llenç es veu (i el navegador ja s'atura quan la pestanya no es veu)
@@ -41,59 +42,123 @@ function whenVisible(el) {
   return s;
 }
 
-// 1. El planeta: el fotograma de l'època del peu de la figura, del primer món de la llista amb la seva llavor, tot sol
-// (sols/E.z, uns 94 kB, i no els mapes de tots els fotogrames: AUD-161). El fons és el de la figura (--hero-bg: al tema
-// clar, el paper de la pàgina), i al tema fosc hi ha més estrelles que als visors. Fins que no hi ha dibuix, i sempre sense
-// WebGL2, es veu la imatge fixa del planeta (web/img/planeta-*.jpg), que és el mateix dibuix
-async function hero() {
-  const canvas = document.getElementById('hero'), r = createRenderer(canvas, { starCount: 16000 });
-  if (!r) return;
-  motionShown();
-  const fig = canvas.closest('[data-seed]'), seed = fig.dataset.seed;
-  const withBackground = (tk) => ({ ...tk, background: parseColor(getComputedStyle(fig).getPropertyValue('--hero-bg')) });
-  r.setTheme(withBackground(tokens));
-  themed.push((tk) => r.setTheme(withBackground(tk)));
+// El cel de la capçalera: un patró fix d'estrelles (sempre el mateix), que només es veu al tema fosc (--o-stars)
+function sky() {
+  const el = document.querySelector('.ob-hero > .ob-sky');
+  if (!el) return;
+  let s = 20261103;
+  const rnd = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < 150; i++) {
+    const star = document.createElement('i'), size = rnd() < 0.85 ? 1 : 2;
+    star.style.cssText = `left:${(rnd() * 100).toFixed(2)}%;top:${(rnd() * 100).toFixed(2)}%;width:${size}px;height:${size}px;opacity:${(0.25 + 0.65 * rnd() ** 2).toFixed(2)}`;
+    frag.append(star);
+  }
+  el.append(frag);
+}
+sky();
+
+// El món de la capçalera: el primer de la llista amb la llavor de la figura (data-seed), i la seva fitxa (mon.json, uns 40 kB)
+async function heroWorld(seed) {
   const list = await (await fetch('dades/mons.json')).json();
-  let w = null;
   for (const m of list) {
     try {
       const meta = await loadMeta(`dades/${m.id}`);
-      // l'època del peu de la figura (data-epoch); si el món no en té el fotograma sol, no es dibuixa res
-      if (new RegExp(`--seed ${seed}\\b`).test(meta.ordre)) { w = await loadFrame(`dades/${m.id}`, meta, Number(fig.dataset.epoch)); break; }
+      if (new RegExp(`--seed ${seed}\\b`).test(meta.ordre)) return { base: `dades/${m.id}`, meta };
     } catch { /* el següent */ }
   }
-  if (!w) return;
-  const frame = () => ({ fam: w.fam(0), k: w.k(0), palette: w.palette(0, tokens.families) });
-  r.setFrames(frame(), frame());
-  themed.push(() => r.setFrames(frame(), frame()));
+  return null;
+}
+
+// Els subtítols del naixement, de les dades: l'establiment i la seva confirmació (els dos censos), soroll si encara no hi ha
+// cap família, i si no, el territori de la família més gran. A la 2.250 no es diu cap territori: és el del cens
+function captions(meta) {
+  const est = meta.establiment ?? {};
+  return (i) => {
+    const e = EPOCHS[i], k = meta.fotogrames.findIndex((x) => x.e === e);
+    if (e === est.epoca) return t('birth.cap.est', { e: num(e) });
+    if (e === est.confirmat) return t('birth.cap.confirm', { e: num(e) });
+    let best = null;
+    for (const f of meta.families) { const q = f.quota?.[k]; if (q !== null && q !== undefined && (!best || q > best.q)) best = { id: f.id, q }; }
+    if (!best) return t('birth.cap.noise');
+    return t('birth.cap.family', { id: best.id, p: pct(best.q).replace(' %', ' %') });
+  };
+}
+
+// 1. La capçalera: el planeta i el naixement
+async function hero() {
+  const sec = document.querySelector('[data-pm="birth"]'), fig = sec?.querySelector('.ob-planet');
+  if (!sec || !fig) return;
+  const canvas = document.getElementById('hero');
+  const r = createRenderer(canvas, { starCount: 0, transparent: true });
+  const world = heroWorld(fig.dataset.seed).catch(() => null);
+  // amb WebGL2, els 7 fotogrames sols (uns 570 kB, només quan es reprodueix); sense, els pòsters de data-frames-*
+  const frames = new Map();
+  const frameOf = async (e) => {
+    const w = await world;
+    if (!w) throw new Error('sense el món de la capçalera');
+    if (!frames.has(e)) frames.set(e, loadFrame(w.base, w.meta, e));
+    return frames.get(e);
+  };
+  let caption = () => '';
+  const birth = mountBirth(sec, {
+    num, t: (k) => t({ play: 'time.play', pause: 'time.pause', again: 'birth.again' }[k]), reducedMotion,
+    caption: (i) => caption(i),
+    load: r ? () => Promise.all(EPOCHS.map(frameOf)) : null,
+  });
+  world.then((w) => { if (w) { caption = captions(w.meta); birth.relang(); } });
+  onLang(() => birth.relang());
+  if (!r) return;
+
+  // el dibuix: el fotograma de l'època que es veu, amb la paleta del tema
+  let shown = null, playing = false;
+  const paint = (w) => { const f = { fam: w.fam(0), k: w.k(0), palette: w.palette(0, tokens.families) }; r.setFrames(f, f); };
+  r.setTheme(tokens);
+  themed.push((tk) => { r.setTheme(tk); if (shown) paint(shown); });
+  const showEpoch = async (e) => { const w = await frameOf(e); shown = w; paint(w); };
+  sec.addEventListener('naixement:fotograma', (ev) => { showEpoch(ev.detail.epoch).catch(() => {}); });
+  sec.addEventListener('naixement:mode', (ev) => { playing = ev.detail.mode === 'play'; });
+  // la llum de cada tall: l'atmosfera puja i torna en 750 ms (com l'halo i la vora en CSS). En repòs, més suau que als
+  // visors (la meitat): l'atmosfera de l'Observatori és blanca, i el disseny la vol discreta (--atmos-intensity, --atmos-flare)
+  let flareAt = -Infinity;
+  sec.addEventListener('naixement:llum', () => { flareAt = performance.now(); });
+  try { await showEpoch(Number(fig.dataset.epoch)); } catch { return; }
+
   const vis = whenVisible(canvas);
-  // la mida del dibuix, la del llenç: es comprova a cada volta, perquè la figura canvia de mida sense que canviï la finestra
-  // (quan arriben les fonts, per exemple), i si no, el navegador estiraria el dibuix d'abans
   const resize = () => {
     const dpr = Math.min(1.5, devicePixelRatio || 1), w = Math.round(canvas.clientWidth * dpr), h = Math.round(canvas.clientHeight * dpr);
     if (w !== canvas.width || h !== canvas.height) r.resize(w, h);
   };
-  resize();
-  // ~20 fotogrames per segon, que n'hi ha prou: el planeta gira com a molt 1,4° per segon. I cap, si no ha canviat res
-  // (aturat, amb moviment reduït o sense canvis de mida ni de tema)
-  const center = [0, -R, 0], t0 = performance.now();
-  let last = -Infinity, drawn = '';
+  // el gir: la fase només avança mentre es reprodueix, i s'atura suaument (en un segon) quan reposa o s'atura. A la fase 0,
+  // el mateix punt de vista que els pòsters
+  const center = [0, -R, 0], D = R * 4.3, FILL = 0.92;
+  let phase = 0, speed = 0, last = performance.now(), drawn = '';
   const loop = (now) => {
     resize();
-    const t = reducedMotion.matches ? 0 : (clock(now) - t0) / 1000, key = `${t}|${canvas.width}|${canvas.height}|${themeStamp}`;
-    if (vis.on && key !== drawn && now - last >= 48) {
-      last = now; drawn = key;
-      // la càmera gira al voltant de l'eix dels pols (z), una mica per sobre de l'equador, i el nord queda amunt
-      const a = 0.5 * Math.sin(t * 0.05) - 0.15, tilt = 0.32, D = R * 4.3;
+    const dt = Math.min(0.1, (now - last) / 1000);
+    last = now;
+    const target = playing && !reducedMotion.matches ? 1 : 0;
+    speed += (target - speed) * Math.min(1, dt * 2.5);
+    if (Math.abs(speed) < 1e-3 && target === 0) speed = 0;
+    phase += speed * dt;
+    const flare = Math.max(0, 1 - (now - flareAt) / 750), atmos = 0.5 + 0.9 * flare * flare;
+    const key = `${phase.toFixed(5)}|${atmos.toFixed(3)}|${canvas.width}|${canvas.height}|${themeStamp}|${shown?.epochs[0]}`;
+    if (vis.on && key !== drawn) {
+      drawn = key;
+      // la càmera gira al voltant de l'eix dels pols (z), una mica per sobre de l'equador, i el nord queda amunt; el
+      // planeta omple el llenç quadrat (FILL), amb lloc per a l'atmosfera
+      // (un gir lent, uns 2° per segon, que torna enrere passats uns 20 s de reproducció: el món no surt mai de la vista)
+      const a = 0.45 * Math.sin(phase * 0.08) - 0.15, tilt = 0.32;
       const eye = v3.add(center, v3.scale([Math.cos(tilt) * Math.sin(a), Math.cos(tilt) * Math.cos(a), -Math.sin(tilt)], D));
-      // el planeta sencer al visor: si el visor és més alt que ample, el camp de visió es fixa en horitzontal
-      const aspect = canvas.clientWidth / canvas.clientHeight, fov = aspect < 1 ? 2 * Math.atan(Math.tan(0.31) / aspect) : 0.62;
-      const proj = perspective(fov, aspect, 10, D * 3);
+      const aspect = canvas.clientWidth / canvas.clientHeight || 1, half = Math.atan(Math.tan(Math.asin(R / D)) / FILL);
+      const fov = aspect < 1 ? 2 * Math.atan(Math.tan(half) / aspect) : 2 * half;
       r.draw({
-        viewProj: multiply(proj, lookAt(eye, center, [0, 0, -1])), eye, planet: 1, sun: SUN, fog: 1 / (D * 4),
-        height: 3, t: 0, time: t, codeMix: 0, gridMix: 0, hover: -1, pixel: Math.min(1.5, devicePixelRatio || 1),
+        viewProj: multiply(perspective(fov, aspect, 10, D * 3), lookAt(eye, center, [0, 0, -1])), eye, planet: 1, sun: SUN, fog: 1 / (D * 4),
+        height: 3, t: 0, time: phase, codeMix: 0, gridMix: 0, hover: -1, pixel: Math.min(1.5, devicePixelRatio || 1), atmos,
       });
-      canvas.classList.add('is-drawn');
+      // l'època que hi ha dibuixada (l'eina de les imatges l'espera abans de capturar-ne el pòster)
+      canvas.dataset.epoch = String(shown.epochs[0]);
+      if (!canvas.classList.contains('is-drawn')) { canvas.classList.add('is-drawn'); fig.classList.add('is-live'); }
     }
     requestAnimationFrame(loop);
   };
@@ -137,12 +202,15 @@ const mat = {
     return out;
   },
 };
+// L'entrada de cada sòlid, una vegada, quan els pous es veuen: gira i creix fins a la seva posició de repòs en 480 ms
+// (--t-specimen), un 60 ms després de l'altre (--t-specimen-stagger)
+const ENTER_MS = 480, STAGGER_MS = 60;
+const easeOut = (x) => 1 - (1 - x) ** 3;
 function gallery() {
-  const canvas = document.getElementById('gallery'), gl = canvas.getContext('webgl2', { antialias: true, alpha: true, premultipliedAlpha: true });
+  const canvas = document.getElementById('gallery'), gl = canvas?.getContext('webgl2', { antialias: true, alpha: true, premultipliedAlpha: true });
   if (!gl) return;
-  motionShown();
   const p = compile(gl, GALLERY_VS, GALLERY_FS);
-  const wells = [...document.querySelectorAll('.specimen-well[data-cls]')];
+  const wells = [...document.querySelectorAll('.ob-specimen__well[data-cls]')];
   const vaos = wells.map((well) => {
     const cls = Number(well.dataset.cls), vao = gl.createVertexArray(), buf = gl.createBuffer();
     gl.bindVertexArray(vao);
@@ -152,15 +220,19 @@ function gallery() {
     gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12);
     return { vao, count: SHAPES[cls].count, cls, well };
   });
-  const vis = whenVisible(canvas), t0 = performance.now();
+  const vis = whenVisible(canvas);
+  // l'entrada comença quan els pous es veuen (amb moviment reduït, o si ja es veien en obrir la pàgina, ja hi són)
+  let enterAt = reducedMotion.matches || canvas.getBoundingClientRect().top < innerHeight * 0.85 ? -Infinity : null;
+  const io = new IntersectionObserver(([e]) => { if (e.isIntersecting && enterAt === null) { enterAt = performance.now(); io.disconnect(); } }, { threshold: 0.25 });
+  if (enterAt === null) io.observe(canvas);
   let drawn = '';
   const loop = (now) => {
     const dpr = Math.min(2, devicePixelRatio || 1), w = canvas.clientWidth, h = canvas.clientHeight;
     // la clau porta també on són el primer i l'últim pou respecte del llenç: si les fonts o la mida mouen els pous, es redibuixa
     const o = canvas.getBoundingClientRect(), p0 = vaos[0]?.well.getBoundingClientRect(), p1 = vaos.at(-1)?.well.getBoundingClientRect();
-    const t = reducedMotion.matches ? 0.6 : (clock(now) - t0) / 1000;
-    const key = `${t}|${w}|${h}|${dpr}|${themeStamp}|${p0?.left - o.left}|${p0?.top - o.top}|${p1?.left - o.left}|${p1?.top - o.top}|${p0?.width}`;
-    // cap fotograma si no ha canviat res (aturat, amb moviment reduït o sense canvis de mida ni de tema)
+    const since = enterAt === null ? 0 : now - enterAt, done = enterAt !== null && since > ENTER_MS + STAGGER_MS * vaos.length;
+    const key = `${done ? 'quiet' : since.toFixed(0)}|${w}|${h}|${dpr}|${themeStamp}|${p0?.left - o.left}|${p0?.top - o.top}|${p1?.left - o.left}|${p1?.top - o.top}|${p0?.width}`;
+    // cap fotograma si no ha canviat res (quiet, amb moviment reduït o sense canvis de mida ni de tema)
     if (vis.on && key !== drawn) {
       drawn = key;
       if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
@@ -171,12 +243,15 @@ function gallery() {
       gl.useProgram(p.program);
       gl.uniformMatrix4fv(p.u.uProj, false, mat.ortho(w, h));
       gl.uniform3fv(p.u.uLight, v3.normalize([0.4, 0.75, 0.6]));
-      const origin = canvas.getBoundingClientRect();
       vaos.forEach((v, k) => {
+        // abans de l'entrada, res; durant l'entrada, gira i creix; després, quiet a la posició de repòs
+        const x0 = enterAt === null ? 0 : Math.min(1, Math.max(0, (since - k * STAGGER_MS) / ENTER_MS)), e = easeOut(x0);
+        if (e <= 0) return;
         const rect = v.well.getBoundingClientRect();
         // el centre del pou, en píxels des de la cantonada de sota a l'esquerra del llenç
-        const x = rect.left - origin.left + rect.width / 2, y = origin.bottom - (rect.top + rect.height * 0.58);
-        gl.uniformMatrix4fv(p.u.uModel, false, mat.model(x, y, Math.min(84, rect.height * 0.52, rect.width * 0.5), 0.55, t * 0.7 + k * 0.6));
+        const x = rect.left - o.left + rect.width / 2, y = o.bottom - (rect.top + rect.height * 0.58);
+        const size = Math.min(84, rect.height * 0.52, rect.width * 0.5) * (0.4 + 0.6 * e);
+        gl.uniformMatrix4fv(p.u.uModel, false, mat.model(x, y, size, 0.55, 0.42 + k * 0.6 - 1.6 * (1 - e)));
         gl.uniform3fv(p.u.uColor, tokens.lit[v.cls].slice(0, 3));
         gl.bindVertexArray(v.vao);
         gl.drawArrays(gl.TRIANGLES, 0, v.count);
@@ -187,18 +262,6 @@ function gallery() {
   requestAnimationFrame(loop);
 }
 
-// 3. L'aparició suau de les seccions, una sola vegada: només s'amaguen les que encara són sota la pantalla, i res amb
-// moviment reduït (AUD-160)
-function reveal() {
-  if (reducedMotion.matches) return;
-  const below = [...document.querySelectorAll('[data-reveal]')].filter((el) => el.getBoundingClientRect().top > innerHeight);
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) if (e.isIntersecting) { e.target.classList.remove('is-out'); io.unobserve(e.target); }
-  }, { rootMargin: '0px 0px -8% 0px' });
-  for (const el of below) { el.classList.add('is-out'); io.observe(el); }
-}
-
-reveal();
 mountTape(document.getElementById('tape'), { num, onLang, reducedMotion });
 gallery();
 hero();

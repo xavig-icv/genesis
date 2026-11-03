@@ -154,12 +154,11 @@ const tests = {
     const tr = trace(bytes);
     assert.strictEqual(check(bytes, tr, 1), -1, 'el traçat no coincideix amb evaluate()');
     assert.strictEqual(tr.steps, 8192);
-    // el pas on la còpia al revés és sencera, als dos peus
+    // el pas on la còpia al revés és sencera, al peu i al final de la figura («La còpia és sencera»), en les dues llengües
     const done = mirrorStep(bytes, tr);
-    const ca = html.match(/al pas <span class="mono">(\d+)<\/span> la còpia ja és sencera/), en = html.match(/by step <span class="mono">(\d+)<\/span> the copy is complete/);
-    assert.ok(ca && en, 'els peus de la cinta');
-    assert.strictEqual(Number(ca[1]), done);
-    assert.strictEqual(Number(en[1]), done);
+    const ca = [...html.matchAll(/[Aa]l pas <span class="ob-mono">(\d+)<\/span> la còpia ja és sencera/g)], en = [...html.matchAll(/[Bb]y step <span class="ob-mono">(\d+)<\/span> the copy is complete/g)];
+    assert.ok(ca.length === 2 && en.length === 2, 'el peu i el final de la cinta');
+    for (const m of [...ca, ...en]) assert.strictEqual(Number(m[1]), done);
     // A no canvia, i al final B és A al revés
     for (let k = 0; k < 64; k++) {
       assert.strictEqual(tr.final[k], bytes[k], `el byte ${k} d'A`);
@@ -226,6 +225,14 @@ const tests = {
     assert.strictEqual(r.status, 2);
     assert.match(r.stderr, /ja existeix .*entrada-2d-fosc\.jpg/);
     assert.strictEqual(readFileSync(join(dir, 'entrada-2d-fosc.jpg'), 'utf8'), 'abans');
+    // també els pòsters del naixement, a la seva carpeta
+    const dir2 = join(tmp, 'imatges-2');
+    mkdirSync(join(dir2, 'naixement'), { recursive: true });
+    writeFileSync(join(dir2, 'naixement', 'clar-6000.webp'), 'abans');
+    const r2 = images('--chrome', chrome, '--sortida', dir2);
+    assert.strictEqual(r2.status, 2);
+    assert.match(r2.stderr, /ja existeix .*clar-6000\.webp/);
+    assert.strictEqual(readFileSync(join(dir2, 'naixement', 'clar-6000.webp'), 'utf8'), 'abans');
   },
 };
 
