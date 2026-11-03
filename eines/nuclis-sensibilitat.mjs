@@ -16,8 +16,8 @@ import { createHash } from 'crypto';
 import { execSync } from 'child_process';
 import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { createFamilyTracker, compactCode } from '../fase2/families.js';
-import { PROGRAM_SIZE } from '../fase1/bff.js';
+import { createFamilyTracker } from '../fase2/families.js';
+import { PROGRAM_SIZE, KIND } from '../fase1/bff.js';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const VARIANTS = [1, 2, 3];
@@ -47,12 +47,23 @@ const out = resolve(opt['--sortida']), csvOut = out.replace(/\.json$/, '') + '.c
 if (!out.endsWith('.json')) fail('la sortida ha de ser un .json');
 for (const f of [out, csvOut]) if (existsSync(f)) fail(`${f} ja existeix: l'eina no sobreescriu res`, 1);
 
-// Les cel·les amb una tirada d'una sola instrucció (6 iguals seguides al codi compacte), una vegada per captura
-const RUN = /(.)\1{5}/;
+// Les cel·les amb una tirada d'una sola instrucció (6 iguals seguides al codi compacte), una vegada per captura. Es
+// recorren els bytes sense fer el codi compacte: les dades se salten, i cada instrucció allarga o comença la tirada
+function hasRun(soup, c) {
+  let last = -1, run = 0;
+  for (let b = c * PROGRAM_SIZE, end = b + PROGRAM_SIZE; b < end; b++) {
+    const v = soup[b];
+    if (!KIND[v]) continue;
+    run = v === last ? run + 1 : 1;
+    last = v;
+    if (run >= 6) return true;
+  }
+  return false;
+}
 function runCells(soup, n) {
   const cells = new Uint8Array(n);
   let count = 0;
-  for (let c = 0; c < n; c++) if (RUN.test(compactCode(soup, c))) { cells[c] = 1; count++; }
+  for (let c = 0; c < n; c++) if (hasRun(soup, c)) { cells[c] = 1; count++; }
   return { cells, count };
 }
 
