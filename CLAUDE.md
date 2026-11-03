@@ -108,6 +108,9 @@ Llegeix-los abans de proposar canvis.
     les N del pla), i amb registres fets amb els mòduls de la seva còpia (la SHA-256 de la línia d'inici; AUD-139, AUD-142).
   - **Els controls** són K0, L0 i X0. S4 és una variant: el codi del company s'hi pot copiar el programa (AUD-140).
   - **La cobertura de l'interval del quocient:** `node eines/densitat-cobertura.mjs`, amb recomptes sintètics.
+  - **Les ordres del càlcul,** escrites abans de calcular, són a `fase2/resultats/b1/nivell1/`: `llista.txt`, i `llista-ampliacio.txt`
+    si cal l'ampliació, amb les SHA-256 al README. Les executa `bash fase2/resultats/b1/nivell1/executa.sh LLISTA SHA-256 COMMIT`,
+    des de l'arrel d'una còpia neta. Mentre corren, cap recompte: només l'estat de l'executor.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
   captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
