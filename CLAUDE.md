@@ -99,6 +99,10 @@ Llegeix-los abans de proposar canvis.
     `416f720` rebutjava les llistes de més de 64 KB (l'acta, la incidència 1). Si cal tornar a llançar un lot, amb la mateixa còpia.
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
+- El registre de famílies, amb els trossos informatius (AUD-162): `createFamilyTracker(llavor, { minDistinct: 3 })` només fa
+  servir els trossos de codi amb almenys 3 instruccions diferents. Per defecte, 1, com sempre: el cens i les sèries no canvien.
+  La sensibilitat (exploratòria): `node eines/nuclis-sensibilitat.mjs clau|mon ...`, amb el pla, escrit abans de calcular, i
+  els resultats a `fase2/resultats/nuclis/`. No simula res.
 - B1, les ablacions de la química (`docs/pla-b1.md`), el nivell 1: `node eines/densitat.mjs --quimica C0|K0|… --distribucio
   d-mig|uniforme --llavor N --programes N --json fitxer.jsonl [--de I] [--fils F]`, i l'anàlisi, `node eines/densitat-analisi.mjs
   carpeta`. Les químiques són a `fase1/bff.js` (`CHEMISTRIES` i `evaluator`), i C0 és l'intèrpret de sempre. La prova de
