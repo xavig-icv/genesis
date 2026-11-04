@@ -329,3 +329,29 @@ Abans del GO de l'auditoria 24, per avançar feina. Les comprovacions es tornen 
     més que aquesta línia.
   - **A git,** perquè se'n pugui comprovar la SHA-256: a `incidencia-2/`, tal com és.
 - **Per no repetir-ho:** els lots que vinguin, des d'una finestra del PC que no depengui de l'aplicació.
+
+### La incidència 3: el lot del PC, aturat sense la línia final (04-11-2026)
+
+- **Què va passar:** el 04-11-2026, el lot del PC es va aturar entre les 16.55.44 i les 16.57.18, sense escriure la línia final.
+  - **Com se'n sap l'hora:** a les 16.55.44 encara va començar una branca; a les 16.57.18 en va acabar una altra, i el lot ja no
+    en va començar cap.
+  - **Les cinc que corrien** van acabar soles, completes, fins a les 17.16.00.
+  - **A les 17.32:** 533 branques completes de 540, i cap procés del lot. En quedaven 7: les sis de la incidència 2 i una que no
+    havia començat.
+- **La causa:** no se sap.
+  - **Al registre d'esdeveniments de Windows,** de les 16.50 a les 17.05, no hi ha cap error ni cap avís de memòria o de disc.
+  - **L'aplicació de Claude,** des d'on es va llançar el lot l'1-11-2026, no s'havia reiniciat des de les 14.20.
+  - **Les captures de la portada del lloc web,** amb Chrome sense finestra, van començar a les 17.06, després de l'aturada.
+- **Com es va veure:** a les 17.27, el seguiment agregat deia 533 acabats, 3 fallats i 3 en marxa, i no hi havia cap procés de
+  `sim.mjs`. La darrera línia del lot no era la de final.
+  - **Per trobar-ne l'hora,** es van mirar les dates de creació i d'última escriptura dels registres i del fitxer del lot, sense
+    els noms, i el registre d'esdeveniments de Windows.
+  - **Què s'hi va veure:** cap nom de branca, cap xifra, cap registre, ni l'ordre en què van acabar.
+- **Què es fa:** el responsable el va tornar a llançar a les 18.21.16, des d'una finestra seva de PowerShell, fora de l'aplicació,
+  amb la mateixa còpia del llançador, 6 alhora i a prioritat baixa (§7, pas 9).
+  - **Les completes:** `experiments.sh` va saltar les 533.
+  - **Les que falten:** a les 18.21.55 ja corrien les sis de la incidència 2. El seguiment agregat ho diu sense noms: 0 fallats,
+    6 en marxa i encara 539 registres. La setena començarà quan quedi lloc.
+  - **Els scripts de la incidència 2** esperen la línia final del lot, i no veuen un lot que s'atura sense escriure-la. No es van
+    aturar. Quan acabi aquest lot, el primer dels dos que ho vegi el tornarà a llançar una vegada més. Aquest lot de més trobarà
+    totes les branques completes, i acabarà sense fer-ne cap.
