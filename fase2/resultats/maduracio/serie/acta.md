@@ -316,7 +316,9 @@ Abans del GO de l'auditoria 24, per avançar feina. Les comprovacions es tornen 
   `experiments.sh` salta les branques completes i torna a fer les sis des del principi (`sim.mjs` torna a escriure el JSONL
   sencer). Les branques són deterministes: en surten els mateixos registres que sense la interrupció.
   - **Ho fa un script fora del repositori,** `rellanca-pc-incidencia-2.sh` (SHA-256
-    `ca4bb3d3b3a45b7cf36eb4c44ffb8ebd495accbff48900b939163476768a0245`), llançat el 04-11-2026 a les 01.26, a prioritat baixa.
+    `aeaa42c61608dd6c2e6d12c0abbc5c4baccf1c7f7c755318d31a773f7831cfa8`), llançat el 04-11-2026 a les 01.28, a prioritat baixa.
+  - **La primera versió** (a les 01.26, `ca4bb3d3…`) portava escrits els camins d'aquesta màquina, que no van al repositori: es va
+    aturar mentre esperava, abans de llançar res, i la nova troba el llançador a la seva mateixa carpeta. Fa el mateix.
   - **Com treballa:** espera la línia final del lot, mirant-la cada 5 minuts, i llavors torna a llançar el lot. No llegeix res
     més que aquesta línia.
   - **A git,** perquè se'n pugui comprovar la SHA-256: a `incidencia-2/`, tal com és.

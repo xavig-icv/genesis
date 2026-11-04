@@ -6,14 +6,13 @@
 # mirant-ho cada 5 minuts, i llavors torna a llançar el mateix lot (§7 del protocol, pas 9), amb la mateixa còpia corregida del
 # llançador (la incidència 1): experiments.sh salta les branques completes i torna a fer les incompletes des del principi.
 # No llegeix cap registre: només l'última línia del fitxer del lot. Es llança des de l'arrel de la còpia del commit de l'etiqueta,
-# en una finestra amagada i a prioritat baixa (els processos que llança l'hereten):
-#
-#   $p = Start-Process -FilePath 'D:\Git\bin\bash.exe' -ArgumentList '/d/abiogenesis-backup/eines-segell/maduracio/rellanca-pc-incidencia-2.sh'
-#        -WorkingDirectory 'D:\claude-origins-maduracio-serie' -WindowStyle Hidden -PassThru; $p.PriorityClass = 'BelowNormal'
+# en una finestra amagada i a prioritat baixa (els processos que llança l'hereten): Start-Process amb -WindowStyle Hidden, i la
+# prioritat BelowNormal. Ha de ser a la mateixa carpeta que la còpia corregida del llançador; els camins de la màquina són a
+# CLAUDE.local.md, que no va al repositori.
 #
 # El que fa, ho escriu a rellanca-pc-incidencia-2.log, al costat d'aquest script (fora del repositori).
 set -u
-HERE=/d/abiogenesis-backup/eines-segell/maduracio
+HERE=$(cd "$(dirname "$0")" && pwd)
 LOG="$HERE/rellanca-pc-incidencia-2.log"
 OUT=fase2/resultats/maduracio/serie/branques/lot-llista-pc.out
 say() { echo "$(date '+%d-%m-%Y %H.%M.%S') $*" >> "$LOG"; }
