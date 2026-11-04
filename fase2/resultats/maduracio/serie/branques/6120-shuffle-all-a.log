@@ -1,0 +1,20 @@
+codi=416f720  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 406120 --mixing 0 --from fase2/resultats/maduracio/serie/alicuotes/6120/shuffle-all.bin --start 8000 --epochs 16000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/maduracio/serie/branques/6120-shuffle-all-a.jsonl
+llavor=406120 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/maduracio/serie/alicuotes/6120/shuffle-all.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.831  HOE=0.363  ops/execució=251.3  parelles=75%  bytes <:4.0% ,:1.6% #61:1.5%  fragments [[[[[[[[[[[[ (0.3%)  <<<<<<<<<<<< (0.3%)  ,,,,,,,,,,,, (0.2%)  105s
+època 8200  H0=7.816  HOE=0.508  ops/execució=263.3  parelles=75%  bytes <:4.0% ,:1.7% #61:1.5%  fragments ,·<····-·[·, (0.4%)  <<<<<<<<<<<< (0.3%)  [[[[[[[[[[[[ (0.3%)  201s
+*** PRIMERA FAMÍLIA a l'època 8250 ***
+cens 8250  mostra=2048  hereditaris=2.0% (sols 2.0%, només en context 0.0%)  es repliquen=2.5% (sols 2.5%, en context 0.0%)  famílies=1  #1:2.77%(-[,<}])
+època 8300  H0=7.773  HOE=0.673  ops/execució=261.3  parelles=75%  bytes <:4.1% 0:2.0% ,:1.8%  fragments ,·<····-·[·, (0.5%)  <<<<<<<<<<<< (0.3%)  ,·[·-····<·, (0.3%)  302s
+època 8400  H0=7.702  HOE=0.831  ops/execució=254.4  parelles=75%  bytes <:4.2% 0:3.4% ,:1.9%  fragments ,·<····-·[·, (0.4%)  <<<<<<<<<<<< (0.3%)  ,,,,,,,,,,,, (0.3%)  386s
+cens 8500  mostra=2048  hereditaris=7.6% (sols 7.6%, només en context 0.0%)  es repliquen=9.6% (sols 9.6%, en context 0.0%)  famílies=1  #1:13.64%([,<}]})
+*** ESTABLIMENT DE LA VIDA a l'època 8250 (confirmat al cens 8500) ***
+època 8500  H0=7.563  HOE=1.048  ops/execució=240.9  parelles=75%  bytes 0:5.5% <:4.3% ,:2.1%  fragments <<<<<<<<<<<< (0.3%)  ,·<····-·[·, (0.3%)  >>>>>>>>>>>> (0.3%)  475s
+
+empremta del món: a25e4a8b
+
+programes diferents: 131061 de 131072
+      5  |                                                                |
+      3  |                                                                |
+      2  |               000     {     < > .  <                 [     .   |
+      2  |<  {  ,         ,  ,     [       -               [            <<|
+      2  |                                                                |
