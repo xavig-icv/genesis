@@ -24,6 +24,7 @@
     <a href="#entrada-11">Entrada 11</a>
     <a href="#entrada-12">Entrada 12</a>
     <a href="#entrada-13">Entrada 13</a>
+    <a href="#entrada-14">Entrada 14</a>
   </nav>
 
   <article id="entrada-1">
@@ -1375,6 +1376,109 @@
       </ul>
       <p><strong>Una precisió de l'auditoria 24 (01-11-2026).</strong> Als resultats diem que el placebo deixa sense aparellar "entre el 0,5 % i el 5,0 % dels zeros de cada món". És dels zeros que canvia <code>zeros-data</code>, els de l'abast, com diu l'acta. De tots els zeros del món, és del 0,4 al 3,0 %. Ho va trobar l'auditor 1, que havia proposat la frase a l'auditoria 23, i l'error anava cap al costat prudent: feia semblar el placebo menys aparellat del que és. Corregit al README i al README.en.</p>
     </div>
+  </article>
+
+  <article id="entrada-14">
+    <header>
+      <p class="date">Entrada 14 · 4 de novembre de 2026</p>
+      <h1>La maduració de la sopa: amb la sopa envellida, la vida hi neix més sovint</h1>
+      <p class="lede">En 150 mons quiets que arriben a l'època 8.000 sense vida, l'hem esperada 8.000 èpoques més, de tres maneres, des de la mateixa captura i amb el mateix atzar: amb la sopa tal com és, amb els seus bytes barrejats i amb una sopa nova. Amb la sopa envellida, la vida s'hi estableix en 64 branques de 300; amb una de nova, en 40, i amb la sopa envellida barrejada, en 82. Les dues proves preregistrades ho confirmen. Són efectes totals, en aquesta cohort de mons: no diuen per quina via.</p>
+    </header>
+
+    <h2>Què volíem saber</h2>
+    <p>La pista era a les dades de la llei 2, mirades després (AUD-64): un món quiet que arriba sense vida a l'època 8.000 s'hi estableix en les 8.000 èpoques següents el doble de sovint que un món nou, el 22 % contra el 10 %. El pilot (entrada 12) apuntava al mateix, sense cap conclusió. La pregunta: en un món quiet que arriba sense vida a l'època 8.000, la vida s'hi estableix més sovint si es conserva la sopa envellida que si es canvia per una sopa nova? I si se'n conserva només l'histograma de bytes, barrejat?</p>
+    <p>Són mons nous: els 150 primers, de les llavors 6001 a 6186, que arriben a l'època 8.000 sense establiment i sense cap cel·la hereditària a l'escaneig d'aquella època. Des de la captura de l'època 8.000, cada món continua de tres maneres, amb les mateixes dues llavors de continuació:</p>
+    <ul>
+      <li><code>continue</code>: la sopa tal com és;</li>
+      <li><code>shuffle-all</code>: es barregen tots els bytes del món, i només se'n conserva l'histograma;</li>
+      <li><code>reinit</code>: una sopa nova a l'atzar, la referència de totes dues proves.</li>
+    </ul>
+    <p><strong>La mesura</strong> és l'establiment de la vida, amb el criteri de la llei 2, en les 8.000 èpoques següents. Hi havia dues proves preregistrades: <code>continue</code> contra <code>reinit</code>, i <code>shuffle-all</code> contra <code>reinit</code>. Cadascuna és una permutació de signes exacta sobre la diferència d'establiments de cada món, amb la correcció de Holm. Els llindars són calibrats perquè la prova sigui vàlida encara que un braç concentri els establiments en pocs mons i l'altre els reparteixi (<code>docs/protocol-maduracio.md</code>).</p>
+    <div class="params">
+      <div class="param"><b>150</b><span>mons quiets, sense vida a l'època 8.000</span></div>
+      <div class="param"><b>900</b><span>branques: 3 braços i 2 llavors per món</span></div>
+      <div class="param"><b>8.000</b><span>èpoques per branca, com a molt</span></div>
+      <div class="param"><b>707 h</b><span>de càlcul, en 75 h, a dues màquines</span></div>
+    </div>
+
+    <h2>El que surt</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Braç</th><th style="text-align:left">Establiments</th><th style="text-align:left">Ritme</th><th style="text-align:left">IC del 95 %, Clopper-Pearson</th><th style="text-align:left">IC del 95 %, bootstrap per món</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left"><code>continue</code></td><td style="text-align:left">64 de 300</td><td style="text-align:left">21,3 %</td><td style="text-align:left">16,8–26,4 %</td><td style="text-align:left">16,7–26,0 %</td></tr>
+          <tr><td style="text-align:left"><code>shuffle-all</code></td><td style="text-align:left">82 de 300</td><td style="text-align:left">27,3 %</td><td style="text-align:left">22,4–32,8 %</td><td style="text-align:left">22,3–32,7 %</td></tr>
+          <tr><td style="text-align:left"><code>reinit</code></td><td style="text-align:left">40 de 300</td><td style="text-align:left">13,3 %</td><td style="text-align:left">9,7–17,7 %</td><td style="text-align:left">9,3–17,3 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">L'interval de Clopper-Pearson suposa que les branques són independents; el del bootstrap per món (10.000 remostres), no. Els valors són els de la decisió (<code>decisio-sortida.txt</code>).</p>
+
+    <p><strong>La primera prova, amb la sopa envellida: es confirma.</strong> A la cohort (mons quiets sense vida a l'època 8.000, sense cap cel·la hereditària), la vida s'hi estableix més sovint en les 8.000 èpoques següents si es conserva la sopa envellida que amb una sopa nova (64 de 300 branques contra 40; <em>p</em> = 0,0067, llindar calibrat de Holm 0,008684). És l'efecte total de conservar la sopa d'aquests mons, no d'un mecanisme concret.</p>
+    <ul>
+      <li><strong>Món a món:</strong> més establiments amb la sopa envellida a 44 mons, menys a 23, i els mateixos a 83. La diferència dels ritmes és de +8,0 punts, i el seu interval del bootstrap per món va de +2,0 a +14,0.</li>
+      <li><strong>Dins de la cohort, és causal:</strong> els tres braços d'un món parteixen de la mateixa captura i tenen les mateixes llavors. Només els separa la transformació.</li>
+      <li><strong>"Sense cap cel·la hereditària"</strong> vol dir sense cap de detectada per l'escaneig de l'època 8.000. Quan es va repetir l'escaneig amb dues llavors més, a l'auditoria 23, en un 9 % dels casos se'n veia alguna de marginal als mons inclosos (AUD-136).</li>
+    </ul>
+
+    <p><strong>La segona prova, amb la sopa envellida barrejada: es confirma.</strong> A la cohort (mons quiets sense vida a l'època 8.000, sense cap cel·la hereditària), la vida s'hi estableix més sovint en les 8.000 èpoques següents si es conserva l'histograma de bytes de la sopa envellida, barrejat, que amb una sopa nova (82 de 300 branques contra 40; <em>p</em> = 3,05·10⁻⁵, llindar calibrat de Holm 0,009537). Inclou el que la barreja crea a l'instant, com els replicadors del començament: no aïlla la composició.</p>
+    <ul>
+      <li><strong>Món a món:</strong> 54 mons a favor, 20 en contra i 76 iguals. La diferència dels ritmes és de +14,0 punts, de +7,7 a +20,3.</li>
+      <li><strong>El que crea la barreja a l'instant:</strong> la sopa envellida té més bytes d'instrucció que una de nova (AUD-122), i barrejar-la n'escampa les instruccions. La sopa barrejada comença amb alguna cel·la hereditària als 150 mons (1.025 en total, i 99 de soles, a 77 mons). La sopa nova, a 49 mons (62 cel·les). La sopa envellida sense barrejar, a cap, perquè la cohort ho demana.</li>
+    </ul>
+    <p>Totes dues proves es rebutgen ja al primer pas de Holm. La família, amb les dues, és al 2,5 %.</p>
+
+    <h2>El que s'hi veu, sense provar-ho</h2>
+    <ul>
+      <li><strong>La sopa envellida, barrejada o no.</strong> Amb la sopa tal com és, 6,0 punts menys que amb la barrejada, i l'interval del bootstrap per món va de −13,0 a +0,7. Amb la sopa tal com és, la vida s'estableix més a 30 mons, i menys a 45. No hi ha cap prova ni cap afirmació d'equivalència (AUD-127): no diu que l'estructura de la sopa no hi afegeixi res.</li>
+      <li><strong>Segons com comença el braç.</strong> Amb la sopa barrejada, la vida s'estableix en 40 de 154 branques (26,0 %) als mons que començaven amb alguna cel·la hereditària sola, i en 42 de 146 (28,8 %) als altres. Amb la sopa nova, en 5 de 32 (15,6 %) i en 35 de 268 (13,1 %). És una partició dels mons tal com són, no un efecte.</li>
+      <li><strong>El temps.</strong> Comptat des de l'època 8.000, el primer cens amb algun hereditari arriba, de mediana, a les 2.750 èpoques amb la sopa barrejada (a 106 de 300 branques), a les 4.125 amb l'envellida (78) i a les 4.625 amb la nova (58). De les branques establertes, la mediana de l'establiment és de 3.000, 4.625 i 4.875 èpoques. Només compta les branques establertes: no diu que un braç sigui més ràpid. La mitjana restringida a les 8.000 èpoques (la RMST), amb totes les branques, és de 6.738, 7.233 i 7.563 èpoques.</li>
+      <li><strong>Les dues llavors d'un món</strong> s'assemblen poc: la concordança és de <em>rho</em> = 0,03. És un dels dos valors amb què es va calcular la potència.</li>
+      <li><strong>Comparat amb el que esperàvem.</strong> La potència suposava el 27 % amb la sopa envellida i amb la barrejada, i el 13,5 % amb la nova. La nova i la barrejada hi són (13,3 % i 27,3 %); l'envellida, més avall (21,3 %). Al pilot, de 22 mons, eren el 27 %, el 27 % i el 18 %.</li>
+      <li><strong>La pista de la llei 2</strong> era el 22 % contra el 10 %, amb mons diferents. Aquí, comparant cada món amb ell mateix, és el 21,3 % contra el 13,3 %.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>Conservar la sopa d'aquests mons hi fa néixer la vida més sovint que començar de nou.</strong> La sopa d'un món quiet que ha arribat a l'època 8.000 sense vida, tal com és, hi fa néixer la vida en les 8.000 èpoques següents més sovint que una sopa nova. És l'efecte total de conservar-la, i la prova no en diu el mecanisme.</li>
+      <li><strong>La composició, també, amb el que crea la barreja.</strong> Només amb l'histograma de bytes de la sopa envellida, barrejat, la vida neix més sovint que amb una sopa nova. Però barrejar-la ja crea replicadors al començament, i la prova els inclou.</li>
+      <li><strong>No és una llei de tots els mons, ni de l'edat en general.</strong> Val per a mons quiets que arriben a l'època 8.000 sense vida i sense cap cel·la hereditària detectada, en aquest món de 512 × 256 i amb aquesta química.</li>
+      <li><strong>Què no diem:</strong> que l'estructura de la sopa no hi afegeixi res, ni que la composició expliqui l'efecte de l'edat.</li>
+    </ul>
+    <p><strong>Els límits</strong> (<code>docs/protocol-maduracio.md</code>, §8):</p>
+    <ul>
+      <li>Les dues proves es van triar després del pilot. La pista de l'edat era d'abans (AUD-64), i la de la composició, de l'AUD-122.</li>
+      <li>La cohort és la d'un sol escaneig de l'època 8.000, i la condició la tria: l'afirmació és per a la intervenció de conservar o substituir la sopa d'aquests mons.</li>
+      <li>La validesa dels llindars calibrats suposa que els mons són independents, i la certificació és en coma flotant, amb un marge.</li>
+      <li>Les branques no desen captures: qualsevol anàlisi que en necessiti les ha de regenerar, amb l'ordre de cada branca.</li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>El preregistre:</strong> l'etiqueta <code>preregistre-maduracio</code>, sobre el commit <code>416f720</code>, amb les SHA-256 del manifest, del protocol, dels programes, i de la taula dels llindars amb el seu certificat. Hi van donar el vistiplau els dos auditors (auditories 19 a 24).</li>
+      <li><strong>El segell:</strong> el bloc 974.134 de Bitcoin el va ancorar 75 minuts abans de la primera branca (<code>docs/preregistre-maduracio/</code>).</li>
+      <li><strong>L'execució:</strong> de l'1 al 4 de novembre, 6 branques alhora al PC i 4 a la màquina virtual, amb el codi de l'etiqueta.
+        <ul>
+          <li><strong>Tres incidències, a l'acta:</strong> el llançador de l'etiqueta rebutjava les llistes de la sèrie, i es va fer servir una còpia corregida; una actualització de l'aplicació de Claude va aturar sis branques del PC, que es van tornar a fer des del principi; i el lot del PC es va aturar sense la línia final, i es va tornar a llançar. Les branques són deterministes: les que es tornen a fer donen el mateix registre.</li>
+          <li>Al final, cap branca no havia fallat. Durant la sèrie no es va mirar cap resultat, només el recompte de branques acabades.</li>
+        </ul>
+      </li>
+      <li><strong>La decisió:</strong> el 04-11-2026, amb <code>node fase2/maduracio-confirmacio.mjs --decideix</code>, des d'una còpia idèntica a l'etiqueta.
+        <ul>
+          <li>Abans, es van tornar a comprovar les 13 SHA-256 de l'etiqueta i les captures, a totes dues màquines.</li>
+          <li>La sortida es va desar tal com va sortir, a <code>decisio-sortida.txt</code>.</li>
+          <li>Un script independent, que no fa servir cap funció del projecte, en dona els mateixos establiments i els mateixos recomptes exactes de les dues proves.</li>
+        </ul>
+      </li>
+      <li><strong>Les dades:</strong> a <code>fase2/resultats/maduracio/serie/</code>, amb l'acta, el manifest i les sumes SHA-256 dels registres. Les captures no van a git: es regeneren exactament amb el commit i les llavors.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>L'auditoria:</strong> els dos auditors en revisaran l'execució, la decisió i com la comuniquem.</li>
+      <li><strong>B1, les ablacions de la química</strong> (<code>docs/pla-b1.md</code>): el nivell 1 es calcula ara, amb les ordres escrites abans de calcular.</li>
+      <li><strong>El lloc web</strong> en mostrarà el resultat, amb els altres.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

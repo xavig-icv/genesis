@@ -199,24 +199,35 @@ engegar cada món des del mateix instant, de quatre maneres i amb el mateix atza
 
 Vegeu l'[entrada 13](quadern/index.html#entrada-13).
 
+### La quarta sèrie preregistrada: la maduració de la sopa
+
+En un món quiet que arriba sense vida a l'època 8.000, la vida s'hi estableix més sovint si es conserva la sopa
+envellida que si es canvia per una de nova? En 150 mons nous, cada món ha continuat 8.000 èpoques més de tres maneres,
+des de la mateixa captura i amb el mateix atzar: 900 branques ([protocol](docs/protocol-maduracio.md)).
+- **Amb la sopa envellida, la vida s'hi estableix més sovint que amb una sopa nova:** confirmat, 64 branques de 300
+  contra 40 (*p* = 0,007, amb els llindars de Holm calibrats). És l'efecte total de conservar la sopa d'aquests mons, no
+  d'un mecanisme concret.
+- **Amb l'histograma de bytes de la sopa envellida, barrejat, també:** confirmat, 82 contra 40 (*p* = 0,00003). Inclou
+  els replicadors que la barreja crea a l'instant: no aïlla la composició.
+- **La cohort:** mons quiets que arriben a l'època 8.000 sense vida i sense cap cel·la hereditària detectada. No és una
+  llei de tots els mons, ni de l'edat en general.
+- **Entre la sopa envellida i la barrejada** no hi ha cap prova: el 21,3 % contra el 27,3 %, sense cap afirmació
+  d'equivalència.
+
+Vegeu l'[entrada 14](quadern/index.html#entrada-14).
+
 ### El que estudiem ara
 
-- **La maduració de la sopa abans que hi aparegui la vida,** la línia que vam triar després de l'auditoria 14:
-  branques des d'una mateixa captura, que continuen la sopa o en barregen els bytes.
-  - **El pilot, fet:** amb 22 mons, la vida s'estableix en el 27 % de les branques que continuen tal com són, i en el
-    mateix 27 % quan es barregen tots els bytes del món. És un pilot, sense cap conclusió
-    ([entrada 12](quadern/index.html#entrada-12)).
-  - **La sèrie preregistrada,** amb 150 mons nous ([protocol](docs/protocol-maduracio.md)): l'envelliment dels mons
-    corre des del 29-10-2026, i el protocol és a l'auditoria.
+- **Els ingredients de la química:** treure-li instruccions o capacitats per saber quines calen. El primer nivell és
+  el que ve ara ([pla](docs/pla-b1.md)).
 - **La mida del món,** començant pels mons petits.
-- **Els ingredients de la química:** treure-li instruccions o capacitats per saber quines calen.
 - **Un temps que canvia:** un corrent que alterna la calma i el temporal.
 
 ## Com es treballa
 
 - **Preregistre.** Les sèries confirmatòries tenen un protocol escrit abans de començar
-  ([protocol de la llei 2](docs/protocol-estadistic.md), [de B2](docs/protocol-b2.md) i
-  [dels zeros](docs/protocol-zeros.md)). El programa que
+  ([protocol de la llei 2](docs/protocol-estadistic.md), [de B2](docs/protocol-b2.md),
+  [dels zeros](docs/protocol-zeros.md) i [de la maduració](docs/protocol-maduracio.md)). El programa que
   decideix només ho fa des d'una còpia idèntica a l'etiqueta de git del preregistre.
 - **Dos auditors, tots dos d'IA.**
   - **Què revisen:** a cada iteració, dos models revisen el codi, els mètodes i els resultats, en sessions
@@ -254,6 +265,11 @@ Vegeu l'[entrada 13](quadern/index.html#entrada-13).
   - **Què demostra Bitcoin:** que l'etiqueta existia quan es va minar el bloc 973.367 (07:43:35 UTC del
     27-10-2026), 51 minuts abans que comencés la primera branca. Aquesta vegada es va esperar l'ancoratge abans
     de llançar.
+  - **El que no demostra:** que ningú no va mirar cap resultat. Ho diu l'acta.
+- **El preregistre de la sèrie de la maduració** és l'etiqueta `preregistre-maduracio`, amb un segell
+  d'OpenTimestamps ancorat a Bitcoin ([`docs/preregistre-maduracio/`](docs/preregistre-maduracio/)).
+  - **Què demostra Bitcoin:** que l'etiqueta existia quan es va minar el bloc 974.134 (14:21:50 UTC de
+    l'1-11-2026), 75 minuts abans que comencés la primera branca. També es va esperar l'ancoratge abans de llançar.
   - **El que no demostra:** que ningú no va mirar cap resultat. Ho diu l'acta.
 - **Com citar-ho:** [`CITATION.cff`](CITATION.cff). **Com participar-hi:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 

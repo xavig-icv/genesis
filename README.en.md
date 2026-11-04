@@ -124,23 +124,33 @@ same randomness: 132 branches ([protocol](docs/protocol-zeros.md), in Catalan).
 
 See notebook entry 13, in Catalan.
 
+**The fourth preregistered series: how the soup matures.** In a quiet world that reaches epoch 8,000 without
+life, does life become established more often if the aged soup is kept than if it is replaced by a fresh one? In
+150 new worlds, each world continued for 8,000 more epochs in three ways, from the same snapshot and with the same
+randomness: 900 branches ([protocol](docs/protocol-maduracio.md), in Catalan).
+- **With the aged soup, life becomes established more often than with a fresh soup:** confirmed, 64 branches of
+  300 against 40 (p = 0.007, with calibrated Holm thresholds). It is the total effect of keeping the soup of these
+  worlds, not of a specific mechanism.
+- **With the aged soup's byte histogram, shuffled, too:** confirmed, 82 against 40 (p = 0.00003). It includes the
+  replicators that the shuffle creates at once: it does not isolate the composition.
+- **The cohort:** quiet worlds that reach epoch 8,000 without life and without any detected heritable cell. It is
+  not a law of all worlds, nor of age in general.
+- **Between the aged soup and the shuffled one** there is no test: 21.3% against 27.3%, with no claim of
+  equivalence.
+
+See notebook entry 14, in Catalan.
+
 **What we study now:**
-- **How the soup matures before life appears,** the line chosen after audit 14: branches from the same
-  snapshot that either continue the soup or shuffle its bytes.
-  - **The pilot, done:** with 22 worlds, life becomes established in 27 % of the branches that continue as they
-    are, and in the same 27 % when all the bytes of the world are shuffled. It is a pilot, with no conclusion
-    (notebook entry 12, in Catalan).
-  - **The preregistered series,** with 150 new worlds ([protocol](docs/protocol-maduracio.md), in Catalan): the
-    worlds have been aging since 29 October 2026, and the protocol is under audit.
+- **Chemistry ablations:** removing instructions or capabilities to learn which ones are needed. The first level
+  comes next ([plan](docs/pla-b1.md), in Catalan).
 - **World size.**
-- **Chemistry ablations.**
 - **A changing weather,** with a current that alternates calm and storm.
 
 ## How we work
 
 - **Preregistration.** Confirmatory series have a protocol written before starting
-  ([law-2 protocol](docs/protocol-estadistic.md), [B2 protocol](docs/protocol-b2.md) and
-  [zeros protocol](docs/protocol-zeros.md), in Catalan). The
+  ([law-2 protocol](docs/protocol-estadistic.md), [B2 protocol](docs/protocol-b2.md),
+  [zeros protocol](docs/protocol-zeros.md) and [maturation protocol](docs/protocol-maduracio.md), in Catalan). The
   deciding program only decides from a copy identical to the git tag of the preregistration.
 - **Two auditors, both AI.**
   - **What they do:** at each iteration, two models review the code, the methods and the results, in
@@ -176,6 +186,11 @@ See notebook entry 13, in Catalan.
   in Bitcoin ([`docs/preregistre-zeros/`](docs/preregistre-zeros/), in Catalan).
   - **What Bitcoin proves:** that the tag existed when block 973,367 was mined (07:43:35 UTC on 27 October
     2026), 51 minutes before the first branch started. This time we waited for the anchor before launching.
+  - **What it does not prove:** that nobody looked at any result. That is stated in the run log.
+- **The maturation-series preregistration** is the git tag `preregistre-maduracio`, with an OpenTimestamps proof
+  anchored in Bitcoin ([`docs/preregistre-maduracio/`](docs/preregistre-maduracio/), in Catalan).
+  - **What Bitcoin proves:** that the tag existed when block 974,134 was mined (14:21:50 UTC on 1 November 2026),
+    75 minutes before the first branch started. Again, we waited for the anchor before launching.
   - **What it does not prove:** that nobody looked at any result. That is stated in the run log.
 - **How to cite it:** [`CITATION.cff`](CITATION.cff). **How to take part:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
