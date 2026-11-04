@@ -1,5 +1,5 @@
-/* La portada amb l'Observatori (l'encàrrec 2): el que és propi d'aquesta pàgina, sobre obs.css, que és el fitxer del sistema
-   tal com el va lliurar el disseny. La capçalera i el seu planeta en totes les amplades (els prototips eren de 1.440 i 390
+/* La portada amb l'Observatori (l'encàrrec 2): el que és propi d'aquesta pàgina, sobre obs.css, que és el sistema (l'escala de
+   mides i d'espais, i les seccions). La capçalera i el seu planeta en totes les amplades (els prototips eren de 1.440 i 390
    píxels), les imatges de cada tema, les entrades i la llum dels talls del naixement. */
 
 /* El fons de la pàgina, també fora de .ob (el de --o-space a cada tema) */
@@ -25,12 +25,11 @@ body.ob { margin: 0; min-height: 100vh; }
 html:not(.js) .ob .js-only { display: none !important; }
 .ob [hidden] { display: none !important; }
 
-/* ───────── Acte 1 · la capçalera i el planeta ───────── */
-.ob .ob-hero { grid-template-columns: minmax(0, 590px) minmax(0, 1fr); column-gap: 24px; }
-.ob .ob-hero__lede { margin-top: 28px; max-width: 31em; }
-.ob .ob-hero__more { margin: 14px 0 0; }
-.ob .ob-hero__stage { display: flex; justify-content: center; align-items: flex-start; padding: 18px 0 150px; }
-.ob .ob-hero__frame { position: relative; width: min(100%, 720px); aspect-ratio: 720 / 708; }
+/* ───────── La capçalera i el planeta ───────── */
+.ob .ob-hero__lede { margin-top: var(--o-s5); }
+.ob .ob-hero__more { margin: var(--o-s3) 0 0; }
+.ob .ob-hero__stage { display: flex; justify-content: center; align-items: center; padding: var(--o-s7) 0 0; }
+.ob .ob-hero__frame { position: relative; width: min(100%, 600px); aspect-ratio: 720 / 708; }
 .ob .ob-hero__frame > .ob-brk.tl { left: 0; top: 0; }
 .ob .ob-hero__frame > .ob-brk.tr { right: 0; top: 0; }
 .ob .ob-hero__frame > .ob-brk.bl { left: 0; bottom: 0; }
@@ -55,37 +54,31 @@ html:not(.js) .ob .js-only { display: none !important; }
 /* el cel: les estrelles les posa portada.js (un patró fix), i només es veuen al tema fosc (--o-stars) */
 .ob .ob-hero > .ob-sky { z-index: 0; }
 
-/* el cronoscopi del naixement */
-.ob .ob-hero__chrono { z-index: 3; }
+/* el cronoscopi del naixement: el botó, al mig de les xifres de l'època */
 .ob .ob-hero .ob-chrono { align-items: flex-start; }
-.ob .ob-hero .ob-chrono > .ob-iconbtn { margin-top: 10px; }
+.ob .ob-hero .ob-chrono > .ob-iconbtn { margin-top: 17px; }
 .ob .ob-hero .ob-chrono__ep { width: 152px; }
-.ob .ob-chrono__digits { height: 42px; }
-.ob .ob-hero__scale { flex: 1 1 auto; min-width: 0; max-width: 682px; margin-top: 4px; }
+.ob .ob-chrono__digits { height: 40px; }
+.ob .ob-hero__scale { flex: 1 1 auto; min-width: 0; max-width: 682px; margin-top: 6px; }
 .ob .ob-hero .ob-chrono__cap { flex: 0 1 360px; min-width: 0; }
-.ob .ob-chrono__again { margin-top: 10px; }
+.ob .ob-chrono__again { margin-top: var(--o-s3); }
 
-/* entre el mòbil i la pantalla gran: dues columnes iguals, i el cronoscopi sota */
+/* entre el mòbil i la pantalla gran: dues columnes iguals, i el subtítol sota l'escala */
 @container ob (max-width: 1180px) and (min-width: 641px) {
-  /* (els titulars, directament: la consulta de contenidor no pot canviar les fitxes del mateix contenidor, body.ob) */
-  .ob .ob-d1 { font-size: 72px; }
-  .ob .ob-d2 { font-size: 52px; }
-  .ob .ob-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 0; }
-  .ob .ob-hero__text { padding: 40px 0 32px; }
-  .ob .ob-hero__stage { padding: 32px 0; align-items: center; }
-  .ob .ob-hero__chrono { position: static; grid-column: 1 / -1; padding-bottom: 32px; }
+  .ob .ob-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ob .ob-hero__text { padding: var(--o-s7) 0; }
   .ob .ob-hero .ob-chrono { flex-wrap: wrap; row-gap: 14px; }
   .ob .ob-hero .ob-chrono__cap { flex: 1 1 100%; }
 }
 /* al mòbil: el planeta primer, després el cronoscopi i el text */
 @container ob (max-width: 640px) {
   .ob .ob-hero { display: flex; flex-direction: column; }
-  .ob .ob-hero__stage { order: -2; padding: 16px 0 0; }
-  .ob .ob-hero__chrono { order: -1; }
+  .ob .ob-hero__stage { order: -2; padding: var(--o-s4) 0 0; }
+  .ob .ob-hero__chrono { order: -1; padding: var(--o-s4) 0 0; }
   .ob .ob-hero__hud.is-l { left: 24px; }
   .ob .ob-hero__hud.is-r { right: 24px; }
   .ob .ob-hero .ob-chrono { flex-wrap: wrap; gap: 12px 14px; }
-  .ob .ob-hero .ob-chrono > .ob-iconbtn { margin-top: 4px; }
+  .ob .ob-hero .ob-chrono > .ob-iconbtn { margin-top: 12px; }
   .ob .ob-hero .ob-chrono__ep { width: auto; min-width: 96px; }
   .ob .ob-chrono__digits { font-size: 32px; height: 32px; }
   .ob .ob-hero__scale { flex: 1 1 140px; }
@@ -93,29 +86,20 @@ html:not(.js) .ob .js-only { display: none !important; }
   .ob .ob-hero .ob-chrono__cap { flex: 1 1 100%; }
 }
 
-/* ───────── Acte 2 · la cinta ───────── */
-.ob .ob-tape-panel { margin-top: 48px; padding: 22px 24px 24px; }
-.ob .ob-tape__caption { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--o-line); color: var(--o-ink-2); }
-.ob .ob-life { margin-top: 96px; }
-.ob .ob-life > .ob-hud { margin: 0 0 14px; }
-.ob .ob-life .ob-defs { margin-top: 28px; }
-@container ob (max-width: 640px) {
-  .ob .ob-tape-panel { padding: 16px 14px 18px; }
-  .ob .ob-life { margin-top: 64px; }
-}
+/* ───────── La cinta ───────── */
+.ob .ob-tape-panel { padding: var(--o-s5); }
+.ob .ob-tape__caption { margin-top: var(--o-s5); padding-top: var(--o-s4); border-top: 1px solid var(--o-line); color: var(--o-ink-2); }
+.ob .ob-tape__caption > span { display: block; max-width: 90ch; }
+@container ob (max-width: 640px) { .ob .ob-tape-panel { padding: var(--o-s4) 14px; } }
 
-/* ───────── Acte 3 · les regles i la química ───────── */
-.ob .ob-chem { margin-top: 120px; }
-.ob .ob-specimens { position: relative; margin-top: 56px; }
+/* ───────── La química ───────── */
+.ob .ob-specimens { position: relative; }
 /* un sol llenç sobre tots els pous: cada sòlid es dibuixa al centre del seu pou */
 .ob .ob-specimens > canvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
-.ob .ob-chem__note { margin-top: 16px; }
-@container ob (max-width: 640px) {
-  .ob .ob-chem { margin-top: 72px; }
-  .ob .ob-specimens { margin-top: 32px; }
-}
+/* la nota va amb els espècimens: més a prop que la distància entre blocs */
+.ob.site .ob-act > .ob-chem__note { margin-top: var(--o-s4); }
 
-/* ───────── Acte 5 · el laboratori ───────── */
+/* ───────── El laboratori ───────── */
 .ob .ob-window__media > img { display: none; }
 .ob .ob-window__media > img.when-dark { display: block; }
 :root[data-theme="light"] .ob .ob-window__media > img.when-dark { display: none; }
@@ -124,16 +108,8 @@ html:not(.js) .ob .js-only { display: none !important; }
   :root:not([data-theme="dark"]) .ob .ob-window__media > img.when-dark { display: none; }
   :root:not([data-theme="dark"]) .ob .ob-window__media > img.when-light { display: block; }
 }
-.ob .ob-windows { margin-top: 56px; }
-@container ob (max-width: 640px) { .ob .ob-windows { margin-top: 32px; } }
 /* la lectura sobre la imatge, sempre llegible: amb el fons de l'espai */
 .ob .ob-window__hud { padding: 4px 6px; background: var(--o-space); border-radius: var(--o-r1); }
-
-/* ───────── Estat i límits ───────── */
-.ob .ob-limits .ob-act__head { align-items: start; }
-.ob .ob-limits .ob-act__head > .ob-display { grid-column: 1 / span 4; }
-.ob .ob-limits__body { grid-column: 6 / span 7; }
-@container ob (max-width: 640px) { .ob .ob-limits__body { margin-top: 18px; } }
 
 /* ───────── Les entrades, una vegada ───────── */
 /* Només s'amaga el que encara és sota la pantalla quan la pàgina ja corre (portada.js hi posa .is-out): sense JavaScript, o

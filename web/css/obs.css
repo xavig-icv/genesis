@@ -10,13 +10,15 @@
   --o-font-display: "Archivo", "Inter", ui-sans-serif, system-ui, sans-serif;
   --o-font-text: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --o-font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --o-display-1: 96px;
-  --o-display-2: 64px;
+  /* l'escala (la valoració del responsable, 04-11-2026): dos titulars, i un sol valor per a cada paper */
+  --o-display-1: clamp(44px, 5.2vw, 80px);
+  --o-display-2: clamp(34px, 3.4vw, 50px);
   --o-display-3: 40px;
+  --o-metric: 40px;
   --o-title: 22px;
   --o-body-l: 18px;
   --o-body: 16px;
-  --o-small: 13.5px;
+  --o-small: 14px;
   --o-hud: 11px;
   --o-s1: 4px;
   --o-s2: 8px;
@@ -27,8 +29,13 @@
   --o-s7: 48px;
   --o-s8: 64px;
   --o-s9: 96px;
-  --o-s10: 160px;
+  --o-s10: 128px;
+  /* la distància entre seccions, i una sola columna de contingut, centrada a les pantalles grans: totes les seccions
+     comencen al mateix marge (--o-pad) */
+  --o-section: var(--o-s10);
   --o-page: 64px;
+  --o-maxw: 1312px;
+  --o-pad: max(var(--o-page), calc((100% - var(--o-maxw)) / 2));
   --o-gutter: 24px;
   --o-gap-tray: 12px;
   --o-r1: 2px;
@@ -338,11 +345,15 @@
 .ob .ob-d1 { font-size: var(--o-display-1); }
 .ob .ob-d2 { font-size: var(--o-display-2); line-height: .92; }
 .ob .ob-d3 { font-size: var(--o-display-3); line-height: .95; }
-.ob .ob-title { margin: 0; font-family: var(--o-font-display); font-stretch: 100%; font-weight: 650; font-size: var(--o-title); line-height: 1.2; letter-spacing: .005em; }
-.ob .ob-lede { margin: 0; font-size: var(--o-body-l); line-height: 1.55; color: var(--o-ink-2); }
-.ob .ob-text { margin: 0; font-size: var(--o-body); line-height: 1.62; color: var(--o-ink-2); }
+/* Els títols de tots els blocs (h3): Archivo, en minúscules */
+.ob .ob-title { margin: 0; font-family: var(--o-font-display); font-stretch: 100%; font-weight: 650; font-size: var(--o-title); line-height: 1.2; letter-spacing: .005em; text-wrap: balance; }
+/* El text: l'entradeta de cada secció, el cos i el text petit (peus, notes, etiquetes), amb línies de 60 a 75 caràcters */
+.ob .ob-lede { margin: 0; max-width: 60ch; font-size: var(--o-body-l); line-height: 1.55; color: var(--o-ink-2); text-wrap: pretty; }
+.ob .ob-text { margin: 0; font-size: var(--o-body); line-height: 1.62; color: var(--o-ink-2); text-wrap: pretty; }
 .ob .ob-text em, .ob .ob-lede em { font-style: italic; color: var(--o-ink); }
-.ob .ob-small { margin: 0; font-size: var(--o-small); line-height: 1.5; color: var(--o-ink-3); }
+.ob .ob-small { margin: 0; font-size: var(--o-small); line-height: 1.5; color: var(--o-ink-3); text-wrap: pretty; }
+/* Les xifres dins del text: el tipus del text, amb les xifres d'amplada fixa (el mono és per a les lectures) */
+.ob .ob-num { font-variant-numeric: tabular-nums; }
 /* Els textos en les dues llengües: només es veu la de la pàgina */
 html[lang="ca"] .ob [lang="en"]:not(html), html[lang="en"] .ob [lang="ca"]:not(html) { display: none !important; }
 
@@ -353,7 +364,7 @@ html[lang="ca"] .ob [lang="en"]:not(html), html[lang="en"] .ob [lang="ca"]:not(h
   height: var(--h); padding: 0 22px;
   border: 1px solid var(--o-line-2); border-radius: var(--o-r1);
   background: transparent; color: var(--o-ink);
-  font-family: var(--o-font-display); font-stretch: 108%; font-weight: 620; font-size: 13.5px; letter-spacing: .08em; text-transform: uppercase;
+  font-family: var(--o-font-display); font-stretch: 112%; font-weight: 620; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase;
   text-decoration: none; white-space: nowrap; cursor: pointer;
   transition: background-color var(--t-instant) var(--ease-out), border-color var(--t-instant) var(--ease-out), color var(--t-instant) var(--ease-out);
 }
@@ -362,9 +373,9 @@ html[lang="ca"] .ob [lang="en"]:not(html), html[lang="en"] .ob [lang="ca"]:not(h
 .ob .ob-btn[disabled], .ob .ob-btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; transform: none; }
 .ob .ob-btn.is-primary { background: var(--o-ink); border-color: var(--o-ink); color: var(--o-on-ink); }
 .ob .ob-btn.is-primary:hover { background: var(--o-ink-2); border-color: var(--o-ink-2); }
-.ob .ob-btn.is-link { height: auto; min-height: 44px; padding: 0 2px; border-color: transparent; color: var(--o-ink-2); text-decoration: underline; text-decoration-color: var(--o-line-2); text-underline-offset: 6px; }
+.ob .ob-btn.is-link { height: auto; min-height: 44px; padding: 0; border-color: transparent; color: var(--o-ink-2); text-decoration: underline; text-decoration-color: var(--o-line-2); text-underline-offset: 6px; }
 .ob .ob-btn.is-link:hover { background: none; color: var(--o-ink); text-decoration-color: var(--o-ink); }
-.ob .ob-btn.is-sm { --h: var(--o-h-control); padding: 0 14px; font-size: 12px; }
+.ob .ob-btn.is-sm { --h: var(--o-h-control); padding: 0 14px; }
 .ob .ob-iconbtn {
   flex: none; width: 44px; height: 44px; display: grid; place-items: center;
   border: 1px solid var(--o-line-2); border-radius: 50%; background: var(--o-space-2); color: var(--o-ink); cursor: pointer;
@@ -442,23 +453,23 @@ html[lang="ca"] .ob [lang="en"]:not(html), html[lang="en"] .ob [lang="ca"]:not(h
 .ob .ob-chrono { display: flex; align-items: center; gap: 22px; }
 .ob .ob-chrono__ep { position: relative; flex: none; }
 .ob .ob-chrono__ep > .ob-hud { display: block; margin-bottom: 6px; }
-.ob .ob-chrono__digits { position: relative; display: block; font-family: var(--o-font-display); font-stretch: 100%; font-weight: 300; font-size: 42px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.ob .ob-chrono__digits { position: relative; display: block; font-family: var(--o-font-display); font-stretch: 100%; font-weight: 300; font-size: var(--o-metric); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
 .ob .ob-chrono__cap { flex: none; }
 .ob .ob-chrono__cap p { margin: 0; }
-.ob .ob-chrono__now { font-size: 14px; line-height: 1.45; color: var(--o-ink); }
-.ob .ob-chrono__qual { margin-top: 4px !important; font-size: 12.5px; line-height: 1.5; color: var(--o-ink-3); }
+.ob .ob-chrono__now { font-size: var(--o-body); line-height: 1.45; color: var(--o-ink); }
+.ob .ob-chrono__qual { max-width: 75ch; margin-top: 4px !important; font-size: var(--o-small); line-height: 1.5; color: var(--o-ink-3); text-wrap: pretty; }
 .ob .ob-scale { position: relative; flex: none; height: 44px; }
 .ob .ob-scale__base { position: absolute; left: 0; right: 0; top: 24px; height: 1px; background: var(--o-line-2); }
 .ob .ob-scale__t { position: absolute; top: 20px; width: 1px; height: 4px; background: var(--o-line-2); }
 .ob .ob-scale__t.is-k { top: 16px; height: 8px; background: var(--o-ink-3); }
-.ob .ob-scale__lb { position: absolute; top: 32px; transform: translateX(-50%); font: 500 10px/1 var(--o-font-mono); color: var(--o-ink-3); white-space: nowrap; }
+.ob .ob-scale__lb { position: absolute; top: 32px; transform: translateX(-50%); font: 500 var(--o-hud)/1 var(--o-font-mono); color: var(--o-ink-3); white-space: nowrap; }
 .ob .ob-scale__lb.is-first { transform: none; }
 .ob .ob-scale__lb.is-last { transform: translateX(-100%); }
 /* les exposicions: un fotograma real cada una; la que es veu, encesa */
 .ob .ob-scale__x { position: absolute; top: 12px; width: 5px; height: 12px; margin-left: -2.5px; background: var(--o-ink); opacity: .32; }
 .ob .ob-scale__x.is-past { opacity: .6; }
 .ob .ob-scale__x.is-current { opacity: 1; }
-.ob .ob-scale__est { position: absolute; top: -6px; transform: translateX(-50%); font: 500 9.5px/1 var(--o-font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--o-ink-2); white-space: nowrap; }
+.ob .ob-scale__est { position: absolute; top: -6px; transform: translateX(-50%); font: 500 var(--o-hud)/1 var(--o-font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--o-ink-2); white-space: nowrap; }
 .ob .ob-scale__fill { position: absolute; left: 0; top: 23px; height: 3px; background: var(--o-ink); }
 .ob .ob-scale__head { position: absolute; left: 0; top: 6px; width: 1px; height: 26px; background: var(--o-ink); }
 .ob .ob-scale__pin { position: absolute; top: -2px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 3px; white-space: nowrap; font-family: var(--o-font-display); font-stretch: 112%; font-weight: 620; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--o-ink-2); }
@@ -539,10 +550,10 @@ html[lang="ca"] .ob [lang="en"]:not(html), html[lang="en"] .ob [lang="ca"]:not(h
 /* ───────────────────────── La cinta: dues meitats de 64 bytes que s'executen ───────────────────────── */
 .ob .ob-tape { position: relative; }
 .ob .ob-tape__bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; }
-.ob .ob-tape__now { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 26px; margin: 0; font-size: 14px; color: var(--o-ink-2); }
+.ob .ob-tape__now { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 24px; margin: 0; font-size: var(--o-small); color: var(--o-ink-2); }
 .ob .ob-tape__now b { font: 500 22px/1 var(--o-font-display); font-variant-numeric: tabular-nums; color: var(--o-ink); }
 .ob .ob-tape__ctl { display: flex; gap: 8px; }
-.ob .ob-tape__label { display: flex; justify-content: space-between; gap: 12px; margin: 22px 0 8px; font-size: 13px; color: var(--o-ink-2); }
+.ob .ob-tape__label { display: flex; justify-content: space-between; gap: 12px; margin: 24px 0 8px; font-size: var(--o-small); color: var(--o-ink-2); }
 .ob .ob-tape__label b { font-weight: 650; color: var(--o-ink); }
 .ob .ob-tape__row { display: grid; grid-template-columns: repeat(64, minmax(0, 1fr)); border: 1px solid var(--o-line-2); border-radius: var(--o-r1); overflow: hidden; background: var(--o-space); }
 .ob .ob-tape__row > span { position: relative; display: grid; place-items: center; height: 34px; border-right: 1px solid var(--o-line); font: 600 13px/1 var(--o-font-mono); transition: background-color var(--t-slow) var(--ease-out); }
@@ -557,105 +568,101 @@ html[lang="ca"] .ob [lang="en"]:not(html), html[lang="en"] .ob [lang="ca"]:not(h
 .ob .ob-tape__track { position: relative; height: 44px; margin-top: 12px; }
 .ob .ob-tape__track input { position: absolute; inset: 0; width: 100%; margin: 0; accent-color: var(--o-ink); cursor: pointer; }
 .ob .ob-tape__mark { position: absolute; top: 6px; bottom: 6px; width: 2px; margin-left: -1px; background: var(--f1); pointer-events: none; }
-.ob .ob-tape__legend { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 8px 0 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--o-ink-2); }
+.ob .ob-tape__legend { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 8px 0 0; padding: 0; list-style: none; font-size: var(--o-small); color: var(--o-ink-2); }
 .ob .ob-tape__legend li { display: inline-flex; align-items: center; gap: 8px; }
 .ob .ob-tape__legend i { position: relative; display: inline-block; width: 14px; height: 16px; border: 1px solid var(--o-line-2); border-radius: 2px; background: var(--o-space); }
 .ob .ob-tape__legend .lg-pc { background: var(--o-ink); border-color: var(--o-ink); }
 .ob .ob-tape__legend .lg-h0::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--i-head0-fill); }
 .ob .ob-tape__legend .lg-h1::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--i-head1-fill); }
 .ob .ob-tape__legend .lg-copy { background: color-mix(in srgb, var(--f1) 40%, var(--o-space)); }
-/* el final: la còpia és sencera */
-.ob .ob-tape__end { display: flex; align-items: center; gap: 18px; margin-top: 18px; padding: 16px 20px; border: 1px solid var(--o-ink); border-radius: var(--o-r1); }
-.ob .ob-tape__end b { font-family: var(--o-font-display); font-stretch: 72%; font-weight: 700; font-size: 34px; line-height: 1; text-transform: uppercase; }
-.ob .ob-tape__end p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--o-ink-2); }
+/* el final: la còpia és sencera (una afirmació clau, com la regla principal: el títol dels blocs, amb un marc de tinta) */
+.ob .ob-tape__end { display: flex; align-items: baseline; gap: 16px; margin-top: 16px; padding: 16px 24px; border: 1px solid var(--o-ink); border-radius: var(--o-r1); }
+.ob .ob-tape__end b { flex: none; font: 650 var(--o-title)/1.2 var(--o-font-display); letter-spacing: .005em; }
+.ob .ob-tape__end p { margin: 0; font-size: var(--o-small); line-height: 1.5; color: var(--o-ink-2); }
 
 /* ───────────────────────── Els espècimens: un sòlid per instrucció ───────────────────────── */
 .ob .ob-specimens { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-top: 1px solid var(--o-line); border-left: 1px solid var(--o-line); }
 .ob .ob-specimen { position: relative; margin: 0; padding: 0 0 20px; border-right: 1px solid var(--o-line); border-bottom: 1px solid var(--o-line); }
-.ob .ob-specimen__well { position: relative; height: 176px; display: grid; place-items: center; background: radial-gradient(closest-side, rgb(var(--o-glow) / .07), rgb(var(--o-glow) / 0) 72%); }
-.ob .ob-specimen__well img { width: 112px; height: 112px; display: block; }
-.ob .ob-specimen__row { display: flex; align-items: baseline; gap: 12px; padding: 14px 16px 0; }
-.ob .ob-specimen__glyph { font: 600 30px/1 var(--o-font-mono); }
-.ob .ob-specimen .ob-hud { font-size: 10px; letter-spacing: .1em; }
-.ob .ob-specimen figcaption { margin: 8px 16px 0; font-size: 13.5px; line-height: 1.4; color: var(--o-ink-2); }
+.ob .ob-specimen__well { position: relative; height: 160px; display: grid; place-items: center; background: radial-gradient(closest-side, rgb(var(--o-glow) / .07), rgb(var(--o-glow) / 0) 72%); }
+.ob .ob-specimen__well img { width: 104px; height: 104px; display: block; }
+.ob .ob-specimen__row { display: flex; align-items: baseline; gap: 12px; padding: 12px 16px 0; }
+.ob .ob-specimen__glyph { font: 600 28px/1 var(--o-font-mono); }
+.ob .ob-specimen figcaption { margin: 8px 16px 0; font-size: var(--o-small); line-height: 1.45; color: var(--o-ink-2); }
 
 /* ───────────────────────── Les finestres del laboratori ───────────────────────── */
-.ob .ob-windows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.ob .ob-windows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--o-gutter); }
 .ob .ob-window { display: grid; grid-template-rows: auto 1fr; overflow: hidden; border: 1px solid var(--o-line-2); border-radius: var(--o-r1); background: var(--o-space-2); color: inherit; text-decoration: none; transition: border-color var(--t-fast) var(--ease-out); }
 .ob .ob-window:hover { border-color: var(--o-line-3); }
-.ob .ob-window__media { position: relative; height: 320px; overflow: hidden; background: var(--o-space); }
+.ob .ob-window__media { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: var(--o-space); }
 .ob .ob-window__media > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .ob .ob-window__hud { position: absolute; left: 14px; top: 12px; z-index: 2; }
-.ob .ob-window__body { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 20px; padding: 22px 22px 24px; border-top: 1px solid var(--o-line); }
+.ob .ob-window__body { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 24px; padding: 24px; border-top: 1px solid var(--o-line); }
 .ob .ob-window__body h3 { margin: 0; }
-.ob .ob-window__body p { grid-column: 1; margin: 0; font-size: 15px; line-height: 1.55; color: var(--o-ink-2); }
+.ob .ob-window__body p { grid-column: 1; margin: 0; font-size: var(--o-body); line-height: 1.6; color: var(--o-ink-2); text-wrap: pretty; }
 .ob .ob-go { grid-column: 2; grid-row: 1 / span 2; align-self: end; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--o-line-2); border-radius: 50%; transition: background-color var(--t-fast) var(--ease-out), color var(--t-fast) var(--ease-out); }
 .ob .ob-window:hover .ob-go { background: var(--o-ink); border-color: var(--o-ink); color: var(--o-on-ink); }
 
-/* ───────────────────────── La portada: navegació, actes, peu ───────────────────────── */
+/* ───────────────────────── La portada: navegació, seccions, peu ───────────────────────── */
+/* Totes les seccions comencen al mateix marge (--o-pad) i fan servir la mateixa graella de 12 columnes. A cada secció, el
+   titular (h2) i, a sota, l'entradeta; després, els blocs, sempre a la mateixa distància (--o-s7); entre seccions,
+   --o-section. Sense rètols a sobre dels titulars: el titular ja diu què és la secció */
 .ob.site { container: ob / inline-size; }
-.ob .ob-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 28px; height: 64px; padding: 0 var(--o-page) 0 48px; background: var(--o-space); border-bottom: 1px solid var(--o-line); }
+.ob .ob-nav { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 28px; height: 64px; padding: 0 var(--o-pad); background: var(--o-space); border-bottom: 1px solid var(--o-line); }
 .ob .ob-brand { display: inline-flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; white-space: nowrap; }
 .ob .ob-brand svg { width: 22px; height: 22px; flex: none; }
 .ob .ob-brand b { font-family: var(--o-font-display); font-stretch: 125%; font-weight: 700; font-size: 15px; letter-spacing: .34em; text-transform: uppercase; }
-.ob .ob-nav__sub { padding-left: 16px; border-left: 1px solid var(--o-line-2); font-size: 13px; color: var(--o-ink-3); white-space: nowrap; }
+.ob .ob-nav__sub { padding-left: 16px; border-left: 1px solid var(--o-line-2); font-size: var(--o-small); color: var(--o-ink-3); white-space: nowrap; }
 .ob .ob-nav__links { display: flex; gap: 2px; margin: 0 0 0 auto; padding: 0; list-style: none; }
-.ob .ob-nav__links a { display: block; padding: 12px 10px; font-family: var(--o-font-display); font-stretch: 112%; font-weight: 580; font-size: 12px; letter-spacing: .11em; text-transform: uppercase; color: var(--o-ink-2); text-decoration: none; white-space: nowrap; }
+.ob .ob-nav__links a { display: block; padding: 12px 10px; font-family: var(--o-font-display); font-stretch: 112%; font-weight: 620; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--o-ink-2); text-decoration: none; white-space: nowrap; }
 .ob .ob-nav__links a:hover, .ob .ob-nav__links a[aria-current="page"] { color: var(--o-ink); }
 .ob .ob-nav__tools { display: flex; align-items: center; gap: 8px; }
-/* Acte 1 · la pregunta */
-.ob .ob-hero { position: relative; display: grid; grid-template-columns: 590px minmax(0, 1fr); min-height: calc(900px - 64px); padding: 0 var(--o-page); overflow: hidden; }
-.ob .ob-hero__text { position: relative; z-index: 2; align-self: center; padding: 40px 0 150px; }
-.ob .ob-hero__stage { position: relative; }
-.ob .ob-eyebrow { display: flex; align-items: center; gap: 12px; margin: 0 0 26px; }
-.ob .ob-eyebrow::before { content: ""; width: 36px; height: 1px; background: currentColor; }
-.ob .ob-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 34px; }
-.ob .ob-hero__chrono { position: absolute; left: var(--o-page); right: var(--o-page); bottom: 26px; z-index: 3; }
-.ob .ob-specs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 var(--o-page); border-top: 1px solid var(--o-line); border-bottom: 1px solid var(--o-line); }
-.ob .ob-spec { margin: 0; padding: 26px 24px 28px; border-left: 1px solid var(--o-line); }
+/* la capçalera: el text i el planeta, i a sota, el cronoscopi */
+.ob .ob-hero { position: relative; display: grid; grid-template-columns: minmax(0, 600px) minmax(0, 1fr); grid-template-areas: "text stage" "chrono chrono"; column-gap: var(--o-gutter); padding: 0 var(--o-pad); overflow: hidden; }
+.ob .ob-hero__text { position: relative; z-index: 2; grid-area: text; align-self: center; padding: var(--o-s8) 0; }
+.ob .ob-hero__stage { position: relative; grid-area: stage; }
+.ob .ob-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--o-s3); margin-top: var(--o-s6); }
+.ob .ob-hero__chrono { position: relative; z-index: 3; grid-area: chrono; padding: var(--o-s5) 0 var(--o-s6); }
+.ob .ob-specs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 var(--o-pad); border-top: 1px solid var(--o-line); border-bottom: 1px solid var(--o-line); }
+.ob .ob-spec { margin: 0; padding: var(--o-s5); border-left: 1px solid var(--o-line); }
 .ob .ob-spec:first-child { border-left: 0; padding-left: 0; }
-.ob .ob-spec dt { font-family: var(--o-font-display); font-weight: 300; font-size: 44px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
-.ob .ob-spec dd { margin: 10px 0 0; font-size: 13.5px; line-height: 1.4; color: var(--o-ink-3); }
-/* els actes */
-.ob .ob-act { padding: var(--o-s10) var(--o-page) 0; scroll-margin-top: 64px; }
-.ob .ob-act__label { display: flex; align-items: center; gap: 14px; margin: 0 0 22px; }
-.ob .ob-act__label::before { content: ""; width: 36px; height: 1px; background: currentColor; }
-.ob .ob-act__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--o-gutter); align-items: end; }
-.ob .ob-act__head > .ob-display { grid-column: 1 / span 7; }
-.ob .ob-act__head > .ob-lede { grid-column: 8 / span 5; }
-.ob .ob-defs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 56px; }
-.ob .ob-def { padding: 26px 28px 28px; border: 1px solid var(--o-line-2); border-radius: var(--o-r1); }
-.ob .ob-def h3 { margin: 0 0 10px; }
-.ob .ob-def p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--o-ink-2); }
-.ob .ob-questions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 40px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--o-line); }
-.ob .ob-questions li { padding: 22px 24px 26px 0; border-right: 1px solid var(--o-line); }
-.ob .ob-questions li + li { padding-left: 24px; }
-.ob .ob-questions li:last-child { border-right: 0; }
-.ob .ob-questions .n { display: block; margin-bottom: 14px; font-family: var(--o-font-display); font-weight: 300; font-size: 34px; line-height: 1; }
-.ob .ob-questions p { margin: 0; font-size: 15.5px; line-height: 1.55; color: var(--o-ink); }
-.ob .ob-rule { margin-top: 48px; padding: 28px 32px 30px; border: 1px solid var(--o-ink); border-radius: var(--o-r1); }
-.ob .ob-rule p { margin: 0; max-width: 90ch; font-size: 17px; line-height: 1.65; color: var(--o-ink-2); }
-.ob .ob-rule b { display: block; margin-bottom: 10px; font-family: var(--o-font-display); font-stretch: 72%; font-weight: 700; font-size: 34px; line-height: 1; text-transform: uppercase; color: var(--o-ink); }
-/* els resultats */
-.ob .ob-results { margin: 56px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--o-ink); }
-.ob .ob-result { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--o-gutter); padding: 32px 0 34px; border-bottom: 1px solid var(--o-line); }
-.ob .ob-result__meta { grid-column: 1 / span 3; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.ob .ob-spec dt { font-family: var(--o-font-display); font-weight: 300; font-size: var(--o-metric); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+.ob .ob-spec dd { margin: var(--o-s2) 0 0; font-size: var(--o-small); line-height: 1.45; color: var(--o-ink-3); }
+/* les seccions */
+.ob .ob-act { padding: var(--o-section) var(--o-pad) 0; scroll-margin-top: 64px; }
+.ob.site .ob-act > * + * { margin-top: var(--o-s7); }
+.ob .ob-act__head { display: grid; justify-items: start; gap: var(--o-s5); }
+/* les llistes en columnes (les definicions, les preguntes i el mètode): una línia a sobre de cada element, el títol i el text */
+.ob .ob-defs, .ob .ob-questions, .ob .ob-method { display: grid; gap: var(--o-s6) var(--o-gutter); margin-bottom: 0; padding: 0; list-style: none; }
+.ob .ob-defs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ob .ob-questions { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ob .ob-method { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ob .ob-defs > div, .ob .ob-questions > li, .ob .ob-method > div { padding-top: var(--o-s4); border-top: 1px solid var(--o-line-2); }
+.ob .ob-defs dt, .ob .ob-method h3 { margin-bottom: var(--o-s2); }
+.ob .ob-defs dd, .ob .ob-method p { margin: 0; font-size: var(--o-body); line-height: 1.6; color: var(--o-ink-2); text-wrap: pretty; }
+.ob .ob-questions .n { display: block; margin-bottom: var(--o-s2); font-size: var(--o-small); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--o-ink-3); }
+.ob .ob-questions p { margin: 0; font-size: var(--o-body); line-height: 1.55; color: var(--o-ink); text-wrap: pretty; }
+/* la regla principal: una afirmació clau, com el final de la cinta (el títol dels blocs, amb un marc de tinta) */
+.ob .ob-rule { padding: var(--o-s5) var(--o-s6); border: 1px solid var(--o-ink); border-radius: var(--o-r1); }
+.ob .ob-rule p { margin: 0; max-width: 75ch; font-size: var(--o-body); line-height: 1.6; color: var(--o-ink-2); text-wrap: pretty; }
+.ob .ob-rule b { display: block; margin-bottom: var(--o-s2); font: 650 var(--o-title)/1.2 var(--o-font-display); letter-spacing: .005em; color: var(--o-ink); text-wrap: balance; }
+/* els resultats: l'estat, el títol i el text, i l'enllaç, alineats per la primera línia */
+.ob .ob-results { margin-bottom: 0; padding: 0; list-style: none; border-top: 1px solid var(--o-line-2); }
+.ob .ob-result { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--o-gutter); align-items: baseline; padding: var(--o-s6) 0; border-bottom: 1px solid var(--o-line); }
+.ob .ob-result__meta { grid-column: 1 / span 3; display: flex; flex-direction: column; align-items: flex-start; gap: var(--o-s2); }
+.ob .ob-result__kind { font-size: var(--o-small); line-height: 1.45; color: var(--o-ink-3); }
 .ob .ob-result__main { grid-column: 4 / span 7; }
-.ob .ob-result h3 { margin: 0 0 12px; font-family: var(--o-font-display); font-stretch: 80%; font-weight: 700; font-size: 30px; line-height: 1; text-transform: uppercase; }
-.ob .ob-result p { margin: 0; max-width: 66ch; font-size: 16px; line-height: 1.62; color: var(--o-ink-2); }
-.ob .ob-result__link { grid-column: 11 / span 2; justify-self: end; align-self: start; }
-.ob .ob-result.is-now { margin: 0 calc(-1 * var(--o-page)); padding-left: var(--o-page); padding-right: var(--o-page); background: var(--o-space-2); }
-/* com es treballa, estat i límits, peu */
-.ob .ob-method { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--o-gutter); margin-top: 48px; }
-.ob .ob-method > div { padding-top: 22px; border-top: 1px solid var(--o-ink); }
-.ob .ob-method h3 { margin: 0 0 12px; }
-.ob .ob-method p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--o-ink-2); }
-.ob .ob-limits__text { margin: 0; max-width: 32em; font-size: 26px; line-height: 1.45; letter-spacing: -.01em; color: var(--o-ink); }
-.ob .ob-foot { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--o-gutter); margin-top: var(--o-s10); padding: 36px var(--o-page) 56px; border-top: 1px solid var(--o-line); }
-.ob .ob-foot__brand { grid-column: 1 / span 3; display: flex; flex-direction: column; gap: 10px; }
-.ob .ob-foot__text { grid-column: 4 / span 6; margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--o-ink-2); }
+.ob .ob-result h3 { margin-bottom: var(--o-s2); }
+.ob .ob-result p { margin: 0; max-width: 66ch; font-size: var(--o-body); line-height: 1.6; color: var(--o-ink-2); text-wrap: pretty; }
+.ob .ob-result__link { grid-column: 11 / span 2; justify-self: end; }
+/* el que es fa ara: la franja arriba a les vores de la pantalla, i el text es queda alineat amb el de les altres files */
+.ob .ob-result.is-now { background: var(--o-space-2); box-shadow: 0 0 0 100vmax var(--o-space-2); clip-path: inset(0 -100vmax); }
+/* el peu */
+.ob .ob-foot { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--o-gutter); margin-top: var(--o-section); padding: var(--o-s7) var(--o-pad) var(--o-s8); border-top: 1px solid var(--o-line); }
+.ob .ob-foot__brand { grid-column: 1 / span 3; display: flex; flex-direction: column; align-items: flex-start; gap: var(--o-s2); }
+.ob .ob-foot__sub { font-size: var(--o-small); color: var(--o-ink-3); }
+.ob .ob-foot__text { grid-column: 4 / span 6; margin: 0; max-width: 75ch; font-size: var(--o-small); line-height: 1.6; color: var(--o-ink-2); }
 .ob .ob-foot__links { grid-column: 11 / span 2; display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.ob .ob-foot__links a { display: inline-block; padding: 6px 0; font-size: 13.5px; color: var(--o-ink-2); text-decoration: none; }
+.ob .ob-foot__links a { display: inline-block; padding: 6px 0; font-size: var(--o-small); color: var(--o-ink-2); text-decoration: none; }
 .ob .ob-foot__links a:hover { color: var(--o-ink); text-decoration: underline; }
 
 /* ───────────────────────── Visors: explorador 3D, vista 2D, món en viu ───────────────────────── */
@@ -760,59 +767,54 @@ html[lang="ca"] .ob [lang="en"]:not(html), html[lang="en"] .ob [lang="ca"]:not(h
   .ob { --o-h-control: 44px; }
 }
 
-/* ───────────────────────── Portada a 390 px (consulta de contenidor sobre .ob.site) ───────────────────────── */
+/* ───────────────────────── Portada a 390 px ───────────────────────── */
+/* Les fitxes, amb una consulta de mitjà: la de contenidor no pot canviar les del mateix contenidor (body.ob). La resta, amb la
+   de contenidor */
+@media (max-width: 640px) {
+  .ob.site { --o-page: 16px; --o-section: var(--o-s9); --o-body-l: 17px; }
+}
+/* la navegació: en una fila calen 1.310 px en català i 1.427 en anglès, i sense el subtítol, 1.147 i 1.257 (mesurat). Fins a
+   1.260 px, en dues files: a sota, els enllaços, que es desplacen, amb el text del primer al marge de la pàgina (els enllaços
+   tenen 10 px de marge) */
+@container ob (min-width: 1261px) and (max-width: 1439px) {
+  .ob .ob-nav__sub { display: none; }
+}
+@container ob (max-width: 1260px) {
+  .ob .ob-nav { flex-wrap: wrap; height: auto; gap: 0 28px; padding-top: 6px; }
+  .ob .ob-nav > .ob-brand { height: 50px; }
+  .ob .ob-nav__tools { margin-left: auto; }
+  .ob .ob-nav__links { order: 3; width: calc(100% + 2 * var(--o-page)); margin: 6px calc(-1 * var(--o-page)) 0; padding: 0 calc(var(--o-page) - 10px); overflow-x: auto; border-top: 1px solid var(--o-line); }
+}
 @container ob (max-width: 640px) {
-  .ob .ob-nav { flex-wrap: wrap; height: auto; gap: 0; padding: 6px 16px 0; }
-  .ob .ob-nav > .ob-brand { flex: 1; height: 50px; }
+  .ob .ob-nav > .ob-brand { flex: 1; }
   .ob .ob-nav__sub { display: none; }
   .ob .ob-nav__tools { gap: 6px; }
   .ob .ob-nav__tools .ob-seg { height: 44px; }
-  .ob .ob-nav__links { order: 3; width: calc(100% + 32px); margin: 6px -16px 0; padding: 0 6px; overflow-x: auto; border-top: 1px solid var(--o-line); }
-  .ob .ob-hero { display: block; min-height: 0; padding: 0 16px; }
-  .ob .ob-hero__text { padding: 24px 0 0; }
-  .ob .ob-d1 { font-size: 46px; line-height: .92; }
-  .ob .ob-d2 { font-size: 40px; }
-  .ob .ob-d3 { font-size: 30px; }
-  .ob .ob-lede { font-size: 16.5px; }
+  .ob .ob-hero__text { padding: var(--o-s5) 0 var(--o-s6); }
   .ob .ob-cta { flex-direction: column; align-items: stretch; }
-  .ob .ob-hero__chrono { position: static; margin-top: 20px; }
-  .ob .ob-specs { grid-template-columns: 1fr 1fr; margin: 0 16px; }
-  .ob .ob-spec { padding: 18px 16px 20px; }
+  .ob .ob-specs { grid-template-columns: 1fr 1fr; }
+  .ob .ob-spec { padding: var(--o-s4); }
   .ob .ob-spec:nth-child(odd) { border-left: 0; padding-left: 0; }
   .ob .ob-spec:nth-child(n + 3) { border-top: 1px solid var(--o-line); }
   .ob .ob-spec dt { font-size: 32px; }
-  .ob .ob-act { padding: var(--o-s9) 16px 0; }
-  .ob .ob-act__head { display: block; }
-  .ob .ob-act__head > .ob-lede { margin-top: 18px; }
-  .ob .ob-defs { grid-template-columns: 1fr; gap: 14px; margin-top: 36px; }
-  .ob .ob-def { padding: 20px 20px 22px; }
-  .ob .ob-questions { grid-template-columns: 1fr; }
-  .ob .ob-questions li, .ob .ob-questions li + li { padding: 18px 0 20px; border-right: 0; border-bottom: 1px solid var(--o-line); }
-  .ob .ob-rule { padding: 22px 20px 24px; }
-  .ob .ob-rule b { font-size: 28px; }
-  .ob .ob-rule p { font-size: 16px; }
+  .ob .ob-defs, .ob .ob-questions, .ob .ob-method { grid-template-columns: 1fr; gap: var(--o-s5); }
+  .ob .ob-rule { padding: var(--o-s5) var(--o-s4); }
   .ob .ob-tape__row { grid-template-columns: repeat(16, minmax(0, 1fr)); }
   .ob .ob-tape__row > span { height: 26px; font-size: 12px; }
   .ob .ob-tape__row > span:nth-child(16n) { border-right: 0; }
   .ob .ob-tape__row > span:nth-child(n + 17) { border-top: 1px solid var(--o-line); }
   .ob .ob-tape__ctl { width: 100%; }
   .ob .ob-tape__ctl .ob-btn { flex: 1; }
-  .ob .ob-tape__end { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .ob .ob-tape__end b { font-size: 28px; }
+  .ob .ob-tape__end { flex-direction: column; align-items: flex-start; gap: var(--o-s2); padding: var(--o-s4); }
   .ob .ob-specimens { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ob .ob-specimen__well { height: 132px; }
   .ob .ob-specimen__well img { width: 88px; height: 88px; }
-  .ob .ob-windows { grid-template-columns: 1fr; gap: 16px; }
-  .ob .ob-window__media { height: 220px; }
-  .ob .ob-result { display: block; padding: 24px 0 26px; }
-  .ob .ob-result__meta { flex-direction: row; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
-  .ob .ob-result h3 { font-size: 26px; }
-  .ob .ob-result__link { display: inline-flex; margin-top: 12px; }
-  .ob .ob-result.is-now { margin: 0 -16px; padding: 24px 16px 26px; }
-  .ob .ob-method { grid-template-columns: 1fr; gap: 28px; }
-  .ob .ob-limits__text { font-size: 20px; }
-  .ob .ob-foot { display: block; padding: 28px 16px 40px; margin-top: var(--o-s9); }
-  .ob .ob-foot__text { margin: 18px 0; }
+  .ob .ob-windows { grid-template-columns: 1fr; gap: var(--o-s4); }
+  .ob .ob-result { display: block; padding: var(--o-s5) 0; }
+  .ob .ob-result__meta { flex-direction: row; flex-wrap: wrap; align-items: center; margin-bottom: var(--o-s3); }
+  .ob .ob-result__link { display: inline-flex; margin-top: var(--o-s2); }
+  .ob .ob-foot { display: block; padding: var(--o-s6) var(--o-pad) var(--o-s7); }
+  .ob .ob-foot__text { margin: var(--o-s4) 0; }
   .ob .ob-foot__links { flex-direction: row; flex-wrap: wrap; gap: 4px 18px; }
   .ob .ob-foot__links a { padding: 11px 0; }
 }

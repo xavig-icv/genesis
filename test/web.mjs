@@ -156,7 +156,7 @@ const tests = {
     assert.strictEqual(tr.steps, 8192);
     // el pas on la còpia al revés és sencera, al peu i al final de la figura («La còpia és sencera»), en les dues llengües
     const done = mirrorStep(bytes, tr);
-    const ca = [...html.matchAll(/[Aa]l pas <span class="ob-mono">(\d+)<\/span> la còpia ja és sencera/g)], en = [...html.matchAll(/[Bb]y step <span class="ob-mono">(\d+)<\/span> the copy is complete/g)];
+    const ca = [...html.matchAll(/[Aa]l pas <span class="ob-num">(\d+)<\/span> la còpia ja és sencera/g)], en = [...html.matchAll(/[Bb]y step <span class="ob-num">(\d+)<\/span> the copy is complete/g)];
     assert.ok(ca.length === 2 && en.length === 2, 'el peu i el final de la cinta');
     for (const m of [...ca, ...en]) assert.strictEqual(Number(m[1]), done);
     // A no canvia, i al final B és A al revés
