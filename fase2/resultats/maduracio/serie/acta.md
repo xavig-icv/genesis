@@ -294,3 +294,30 @@ Abans del GO de l'auditoria 24, per avançar feina. Les comprovacions es tornen 
     (`llanca-lot-416f720-corregit.diff`): la capçalera, el `cd` i la comprovació.
   - **La desviació de la lletra del protocol** (§7, pas 8, "`eines/llanca-lot.sh`, des de la carpeta del commit de l'etiqueta"):
     l'entrada de la decisió també ho dirà.
+
+### La incidència 2: sis branques del PC, interrompudes (03-11-2026)
+
+- **Què va passar:** el 03-11-2026, entre les 23.13.16 i les 23.13.44, es van aturar les sis branques que corrien al PC, i cap
+  més:
+  - **tres, amb el codi 130,** el de la interrupció: `6132-shuffle-all-b`, `6135-continue-b` i `6135-shuffle-all-a`;
+  - **tres, sense cap línia de final al lot:** `6135-reinit-a`, `6135-reinit-b` i `6135-shuffle-all-b`.
+
+  El lot va continuar amb les següents. La màquina virtual no en va tenir cap.
+- **La causa probable:** l'actualització de l'aplicació de Claude, des d'on es va llançar el lot. El registre d'esdeveniments de
+  Windows hi anota el paquet nou a les 23.03, i l'aturada del seu servei "durant el servei del paquet" a les 23.13.49. No hi va
+  haver cap reinici, ni cap canvi d'alimentació, ni cap avís de memòria o de disc.
+- **Com es va veure:** el 04-11-2026 a les 01.18, el seguiment agregat deia 3 fallats i 9 en marxa, amb només 6 processos de
+  `node`, i 126 minuts sense escriure.
+  - **Per trobar-ne la causa,** es van mirar les línies d'estat del lot (no els registres), les dates dels registres i el registre
+    d'esdeveniments de Windows.
+  - **Què s'hi va veure:** els noms de les branques començades i de les sis interrompudes, però cap xifra, cap registre, ni l'ordre
+    en què van acabar.
+- **Què es fa:** quan acabi el lot del PC, es torna a llançar el mateix lot, amb la mateixa còpia del llançador (§7, pas 9).
+  `experiments.sh` salta les branques completes i torna a fer les sis des del principi (`sim.mjs` torna a escriure el JSONL
+  sencer). Les branques són deterministes: en surten els mateixos registres que sense la interrupció.
+  - **Ho fa un script fora del repositori,** `rellanca-pc-incidencia-2.sh` (SHA-256
+    `ca4bb3d3b3a45b7cf36eb4c44ffb8ebd495accbff48900b939163476768a0245`), llançat el 04-11-2026 a les 01.26, a prioritat baixa.
+  - **Com treballa:** espera la línia final del lot, mirant-la cada 5 minuts, i llavors torna a llançar el lot. No llegeix res
+    més que aquesta línia.
+  - **A git,** perquè se'n pugui comprovar la SHA-256: a `incidencia-2/`, tal com és.
+- **Per no repetir-ho:** els lots que vinguin, des d'una finestra del PC que no depengui de l'aplicació.
