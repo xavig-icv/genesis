@@ -319,6 +319,12 @@ Abans del GO de l'auditoria 24, per avançar feina. Les comprovacions es tornen 
     `aeaa42c61608dd6c2e6d12c0abbc5c4baccf1c7f7c755318d31a773f7831cfa8`), llançat el 04-11-2026 a les 01.28, a prioritat baixa.
   - **La primera versió** (a les 01.26, `ca4bb3d3…`) portava escrits els camins d'aquesta màquina, que no van al repositori: es va
     aturar mentre esperava, abans de llançar res, i la nova troba el llançador a la seva mateixa carpeta. Fa el mateix.
+  - **La segona** (`aeaa42c6…`, a les 01.28) ja no hi era el 04-11-2026 a les 14.21: es va aturar, probablement quan l'aplicació
+    es va reiniciar a les 14.20, sense haver llançat res. El lot continuava, amb 493 branques acabades.
+  - **La tercera** (`292a664df6de38373617b94921539274692a1667e93696f17446d6d1997367e4`), llançada a les 14.25: és la mateixa, amb un pany. Se'n pot llançar una
+    altra des d'una finestra del responsable, fora de l'aplicació: quan el lot acaba, només la primera que crea la carpeta
+    `rellanca-pc-incidencia-2.lock` el torna a llançar, i les altres surten. Provat en una carpeta d'un sol ús, amb dues alhora i
+    un llançador de prova: un sol llançament.
   - **Com treballa:** espera la línia final del lot, mirant-la cada 5 minuts, i llavors torna a llançar el lot. No llegeix res
     més que aquesta línia.
   - **A git,** perquè se'n pugui comprovar la SHA-256: a `incidencia-2/`, tal com és.

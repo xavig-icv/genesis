@@ -10,15 +10,20 @@
 # prioritat BelowNormal. Ha de ser a la mateixa carpeta que la còpia corregida del llançador; els camins de la màquina són a
 # CLAUDE.local.md, que no va al repositori.
 #
+# N'hi pot haver més d'un que espera: un llançat des de l'aplicació i un des d'una finestra del responsable, perquè quan
+# l'aplicació es reinicia, els processos que hi ha llançat poden aturar-se. Quan el lot acaba, només el primer que crea la
+# carpeta rellanca-pc-incidencia-2.lock el torna a llançar, i els altres surten.
+#
 # El que fa, ho escriu a rellanca-pc-incidencia-2.log, al costat d'aquest script (fora del repositori).
 set -u
 HERE=$(cd "$(dirname "$0")" && pwd)
 LOG="$HERE/rellanca-pc-incidencia-2.log"
 OUT=fase2/resultats/maduracio/serie/branques/lot-llista-pc.out
-say() { echo "$(date '+%d-%m-%Y %H.%M.%S') $*" >> "$LOG"; }
+say() { echo "$(date '+%d-%m-%Y %H.%M.%S') procés $$: $*" >> "$LOG"; }
 [[ -f eines/experiments.sh && -f sim.mjs && -f "$OUT" ]] || { say "aturat: no és l'arrel de la còpia de l'etiqueta"; exit 2; }
 say "espera que acabi el lot del PC ($(git rev-parse --short HEAD))"
 until tail -n 1 "$OUT" | grep -q '^== lot \(acabat\|interromput\)'; do sleep 300; done
+mkdir "$HERE/rellanca-pc-incidencia-2.lock" 2> /dev/null || { say "un altre ja el torna a llançar: surto"; exit 0; }
 say "el lot ha acabat: $(tail -n 1 "$OUT")"
 say "el torno a llançar: llanca-lot-416f720-corregit.sh 6, la llista del PC"
 exec bash "$HERE/llanca-lot-416f720-corregit.sh" 6 fase2/resultats/maduracio/serie/branques fase2/resultats/maduracio/serie/llista-pc.txt
