@@ -27,3 +27,34 @@ nivell 1). La repetició serveix per veure que els registres s'han fet de debò 
 
   `node fase2/resultats/b1/nivell1/repeticio/compara.mjs fase2/resultats/b1/nivell1/registres fase2/resultats/b1/nivell1/repeticio 12 64 79`
 - **Si no coincideixen,** l'anàlisi espera fins que se'n trobi la causa, i es diu al quadern i a l'auditoria.
+
+## El primer intent no val (05-11-2026)
+
+- **Què va passar:** de les 06.12 a les 06.34, les 45 ordres van acabar amb el codi 0. Però la línia d'inici de cada repetició deia
+  `a677726+canvis`, i la de les tirades, `a677726`: no en coincidia cap, només pel camp `code`. Els mòduls del càlcul (`modules`),
+  la versió de Node i la resta de la línia d'inici sí que hi coincidien.
+- **La causa:** abans de llançar-la, vaig copiar `compara.mjs` a la còpia neta, sense seguir. `densitat.mjs` hi escriu `+canvis` si
+  hi ha cap fitxer `.js` o `.mjs` que no sigui el del commit, encara que sigui sense seguir (`git status --porcelain -- "*.js"
+  "*.mjs"`).
+- **El criteri no es toca.** El primer intent és a `intent-1/`:
+  - **a git:** l'estat, l'execució, la consola i la comparació;
+  - **a la còpia de seguretat:** els 45 registres, comprimits, amb la SHA-256 a `intent-1/execucio-llista-tros*.txt`.
+
+  No s'hi va comparar cap replicador, perquè la comparació s'atura a la primera diferència.
+- **El segon intent** corre des de les 06.36, amb les mateixes llistes, i amb la còpia sense cap fitxer de codi sense seguir
+  (`git status --porcelain -- "*.js" "*.mjs"`, buit). La comparació es fa des d'una altra còpia, la de `main`, amb els camins de la
+  còpia neta.
+- **Per al nivell 2:** a la còpia del càlcul, cap fitxer de codi sense seguir mentre hi corri res.
+
+## El segon intent: 45 de 45 coincideixen (05-11-2026)
+
+- **La repetició:** les 45 ordres, de les 06.36 a les 06.58, totes amb el codi 0.
+  - **L'estat:** `estat-llista-tros*.txt`.
+  - **Les SHA-256 dels registres:** `execucio-llista-tros*.txt`.
+  - **La línia d'inici** de cada registre diu `a677726`, com la de les tirades.
+- **La comparació** (`comparacio.txt`, des de la còpia de `main`): **45 de 45 coincideixen.** Els replicadors de cada tros, línia a
+  línia, i el seu recompte.
+- **Els dos intents:** els 45 registres del primer són iguals als del segon, línia a línia. Només canvien el camp `code` de la línia
+  d'inici (`a677726+canvis` → `a677726`) i el temps de la línia final. El fitxer sense seguir no va canviar el càlcul.
+  - **Quan es va comprovar:** després de la comparació.
+  - **El programa i la seva sortida:** `intent-1/compara-intents.mjs` i `intent-1/comparacio-intents.txt`.
