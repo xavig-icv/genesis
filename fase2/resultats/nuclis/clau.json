@@ -1,0 +1,10105 @@
+{
+ "eina": "eines/nuclis-sensibilitat.mjs",
+ "codi": "df3676d",
+ "registre": {
+  "fitxer": "fase2/families.js",
+  "sha256": "1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e"
+ },
+ "node": "v16.15.1",
+ "data": "2026-11-03T01:10:44.045Z",
+ "valors": [
+  1,
+  2,
+  3
+ ],
+ "conjunt": "docs/captures.sha256",
+ "arrel": "una altra còpia",
+ "captures": 183,
+ "entrades": [
+  {
+   "captura": "fase2/resultats/llavor1-mon512x256-r2-m0.01-epoca12000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 32215,
+   "variants": {
+    "1": {
+     "alive": 0.009765625,
+     "colored": 5180,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 610,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<,,{,[",
+       "share": 0.03952,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.009765625,
+     "colored": 5161,
+     "lost": 96,
+     "gained": 77,
+     "runColored": 595,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<,,{,[",
+       "share": 0.039375,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 0.9671
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.009765625,
+     "colored": 5161,
+     "lost": 96,
+     "gained": 77,
+     "runColored": 595,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<,,{,[",
+       "share": 0.039375,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 0.9671
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase1/resultats/llavor3-epoca8950.bin",
+   "width": 0,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 23299,
+   "variants": {
+    "1": {
+     "alive": 0.287109375,
+     "colored": 86994,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 14164,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[},<]",
+       "share": 0.663712,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.287109375,
+     "colored": 86994,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 14164,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[},<]",
+       "share": 0.663712,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.287109375,
+     "colored": 86994,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 14164,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[},<]",
+       "share": 0.663712,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase1/resultats/llavor3-final.bin",
+   "width": 0,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19215,
+   "variants": {
+    "1": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase1/resultats/llavor1-fils7-epoca250.bin",
+   "width": 0,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 5140,
+   "variants": {
+    "1": {
+     "alive": 0.33203125,
+     "colored": 95250,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3382,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.7267,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.33203125,
+     "colored": 95250,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3382,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.7267,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.33203125,
+     "colored": 95250,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3382,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.7267,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase1/resultats/llavor1-fils7-epoca500.bin",
+   "width": 0,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 9018,
+   "variants": {
+    "1": {
+     "alive": 0.1015625,
+     "colored": 44574,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1658,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.340073,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.1015625,
+     "colored": 44574,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1658,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.340073,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.1015625,
+     "colored": 44574,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1658,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.340073,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase1/resultats/llavor1-fils7-epoca750.bin",
+   "width": 0,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 307,
+   "variants": {
+    "1": {
+     "alive": 0.927734375,
+     "colored": 125053,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 152,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "-]}<,[",
+       "share": 0.954079,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.927734375,
+     "colored": 125053,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 152,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "-]}<,[",
+       "share": 0.954079,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.927734375,
+     "colored": 125053,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 152,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "-]}<,[",
+       "share": 0.954079,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase1/resultats/llavor1-epoca16000.bin",
+   "width": 0,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 7426,
+   "variants": {
+    "1": {
+     "alive": 0.09375,
+     "colored": 89883,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2267,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,[<,}",
+       "share": 0.685753,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.09375,
+     "colored": 89883,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2267,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,[<,}",
+       "share": 0.685753,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.09375,
+     "colored": 89883,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2267,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,[<,}",
+       "share": 0.685753,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/llavor1-mon512x256-r2-m1-final.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 4838,
+   "variants": {
+    "1": {
+     "alive": 0.396484375,
+     "colored": 106484,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[.,{>]",
+       "share": 0.812408,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.396484375,
+     "colored": 106484,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[.,{>]",
+       "share": 0.812408,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.396484375,
+     "colored": 106484,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[.,{>]",
+       "share": 0.812408,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/llavor3-mon512x256-r2-m1-final.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 205,
+   "variants": {
+    "1": {
+     "alive": 0.9921875,
+     "colored": 122639,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 128,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",,}]{{",
+       "share": 0.616768,
+       "distinct": 4
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<},]}",
+       "share": 0.134987,
+       "distinct": 5
+      },
+      {
+       "id": 3,
+       "born": 0,
+       "core": ",<}]}<",
+       "share": 0.179321,
+       "distinct": 4
+      },
+      {
+       "id": 5,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.004585,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.9921875,
+     "colored": 122639,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 128,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",,}]{{",
+       "share": 0.616768,
+       "distinct": 4
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<},]}",
+       "share": 0.134987,
+       "distinct": 5
+      },
+      {
+       "id": 3,
+       "born": 0,
+       "core": ",<}]}<",
+       "share": 0.179321,
+       "distinct": 4
+      },
+      {
+       "id": 5,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.004585,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 3,
+       "amb": {
+        "id": 3,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 5,
+       "amb": {
+        "id": 5,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.9921875,
+     "colored": 122639,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 128,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",,}]{{",
+       "share": 0.616768,
+       "distinct": 4
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<},]}",
+       "share": 0.134987,
+       "distinct": 5
+      },
+      {
+       "id": 3,
+       "born": 0,
+       "core": ",<}]}<",
+       "share": 0.179321,
+       "distinct": 4
+      },
+      {
+       "id": 5,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.004585,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 3,
+       "amb": {
+        "id": 3,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 5,
+       "amb": {
+        "id": 5,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/vm/llavor1-mon512x256-r2-m0.001-final.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 399,
+   "variants": {
+    "1": {
+     "alive": 0.9453125,
+     "colored": 127047,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 95,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[,}<]",
+       "share": 0.969292,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.9453125,
+     "colored": 127047,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 95,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[,}<]",
+       "share": 0.969292,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.9453125,
+     "colored": 127047,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 95,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[,}<]",
+       "share": 0.969292,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/vm/llavor2-mon512x256-r2-m0.01-final.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 70,
+   "variants": {
+    "1": {
+     "alive": 0.837890625,
+     "colored": 112585,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.485802,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.373154,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.837890625,
+     "colored": 112585,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.485802,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.373154,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.837890625,
+     "colored": 112585,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.485802,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.373154,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/llavor1-mon512x256-r2-m0.01-final.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 73354,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1006-mon512x256-r2-establiment2250-epoca1750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 6102,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1006-mon512x256-r2-establiment2250-epoca2000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 6908,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1006-mon512x256-r2-establiment2250-epoca2250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 12564,
+   "variants": {
+    "1": {
+     "alive": 0.015625,
+     "colored": 1558,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1477,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[<,}]",
+       "share": 0.011887,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.015625,
+     "colored": 1558,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1477,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[<,}]",
+       "share": 0.011887,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.015625,
+     "colored": 1558,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1477,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[<,}]",
+       "share": 0.011887,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1009-mon512x256-r2-establiment7500-epoca7000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17506,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1009-mon512x256-r2-establiment7500-epoca7250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17602,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1009-mon512x256-r2-establiment7500-epoca7500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16858,
+   "variants": {
+    "1": {
+     "alive": 0.0234375,
+     "colored": 6538,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 66,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.049881,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0234375,
+     "colored": 6538,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 66,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.049881,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0234375,
+     "colored": 6706,
+     "lost": 51,
+     "gained": 219,
+     "runColored": 69,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.051163,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 0.96
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1010-mon512x256-r2-establiment6250-epoca5750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16033,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1010-mon512x256-r2-establiment6250-epoca6000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 15834,
+   "variants": {
+    "1": {
+     "alive": 0.0078125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.0078125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.0078125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1010-mon512x256-r2-establiment6250-epoca6250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 14902,
+   "variants": {
+    "1": {
+     "alive": 0.029296875,
+     "colored": 3763,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.016495,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.012215,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.029296875,
+     "colored": 3763,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.016495,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.012215,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.029296875,
+     "colored": 3763,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.016495,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.012215,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1016-mon512x256-r2-establiment12250-epoca11750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17918,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1016-mon512x256-r2-establiment12250-epoca12000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17775,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1016-mon512x256-r2-establiment12250-epoca12250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17556,
+   "variants": {
+    "1": {
+     "alive": 0.01171875,
+     "colored": 1282,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[<,}]",
+       "share": 0.009781,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.01171875,
+     "colored": 1282,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[<,}]",
+       "share": 0.009781,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.01171875,
+     "colored": 1282,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[<,}]",
+       "share": 0.009781,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1017-mon512x256-r2-establiment12500-epoca12000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18426,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1017-mon512x256-r2-establiment12500-epoca12250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18054,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1017-mon512x256-r2-establiment12500-epoca12500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16999,
+   "variants": {
+    "1": {
+     "alive": 0.0390625,
+     "colored": 7771,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<}]]}",
+       "share": 0.059288,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0390625,
+     "colored": 7771,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<}]]}",
+       "share": 0.059288,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0390625,
+     "colored": 7771,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<}]]}",
+       "share": 0.059288,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1018-mon512x256-r2-establiment10250-epoca10000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16767,
+   "variants": {
+    "1": {
+     "alive": 0.009765625,
+     "colored": 3812,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 58,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},.<]",
+       "share": 0.029083,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.009765625,
+     "colored": 3812,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 58,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},.<]",
+       "share": 0.029083,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.009765625,
+     "colored": 3812,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 58,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},.<]",
+       "share": 0.029083,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1018-mon512x256-r2-establiment10250-epoca10250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 14802,
+   "variants": {
+    "1": {
+     "alive": 0.0625,
+     "colored": 17328,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 178,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},.<]",
+       "share": 0.132202,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0625,
+     "colored": 17328,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 178,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},.<]",
+       "share": 0.132202,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0625,
+     "colored": 17328,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 178,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},.<]",
+       "share": 0.132202,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1018-mon512x256-r2-establiment10250-epoca9750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17217,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1021-mon512x256-r2-establiment9500-epoca9000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17204,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1021-mon512x256-r2-establiment9500-epoca9250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17368,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1021-mon512x256-r2-establiment9500-epoca9500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16639,
+   "variants": {
+    "1": {
+     "alive": 0.013671875,
+     "colored": 2208,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.016846,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.013671875,
+     "colored": 2208,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.016846,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.013671875,
+     "colored": 2208,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.016846,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1023-mon512x256-r2-establiment15750-epoca15250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17861,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1023-mon512x256-r2-establiment15750-epoca15500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17941,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1023-mon512x256-r2-establiment15750-epoca15750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17034,
+   "variants": {
+    "1": {
+     "alive": 0.009765625,
+     "colored": 1611,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.012291,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.009765625,
+     "colored": 1611,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.012291,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.009765625,
+     "colored": 1611,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.012291,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1051-mon512x256-r2-establiment10250-epoca10000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17573,
+   "variants": {
+    "1": {
+     "alive": 0.0078125,
+     "colored": 702,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ".[<,}]",
+       "share": 0.005356,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0078125,
+     "colored": 702,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ".[<,}]",
+       "share": 0.005356,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0078125,
+     "colored": 702,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ".[<,}]",
+       "share": 0.005356,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1051-mon512x256-r2-establiment10250-epoca10250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 15532,
+   "variants": {
+    "1": {
+     "alive": 0.017578125,
+     "colored": 4975,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ".[<,}]",
+       "share": 0.037956,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.017578125,
+     "colored": 4975,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ".[<,}]",
+       "share": 0.037956,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.017578125,
+     "colored": 4975,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ".[<,}]",
+       "share": 0.037956,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1051-mon512x256-r2-establiment10250-epoca9750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17838,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1054-mon512x256-r2-establiment15000-epoca14500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17537,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1054-mon512x256-r2-establiment15000-epoca14750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17018,
+   "variants": {
+    "1": {
+     "alive": 0.009765625,
+     "colored": 1476,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.011261,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.009765625,
+     "colored": 1476,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.011261,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.009765625,
+     "colored": 1476,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.011261,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1054-mon512x256-r2-establiment15000-epoca15000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 15046,
+   "variants": {
+    "1": {
+     "alive": 0.0390625,
+     "colored": 5058,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.038589,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0390625,
+     "colored": 5058,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.038589,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0390625,
+     "colored": 5058,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]},<[",
+       "share": 0.038589,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1059-mon512x256-r2-establiment11750-epoca11250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17469,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1059-mon512x256-r2-establiment11750-epoca11500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17156,
+   "variants": {
+    "1": {
+     "alive": 0.005859375,
+     "colored": 618,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.004715,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.005859375,
+     "colored": 618,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.004715,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.005859375,
+     "colored": 618,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.004715,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1059-mon512x256-r2-establiment11750-epoca11750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 15591,
+   "variants": {
+    "1": {
+     "alive": 0.03125,
+     "colored": 3651,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 13,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.027855,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.03125,
+     "colored": 3651,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 13,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.027855,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.03125,
+     "colored": 3651,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 13,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.027855,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2001-mon512x256-r2-m0.01-establiment5000-epoca4500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17885,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2001-mon512x256-r2-m0.01-establiment5000-epoca4750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18312,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2001-mon512x256-r2-m0.01-establiment5000-epoca5000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 9702,
+   "variants": {
+    "1": {
+     "alive": 0.240234375,
+     "colored": 64320,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2685,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<}][[",
+       "share": 0.490723,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.240234375,
+     "colored": 64320,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2685,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<}][[",
+       "share": 0.490723,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.240234375,
+     "colored": 64320,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2685,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<}][[",
+       "share": 0.490723,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2002-mon512x256-r2-m0.01-establiment7000-epoca6500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19490,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2002-mon512x256-r2-m0.01-establiment7000-epoca6750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19357,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2002-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 14428,
+   "variants": {
+    "1": {
+     "alive": 0.14453125,
+     "colored": 47250,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1057,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},<]]",
+       "share": 0.301285,
+       "distinct": 5
+      },
+      {
+       "id": 3,
+       "born": 0,
+       "core": "<]<,}[",
+       "share": 0.059204,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.14453125,
+     "colored": 47250,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1057,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},<]]",
+       "share": 0.301285,
+       "distinct": 5
+      },
+      {
+       "id": 3,
+       "born": 0,
+       "core": "<]<,}[",
+       "share": 0.059204,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 3,
+       "amb": {
+        "id": 3,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.14453125,
+     "colored": 47250,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1057,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},<]]",
+       "share": 0.301285,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "<]<,}[",
+       "share": 0.059204,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 3,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2003-mon512x256-r2-m0.01-establiment13000-epoca12500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19373,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2003-mon512x256-r2-m0.01-establiment13000-epoca12750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19532,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2003-mon512x256-r2-m0.01-establiment13000-epoca13000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17192,
+   "variants": {
+    "1": {
+     "alive": 0.0703125,
+     "colored": 13944,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 191,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,,}<]",
+       "share": 0.106384,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0703125,
+     "colored": 13944,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 191,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,,}<]",
+       "share": 0.106384,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0703125,
+     "colored": 13944,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 191,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,,}<]",
+       "share": 0.106384,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2005-mon512x256-r2-m0.01-establiment5250-epoca4750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18726,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2005-mon512x256-r2-m0.01-establiment5250-epoca5000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17269,
+   "variants": {
+    "1": {
+     "alive": 0.015625,
+     "colored": 72211,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5598,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">,{[[[",
+       "share": 0.550926,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.015625,
+     "colored": 72211,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5598,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">,{[[[",
+       "share": 0.550926,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.015625,
+     "colored": 72211,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5598,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[{,>]",
+       "share": 0.550926,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2005-mon512x256-r2-m0.01-establiment5250-epoca5250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 8756,
+   "variants": {
+    "1": {
+     "alive": 0.8828125,
+     "colored": 121979,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4275,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.,>]",
+       "share": 0.930626,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.8828125,
+     "colored": 121979,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4275,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.,>]",
+       "share": 0.930626,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.8828125,
+     "colored": 121979,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4275,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.,>]",
+       "share": 0.930626,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2011-mon512x256-r2-m0.01-establiment2000-epoca1500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 6335,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2011-mon512x256-r2-m0.01-establiment2000-epoca1750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 7408,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2011-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 4115,
+   "variants": {
+    "1": {
+     "alive": 0.31640625,
+     "colored": 76119,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 854,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.580742,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.31640625,
+     "colored": 76119,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 854,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.580742,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.31640625,
+     "colored": 76119,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 854,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.580742,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2019-mon512x256-r2-m0.01-establiment8750-epoca8250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 20072,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2019-mon512x256-r2-m0.01-establiment8750-epoca8500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19890,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2019-mon512x256-r2-m0.01-establiment8750-epoca8750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19223,
+   "variants": {
+    "1": {
+     "alive": 0.02734375,
+     "colored": 3558,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 61,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "]<},[}",
+       "share": 0.027145,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.02734375,
+     "colored": 3558,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 61,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "]<},[}",
+       "share": 0.027145,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.02734375,
+     "colored": 3558,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 61,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "]<},[}",
+       "share": 0.027145,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2021-mon512x256-r2-m0.01-establiment11000-epoca10500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19441,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2021-mon512x256-r2-m0.01-establiment11000-epoca10750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19575,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2021-mon512x256-r2-m0.01-establiment11000-epoca11000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 9852,
+   "variants": {
+    "1": {
+     "alive": 0.310546875,
+     "colored": 82676,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3363,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[},<]",
+       "share": 0.630768,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.310546875,
+     "colored": 82676,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3363,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[},<]",
+       "share": 0.630768,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.310546875,
+     "colored": 82676,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3363,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[},<]",
+       "share": 0.630768,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2051-mon512x256-r2-m0.01-establiment7000-epoca6500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19535,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2051-mon512x256-r2-m0.01-establiment7000-epoca6750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19906,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2051-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 13625,
+   "variants": {
+    "1": {
+     "alive": 0.052734375,
+     "colored": 6516,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 10,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.049713,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.052734375,
+     "colored": 6516,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 10,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.049713,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.052734375,
+     "colored": 6516,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 10,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.049713,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2053-mon512x256-r2-m0.01-establiment14750-epoca14250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19456,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2053-mon512x256-r2-m0.01-establiment14750-epoca14500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19445,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2053-mon512x256-r2-m0.01-establiment14750-epoca14750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17335,
+   "variants": {
+    "1": {
+     "alive": 0.017578125,
+     "colored": 2640,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.020142,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.017578125,
+     "colored": 2640,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.020142,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.017578125,
+     "colored": 2640,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.020142,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2055-mon512x256-r2-m0.01-establiment250-epoca250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 1295,
+   "variants": {
+    "1": {
+     "alive": 0.08203125,
+     "colored": 8129,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 8,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.,>]",
+       "share": 0.062019,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.08203125,
+     "colored": 8129,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 8,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.,>]",
+       "share": 0.062019,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.08203125,
+     "colored": 8129,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 8,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.,>]",
+       "share": 0.062019,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2056-mon512x256-r2-m0.01-establiment11750-epoca11250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19003,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2056-mon512x256-r2-m0.01-establiment11750-epoca11500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 14196,
+   "variants": {
+    "1": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2056-mon512x256-r2-m0.01-establiment11750-epoca11750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 2848,
+   "variants": {
+    "1": {
+     "alive": 0.82421875,
+     "colored": 109124,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 596,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]>{.[",
+       "share": 0.83255,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.82421875,
+     "colored": 109124,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 596,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]>{.[",
+       "share": 0.83255,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.82421875,
+     "colored": 109124,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 596,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]>{.[",
+       "share": 0.83255,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2057-mon512x256-r2-m0.01-establiment2000-epoca1500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 6524,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2057-mon512x256-r2-m0.01-establiment2000-epoca1750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 7569,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2057-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 1986,
+   "variants": {
+    "1": {
+     "alive": 0.302734375,
+     "colored": 30841,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.196396,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.038902,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.302734375,
+     "colored": 30841,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.196396,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.038902,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.302734375,
+     "colored": 30841,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 5,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.196396,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.038902,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2058-mon512x256-r2-m0.01-establiment12250-epoca11750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18955,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2058-mon512x256-r2-m0.01-establiment12250-epoca12000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18418,
+   "variants": {
+    "1": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.00390625,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2058-mon512x256-r2-m0.01-establiment12250-epoca12250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 4680,
+   "variants": {
+    "1": {
+     "alive": 0.515625,
+     "colored": 86201,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1082,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.585701,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ",[,}<]",
+       "share": 0.036804,
+       "distinct": 5
+      },
+      {
+       "id": 4,
+       "born": 0,
+       "core": "<,],<}",
+       "share": 0.035156,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.515625,
+     "colored": 86201,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1082,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.585701,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ",[,}<]",
+       "share": 0.036804,
+       "distinct": 5
+      },
+      {
+       "id": 4,
+       "born": 0,
+       "core": "<,],<}",
+       "share": 0.035156,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 4,
+       "amb": {
+        "id": 4,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.515625,
+     "colored": 86201,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1082,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.585701,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ",[,}<]",
+       "share": 0.036804,
+       "distinct": 5
+      },
+      {
+       "id": 4,
+       "born": 0,
+       "core": "<,],<}",
+       "share": 0.035156,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 4,
+       "amb": {
+        "id": 4,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2062-mon512x256-r2-m0.01-establiment15250-epoca14750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19885,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2062-mon512x256-r2-m0.01-establiment15250-epoca15000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19616,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2062-mon512x256-r2-m0.01-establiment15250-epoca15250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 4978,
+   "variants": {
+    "1": {
+     "alive": 0.181640625,
+     "colored": 21125,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 6,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.161049,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ".]},<[",
+       "share": 0.000122,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.181640625,
+     "colored": 21125,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 6,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.161049,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ".]},<[",
+       "share": 0.000122,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.181640625,
+     "colored": 21109,
+     "lost": 16,
+     "gained": 0,
+     "runColored": 6,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.161049,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2064-mon512x256-r2-m0.01-establiment9500-epoca9000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18323,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2064-mon512x256-r2-m0.01-establiment9500-epoca9250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17955,
+   "variants": {
+    "1": {
+     "alive": 0.009765625,
+     "colored": 3807,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 170,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">{..[[",
+       "share": 0.029045,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.009765625,
+     "colored": 3807,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 170,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">{..[[",
+       "share": 0.029045,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.009765625,
+     "colored": 3807,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 170,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">{..[[",
+       "share": 0.029045,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2064-mon512x256-r2-m0.01-establiment9500-epoca9500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 14180,
+   "variants": {
+    "1": {
+     "alive": 0.033203125,
+     "colored": 21532,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 807,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[..{>]",
+       "share": 0.164276,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.033203125,
+     "colored": 21532,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 807,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[..{>]",
+       "share": 0.164276,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.033203125,
+     "colored": 21532,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 807,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[..{>]",
+       "share": 0.164276,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2065-mon512x256-r2-m0.01-establiment7250-epoca6750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19059,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2065-mon512x256-r2-m0.01-establiment7250-epoca7000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19461,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2065-mon512x256-r2-m0.01-establiment7250-epoca7250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18843,
+   "variants": {
+    "1": {
+     "alive": 0.013671875,
+     "colored": 3310,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 45,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.025253,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.013671875,
+     "colored": 3310,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 45,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.025253,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.013671875,
+     "colored": 3310,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 45,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.025253,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1026-mon512x256-r2-establiment8000-epoca7500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17408,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1026-mon512x256-r2-establiment8000-epoca7750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17320,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1026-mon512x256-r2-establiment8000-epoca8000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16879,
+   "variants": {
+    "1": {
+     "alive": 0.021484375,
+     "colored": 4229,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 65,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.032265,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.021484375,
+     "colored": 4229,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 65,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.032265,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.021484375,
+     "colored": 4229,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 65,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.032265,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1027-mon512x256-r2-establiment4000-epoca3500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 11765,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1027-mon512x256-r2-establiment4000-epoca3750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 12229,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1027-mon512x256-r2-establiment4000-epoca4000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 12167,
+   "variants": {
+    "1": {
+     "alive": 0.009765625,
+     "colored": 1678,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.012802,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.009765625,
+     "colored": 1678,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.012802,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.009765625,
+     "colored": 1678,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.012802,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1029-mon512x256-r2-establiment1250-epoca1000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 3763,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1029-mon512x256-r2-establiment1250-epoca1250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 4332,
+   "variants": {
+    "1": {
+     "alive": 0.021484375,
+     "colored": 2726,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.020798,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.021484375,
+     "colored": 2726,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.020798,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.021484375,
+     "colored": 2726,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.020798,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1029-mon512x256-r2-establiment1250-epoca750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 2955,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1033-mon512x256-r2-establiment15000-epoca14500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18160,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1033-mon512x256-r2-establiment15000-epoca14750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17670,
+   "variants": {
+    "1": {
+     "alive": 0.009765625,
+     "colored": 1676,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 9,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.012787,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.009765625,
+     "colored": 1676,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 9,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.012787,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.009765625,
+     "colored": 1676,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 9,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.012787,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1033-mon512x256-r2-establiment15000-epoca15000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 15985,
+   "variants": {
+    "1": {
+     "alive": 0.05859375,
+     "colored": 5946,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 40,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.045364,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.05859375,
+     "colored": 5946,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 40,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.045364,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.05859375,
+     "colored": 5946,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 40,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,}<]]",
+       "share": 0.045364,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1035-mon512x256-r2-establiment15000-epoca14500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17059,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1035-mon512x256-r2-establiment15000-epoca14750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16594,
+   "variants": {
+    "1": {
+     "alive": 0.015625,
+     "colored": 3396,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 34,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.025909,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.015625,
+     "colored": 3396,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 34,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.025909,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.015625,
+     "colored": 3396,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 34,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.025909,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1035-mon512x256-r2-establiment15000-epoca15000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 15406,
+   "variants": {
+    "1": {
+     "alive": 0.041015625,
+     "colored": 9549,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 60,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.072853,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.041015625,
+     "colored": 9549,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 60,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.072853,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.041015625,
+     "colored": 9549,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 60,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.072853,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1036-mon512x256-r2-establiment4750-epoca4250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 13301,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1036-mon512x256-r2-establiment4750-epoca4500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 13851,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1036-mon512x256-r2-establiment4750-epoca4750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18102,
+   "variants": {
+    "1": {
+     "alive": 0.0234375,
+     "colored": 5745,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4695,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",[[[[[",
+       "share": 0.043831,
+       "distinct": 2
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0234375,
+     "colored": 5745,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4695,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",[[[[[",
+       "share": 0.043831,
+       "distinct": 2
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0234375,
+     "colored": 5311,
+     "lost": 631,
+     "gained": 197,
+     "runColored": 4161,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[[[,}",
+       "share": 0.04052,
+       "distinct": 3
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 0.8607
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1037-mon512x256-r2-establiment14500-epoca14000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18055,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1037-mon512x256-r2-establiment14500-epoca14250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17586,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1037-mon512x256-r2-establiment14500-epoca14500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16455,
+   "variants": {
+    "1": {
+     "alive": 0.029296875,
+     "colored": 9710,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 106,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<[[[.",
+       "share": 0.074081,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.029296875,
+     "colored": 9710,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 106,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<[[[.",
+       "share": 0.074081,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.029296875,
+     "colored": 9710,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 106,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<[[[.",
+       "share": 0.074081,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1039-mon512x256-r2-establiment4250-epoca3750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 12077,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1039-mon512x256-r2-establiment4250-epoca4000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 12603,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1039-mon512x256-r2-establiment4250-epoca4250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17137,
+   "variants": {
+    "1": {
+     "alive": 0.01953125,
+     "colored": 4791,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4228,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<[[[[",
+       "share": 0.036552,
+       "distinct": 3
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.01953125,
+     "colored": 4791,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4228,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<[[[[",
+       "share": 0.036552,
+       "distinct": 3
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.01953125,
+     "colored": 4791,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4228,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",<[[[[",
+       "share": 0.036552,
+       "distinct": 3
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1041-mon512x256-r2-establiment9000-epoca8500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17540,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1041-mon512x256-r2-establiment9000-epoca8750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17500,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1041-mon512x256-r2-establiment9000-epoca9000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16702,
+   "variants": {
+    "1": {
+     "alive": 0.044921875,
+     "colored": 6398,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 185,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.048813,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.044921875,
+     "colored": 6398,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 185,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.048813,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.044921875,
+     "colored": 6398,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 185,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.048813,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1045-mon512x256-r2-establiment9500-epoca9000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17446,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1045-mon512x256-r2-establiment9500-epoca9250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17544,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1045-mon512x256-r2-establiment9500-epoca9500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16828,
+   "variants": {
+    "1": {
+     "alive": 0.01953125,
+     "colored": 1946,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.014847,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.01953125,
+     "colored": 1946,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.014847,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.01953125,
+     "colored": 1946,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.014847,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1046-mon512x256-r2-establiment10500-epoca10000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18019,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1046-mon512x256-r2-establiment10500-epoca10250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17932,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1046-mon512x256-r2-establiment10500-epoca10500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17005,
+   "variants": {
+    "1": {
+     "alive": 0.021484375,
+     "colored": 3222,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]},<[",
+       "share": 0.024582,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.021484375,
+     "colored": 3222,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]},<[",
+       "share": 0.024582,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.021484375,
+     "colored": 3222,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]},<[",
+       "share": 0.024582,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1068-mon512x256-r2-establiment9500-epoca9000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17504,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1068-mon512x256-r2-establiment9500-epoca9250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17737,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1068-mon512x256-r2-establiment9500-epoca9500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16849,
+   "variants": {
+    "1": {
+     "alive": 0.03515625,
+     "colored": 6846,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 187,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[{.>]",
+       "share": 0.052231,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.03515625,
+     "colored": 6846,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 187,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[{.>]",
+       "share": 0.052231,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.03515625,
+     "colored": 6846,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 187,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[{.>]",
+       "share": 0.052231,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1070-mon512x256-r2-establiment9000-epoca8500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17548,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1070-mon512x256-r2-establiment9000-epoca8750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17762,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/A/captures/llavor1070-mon512x256-r2-establiment9000-epoca9000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16860,
+   "variants": {
+    "1": {
+     "alive": 0.02734375,
+     "colored": 2017,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.010262,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.005127,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.02734375,
+     "colored": 2017,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.010262,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.005127,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.02734375,
+     "colored": 2017,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 1,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.010262,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.005127,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2030-mon512x256-r2-m0.01-establiment14000-epoca13500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 20330,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2030-mon512x256-r2-m0.01-establiment14000-epoca13750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 22688,
+   "variants": {
+    "1": {
+     "alive": 0.005859375,
+     "colored": 1145,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 641,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[<,}]",
+       "share": 0.008736,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.005859375,
+     "colored": 1145,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 641,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[<,}]",
+       "share": 0.008736,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.005859375,
+     "colored": 1145,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 641,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[<,}]",
+       "share": 0.008736,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2030-mon512x256-r2-m0.01-establiment14000-epoca14000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 42286,
+   "variants": {
+    "1": {
+     "alive": 0.140625,
+     "colored": 17004,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 7702,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.12973,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.140625,
+     "colored": 17004,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 7702,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.12973,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.140625,
+     "colored": 17004,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 7702,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]}",
+       "share": 0.12973,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2032-mon512x256-r2-m0.01-establiment3500-epoca3000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 12978,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2032-mon512x256-r2-m0.01-establiment3500-epoca3250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 14109,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2032-mon512x256-r2-m0.01-establiment3500-epoca3500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 13450,
+   "variants": {
+    "1": {
+     "alive": 0.0390625,
+     "colored": 5018,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 15,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.038284,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0390625,
+     "colored": 5018,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 15,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.038284,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0390625,
+     "colored": 5018,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 15,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.038284,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2036-mon512x256-r2-m0.01-establiment12250-epoca11750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18740,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2036-mon512x256-r2-m0.01-establiment12250-epoca12000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18525,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2036-mon512x256-r2-m0.01-establiment12250-epoca12250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17330,
+   "variants": {
+    "1": {
+     "alive": 0.015625,
+     "colored": 1784,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.013611,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.015625,
+     "colored": 1784,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.013611,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.015625,
+     "colored": 1784,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.013611,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2038-mon512x256-r2-m0.01-establiment10250-epoca10000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18558,
+   "variants": {
+    "1": {
+     "alive": 0.0078125,
+     "colored": 1233,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<,}[",
+       "share": 0.009407,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0078125,
+     "colored": 1233,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<,}[",
+       "share": 0.009407,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0078125,
+     "colored": 1233,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<,}[",
+       "share": 0.009407,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2038-mon512x256-r2-m0.01-establiment10250-epoca10250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 9979,
+   "variants": {
+    "1": {
+     "alive": 0.125,
+     "colored": 32027,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.244347,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.125,
+     "colored": 32027,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.244347,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.125,
+     "colored": 32027,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 340,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.244347,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2038-mon512x256-r2-m0.01-establiment10250-epoca9750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18639,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2039-mon512x256-r2-m0.01-establiment2000-epoca1500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 6318,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2039-mon512x256-r2-m0.01-establiment2000-epoca1750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 7423,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2039-mon512x256-r2-m0.01-establiment2000-epoca2000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 869,
+   "variants": {
+    "1": {
+     "alive": 0.171875,
+     "colored": 24523,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.1661,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.020996,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.171875,
+     "colored": 24523,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.1661,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.020996,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.171875,
+     "colored": 24523,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 2,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.1661,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ">]>.{[",
+       "share": 0.020996,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2041-mon512x256-r2-m0.01-establiment10750-epoca10250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19354,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2041-mon512x256-r2-m0.01-establiment10750-epoca10500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18977,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2041-mon512x256-r2-m0.01-establiment10750-epoca10750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17320,
+   "variants": {
+    "1": {
+     "alive": 0.01953125,
+     "colored": 2489,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 130,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">],}<[",
+       "share": 0.01899,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.01953125,
+     "colored": 2489,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 130,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">],}<[",
+       "share": 0.01899,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.01953125,
+     "colored": 2489,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 130,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ">],}<[",
+       "share": 0.01899,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2042-mon512x256-r2-m0.01-establiment5750-epoca5250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19430,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2042-mon512x256-r2-m0.01-establiment5750-epoca5500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19503,
+   "variants": {
+    "1": {
+     "alive": 0.005859375,
+     "colored": 703,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 27,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[,}<]",
+       "share": 0.005363,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.005859375,
+     "colored": 703,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 27,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[,}<]",
+       "share": 0.005363,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.005859375,
+     "colored": 703,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 27,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[,}<]",
+       "share": 0.005363,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2042-mon512x256-r2-m0.01-establiment5750-epoca5750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 13326,
+   "variants": {
+    "1": {
+     "alive": 0.046875,
+     "colored": 14507,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 480,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.11068,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.046875,
+     "colored": 14507,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 480,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.11068,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.046875,
+     "colored": 14936,
+     "lost": 419,
+     "gained": 848,
+     "runColored": 483,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[,}<]",
+       "share": 0.113953,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 0.9175
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2043-mon512x256-r2-m0.01-establiment500-epoca250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 1371,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2043-mon512x256-r2-m0.01-establiment500-epoca500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 1162,
+   "variants": {
+    "1": {
+     "alive": 0.294921875,
+     "colored": 60357,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 88,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.460487,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.294921875,
+     "colored": 60357,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 88,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.460487,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.294921875,
+     "colored": 60357,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 88,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<]<},[",
+       "share": 0.460487,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2044-mon512x256-r2-m0.01-establiment6750-epoca6250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19199,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2044-mon512x256-r2-m0.01-establiment6750-epoca6500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19385,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2044-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 36873,
+   "variants": {
+    "1": {
+     "alive": 0.453125,
+     "colored": 80174,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 29270,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[<,}]",
+       "share": 0.288895,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ",}<]}<",
+       "share": 0.322784,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.453125,
+     "colored": 80174,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 29270,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[<,}]",
+       "share": 0.288895,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ",}<]}<",
+       "share": 0.322784,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.453125,
+     "colored": 80174,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 29270,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[[<,}]",
+       "share": 0.288895,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": ",}<]}<",
+       "share": 0.322784,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2048-mon512x256-r2-m0.01-establiment4500-epoca4000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17195,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2048-mon512x256-r2-m0.01-establiment4500-epoca4250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18344,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2048-mon512x256-r2-m0.01-establiment4500-epoca4500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 34557,
+   "variants": {
+    "1": {
+     "alive": 0.15625,
+     "colored": 20899,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 20856,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]},<[",
+       "share": 0.159447,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.15625,
+     "colored": 20899,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 20856,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]},<[",
+       "share": 0.159447,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.15625,
+     "colored": 20899,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 20856,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",]},<[",
+       "share": 0.159447,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2049-mon512x256-r2-m0.01-establiment13750-epoca13250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 20376,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2049-mon512x256-r2-m0.01-establiment13750-epoca13500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19857,
+   "variants": {
+    "1": {
+     "alive": 0.01171875,
+     "colored": 2588,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 111,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",,[<,}",
+       "share": 0.019745,
+       "distinct": 4
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.01171875,
+     "colored": 2588,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 111,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",,[<,}",
+       "share": 0.019745,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.01171875,
+     "colored": 2588,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 111,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": ",,[<,}",
+       "share": 0.019745,
+       "distinct": 4
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2049-mon512x256-r2-m0.01-establiment13750-epoca13750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 4855,
+   "variants": {
+    "1": {
+     "alive": 0.158203125,
+     "colored": 15280,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.116577,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.158203125,
+     "colored": 15280,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.116577,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.158203125,
+     "colored": 15280,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 4,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.116577,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2069-mon512x256-r2-m0.01-establiment7000-epoca6500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19562,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2069-mon512x256-r2-m0.01-establiment7000-epoca6750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19347,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2069-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16908,
+   "variants": {
+    "1": {
+     "alive": 0.025390625,
+     "colored": 15945,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 455,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "]},<[{",
+       "share": 0.121651,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.025390625,
+     "colored": 15945,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 455,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "]},<[{",
+       "share": 0.121651,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.025390625,
+     "colored": 15945,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 455,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "]},<[{",
+       "share": 0.121651,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2071-mon512x256-r2-m0.01-establiment6750-epoca6250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 20151,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2071-mon512x256-r2-m0.01-establiment6750-epoca6500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 20020,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2071-mon512x256-r2-m0.01-establiment6750-epoca6750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 8050,
+   "variants": {
+    "1": {
+     "alive": 0.158203125,
+     "colored": 41763,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 821,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.25811,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[,<}]}",
+       "share": 0.060516,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.158203125,
+     "colored": 41763,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 821,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.25811,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[,<}]}",
+       "share": 0.060516,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.158203125,
+     "colored": 41763,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 821,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,<}]]",
+       "share": 0.25811,
+       "distinct": 5
+      },
+      {
+       "id": 2,
+       "born": 0,
+       "core": "[,<}]}",
+       "share": 0.060516,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      },
+      {
+       "id": 2,
+       "amb": {
+        "id": 2,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2074-mon512x256-r2-m0.01-establiment5250-epoca4750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18012,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2074-mon512x256-r2-m0.01-establiment5250-epoca5000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18290,
+   "variants": {
+    "1": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0.001953125,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2074-mon512x256-r2-m0.01-establiment5250-epoca5250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 12138,
+   "variants": {
+    "1": {
+     "alive": 0.0390625,
+     "colored": 5298,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 53,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[{>.]",
+       "share": 0.040421,
+       "distinct": 6
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.0390625,
+     "colored": 5298,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 53,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[{>.]",
+       "share": 0.040421,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.0390625,
+     "colored": 5298,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 53,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "<[{>.]",
+       "share": 0.040421,
+       "distinct": 6
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2076-mon512x256-r2-m0.01-establiment1500-epoca1000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 4386,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2076-mon512x256-r2-m0.01-establiment1500-epoca1250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 5338,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2076-mon512x256-r2-m0.01-establiment1500-epoca1500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 5387,
+   "variants": {
+    "1": {
+     "alive": 0.044921875,
+     "colored": 4913,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 119,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.037483,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.044921875,
+     "colored": 4913,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 119,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.037483,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.044921875,
+     "colored": 4913,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 119,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[{.>]]",
+       "share": 0.037483,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2078-mon512x256-r2-m0.01-establiment4750-epoca4250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16161,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2078-mon512x256-r2-m0.01-establiment4750-epoca4500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 16450,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2078-mon512x256-r2-m0.01-establiment4750-epoca4750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 19789,
+   "variants": {
+    "1": {
+     "alive": 0.16796875,
+     "colored": 56211,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3585,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,,<}]",
+       "share": 0.428856,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.16796875,
+     "colored": 56211,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3585,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,,<}]",
+       "share": 0.428856,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.16796875,
+     "colored": 56211,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3585,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[,,<}]",
+       "share": 0.428856,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2079-mon512x256-r2-m0.01-establiment11250-epoca10750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18876,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2079-mon512x256-r2-m0.01-establiment11250-epoca11000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 18579,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2079-mon512x256-r2-m0.01-establiment11250-epoca11250.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 5246,
+   "variants": {
+    "1": {
+     "alive": 0.1328125,
+     "colored": 18195,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 12,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.138817,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.1328125,
+     "colored": 18195,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 12,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.138817,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.1328125,
+     "colored": 18195,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 12,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[<,}]]",
+       "share": 0.138817,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2080-mon512x256-r2-m0.01-establiment7000-epoca6500.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17386,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2080-mon512x256-r2-m0.01-establiment7000-epoca6750.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 17370,
+   "variants": {
+    "1": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": []
+    },
+    "2": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    },
+    "3": {
+     "alive": 0,
+     "colored": 0,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 0,
+     "families": [],
+     "pairs": []
+    }
+   }
+  },
+  {
+   "captura": "fase2/resultats/serie-llei2/B/captures/llavor2080-mon512x256-r2-m0.01-establiment7000-epoca7000.bin",
+   "width": 512,
+   "radius": 2,
+   "n": 131072,
+   "runCells": 20594,
+   "variants": {
+    "1": {
+     "alive": 0.01953125,
+     "colored": 5306,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3547,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},<]]",
+       "share": 0.040482,
+       "distinct": 5
+      }
+     ]
+    },
+    "2": {
+     "alive": 0.01953125,
+     "colored": 5306,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3547,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},<]]",
+       "share": 0.040482,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    },
+    "3": {
+     "alive": 0.01953125,
+     "colored": 5306,
+     "lost": 0,
+     "gained": 0,
+     "runColored": 3547,
+     "families": [
+      {
+       "id": 1,
+       "born": 0,
+       "core": "[},<]]",
+       "share": 0.040482,
+       "distinct": 5
+      }
+     ],
+     "pairs": [
+      {
+       "id": 1,
+       "amb": {
+        "id": 1,
+        "jaccard": 1
+       }
+      }
+     ]
+    }
+   }
+  }
+ ]
+}
