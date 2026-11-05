@@ -22,7 +22,7 @@ function tape(code, fill = 1) {
 const run = (name, t, maxSteps = MAX_STEPS) => evaluator(name)(t, 0, maxSteps);
 
 // La versió de referència de fase1/test-bff.mjs (adaptada de bff.inc.h de cubff, Copyright 2024 Google LLC, llicència
-// Apache 2.0; vegeu NOTICE), amb les regles d'una química, escrites tal com les diu docs/pla-b1.md: una instrucció ablada és
+// Apache 2.0; vegeu NOTICE i LICENSES/Apache-2.0.txt), amb les regles d'una química, escrites tal com les diu docs/pla-b1.md: una instrucció ablada és
 // un byte de dades; una escriptura bloquejada, o una còpia que llegeix de l'altra meitat, compta però no fa res
 function referenceEvaluate(t, maxSteps, chemistry) {
   const nop = chemistry.nop ?? '', block = chemistry.block ?? null;

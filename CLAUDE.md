@@ -208,8 +208,9 @@ Llegeix-los abans de proposar canvis.
   `~/claude-origins-<commit>` i hi deixa el fitxer `VERSIO`. Un lot s'executa sempre des de la carpeta
   del seu commit.
 - Les captures `.bin` no van a git (vegeu `.gitignore`): es regeneren amb el mateix commit i llavor.
-- Llicència: Apache 2.0 per al codi (`LICENSE`, `NOTICE` amb els crèdits) i CC BY 4.0 per al quadern i la
-  documentació (`LICENSE-docs.md`). El repositori es farà públic quan s'acabi la revisió d'abans d'obrir-lo (T-13,
+- Llicència: AGPL-3.0-or-later per al codi des del 05-11-2026 (`LICENSE`; abans, Apache 2.0), amb els crèdits a `NOTICE`. La
+  funció de referència adaptada de cubff conserva l'Apache 2.0 (`LICENSES/Apache-2.0.txt`). CC BY 4.0 per al quadern, la
+  documentació i les dades (`LICENSE-docs.md`, `LICENSE-data.md`). El repositori es farà públic quan s'acabi la revisió d'abans d'obrir-lo (T-13,
   05-11-2026; `docs/disseny.md`), amb la història tal com és, que encara conté l'adreça privada de la VM. Obrir-lo és cosa del
   responsable.
 - Auditories externes iteratives a `../auditories/claude-origins/auditor1/auditN/`. En acabar cada grup

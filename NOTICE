@@ -3,9 +3,11 @@ Copyright 2026 xavig-icv i els col·laboradors de Genesis
 
 Aquest projecte s'ha desenvolupat amb l'ajuda de Claude (Anthropic).
 
-El codi es distribueix amb la llicència Apache 2.0 (vegeu LICENSE). El quadern de laboratori
-(quadern/) i la documentació (docs/, README.md) es distribueixen amb la llicència Creative Commons
-Reconeixement 4.0 Internacional (CC BY 4.0; vegeu LICENSE-docs.md).
+El codi es distribueix amb la llicència GNU Affero General Public License, versió 3 o (a la vostra
+elecció) qualsevol versió posterior (AGPL-3.0-or-later; vegeu LICENSE). Les versions publicades fins al
+05-11-2026 es van distribuir amb la llicència Apache 2.0. El quadern de laboratori (quadern/), la
+documentació (docs/, README.md) i les dades dels experiments es distribueixen amb la llicència Creative
+Commons Reconeixement 4.0 Internacional (CC BY 4.0; vegeu LICENSE-docs.md i LICENSE-data.md).
 
 Crèdits
 -------
@@ -21,7 +23,9 @@ la implementació de referència d'aquest article, cubff (https://github.com/par
 Copyright 2024 Google LLC, amb llicència Apache 2.0. Genesis n'és una reimplementació
 independent en JavaScript, contrastada amb el comportament de cubff. L'única part que en segueix el
 codi de prop és la funció de referència de les proves de l'intèrpret (referenceEvaluate, a
-fase1/test-bff.mjs), adaptada de bff.inc.h.
+fase1/test-bff.mjs), adaptada de bff.inc.h, i la seva variant per a les químiques de B1 (a
+test/quimiques.mjs). Totes dues conserven la llicència Apache 2.0 de cubff (vegeu LICENSES/Apache-2.0.txt),
+que és compatible amb l'AGPLv3.
 
 El lloc web (web/) fa servir les fonts Inter (Copyright 2016 The Inter Project Authors) i JetBrains Mono
 (Copyright 2020 The JetBrains Mono Project Authors), amb la SIL Open Font License 1.1: els fitxers i les

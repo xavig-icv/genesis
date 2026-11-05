@@ -3,9 +3,6 @@
 **Digital abiogenesis:** a toy universe where we try to let life arise on its own, without anyone writing the
 first organism.
 
-*Until 30 October 2026 it was called claude-origins, the name that still appears in the experiment records and in
-the audits.*
-
 *This is the English version of the [Catalan README](README.md), which is the main one. It is shorter, and
 was last synchronised on 5 November 2026. The lab notebook and most of the documentation are in Catalan. Each
 notebook entry has an [English summary](quadern/resum.en.md), and the [glossary](docs/glossari.md) gives the
@@ -216,6 +213,8 @@ See notebook entry 15, in Catalan, or its [English summary](quadern/resum.en.md#
   - **What Bitcoin proves:** that the tag existed when block 974,134 was mined (14:21:50 UTC on 1 November 2026),
     75 minutes before the first branch started. Again, we waited for the anchor before launching.
   - **What it does not prove:** that nobody looked at any result. That is stated in the run log.
+- **The former name:** until 30 October 2026 the project was called claude-origins, the name that still appears in
+  the experiment records and in the audits.
 - **How to cite it:** [`CITATION.cff`](CITATION.cff). **How to take part:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## How to run it
@@ -249,7 +248,8 @@ three hours. `node sim.mjs --help` lists every option, and `npm test` runs the t
 
 ## Licence and credits
 
-- **Code:** Apache 2.0 ([`LICENSE`](LICENSE)).
+- **Code:** GNU AGPL v3 or later ([`LICENSE`](LICENSE)). Until 5 November 2026, Apache 2.0. The reference function
+  adapted from cubff keeps its Apache 2.0 licence ([`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt)).
 - **Notebook and documentation:** CC BY 4.0 ([`LICENSE-docs.md`](LICENSE-docs.md)).
 - **Experimental data:** CC BY 4.0 ([`LICENSE-data.md`](LICENSE-data.md)).
 - **Credits** ([`NOTICE`](NOTICE)).
