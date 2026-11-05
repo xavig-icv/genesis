@@ -6,7 +6,8 @@ import { mkdtempSync, readFileSync, rmSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
-import { encodePng, encodeApng } from '../eines/png.mjs';
+import { encodePng, encodeApng, decodePng, paletteOf, toIndices, encodeApngIndexed } from '../eines/png.mjs';
+import { deflateSync } from 'zlib';
 import { soupImage, worldImage, codeImage, row, grid, label, thousands, COLORS, WORLD, THEMES } from '../eines/imatges.mjs';
 import { pick } from '../eines/tria.mjs';
 import { randomSoup, makeRng } from '../fase1/soup.js';
@@ -49,6 +50,52 @@ const tests = {
     const seqs = cs.filter((c) => c.type === 'fcTL' || c.type === 'fdAT').map((c) => c.data.readUInt32BE(0));
     assert.deepStrictEqual(seqs, [0, 1, 2, 3, 4]);
     assert.strictEqual(cs[2].data.readUInt16BE(20), 50);
+  },
+  'decodePng: el que fa encodePng, i els cinc filtres d’un PNG RGBA': () => {
+    const w = 5, h = 4, rgb = Uint8Array.from({ length: w * h * 3 }, (_, i) => (i * 37 + 11) & 255);
+    assert.deepStrictEqual([...decodePng(encodePng(rgb, w, h)).rgb], [...rgb]);
+    // un PNG RGBA fet a mà, amb una fila de cada filtre (0 a 4), com els del navegador
+    const bpp = 4, stride = w * bpp, px = Uint8Array.from({ length: stride * 5 }, (_, i) => (i * 53 + 7) & 255);
+    const paeth = (a, b, c) => { const p = a + b - c, pa = Math.abs(p - a), pb = Math.abs(p - b), pc = Math.abs(p - c); return pa <= pb && pa <= pc ? a : pb <= pc ? b : c; };
+    const raw = Buffer.alloc((stride + 1) * 5);
+    for (let y = 0; y < 5; y++) {
+      raw[y * (stride + 1)] = y;
+      for (let i = 0; i < stride; i++) {
+        const x = px[y * stride + i], a = i >= bpp ? px[y * stride + i - bpp] : 0, b = y ? px[(y - 1) * stride + i] : 0, c = y && i >= bpp ? px[(y - 1) * stride + i - bpp] : 0;
+        const pred = [0, a, b, (a + b) >> 1, paeth(a, b, c)][y];
+        raw[y * (stride + 1) + 1 + i] = (x - pred) & 255;
+      }
+    }
+    const head = Buffer.alloc(13); head.writeUInt32BE(w, 0); head.writeUInt32BE(5, 4); head[8] = 8; head[9] = 6;
+    const ch = (t, d) => { const o = Buffer.alloc(12 + d.length); o.writeUInt32BE(d.length, 0); o.write(t, 4, 'ascii'); d.copy(o, 8); o.writeUInt32BE(crc32(o.subarray(4, 8 + d.length)), 8 + d.length); return o; };
+    const png = Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), ch('IHDR', head), ch('IDAT', deflateSync(raw)), ch('IEND', Buffer.alloc(0))]);
+    const out = decodePng(png), want = [];
+    for (let i = 0; i < w * 5; i++) want.push(px[i * 4], px[i * 4 + 1], px[i * 4 + 2]);
+    assert.deepStrictEqual([out.width, out.height], [w, 5]);
+    assert.deepStrictEqual([...out.rgb], want);
+  },
+  'paletteOf i toIndices: amb pocs colors, exactes; amb molts, deterministes': () => {
+    const colors = [[0, 0, 0], [255, 0, 128], [12, 34, 56], [255, 255, 255], [90, 90, 90]];
+    const frame = Uint8Array.from(Array.from({ length: 40 }, (_, i) => colors[(i * 7) % 5]).flat());
+    const pal = paletteOf([frame], 256);
+    assert.strictEqual(pal.length, 15);
+    const idx = toIndices(frame, pal);
+    assert.deepStrictEqual([...idx].flatMap((p) => [...pal.subarray(p * 3, p * 3 + 3)]), [...frame]);
+    const many = Uint8Array.from({ length: 3000 }, (_, i) => (i * 97 + (i >> 3) * 13) & 255);
+    const a = paletteOf([many], 16), b = paletteOf([many], 16);
+    assert.strictEqual(a.length, 48);
+    assert.deepStrictEqual([...a], [...b]);
+  },
+  'un APNG amb paleta: PLTE, la seqüència i els índexs': () => {
+    const pal = Uint8Array.from([0, 0, 0, 255, 255, 255, 200, 30, 90]);
+    const cs = chunks(encodeApngIndexed([Uint8Array.from([0, 1, 2, 1]), Uint8Array.from([2, 2, 0, 0])], pal, 2, 2, { delayMs: 40, lastMs: 900 }));
+    assert.deepStrictEqual(cs.map((c) => c.type), ['IHDR', 'PLTE', 'acTL', 'fcTL', 'IDAT', 'fcTL', 'fdAT', 'IEND']);
+    assert.deepStrictEqual([cs[0].data[8], cs[0].data[9]], [8, 3]);
+    assert.deepStrictEqual([...cs[1].data], [...pal]);
+    assert.deepStrictEqual([...inflateSync(cs[4].data)], [0, 0, 1, 0, 2, 1]);
+    assert.deepStrictEqual([...inflateSync(cs[6].data.subarray(4))], [0, 2, 2, 0, 0, 0]);
+    assert.deepStrictEqual([cs[3].data.readUInt16BE(20), cs[5].data.readUInt16BE(20)], [40, 900]);
+    assert.deepStrictEqual(cs.filter((c) => c.type === 'fcTL' || c.type === 'fdAT').map((c) => c.data.readUInt32BE(0)), [0, 1, 2]);
   },
   'una sopa: els bytes amb el color de la seva família': () => {
     const soup = new Uint8Array(64 * 2);

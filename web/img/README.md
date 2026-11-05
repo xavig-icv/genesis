@@ -2,7 +2,7 @@
 
 Cada imatge diu d'on surt. Són captures del lloc mateix (els dibuixos de `web/js/`, sense els controls), fetes amb Chrome 156
 sense finestra, amb el món de la llavor 1006. Les de les finestres del laboratori de la portada, a 1.200 × 560 píxels i en JPEG
-de qualitat 86; els pòsters del naixement, a la mida del planeta de la portada a 1.440 píxels (621 × 621), en WebP de qualitat
+de qualitat 86; els pòsters del naixement, a la mida del planeta de la portada a 1.440 píxels (533 × 533, des de l'harmonia de la portada, `66cfef1`), en WebP de qualitat
 80 i amb el fons transparent. Les SHA-256 són a `SHA256SUMS`.
 
 | Fitxer | Què és |
