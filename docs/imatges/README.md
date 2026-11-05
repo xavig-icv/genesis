@@ -1,7 +1,8 @@
 # D'on surten les imatges
 
-Totes les imatges d'aquesta carpeta les genera `eines/imatges.mjs` a partir de captures `.bin`, amb els
-colors del mode fosc de la interfície (`--tema fosc`). La corba també té una versió clara.
+Totes les imatges d'aquesta carpeta, llevat de les dues animacions 3D, les genera `eines/imatges.mjs` a partir de
+captures `.bin`, amb els colors del mode fosc de la interfície (`--tema fosc`). Les animacions 3D les fa
+`eines/web-animacio.mjs` amb l'explorador del lloc web (vegeu més avall). La corba també té una versió clara.
 - **Les captures** no van a git (8 MB cadascuna), però es poden tornar a fer amb el mateix commit i la mateixa
   llavor.
 - **Les que porten SHA-256** són a `docs/captures.sha256`, i es poden comprovar.
@@ -9,6 +10,8 @@ colors del mode fosc de la interfície (`--tema fosc`). La corba també té una 
 | Imatge | Què mostra | Captures |
 |---|---|---|
 | `colonia-animada.png` | Un PNG animat del món quiet de la llavor 1006 de la sèrie de la llei 2 (grup A): un fotograma cada 50 èpoques, de l'època 1.500 a la 2.900, amb l'època a la cantonada. Els visors que no animen en mostren l'últim fotograma. | 29 captures d'una nova execució de la mateixa llavor (vegeu més avall). |
+| `planeta-1006.png` | Un PNG animat del mateix món a l'explorador 3D del lloc web, de l'època 1.500 a la 6.000, un fotograma cada 50 èpoques, amb l'època a la cantonada. El món és pla i té vores: dibuixar-lo com un continent sobre un planeta és un efecte de presentació. La càmera gira 160 cel·les d'oest a est. 91 fotogrames, amb una paleta comuna de 256 colors. | Les dades del món 1006 del lloc (`web/dades/1006`, comprovades amb `web/dades/SHA256SUMS`), fetes amb `eines/web-dades.mjs` a partir de les captures d'una execució que dona la història del registre de la sèrie. |
+| `terreny-1006.png` | El mateix món, de prop i en relleu, de l'època 1.900 a la 4.500, un fotograma cada 100 èpoques. L'alçada de cada cel·la és el nombre d'instruccions del seu programa, i el color, el de la família. 27 fotogrames. | Les mateixes dades. |
 | `zoom-1-mon.png` … `zoom-5-codi.png` | Cinc nivells de zoom sobre el mateix món a l'època 2.900, cadascun dins del rectangle de l'anterior. | La captura de l'època 2.900 de la mateixa execució. |
 | `mons-a-l-atzar.png` | Quatre mons quiets (a l'esquerra) i quatre amb corrent 0,01 (a la dreta), triats a l'atzar d'entre els que la vida s'hi va establir, en el moment de l'establiment. | Les captures de l'època *t* de cada món, a `fase2/resultats/serie-llei2/{A,B}/captures/`. |
 | `sopa-abans-i-despres.png` | Els primers programes de la sopa inicial de la llavor 1 de la Fase 1, al costat de la mateixa sopa a l'època 750. | `aleatoria:1:v1`, `fase1/resultats/llavor1-fils7-epoca750.bin` |
@@ -116,6 +119,21 @@ node eines/imatges.mjs codi 512x256 docs/imatges/zoom-5-codi.png $F --regio 300,
   comú, en bytes diferents, permetent-hi un desplaçament cíclic i el mirall.
   - En 89 (el 58 %), la distància és de 5 bytes o menys, i 10 són idèntiques al programa més comú.
   - En 56, la distància és de més de 20 bytes.
+
+### Les animacions 3D
+
+Amb el servidor engegat a l'arrel del repositori (`node server.mjs`), les dades del lloc a `web/dades` i Chrome:
+
+```bash
+node eines/web-animacio.mjs --chrome CAMI-DE-CHROME --sortida docs/imatges/planeta-1006.png --camera 176,336,128,640,1.53,0 --epoques 1500,6000,50 --retard 70 --darrer 1800 --portada 3500
+node eines/web-animacio.mjs --chrome CAMI-DE-CHROME --sortida docs/imatges/terreny-1006.png --vista pla --camera 180,210,75,250,1.1,0 --epoques 1900,4500,100 --retard 180 --darrer 1800 --portada 3000
+```
+
+- **Els visors que no animen** en mostren l'època 3.500 i la 3.000.
+- **Es refan igual:** el temps de la pàgina es fixa a cada fotograma, i dues execucions donen el mateix fitxer, byte a
+  byte, amb la mateixa versió de Chrome a la mateixa màquina. Les SHA-256 d'aquestes, fetes amb Chrome 156 a Windows:
+  `4da7245e…` i `2b7d0320…`. Amb una altra targeta gràfica, els píxels poden canviar una mica.
+- **Per què no són exemples a l'atzar:** com l'animació 2D, són del món 1006, triat perquè la colònia s'hi veu bé.
 
 ## Com es llegeixen
 

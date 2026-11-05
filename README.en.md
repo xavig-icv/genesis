@@ -8,13 +8,14 @@ was last synchronised on 5 November 2026. The lab notebook and most of the docum
 notebook entry has an [English summary](quadern/resum.en.md), and the [glossary](docs/glossari.md) gives the
 English term for each Catalan one.*
 
-![Animation: a colony of replicators appears and grows in a 2D world](docs/imatges/colonia-animada.png)
+![Animation: the world of seed 1006, drawn as a planet, where a colony of replicators appears and spreads over almost the whole continent](docs/imatges/planeta-1006.png)
 
-*A world of 512 × 256 random programs, from epoch 1,500 to 2,900. The number in the corner is the epoch.
-Around epoch 2,100, a patch of instruction-rich programs appears. At 2,200, the family tracker recognises
-replicators there and colours them pink. Nobody wrote them. This is the world of seed 1006 from the law-2
-series. It was chosen because the colony is easy to see, so it is an example, not a sample
-([where the images come from](docs/imatges/README.md)).*
+*A world of 512 × 256 random programs, from epoch 1,500 to 6,000, in the 3D explorer of the
+[website](https://xavig-icv.github.io/genesis/). The world is flat and has edges: here it is drawn as a continent on a
+planet. The number in the corner is the epoch. At 2,200, the family tracker recognises replicators there and colours
+them pink, and at 2,250 life becomes established. Later another family appears, in yellow. Nobody wrote them. This
+is the world of seed 1006 from the law-2 series. It was chosen because the colony is easy to see, so it is an
+example, not a sample ([where the images come from](docs/imatges/README.md)).*
 
 **What "life" means here.** It is an operational criterion, not a claim about biological life.
 - **A heritable replicator** is a program that copies itself into a partner, and whose copy copies itself in
@@ -62,6 +63,14 @@ The main rule: **we design the laws, never the organisms.**
 **In a world with space** (each program interacts only with its neighbours):
 - **Quiet worlds:** the replicator family occupies a single area.
 - **Worlds with a weak current** (1% of cells moved each epoch): it spreads out.
+
+![Animation: close up and in relief, the colony of world 1006 spreads over the terrain](docs/imatges/terreny-1006.png)
+
+*The world of seed 1006, close up, from epoch 1,900 to 4,500. Each program only meets its neighbours, and the colony
+advances over the surface. The height of each cell is the number of instructions in its program, and the colour is
+its family's. The number in the corner is the epoch. Seen from above and in 2D, from epoch 1,500 to 2,900:*
+
+![Animation: a colony of replicators appears and grows in a 2D world](docs/imatges/colonia-animada.png)
 
 See the sample of eight worlds chosen at random in the [Catalan README](README.md#en-un-món-amb-espai).
 

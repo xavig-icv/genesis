@@ -5,13 +5,14 @@ n'escrigui el primer organisme.
 
 **English:** [README.en.md](README.en.md) · **Glossari català–anglès:** [docs/glossari.md](docs/glossari.md)
 
-![Animació: una colònia de replicadors que neix i creix en un món 2D](docs/imatges/colonia-animada.png)
+![Animació: el món de la llavor 1006, dibuixat com un planeta, on una colònia de replicadors apareix i s'escampa per gairebé tot el continent](docs/imatges/planeta-1006.png)
 
-*Un món de 512 × 256 programes aleatoris, de l'època 1.500 a la 2.900. El número de la cantonada és l'època.
-Cap a la 2.100 hi apareix una taca de programes plens d'instruccions. A la 2.200, el registre de famílies hi
-reconeix replicadors i els pinta de rosa. Ningú no els havia escrit. És el món de la llavor 1006 de la sèrie
-de la llei 2, i s'ha triat perquè la colònia s'hi veu bé: és un exemple, no una mostra
-([d'on surten les imatges](docs/imatges/README.md)).*
+*Un món de 512 × 256 programes aleatoris, de l'època 1.500 a la 6.000, a l'explorador 3D del
+[lloc web](https://xavig-icv.github.io/genesis/). El món és pla i té vores: aquí es dibuixa com un continent sobre un
+planeta. El número de la cantonada és l'època. A la 2.200, el registre de famílies hi reconeix replicadors i els
+pinta de rosa, i a la 2.250 la vida s'hi estableix. Més tard n'hi apareix una altra família, en groc. Ningú no els
+havia escrit. És el món de la llavor 1006 de la sèrie de la llei 2, i s'ha triat perquè la colònia s'hi veu bé: és
+un exemple, no una mostra ([d'on surten les imatges](docs/imatges/README.md)).*
 
 **Què vol dir "vida" aquí.** És un criteri de treball, no cap afirmació sobre la vida biològica.
 - **Un replicador hereditari** és un programa que es copia en un company, i la còpia també es copia.
@@ -101,7 +102,18 @@ declarada. Cada imatge és del moment de l'establiment.*
 Al món 2D, cada programa només interactua amb els veïns. Les primeres observacions suggerien que l'espai frena
 la vida, i que un corrent feble la fa néixer més sovint.
 
+![Animació: de prop i en relleu, la colònia del món 1006 s'escampa pel terreny](docs/imatges/terreny-1006.png)
+
+*El món de la llavor 1006, de prop, de l'època 1.900 a la 4.500. Cada programa només es troba amb els veïns, i la
+colònia avança per la superfície. L'alçada de cada cel·la és el nombre d'instruccions del seu programa, i el color,
+el de la família. El número de la cantonada és l'època.*
+
 ### De prop: del món al codi
+
+![Animació: una colònia de replicadors que apareix i creix en un món 2D](docs/imatges/colonia-animada.png)
+
+*El mateix món, des de dalt, de l'època 1.500 a la 2.900. Cap a la 2.100 hi apareix una taca de programes plens
+d'instruccions. A la 2.200, el registre de famílies hi reconeix replicadors i els pinta de rosa.*
 
 Si ens hi acostem, la colònia de l'animació, a l'època 2.900, es veu així. Cada imatge marca amb un
 rectangle blanc on fa zoom la següent.
