@@ -117,7 +117,7 @@ function setPlaying(on) {
   hint();
   if (on && !was) { rate = { t: performance.now(), e: world.epoch, value: rate.value }; loop(generation); }
 }
-// la llavor 1006: la vida hi neix a l'època 2.250, com a la sèrie; mentre corre, quant falta al ritme d'ara (AUD-170)
+// la llavor 1006: la vida s'hi estableix a l'època 2.250, com a la sèrie; mentre corre, quant falta al ritme d'ara (AUD-170)
 const BIRTH_1006 = 2250;
 function tryNote() {
   const is1006 = current?.seed === 1006 && current.mixing === 0 && current.size === '512x256';
