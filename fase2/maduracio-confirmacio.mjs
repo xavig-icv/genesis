@@ -4,7 +4,8 @@
 //        la decisió confirmatòria. Només des d'una còpia del commit de l'etiqueta del manifest (preregistre-maduracio)
 //   node fase2/maduracio-confirmacio.mjs --prova COMMIT [--serie manifest.json] carpeta
 //        el mateix càlcul, sense decidir res, per provar-lo amb dades sintètiques. Es nega a llegir la carpeta de la
-//        sèrie de veritat (la del manifest), i cap registre de la sèrie, sigui on sigui (AUD-132)
+//        sèrie de veritat (la del manifest), i cap registre de la sèrie, sigui on sigui (AUD-132). D'un registre, abans de
+//        llegir-lo, en llegeix només la primera línia no buida, byte a byte, i ni un byte més (AU2-100, AUD-133)
 //
 // Aquest fitxer només importa mòduls de Node i fase2/preregistre.mjs, que tampoc no en carrega cap altre. Amb
 // --decideix, comprova el preregistre abans de carregar cap codi més del projecte (AUD-81, auditoria 9).
@@ -46,7 +47,7 @@ try { manifest = pre ? pre.manifest : JSON.parse(readFileSync(resolve(ROOT, mani
 if (!manifest.test || !manifest.dir) fail(`${manifestPath} no és el manifest d'una prova (no té "test" ni "dir")`, 2);
 
 if (testCommit !== null) {
-  // --prova no llegeix cap registre de la sèrie de veritat (AU2-96, AU2-98 i AUD-132, auditories 20 a 22):
+  // --prova no llegeix cap registre de la sèrie de veritat (AU2-96, AU2-98, AUD-132, AU2-100 i AUD-133, auditories 20 a 23):
   //   - les carpetes protegides: la del manifest que es dona i, sempre, la de la sèrie de veritat (i la del seu manifest, si
   //     en diu una altra). La de l'argument no hi pot ser, ni pel seu camí real (un enllaç simbòlic o una unió de Windows);
   //   - si la sèrie de veritat ja té cap registre, --prova no s'executa en aquesta còpia del repositori;
@@ -55,8 +56,11 @@ if (testCommit !== null) {
   //   - i pel contingut (AUD-132): la sèrie de veritat també pot ser en una altra còpia del repositori, la de l'etiqueta, on
   //     no la veu cap de les barreres d'abans. Cada registre de la sèrie porta a la primera línia l'ordre de la seva branca, que
   //     l'escriu a la carpeta de la sèrie. D'un registre, abans de llegir-lo, se'n llegeix només aquesta línia, que no té cap
-  //     resultat, i --prova es nega si l'ordre escriu a la carpeta de la sèrie. Atura també una còpia dels fitxers, en
-  //     qualsevol carpeta. Les dades sintètiques escriuen en una altra carpeta.
+  //     resultat: byte a byte, fins al seu salt de línia, i ni un byte més (AU2-100). Com el lector (readSeries), que treu els
+  //     espais del començament, se salten les línies buides (AUD-133). --prova es nega si l'ordre escriu a la carpeta de la
+  //     sèrie, en el text de la línia o en el seu JSON (AUD-133), i també si la línia no és la d'inici d'un registre, sencera
+  //     en els primers 64 KiB: no se sap què és. Atura també una còpia dels fitxers, en qualsevol carpeta. Les dades
+  //     sintètiques escriuen en una altra carpeta.
   // Les còpies del repositori amb el programa d'abans no tenen la barrera del contingut: des de l'etiqueta fins a la decisió,
   // no es fa servir --prova (protocol, §7).
   const refuse = (why) => fail(`--prova no llegeix la carpeta de la sèrie (${why}): els resultats només es miren amb --decideix.`, 2);
@@ -64,11 +68,22 @@ if (testCommit !== null) {
   const physical = (p) => { try { return realpathSync.native(p); } catch { return p; } };
   const files = (d) => { try { return readdirSync(d).map((f) => join(d, f)); } catch { return []; } };
   const identity = (f) => { try { const s = statSync(f, { bigint: true }); return s.ino ? `${s.dev}:${s.ino}` : null; } catch { return null; } };
-  // la primera línia d'un fitxer, i res més (com a molt 64 KiB; la línia d'inici d'un registre en fa menys d'1)
+  // la primera línia no buida d'un fitxer, llegida byte a byte fins al seu salt de línia, i res més (AU2-100). Com el lector,
+  // salta les buides del començament (AUD-133). Com a molt 64 KiB en tot, i null si no hi ha cap línia no buida sencera (la
+  // línia d'inici d'un registre en fa menys d'1)
   const firstLine = (f) => {
     let fd = null;
-    try { fd = openSync(f, 'r'); const buf = Buffer.alloc(1 << 16), n = readSync(fd, buf, 0, buf.length, 0); return buf.toString('utf8', 0, n).split('\n')[0]; }
-    catch { return ''; } finally { if (fd !== null) closeSync(fd); }
+    try {
+      fd = openSync(f, 'r');
+      const buf = Buffer.alloc(1 << 16);
+      for (let n = 0, from = 0; n < buf.length && readSync(fd, buf, n, 1, n) === 1;) {
+        if (buf[n++] !== 0x0a) continue;
+        const line = buf.toString('utf8', from, n - 1);
+        if (line.trim()) return line;
+        from = n;
+      }
+      return null;
+    } catch { return null; } finally { if (fd !== null) closeSync(fd); }
   };
   const seriesDirs = [SERIES_DIR];
   try { const d = JSON.parse(readFileSync(resolve(ROOT, SERIES_MANIFEST), 'utf8')).dir; if (typeof d === 'string') seriesDirs.push(d); } catch { /* encara no hi ha el manifest */ }
@@ -84,7 +99,11 @@ if (testCommit !== null) {
     if (!existsSync(f)) continue;
     if ([...shielded.keys()].some((d) => inside(physical(d), physical(f)))) refuse(`${b.id}.jsonl és un enllaç a un registre de la sèrie`);
     if (guarded.has(identity(f))) refuse(`${b.id}.jsonl és el mateix fitxer que un registre de la sèrie`);
-    const head = firstLine(f), d = seriesDirs.find((x) => head.includes(`${x}/`));
+    const head = firstLine(f);
+    let start = null;
+    try { start = head === null ? null : JSON.parse(head.trim()); } catch { /* no és JSON */ }
+    if (start?.type !== 'start' || typeof start.command !== 'string') refuse(`${b.id}.jsonl no comença amb la línia d'inici d'un registre, sencera en els primers 64 KiB`);
+    const d = seriesDirs.find((x) => head.includes(`${x}/`) || start.command.includes(`${x}/`));
     if (d) refuse(`${b.id}.jsonl és un registre de la sèrie de veritat: la seva ordre l'escriu a ${d}`);
   }
   if (!/^[0-9a-f]{40}$/.test(testCommit)) fail('--prova necessita un commit sencer (40 xifres hexadecimals)', 2);

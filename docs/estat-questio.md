@@ -66,14 +66,19 @@ La Fase 1 del projecte reprodueix aquest resultat.
   els replicadors continuen apareixent però ja no envaeixen la sopa.
   - **La comparació concreta** (la seva taula 1, amb la variant `bff_selfmove`): la sopa troba un replicador
     cada ~5·10⁶ programes.
-  - **La mutació a l'atzar,** amb l'histograma de bytes de la mateixa sopa i a un ritme de canvi semblant,
-    en necessita 1,0–1,9·10⁷, 2 a 4 vegades més.
+  - **La mutació a l'atzar,** amb la distribució dels bytes que escriu la mateixa sopa i a un ritme de canvi
+    semblant, en necessita 1,0–1,9·10⁷, 2 a 4 vegades més.
   - **Aquest factor el calculem nosaltres:** l'article no el dona. Comparem programes provats amb programes
     provats: els de la taula 1 amb els ~5·10⁶ de l'experiment 3.1, que l'article també dona com a ~2,5·10⁶
     interaccions de dos programes (AUD-92).
   - **Només superen la sopa** el remostreig complet de cada cinta i les distribucions fetes a mà (CUST i
     CUST64).
-  - **L'histograma de la sopa** es va mesurar poc abans que un replicador la prengués, és a dir, ja madur.
+  - **La distribució de la sopa** (ℬℱℱ, la seva definició 3.3) és la dels bytes que la sopa escriu, comptant
+    només els canvis que duren, i es va mesurar poc abans que un replicador la prengués, és a dir, ja madura. No
+    és el contingut de la sopa. *(Corregit el 05-11-2026, auditoria 27: dèiem «l'histograma de la sopa».)*
+  - **La cerca a l'atzar** (els experiments 3.2 i 3.4): fins al primer replicador, 2,9·10⁷ programes de
+    mitjana amb bytes uniformes, i 1,7·10⁶ amb ℬℱℱ, unes 17 vegades menys. Amb CUST, 4,5·10⁵, i amb CUST64,
+    9,4·10⁴ (els experiments 3.6 i 3.8). Els factors també els calculem nosaltres (AUD-173).
 - **Cicala i altres (2026), preprint,** fan sopes de programes Z80 de 32 bytes, repartides en nínxols. Hi
   la replicació i la resolució de tasques evolucionen juntes, i la pressió per calcular afavoreix els
   replicadors compactes, que deixen memòria lliure.

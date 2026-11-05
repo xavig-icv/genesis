@@ -1,0 +1,30 @@
+codi=416f720  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 406176 --mixing 0 --from fase2/resultats/maduracio/serie/alicuotes/6176/shuffle-all.bin --start 8000 --epochs 16000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/maduracio/serie/branques/6176-shuffle-all-a.jsonl
+llavor=406176 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/maduracio/serie/alicuotes/6176/shuffle-all.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.837  HOE=0.375  ops/execució=266.4  parelles=75%  bytes <:3.8% #61:1.5% ,:1.5%  fragments <<<<<<<<<<<< (0.3%)  ,,,,,,,,,,,, (0.2%)  [[[[[[[[[[[[ (0.2%)  48s
+època 8200  H0=7.833  HOE=0.462  ops/execució=278.1  parelles=75%  bytes <:3.8% ,:1.6% #61:1.5%  fragments <<<<<<<<<<<< (0.3%)  ,,,,,,,,,,,, (0.3%)  [[[[[[[[[[[[ (0.3%)  94s
+cens 8250  mostra=2048  hereditaris=0.1% (sols 0.1%, només en context 0.0%)  es repliquen=0.2% (sols 0.2%, en context 0.0%)  famílies=0
+època 8300  H0=7.831  HOE=0.503  ops/execució=277.1  parelles=75%  bytes <:3.8% ,:1.6% #61:1.5%  fragments ,,,,,,,,,,,, (0.3%)  <<<<<<<<<<<< (0.3%)  [[[[[[[[[[[[ (0.3%)  142s
+època 8400  H0=7.828  HOE=0.533  ops/execució=275.6  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments ,,,,,,,,,,,, (0.3%)  >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.3%)  185s
+cens 8500  mostra=2048  hereditaris=0.2% (sols 0.2%, només en context 0.0%)  es repliquen=0.3% (sols 0.3%, en context 0.0%)  famílies=0
+època 8500  H0=7.824  HOE=0.556  ops/execució=274.2  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments ,,,,,,,,,,,, (0.4%)  [[[[[[[[[[[[ (0.4%)  <<<<<<<<<<<< (0.3%)  230s
+època 8600  H0=7.820  HOE=0.572  ops/execució=268.4  parelles=75%  bytes <:4.0% ,:1.6% #61:1.6%  fragments [[[[[[[[[[[[ (0.4%)  ,,,,,,,,,,,, (0.4%)  [[[[[[[·[[[[ (0.3%)  270s
+època 8700  H0=7.817  HOE=0.602  ops/execució=263.8  parelles=75%  bytes <:4.0% ,:1.6% #61:1.6%  fragments [[[[[[[[[[[[ (0.4%)  ,,,,,,,,,,,, (0.4%)  [[[[[[·[[[[[ (0.3%)  310s
+cens 8750  mostra=2048  hereditaris=0.9% (sols 0.9%, només en context 0.0%)  es repliquen=1.1% (sols 1.0%, en context 0.0%)  famílies=0
+època 8800  H0=7.797  HOE=0.714  ops/execució=259.4  parelles=75%  bytes <:4.1% ,:1.7% #61:1.6%  fragments [[[[[[[[[[[[ (0.4%)  ,,,,,,,,,,,, (0.4%)  [[[[[[[·[[[[ (0.4%)  351s
+època 8900  H0=7.725  HOE=0.926  ops/execució=249.8  parelles=75%  bytes <:4.4% 0:2.7% ,:1.9%  fragments ]·····<},··[ (0.5%)  [··,}<·····] (0.5%)  [[[[[[[[[[[[ (0.5%)  388s
+*** PRIMERA FAMÍLIA a l'època 9000 ***
+cens 9000  mostra=2048  hereditaris=8.8% (sols 8.8%, només en context 0.0%)  es repliquen=11.2% (sols 11.2%, en context 0.0%)  famílies=1  #1:16.13%([[,}<])
+època 9000  H0=7.588  HOE=1.160  ops/execució=233.7  parelles=75%  bytes 0:4.8% <:4.7% [:2.2%  fragments [··,}<·····] (0.8%)  ]·····<},··[ (0.6%)  [··[0·0··,}< (0.5%)  423s
+època 9100  H0=7.405  HOE=1.353  ops/execució=212.9  parelles=75%  bytes 0:7.3% <:5.0% [:2.6%  fragments [··,}<·····] (1.0%)  ]·····<},··[ (0.9%)  [··[0·0··,}< (0.4%)  454s
+època 9200  H0=7.141  HOE=1.526  ops/execució=192.7  parelles=75%  bytes 0:10.5% <:5.3% [:3.0%  fragments [··,}<····0] (1.6%)  ]·····<},··[ (1.3%)  ]····<},[··< (0.4%)  479s
+cens 9250  mostra=2048  hereditaris=15.9% (sols 15.9%, només en context 0.0%)  es repliquen=24.8% (sols 24.8%, en context 0.0%)  famílies=2  #1:30.05%(<]<},[) #2:0.78%(,,,,}<)
+*** ESTABLIMENT DE LA VIDA a l'època 9000 (confirmat al cens 9250) ***
+
+empremta del món: 255acf4e
+
+programes diferents: 130937 de 131072
+     15  |   0 000         0      <[  [  ,}<    ]0    <},  [ <0 0 0 00 000|
+      9  |000 00 0 0 0< [  ,}<    0]    <},  [  [<      0         000 0   |
+      8  |000 00 0 0 0< [  ,}<    0]    <},  [  [<      0         00000000|
+      7  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      5  | 0  0   <0  0       0   0[,}<      ]    <},[<0  0     0  000  00|

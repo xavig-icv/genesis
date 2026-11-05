@@ -136,6 +136,23 @@ const tests = {
     }
     assert.deepStrictEqual(readdirSync(dir).filter((f) => f.endsWith('.log') || f.endsWith('.out')), []);
   }),
+  // La incidència 1 de la sèrie de la maduració: amb "grep -q" i pipefail, les llistes de més de 64 KB es rebutjaven
+  "una llista de més de 64 KB s'accepta, i una tan llarga però només amb comentaris es rebutja": () => withDir((dir) => {
+    const comments = `# ${'x'.repeat(98)}\n`.repeat(10000);
+    const list = join(dir, 'llarga.txt');
+    writeFileSync(list, 'bo --world 32x32 --seed 1 --epochs 3 --census 250\n' + comments);
+    const r = bash('llanca-lot.sh', ['2', dir, list]);
+    assert.strictEqual(r.status, 0, r.stderr);
+    assert.strictEqual(r.stderr, '');
+    const out = lotOut(dir, 'llarga');
+    assert.match(out, /^acaba: {3}bo$/m);
+    assert.match(out, /^== lot acabat .*: 1 acabats, 0 fallats, 0 ja fets$/m);
+    const only = join(dir, 'comentaris.txt');
+    writeFileSync(only, comments);
+    const c = bash('llanca-lot.sh', ['2', dir, only]);
+    assert.strictEqual(c.status, 2);
+    assert.match(c.stderr, /no té cap experiment/);
+  }),
   "una llista sense salt de línia al final executa l'última línia": () => withBatch((dir, list) => {
     assert.strictEqual(bash('llanca-lot.sh', ['1', dir, list]).status, 0);
     assert.match(lotOut(dir), /^acaba: {3}bo$/m);

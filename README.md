@@ -183,13 +183,15 @@ Als mons on la vida es torna a perdre, quan s'hi estableix ja hi ha molts més b
 ([entrada 11](quadern/index.html#entrada-11)). En 8 mons on la vida baixa just després d'establir-se, hem tornat a
 engegar cada món des del mateix instant, de quatre maneres i amb el mateix atzar: 132 branques
 ([protocol](docs/protocol-zeros.md)).
-- **Contra un placebo, treure els zeros fa que la vida baixi menys:** confirmat, als 8 mons (*p* = 0,004, amb la
-  correcció de Holm).
+- **Contra un placebo, treure els zeros fa que la vida baixi menys, o creixi més:** confirmat, als 8 mons (*p* = 0,004, amb
+  la correcció de Holm). Amb els zeros canviats, la vida creix en 5 dels 8.
   - **Què es fa:** els zeros de les cel·les que no es repliquen passen a bytes de dades. El placebo canvia, a les mateixes
-    cel·les, tants bytes de dades com zeros hi ha, i hi deixa els zeros.
-  - **Què vol dir:** dins d'aquests mons, els zeros contribueixen a fer baixar la vida. És la hipòtesi de
+    cel·les, tants bytes de dades com zeros hi ha, i hi deixa els zeros. És aparellat cel·la per cel·la, en part a les
+    cel·les saturades: a les que tenen més zeros que bytes de dades no hi arriba, i deixa sense aparellar entre el 0,5 % i
+    el 5,0 % dels zeros que canvia `zeros-data` a cada món.
+  - **Què vol dir:** dins d'aquests mons, els zeros contribueixen a fer baixar la vida. És compatible amb la hipòtesi de
     l'autoenverinament: el replicador deixa còpies trencades plenes de zeros, i aquestes deixalles aturen les còpies
-    següents.
+    següents. La prova no en diu el mecanisme: els zeros també poden adormir les còpies que els porten.
 - **Contra el món sense tocar:** no concloent (7 mons a favor i 1 en contra, *p* = 0,035, amb un llindar de 0,025).
 - **No diu res de mons nous,** perquè aquests es van triar després de veure'n les dades.
 - **No és un descobriment:** l'enverinament per zeros ja és a l'article de 2024. El que hi afegeix la sèrie és la prova
@@ -197,24 +199,59 @@ engegar cada món des del mateix instant, de quatre maneres i amb el mateix atza
 
 Vegeu l'[entrada 13](quadern/index.html#entrada-13).
 
+### La quarta sèrie preregistrada: la maduració de la sopa
+
+En un món quiet que arriba sense vida a l'època 8.000, la vida s'hi estableix més sovint si es conserva la sopa
+envellida que si es canvia per una de nova? En 150 mons nous, cada món ha continuat 8.000 èpoques més de tres maneres,
+des de la mateixa captura i amb el mateix atzar: 900 branques ([protocol](docs/protocol-maduracio.md)).
+- **Amb la sopa envellida, la vida s'hi estableix més sovint que amb una sopa nova:** confirmat, 64 branques de 300
+  contra 40 (*p* = 0,007, amb els llindars de Holm calibrats). És l'efecte total de conservar la sopa d'aquests mons, no
+  d'un mecanisme concret.
+- **Amb l'histograma de bytes de la sopa envellida, barrejat, també:** confirmat, 82 contra 40 (*p* = 0,00003). Inclou
+  els replicadors que la barreja crea a l'instant: no aïlla la composició.
+- **La cohort:** mons quiets que arriben a l'època 8.000 sense vida i sense cap cel·la hereditària detectada. No és una
+  llei de tots els mons, ni de l'edat en general.
+- **Entre la sopa envellida i la barrejada** no hi ha cap prova: el 21,3 % contra el 27,3 %, sense cap afirmació
+  d'equivalència.
+- **El que ja se sabia:** Knierim i altres (2026) troben que, amb la distribució dels bytes que escriu una sopa, la
+  cerca a l'atzar troba el primer replicador unes 17 vegades abans que amb bytes uniformes. Fa esperar el resultat de
+  la sopa barrejada, però no diu res de la sopa envellida tal com és.
+
+Vegeu l'[entrada 14](quadern/index.html#entrada-14).
+
+### Els ingredients de la química
+
+Quins ingredients de la química calen perquè un programa a l'atzar es copiï? Hem posat a prova 10⁷ programes a
+l'atzar amb la química de sempre i amb dotze variants, cadascuna amb una regla canviada, i hem comptat quants són
+replicadors hereditaris ([pla](docs/pla-b1.md)). És el primer nivell: si els replicadors existeixen i són abundants,
+no si s'estableixen en una sopa. Tot és descriptiu.
+- **Els tres controls donen zero, com esperàvem:** sense instruccions de còpia, sense bucles o sense cap còpia d'un
+  programa a l'altre, cap replicador en 10⁷ programes. Es van triar perquè no n'hi pogués haver, i el zero no demostra
+  que no n'hi pugui haver cap. Amb la química de sempre, 1.625.
+- **Una sola instrucció de còpia n'hi ha prou,** amb menys replicadors: amb la `,`, el 71 % dels de la química de
+  sempre, i amb el `.`, el 39 %.
+- **Algunes regles fan nosa:** sense aritmètica, hi ha el doble de replicadors, i si el programa no es pot reescriure
+  a si mateix, el quàdruple.
+- **Amb els dos caps alineats,** cadascun a l'inici d'un programa, n'hi ha 31 vegades més. Knierim i altres (2026)
+  ja ho apunten, amb una altra química.
+- **Els límits:** amb bytes a l'atzar com els de la sopa del començament, són 44 vegades més rars, i, segons una
+  comprovació exploratòria, gairebé cap no es copia sense el codi del company. La prova també compta els que el
+  company ajuda.
+
+Vegeu l'[entrada 15](quadern/index.html#entrada-15).
+
 ### El que estudiem ara
 
-- **La maduració de la sopa abans que hi aparegui la vida,** la línia que vam triar després de l'auditoria 14:
-  branques des d'una mateixa captura, que continuen la sopa o en barregen els bytes.
-  - **El pilot, fet:** amb 22 mons, la vida s'estableix en el 27 % de les branques que continuen tal com són, i en el
-    mateix 27 % quan es barregen tots els bytes del món. És un pilot, sense cap conclusió
-    ([entrada 12](quadern/index.html#entrada-12)).
-  - **La sèrie preregistrada,** amb 150 mons nous ([protocol](docs/protocol-maduracio.md)): l'envelliment dels mons
-    corre des del 29-10-2026, i el protocol és a l'auditoria.
+- **Els ingredients de la química, el pas següent:** quins replicadors es copien sols, quants n'hi ha segons la
+  proporció d'instruccions, i la sopa amb les químiques que en tenen ([pla](docs/pla-b1.md)).
 - **La mida del món,** començant pels mons petits.
-- **Els ingredients de la química:** treure-li instruccions o capacitats per saber quines calen.
 - **Un temps que canvia:** un corrent que alterna la calma i el temporal.
 
 ## Com es treballa
 
 - **Preregistre.** Les sèries confirmatòries tenen un protocol escrit abans de començar
-  ([protocol de la llei 2](docs/protocol-estadistic.md), [de B2](docs/protocol-b2.md) i
-  [dels zeros](docs/protocol-zeros.md)). El programa que
+  ([protocol de la llei 2](docs/protocol-estadistic.md), [de B2](docs/protocol-b2.md),
+  [dels zeros](docs/protocol-zeros.md) i [de la maduració](docs/protocol-maduracio.md)). El programa que
   decideix només ho fa des d'una còpia idèntica a l'etiqueta de git del preregistre.
 - **Dos auditors, tots dos d'IA.**
   - **Què revisen:** a cada iteració, dos models revisen el codi, els mètodes i els resultats, en sessions
@@ -252,6 +289,11 @@ Vegeu l'[entrada 13](quadern/index.html#entrada-13).
   - **Què demostra Bitcoin:** que l'etiqueta existia quan es va minar el bloc 973.367 (07:43:35 UTC del
     27-10-2026), 51 minuts abans que comencés la primera branca. Aquesta vegada es va esperar l'ancoratge abans
     de llançar.
+  - **El que no demostra:** que ningú no va mirar cap resultat. Ho diu l'acta.
+- **El preregistre de la sèrie de la maduració** és l'etiqueta `preregistre-maduracio`, amb un segell
+  d'OpenTimestamps ancorat a Bitcoin ([`docs/preregistre-maduracio/`](docs/preregistre-maduracio/)).
+  - **Què demostra Bitcoin:** que l'etiqueta existia quan es va minar el bloc 974.134 (14:21:50 UTC de
+    l'1-11-2026), 75 minuts abans que comencés la primera branca. També es va esperar l'ancoratge abans de llançar.
   - **El que no demostra:** que ningú no va mirar cap resultat. Ho diu l'acta.
 - **Com citar-ho:** [`CITATION.cff`](CITATION.cff). **Com participar-hi:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 

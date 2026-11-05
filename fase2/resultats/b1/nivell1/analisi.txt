@@ -1,0 +1,35 @@
+Distribució d-mig: 13 químiques, 10000000 programes cadascuna, els mateixos a totes
+  C0: 1625 hereditaris de 10000000 (1.62·10^-4; IC del 95 %, de 1.55·10^-4 a 1.71·10^-4); sols 371, només en context 1254; es repliquen 134688; instruccions per programa, de 21 a 45 (mediana 32)
+  K0: 0 hereditaris de 10000000 (0; IC del 95 %, de 0 a 3.69·10^-7); sols 0, només en context 0; es repliquen 0
+  L0: 0 hereditaris de 10000000 (0; IC del 95 %, de 0 a 3.69·10^-7); sols 0, només en context 0; es repliquen 0
+  X0: 0 hereditaris de 10000000 (0; IC del 95 %, de 0 a 3.69·10^-7); sols 0, només en context 0; es repliquen 0
+  K1: 1152 hereditaris de 10000000 (1.15·10^-4; IC del 95 %, de 1.09·10^-4 a 1.22·10^-4); sols 279, només en context 873; es repliquen 97340; instruccions per programa, de 21 a 46 (mediana 33)
+  K2: 640 hereditaris de 10000000 (6.40·10^-5; IC del 95 %, de 5.91·10^-5 a 6.92·10^-5); sols 114, només en context 526; es repliquen 83475; instruccions per programa, de 21 a 44 (mediana 33)
+  R0: 3272 hereditaris de 10000000 (3.27·10^-4; IC del 95 %, de 3.16·10^-4 a 3.39·10^-4); sols 766, només en context 2506; es repliquen 213088; instruccions per programa, de 19 a 45 (mediana 33)
+  S1: 6420 hereditaris de 10000000 (6.42·10^-4; IC del 95 %, de 6.26·10^-4 a 6.58·10^-4); sols 2293, només en context 4127; es repliquen 223412; instruccions per programa, de 18 a 46 (mediana 33)
+  S2: 2252 hereditaris de 10000000 (2.25·10^-4; IC del 95 %, de 2.16·10^-4 a 2.35·10^-4); sols 2252, només en context 0; es repliquen 146289; instruccions per programa, de 19 a 46 (mediana 33)
+  S3: 5746 hereditaris de 10000000 (5.75·10^-4; IC del 95 %, de 5.60·10^-4 a 5.90·10^-4); sols 0, només en context 5746; es repliquen 204864; instruccions per programa, de 18 a 46 (mediana 33)
+  S4: 44 hereditaris de 10000000 (4.40·10^-6; IC del 95 %, de 3.20·10^-6 a 5.91·10^-6); sols 0, només en context 44; es repliquen 9936; instruccions per programa, de 25 a 42 (mediana 32)
+  X1: 2883 hereditaris de 10000000 (2.88·10^-4; IC del 95 %, de 2.78·10^-4 a 2.99·10^-4); sols 902, només en context 1981; es repliquen 174409; instruccions per programa, de 18 a 46 (mediana 32)
+  H64: 51047 hereditaris de 10000000 (5.10·10^-3; IC del 95 %, de 5.06·10^-3 a 5.15·10^-3); sols 19165, només en context 31882; es repliquen 121377; instruccions per programa, de 14 a 49 (mediana 32)
+  Contra C0, programa a programa (els hereditaris a totes dues, només a C0, només a la variant; el quocient de densitats i el seu interval):
+    K0: 0, 1625, 0; quocient 0.00 (de 0.00 a 0.00)
+    L0: 0, 1625, 0; quocient 0.00 (de 0.00 a 0.00)
+    X0: 0, 1625, 0; quocient 0.00 (de 0.00 a 0.00)
+    K1: 595, 1030, 557; quocient 0.71 (de 0.66 a 0.76)
+    K2: 347, 1278, 293; quocient 0.39 (de 0.36 a 0.43)
+    R0: 1113, 512, 2159; quocient 2.01 (de 1.90 a 2.14)
+    S1: 644, 981, 5776; quocient 3.95 (de 3.74 a 4.17)
+    S2: 304, 1321, 1948; quocient 1.39 (de 1.30 a 1.48)
+    S3: 677, 948, 5069; quocient 3.54 (de 3.35 a 3.74)
+    S4: 10, 1615, 34; quocient 0.03 (de 0.02 a 0.04)
+    X1: 681, 944, 2202; quocient 1.77 (de 1.67 a 1.89)
+    H64: 265, 1360, 50782; quocient 31.41 (de 29.90 a 33.02)
+Distribució uniforme: 2 químiques, 10000000 programes cadascuna, els mateixos a totes
+  C0: 37 hereditaris de 10000000 (3.70·10^-6; IC del 95 %, de 2.61·10^-6 a 5.10·10^-6); sols 7, només en context 30; es repliquen 8330; instruccions per programa, de 0 a 10 (mediana 3)
+  K0: 0 hereditaris de 10000000 (0; IC del 95 %, de 0 a 3.69·10^-7); sols 0, només en context 0; es repliquen 0
+  Contra C0, programa a programa (els hereditaris a totes dues, només a C0, només a la variant; el quocient de densitats i el seu interval):
+    K0: 0, 37, 0; quocient 0.00 (de 0.00 a 0.10)
+Ampliació (§5): C0 hi té 1625 hereditaris: no cal
+Al nivell 2 (§6), amb d-mig: C0, K1, K2, R0, S1, S2, S3, S4, X1, H64
+Sense cap hereditari en 10000000 programes: K0, L0, X0 (la cota del 95 %, 3.69·10^-7)

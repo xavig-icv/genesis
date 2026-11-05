@@ -1,0 +1,27 @@
+--- eines/llanca-lot.sh (416f720)
++++ llanca-lot-416f720-corregit.sh
+@@ -1,4 +1,9 @@
+ #!/usr/bin/env bash
++# CÒPIA CORREGIDA de eines/llanca-lot.sh de 416f720, per llançar la sèrie de la maduració (01-11-2026). Només hi canvien
++# dues línies: (1) la comprovació de la llista, que amb "grep -q" i pipefail rebutjava les llistes de més de 64 KB (el primer
++# grep rebia un SIGPIPE quan el segon sortia a la primera coincidència: "la llista no té cap experiment", codi 2); i (2) el
++# "cd" a la carpeta del repositori, perquè aquesta còpia viu fora del repositori: es llança des de la seva arrel, i ho comprova.
++# Tota la resta, i experiments.sh i sim.mjs, són els del commit de l'etiqueta, sense tocar.
+ # Executa un lot d'experiments (experiments.sh) i n'escriu el progrés NOMÉS en un fitxer, mai a la
+ # consola. Una consola de Windows en mode de selecció bloqueja tot el que hi escriu, i el 17-10-2026
+ # va aturar el lot del PC durant una hora (incidència 1 de l'acta de la sèrie de la llei 2).
+@@ -24,12 +29,12 @@
+ if [[ $# -ne 3 ]]; then echo "ús: bash eines/llanca-lot.sh N carpeta llista.txt" >&2; exit 2; fi
+ abs() { case "$1" in /*|[A-Za-z]:*) printf '%s\n' "$1" ;; *) printf '%s\n' "$PWD/$1" ;; esac; }
+ PARALLEL="$1"; DIR=$(abs "$2"); LIST=$(abs "$3")
+-cd "$(dirname "$0")/.."
++[[ -f eines/experiments.sh && -f sim.mjs ]] || { echo "llanca-lot (còpia corregida): cal llançar-lo des de l'arrel del repositori" >&2; exit 2; }
+ if ! [[ "$PARALLEL" =~ ^[0-9]+$ ]] || (( PARALLEL < 1 || PARALLEL > 16 )); then
+   echo "llanca-lot.sh: el nombre d'experiments alhora ha de ser un enter d'1 a 16 (és '$PARALLEL')" >&2; exit 2
+ fi
+ [[ -f "$LIST" ]] || { echo "llanca-lot.sh: no existeix la llista $LIST" >&2; exit 2; }
+-if ! grep -v '^[[:space:]]*$' "$LIST" | grep -qv '^[[:space:]]*#'; then
++if ! grep -v '^[[:space:]]*$' "$LIST" | grep -v '^[[:space:]]*#' > /dev/null; then
+   echo "llanca-lot.sh: la llista $LIST no té cap experiment" >&2; exit 2
+ fi
+ mkdir -p "$DIR"

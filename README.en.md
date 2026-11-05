@@ -7,8 +7,9 @@ first organism.
 the audits.*
 
 *This is the English version of the [Catalan README](README.md), which is the main one. It is shorter, and
-was last synchronised on 25 October 2026. The lab notebook and most of the documentation are in Catalan; the
-[glossary](docs/glossari.md) gives the English term for each Catalan one.*
+was last synchronised on 5 November 2026. The lab notebook and most of the documentation are in Catalan. Each
+notebook entry has an [English summary](quadern/resum.en.md), and the [glossary](docs/glossari.md) gives the
+English term for each Catalan one.*
 
 ![Animation: a colony of replicators appears and grows in a 2D world](docs/imatges/colonia-animada.png)
 
@@ -100,44 +101,80 @@ more epochs: 116 branches ([protocol](docs/protocol-b2.md), in Catalan).
   ties). Losses are rare and concentrated in a few worlds, and the test had little power, as the protocol
   warned.
 
-See notebook entry 10, in Catalan.
+See notebook entry 10, in Catalan, or its [English summary](quadern/resum.en.md#entry-10).
 
 **The third preregistered series: the zeros.** In the worlds where life is lost again and again, there are
-many more zero bytes when it becomes established (notebook entry 11, in Catalan). In 8 worlds where life drops
+many more zero bytes when it becomes established (notebook entry 11, in Catalan; [summary](quadern/resum.en.md#entry-11)). In 8 worlds where life drops
 right after becoming established, we restarted each world from the same instant, in four ways and with the
 same randomness: 132 branches ([protocol](docs/protocol-zeros.md), in Catalan).
-- **Against a placebo, removing the zeros makes life drop less:** confirmed, in all 8 worlds (p = 0.004, with
-  Holm's correction).
+- **Against a placebo, removing the zeros makes life drop less, or grow more:** confirmed, in all 8 worlds (p = 0.004,
+  with Holm's correction). With the zeros changed, life grows in 5 of the 8.
   - **What is done:** the zeros of the cells that do not replicate become data bytes. The placebo changes, in
-    the same cells, as many data bytes as there are zeros, and leaves the zeros in place.
-  - **What it means:** within these worlds, the zeros contribute to the drop of life. This is the
+    the same cells, as many data bytes as there are zeros, and leaves the zeros in place. It is matched cell by
+    cell, partly at the saturated cells: in cells with more zeros than data bytes it falls short, and leaves
+    unmatched between 0.5% and 5.0% of the zeros that `zeros-data` changes in each world.
+  - **What it means:** within these worlds, the zeros contribute to the drop of life. This is compatible with the
     self-poisoning hypothesis: the replicator leaves behind broken copies full of zeros, and this debris stops
-    the next copies.
+    the next copies. The test does not tell the mechanism: the zeros may also put to sleep the copies that carry
+    them.
 - **Against the untouched world:** inconclusive (7 worlds for and 1 against, p = 0.035, with a threshold of
   0.025).
 - **It says nothing about new worlds,** because these were chosen after seeing their data.
 - **Not a discovery:** zero poisoning is already in the 2024 paper. What the series adds is the causal test,
   with an intervention from the same snapshot and a control.
 
-See notebook entry 13, in Catalan.
+See notebook entry 13, in Catalan, or its [English summary](quadern/resum.en.md#entry-13).
+
+**The fourth preregistered series: how the soup matures.** In a quiet world that reaches epoch 8,000 without
+life, does life become established more often if the aged soup is kept than if it is replaced by a fresh one? In
+150 new worlds, each world continued for 8,000 more epochs in three ways, from the same snapshot and with the same
+randomness: 900 branches ([protocol](docs/protocol-maduracio.md), in Catalan).
+- **With the aged soup, life becomes established more often than with a fresh soup:** confirmed, 64 branches of
+  300 against 40 (p = 0.007, with calibrated Holm thresholds). It is the total effect of keeping the soup of these
+  worlds, not of a specific mechanism.
+- **With the aged soup's byte histogram, shuffled, too:** confirmed, 82 against 40 (p = 0.00003). It includes the
+  replicators that the shuffle creates at once: it does not isolate the composition.
+- **The cohort:** quiet worlds that reach epoch 8,000 without life and without any detected heritable cell. It is
+  not a law of all worlds, nor of age in general.
+- **Between the aged soup and the shuffled one** there is no test: 21.3% against 27.3%, with no claim of
+  equivalence.
+- **What was already known:** Knierim et al. (2026) find that, with the distribution of the bytes a soup writes,
+  random search finds the first replicator about 17 times sooner than with uniform bytes. That leads one to expect
+  the result for the shuffled soup, but says nothing about the aged soup as it is.
+
+See notebook entry 14, in Catalan, or its [English summary](quadern/resum.en.md#entry-14).
+
+**The ingredients of the chemistry.** Which ingredients of the chemistry does a random program need to copy itself?
+We tested 10⁷ random programs with the usual chemistry and with twelve variants, each with one rule changed, and
+counted how many are heritable replicators ([plan](docs/pla-b1.md), in Catalan). This is the first level: whether
+replicators exist and are abundant, not whether they become established in a soup. Everything is descriptive.
+- **The three controls give zero, as expected:** without copy instructions, without loops or without any copying
+  from one program to the other, no replicator in 10⁷ programs. They were chosen so that there could be none, and a
+  zero does not prove that there can be none. With the usual chemistry, 1,625.
+- **A single copy instruction is enough,** with fewer replicators: with `,`, 71% as many as with the usual
+  chemistry, and with `.`, 39%.
+- **Some rules get in the way:** without arithmetic, there are twice as many replicators, and if a program cannot
+  rewrite itself, four times as many.
+- **With the two heads aligned,** each at the start of a program, there are 31 times as many. Knierim et al. (2026)
+  already point to this, with another chemistry.
+- **The limits:** with random bytes like those of a fresh soup, they are 44 times rarer, and, according to an
+  exploratory check, almost none copy themselves without their partner's code. The test also counts those the
+  partner helps.
+
+See notebook entry 15, in Catalan, or its [English summary](quadern/resum.en.md#entry-15).
 
 **What we study now:**
-- **How the soup matures before life appears,** the line chosen after audit 14: branches from the same
-  snapshot that either continue the soup or shuffle its bytes.
-  - **The pilot, done:** with 22 worlds, life becomes established in 27 % of the branches that continue as they
-    are, and in the same 27 % when all the bytes of the world are shuffled. It is a pilot, with no conclusion
-    (notebook entry 12, in Catalan).
-  - **The preregistered series,** with 150 new worlds ([protocol](docs/protocol-maduracio.md), in Catalan): the
-    worlds have been aging since 29 October 2026, and the protocol is under audit.
+- **The ingredients of the chemistry, next step:** which replicators copy themselves alone, how many there are
+  depending on the share of instructions, and the soup with the chemistries that have them ([plan](docs/pla-b1.md),
+  in Catalan).
 - **World size.**
-- **Chemistry ablations.**
 - **A changing weather,** with a current that alternates calm and storm.
 
 ## How we work
 
 - **Preregistration.** Confirmatory series have a protocol written before starting
-  ([law-2 protocol](docs/protocol-estadistic.md), [B2 protocol](docs/protocol-b2.md) and
-  [zeros protocol](docs/protocol-zeros.md), in Catalan). The
+  ([law-2 protocol](docs/protocol-estadistic.md), [B2 protocol](docs/protocol-b2.md),
+  [zeros protocol](docs/protocol-zeros.md) and [maturation protocol](docs/protocol-maduracio.md), in Catalan). The
   deciding program only decides from a copy identical to the git tag of the preregistration.
 - **Two auditors, both AI.**
   - **What they do:** at each iteration, two models review the code, the methods and the results, in
@@ -173,6 +210,11 @@ See notebook entry 13, in Catalan.
   in Bitcoin ([`docs/preregistre-zeros/`](docs/preregistre-zeros/), in Catalan).
   - **What Bitcoin proves:** that the tag existed when block 973,367 was mined (07:43:35 UTC on 27 October
     2026), 51 minutes before the first branch started. This time we waited for the anchor before launching.
+  - **What it does not prove:** that nobody looked at any result. That is stated in the run log.
+- **The maturation-series preregistration** is the git tag `preregistre-maduracio`, with an OpenTimestamps proof
+  anchored in Bitcoin ([`docs/preregistre-maduracio/`](docs/preregistre-maduracio/), in Catalan).
+  - **What Bitcoin proves:** that the tag existed when block 974,134 was mined (14:21:50 UTC on 1 November 2026),
+    75 minutes before the first branch started. Again, we waited for the anchor before launching.
   - **What it does not prove:** that nobody looked at any result. That is stated in the run log.
 - **How to cite it:** [`CITATION.cff`](CITATION.cff). **How to take part:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 

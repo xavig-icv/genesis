@@ -14,7 +14,9 @@ Llegeix-los abans de proposar canvis.
 - Proves: `npm test` (intèrpret, món i cens, línia d'ordres, lots d'experiments, servidor, estadística,
   oracle de cubff i regressió del determinisme; necessita `bash`, Git Bash a Windows). **Abans de demanar
   un merge, `bash eines/prova-neta.sh`**, que les passa en una còpia neta del commit: no poden dependre de canvis
-  sense desar (AUD-58). GitHub també les passa a cada PR, amb Node 16, 20, 22 i 24 (`.github/workflows/proves.yml`). Han de passar totes abans de donar res per acabat. Les empremtes de
+  sense desar (AUD-58). GitHub també les passa a cada PR, amb Node 16, 20, 22 i 24 (`.github/workflows/proves.yml`), però no
+  a `main`: **després de cada commit a `main` que pugui tocar les proves, també els de documents o de registres, `prova-neta`**
+  (dues proves de la maduració van fallar a `main` sense que ningú ho veiés, la PR #33). Han de passar totes abans de donar res per acabat. Les empremtes de
   `test/determinisme.mjs` no es toquen mai: si un canvi ha d'alterar les històries a propòsit, va darrere
   d'una opció nova. El mateix val per als valors del cens v2.
 - Experiments llargs sense gràfics: `node sim.mjs` (sopa) o `node sim.mjs --world 512x256` (món 2D).
@@ -90,11 +92,43 @@ Llegeix-los abans de proposar canvis.
   la branca del manifest, i només és bona si en surten els mateixos censos i la mateixa empremta final.
   - **`--prova`** no llegeix cap registre de la sèrie (AU2-98, AUD-132): ni pels àlies dels fitxers, ni amb un manifest que digui
     un altre `dir`, ni des d'una altra còpia del repositori, ni en una còpia dels fitxers, i no s'executa en una còpia on la sèrie
-    ja té registres. D'un registre en llegeix primer només la primera línia, i es nega si l'ordre de la branca l'escriu a la
-    carpeta de la sèrie. Les proves amb dades sintètiques, amb una altra carpeta a les ordres. **Des de l'etiqueta fins a la
+    ja té registres. D'un registre en llegeix primer, byte a byte, la primera línia no buida, i ni un byte més (AU2-100,
+    AUD-133). Es nega si l'ordre de la branca l'escriu a la carpeta de la sèrie, o si no hi ha cap línia d'inici sencera en els
+    primers 64 KiB. Les proves amb dades sintètiques, amb una altra carpeta a les ordres. **Des de l'etiqueta fins a la
     decisió, cap `--prova`**, i els registres només es copien a la carpeta del commit de l'etiqueta.
+  - **L'etiqueta** (`preregistre-maduracio`, a `416f720`, 01-11-2026): l'objecte i el segell, a `docs/preregistre-maduracio/`.
+    La sèrie va córrer de l'1 al 4-11-2026, llançada amb una còpia corregida de `eines/llanca-lot.sh`, fora del repositori: el de
+    `416f720` rebutjava les llistes de més de 64 KB (l'acta, la incidència 1).
+  - **La decisió** (04-11-2026, l'entrada 14): es rebutgen totes dues hipòtesis nul·les. La sortida, a
+    `fase2/resultats/maduracio/serie/decisio-sortida.txt`. Es reprodueix byte a byte des d'una còpia de l'etiqueta, amb els registres de
+    `main` copiats a la carpeta de la sèrie. Tots dos auditors la van confirmar a l'auditoria 27. La mesura és l'establiment: la vida
+    «s'hi estableix», mai «hi neix» (AUD-171 = AU2-138).
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
+- El registre de famílies, amb els trossos informatius (AUD-162): `createFamilyTracker(llavor, { minDistinct: 3 })` només fa
+  servir els trossos de codi amb almenys 3 instruccions diferents. Per defecte, 1, com sempre: el cens i les sèries no canvien.
+  La sensibilitat (exploratòria): `node eines/nuclis-sensibilitat.mjs clau|mon ...`, amb el pla, escrit abans de calcular, i
+  els resultats a `fase2/resultats/nuclis/`. No simula res.
+- B1, les ablacions de la química (`docs/pla-b1.md`), el nivell 1: `node eines/densitat.mjs --quimica C0|K0|… --distribucio
+  d-mig|uniforme --llavor N --programes N --json fitxer.jsonl [--de I] [--fils F]`, i l'anàlisi, `node eines/densitat-analisi.mjs
+  carpeta`. Les químiques són a `fase1/bff.js` (`CHEMISTRIES` i `evaluator`), i C0 és l'intèrpret de sempre. La prova de
+  replicació és la del cens, amb la mateixa química (l'opció `evaluate` de `replicationTest`, AUD-65). El pla v0.4 té el GO de les
+  auditories 25 i 26. El nivell 1 es va calcular el 4 i el 5-11-2026 (l'entrada 15), i l'ampliació no va caldre. L'auditoria 27 el
+  va revisar. El pas següent (la prova d'autonomia, la §13 i les variants per cap) va en una PR, amb el pla v0.5 i l'auditoria 28
+  abans de calcular.
+  - **L'anàlisi només es fa amb el pla sencer** (`PLAN`: les 13 químiques amb `d-mig`, C0 i K0 amb `uniforme`, la llavor 20261101 i
+    les N del pla), i amb registres fets amb els mòduls de la seva còpia (la SHA-256 de la línia d'inici; AUD-139, AUD-142).
+  - **Els controls** són K0, L0 i X0. S4 és una variant: el codi del company s'hi pot copiar el programa (AUD-140).
+  - **La cobertura de l'interval del quocient:** `node eines/densitat-cobertura.mjs`, amb recomptes sintètics.
+  - **Les ordres del càlcul,** escrites abans de calcular, són a `fase2/resultats/b1/nivell1/`: `llista.txt`, i `llista-ampliacio.txt`
+    si cal l'ampliació, amb les SHA-256 al README. Les executa `bash fase2/resultats/b1/nivell1/executa.sh LLISTA SHA-256 COMMIT`,
+    des de l'arrel d'una còpia neta. Mentre corren, cap recompte: només l'estat de l'executor.
+  - **A la còpia del càlcul, cap fitxer de codi sense seguir** mentre hi corri res: `eines/densitat.mjs` hi escriuria `+canvis`, i
+    l'anàlisi en rebutjaria els registres (el primer intent de la repetició, `fase2/resultats/b1/nivell1/repeticio/README.md`).
+  - **Els registres del nivell 1 no són a git:** dos passen de 50 MB. Són a la còpia de seguretat, amb la SHA-256 a
+    `execucio-llista.txt`, i es poden refer amb les mateixes ordres. La repetició de tres trossos (`repeticio/`, amb `compara.mjs`), la
+    sortida de l'anàlisi (`analisi.txt`), les comprovacions exploratòries (`exploratori/`) i l'extracte dels hereditaris
+    (`hereditaris.jsonl.gz`, amb `extreu-hereditaris.mjs`; AUD-174) sí que hi són.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
   captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
@@ -164,13 +198,16 @@ Llegeix-los abans de proposar canvis.
   del seu commit.
 - Les captures `.bin` no van a git (vegeu `.gitignore`): es regeneren amb el mateix commit i llavor.
 - Llicència: Apache 2.0 per al codi (`LICENSE`, `NOTICE` amb els crèdits) i CC BY 4.0 per al quadern i la
-  documentació (`LICENSE-docs.md`). Fer públic el repositori és decisió del responsable: la història de git
-  anterior a la reorganització encara conté l'adreça privada de la VM (vegeu `docs/disseny.md`).
+  documentació (`LICENSE-docs.md`). El repositori es farà públic quan s'acabi la revisió d'abans d'obrir-lo (T-13,
+  05-11-2026; `docs/disseny.md`), amb la història tal com és, que encara conté l'adreça privada de la VM. Obrir-lo és cosa del
+  responsable.
 - Auditories externes iteratives a `../auditories/claude-origins/auditor1/auditN/`. En acabar cada grup
   de tasques, deixa-hi un `informe-de-traspas.md` (commits, estat de cada troballa AUD-xx, què cal
   revisar). Quan arribi l'informe de l'auditor, comprova'n les afirmacions amb dades i respon a
   `resposta-equip.md`. Les troballes conserven l'identificador entre auditories. Cada troballa nova, amb una
   línia i la resolució, va a l'índex públic `docs/auditories.md`, sense cap dada interna.
+  - **Mentre una auditoria és oberta** (del paquet als informes), `main` no es toca: els merges, després dels informes. Així
+    `main` és el que diu el traspàs.
 - El protocol de la sèrie confirmatòria (`docs/protocol-estadistic.md`) no es llança fins que l'auditoria
   l'hagi revisat.
 

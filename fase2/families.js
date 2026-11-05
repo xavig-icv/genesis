@@ -23,6 +23,15 @@
 // externa 2: a la v2 es triaven amb reemplaçament i una cel·la podia sortir dues vegades), i les
 // famílies que se surten del seguiment perquè n'hi ha massa no es donen per extingides (AUD-14). La
 // v2 es manté per reproduir exactament els censos dels registres antics.
+//
+// Trossos informatius (opció `minDistinct`, AUD-162 i AU2-134): els trossos de codi compacte que fa servir el registre
+// (els de 5 instruccions, per saber si dos replicadors s'assemblen, i els de 6 del nucli, i per tant el territori) han de
+// tenir almenys `minDistinct` instruccions diferents. Amb 1, el valor per defecte, compten tots, com sempre: els censos i
+// les sèries tancades no canvien. Amb 3, un tros com `[[[[[[` o `<<<>>>` no identifica cap família: molts programes tenen
+// tirades d'una instrucció entre les dades, que al codi compacte es tornen contigües, i al món 1006 una família de nucli
+// `[[[[[[` pintava durant dos fotogrames el 17 % de les cel·les. En trossos de 5 i de 6, demanar-ne 3 de diferents és el
+// mateix que demanar més d'1 bit d'entropia. L'opció no toca el generador aleatori: amb qualsevol valor, la mostra i els
+// replicadors són els mateixos, i només canvien les famílies, el nucli i el territori.
 import { PROGRAM_SIZE, KIND } from '../fase1/bff.js';
 import { createRng } from '../fase1/soup.js';
 import { replicates } from './replication.js';
@@ -50,16 +59,21 @@ export function compactCode(soup, c) {
   return s;
 }
 
-function grams(s, k) {
+// Els trossos de k instruccions seguides d'un codi compacte; amb minDistinct > 1, només els que en tenen prou de diferents
+function grams(s, k, minDistinct = 1) {
   const out = new Set();
-  for (let i = 0; i + k <= s.length; i++) out.add(s.slice(i, i + k));
+  for (let i = 0; i + k <= s.length; i++) {
+    const g = s.slice(i, i + k);
+    if (minDistinct <= 1 || new Set(g).size >= minDistinct) out.add(g);
+  }
   return out;
 }
 
 export const SAMPLING_VERSIONS = ['v2', 'v3'];
 
-export function createFamilyTracker(seed = 20261014, { sampling = 'v3' } = {}) {
+export function createFamilyTracker(seed = 20261014, { sampling = 'v3', minDistinct = 1 } = {}) {
   if (!SAMPLING_VERSIONS.includes(sampling)) throw new Error(`mostreig desconegut: ${sampling}`);
+  if (!Number.isInteger(minDistinct) || minDistinct < 1 || minDistinct > K) throw new Error(`minDistinct ha de ser un enter de 1 a ${K}: ${minDistinct}`);
   let families = [];
   let nextId = 1;
   let rng = createRng(seed);
@@ -81,12 +95,12 @@ export function createFamilyTracker(seed = 20261014, { sampling = 'v3' } = {}) {
   };
   const profileOf = (codes) => {
     const p = new Set();
-    for (const s of codes) for (const g of grams(s, K)) { p.add(g); p.add(reverse(g)); }
+    for (const s of codes) for (const g of grams(s, K, minDistinct)) { p.add(g); p.add(reverse(g)); }
     return p;
   };
   const coreOf = (codes) => {
     const count = new Map();
-    for (const s of codes) for (const g of new Set([...grams(s, CORE)].map(canonical))) count.set(g, (count.get(g) ?? 0) + 1);
+    for (const s of codes) for (const g of new Set([...grams(s, CORE, minDistinct)].map(canonical))) count.set(g, (count.get(g) ?? 0) + 1);
     return [...count.entries()].sort((a, b) => b[1] - a[1]).slice(0, CORE_SIZE).map(([g]) => g);
   };
 
@@ -109,7 +123,7 @@ export function createFamilyTracker(seed = 20261014, { sampling = 'v3' } = {}) {
       }
       if (!replicates(soup, c, rng, { width, radius })) continue;
       const code = compactCode(soup, c);
-      if (code.length >= K) replicators.push({ c, code, kg: grams(code, K) });
+      if (code.length >= K) replicators.push({ c, code, kg: grams(code, K, minDistinct) });
     }
 
     // 2. Cada replicador va a la família coneguda que més s'hi assembla...

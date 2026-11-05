@@ -44,6 +44,20 @@ function plantedWorld(n, program, share, seed) {
   return soup;
 }
 
+// El cas dels trossos informatius (AUD-162): el 5 % de cel·les, amb el replicador amb una tirada de [ als sis primers bytes
+// (eren dades, i amb el cap 0 a sobre d'un byte que no és zero, els [ no fan res: es continua replicant), i el 20 %,
+// inertes, amb la tirada als bytes 20 a 25. Al codi compacte, el primer tros del replicador és [[[[[[
+function runWorld() {
+  const n = 4096, rng = createRng(40), soup = randomSoup(n, rng), runner = REPLICATOR.slice();
+  runner.fill('['.charCodeAt(0), 0, 6);
+  let real = 0, inert = 0;
+  for (let c = 0; c < n; c++) {
+    const u = rng();
+    if (u < 0.05) { soup.set(runner, c * 64); real++; } else if (u < 0.25) { soup.fill('['.charCodeAt(0), c * 64 + 20, c * 64 + 26); inert++; }
+  }
+  return { soup, n, real, inert };
+}
+
 function run(width, height, radius, seed) {
   const n = width * height;
   const order = new Uint32Array(n).map((_, i) => i);
@@ -234,6 +248,33 @@ const tests = {
     const r = createFamilyTracker().analyse(soup, n, 100);
     assert.strictEqual(r.families.length, 2);
     assert.notStrictEqual(r.families[0].slot, r.families[1].slot);
+  },
+  'amb minDistinct 3, una tirada d\'una sola instrucció no fa territori; per defecte, sí, com sempre (AUD-162)'() {
+    const { soup, n, real, inert } = runWorld();
+    const old = createFamilyTracker().analyse(soup, n, 100), one = createFamilyTracker(undefined, { minDistinct: 1 }).analyse(soup, n, 100);
+    const three = createFamilyTracker(undefined, { minDistinct: 3 }).analyse(soup, n, 100);
+    // per defecte, el d'ara: el nucli és la tirada, i el territori, els replicadors i les inertes
+    assert.deepStrictEqual(one, old, 'minDistinct 1 és el valor per defecte');
+    assert.strictEqual(old.families.length, 1);
+    assert.strictEqual(old.families[0].core, '[[[[[[');
+    assert.strictEqual(old.families[0].share, (real + inert) / n);
+    // amb 3, el nucli té 3 instruccions diferents, i el territori són exactament els replicadors
+    assert.strictEqual(three.families.length, 1);
+    assert.ok(new Set(three.families[0].core).size >= 3, three.families[0].core);
+    assert.strictEqual(three.families[0].share, real / n);
+    // la mostra i els replicadors no canvien: l'opció no toca el generador aleatori
+    assert.strictEqual(three.alive, old.alive);
+  },
+  'amb minDistinct 3, els nuclis de les famílies dels retalls amb vida tenen 3 instruccions diferents'() {
+    for (const name of ['esclat-32x32.bin', 'punt-32x32.bin']) {
+      const soup = new Uint8Array(readFileSync(fileURLToPath(new URL(`../test/fixtures/${name}`, import.meta.url))));
+      const n = soup.length / 64, r = createFamilyTracker(undefined, { minDistinct: 3 }).analyse(soup, n, 100, 32);
+      for (const f of r.families) assert.ok(new Set(f.core).size >= 3, `${name}: ${f.core}`);
+      assert.strictEqual(r.alive, createFamilyTracker().analyse(soup, n, 100, 32).alive, name);
+    }
+  },
+  'minDistinct ha de ser un enter de 1 a 5'() {
+    for (const bad of [0, 6, 2.5, '3']) assert.throws(() => createFamilyTracker(undefined, { minDistinct: bad }), /minDistinct/);
   },
   'l\'enverinador no és un replicador, ni sol ni en context (AUD-02)'() {
     const W = 64, n = W * W;

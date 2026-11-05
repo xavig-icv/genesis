@@ -9,7 +9,7 @@
     "node": ">=16"
   },
   "scripts": {
-    "test": "node fase1/test-bff.mjs && node fase2/test-world.mjs && node test/sim-cli.mjs && node test/lots.mjs && node test/servidor.mjs && node test/estadistica.mjs && node test/preregistre.mjs && node test/quadern.mjs && node test/b2-analisi.mjs && node test/b2-confirmacio.mjs && node test/transforma.mjs && node test/pilot.mjs && node test/zeros-confirmacio.mjs && node test/maduracio-analisi.mjs && node test/maduracio-serie.mjs && node test/imatges.mjs && node test/web.mjs && node test/oracle-cubff.mjs && node test/determinisme.mjs",
+    "test": "node fase1/test-bff.mjs && node fase2/test-world.mjs && node test/nuclis.mjs && node test/quimiques.mjs && node test/densitat.mjs && node test/densitat-analisi.mjs && node test/sim-cli.mjs && node test/lots.mjs && node test/servidor.mjs && node test/estadistica.mjs && node test/preregistre.mjs && node test/quadern.mjs && node test/b2-analisi.mjs && node test/b2-confirmacio.mjs && node test/transforma.mjs && node test/pilot.mjs && node test/zeros-confirmacio.mjs && node test/maduracio-analisi.mjs && node test/maduracio-serie.mjs && node test/imatges.mjs && node test/web.mjs && node test/oracle-cubff.mjs && node test/determinisme.mjs",
     "serve": "node server.mjs",
     "sim": "node sim.mjs"
   }
