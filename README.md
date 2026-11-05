@@ -213,6 +213,9 @@ des de la mateixa captura i amb el mateix atzar: 900 branques ([protocol](docs/p
   llei de tots els mons, ni de l'edat en general.
 - **Entre la sopa envellida i la barrejada** no hi ha cap prova: el 21,3 % contra el 27,3 %, sense cap afirmació
   d'equivalència.
+- **El que ja se sabia:** Knierim i altres (2026) troben que, amb la distribució dels bytes que escriu una sopa, la
+  cerca a l'atzar troba el primer replicador unes 17 vegades abans que amb bytes uniformes. Fa esperar el resultat de
+  la sopa barrejada, però no diu res de la sopa envellida tal com és.
 
 Vegeu l'[entrada 14](quadern/index.html#entrada-14).
 
@@ -222,15 +225,18 @@ Quins ingredients de la química calen perquè un programa a l'atzar es copiï? 
 l'atzar amb la química de sempre i amb dotze variants, cadascuna amb una regla canviada, i hem comptat quants són
 replicadors hereditaris ([pla](docs/pla-b1.md)). És el primer nivell: si els replicadors existeixen i són abundants,
 no si s'estableixen en una sopa. Tot és descriptiu.
-- **Tres ingredients, necessaris a la pràctica:** les instruccions de còpia, els bucles i la còpia d'un programa a
-  l'altre. Sense cadascun, cap replicador en 10⁷ programes. Amb la química de sempre, 1.625.
+- **Els tres controls donen zero, com esperàvem:** sense instruccions de còpia, sense bucles o sense cap còpia d'un
+  programa a l'altre, cap replicador en 10⁷ programes. Es van triar perquè no n'hi pogués haver, i el zero no demostra
+  que no n'hi pugui haver cap. Amb la química de sempre, 1.625.
 - **Una sola instrucció de còpia n'hi ha prou,** amb menys replicadors: amb la `,`, el 71 % dels de la química de
   sempre, i amb el `.`, el 39 %.
 - **Algunes regles fan nosa:** sense aritmètica, hi ha el doble de replicadors, i si el programa no es pot reescriure
   a si mateix, el quàdruple.
-- **Amb els dos caps alineats,** cadascun a l'inici d'un programa, n'hi ha 31 vegades més.
-- **Els límits:** amb bytes a l'atzar com els de la sopa del començament, són 44 vegades més rars, i la majoria
-  necessiten el codi del company per copiar-se. La prova també compta els que el company ajuda.
+- **Amb els dos caps alineats,** cadascun a l'inici d'un programa, n'hi ha 31 vegades més. Knierim i altres (2026)
+  ja ho apunten, amb una altra química.
+- **Els límits:** amb bytes a l'atzar com els de la sopa del començament, són 44 vegades més rars, i, segons una
+  comprovació exploratòria, gairebé cap no es copia sense el codi del company. La prova també compta els que el
+  company ajuda.
 
 Vegeu l'[entrada 15](quadern/index.html#entrada-15).
 

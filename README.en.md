@@ -137,6 +137,9 @@ randomness: 900 branches ([protocol](docs/protocol-maduracio.md), in Catalan).
   not a law of all worlds, nor of age in general.
 - **Between the aged soup and the shuffled one** there is no test: 21.3% against 27.3%, with no claim of
   equivalence.
+- **What was already known:** Knierim et al. (2026) find that, with the distribution of the bytes a soup writes,
+  random search finds the first replicator about 17 times sooner than with uniform bytes. That leads one to expect
+  the result for the shuffled soup, but says nothing about the aged soup as it is.
 
 See notebook entry 14, in Catalan.
 
@@ -144,15 +147,18 @@ See notebook entry 14, in Catalan.
 We tested 10⁷ random programs with the usual chemistry and with twelve variants, each with one rule changed, and
 counted how many are heritable replicators ([plan](docs/pla-b1.md), in Catalan). This is the first level: whether
 replicators exist and are abundant, not whether they become established in a soup. Everything is descriptive.
-- **Three ingredients, needed in practice:** the copy instructions, loops, and copying from one program to the
-  other. Without any one of them, no replicator in 10⁷ programs. With the usual chemistry, 1,625.
+- **The three controls give zero, as expected:** without copy instructions, without loops or without any copying
+  from one program to the other, no replicator in 10⁷ programs. They were chosen so that there could be none, and a
+  zero does not prove that there can be none. With the usual chemistry, 1,625.
 - **A single copy instruction is enough,** with fewer replicators: with `,`, 71% as many as with the usual
   chemistry, and with `.`, 39%.
 - **Some rules get in the way:** without arithmetic, there are twice as many replicators, and if a program cannot
   rewrite itself, four times as many.
-- **With the two heads aligned,** each at the start of a program, there are 31 times as many.
-- **The limits:** with random bytes like those of a fresh soup, they are 44 times rarer, and most of them need their
-  partner's code to be copied. The test also counts those the partner helps.
+- **With the two heads aligned,** each at the start of a program, there are 31 times as many. Knierim et al. (2026)
+  already point to this, with another chemistry.
+- **The limits:** with random bytes like those of a fresh soup, they are 44 times rarer, and, according to an
+  exploratory check, almost none copy themselves without their partner's code. The test also counts those the
+  partner helps.
 
 See notebook entry 15, in Catalan.
 
