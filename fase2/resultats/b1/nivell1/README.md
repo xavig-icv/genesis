@@ -55,3 +55,22 @@ ordre del nivell 1 i un registre repetit.
 - **Els registres no són a git:** dos passen de 50 MB (`d-mig-R0`, 53,7 MB, i `d-mig-S1`, 56,2 MB). Són a la còpia neta del càlcul i,
   comprimits (101 MB), a la còpia de seguretat. Totes dues coincideixen amb les SHA-256 d'`execucio-llista.txt`.
 - **La repetició:** `repeticio/`, amb el seu README.
+
+## L'extracte dels hereditaris (auditoria 27, AUD-174)
+
+Els registres sencers no són a git, i ningú de fora no els podia comprovar sense refer el càlcul (unes 9 h). L'extracte en porta el
+que fa falta per comprovar l'anàlisi dels hereditaris i per a la prova d'autonomia:
+
+- **Què hi ha:** per a cada registre, en ordre alfabètic, la línia d'inici, les dels replicadors hereditaris (sols o en context) i la
+  línia final, tal com són, byte a byte. Són 75.148 línies: 75.118 hereditaris i les 30 línies d'inici i de final.
+- **Com es fa:** `node fase2/resultats/b1/nivell1/extreu-hereditaris.mjs CARPETA-DELS-REGISTRES fase2/resultats/b1/nivell1/execucio-llista.txt
+  hereditaris.jsonl`. Abans, comprova cada registre amb la SHA-256 d'`execucio-llista.txt`, i el recompte de cada un amb la seva línia
+  final. No sobreescriu cap fitxer.
+- **Les SHA-256:**
+  - **del contingut** (`hereditaris.jsonl`, sense comprimir, 18.856.417 bytes): `6029d8783b13b1c8faa4077b0e28b2c569903e2420b8f660efa081092fb049a1`.
+    És la que s'ha de comprovar: la del fitxer comprimit depèn de la versió de zlib (AUD-55);
+  - **del fitxer comprimit** (`hereditaris.jsonl.gz`, 5.610.613 bytes): `a927f02e541fe9f7aea6e7e4989fa89719f0cd01d35cfe343c393366d661dca9`.
+- **Comprovat:** l'auditor 1 en va fer un altre des dels registres sencers, sense l'eina de l'equip, i és igual byte a byte; l'auditor 2
+  en va refer els recomptes, i quadren amb `analisi.txt` (auditoria 27).
+- **Els registres sencers:** per a l'auditor 2, amb el paquet de l'auditoria 28 (AU2-139). Per a tothom, en un fitxer d'una versió o a
+  Zenodo, quan el repositori sigui públic.
