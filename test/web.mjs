@@ -268,8 +268,9 @@ const tests = {
     const all = [];
     const walk = (d, rel = '') => { for (const e of readdirSync(d, { withFileTypes: true })) { const p = rel ? `${rel}/${e.name}` : e.name; if (e.isDirectory()) walk(join(d, e.name), p); else all.push(p); } };
     walk(out);
-    for (const f of ['index.html', 'web/index.html', 'web/explorador/index.html', 'web/viu/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase1/worker.js', 'fase2/world.js', 'fase2/census.js']) assert.ok(all.includes(f), f);
-    assert.ok(all.every((f) => /^(index\.html|web\/.+|quadern\/.+|fase[12]\/[^/]+\.(html|css|js))$/.test(f)), all.find((f) => !/^(index\.html|web\/|quadern\/|fase[12]\/)/.test(f)));
+    for (const f of ['index.html', 'LICENSE', 'NOTICE', 'web/index.html', 'web/explorador/index.html', 'web/viu/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase1/worker.js', 'fase2/world.js', 'fase2/census.js']) assert.ok(all.includes(f), f);
+    const allowed = /^(index\.html|LICENSE|NOTICE|LICENSE-docs\.md|LICENSE-data\.md|web\/.+|quadern\/.+|fase[12]\/[^/]+\.(html|css|js))$/;
+    assert.ok(all.every((f) => allowed.test(f)), all.find((f) => !allowed.test(f)));
     assert.ok(!all.some((f) => f.split('/').some((p) => p.startsWith('.'))));
     assert.ok(!all.some((f) => /resultats|\.bin$|\.jsonl$/.test(f)));
     assert.match(readFileSync(join(out, 'index.html'), 'utf8'), /url=web\//);
@@ -282,7 +283,7 @@ const tests = {
   'el lloc per publicar: les dades, comprovades una per una amb web/dades/SHA256SUMS': () => {
     // un repositori de mostra, amb el mínim que demana l'eina
     const repo = join(tmp, 'repo-lloc'), git = (...a) => spawnSync('git', a, { cwd: repo, encoding: 'utf8' });
-    for (const f of ['web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js', 'web/dades/7/fitxa.json']) { mkdirSync(join(repo, dirname(f)), { recursive: true }); writeFileSync(join(repo, f), f); }
+    for (const f of ['LICENSE', 'web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js', 'web/dades/7/fitxa.json']) { mkdirSync(join(repo, dirname(f)), { recursive: true }); writeFileSync(join(repo, f), f); }
     mkdirSync(join(repo, 'web/dades/7/codi'), { recursive: true });
     writeFileSync(join(repo, 'web/dades/7/mon.json'), '{"id":7}');
     writeFileSync(join(repo, 'web/dades/7/codi/1500.z'), 'codi');
@@ -291,7 +292,7 @@ const tests = {
     assert.deepStrictEqual(sums.stdout.trim().split('\n').map((l) => l.split('  ')[1]), ['7/codi/1500.z', '7/mon.json']);
     writeFileSync(join(repo, 'web/dades/SHA256SUMS'), sums.stdout);
     assert.strictEqual(git('init', '-q').status, 0);
-    git('add', 'web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js', 'web/dades/7/fitxa.json', 'web/dades/SHA256SUMS');
+    git('add', 'LICENSE', 'web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js', 'web/dades/7/fitxa.json', 'web/dades/SHA256SUMS');
     const pub = (out) => spawnSync(process.execPath, [join(root, 'eines', 'lloc-publica.mjs'), out, '--arrel', repo], { encoding: 'utf8' });
     const ok = pub(join(tmp, 'lloc-bo'));
     assert.strictEqual(ok.status, 0, ok.stderr);

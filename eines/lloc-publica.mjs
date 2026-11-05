@@ -11,6 +11,7 @@
 // - quadern/, sencer;
 // - de fase1/ i fase2/, només els fitxers de la carpeta (html, css i js), sense resultats/ ni les eines de Node (.mjs): el món en
 //   viu i el quadern els fan servir al navegador;
+// - les llicències: LICENSE (el codi, AGPL-3.0-or-later), NOTICE, LICENSE-docs.md i LICENSE-data.md;
 // - una portada que porta a web/. Amb el workflow, GitHub Pages no hi fa passar Jekyll: no cal cap .nojekyll.
 // No hi va res que comenci per punt, cap registre ni cap captura. Mai no sobreescriu: SORTIDA no ha d'existir.
 import { createHash } from 'crypto';
@@ -59,10 +60,11 @@ catch (e) { fail(`no puc llegir els fitxers de git a ${root}: ${e.message}`, 1);
 const isPublic = (f) => {
   if (f.split('/').some((p) => p.startsWith('.'))) return false;
   if (f.startsWith('web/') || f.startsWith('quadern/')) return true;
+  if (['LICENSE', 'NOTICE', 'LICENSE-docs.md', 'LICENSE-data.md'].includes(f)) return true;
   return /^fase[12]\/[^/]+\.(html|css|js)$/.test(f);
 };
 const files = tracked.filter(isPublic);
-for (const need of ['web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js']) if (!files.includes(need)) fail(`no hi ha ${need} a git`, 1);
+for (const need of ['web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js', 'LICENSE']) if (!files.includes(need)) fail(`no hi ha ${need} a git`, 1);
 
 // les dades, comprovades amb web/dades/SHA256SUMS
 let data = [];

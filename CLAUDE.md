@@ -154,7 +154,7 @@ Llegeix-los abans de proposar canvis.
     cadascun amb la proporció de la seva sèrie. Cap resultat d'una sèrie abans de la seva decisió.
   - **La publicació** (GitHub Pages, <https://xavig-icv.github.io/genesis/>): `.github/workflows/lloc.yml`, a cada push a `main`
     que toqui el lloc. Munta la carpeta amb `node eines/lloc-publica.mjs _site`: només el que git segueix de `web/` i
-    `quadern/`, i els `.html`, `.css` i `.js` de `fase1/` i `fase2/`, sense `resultats/`. Les dades dels mons no són a
+    `quadern/`, els `.html`, `.css` i `.js` de `fase1/` i `fase2/`, sense `resultats/`, i les llicències. Les dades dels mons no són a
     git: es baixen d'una versió del repositori (`lloc-dades-vN`) i es comproven amb la SHA-256 del fitxer i després una per
     una amb `web/dades/SHA256SUMS`. Si alguna no hi coincideix, no es publica res.
     - **Per canviar les dades:** `node eines/lloc-publica.mjs --sumes > web/dades/SHA256SUMS`, una versió nova amb el
