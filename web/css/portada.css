@@ -1,0 +1,119 @@
+/* La portada amb l'Observatori (l'encàrrec 2): el que és propi d'aquesta pàgina, sobre obs.css, que és el sistema (l'escala de
+   mides i d'espais, i les seccions). La capçalera i el seu planeta en totes les amplades (els prototips eren de 1.440 i 390
+   píxels), les imatges de cada tema, les entrades i la llum dels talls del naixement. */
+
+/* El fons de la pàgina, també fora de .ob (el de --o-space a cada tema) */
+html { background: #050506; }
+:root[data-theme="light"] { background: #f3f3f0; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { background: #f3f3f0; } }
+body.ob { margin: 0; min-height: 100vh; }
+
+/* Salta al contingut: amagat fins que té el focus */
+.ob .ob-skip { position: absolute; z-index: 20; left: 16px; top: -60px; padding: 10px 14px; background: var(--o-ink); color: var(--o-on-ink); border-radius: var(--o-r1); font-weight: 600; text-decoration: none; }
+.ob .ob-skip:focus { top: 12px; }
+.ob main:focus { outline: none; }
+
+/* Les imatges de cada tema: la del fosc per defecte, i la del clar quan el tema és clar */
+.ob .when-light { display: none; }
+:root[data-theme="light"] .ob .when-light { display: block; }
+:root[data-theme="light"] .ob .when-dark { display: none; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .ob .when-light { display: block; }
+  :root:not([data-theme="dark"]) .ob .when-dark { display: none; }
+}
+/* Els controls que només funcionen amb JavaScript; i hidden, que els estils dels botons (display) no han de desfer */
+html:not(.js) .ob .js-only { display: none !important; }
+.ob [hidden] { display: none !important; }
+
+/* ───────── La capçalera i el planeta ───────── */
+.ob .ob-hero__lede { margin-top: var(--o-s5); }
+.ob .ob-hero__more { margin: var(--o-s3) 0 0; }
+.ob .ob-hero__stage { display: flex; justify-content: center; align-items: center; padding: var(--o-s7) 0 0; }
+.ob .ob-hero__frame { position: relative; width: min(100%, 600px); aspect-ratio: 720 / 708; }
+.ob .ob-hero__frame > .ob-brk.tl { left: 0; top: 0; }
+.ob .ob-hero__frame > .ob-brk.tr { right: 0; top: 0; }
+.ob .ob-hero__frame > .ob-brk.bl { left: 0; bottom: 0; }
+.ob .ob-hero__frame > .ob-brk.br { right: 0; bottom: 0; }
+.ob .ob-hero__hud { position: absolute; z-index: 2; top: 6px; }
+.ob .ob-hero__hud.is-l { left: 32px; }
+.ob .ob-hero__hud.is-r { right: 32px; text-align: right; }
+/* el planeta: 640 de 720 píxels del marc, com al prototip */
+.ob .ob-hero__frame > .ob-planet { position: absolute; left: 5.56%; top: 4.8%; width: 88.9%; aspect-ratio: 1; }
+/* el pòster: una imatge de fons, perquè només es baixi la del tema que es veu (amb dues <img>, es baixaven totes dues). Sense
+   JavaScript també és la bona; amb el naixement sense WebGL2, naixement.js n'hi posa el fotograma */
+.ob .ob-planet__poster { position: absolute; inset: 0; background: url("../img/naixement/fosc-3500.webp") center / contain no-repeat; }
+:root[data-theme="light"] .ob .ob-planet__poster { background-image: url("../img/naixement/clar-3500.webp"); }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .ob .ob-planet__poster { background-image: url("../img/naixement/clar-3500.webp"); } }
+/* el WebGL, quan ja ha dibuixat: llavors el pòster s'amaga (és el mateix dibuix, quiet) */
+.ob .ob-planet__globe canvas { opacity: 0; }
+.ob .ob-planet.is-live .ob-planet__globe canvas { opacity: 1; }
+.ob .ob-planet.is-live .ob-planet__poster { visibility: hidden; }
+/* la llum de cada tall del naixement: l'halo i la vora pugen de cop i tornen al repòs en 750 ms */
+.ob .ob-planet__halo, .ob .ob-planet__rim { transition: opacity var(--t-flare) var(--ease-out); }
+.ob [data-pm="birth"].is-flare .ob-planet__halo, .ob [data-pm="birth"].is-flare .ob-planet__rim { opacity: 1; transition: none; }
+/* el cel: les estrelles les posa portada.js (un patró fix), i només es veuen al tema fosc (--o-stars) */
+.ob .ob-hero > .ob-sky { z-index: 0; }
+
+/* el cronoscopi del naixement: el botó, al mig de les xifres de l'època */
+.ob .ob-hero .ob-chrono { align-items: flex-start; }
+.ob .ob-hero .ob-chrono > .ob-iconbtn { margin-top: 17px; }
+.ob .ob-hero .ob-chrono__ep { width: 152px; }
+.ob .ob-chrono__digits { height: 40px; }
+.ob .ob-hero__scale { flex: 1 1 auto; min-width: 0; max-width: 682px; margin-top: 6px; }
+.ob .ob-hero .ob-chrono__cap { flex: 0 1 360px; min-width: 0; }
+.ob .ob-chrono__again { margin-top: var(--o-s3); }
+
+/* entre el mòbil i la pantalla gran: dues columnes iguals, i el subtítol sota l'escala */
+@container ob (max-width: 1180px) and (min-width: 641px) {
+  .ob .ob-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ob .ob-hero__text { padding: var(--o-s7) 0; }
+  .ob .ob-hero .ob-chrono { flex-wrap: wrap; row-gap: 14px; }
+  .ob .ob-hero .ob-chrono__cap { flex: 1 1 100%; }
+}
+/* al mòbil: el planeta primer, després el cronoscopi i el text */
+@container ob (max-width: 640px) {
+  .ob .ob-hero { display: flex; flex-direction: column; }
+  .ob .ob-hero__stage { order: -2; padding: var(--o-s4) 0 0; }
+  .ob .ob-hero__chrono { order: -1; padding: var(--o-s4) 0 0; }
+  .ob .ob-hero__hud.is-l { left: 24px; }
+  .ob .ob-hero__hud.is-r { right: 24px; }
+  .ob .ob-hero .ob-chrono { flex-wrap: wrap; gap: 12px 14px; }
+  .ob .ob-hero .ob-chrono > .ob-iconbtn { margin-top: 12px; }
+  .ob .ob-hero .ob-chrono__ep { width: auto; min-width: 96px; }
+  .ob .ob-chrono__digits { font-size: 32px; height: 32px; }
+  .ob .ob-hero__scale { flex: 1 1 140px; }
+  .ob .ob-hero__scale .ob-scale__lb:nth-of-type(2n) { display: none; }
+  .ob .ob-hero .ob-chrono__cap { flex: 1 1 100%; }
+}
+
+/* ───────── La cinta ───────── */
+.ob .ob-tape-panel { padding: var(--o-s5); }
+.ob .ob-tape__caption { margin-top: var(--o-s5); padding-top: var(--o-s4); border-top: 1px solid var(--o-line); color: var(--o-ink-2); }
+.ob .ob-tape__caption > span { display: block; max-width: 90ch; }
+@container ob (max-width: 640px) { .ob .ob-tape-panel { padding: var(--o-s4) 14px; } }
+
+/* ───────── La química ───────── */
+.ob .ob-specimens { position: relative; }
+/* un sol llenç sobre tots els pous: cada sòlid es dibuixa al centre del seu pou */
+.ob .ob-specimens > canvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; pointer-events: none; }
+/* la nota va amb els espècimens: més a prop que la distància entre blocs */
+.ob.site .ob-act > .ob-chem__note { margin-top: var(--o-s4); }
+
+/* ───────── El laboratori ───────── */
+.ob .ob-window__media > img { display: none; }
+.ob .ob-window__media > img.when-dark { display: block; }
+:root[data-theme="light"] .ob .ob-window__media > img.when-dark { display: none; }
+:root[data-theme="light"] .ob .ob-window__media > img.when-light { display: block; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .ob .ob-window__media > img.when-dark { display: none; }
+  :root:not([data-theme="dark"]) .ob .ob-window__media > img.when-light { display: block; }
+}
+/* la lectura sobre la imatge, sempre llegible: amb el fons de l'espai */
+.ob .ob-window__hud { padding: 4px 6px; background: var(--o-space); border-radius: var(--o-r1); }
+
+/* ───────── Les entrades, una vegada ───────── */
+/* Només s'amaga el que encara és sota la pantalla quan la pàgina ja corre (portada.js hi posa .is-out): sense JavaScript, o
+   si el mòdul falla, tot es veu. Per això es desfà la regla d'obs.css, que amagava tot el que no tenia .is-in */
+.js .ob [data-enter]:not(.is-in) { opacity: 1; transform: none; }
+.js .ob [data-enter].is-out { opacity: 0; transform: translateY(14px); }
+@media (prefers-reduced-motion: reduce) { .js .ob [data-enter].is-out { opacity: 1; transform: none; } }

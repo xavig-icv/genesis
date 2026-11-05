@@ -1,0 +1,55 @@
+name: Lloc web
+
+# Publica el lloc a GitHub Pages des de main (https://xavig-icv.github.io/genesis/). Hi van els fitxers de la llista tancada
+# (eines/lloc-publica.mjs) i les dades dels mons, que no són a git: es baixen d'una versió del repositori, es comproven amb la
+# SHA-256 del fitxer i després una per una amb web/dades/SHA256SUMS. Si alguna cosa no hi coincideix, no es publica res.
+# Per canviar les dades: una versió nova (lloc-dades-vN), web/dades/SHA256SUMS i les dues variables d'aquí.
+
+on:
+  push:
+    branches: [main]
+    paths: ['web/**', 'quadern/**', 'fase1/*', 'fase2/*', 'eines/lloc-publica.mjs', '.github/workflows/lloc.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  DADES_VERSIO: lloc-dades-v1
+  DADES_SHA256: ae06a90fd536bd43217c8f59f0c2ac0f93ae84e864cfc42ea2d60262bd096182
+
+jobs:
+  construeix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Les dades dels mons, de la versió, comprovades amb la SHA-256
+        run: |
+          curl -fsSL -o dades.tar.gz "https://github.com/${GITHUB_REPOSITORY}/releases/download/${DADES_VERSIO}/${DADES_VERSIO}.tar.gz"
+          echo "${DADES_SHA256}  dades.tar.gz" | sha256sum -c -
+          tar -xzf dades.tar.gz
+          rm dades.tar.gz
+      - name: El lloc, amb la llista tancada de fitxers i les dades comprovades una per una
+        run: node eines/lloc-publica.mjs _site
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  publica:
+    needs: construeix
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.desplega.outputs.page_url }}
+    steps:
+      - id: desplega
+        uses: actions/deploy-pages@v5

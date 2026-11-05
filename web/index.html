@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <title data-i18n="page.home.title">Genesis · Abiogènesi digital</title>
+  <meta name="description" data-i18n-content="page.home.desc" content="Un univers de joguina on la vida sorgeix sola: programes aleatoris que es tornen replicadors, sense que ningú n'escrigui el primer. Dissenyem les lleis, mai els organismes.">
+  <!-- per compartir l'enllaç (AUD-166, AU2-135): la imatge és el món 1006 a l'època 3.500, feta amb eines/web-animacio.mjs (web/img/README.md) -->
+  <link rel="canonical" href="https://xavig-icv.github.io/genesis/web/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Genesis">
+  <meta property="og:title" content="Genesis · Abiogènesi digital">
+  <meta property="og:description" content="Un univers de joguina on la vida sorgeix sola: programes aleatoris que es tornen replicadors, sense que ningú n'escrigui el primer. Dissenyem les lleis, mai els organismes.">
+  <meta property="og:url" content="https://xavig-icv.github.io/genesis/web/">
+  <meta property="og:image" content="https://xavig-icv.github.io/genesis/web/img/og-1006.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="El món de la llavor 1006, en forma de planeta: una colònia de replicadors, en rosa, en cobreix bona part del continent a l'època 3.500.">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- abans del primer pintat: la classe js (sense JavaScript no s'amaga res), el tema i la llengua desats (AUD-166) -->
+  <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}
+  try{var q=new URLSearchParams(location.search).get('lang'),s=null;try{s=localStorage.getItem('lang')}catch(e){}document.documentElement.lang=q==='ca'||q==='en'?q:s==='ca'||s==='en'?s:(navigator.languages||[navigator.language]).some(function(l){return/^ca/i.test(l)})?'ca':'en'}catch(e){}</script>
+  <link rel="icon" href="img/icona.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- el pòster del planeta, el primer pintat (una imatge de fons de portada.css: només la del tema) -->
+  <link rel="preload" href="img/naixement/fosc-3500.webp" as="image" type="image/webp" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="img/naixement/clar-3500.webp" as="image" type="image/webp" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/obs.css">
+  <link rel="stylesheet" href="css/portada.css">
+</head>
+<body class="ob site">
+  <a class="ob-skip" href="#contingut"><span lang="ca">Salta al contingut</span><span lang="en">Skip to content</span></a>
+  <header class="ob-nav">
+    <a class="ob-brand" href="./"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="2.6"></circle><path d="M12.37 21.00A19.63 7.20 0 0 0 51.63 21.00A22.50 22.50 0 0 1 53.38 39.00A21.38 7.20 0 0 1 10.62 39.00A22.50 22.50 0 0 1 12.37 21.00Z" fill="currentColor"></path></svg><b>Genesis</b></a>
+    <span class="ob-nav__sub"><span lang="ca">Abiogènesi digital</span><span lang="en">Digital abiogenesis</span></span>
+    <ul class="ob-nav__links">
+      <li><a href="explorador/" data-i18n="nav.explorer">Explorador 3D</a></li>
+      <li><a href="2d/" data-i18n="nav.map">Vista 2D</a></li>
+      <li><a href="viu/" data-i18n="nav.live">El teu món, en viu</a></li>
+      <li><a href="../quadern/" data-i18n="nav.notebook">Quadern</a></li>
+      <li><a href="https://github.com/xavig-icv/genesis" data-i18n="nav.repo">Codi</a></li>
+    </ul>
+    <div class="ob-nav__tools">
+      <div class="ob-seg is-mono" role="group" aria-label="Llengua / Language"><button type="button" data-lang="ca" aria-pressed="true">CA</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <div class="ob-seg" role="group" data-i18n-aria="theme.label">
+        <button type="button" data-theme-value="system" data-i18n-title="theme.system" data-i18n-aria="theme.system"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"></rect><path d="M8 20h8M12 16v4"></path></svg></button>
+        <button type="button" data-theme-value="light" data-i18n-title="theme.light" data-i18n-aria="theme.light"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"></path></svg></button>
+        <button type="button" data-theme-value="dark" data-i18n-title="theme.dark" data-i18n-aria="theme.dark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contingut" tabindex="-1">
+    <!-- Acte 1 · la pregunta: el naixement del món 1006, en 7 fotogrames reals (js/naixement.js) -->
+    <section class="ob-hero" data-pm="birth"
+      data-frames-dark="img/naixement/fosc-1650.webp,img/naixement/fosc-2250.webp,img/naixement/fosc-2500.webp,img/naixement/fosc-3000.webp,img/naixement/fosc-3500.webp,img/naixement/fosc-4500.webp,img/naixement/fosc-6000.webp"
+      data-frames-light="img/naixement/clar-1650.webp,img/naixement/clar-2250.webp,img/naixement/clar-2500.webp,img/naixement/clar-3000.webp,img/naixement/clar-3500.webp,img/naixement/clar-4500.webp,img/naixement/clar-6000.webp">
+      <div class="ob-sky" aria-hidden="true"></div>
+      <div class="ob-hero__text">
+        <h1 class="ob-display ob-d1"><span lang="ca">La vida, sense que ningú l’escrigui</span><span lang="en">Life, without anyone writing it</span></h1>
+        <p class="ob-lede ob-hero__lede" lang="ca">Un univers de joguina on intentem que la vida sorgeixi sola. Programes aleatoris es troben, es reescriuen i, de vegades, en surt un que es copia. Dissenyem les lleis del món, mai els organismes.</p>
+        <p class="ob-lede ob-hero__lede" lang="en">A toy universe where we try to let life arise on its own. Random programs meet and rewrite each other and, sometimes, one appears that copies itself. We design the laws of the world, never the organisms.</p>
+        <div class="ob-cta">
+          <a class="ob-btn is-primary" href="explorador/"><span lang="ca">Explora un món en 3D</span><span lang="en">Explore a world in 3D</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+          <a class="ob-btn" href="viu/"><span lang="ca">Simula el teu món digital</span><span lang="en">Simulate your own digital world</span></a>
+        </div>
+        <p class="ob-hero__more"><a class="ob-btn is-link" href="../quadern/"><span lang="ca">Llegeix el quadern</span><span lang="en">Read the notebook (in Catalan)</span></a></p>
+      </div>
+      <div class="ob-hero__stage">
+        <div class="ob-hero__frame">
+          <i class="ob-brk tl"></i><i class="ob-brk tr"></i><i class="ob-brk bl"></i><i class="ob-brk br"></i>
+          <span class="ob-hud ob-hero__hud is-l"><span lang="ca">Llavor 1006</span><span lang="en">Seed 1006</span></span>
+          <span class="ob-hud ob-hero__hud is-r">512 × 256 <span lang="ca">cel·les</span><span lang="en">cells</span></span>
+          <figure class="ob-planet" data-seed="1006" data-epoch="3500">
+            <div class="ob-planet__halo" aria-hidden="true"></div>
+            <div class="ob-planet__globe">
+              <i class="ob-planet__poster" data-b="img" aria-hidden="true"></i>
+              <canvas id="hero" aria-hidden="true"></canvas>
+            </div>
+            <div class="ob-planet__rim" aria-hidden="true"></div>
+          </figure>
+        </div>
+      </div>
+      <div class="ob-hero__chrono">
+        <div class="ob-chrono">
+          <button class="ob-iconbtn js-only" type="button" data-b="toggle" aria-pressed="false" aria-label="Reprodueix">
+            <svg class="ic" data-b="i-play" viewBox="0 0 24 24" aria-hidden="true"><path class="ic-fill" d="M7 4.5v15l12.5-7.5z"></path></svg>
+            <svg class="ic" data-b="i-pause" viewBox="0 0 24 24" aria-hidden="true" hidden><path class="ic-fill" d="M6.5 4.5h4v15h-4zM13.5 4.5h4v15h-4z"></path></svg>
+            <svg class="ic" data-b="i-replay" viewBox="0 0 24 24" aria-hidden="true" hidden><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"></path></svg>
+          </button>
+          <div class="ob-chrono__ep"><span class="ob-hud"><span lang="ca">Època</span><span lang="en">Epoch</span></span><output class="ob-chrono__digits" data-b="digits"><span lang="ca">3.500</span><span lang="en">3,500</span></output></div>
+          <div class="ob-scale ob-hero__scale" aria-hidden="true">
+            <i class="ob-scale__base"></i><i class="ob-scale__t is-k" style="left:0%"></i><span class="ob-scale__lb is-first" style="left:0%"><span lang="ca">0</span><span lang="en">0</span></span><i class="ob-scale__t" style="left:4.167%"></i><i class="ob-scale__t" style="left:8.333%"></i><i class="ob-scale__t" style="left:12.5%"></i><i class="ob-scale__t is-k" style="left:16.667%"></i><span class="ob-scale__lb" style="left:16.667%"><span lang="ca">1.000</span><span lang="en">1,000</span></span><i class="ob-scale__t" style="left:20.833%"></i><i class="ob-scale__t" style="left:25%"></i><i class="ob-scale__t" style="left:29.167%"></i><i class="ob-scale__t is-k" style="left:33.333%"></i><span class="ob-scale__lb" style="left:33.333%"><span lang="ca">2.000</span><span lang="en">2,000</span></span><i class="ob-scale__t" style="left:37.5%"></i><i class="ob-scale__t" style="left:41.667%"></i><i class="ob-scale__t" style="left:45.833%"></i><i class="ob-scale__t is-k" style="left:50%"></i><span class="ob-scale__lb" style="left:50%"><span lang="ca">3.000</span><span lang="en">3,000</span></span><i class="ob-scale__t" style="left:54.167%"></i><i class="ob-scale__t" style="left:58.333%"></i><i class="ob-scale__t" style="left:62.5%"></i><i class="ob-scale__t is-k" style="left:66.667%"></i><span class="ob-scale__lb" style="left:66.667%"><span lang="ca">4.000</span><span lang="en">4,000</span></span><i class="ob-scale__t" style="left:70.833%"></i><i class="ob-scale__t" style="left:75%"></i><i class="ob-scale__t" style="left:79.167%"></i><i class="ob-scale__t is-k" style="left:83.333%"></i><span class="ob-scale__lb" style="left:83.333%"><span lang="ca">5.000</span><span lang="en">5,000</span></span><i class="ob-scale__t" style="left:87.5%"></i><i class="ob-scale__t" style="left:91.667%"></i><i class="ob-scale__t" style="left:95.833%"></i><i class="ob-scale__t is-k" style="left:100%"></i><span class="ob-scale__lb is-last" style="left:100%"><span lang="ca">6.000</span><span lang="en">6,000</span></span><i class="ob-scale__x is-past" style="left:27.5%"></i><i class="ob-scale__x is-past" style="left:37.5%"></i><i class="ob-scale__x is-past" style="left:41.667%"></i><i class="ob-scale__x is-past" style="left:50%"></i><i class="ob-scale__x is-current" style="left:58.333%"></i><i class="ob-scale__x" style="left:75%"></i><i class="ob-scale__x" style="left:100%"></i><span class="ob-scale__est" style="left:37.5%"><span lang="ca">Establiment</span><span lang="en">Establishment</span></span><i class="ob-scale__head" style="left:58.333%"></i>
+          </div>
+          <div class="ob-chrono__cap">
+            <p class="ob-chrono__now" data-b="cap"><span lang="ca">Família 1 · 24,8&nbsp;% del món.</span><span lang="en">Family 1 · 24.8&nbsp;% of the world.</span></p>
+            <p class="ob-chrono__qual"><span lang="ca">El món de la llavor 1006, que gira com un planeta: hi ha nascut una colònia de replicadors. És un exemple triat perquè es veu bé, no una mostra.</span><span lang="en">The world of seed 1006, turning like a planet: a colony of replicators has been born in it. It is an example chosen because it is easy to see, not a sample.</span></p>
+            <button class="ob-btn is-sm ob-chrono__again" type="button" data-b="again" hidden><span lang="ca">Torna-ho a veure</span><span lang="en">Watch it again</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <dl class="ob-specs">
+      <div class="ob-spec"><dt><span lang="ca">131.072</span><span lang="en">131,072</span></dt><dd><span lang="ca">programes en una sopa</span><span lang="en">programs in a soup</span></dd></div>
+      <div class="ob-spec"><dt>64 B</dt><dd><span lang="ca">cada programa</span><span lang="en">each program</span></dd></div>
+      <div class="ob-spec"><dt>128 B</dt><dd><span lang="ca">la cinta: dos programes junts</span><span lang="en">the tape: two programs together</span></dd></div>
+      <div class="ob-spec"><dt>10</dt><dd><span lang="ca">instruccions; qualsevol altre byte és una dada</span><span lang="en">instructions; any other byte is data</span></dd></div>
+    </dl>
+
+    <!-- Acte 2 · la cinta: dues cel·les reals, executades amb l'intèrpret del simulador (js/cinta.js) -->
+    <section class="ob-act" id="cinta">
+      <div class="ob-act__head">
+        <h2 class="ob-display ob-d2"><span lang="ca">Un programa es copia, pas a pas</span><span lang="en">A program copies itself, step by step</span></h2>
+        <p class="ob-lede"><span lang="ca">Dues cel·les veïnes del món 1006, executades amb l’intèrpret del simulador fins que una s’ha copiat sencera dins de l’altra.</span><span lang="en">Two neighbouring cells of world 1006, run with the simulator’s interpreter until one has copied itself whole into the other.</span></p>
+      </div>
+      <div class="ob-panel ob-tape-panel" data-enter>
+        <figure class="ob-tape" id="tape" data-bytes="423042bac9ef7c31f562e39090f1cb0e0e48ae5f7baeeaf03869483838af5b817d88d1e42a3cc8d1d9f5762c5d7d2c3c5b5b5b165b271bc381ae9aa82f42a1e142304238c9ef7c31f562e39090f1cb0e0e48ae5f7baeeaf03869483838af5b817d80d1e42a3cc8d1d9f5762c480e3dcbf19090e362f5317cefc93842fd421a42">
+          <div class="ob-tape__bar">
+            <p class="ob-tape__now"><span><span lang="ca">Pas</span><span lang="en">Step</span> <b id="tape-step">0</b> <span lang="ca">de</span><span lang="en">of</span> <span class="ob-num" id="tape-steps">8.192</span></span><span><span lang="ca">B porta</span><span lang="en">B carries</span> <b id="tape-copied">0</b> <span lang="ca">dels 64 bytes d’A, al revés</span><span lang="en">of A’s 64 bytes, reversed</span></span></p>
+            <div class="ob-tape__ctl">
+              <button class="ob-btn is-sm is-primary" id="tape-play" type="button"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path class="ic-fill" d="M7 4.5v15l12.5-7.5z"></path></svg><span class="when-paused"><span lang="ca">Executa</span><span lang="en">Run</span></span><span class="when-after"><span lang="ca">Continua</span><span lang="en">Continue</span></span><span class="when-playing"><span lang="ca">Atura</span><span lang="en">Pause</span></span></button>
+              <button class="ob-btn is-sm" id="tape-reset" type="button"><span lang="ca">Torna a començar</span><span lang="en">Start again</span></button>
+            </div>
+          </div>
+          <p class="ob-tape__label is-from-left"><span><b>A</b> · <span lang="ca">la cel·la (410, 155), de la família 1</span><span lang="en">cell (410, 155), of family 1</span></span><span class="ob-mono">0–63</span></p>
+          <div class="ob-tape__row is-from-left" id="tape-a" aria-hidden="true"></div>
+          <p class="ob-tape__label is-from-right"><span><b>B</b> · <span lang="ca">la cel·la (412, 156), sense família</span><span lang="en">cell (412, 156), with no family</span></span><span class="ob-mono">64–127</span></p>
+          <div class="ob-tape__row is-from-right" id="tape-b" aria-hidden="true"></div>
+          <div class="ob-tape__track"><input type="range" id="tape-scrub" min="0" max="8192" step="1" value="0" aria-label="Pas / Step"><i class="ob-tape__mark" id="tape-mark"></i></div>
+          <ul class="ob-tape__legend">
+            <li><i class="lg-pc"></i><span lang="ca">la instrucció que s’executa</span><span lang="en">the instruction being run</span></li>
+            <li><i class="lg-h0"></i><span lang="ca">cap 0</span><span lang="en">head 0</span></li>
+            <li><i class="lg-h1"></i><span lang="ca">cap 1</span><span lang="en">head 1</span></li>
+            <li><i class="lg-copy"></i><span lang="ca">els bytes d’A, la família 1</span><span lang="en">A’s bytes, family 1</span></li>
+          </ul>
+          <div class="ob-tape__end">
+            <b><span lang="ca">La còpia és sencera</span><span lang="en">The copy is complete</span></b>
+            <p><span lang="ca">Al pas <span class="ob-num">926</span> la còpia ja és sencera: A s’ha copiat al revés a la meitat de B.</span><span lang="en">By step <span class="ob-num">926</span> the copy is complete: A has copied itself, reversed, onto B’s half.</span></p>
+          </div>
+          <figcaption class="ob-small ob-tape__caption">
+            <span lang="ca">Dues cel·les veïnes del món 1006 a l’època 3.500, triades a l’atzar (llavor 20261030) entre les 254.776 parelles d’una cel·la de la família 1 amb un veí sense família. La cinta l’executa l’intèrpret del simulador: A es copia al revés a la meitat de B, i al pas <span class="ob-num">926</span> la còpia ja és sencera. Passa en el 73&nbsp;% d’aquestes parelles, amb la cel·la de la família primer a la cinta. Al principi, B ja s’assemblava a A: 43 dels seus 64 bytes eren els d’A, als mateixos llocs. Però la còpia és al revés, i el comptador diu quants bytes de B són els d’A llegits al revés: al principi, 3.</span>
+            <span lang="en">Two neighbouring cells of world 1006 at epoch 3,500, picked at random (seed 20261030) among the 254,776 pairs of a cell of family 1 with a neighbour that has no family. The tape is run by the simulator’s interpreter: A copies itself, reversed, onto B’s half, and by step <span class="ob-num">926</span> the copy is complete. This happens in 73&nbsp;% of these pairs, with the family’s cell first on the tape. At the start, B already resembled A: 43 of its 64 bytes were A’s, in the same places. But the copy is reversed, and the counter shows how many of B’s bytes are A’s read backwards: at the start, 3.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Què vol dir «vida» aquí: el criteri de treball -->
+    <section class="ob-act" id="vida">
+      <div class="ob-act__head">
+        <h2 class="ob-display ob-d2"><span lang="ca">Què vol dir «vida» aquí</span><span lang="en">What “life” means here</span></h2>
+        <p class="ob-lede"><span lang="ca">És un criteri de treball, no cap afirmació sobre la vida biològica.</span><span lang="en">It is an operational criterion, not a claim about biological life.</span></p>
+      </div>
+      <dl class="ob-defs">
+        <div data-enter><dt class="ob-title"><span lang="ca">Un replicador hereditari</span><span lang="en">A heritable replicator</span></dt><dd><span lang="ca">és un programa que es copia en un company, i la còpia també es copia.</span><span lang="en">is a program that copies itself into a partner, and whose copy copies itself in turn.</span></dd></div>
+        <div data-enter style="--i:1"><dt class="ob-title"><span lang="ca">La vida s’ha establert</span><span lang="en">Life is established</span></dt><dd><span lang="ca">quan, en dos censos seguits (un cada 250 èpoques), almenys l’1&nbsp;% d’una mostra de 2.048 cel·les en són.</span><span lang="en">when at least 1&nbsp;% of a sample of 2,048 cells are heritable replicators, in two consecutive censuses taken 250 epochs apart.</span></dd></div>
+      </dl>
+    </section>
+
+    <!-- Què és: d'on ve el projecte, les preguntes obertes i la regla principal -->
+    <section class="ob-act" id="regles">
+      <div class="ob-act__head" id="que-es">
+        <h2 class="ob-display ob-d2"><span lang="ca">Què és</span><span lang="en">What it is</span></h2>
+        <p class="ob-lede" lang="ca">Tierra (1991) i Avida (1994) van estudiar l’evolució digital, però hi començava un organisme escrit a mà. La idea que la vida aparegui sola en una «química» de programes ve de lluny: Coreworld, AlChemy o Amoeba. El 2024, <em>Computational Life</em> (Agüera y Arcas i altres) va mostrar que en una sopa de programes molt senzills, en llenguatge BFF, hi apareixen replicadors sols: en un 40&nbsp;% de les sopes, en 16.000 èpoques. Aquest projecte parteix d’aquí i es pregunta el que queda obert:</p>
+        <p class="ob-lede" lang="en">Tierra (1991) and Avida (1994) studied digital evolution, but they started from a hand-written organism. The idea that life can arise on its own in a “chemistry” of programs is older: Coreworld, AlChemy and Amoeba. In 2024, <em>Computational Life</em> (Agüera y Arcas et al.) showed that replicators appear on their own in a soup of very simple programs written in the BFF language: in about 40&nbsp;% of the soups, within 16,000 epochs. This project starts from there and asks what remains open:</p>
+      </div>
+      <ol class="ob-questions">
+        <li data-enter><span class="n">1</span><p><span lang="ca">Quines propietats de la química i de l’entorn calen perquè hi aparegui la vida.</span><span lang="en">Which properties of the chemistry and of the environment are needed for life to appear.</span></p></li>
+        <li data-enter style="--i:1"><span class="n">2</span><p><span lang="ca">De què depèn que s’estableixi i que duri.</span><span lang="en">What makes it become established, and last.</span></p></li>
+        <li data-enter style="--i:2"><span class="n">3</span><p><span lang="ca">Si després hi ha evolució darwiniana sostinguda.</span><span lang="en">Whether sustained Darwinian evolution follows.</span></p></li>
+        <li data-enter style="--i:3"><span class="n">4</span><p><span lang="ca">Si els resultats són generals o propis d’aquest llenguatge.</span><span lang="en">Whether the results are general or specific to this language.</span></p></li>
+      </ol>
+      <div class="ob-rule" data-enter>
+        <p lang="ca"><b>La regla principal: dissenyem les lleis, mai els organismes.</b> No hi ha replicadors inicials, ni premis per copiar-se, ni cap instrucció que copiï un programa sencer d’un sol cop. Els organismes són bytes executats pel nostre intèrpret, en un univers tancat: sense accés al sistema, a la xarxa ni als fitxers.</p>
+        <p lang="en"><b>The main rule: we design the laws, never the organisms.</b> There are no seeded replicators, no rewards for copying, and no instruction that copies a whole program at once. The organisms are bytes run by our interpreter, in a closed universe: no access to the system, the network or the files.</p>
+      </div>
+    </section>
+
+    <!-- La química: les 10 instruccions, amb un sòlid cadascuna -->
+    <section class="ob-act" id="instruccions">
+      <div class="ob-act__head">
+        <h2 class="ob-display ob-d2"><span lang="ca">La química: 10 instruccions</span><span lang="en">The chemistry: 10 instructions</span></h2>
+        <p class="ob-lede" lang="ca">Cada programa són 64 bytes. Dos programes es posen l’un al costat de l’altre en una cinta de 128 bytes, i la cinta s’executa: el codi i les dades hi viuen junts, de manera que un programa es pot reescriure a si mateix i també el seu veí. Hi ha dos caps que llegeixen i escriuen. Qualsevol altre byte no fa res: són dades.</p>
+        <p class="ob-lede" lang="en">Each program is 64 bytes. Two programs are placed side by side on a 128-byte tape, and the tape is run: code and data live together, so a program can rewrite itself and its neighbour. Two heads read and write. Any other byte does nothing: it is data.</p>
+      </div>
+      <div class="ob-specimens">
+        <canvas id="gallery" aria-hidden="true"></canvas>
+        <figure class="ob-specimen" data-enter><div class="ob-specimen__well" data-cls="2"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-h0">&lt;</span><span class="ob-hud"><span lang="ca">Cap 0</span><span lang="en">Head 0</span></span></div><figcaption><span lang="ca">cap 0 a l’esquerra</span><span lang="en">head 0 left</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:1"><div class="ob-specimen__well" data-cls="3"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-h0">&gt;</span><span class="ob-hud"><span lang="ca">Cap 0</span><span lang="en">Head 0</span></span></div><figcaption><span lang="ca">cap 0 a la dreta</span><span lang="en">head 0 right</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:2"><div class="ob-specimen__well" data-cls="4"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-h1">{</span><span class="ob-hud"><span lang="ca">Cap 1</span><span lang="en">Head 1</span></span></div><figcaption><span lang="ca">cap 1 a l’esquerra</span><span lang="en">head 1 left</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:3"><div class="ob-specimen__well" data-cls="5"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-h1">}</span><span class="ob-hud"><span lang="ca">Cap 1</span><span lang="en">Head 1</span></span></div><figcaption><span lang="ca">cap 1 a la dreta</span><span lang="en">head 1 right</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:4"><div class="ob-specimen__well" data-cls="6"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-ar">−</span><span class="ob-hud"><span lang="ca">Aritmètica</span><span lang="en">Arithmetic</span></span></div><figcaption><span lang="ca">resta 1 al byte del cap 0</span><span lang="en">subtract 1 at head 0</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:5"><div class="ob-specimen__well" data-cls="7"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-ar">+</span><span class="ob-hud"><span lang="ca">Aritmètica</span><span lang="en">Arithmetic</span></span></div><figcaption><span lang="ca">suma 1 al byte del cap 0</span><span lang="en">add 1 at head 0</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:6"><div class="ob-specimen__well" data-cls="8"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-cp">.</span><span class="ob-hud"><span lang="ca">Còpia</span><span lang="en">Copy</span></span></div><figcaption><span lang="ca">copia del cap 0 al cap 1</span><span lang="en">copy head 0 to head 1</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:7"><div class="ob-specimen__well" data-cls="9"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-cp">,</span><span class="ob-hud"><span lang="ca">Còpia</span><span lang="en">Copy</span></span></div><figcaption><span lang="ca">copia del cap 1 al cap 0</span><span lang="en">copy head 1 to head 0</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:8"><div class="ob-specimen__well" data-cls="10"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-lp">[</span><span class="ob-hud"><span lang="ca">Bucle</span><span lang="en">Loop</span></span></div><figcaption><span lang="ca">si el cap 0 llegeix 0, salta al ]</span><span lang="en">if head 0 reads 0, jump past ]</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:9"><div class="ob-specimen__well" data-cls="11"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-lp">]</span><span class="ob-hud"><span lang="ca">Bucle</span><span lang="en">Loop</span></span></div><figcaption><span lang="ca">si no és 0, torna al [</span><span lang="en">if not 0, jump back to [</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:10"><div class="ob-specimen__well" data-cls="1"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-z">0</span><span class="ob-hud"><span lang="ca">Zero</span><span lang="en">Zero</span></span></div><figcaption><span lang="ca">fa sortir dels bucles</span><span lang="en">ends loops</span></figcaption></figure>
+        <figure class="ob-specimen" data-enter style="--i:11"><div class="ob-specimen__well"></div><div class="ob-specimen__row"><span class="ob-specimen__glyph g-d">·</span><span class="ob-hud"><span lang="ca">Dada</span><span lang="en">Data</span></span></div><figcaption><span lang="ca">qualsevol altre byte</span><span lang="en">any other byte</span></figcaption></figure>
+      </div>
+      <p class="ob-small ob-chem__note"><span lang="ca">A l’explorador, cada instrucció és un sòlid diferent.</span><span lang="en">In the explorer, each instruction is a different solid.</span></p>
+    </section>
+
+    <!-- Acte 4 · els resultats: cada estat amb una forma i les paraules del text, no només un color -->
+    <section class="ob-act" id="resultats">
+      <div class="ob-act__head">
+        <h2 class="ob-display ob-d2"><span lang="ca">Què hem trobat</span><span lang="en">What we have found</span></h2>
+      </div>
+      <ol class="ob-results">
+        <li class="ob-result" data-enter>
+          <div class="ob-result__meta"><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle></svg><span lang="ca">Reproduït</span><span lang="en">Reproduced</span></span><span class="ob-result__kind"><span lang="ca">Fase 1 · La sopa</span><span lang="en">Phase 1 · The soup</span></span></div>
+          <div class="ob-result__main"><h3 class="ob-title"><span lang="ca">La sopa cobra vida</span><span lang="en">The soup comes alive</span></h3><p lang="ca">Hem reproduït el resultat de 2024 en sopes de 131.072 programes, i n’hem seguit la història. Els primers replicadors s’enverinen: cada còpia deixa zeros, i els zeros aturen les còpies, com ja descrivia l’article. En una sopa, un successor els converteix en 255 i s’hi continua copiant.</p><p lang="en">We reproduced the 2024 result in soups of 131,072 programs, and followed their history. The first replicators poison themselves: each copy leaves zeros behind, and zeros stop copying, as the paper already described. In one soup, a successor turns them into 255 and keeps copying.</p></div>
+          <a class="ob-btn is-link ob-result__link" href="../quadern/#entrada-1"><span lang="ca">Entrades 1 i 2 del quadern</span><span lang="en">Notebook entries 1 and 2 (in Catalan)</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </li>
+        <li class="ob-result" data-enter>
+          <div class="ob-result__meta"><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle><path d="M6 1.5a4.5 4.5 0 0 1 0 9z" fill="currentColor"></path></svg><span lang="ca">No concloent</span><span lang="en">Inconclusive</span></span><span class="ob-result__kind"><span lang="ca">Sèrie preregistrada 1</span><span lang="en">Preregistered series 1</span></span></div>
+          <div class="ob-result__main"><h3 class="ob-title"><span lang="ca">Un corrent feble: no concloent</span><span lang="en">A weak current: inconclusive</span></h3><p lang="ca">En un món 2D, cada programa només es troba amb els veïns. En 160 mons, la vida s’hi va establir en el 30&nbsp;% dels quiets (24 de 80) i en el 42,5&nbsp;% dels que tenen un corrent feble (34 de 80). La diferència no arriba al límit preregistrat: no permet afirmar cap efecte del corrent, però tampoc no el descarta.</p><p lang="en">In a 2D world, each program only meets its neighbours. In 160 worlds, life became established in 30&nbsp;% of the quiet ones (24 of 80) and in 42.5&nbsp;% of those with a weak current (34 of 80). The difference does not reach the preregistered bound: it does not show an effect of the current, nor does it rule one out.</p></div>
+          <a class="ob-btn is-link ob-result__link" href="../quadern/#entrada-8"><span lang="ca">Entrada 8</span><span lang="en">Entry 8 (in Catalan)</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </li>
+        <li class="ob-result" data-enter>
+          <div class="ob-result__meta"><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="currentColor"></circle></svg><span lang="ca">Amb corrent, ocupa més: confirmat</span><span lang="en">With a current, it fills more: confirmed</span></span><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle><path d="M6 1.5a4.5 4.5 0 0 1 0 9z" fill="currentColor"></path></svg><span lang="ca">Si canvia de condició: no concloent</span><span lang="en">If the condition changes: inconclusive</span></span><span class="ob-result__kind"><span lang="ca">Sèrie preregistrada 2</span><span lang="en">Preregistered series 2</span></span></div>
+          <div class="ob-result__main"><h3 class="ob-title"><span lang="ca">La vida establerta dura</span><span lang="en">Established life lasts</span></h3><p lang="ca">Continuant 29 mons des de l’establiment, 116 branques de 5.000 èpoques: en el seu món, el 93,1&nbsp;% de les branques no tenen cap pèrdua sostinguda. Amb corrent, durant les primeres 2.000 èpoques la vida ocupa de mitjana més part del món (22 de 29 mons), com s’espera dels fronts d’invasió. Que la vida duri menys quan el món canvia de condició: no concloent.</p><p lang="en">Continuing 29 worlds from the establishment, 116 branches of 5,000 epochs: in their own world, 93.1&nbsp;% of the branches show no sustained loss. With a current, life fills on average a larger share of the world during the first 2,000 epochs (22 of 29 worlds), as invasion-front theory predicts. Whether life lasts less when the world changes condition: inconclusive.</p></div>
+          <a class="ob-btn is-link ob-result__link" href="../quadern/#entrada-10"><span lang="ca">Entrada 10</span><span lang="en">Entry 10 (in Catalan)</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </li>
+        <li class="ob-result" data-enter>
+          <div class="ob-result__meta"><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="currentColor"></circle></svg><span lang="ca">Confirmat als 8 mons</span><span lang="en">Confirmed in the 8 worlds</span></span><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle><path d="M6 1.5a4.5 4.5 0 0 1 0 9z" fill="currentColor"></path></svg><span lang="ca">Contra el món sense tocar, no concloent</span><span lang="en">Against the untouched world, inconclusive</span></span><span class="ob-result__kind"><span lang="ca">Sèrie preregistrada 3</span><span lang="en">Preregistered series 3</span></span></div>
+          <div class="ob-result__main"><h3 class="ob-title"><span lang="ca">Els zeros enverinen, en aquests 8 mons</span><span lang="en">Zeros poison, in these 8 worlds</span></h3><p lang="ca">En 8 mons on la vida baixa just després d’establir-se, treure els zeros de les cel·les que no es repliquen fa que la vida baixi menys que amb un placebo: confirmat als 8 mons. Contra el món sense tocar, no concloent. No diu res de mons nous.</p><p lang="en">In 8 worlds where life drops right after becoming established, removing the zeros of the cells that do not replicate makes life drop less than with a placebo: confirmed in all 8 worlds. Against the untouched world, inconclusive. It says nothing about new worlds.</p></div>
+          <a class="ob-btn is-link ob-result__link" href="../quadern/#entrada-13"><span lang="ca">Entrada 13</span><span lang="en">Entry 13 (in Catalan)</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </li>
+        <li class="ob-result" data-enter>
+          <div class="ob-result__meta"><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="currentColor"></circle></svg><span lang="ca">Totes dues proves, confirmades</span><span lang="en">Both tests confirmed</span></span><span class="ob-result__kind"><span lang="ca">Sèrie preregistrada 4</span><span lang="en">Preregistered series 4</span></span></div>
+          <div class="ob-result__main"><h3 class="ob-title"><span lang="ca">Amb la sopa envellida, la vida s’hi estableix més sovint</span><span lang="en">With the aged soup, life becomes established more often</span></h3><p lang="ca">En 150 mons quiets que arriben a l’època 8.000 sense vida, cada món ha continuat 8.000 èpoques més de tres maneres, des de la mateixa captura. Amb la sopa envellida, la vida s’hi estableix més sovint que amb una de nova: 64 branques de 300 contra 40. Amb els mateixos bytes barrejats, també (82 contra 40), però la barreja ja crea replicadors: no aïlla la composició. És l’efecte total de conservar la sopa d’aquests mons, no d’un mecanisme concret.</p><p lang="en">In 150 quiet worlds that reach epoch 8,000 without life, each world was continued for 8,000 more epochs in three ways, from the same capture. With the aged soup, life becomes established more often than with a fresh one: 64 branches of 300 against 40. With the same bytes shuffled, too (82 against 40), but shuffling already creates replicators: it does not isolate the composition. It is the total effect of keeping the soup of these worlds, not of a specific mechanism.</p></div>
+          <a class="ob-btn is-link ob-result__link" href="../quadern/#entrada-14"><span lang="ca">Entrada 14</span><span lang="en">Entry 14 (in Catalan)</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </li>
+        <li class="ob-result" data-enter>
+          <div class="ob-result__meta"><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"></circle></svg><span lang="ca">Descriptiu</span><span lang="en">Descriptive</span></span><span class="ob-result__kind"><span lang="ca">B1, nivell 1</span><span lang="en">B1, level 1</span></span></div>
+          <div class="ob-result__main"><h3 class="ob-title"><span lang="ca">Què cal perquè un programa es copiï</span><span lang="en">What a program needs to copy itself</span></h3><p lang="ca">Hem tret a la química una instrucció o una capacitat cada vegada, i hem comptat quants de deu milions de programes a l’atzar són replicadors hereditaris. Els tres controls, sense les instruccions de còpia, sense bucles o sense còpia d’un programa a l’altre, no en donen cap, com esperàvem. Amb la química de sempre, 1.625. Sense aritmètica, n’hi ha el doble, i si el programa no es pot reescriure a si mateix, el quàdruple. Amb els dos caps alineats, 31 vegades més. No diu si la vida s’hi estableix en una sopa.</p><p lang="en">We removed one instruction or one capability from the chemistry at a time, and counted how many of ten million random programs are heritable replicators. The three controls, without the copy instructions, without loops or without copying from one program to the other, give none, as expected. With the usual chemistry, 1,625. Without arithmetic, there are twice as many, and if a program cannot rewrite itself, four times as many. With the two heads aligned, 31 times as many. It does not say whether life becomes established in a soup.</p></div>
+          <a class="ob-btn is-link ob-result__link" href="../quadern/#entrada-15"><span lang="ca">Entrada 15</span><span lang="en">Entry 15 (in Catalan)</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </li>
+        <li class="ob-result is-now" data-enter>
+          <div class="ob-result__meta"><span class="ob-status"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2.2 1.8"></circle></svg><span lang="ca">Ara</span><span lang="en">Now</span></span></div>
+          <div class="ob-result__main"><h3 class="ob-title"><span lang="ca">Quins replicadors es copien sols</span><span lang="en">Which replicators copy themselves</span></h3><p lang="ca">Amb bytes com els de la sopa del començament, la majoria dels replicadors necessiten el codi del company per copiar-se. Els tornarem a provar amb companys sense cap instrucció, i mirarem com canvia el nombre de replicadors amb la proporció d’instruccions. Primer, la revisió dels dos auditors.</p><p lang="en">With bytes like those of a fresh soup, most replicators need their partner’s code to be copied. We will test them again with partners that have no instructions, and see how the number of replicators changes with the share of instructions. First, the review by both auditors.</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Acte 5 · el laboratori: tres finestres, cadascuna amb un fotograma real -->
+    <section class="ob-act" id="laboratori">
+      <div class="ob-act__head">
+        <h2 class="ob-display ob-d2"><span lang="ca">Entra al laboratori</span><span lang="en">Enter the lab</span></h2>
+        <p class="ob-lede"><span lang="ca">Tres maneres de mirar la vida digital: de prop, des de dalt i en directe.</span><span lang="en">Three ways to look at digital life: up close, from above and live.</span></p>
+      </div>
+      <div class="ob-windows">
+        <a class="ob-window" href="explorador/" data-enter>
+          <div class="ob-window__media"><img class="when-dark" src="img/entrada-3d-fosc.jpg" alt="" loading="lazy"><img class="when-light" src="img/entrada-3d-clar.jpg" alt="" loading="lazy"><span class="ob-hud is-value ob-window__hud"><span lang="ca">Món 1006 · època 3.500</span><span lang="en">World 1006 · epoch 3,500</span></span></div>
+          <div class="ob-window__body"><h3 class="ob-title" data-i18n="nav.explorer">Explorador 3D</h3><p><span lang="ca">Un món digital on la vida sorgeix sola, en 3D: les famílies de replicadors i el codi de cada cel·la.</span><span lang="en">A digital world where life arises on its own, in 3D: the families of replicators and the code of each cell.</span></p><span class="ob-go" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></div>
+        </a>
+        <a class="ob-window" href="2d/" data-enter style="--i:1">
+          <div class="ob-window__media"><img class="when-dark" src="img/entrada-2d-fosc.jpg" alt="" loading="lazy"><img class="when-light" src="img/entrada-2d-clar.jpg" alt="" loading="lazy"><span class="ob-hud is-value ob-window__hud"><span lang="ca">Món 1006 · època 3.500</span><span lang="en">World 1006 · epoch 3,500</span></span></div>
+          <div class="ob-window__body"><h3 class="ob-title" data-i18n="nav.map">Vista 2D</h3><p><span lang="ca">Un món digital on la vida sorgeix sola, vist des de dalt: del món sencer fins als bytes de cada programa.</span><span lang="en">A digital world where life arises on its own, seen from above: from the whole world down to the bytes of each program.</span></p><span class="ob-go" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></div>
+        </a>
+        <a class="ob-window" href="viu/" data-enter style="--i:2">
+          <div class="ob-window__media"><img class="when-dark" src="img/entrada-viu-fosc.jpg" alt="" loading="lazy"><img class="when-light" src="img/entrada-viu-clar.jpg" alt="" loading="lazy"><span class="ob-hud is-value ob-window__hud"><span lang="ca">Així comença un món · època 1.650</span><span lang="en">This is how a world begins · epoch 1,650</span></span></div>
+          <div class="ob-window__body"><h3 class="ob-title" data-i18n="nav.live">El teu món, en viu</h3><p><span lang="ca">Un món digital nou, de bytes a l’atzar, que corre al teu navegador amb el mateix simulador i les mateixes lleis que les sèries del projecte.</span><span lang="en">A new digital world, from random bytes, running in your browser with the same simulator and the same laws as the project’s series.</span></p><span class="ob-go" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="ob-act" id="metode">
+      <div class="ob-act__head">
+        <h2 class="ob-display ob-d2"><span lang="ca">Com es treballa</span><span lang="en">How we work</span></h2>
+      </div>
+      <div class="ob-method">
+        <div data-enter><h3 class="ob-title"><span lang="ca">Preregistre</span><span lang="en">Preregistration</span></h3><p lang="ca">Cada sèrie confirmatòria té un protocol escrit abans de començar, fixat en una etiqueta de git; les de B2 i dels zeros, a més, amb un segell ancorat a Bitcoin. El programa que decideix només ho fa des d’una còpia idèntica a l’etiqueta.</p><p lang="en">Each confirmatory series has a protocol written before it starts, fixed in a git tag; those of B2 and of the zeros also carry a stamp anchored on Bitcoin. The program that decides only runs from a copy identical to the tag.</p></div>
+        <div data-enter style="--i:1"><h3 class="ob-title"><span lang="ca">Dos auditors d’IA</span><span lang="en">Two AI auditors</span></h3><p lang="ca">A cada iteració, dos models revisen el codi, els mètodes i els resultats, per separat: una altra instància de Claude i un model diferent. No és cap revisió per experts humans.</p><p lang="en">At each iteration, two models review the code, methods and results separately: another instance of Claude and a different model. This is not human peer review.</p></div>
+        <div data-enter style="--i:2"><h3 class="ob-title"><span lang="ca">Reproduïble i honest</span><span lang="en">Reproducible and honest</span></h3><p lang="ca">La història de cada món es pot reproduir exactament amb el mateix commit i la mateixa llavor. Les errades es corregeixen al quadern sense esborrar el que vam dir.</p><p lang="en">The history of every world can be reproduced exactly with the same commit and seed. Mistakes are corrected in the notebook without erasing what we said.</p></div>
+      </div>
+    </section>
+
+    <section class="ob-act" id="limits">
+      <div class="ob-act__head">
+        <h2 class="ob-display ob-d2"><span lang="ca">Estat i límits</span><span lang="en">Status and limits</span></h2>
+        <p class="ob-lede" lang="ca">És un projecte personal en curs, començat el 14 d’octubre de 2026. Ho desenvolupa Claude (Anthropic), amb un responsable humà que decideix la direcció i revisa cada canvi del simulador. Els resultats són preliminars, i no s’han publicat ni els han revisat experts humans.</p>
+        <p class="ob-lede" lang="en">This is a personal project in progress, started on 14 October 2026. It is developed by Claude (Anthropic), with a human owner who sets the direction and reviews every change to the simulator. The results are preliminary, and have not been published or reviewed by human experts.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="ob-foot">
+    <div class="ob-foot__brand"><span class="ob-brand"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="2.6"></circle><path d="M12.37 21.00A19.63 7.20 0 0 0 51.63 21.00A22.50 22.50 0 0 1 53.38 39.00A21.38 7.20 0 0 1 10.62 39.00A22.50 22.50 0 0 1 12.37 21.00Z" fill="currentColor"></path></svg><b>Genesis</b></span><span class="ob-foot__sub"><span lang="ca">Abiogènesi digital</span><span lang="en">Digital abiogenesis</span></span></div>
+    <p class="ob-foot__text"><span lang="ca">Codi: GNU AGPL v3 o posterior. Quadern, documentació i dades: CC BY 4.0. El simulador és una reimplementació independent del llenguatge BFF de <em>Computational Life</em> (Agüera y Arcas i altres, 2024, arXiv:2406.19108), contrastada amb cubff, la seva implementació de referència. Els tipus, Archivo, Inter i JetBrains Mono: SIL Open Font License 1.1.</span><span lang="en">Code: GNU AGPL v3 or later. Notebook, documentation and data: CC BY 4.0. The simulator is an independent reimplementation of the BFF language of <em>Computational Life</em> (Agüera y Arcas et al., 2024, arXiv:2406.19108), checked against cubff, its reference implementation. The typefaces, Archivo, Inter and JetBrains Mono: SIL Open Font License 1.1.</span></p>
+    <ul class="ob-foot__links">
+      <li><a href="explorador/" data-i18n="nav.explorer">Explorador 3D</a></li>
+      <li><a href="2d/" data-i18n="nav.map">Vista 2D</a></li>
+      <li><a href="viu/" data-i18n="nav.live">El teu món, en viu</a></li>
+      <li><a href="../quadern/" data-i18n="nav.notebook">Quadern</a></li>
+      <li><a href="https://github.com/xavig-icv/genesis" data-i18n="nav.repo">Codi</a></li>
+    </ul>
+  </footer>
+  <script type="module" src="js/portada.js"></script>
+</body>
+</html>

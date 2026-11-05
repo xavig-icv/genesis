@@ -136,6 +136,33 @@ Llegeix-los abans de proposar canvis.
   - **Els exemples:** quan una imatge compara condicions, es trien a l'atzar amb una llavor declarada
     (`node eines/tria.mjs LLAVOR N elements...`), no els que es veuen bé.
   - **Les afirmacions dels peus** es comproven amb dades abans de publicar-les.
+- El lloc web (`web/`, sense dependències): la portada, en català i en anglès, l'explorador 3D (WebGL2), la vista 2D i el
+  món en viu (`web/viu/`). Fa servir els fitxers del simulador (`fase1/`, `fase2/`): s'ha de servir amb l'arrel del repositori.
+  - **El món en viu** corre al navegador amb `web/js/viu-motor.js`, el mateix ordre de passos que `sim.mjs`, i el cens v3 de
+    `fase2/census.js`: cada cens en dona l'empremta i l'ordre de `sim.mjs` que fa el mateix món (`test/web.mjs` ho comprova).
+    No hi ha cap botó per plantar replicadors.
+  - **La cinta de la portada:** bytes de dues cel·les reals, que s'executen amb `fase1/bff.js`. Es trien i se'n comproven les
+    xifres del peu amb `node eines/web-cinta.mjs captura.bin web/dades/1006 3500 20261030` (`web/img/README.md`).
+  - **Els colors** són fitxes de `web/css/estil.css`, amb un tema clar i un de fosc (per defecte, el del sistema); els dibuixos
+    les llegeixen amb `web/js/tema.js`. El color és de les dades: la interfície va en tinta. Les dades diuen la posició de
+    cada família a la paleta, no el color. Les imatges de `web/img/` diuen d'on surten (`web/img/README.md`), i es tornen a
+    fer, byte a byte, amb `node eines/web-imatges.mjs --chrome CAMI-DE-CHROME --sortida carpeta` i el servidor engegat.
+  - **Les dades de cada món:** `node eines/web-dades.mjs web/dades/ID/fitxa.json carpeta-de-captures`, a partir de les
+    captures d'una execució amb `--save-every` (l'ordre és a la fitxa). Només les escriu si la història és la del registre:
+    les SHA-256 de les captures (`docs/captures.sha256`) i els censos i l'empremta de la sèrie. No van a git.
+  - **Els mons, com les imatges:** il·lustratius i declarats com a tals, o triats a l'atzar amb una llavor declarada, i
+    cadascun amb la proporció de la seva sèrie. Cap resultat d'una sèrie abans de la seva decisió.
+  - **La publicació** (GitHub Pages, <https://xavig-icv.github.io/genesis/>): `.github/workflows/lloc.yml`, a cada push a `main`
+    que toqui el lloc. Munta la carpeta amb `node eines/lloc-publica.mjs _site`: només el que git segueix de `web/` i
+    `quadern/`, els `.html`, `.css` i `.js` de `fase1/` i `fase2/`, sense `resultats/`, i les llicències. Les dades dels mons no són a
+    git: es baixen d'una versió del repositori (`lloc-dades-vN`) i es comproven amb la SHA-256 del fitxer i després una per
+    una amb `web/dades/SHA256SUMS`. Si alguna no hi coincideix, no es publica res.
+    - **Per canviar les dades:** `node eines/lloc-publica.mjs --sumes > web/dades/SHA256SUMS`, una versió nova amb el
+      `tar.gz` de les dades (fet amb `tar --sort=name` i `gzip -n`, perquè es pugui refer igual), i `DADES_VERSIO` i
+      `DADES_SHA256` del workflow. La versió la crea el responsable.
+  - **Les animacions del planeta,** per al README i per compartir el lloc: `node eines/web-animacio.mjs --chrome CAMI-DE-CHROME
+    --sortida fitxer.png`, amb el servidor engegat. Una captura per època a l'explorador 3D, amb l'època a la cantonada, i un
+    PNG animat amb una paleta comuna. El temps de la pàgina es fixa a cada fotograma: dues execucions donen el mateix fitxer.
 - Documents per a qui arriba de fora: `README.en.md` (cal posar-lo al dia quan canviï el README), `docs/reproduir.md`
   (receptes comprovades), `docs/glossari.md`, `CITATION.cff`, `CONTRIBUTING.md` i `LICENSE-data.md`. Al
   README, la revisió és "de dos auditors d'IA", mai "externa" sense dir-ho.
