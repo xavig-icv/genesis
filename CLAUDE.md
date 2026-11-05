@@ -125,8 +125,8 @@ Llegeix-los abans de proposar canvis.
     des de l'arrel d'una còpia neta. Mentre corren, cap recompte: només l'estat de l'executor.
   - **A la còpia del càlcul, cap fitxer de codi sense seguir** mentre hi corri res: `eines/densitat.mjs` hi escriuria `+canvis`, i
     l'anàlisi en rebutjaria els registres (el primer intent de la repetició, `fase2/resultats/b1/nivell1/repeticio/README.md`).
-  - **Els registres del nivell 1 no són a git:** dos passen de 50 MB. Són a la còpia de seguretat, amb la SHA-256 a
-    `execucio-llista.txt`, i es poden refer amb les mateixes ordres. La repetició de tres trossos (`repeticio/`, amb `compara.mjs`), la
+  - **Els registres del nivell 1 no són a git:** dos passen de 50 MB. Són a la còpia de seguretat i a la versió
+    `b1-nivell1-registres-v1` de GitHub, amb la SHA-256 a `execucio-llista.txt`, i es poden refer amb les mateixes ordres. La repetició de tres trossos (`repeticio/`, amb `compara.mjs`), la
     sortida de l'anàlisi (`analisi.txt`), les comprovacions exploratòries (`exploratori/`) i l'extracte dels hereditaris
     (`hereditaris.jsonl.gz`, amb `extreu-hereditaris.mjs`; AUD-174) sí que hi són.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).

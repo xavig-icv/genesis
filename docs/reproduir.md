@@ -171,8 +171,9 @@ com són als registres, i la SHA-256 del seu contingut (`fase2/resultats/b1/nive
 node -e "const z=require('zlib'),c=require('crypto'),fs=require('fs');const b=z.gunzipSync(fs.readFileSync('fase2/resultats/b1/nivell1/hereditaris.jsonl.gz'));console.log(c.createHash('sha256').update(b).digest('hex'))"
 ```
 
-Ha de donar `6029d8783b13b1c8faa4077b0e28b2c569903e2420b8f660efa081092fb049a1`. Els registres sencers es poden refer amb les ordres
-de `fase2/resultats/b1/nivell1/llista.txt` (unes 9 hores amb 8 fils), i n'hi ha la SHA-256 a `execucio-llista.txt`.
+Ha de donar `6029d8783b13b1c8faa4077b0e28b2c569903e2420b8f660efa081092fb049a1`. Els registres sencers es poden baixar de la versió
+`b1-nivell1-registres-v1` del repositori (<https://github.com/xavig-icv/genesis/releases/tag/b1-nivell1-registres-v1>, 105 MB), o refer-los amb les ordres de
+`fase2/resultats/b1/nivell1/llista.txt` (unes 9 hores amb 8 fils). Descomprimits, han de tenir les SHA-256 d'`execucio-llista.txt`.
 
 ## Les captures
 

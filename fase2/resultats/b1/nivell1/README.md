@@ -53,7 +53,8 @@ ordre del nivell 1 i un registre repetit.
   Unes 35 min per ordre, i no 17: 8 h 44 min en total, i no 4,2 h.
 - **`execucio-llista.txt`,** a git (`a146177`) abans de mirar cap resultat.
 - **Els registres no són a git:** dos passen de 50 MB (`d-mig-R0`, 53,7 MB, i `d-mig-S1`, 56,2 MB). Són a la còpia neta del càlcul i,
-  comprimits (101 MB), a la còpia de seguretat. Totes dues coincideixen amb les SHA-256 d'`execucio-llista.txt`.
+  comprimits (101 MB), a la còpia de seguretat i a la versió `b1-nivell1-registres-v1` de GitHub. Totes coincideixen amb les SHA-256
+  d'`execucio-llista.txt`.
 - **La repetició:** `repeticio/`, amb el seu README.
 
 ## L'extracte dels hereditaris (auditoria 27, AUD-174)
@@ -72,5 +73,6 @@ que fa falta per comprovar l'anàlisi dels hereditaris i per a la prova d'autono
   - **del fitxer comprimit** (`hereditaris.jsonl.gz`, 5.610.613 bytes): `a927f02e541fe9f7aea6e7e4989fa89719f0cd01d35cfe343c393366d661dca9`.
 - **Comprovat:** l'auditor 1 en va fer un altre des dels registres sencers, sense l'eina de l'equip, i és igual byte a byte; l'auditor 2
   en va refer els recomptes, i quadren amb `analisi.txt` (auditoria 27).
-- **Els registres sencers:** per a l'auditor 2, amb el paquet de l'auditoria 28 (AU2-139). Per a tothom, en un fitxer d'una versió o a
-  Zenodo, quan el repositori sigui públic.
+- **Els registres sencers:** per a l'auditor 2, amb el paquet de l'auditoria 28 (AU2-139). Per a tothom, des del 05-11-2026, a la
+  versió `b1-nivell1-registres-v1` de GitHub (<https://github.com/xavig-icv/genesis/releases/tag/b1-nivell1-registres-v1>): un `tar` de 105 MB (SHA-256 `991bd026…66c3`) amb els 15 registres
+  comprimits, `execucio-llista.txt` i `sha256-gz.txt`. Descomprimits, cada registre ha de tenir la SHA-256 d'`execucio-llista.txt`.
