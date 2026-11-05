@@ -16,7 +16,7 @@
 import assert from 'assert';
 import { spawnSync } from 'child_process';
 import { createHash } from 'crypto';
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync, readdirSync, copyFileSync, appendFileSync, symlinkSync, linkSync } from 'fs';
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync, readFileSync, readdirSync, copyFileSync, appendFileSync, symlinkSync, linkSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join, basename } from 'path';
 import { fileURLToPath } from 'url';
@@ -352,7 +352,8 @@ const tests = {
     assert.ok(/Amb 6 mons amb diferència, cap resultat no arriba al llindar calibrat del pas 2: la prova no es podia rebutjar/.test(decisionLines({ results: pair })[1]));
   }),
   "la línia d'ordres: --prova calcula sense decidir, no llegeix la carpeta de la sèrie, i --decideix necessita el preregistre": () => withTmp((tmp) => {
-    const run = (...a) => spawnSync(process.execPath, [join(root, 'fase2', 'maduracio-confirmacio.mjs'), ...a], { cwd: root, encoding: 'utf8', env: { ...process.env, NODE_OPTIONS: '' } });
+    // en una còpia del programa: al repositori, la sèrie ja té els registres (a677726), i --prova no s'hi executa (AU2-98)
+    const repo = programCopy(tmp), run = (...a) => runIn(repo, ...a);
     const m = smallManifest({ dir: SYNTH_DIR }), dir = join(tmp, 'branques'), manifest = join(tmp, 'manifest.json');
     writeFileSync(manifest, JSON.stringify(m));
     writeSeries(dir, m, fateOf(COUNTS));
@@ -387,16 +388,18 @@ const tests = {
     assert.ok(/no té l'estructura esperada/.test(r.stdout), r.stdout);
   }),
   "--prova no llegeix cap registre de la sèrie: ni per enllaços als fitxers, ni amb un manifest que digui un altre dir, ni si la sèrie ja en té (AU2-98)": () => withTmp((tmp) => {
-    // 1. al repositori, amb una carpeta protegida: la del manifest, amb registres sintètics
+    // 1. en una còpia del programa sense registres de la sèrie (al repositori, ja hi són: a677726), amb una carpeta protegida: la
+    // del manifest, amb registres sintètics
+    const prog = programCopy(join(tmp, 'programa'));
     const real = join(tmp, 'protegida'), m = smallManifest({ dir: real }), manifest = join(tmp, 'manifest.json');
     writeFileSync(manifest, JSON.stringify(m));
     writeSeries(real, m, fateOf(COUNTS));
-    refused(runIn(root, '--prova', COMMIT, '--serie', manifest, real), 'la carpeta', /no llegeix la carpeta de la sèrie/);
+    refused(runIn(prog, '--prova', COMMIT, '--serie', manifest, real), 'la carpeta', /no llegeix la carpeta de la sèrie/);
     // enllaços durs a cada registre: a Windows no demanen permisos, i el camí real d'un enllaç dur és el seu
     const hard = join(tmp, 'durs');
     mkdirSync(hard);
     for (const f of readdirSync(real)) linkSync(join(real, f), join(hard, f));
-    refused(runIn(root, '--prova', COMMIT, '--serie', manifest, hard), 'els enllaços durs', /és el mateix fitxer que un registre de la sèrie/);
+    refused(runIn(prog, '--prova', COMMIT, '--serie', manifest, hard), 'els enllaços durs', /és el mateix fitxer que un registre de la sèrie/);
     // enllaços simbòlics a cada registre (la prova de l'auditor 2). A Windows, sense permisos, no se'n poden fer: el cas ho diu i
     // se salta (a GitHub, amb Linux, s'executa)
     const soft = join(tmp, 'simbolics');
@@ -404,7 +407,7 @@ const tests = {
     let made = true;
     try { for (const f of readdirSync(real)) symlinkSync(join(real, f), join(soft, f), 'file'); }
     catch (e) { if (e.code !== 'EPERM') throw e; made = false; console.log(`        (els enllaços simbòlics de fitxer, omesos: no se'n poden crear en aquest sistema, ${e.code})`); }
-    if (made) refused(runIn(root, '--prova', COMMIT, '--serie', manifest, soft), 'els enllaços simbòlics', /és un enllaç a un registre de la sèrie/);
+    if (made) refused(runIn(prog, '--prova', COMMIT, '--serie', manifest, soft), 'els enllaços simbòlics', /és un enllaç a un registre de la sèrie/);
     // 2. en una còpia del programa, amb registres a la carpeta de la sèrie de veritat
     const repo = programCopy(tmp), truth = join(repo, 'fase2', 'resultats', 'maduracio', 'serie', 'branques');
     const m2 = smallManifest(), mf2 = join(tmp, 'manifest2.json'), other = join(tmp, 'altre-dir.json');
@@ -418,6 +421,10 @@ const tests = {
     writeFileSync(mfs, JSON.stringify(ms));
     writeSeries(synth, ms, fateOf(COUNTS));
     refused(runIn(repo, '--prova', COMMIT, '--serie', mfs, synth), 'la sèrie amb registres', /ja té registres de la sèrie/);
+    // i al repositori, si ja hi ha els registres de veritat (són a git des de a677726), tampoc
+    if (existsSync(join(root, SERIES_DIR)) && readdirSync(join(root, SERIES_DIR)).some((f) => f.endsWith('.jsonl'))) {
+      refused(runIn(root, '--prova', COMMIT, '--serie', mfs, synth), 'el repositori, amb els registres de la sèrie', /ja té registres de la sèrie/);
+    }
     // sense registres a la sèrie de veritat, la mateixa còpia sí que fa la prova amb les dades sintètiques
     rmSync(truth, { recursive: true, force: true });
     const r = runIn(repo, '--prova', COMMIT, '--serie', mfs, synth);
