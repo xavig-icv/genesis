@@ -18,4 +18,4 @@ sempre que en reconegueu l'autoria, hi enllaceu la llicència i indiqueu si hi h
 **Com citar-les:** `CITATION.cff`. Els experiments de la Fase 1 reprodueixen els de *Computational Life*
 (Agüera y Arcas i altres, 2024, arXiv:2406.19108): cal citar-lo també quan feu servir aquestes dades.
 
-El codi que les genera té la llicència Apache 2.0 (`LICENSE`, `NOTICE`).
+El codi que les genera té la llicència GNU AGPL v3 o posterior (`LICENSE`, `NOTICE`).

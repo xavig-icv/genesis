@@ -70,7 +70,7 @@ const tests = {
 };
 
 // Versió de referència: lenta però directa, adaptada de bff.inc.h de cubff (Copyright 2024 Google LLC,
-// llicència Apache 2.0; vegeu NOTICE).
+// llicència Apache 2.0; vegeu NOTICE i LICENSES/Apache-2.0.txt).
 function referenceEvaluate(t, maxSteps = MAX_STEPS) {
   let pc = 0, h0 = 0, h1 = 0, ops = 0;
   for (let step = 0; step < maxSteps; step++) {
