@@ -175,6 +175,23 @@ Ha de donar `6029d8783b13b1c8faa4077b0e28b2c569903e2420b8f660efa081092fb049a1`. 
 `b1-nivell1-registres-v1` del repositori (<https://github.com/xavig-icv/genesis/releases/tag/b1-nivell1-registres-v1>, 105 MB), o refer-los amb les ordres de
 `fase2/resultats/b1/nivell1/llista.txt` (unes 9 hores amb 8 fils). Descomprimits, han de tenir les SHA-256 d'`execucio-llista.txt`.
 
+**L'anàlisi, des d'una còpia del commit del càlcul** (`a677726`). L'anàlisi compara la SHA-256 dels mòduls de cada registre amb la
+dels de la seva còpia (AUD-139), i des de la v0.5 del pla de B1, `fase1/bff.js` i `fase2/replication.js` han canviat: hi ha dues
+químiques més i dues opcions noves de la prova, desactivades per defecte. Des de `main`, doncs, s'hi nega, i és correcte, com les
+decisions des de les seves etiquetes (§3 i §6):
+
+```bash
+git worktree add --detach ../b1-nivell1 a677726
+mkdir -p ../b1-nivell1/fase2/resultats/b1/nivell1/registres
+# aquí, els 15 registres de la versió, descomprimits: han de tenir les SHA-256 d'execucio-llista.txt
+(cd ../b1-nivell1 && node eines/densitat-analisi.mjs fase2/resultats/b1/nivell1/registres) > /tmp/analisi.txt
+diff /tmp/analisi.txt fase2/resultats/b1/nivell1/analisi.txt && echo idèntica
+git worktree remove --force ../b1-nivell1
+```
+
+**Comprovat el 05-11-2026** amb Node 16, des de la còpia del càlcul: la sortida és idèntica a `analisi.txt`, byte a byte. Des de la
+branca de la v0.5, l'anàlisi s'hi nega, i només per aquests dos mòduls.
+
 ## Les captures
 
 - **Per què no són a git:** els fitxers `.bin` fan 8 MB cadascun.
