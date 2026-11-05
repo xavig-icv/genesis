@@ -1,0 +1,24 @@
+{"type":"start","code":"416f720","rng":"v2","node":"v16.15.1","zlib":"1.2.11","command":"node sim.mjs --world 512x256 --seed 406090 --mixing 0 --from fase2/resultats/maduracio/serie/alicuotes/6090/shuffle-all.bin --start 8000 --epochs 16000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/maduracio/serie/branques/6090-shuffle-all-a.jsonl","seed":406090,"programs":131072,"world":[512,256],"radius":2,"mixing":0,"diffusion":0,"flow":0,"renewal":0,"mutation":0.00024,"from":"fase2/resultats/maduracio/serie/alicuotes/6090/shuffle-all.bin","start":8000,"epochs":16000,"every":100,"census":{"version":"v3","every":250,"sample":2048,"seed":20261016},"event":{"share":0.01,"censuses":2,"stopAfter":0}}
+{"type":"measure","epoch":8100,"h0":7.837606690753972,"hoe":0.35827376686481216,"ops":1260514182,"runs":4928586,"epochs":100,"seconds":86}
+{"type":"measure","epoch":8200,"h0":7.8351427015282145,"hoe":0.44545993175282383,"ops":1320923018,"runs":4929100,"epochs":100,"seconds":166}
+{"type":"census","version":"v3","epoch":8250,"families":[],"extinct":[],"untracked":[],"familySample":0,"sample":2048,"replicating":5,"solo":5,"context":0,"heritable":1,"heritableSolo":1,"heritableContext":0}
+{"type":"measure","epoch":8300,"h0":7.832707219779993,"hoe":0.4767816597824348,"ops":1328071079,"runs":4929194,"epochs":100,"seconds":253}
+{"type":"measure","epoch":8400,"h0":7.8305807028643795,"hoe":0.493081084334106,"ops":1316523919,"runs":4928116,"epochs":100,"seconds":322}
+{"type":"census","version":"v3","epoch":8500,"families":[],"extinct":[],"untracked":[],"familySample":0,"sample":2048,"replicating":6,"solo":5,"context":1,"heritable":4,"heritableSolo":4,"heritableContext":0}
+{"type":"measure","epoch":8500,"h0":7.827642737754333,"hoe":0.5253108133158566,"ops":1309687961,"runs":4929166,"epochs":100,"seconds":397}
+{"type":"measure","epoch":8600,"h0":7.8231776749506725,"hoe":0.5792153870478405,"ops":1309814521,"runs":4929127,"epochs":100,"seconds":472}
+{"type":"measure","epoch":8700,"h0":7.820322265249345,"hoe":0.6050865551053022,"ops":1297349091,"runs":4929781,"epochs":100,"seconds":553}
+{"type":"census","version":"v3","epoch":8750,"families":[],"extinct":[],"untracked":[],"familySample":0.005859375,"sample":2048,"replicating":12,"solo":12,"context":0,"heritable":10,"heritableSolo":10,"heritableContext":0}
+{"type":"measure","epoch":8800,"h0":7.814144673243527,"hoe":0.6589475296888399,"ops":1316306912,"runs":4929145,"epochs":100,"seconds":635}
+{"type":"measure","epoch":8900,"h0":7.8066160547107994,"hoe":0.7174303399891198,"ops":1334022270,"runs":4929044,"epochs":100,"seconds":701}
+{"type":"census","version":"v3","epoch":9000,"families":[{"id":1,"born":9000,"share":0.03624725341796875,"core":">><{.["}],"extinct":[],"untracked":[],"familySample":0.005859375,"sample":2048,"replicating":18,"solo":18,"context":0,"heritable":16,"heritableSolo":16,"heritableContext":0}
+{"type":"measure","epoch":9000,"h0":7.801710350201548,"hoe":0.7480614015321141,"ops":1311101041,"runs":4928191,"epochs":100,"seconds":773}
+{"type":"measure","epoch":9100,"h0":7.79401974047932,"hoe":0.7913389619759021,"ops":1341141813,"runs":4927709,"epochs":100,"seconds":848}
+{"type":"measure","epoch":9200,"h0":7.784942073914875,"hoe":0.8288740349744455,"ops":1337720096,"runs":4927635,"epochs":100,"seconds":914}
+{"type":"census","version":"v3","epoch":9250,"families":[{"id":1,"born":9000,"share":0.0509185791015625,"core":".{<>>]"}],"extinct":[],"untracked":[],"familySample":0.0078125,"sample":2048,"replicating":30,"solo":30,"context":0,"heritable":28,"heritableSolo":28,"heritableContext":0}
+{"type":"measure","epoch":9300,"h0":7.777949425813189,"hoe":0.8508006068434621,"ops":1332841439,"runs":4929867,"epochs":100,"seconds":990}
+{"type":"measure","epoch":9400,"h0":7.770541650415995,"hoe":0.8762736145273236,"ops":1336748596,"runs":4929382,"epochs":100,"seconds":1069}
+{"type":"census","version":"v3","epoch":9500,"families":[{"id":1,"born":9000,"share":0.07110595703125,"core":".{<>>]"}],"extinct":[],"untracked":[],"familySample":0.029296875,"sample":2048,"replicating":50,"solo":50,"context":0,"heritable":49,"heritableSolo":49,"heritableContext":0}
+{"type":"event","epoch":9250,"confirmed":9500}
+{"type":"measure","epoch":9500,"h0":7.76107057470338,"hoe":0.9539740933801379,"ops":1384088277,"runs":4929440,"epochs":100,"seconds":1151}
+{"type":"end","epoch":9500,"reason":"establiment","fingerprint":"832b5099","hoeTransition":null,"event":9250,"seconds":1150.946}

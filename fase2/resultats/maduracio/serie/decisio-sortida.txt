@@ -1,0 +1,66 @@
+Commit del preregistre: 416f72095bbc2fb3fdb49e46350994cf66ddb0a8 (etiqueta de git preregistre-maduracio (objecte 6e95a287ad7a92d3f0b5c39e3ed6658a0a141589); manifest fase2/resultats/maduracio/serie/manifest.json)
+La mesura: l'establiment dins de H = 8000 èpoques (el criteri de la llei 2), a 150 mons, amb 2 llavors per braç.
+  continue: 64 de 300 branques (21.3 %); IC del 95 %: de Clopper-Pearson 16.8 %–26.4 % (branques independents), del bootstrap per món 16.7 %–26.0 %; mons amb algun establiment 57, amb totes les llavors 7
+  shuffle-all: 82 de 300 branques (27.3 %); IC del 95 %: de Clopper-Pearson 22.4 %–32.8 % (branques independents), del bootstrap per món 22.3 %–32.7 %; mons amb algun establiment 70, amb totes les llavors 12
+  reinit: 40 de 300 branques (13.3 %); IC del 95 %: de Clopper-Pearson 9.7 %–17.7 % (branques independents), del bootstrap per món 9.3 %–17.3 %; mons amb algun establiment 36, amb totes les llavors 4
+
+Les proves (la permutació de signes exacta, unilateral, sobre la suma de les diferències de cada món; Holm, α = 0.025 per a la família, amb els llindars calibrats per m):
+  Prova 1, continue contra reinit: 64 contra 40 establiments de 300; la diferència dels ritmes +8.0 punts (IC del bootstrap per món +2.0 punts a +14.0 punts).
+    Món a món: més alt amb continue a 44 mons, més baix a 23, iguals 83; per la mida de la diferència, 1: 39 a favor i 21 en contra, 2: 5 a favor i 2 en contra. Suma 24, amb 67 mons amb diferència.
+    p = 0.0067 (exacta: 993967632173966444 de 147573952589676412928 assignacions de signes); llindar calibrat de Holm, pas 1, amb 67 mons amb diferència: 0.008684 (es rebutja si el recompte és com a molt 1281559146518126477); es rebutja H0
+  Prova 2, shuffle-all contra reinit: 82 contra 40 establiments de 300; la diferència dels ritmes +14.0 punts (IC del bootstrap per món +7.7 punts a +20.3 punts).
+    Món a món: més alt amb shuffle-all a 54 mons, més baix a 20, iguals 76; per la mida de la diferència, 1: 44 a favor i 18 en contra, 2: 10 a favor i 2 en contra. Suma 42, amb 74 mons amb diferència.
+    p = 3.05e-5 (exacta: 576391320136788768 de 18889465931478580854784 assignacions de signes); llindar calibrat de Holm, pas 1, amb 74 mons amb diferència: 0.009537 (es rebutja si el recompte és com a molt 180147619840042189130); es rebutja H0
+
+Descriptius:
+  continue contra shuffle-all, sense cap prova ni cap afirmació d'equivalència: la diferència dels ritmes −6.0 punts (IC del bootstrap per món −13.0 punts a +0.7 punts); més alt amb continue a 30 mons, més baix a 45, iguals 75
+  El punt de partida de cada braç (l'escaneig de totes les cel·les del manifest; mediana i rang de les que es repliquen, i les hereditàries):
+    continue: es repliquen 23 (11–35); hereditàries 0, a 0 mons (soles 0, a 0 mons; només en context 0)
+    shuffle-all: es repliquen 701 (596–831); hereditàries 1025, a 150 mons (soles 99, a 77 mons; només en context 926)
+    reinit: es repliquen 117 (91–155); hereditàries 62, a 49 mons (soles 17, a 16 mons; només en context 45)
+  Els establiments separats pel punt de partida del braç, alguna hereditària sola o cap (una partició dels mons tal com són, no un efecte):
+    continue: amb alguna (0 mons) —; sense cap (150 mons) 64 de 300 (21.3 %)
+    shuffle-all: amb alguna (77 mons) 40 de 154 (26.0 %); sense cap (73 mons) 42 de 146 (28.8 %)
+    reinit: amb alguna (16 mons) 5 de 32 (15.6 %); sense cap (134 mons) 35 de 268 (13.1 %)
+  El temps: la RMST (la mitjana de T restringida a H, amb totes les branques) i la mediana de T de les branques establertes, que no diu que un braç sigui més ràpid:
+    continue: RMST 7233 èpoques; T de les establertes, mediana 4625
+    shuffle-all: RMST 6738 èpoques; T de les establertes, mediana 3000
+    reinit: RMST 7563 èpoques; T de les establertes, mediana 4875
+  La concordança entre llavors: rho = 0.03 (la correlació intraclasse, amb la mitjana de cada braç)
+    continue: totes les llavors coincideixen a 100 de 150 mons; phi 0.01
+    shuffle-all: totes les llavors coincideixen a 92 de 150 mons; phi 0.03
+    reinit: totes les llavors coincideixen a 118 de 150 mons; phi 0.08
+  Entre braços, la correlació entre mons dels nombres d'establiments:
+    continue · shuffle-all: 0.00
+    continue · reinit: 0.04
+    shuffle-all · reinit: 0.00
+  El primer cens amb algun hereditari, des del començament (mediana de les branques que en tenen):
+    continue: qualsevol, 4125 èpoques (78 de 300 branques); sol, 4250 èpoques (77 de 300)
+    shuffle-all: qualsevol, 2750 èpoques (106 de 300 branques); sol, 2750 èpoques (105 de 300)
+    reinit: qualsevol, 4625 èpoques (58 de 300 branques); sol, 4750 èpoques (57 de 300)
+  El cost: 706.8 h de branques (la suma dels temps de cada una, amb les altres corrent alhora)
+    continue: 226.0 h; per branca, 0.75 h de mitjana
+    shuffle-all: 277.6 h; per branca, 0.93 h de mitjana
+    reinit: 203.2 h; per branca, 0.68 h de mitjana
+    Node v16.15.1: 540 branques; mediana 388 s per 1.000 èpoques
+    Node v20.19.2: 360 branques; mediana 354 s per 1.000 èpoques
+
+Els establiments de cada món (continue, shuffle-all, reinit):
+  6001 000 · 6003 020 · 6004 101 · 6005 001 · 6006 120 · 6007 000 · 6008 200 · 6009 101 · 6011 001 · 6012 021
+  6013 000 · 6014 210 · 6015 010 · 6016 110 · 6017 001 · 6019 010 · 6020 110 · 6021 111 · 6023 000 · 6024 010
+  6025 110 · 6028 100 · 6029 100 · 6030 011 · 6031 010 · 6032 000 · 6034 100 · 6035 111 · 6036 000 · 6037 010
+  6038 000 · 6041 202 · 6042 200 · 6043 110 · 6044 010 · 6045 010 · 6047 010 · 6048 000 · 6050 011 · 6051 000
+  6052 100 · 6053 001 · 6055 000 · 6056 011 · 6059 010 · 6060 120 · 6061 011 · 6062 001 · 6063 010 · 6065 100
+  6067 010 · 6070 010 · 6071 020 · 6072 010 · 6073 000 · 6074 000 · 6075 010 · 6076 010 · 6077 100 · 6078 010
+  6079 010 · 6080 122 · 6081 010 · 6082 210 · 6083 012 · 6084 000 · 6085 000 · 6086 010 · 6088 000 · 6089 111
+  6090 110 · 6091 110 · 6092 110 · 6094 001 · 6095 100 · 6098 110 · 6100 101 · 6101 110 · 6102 001 · 6104 100
+  6105 000 · 6107 100 · 6108 100 · 6109 111 · 6110 020 · 6111 100 · 6112 000 · 6116 010 · 6117 011 · 6119 101
+  6120 110 · 6121 111 · 6122 100 · 6123 010 · 6124 110 · 6125 100 · 6126 000 · 6127 002 · 6128 110 · 6129 020
+  6130 100 · 6131 000 · 6132 001 · 6133 001 · 6134 020 · 6135 000 · 6136 100 · 6137 000 · 6138 011 · 6139 000
+  6141 000 · 6142 000 · 6143 001 · 6144 000 · 6145 011 · 6146 020 · 6147 000 · 6148 000 · 6149 000 · 6150 010
+  6152 200 · 6155 120 · 6156 100 · 6157 000 · 6158 111 · 6159 110 · 6160 000 · 6161 000 · 6162 010 · 6164 100
+  6165 011 · 6166 010 · 6167 110 · 6168 000 · 6169 001 · 6170 000 · 6172 000 · 6173 100 · 6174 110 · 6175 020
+  6176 110 · 6177 000 · 6179 000 · 6180 000 · 6181 110 · 6182 201 · 6183 101 · 6184 000 · 6185 000 · 6186 000
+
+DECISIÓ 1 (continue contra reinit): es rebutja H0. A la cohort (mons quiets sense vida a l'època 8.000, sense cap cel·la hereditària), la vida s'hi estableix més sovint en les 8.000 èpoques següents si es conserva la sopa envellida que amb una sopa nova (64 de 300 branques contra 40; p = 0.0067, llindar calibrat de Holm 0.008684). És l'efecte total de conservar la sopa d'aquests mons, no d'un mecanisme concret.
+DECISIÓ 2 (shuffle-all contra reinit): es rebutja H0. A la cohort (mons quiets sense vida a l'època 8.000, sense cap cel·la hereditària), la vida s'hi estableix més sovint en les 8.000 èpoques següents si es conserva l'histograma de bytes de la sopa envellida, barrejat, que amb una sopa nova (82 de 300 branques contra 40; p = 3.05e-5, llindar calibrat de Holm 0.009537). Inclou el que la barreja crea a l'instant, com els replicadors del començament: no aïlla la composició.

@@ -294,3 +294,131 @@ Abans del GO de l'auditoria 24, per avançar feina. Les comprovacions es tornen 
     (`llanca-lot-416f720-corregit.diff`): la capçalera, el `cd` i la comprovació.
   - **La desviació de la lletra del protocol** (§7, pas 8, "`eines/llanca-lot.sh`, des de la carpeta del commit de l'etiqueta"):
     l'entrada de la decisió també ho dirà.
+
+### La incidència 2: sis branques del PC, interrompudes (03-11-2026)
+
+- **Què va passar:** el 03-11-2026, entre les 23.13.16 i les 23.13.44, es van aturar les sis branques que corrien al PC, i cap
+  més:
+  - **tres, amb el codi 130,** el de la interrupció: `6132-shuffle-all-b`, `6135-continue-b` i `6135-shuffle-all-a`;
+  - **tres, sense cap línia de final al lot:** `6135-reinit-a`, `6135-reinit-b` i `6135-shuffle-all-b`.
+
+  El lot va continuar amb les següents. La màquina virtual no en va tenir cap.
+- **La causa probable:** l'actualització de l'aplicació de Claude, des d'on es va llançar el lot. El registre d'esdeveniments de
+  Windows hi anota el paquet nou a les 23.03, i l'aturada del seu servei "durant el servei del paquet" a les 23.13.49. No hi va
+  haver cap reinici, ni cap canvi d'alimentació, ni cap avís de memòria o de disc.
+- **Com es va veure:** el 04-11-2026 a les 01.18, el seguiment agregat deia 3 fallats i 9 en marxa, amb només 6 processos de
+  `node`, i 126 minuts sense escriure.
+  - **Per trobar-ne la causa,** es van mirar les línies d'estat del lot (no els registres), les dates dels registres i el registre
+    d'esdeveniments de Windows.
+  - **Què s'hi va veure:** els noms de les branques començades i de les sis interrompudes, però cap xifra, cap registre, ni l'ordre
+    en què van acabar.
+- **Què es fa:** quan acabi el lot del PC, es torna a llançar el mateix lot, amb la mateixa còpia del llançador (§7, pas 9).
+  `experiments.sh` salta les branques completes i torna a fer les sis des del principi (`sim.mjs` torna a escriure el JSONL
+  sencer). Les branques són deterministes: en surten els mateixos registres que sense la interrupció.
+  - **Ho fa un script fora del repositori,** `rellanca-pc-incidencia-2.sh` (SHA-256
+    `aeaa42c61608dd6c2e6d12c0abbc5c4baccf1c7f7c755318d31a773f7831cfa8`), llançat el 04-11-2026 a les 01.28, a prioritat baixa.
+  - **La primera versió** (a les 01.26, `ca4bb3d3…`) portava escrits els camins d'aquesta màquina, que no van al repositori: es va
+    aturar mentre esperava, abans de llançar res, i la nova troba el llançador a la seva mateixa carpeta. Fa el mateix.
+  - **La segona** (`aeaa42c6…`, a les 01.28) ja no hi era el 04-11-2026 a les 14.21: es va aturar, probablement quan l'aplicació
+    es va reiniciar a les 14.20, sense haver llançat res. El lot continuava, amb 493 branques acabades.
+  - **La tercera** (`292a664df6de38373617b94921539274692a1667e93696f17446d6d1997367e4`), llançada a les 14.25: és la mateixa, amb un pany. Se'n pot llançar una
+    altra des d'una finestra del responsable, fora de l'aplicació: quan el lot acaba, només la primera que crea la carpeta
+    `rellanca-pc-incidencia-2.lock` el torna a llançar, i les altres surten. Provat en una carpeta d'un sol ús, amb dues alhora i
+    un llançador de prova: un sol llançament.
+  - **Com treballa:** espera la línia final del lot, mirant-la cada 5 minuts, i llavors torna a llançar el lot. No llegeix res
+    més que aquesta línia.
+  - **A git,** perquè se'n pugui comprovar la SHA-256: a `incidencia-2/`, tal com és.
+- **Per no repetir-ho:** els lots que vinguin, des d'una finestra del PC que no depengui de l'aplicació.
+
+### La incidència 3: el lot del PC, aturat sense la línia final (04-11-2026)
+
+- **Què va passar:** el 04-11-2026, el lot del PC es va aturar entre les 16.55.44 i les 16.57.18, sense escriure la línia final.
+  - **Com se'n sap l'hora:** a les 16.55.44 encara va començar una branca; a les 16.57.18 en va acabar una altra, i el lot ja no
+    en va començar cap.
+  - **Les cinc que corrien** van acabar soles, completes, fins a les 17.16.00.
+  - **A les 17.32:** 533 branques completes de 540, i cap procés del lot. En quedaven 7: les sis de la incidència 2 i una que no
+    havia començat.
+- **La causa:** no se sap.
+  - **Al registre d'esdeveniments de Windows,** de les 16.50 a les 17.05, no hi ha cap error ni cap avís de memòria o de disc.
+  - **L'aplicació de Claude,** des d'on es va llançar el lot l'1-11-2026, no s'havia reiniciat des de les 14.20.
+  - **Les captures de la portada del lloc web,** amb Chrome sense finestra, van començar a les 17.06, després de l'aturada.
+- **Com es va veure:** a les 17.27, el seguiment agregat deia 533 acabats, 3 fallats i 3 en marxa, i no hi havia cap procés de
+  `sim.mjs`. La darrera línia del lot no era la de final.
+  - **Per trobar-ne l'hora,** es van mirar les dates de creació i d'última escriptura dels registres i del fitxer del lot, sense
+    els noms, i el registre d'esdeveniments de Windows.
+  - **Què s'hi va veure:** cap nom de branca, cap xifra, cap registre, ni l'ordre en què van acabar.
+- **Què es fa:** el responsable el va tornar a llançar a les 18.21.16, des d'una finestra seva de PowerShell, fora de l'aplicació,
+  amb la mateixa còpia del llançador, 6 alhora i a prioritat baixa (§7, pas 9).
+  - **Les completes:** `experiments.sh` va saltar les 533.
+  - **Les que falten:** a les 18.21.55 ja corrien les sis de la incidència 2. El seguiment agregat ho diu sense noms: 0 fallats,
+    6 en marxa i encara 539 registres. La setena començarà quan quedi lloc.
+  - **Els scripts de la incidència 2** esperen la línia final del lot, i no veuen un lot que s'atura sense escriure-la. No es van
+    aturar. Quan acabi aquest lot, el primer dels dos que ho vegi el tornarà a llançar una vegada més. Aquest lot de més trobarà
+    totes les branques completes, i acabarà sense fer-ne cap.
+
+## El final de la sèrie (04-11-2026)
+
+Les hores d'aquesta secció i de les següents són les del PC i la màquina virtual (+01:00).
+
+- **La màquina virtual:** el lot va acabar a les 12:43:23, amb 360 branques acabades i cap de fallada ("0 ja fets").
+- **El PC:** el lot que es va tornar a llançar a les 18:21:17 (la incidència 3) va acabar a les 19:06:41, amb 7 branques
+  acabades, cap de fallada i 533 de ja fetes.
+  - **A les 19:09:59,** un dels scripts de la incidència 2 el va tornar a llançar, com s'esperava. Va acabar a les 19:10:50: 0
+    acabades, cap de fallada i 540 de ja fetes.
+- **Els registres de la màquina virtual,** copiats a la còpia de l'etiqueta del PC, sense sobreescriure res: cap nom no
+  coincidia amb els del PC. La SHA-256 dels 360 JSONL, dels 360 registres de text i del lot coincideix amb la de la màquina
+  virtual.
+- **El seguiment agregat dels dos lots junts:** 900 de 900 acabades, cap de fallada, i els 900 registres complets.
+- **Durant la sèrie** no s'ha mirat cap resultat: només el recompte agregat de `eines/seguiment.sh --agregat`, la primera línia
+  d'una branca de cada màquina just després de llançar, i el que diuen les incidències 2 i 3.
+- **El que va córrer alhora, al PC:**
+  - la feina del lloc web, amb captures de Chrome sense finestra;
+  - el càlcul exploratori de la sensibilitat dels nuclis de les famílies (03-11-2026, de les 01.43 a les 02.11, quatre processos
+    de prioritat baixa);
+  - la prova de l'executor del nivell 1 de B1, amb una altra llavor i 40 programes.
+
+  **Què hi canvia:** cap resultat, perquè la simulació és determinista, però sí els temps. Els segons de cada branca no es poden
+  comparar entre branques.
+
+## Les comprovacions d'abans de decidir (04-11-2026)
+
+- **La còpia:** `claude-origins-maduracio-serie`, una còpia de treball de git a `416f720` (`git describe --exact-match` dona
+  `preregistre-maduracio`).
+  - **Neta:** cap canvi als fitxers seguits, i cap fitxer amb `assume-unchanged` ni `skip-worktree`. L'únic que no és del commit
+    són els registres de les branques i les captures, que git no segueix.
+  - **Node:** `NODE_OPTIONS` buit, i Node 16.15.1.
+- **Les SHA-256 del missatge de l'etiqueta:** les 13, tornades a calcular amb `sha256sum` (l'eina del sistema) sobre els fitxers
+  de la còpia, coincideixen totes.
+- **L'objecte de l'etiqueta** (`6e95a287…`) és el fitxer segellat, `docs/preregistre-maduracio/preregistre-maduracio.tag`: el
+  mateix objecte de git i la mateixa SHA-256 (`20d3451a…`).
+- **§7, pas 10:**
+  - **Al PC,** amb totes les captures: `node eines/pilot.mjs serie --comprova-captures`, acabat a les 19:18:22: "La comprovació
+    de les captures del pilot serie: tot correcte." (codi 0). La sortida és a `captures-decisio.txt`.
+  - **A la màquina virtual,** abans d'esborrar-ne les captures: `node eines/pilot.mjs serie --comprova-captures --maquina vm`,
+    a les 19:18:31: "La comprovació de les captures (vm) del pilot serie: tot correcte." (codi 0). La sortida és a
+    `captures-decisio-vm.txt`.
+  - **Abans,** totes dues s'havien fet una vegada sense desar-ne la sortida, amb el mateix resultat.
+
+## La decisió (04-11-2026)
+
+- **Quan i des d'on:** a les 19:19:13, des de la còpia de l'etiqueta, amb `NODE_OPTIONS` buit.
+- **L'ordre:** `node fase2/maduracio-confirmacio.mjs --decideix fase2/resultats/maduracio/serie/branques`, amb la sortida a un
+  fitxer de fora de la còpia, copiat aquí.
+- **El codi de sortida:** 0, i res a la sortida d'errors.
+- **La sortida,** desada tal com va sortir: `decisio-sortida.txt`, SHA-256
+  `a950494eae710de56ba200d633bc3b823b9848834316feb7422d9f1982c606c6`.
+- **Les dues decisions,** totes dues al primer pas de Holm:
+  - **Prova 1, `continue` contra `reinit`: es rebutja H₀.** 64 establiments de 300 branques contra 40 (21,3 % contra 13,3 %).
+    Més alt a 44 mons, més baix a 23 i igual a 83: la suma de les diferències és 24, amb 67 mons amb diferència. *p* = 0,0067,
+    i el llindar calibrat de Holm, amb 67 mons, 0,008684.
+  - **Prova 2, `shuffle-all` contra `reinit`: es rebutja H₀.** 82 contra 40 (27,3 % contra 13,3 %). Més alt a 54 mons, més baix
+    a 20 i igual a 76: la suma és 42, amb 74 mons amb diferència. *p* = 3,05·10⁻⁵, i el llindar, amb 74 mons, 0,009537.
+- **Una comprovació independent,** amb un script que no fa servir cap funció del projecte: llegeix els JSONL com a dades, hi
+  aplica el criteri d'establiment (almenys l'1 % de la mostra d'hereditaris en dos censos seguits) i refà la permutació de
+  signes exacta, amb enters.
+  - **Què en dona, igual que el programa:**
+    - els 186 establiments; a les 900 branques, el criteri coincideix amb el que diu la línia final del registre;
+    - els 64, 82 i 40 de cada braç, les sumes i les *m*;
+    - els dos recomptes exactes;
+    - els rebuigs al primer pas, amb els *K*₁ de la taula certificada.
+- **Les SHA-256 dels registres** (els 900 JSONL, els 900 registres de text i els dos lots): `branques/sha256.txt`.
