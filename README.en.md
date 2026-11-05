@@ -7,8 +7,9 @@ first organism.
 the audits.*
 
 *This is the English version of the [Catalan README](README.md), which is the main one. It is shorter, and
-was last synchronised on 25 October 2026. The lab notebook and most of the documentation are in Catalan; the
-[glossary](docs/glossari.md) gives the English term for each Catalan one.*
+was last synchronised on 5 November 2026. The lab notebook and most of the documentation are in Catalan. Each
+notebook entry has an [English summary](quadern/resum.en.md), and the [glossary](docs/glossari.md) gives the
+English term for each Catalan one.*
 
 ![Animation: a colony of replicators appears and grows in a 2D world](docs/imatges/colonia-animada.png)
 
@@ -100,10 +101,10 @@ more epochs: 116 branches ([protocol](docs/protocol-b2.md), in Catalan).
   ties). Losses are rare and concentrated in a few worlds, and the test had little power, as the protocol
   warned.
 
-See notebook entry 10, in Catalan.
+See notebook entry 10, in Catalan, or its [English summary](quadern/resum.en.md#entry-10).
 
 **The third preregistered series: the zeros.** In the worlds where life is lost again and again, there are
-many more zero bytes when it becomes established (notebook entry 11, in Catalan). In 8 worlds where life drops
+many more zero bytes when it becomes established (notebook entry 11, in Catalan; [summary](quadern/resum.en.md#entry-11)). In 8 worlds where life drops
 right after becoming established, we restarted each world from the same instant, in four ways and with the
 same randomness: 132 branches ([protocol](docs/protocol-zeros.md), in Catalan).
 - **Against a placebo, removing the zeros makes life drop less, or grow more:** confirmed, in all 8 worlds (p = 0.004,
@@ -122,7 +123,7 @@ same randomness: 132 branches ([protocol](docs/protocol-zeros.md), in Catalan).
 - **Not a discovery:** zero poisoning is already in the 2024 paper. What the series adds is the causal test,
   with an intervention from the same snapshot and a control.
 
-See notebook entry 13, in Catalan.
+See notebook entry 13, in Catalan, or its [English summary](quadern/resum.en.md#entry-13).
 
 **The fourth preregistered series: how the soup matures.** In a quiet world that reaches epoch 8,000 without
 life, does life become established more often if the aged soup is kept than if it is replaced by a fresh one? In
@@ -141,7 +142,7 @@ randomness: 900 branches ([protocol](docs/protocol-maduracio.md), in Catalan).
   random search finds the first replicator about 17 times sooner than with uniform bytes. That leads one to expect
   the result for the shuffled soup, but says nothing about the aged soup as it is.
 
-See notebook entry 14, in Catalan.
+See notebook entry 14, in Catalan, or its [English summary](quadern/resum.en.md#entry-14).
 
 **The ingredients of the chemistry.** Which ingredients of the chemistry does a random program need to copy itself?
 We tested 10⁷ random programs with the usual chemistry and with twelve variants, each with one rule changed, and
@@ -160,7 +161,7 @@ replicators exist and are abundant, not whether they become established in a sou
   exploratory check, almost none copy themselves without their partner's code. The test also counts those the
   partner helps.
 
-See notebook entry 15, in Catalan.
+See notebook entry 15, in Catalan, or its [English summary](quadern/resum.en.md#entry-15).
 
 **What we study now:**
 - **The ingredients of the chemistry, next step:** which replicators copy themselves alone, how many there are

@@ -24,6 +24,7 @@ Bash).
 | La prova ràpida (§1) | de 10 a 15 segons |
 | `npm test` | uns minuts |
 | La decisió de la llei 2 (§3) | segons |
+| Les decisions de B2, dels zeros i de la maduració (§6) | de 2 a 25 segons cadascuna |
 | Una sopa de la Fase 1 (§2) | uns minuts fins a la transició (època 200); de 15 a 35 minuts fins a l'època 750, segons la càrrega de la màquina |
 | Un món de la sèrie de la llei 2, fins a 16.000 èpoques o fins a 1.000 èpoques després de l'establiment | de 6 minuts a 3,3 hores, amb una mediana d'una hora |
 | La sèrie de la llei 2 sencera (160 mons) | unes 170 hores de càlcul: més d'un dia amb sis processos alhora |
@@ -36,7 +37,8 @@ npm test
 ```
 
 Les proves inclouen les empremtes de determinisme (`test/determinisme.mjs`): si passen, el simulador fa
-exactament les mateixes històries que quan es van fer els experiments.
+exactament les mateixes històries que quan es van fer els experiments. Comprovat el 05-11-2026 amb Node 16: la
+prova ràpida, en 8 segons, i les 325 proves de `npm test`, totes bé.
 
 ## 2. La sopa de la Fase 1 (entrades 1 i 2 del quadern)
 
@@ -49,8 +51,8 @@ node sim.mjs --seed 1 --chunks 7 --rng v1 --epochs 750 --after 1000 --save fase1
 - **La transició:** arriba a l'època 200.
 - **Per què `--after 1000`:** sense aquesta opció, la simulació s'atura 300 èpoques després de la transició.
 - **La comprovació:** les captures de les èpoques 250, 500 i 750 han de tenir les SHA-256 de
-  `docs/captures.sha256` (`fase1/resultats/llavor1-fils7-epoca*.bin`). Comprovat el 19-10-2026 amb Node 16:
-  coincideixen totes tres.
+  `docs/captures.sha256` (`fase1/resultats/llavor1-fils7-epoca*.bin`). Comprovat el 19-10-2026 i el 05-11-2026
+  amb Node 16: coincideixen totes tres. El 05-11-2026 va trigar 34 minuts, amb una altra simulació alhora.
 
 ```bash
 cd fase1-llavor1 && sha256sum llavor1-fils7-epoca250.bin llavor1-fils7-epoca500.bin llavor1-fils7-epoca750.bin; cd ..
@@ -78,8 +80,8 @@ cd ../genesis && git worktree remove ../preregistre
 - **La sortida** ha de ser idèntica a la desada.
 - **Una excepció possible:** la línia de sensibilitat de l'HOE pot canviar si la vostra versió de Node porta
   un altre zlib. La decisió no en depèn.
-- **Comprovat el 19-10-2026** amb Node 16: la sortida és idèntica byte a byte. Els dos auditors ho van refer a
-  l'auditoria 9.
+- **Comprovat el 19-10-2026 i el 05-11-2026** amb Node 16: la sortida és idèntica byte a byte. Els dos auditors ho
+  van refer a l'auditoria 9.
 - **Qui decideix:** la decisió la pren el programa de l'etiqueta (`8cd4449`), no el de `main` (AUD-87).
   - **Les comprovacions noves** del preregistre (PR #6) protegeixen les sèries futures.
   - **La de la llei 2** es va protegir amb les comprovacions a mà de l'acta del llançament.
@@ -105,6 +107,9 @@ head -1 fase2/resultats/serie-llei2/A/1006.jsonl
     (`test/determinisme.mjs`), i a l'auditoria 9 dues llavors de la sèrie refetes amb el codi de `f821f4d` van
     donar la mateixa història.
   - **Però la garantia és el commit del registre,** no un de posterior.
+- **Comprovat el 05-11-2026:** el món 1006 del grup A, refet amb el codi del registre (`8cd4449`) i Node 16, sense
+  `--save`. Els 13 censos són idèntics byte a byte als del registre, que es va fer amb Node 20, i l'empremta final
+  (`7f8d1963`) i l'època de l'establiment (2.250) també coincideixen. Va trigar 17,5 minuts.
 
 ## 5. Les imatges
 
@@ -113,6 +118,61 @@ head -1 fase2/resultats/serie-llei2/A/1006.jsonl
 - **Les altres:** necessiten captures. La sèrie només desa les dels tres censos que precedeixen
   l'establiment, i es regeneren amb l'ordre del JSONL (§4). L'animació i el zoom necessiten una nova
   execució, i `docs/imatges/README.md` en dona l'ordre.
+- **Comprovat el 05-11-2026** amb Node 16: les dues corbes de la llei 2 surten idèntiques, byte a byte.
+
+## 6. Les decisions de B2, dels zeros i de la maduració (entrades 10, 13 i 14)
+
+Com la de la llei 2 (§3): cada decisió es pren des d'una còpia del commit de la seva etiqueta, i el programa es nega a decidir des de
+`main`. Els registres de les sèries són a `main`, i no a l'etiqueta, que es va fer abans de llançar-les: es copien a la carpeta de la
+sèrie de la còpia. Des de l'arrel del repositori:
+
+```bash
+# B2, la vida establerta (entrada 10)
+git worktree add --detach ../decisio preregistre-b2
+mkdir -p ../decisio/fase2/resultats/b2/confirmacio
+cp fase2/resultats/b2/confirmacio/*.jsonl ../decisio/fase2/resultats/b2/confirmacio/
+(cd ../decisio && node fase2/b2-confirmacio.mjs --decideix fase2/resultats/b2/confirmacio) > /tmp/b2.txt
+diff /tmp/b2.txt fase2/resultats/b2/confirmacio/decisio-sortida.txt && echo idèntica
+git worktree remove --force ../decisio
+```
+
+```bash
+# els zeros (entrada 13)
+git worktree add --detach ../decisio preregistre-zeros
+mkdir -p ../decisio/fase2/resultats/zeros/serie/branques
+cp fase2/resultats/zeros/serie/branques/*.jsonl ../decisio/fase2/resultats/zeros/serie/branques/
+(cd ../decisio && node fase2/zeros-confirmacio.mjs --decideix fase2/resultats/zeros/serie/branques) > /tmp/zeros.txt
+diff /tmp/zeros.txt fase2/resultats/zeros/serie/decisio-sortida.txt && echo idèntica
+git worktree remove --force ../decisio
+```
+
+```bash
+# la maduració (entrada 14)
+git worktree add --detach ../decisio preregistre-maduracio
+mkdir -p ../decisio/fase2/resultats/maduracio/serie/branques
+cp fase2/resultats/maduracio/serie/branques/*.jsonl ../decisio/fase2/resultats/maduracio/serie/branques/
+(cd ../decisio && node fase2/maduracio-confirmacio.mjs --decideix fase2/resultats/maduracio/serie/branques) > /tmp/maduracio.txt
+diff /tmp/maduracio.txt fase2/resultats/maduracio/serie/decisio-sortida.txt && echo idèntica
+git worktree remove --force ../decisio
+```
+
+- **La sortida** ha de ser idèntica a la desada. `--force`, en treure la còpia, perquè hi queden els registres copiats.
+- **Comprovat el 05-11-2026** amb Node 16: totes tres, idèntiques byte a byte (B2 en 2 segons, els zeros en 6 i la maduració en 23).
+  Els dos auditors també les van refer, cadascuna a la seva auditoria.
+- **Per què no cal cap captura:** les decisions només llegeixen els registres. Les captures de les branques es regeneren amb
+  l'ordre de la línia d'inici de cada registre, com a la §4.
+
+## 7. B1, el nivell 1 (entrada 15)
+
+Els registres sencers no són a git: dos passen de 50 MB. Sí que hi ha l'extracte dels replicadors hereditaris, amb les línies tal
+com són als registres, i la SHA-256 del seu contingut (`fase2/resultats/b1/nivell1/README.md`):
+
+```bash
+node -e "const z=require('zlib'),c=require('crypto'),fs=require('fs');const b=z.gunzipSync(fs.readFileSync('fase2/resultats/b1/nivell1/hereditaris.jsonl.gz'));console.log(c.createHash('sha256').update(b).digest('hex'))"
+```
+
+Ha de donar `6029d8783b13b1c8faa4077b0e28b2c569903e2420b8f660efa081092fb049a1`. Els registres sencers es poden refer amb les ordres
+de `fase2/resultats/b1/nivell1/llista.txt` (unes 9 hores amb 8 fils), i n'hi ha la SHA-256 a `execucio-llista.txt`.
 
 ## Les captures
 
