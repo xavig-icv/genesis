@@ -3,6 +3,9 @@
 **Abiogènesi digital:** un univers de joguina on intentem que la vida sorgeixi sola, sense que ningú
 n'escrigui el primer organisme.
 
+**El lloc web:** <https://xavig-icv.github.io/genesis/>. Hi podeu explorar els mons de les sèries en 3D, fins al
+codi de cada cel·la, i fer córrer un món nou al vostre navegador.
+
 **English:** [README.en.md](README.en.md) · **Glossari català–anglès:** [docs/glossari.md](docs/glossari.md)
 
 ![Animació: el món de la llavor 1006, dibuixat com un planeta, on una colònia de replicadors apareix i s'escampa per gairebé tot el continent](docs/imatges/planeta-1006.png)

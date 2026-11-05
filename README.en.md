@@ -3,6 +3,9 @@
 **Digital abiogenesis:** a toy universe where we try to let life arise on its own, without anyone writing the
 first organism.
 
+**The website:** <https://xavig-icv.github.io/genesis/>. Explore the worlds from the series in 3D, down to the
+code of each cell, and run a new world in your browser.
+
 *This is the English version of the [Catalan README](README.md), which is the main one. It is shorter, and
 was last synchronised on 5 November 2026. The lab notebook and most of the documentation are in Catalan. Each
 notebook entry has an [English summary](quadern/resum.en.md), and the [glossary](docs/glossari.md) gives the
