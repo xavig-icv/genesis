@@ -299,6 +299,12 @@ Vegeu l'[entrada 15](quadern/index.html#entrada-15).
 
 ## Com obrir-ho
 
+**El lloc web:** <https://xavig-icv.github.io/genesis/>, en català i en anglès: tres mons de les sèries en 3D i en 2D, fins al
+codi de cada cel·la, i un món nou que corre al vostre navegador amb el mateix simulador. Es publica amb GitHub Pages des de
+`main`, i les dades dels mons es comproven amb la SHA-256 abans de publicar-les.
+
+Per obrir-ho tot en local:
+
 Cal Node.js, sense cap dependència. Per a una instal·lació nova, feu servir una versió amb manteniment
 (Node 22 o 24): les proves hi passen. Les versions 16 i 20 són les dels registres antics, i només calen per
 reproduir-los byte a byte.

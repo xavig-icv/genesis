@@ -53,6 +53,16 @@ l'Observatori: els pòsters del naixement en fan la feina, sense fons.
 
 Es tornen a fer quan canviï el disseny dels visors.
 
+## La imatge per compartir el lloc
+
+`og-1006.png` (1.200 × 630, SHA-256 `e73fca84…`): el món 1006 a l'època 3.500, al planeta de l'explorador 3D, en tema fosc.
+És la de les etiquetes `og:image` de `web/index.html` (AUD-166, AU2-135). Es torna a fer, byte a byte, amb el servidor
+engegat:
+
+```bash
+node eines/web-animacio.mjs --chrome CAMI-DE-CHROME --sortida og-1006.png --mida 1200x630 --epoques 3500,3500,50 --camera 256,256,128,600,1.53,0
+```
+
 ## La cinta de la portada
 
 No és una imatge: són els 128 bytes de la figura de la química (`data-bytes` de `#tape` a `web/index.html`), que la pàgina

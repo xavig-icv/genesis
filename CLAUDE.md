@@ -152,6 +152,17 @@ Llegeix-los abans de proposar canvis.
     les SHA-256 de les captures (`docs/captures.sha256`) i els censos i l'empremta de la sèrie. No van a git.
   - **Els mons, com les imatges:** il·lustratius i declarats com a tals, o triats a l'atzar amb una llavor declarada, i
     cadascun amb la proporció de la seva sèrie. Cap resultat d'una sèrie abans de la seva decisió.
+  - **La publicació** (GitHub Pages, <https://xavig-icv.github.io/genesis/>): `.github/workflows/lloc.yml`, a cada push a `main`
+    que toqui el lloc. Munta la carpeta amb `node eines/lloc-publica.mjs _site`: només el que git segueix de `web/` i
+    `quadern/`, i els `.html`, `.css` i `.js` de `fase1/` i `fase2/`, sense `resultats/`. Les dades dels mons no són a
+    git: es baixen d'una versió del repositori (`lloc-dades-vN`) i es comproven amb la SHA-256 del fitxer i després una per
+    una amb `web/dades/SHA256SUMS`. Si alguna no hi coincideix, no es publica res.
+    - **Per canviar les dades:** `node eines/lloc-publica.mjs --sumes > web/dades/SHA256SUMS`, una versió nova amb el
+      `tar.gz` de les dades (fet amb `tar --sort=name` i `gzip -n`, perquè es pugui refer igual), i `DADES_VERSIO` i
+      `DADES_SHA256` del workflow. La versió la crea el responsable.
+  - **Les animacions del planeta,** per al README i per compartir el lloc: `node eines/web-animacio.mjs --chrome CAMI-DE-CHROME
+    --sortida fitxer.png`, amb el servidor engegat. Una captura per època a l'explorador 3D, amb l'època a la cantonada, i un
+    PNG animat amb una paleta comuna. El temps de la pàgina es fixa a cada fotograma: dues execucions donen el mateix fitxer.
 - Documents per a qui arriba de fora: `README.en.md` (cal posar-lo al dia quan canviï el README), `docs/reproduir.md`
   (receptes comprovades), `docs/glossari.md`, `CITATION.cff`, `CONTRIBUTING.md` i `LICENSE-data.md`. Al
   README, la revisió és "de dos auditors d'IA", mai "externa" sense dir-ho.

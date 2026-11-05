@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, 
 import { createHash } from 'crypto';
 import { inflateSync } from 'zlib';
 import { tmpdir } from 'os';
-import { join } from 'path';
+import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { KIND, runPairs } from '../fase1/bff.js';
 import { makeRng } from '../fase1/soup.js';
@@ -233,6 +233,81 @@ const tests = {
     assert.strictEqual(r2.status, 2);
     assert.match(r2.stderr, /ja existeix .*clar-6000\.webp/);
     assert.strictEqual(readFileSync(join(dir2, 'naixement', 'clar-6000.webp'), 'utf8'), 'abans');
+  },
+  "l'eina de l'animació valida les opcions i no sobreescriu res, abans d'obrir Chrome": () => {
+    const anim = (...args) => spawnSync(process.execPath, [join(root, 'eines', 'web-animacio.mjs'), ...args], { encoding: 'utf8' });
+    assert.strictEqual(anim('--help').status, 0);
+    const chrome = process.execPath, out = join(tmp, 'anim.png');
+    const bad = [
+      ['--sortida', out],
+      ['--chrome', chrome],
+      ['--chrome', chrome, '--sortida', join(tmp, 'anim.gif')],
+      ['--chrome', join(tmp, 'no-hi-es.exe'), '--sortida', out],
+      ['--chrome', chrome, '--sortida', out, '--vista', 'globus'],
+      ['--chrome', chrome, '--sortida', out, '--camera', '1,2,3'],
+      ['--chrome', chrome, '--sortida', out, '--camera', '176,336,128,640,1.9,0'],
+      ['--chrome', chrome, '--sortida', out, '--epoques', '3000,1500,50'],
+      ['--chrome', chrome, '--sortida', out, '--epoques', '1500,6000,70'],
+      ['--chrome', chrome, '--sortida', out, '--portada', '3525'],
+      ['--chrome', chrome, '--sortida', out, '--colors', '1'],
+      ['--chrome', chrome, '--sortida', out, '--url', 'http://exemple.cat/web/'],
+      ['--chrome', chrome, '--sortida', out, '--mon', '1006', '--mon', '1034'],
+    ];
+    for (const args of bad) assert.strictEqual(anim(...args).status, 2, args.join(' '));
+    writeFileSync(out, 'abans');
+    const r = anim('--chrome', chrome, '--sortida', out);
+    assert.strictEqual(r.status, 2);
+    assert.match(r.stderr, /ja existeix/);
+    assert.strictEqual(readFileSync(out, 'utf8'), 'abans');
+  },
+  'el lloc per publicar: la llista tancada, sense res amagat ni cap registre': () => {
+    const pub = (...args) => spawnSync(process.execPath, [join(root, 'eines', 'lloc-publica.mjs'), ...args], { encoding: 'utf8' });
+    const out = join(tmp, 'lloc');
+    const r = pub(out, '--sense-dades');
+    assert.strictEqual(r.status, 0, r.stderr);
+    const all = [];
+    const walk = (d, rel = '') => { for (const e of readdirSync(d, { withFileTypes: true })) { const p = rel ? `${rel}/${e.name}` : e.name; if (e.isDirectory()) walk(join(d, e.name), p); else all.push(p); } };
+    walk(out);
+    for (const f of ['index.html', 'web/index.html', 'web/explorador/index.html', 'web/viu/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase1/worker.js', 'fase2/world.js', 'fase2/census.js']) assert.ok(all.includes(f), f);
+    assert.ok(all.every((f) => /^(index\.html|web\/.+|quadern\/.+|fase[12]\/[^/]+\.(html|css|js))$/.test(f)), all.find((f) => !/^(index\.html|web\/|quadern\/|fase[12]\/)/.test(f)));
+    assert.ok(!all.some((f) => f.split('/').some((p) => p.startsWith('.'))));
+    assert.ok(!all.some((f) => /resultats|\.bin$|\.jsonl$/.test(f)));
+    assert.match(readFileSync(join(out, 'index.html'), 'utf8'), /url=web\//);
+    // no sobreescriu, i les opcions
+    assert.strictEqual(pub(out, '--sense-dades').status, 2);
+    assert.strictEqual(pub().status, 2);
+    assert.strictEqual(pub('--sumes', out).status, 2);
+    assert.strictEqual(pub(join(tmp, 'lloc-x'), '--res').status, 2);
+  },
+  'el lloc per publicar: les dades, comprovades una per una amb web/dades/SHA256SUMS': () => {
+    // un repositori de mostra, amb el mínim que demana l'eina
+    const repo = join(tmp, 'repo-lloc'), git = (...a) => spawnSync('git', a, { cwd: repo, encoding: 'utf8' });
+    for (const f of ['web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js', 'web/dades/7/fitxa.json']) { mkdirSync(join(repo, dirname(f)), { recursive: true }); writeFileSync(join(repo, f), f); }
+    mkdirSync(join(repo, 'web/dades/7/codi'), { recursive: true });
+    writeFileSync(join(repo, 'web/dades/7/mon.json'), '{"id":7}');
+    writeFileSync(join(repo, 'web/dades/7/codi/1500.z'), 'codi');
+    const sums = spawnSync(process.execPath, [join(root, 'eines', 'lloc-publica.mjs'), '--sumes', '--arrel', repo], { encoding: 'utf8' });
+    assert.strictEqual(sums.status, 0, sums.stderr);
+    assert.deepStrictEqual(sums.stdout.trim().split('\n').map((l) => l.split('  ')[1]), ['7/codi/1500.z', '7/mon.json']);
+    writeFileSync(join(repo, 'web/dades/SHA256SUMS'), sums.stdout);
+    assert.strictEqual(git('init', '-q').status, 0);
+    git('add', 'web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js', 'web/dades/7/fitxa.json', 'web/dades/SHA256SUMS');
+    const pub = (out) => spawnSync(process.execPath, [join(root, 'eines', 'lloc-publica.mjs'), out, '--arrel', repo], { encoding: 'utf8' });
+    const ok = pub(join(tmp, 'lloc-bo'));
+    assert.strictEqual(ok.status, 0, ok.stderr);
+    assert.strictEqual(readFileSync(join(tmp, 'lloc-bo', 'web/dades/7/codi/1500.z'), 'utf8'), 'codi');
+    // una dada canviada, una de més o una que falta: no es publica res
+    writeFileSync(join(repo, 'web/dades/7/mon.json'), '{"id":8}');
+    let r = pub(join(tmp, 'lloc-canviat'));
+    assert.strictEqual(r.status, 1); assert.match(r.stderr, /mon\.json: la SHA-256 no hi coincideix/); assert.ok(!existsSync(join(tmp, 'lloc-canviat')));
+    writeFileSync(join(repo, 'web/dades/7/mon.json'), '{"id":7}');
+    writeFileSync(join(repo, 'web/dades/7/codi/1550.z'), 'més');
+    r = pub(join(tmp, 'lloc-sobra'));
+    assert.strictEqual(r.status, 1); assert.match(r.stderr, /1550\.z: no és a SHA256SUMS/);
+    rmSync(join(repo, 'web/dades/7/codi/1550.z'));
+    rmSync(join(repo, 'web/dades/7/codi/1500.z'));
+    r = pub(join(tmp, 'lloc-falta'));
+    assert.strictEqual(r.status, 1); assert.match(r.stderr, /1500\.z: no hi és/);
   },
 };
 

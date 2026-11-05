@@ -220,6 +220,12 @@ See notebook entry 15, in Catalan, or its [English summary](quadern/resum.en.md#
 
 ## How to run it
 
+**The website:** <https://xavig-icv.github.io/genesis/>, in Catalan and English: three worlds from the series in 3D and 2D, down
+to the code of each cell, and a new world that runs in your browser with the same simulator. It is published with GitHub Pages
+from `main`, and the data of the worlds are checked against their SHA-256 before publishing.
+
+To run everything locally:
+
 You need Node.js, and nothing else. For a new setup, use a maintained version (Node 22 or 24): the tests pass
 there. Versions 16 and 20 are those of the historical records, and are only needed to reproduce them byte for
 byte.
