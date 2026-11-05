@@ -95,15 +95,18 @@ Llegeix-los abans de proposar canvis.
     primers 64 KiB. Les proves amb dades sintètiques, amb una altra carpeta a les ordres. **Des de l'etiqueta fins a la
     decisió, cap `--prova`**, i els registres només es copien a la carpeta del commit de l'etiqueta.
   - **L'etiqueta** (`preregistre-maduracio`, a `416f720`, 01-11-2026): l'objecte i el segell, a `docs/preregistre-maduracio/`.
-    La sèrie corre des de l'1-11-2026, llançada amb una còpia corregida de `eines/llanca-lot.sh`, fora del repositori: el de
-    `416f720` rebutjava les llistes de més de 64 KB (l'acta, la incidència 1). Si cal tornar a llançar un lot, amb la mateixa còpia.
+    La sèrie va córrer de l'1 al 4-11-2026, llançada amb una còpia corregida de `eines/llanca-lot.sh`, fora del repositori: el de
+    `416f720` rebutjava les llistes de més de 64 KB (l'acta, la incidència 1).
+  - **La decisió** (04-11-2026, l'entrada 14): es rebutgen totes dues hipòtesis nul·les. La sortida, a
+    `fase2/resultats/maduracio/serie/decisio-sortida.txt`. Es reprodueix byte a byte des d'una còpia de l'etiqueta, amb els registres de
+    `main` copiats a la carpeta de la sèrie.
 - La fragilitat del món (AUD-107, exploratòria): `node eines/fragilitat.mjs`, amb el pla, escrit abans de calcular, i
   els resultats a `fase2/resultats/b2/fragilitat/`. No simula res.
 - B1, les ablacions de la química (`docs/pla-b1.md`), el nivell 1: `node eines/densitat.mjs --quimica C0|K0|… --distribucio
   d-mig|uniforme --llavor N --programes N --json fitxer.jsonl [--de I] [--fils F]`, i l'anàlisi, `node eines/densitat-analisi.mjs
   carpeta`. Les químiques són a `fase1/bff.js` (`CHEMISTRIES` i `evaluator`), i C0 és l'intèrpret de sempre. La prova de
   replicació és la del cens, amb la mateixa química (l'opció `evaluate` de `replicationTest`, AUD-65). El pla v0.4 té el GO de les
-  auditories 25 i 26: el nivell 1 es calcula quan acabi la sèrie de la maduració i se n'hagi pres la decisió, com diu la §11 del pla.
+  auditories 25 i 26. El nivell 1 es va calcular el 4 i el 5-11-2026 (l'entrada 15), i l'ampliació no va caldre.
   - **L'anàlisi només es fa amb el pla sencer** (`PLAN`: les 13 químiques amb `d-mig`, C0 i K0 amb `uniforme`, la llavor 20261101 i
     les N del pla), i amb registres fets amb els mòduls de la seva còpia (la SHA-256 de la línia d'inici; AUD-139, AUD-142).
   - **Els controls** són K0, L0 i X0. S4 és una variant: el codi del company s'hi pot copiar el programa (AUD-140).
@@ -111,6 +114,11 @@ Llegeix-los abans de proposar canvis.
   - **Les ordres del càlcul,** escrites abans de calcular, són a `fase2/resultats/b1/nivell1/`: `llista.txt`, i `llista-ampliacio.txt`
     si cal l'ampliació, amb les SHA-256 al README. Les executa `bash fase2/resultats/b1/nivell1/executa.sh LLISTA SHA-256 COMMIT`,
     des de l'arrel d'una còpia neta. Mentre corren, cap recompte: només l'estat de l'executor.
+  - **A la còpia del càlcul, cap fitxer de codi sense seguir** mentre hi corri res: `eines/densitat.mjs` hi escriuria `+canvis`, i
+    l'anàlisi en rebutjaria els registres (el primer intent de la repetició, `fase2/resultats/b1/nivell1/repeticio/README.md`).
+  - **Els registres del nivell 1 no són a git:** dos passen de 50 MB. Són a la còpia de seguretat, amb la SHA-256 a
+    `execucio-llista.txt`, i es poden refer amb les mateixes ordres. La repetició de tres trossos (`repeticio/`, amb `compara.mjs`), la
+    sortida de l'anàlisi (`analisi.txt`) i les comprovacions exploratòries (`exploratori/`) sí que hi són.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
   captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
