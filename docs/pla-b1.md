@@ -691,7 +691,8 @@ splitmix32, que suma la constant G = 0x9e3779b9 a cada pas: les de *s* són les 
 que difereixen en G comparteixen tres dels quatre mots de l'estat, desplaçats; en 2G, dos; en 3G, un. Les seqüències no són iguals,
 però tampoc no són d'estats independents.
 - **La regla:** dos generadors de càlculs diferents no tenen llavors iguals, ni que difereixin en ±G, ±2G o ±3G (mòdul 2³²). Dins d'un
-  interval no passa mai: el més ample fa 3,1·10⁸, i el desplaçament més petit, 3G mòdul 2³², és de 626.627.285.
+  interval no passa mai: el més ample, el del nivell 1, fa 2·10⁸ (tots els estrats junts, 3,1·10⁸), i el desplaçament més petit, 3G
+  mòdul 2³², és de 626.627.285.
 - **`eines/b1-llavors.mjs`** en té el mapa, i `checkSeedMap` el comprova; `test/b1-autonomia.mjs` també comprova que el v2 fa l'estat
   com diem.
 

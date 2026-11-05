@@ -4,8 +4,8 @@
 // suma GOLDEN a cada pas: les de s són mix(s + GOLDEN), ..., mix(s + 4·GOLDEN). Dues llavors que difereixen en GOLDEN comparteixen
 // tres dels quatre mots de l'estat, desplaçats; en 2·GOLDEN, dos; en 3·GOLDEN, un. Les seqüències no són iguals, però tampoc no
 // són d'estats independents. Per això, dos generadors de dos càlculs diferents no poden tenir llavors que difereixin en 0, ±GOLDEN,
-// ±2·GOLDEN o ±3·GOLDEN (mòdul 2³²). Dins d'un interval no passa mai: el més ample fa 3,1·10⁸, i 3·GOLDEN (mòdul 2³²) és el més
-// petit dels sis desplaçaments, 626.627.285. checkSeedMap ho comprova.
+// ±2·GOLDEN o ±3·GOLDEN (mòdul 2³²). Dins d'un interval no passa mai: el més ample, el del nivell 1, fa 2·10⁸ (tots els estrats
+// junts, 3,1·10⁸), i 3·GOLDEN (mòdul 2³²) és el més petit dels sis desplaçaments, 626.627.285. checkSeedMap ho comprova.
 //
 // Els càlculs que tornen a fer servir les llavors del nivell 1 són aparellats a propòsit: les variants per cap, C0 i S1 de nou,
 // i D½ amb companys de D½ fan servir els mateixos programes que el nivell 1, i no són mostres noves.
