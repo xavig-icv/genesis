@@ -25,6 +25,7 @@
     <a href="#entrada-12">Entrada 12</a>
     <a href="#entrada-13">Entrada 13</a>
     <a href="#entrada-14">Entrada 14</a>
+    <a href="#entrada-15">Entrada 15</a>
   </nav>
 
   <article id="entrada-1">
@@ -1478,6 +1479,140 @@
       <li><strong>L'auditoria:</strong> els dos auditors en revisaran l'execució, la decisió i com la comuniquem.</li>
       <li><strong>B1, les ablacions de la química</strong> (<code>docs/pla-b1.md</code>): el nivell 1 es calcula ara, amb les ordres escrites abans de calcular.</li>
       <li><strong>El lloc web</strong> en mostrarà el resultat, amb els altres.</li>
+    </ul>
+  </article>
+
+  <article id="entrada-15">
+    <header>
+      <p class="date">Entrada 15 · 5 de novembre de 2026</p>
+      <h1>Els ingredients de la química: què cal perquè un programa a l'atzar es copiï</h1>
+      <p class="lede">Hem posat a prova 10⁷ programes a l'atzar amb la química de sempre i amb dotze variants, cadascuna amb una regla canviada, i hem comptat quants són replicadors hereditaris. Sense les instruccions de còpia, sense bucles o sense cap còpia d'un programa a l'altre, no n'hi ha cap. Amb una sola de les dues instruccions de còpia, n'hi ha menys. Sense l'aritmètica o sense que el programa es pugui reescriure a si mateix, n'hi ha el doble i el quàdruple. I si els dos caps comencen alineats, cadascun a l'inici d'un dels dos programes, n'hi ha 31 vegades més. Tot és descriptiu, i el pla es va escriure abans de calcular.</p>
+    </header>
+
+    <h2>Què volíem saber</h2>
+    <p>És la pregunta oberta de l'article de 2024: per què en BFF hi neix vida i en altres llenguatges no. Quins ingredients de la química calen? La responem en dos nivells (<code>docs/pla-b1.md</code>). Aquest és el primer: amb cada química, quina part dels programes a l'atzar són replicadors hereditaris. Diu si els replicadors existeixen i si són abundants, no si s'estableixen en una sopa. Això serà el nivell 2.</p>
+    <ul>
+      <li><strong>Les químiques:</strong> la de sempre (C0) i dotze variants. Cada variant canvia una sola regla, i una instrucció treta no fa res i consumeix el pas. Tres variants són controls, on a la pràctica no hi hauria d'haver cap replicador: sense còpia (K0), sense bucles (L0) i sense cap còpia ni escriptura d'un programa a l'altre (X0).</li>
+      <li><strong>Els programes:</strong> de 64 bytes, i cada byte és, amb probabilitat ½, una de les 10 instruccions (la distribució D½). Són els mateixos 10⁷ programes a totes les químiques: la comparació és programa a programa. Amb bytes uniformes, els de la sopa del començament, només C0 i K0.</li>
+      <li><strong>La prova és la del cens</strong> (<code>fase2/replication.js</code>), amb la química de la variant. Es fa en una sopa de 9 programes: el que es prova i 8 companys de soroll, de bytes uniformes. "Sol" vol dir que el programa va primer, i "en context", que va segon.</li>
+    </ul>
+    <div class="params">
+      <div class="param"><b>13</b><span>químiques amb D½: C0, 9 variants i 3 controls</span></div>
+      <div class="param"><b>10⁷</b><span>programes per química, els mateixos a totes</span></div>
+      <div class="param"><b>1,5·10⁸</b><span>proves, amb les 2 de bytes uniformes</span></div>
+      <div class="param"><b>8 h 44 min</b><span>de càlcul, amb 8 fils</span></div>
+    </div>
+
+    <h2>El que surt</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Química</th><th style="text-align:left">Què canvia</th><th style="text-align:left">Hereditaris de 10⁷</th><th style="text-align:left">Densitat (IC del 95 %)</th><th style="text-align:left">Contra C0 (IC del 95 %)</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">C0</td><td style="text-align:left">Res: BFF, tal com és</td><td style="text-align:left">1.625</td><td style="text-align:left">1,62·10⁻⁴ (1,55–1,71·10⁻⁴)</td><td style="text-align:left">1</td></tr>
+          <tr><td style="text-align:left">K0</td><td style="text-align:left"><code>.</code> i <code>,</code> no fan res (control)</td><td style="text-align:left">0</td><td style="text-align:left">0 (fins a 3,69·10⁻⁷)</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">L0</td><td style="text-align:left"><code>[</code> i <code>]</code> no fan res (control)</td><td style="text-align:left">0</td><td style="text-align:left">0 (fins a 3,69·10⁻⁷)</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">X0</td><td style="text-align:left">Cap còpia ni escriptura d'un programa a l'altre (control)</td><td style="text-align:left">0</td><td style="text-align:left">0 (fins a 3,69·10⁻⁷)</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">K1</td><td style="text-align:left"><code>.</code> no fa res</td><td style="text-align:left">1.152</td><td style="text-align:left">1,15·10⁻⁴ (1,09–1,22·10⁻⁴)</td><td style="text-align:left">0,71 (0,66–0,76)</td></tr>
+          <tr><td style="text-align:left">K2</td><td style="text-align:left"><code>,</code> no fa res</td><td style="text-align:left">640</td><td style="text-align:left">6,40·10⁻⁵ (5,91–6,92·10⁻⁵)</td><td style="text-align:left">0,39 (0,36–0,43)</td></tr>
+          <tr><td style="text-align:left">R0</td><td style="text-align:left"><code>+</code> i <code>-</code> no fan res: sense aritmètica</td><td style="text-align:left">3.272</td><td style="text-align:left">3,27·10⁻⁴ (3,16–3,39·10⁻⁴)</td><td style="text-align:left">2,01 (1,90–2,14)</td></tr>
+          <tr><td style="text-align:left">S1</td><td style="text-align:left">Escriure a la pròpia meitat no fa res: sense automodificació</td><td style="text-align:left">6.420</td><td style="text-align:left">6,42·10⁻⁴ (6,26–6,58·10⁻⁴)</td><td style="text-align:left">3,95 (3,74–4,17)</td></tr>
+          <tr><td style="text-align:left">S2</td><td style="text-align:left">El primer programa no es toca</td><td style="text-align:left">2.252</td><td style="text-align:left">2,25·10⁻⁴ (2,16–2,35·10⁻⁴)</td><td style="text-align:left">1,39 (1,30–1,48)</td></tr>
+          <tr><td style="text-align:left">S3</td><td style="text-align:left">El segon programa no es toca</td><td style="text-align:left">5.746</td><td style="text-align:left">5,75·10⁻⁴ (5,60–5,90·10⁻⁴)</td><td style="text-align:left">3,54 (3,35–3,74)</td></tr>
+          <tr><td style="text-align:left">S4</td><td style="text-align:left">Cada programa només escriu a la seva meitat</td><td style="text-align:left">44</td><td style="text-align:left">4,40·10⁻⁶ (3,20–5,91·10⁻⁶)</td><td style="text-align:left">0,03 (0,02–0,04)</td></tr>
+          <tr><td style="text-align:left">X1</td><td style="text-align:left">Una còpia que llegeix de l'altra meitat no fa res</td><td style="text-align:left">2.883</td><td style="text-align:left">2,88·10⁻⁴ (2,78–2,99·10⁻⁴)</td><td style="text-align:left">1,77 (1,67–1,89)</td></tr>
+          <tr><td style="text-align:left">H64</td><td style="text-align:left">El segon cap comença a 64, a l'inici del segon programa, i no a 0</td><td style="text-align:left">51.047</td><td style="text-align:left">5,10·10⁻³ (5,06–5,15·10⁻³)</td><td style="text-align:left">31,4 (29,9–33,0)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">La densitat, amb l'interval de Clopper-Pearson. El quocient és el de les dues densitats, amb l'interval de la binomial condicionada, que amb els mateixos programes és conservador (<code>docs/pla-b1.md</code>, §6). Els valors són els de l'anàlisi (<code>fase2/resultats/b1/nivell1/analisi.txt</code>).</p>
+
+    <ul>
+      <li><strong>Els controls, cap:</strong> amb K0, L0 i X0, cap programa dels 10⁷ no es replica, ni hereditari ni sense herència. Si n'hi ha, són més de 400 vegades més rars que amb C0. Un zero és una cota, no una impossibilitat.</li>
+      <li><strong>El que era zero per construcció</strong> també ho és: S2 en context (el segon programa no pot escriure al primer) i S3 sol.</li>
+      <li><strong>C0:</strong> 1.625 replicadors hereditaris, 1 de cada 6.150 programes. 371 ho són sols, i 1.254, només en context. Amb cap química, cap programa no és hereditari sol i en context alhora.</li>
+      <li><strong>No cal l'ampliació:</strong> la regla del pla (§5) la demanava si C0 tenia menys de 30 hereditaris.</li>
+      <li><strong>Passen al nivell 2,</strong> per la regla del pla (§6): C0, K1, K2, R0, S1, S2, S3, S4, X1 i H64.</li>
+      <li><strong>Amb bytes uniformes:</strong> C0 en té 37 de 10⁷ (3,70·10⁻⁶; de 2,61 a 5,10·10⁻⁶), 44 vegades menys que amb D½. K0, cap.</li>
+    </ul>
+
+    <p><strong>Programa a programa.</strong> Cada variant perd una part dels replicadors de C0 i en guanya de nous:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Variant</th><th style="text-align:left">Hereditaris a totes dues</th><th style="text-align:left">Només a C0</th><th style="text-align:left">Només a la variant</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">K1</td><td style="text-align:left">595</td><td style="text-align:left">1.030</td><td style="text-align:left">557</td></tr>
+          <tr><td style="text-align:left">K2</td><td style="text-align:left">347</td><td style="text-align:left">1.278</td><td style="text-align:left">293</td></tr>
+          <tr><td style="text-align:left">R0</td><td style="text-align:left">1.113</td><td style="text-align:left">512</td><td style="text-align:left">2.159</td></tr>
+          <tr><td style="text-align:left">S1</td><td style="text-align:left">644</td><td style="text-align:left">981</td><td style="text-align:left">5.776</td></tr>
+          <tr><td style="text-align:left">S2</td><td style="text-align:left">304</td><td style="text-align:left">1.321</td><td style="text-align:left">1.948</td></tr>
+          <tr><td style="text-align:left">S3</td><td style="text-align:left">677</td><td style="text-align:left">948</td><td style="text-align:left">5.069</td></tr>
+          <tr><td style="text-align:left">S4</td><td style="text-align:left">10</td><td style="text-align:left">1.615</td><td style="text-align:left">34</td></tr>
+          <tr><td style="text-align:left">X1</td><td style="text-align:left">681</td><td style="text-align:left">944</td><td style="text-align:left">2.202</td></tr>
+          <tr><td style="text-align:left">H64</td><td style="text-align:left">265</td><td style="text-align:left">1.360</td><td style="text-align:left">50.782</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">Amb els controls, els 1.625 de C0 queden tots a "només a C0".</p>
+
+    <h2>El que s'hi veu, sense provar-ho</h2>
+    <p>Són comprovacions exploratòries, fetes després de l'anàlisi (<code>fase2/resultats/b1/nivell1/exploratori/</code>).</p>
+    <ul>
+      <li><strong>Amb bytes uniformes, la majoria no es copien sols.</strong>
+        <ul>
+          <li><strong>Les instruccions:</strong> dels 37 hereditaris de C0, 32 tenen menys de 5 instruccions; un no en té cap, i deu en tenen una.</li>
+          <li><strong>Per què no es poden copiar sols:</strong> un bucle de còpia propi en demana com a mínim cinc, <code>[</code>, <code>]</code>, una còpia i moure tots dos caps. Sense bucle, copiar 16 bytes en demana 16 de còpia.</li>
+          <li><strong>Qui els copia:</strong> hi intervé el codi d'algun company de soroll, com advertia l'AUD-42.</li>
+          <li><strong>La densitat dels que es copien sols</strong> amb bytes uniformes és, doncs, més baixa que 3,7·10⁻⁶, però no sabem quant.</li>
+        </ul>
+      </li>
+      <li><strong>Amb D½, el nombre d'instruccions no ho diu.</strong> El replicador de C0 amb menys instruccions en té 21, i els programes en tenen 32 de mitjana. Si el company hi ajuda o no, ho dirà la prova d'autonomia.</li>
+      <li><strong>H64, la còpia directa:</strong> el replicador més curt, el programa 2.357.905, té 14 instruccions i porta el bucle <code>[.&gt;}]</code>, amb bytes sense efecte entremig. És la còpia directa que preveia el pla, la que deixa un fill idèntic. No hem mirat els altres.</li>
+      <li><strong>S4:</strong> els 44 són tots en context. L'AUD-140 hi preveia una via amb el codi del company, però no n'hem mirat el mecanisme.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>Tres ingredients, necessaris a la pràctica:</strong> les instruccions de còpia, els bucles i la còpia d'un programa a l'altre. Sense cadascun, cap replicador en 10⁷ programes.</li>
+      <li><strong>N'hi ha que no calen:</strong>
+        <ul>
+          <li><strong>una sola instrucció de còpia:</strong> amb <code>,</code>, n'hi ha el 71 %, i amb <code>.</code>, el 39 %;</li>
+          <li><strong>sense aritmètica, sense automodificació o sense llegir del company,</strong> n'hi continua havent.</li>
+        </ul>
+      </li>
+      <li><strong>Algunes regles de BFF fan nosa als replicadors.</strong> Sense l'aritmètica, n'hi ha el doble, i sense automodificació, el quàdruple. Sense poder escriure en un dels dos programes, o sense llegir del company, també n'hi ha més. Una lectura possible, que no hem provat: les escriptures que no són la còpia espatllen el replicador.</li>
+      <li><strong>Els caps alineats,</strong> amb H64, fan els replicadors 31 vegades més abundants: 1 de cada 196 programes.</li>
+      <li><strong>Què no diem:</strong> que aquestes químiques facin néixer la vida en una sopa, ni més de pressa. Això ho dirà el nivell 2.</li>
+    </ul>
+    <p><strong>Els límits:</strong></p>
+    <ul>
+      <li><strong>La prova és la del cens,</strong> amb 8 companys de soroll. Compta també els replicadors que el company ajuda (AUD-42).</li>
+      <li><strong>D½ és una distribució triada,</strong> no la de cap sopa. Amb la de la sopa del començament, els replicadors són molt més rars, i la majoria no es copien sols.</li>
+      <li><strong>Tot és descriptiu:</strong> no hi ha cap prova d'hipòtesi, només densitats, quocients i els seus intervals.</li>
+      <li><strong>Una química, una regla:</strong> no hem combinat cap canvi, fora del control X0.</li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>El pla</strong> (<code>docs/pla-b1.md</code>, v0.4) i el codi (la PR #30) tenen el vistiplau dels dos auditors (auditories 25 i 26). Les ordres del càlcul, amb la seva SHA-256, es van desar a git abans de calcular (<code>0703d71</code>).</li>
+      <li><strong>L'execució:</strong> des d'una còpia neta del commit <code>a677726</code>, del 4 de novembre a les 21.17 al 5 a les 06.02. Mentre corria, no es va mirar cap recompte, només quina ordre corria. Va trigar el doble del previst. El responsable havia aprovat l'ampliació abans de calcular, i la va tornar a confirmar amb la durada real, unes 69 h, abans de mirar cap recompte.</li>
+      <li><strong>Abans de mirar res,</strong> a git, el commit, la versió de Node i la SHA-256 de cada registre (<code>a146177</code>). Com que dos registres passen de 50 MB, cap no va a git: són a la còpia de seguretat, i es poden refer amb la mateixa ordre.</li>
+      <li><strong>La repetició,</strong> per veure que els registres s'han fet de debò (auditor 2):
+        <ul>
+          <li><strong>Els trossos:</strong> la llavor surt de la SHA-256 d'aquell fitxer, i tria els trossos 12, 64 i 79, de 10⁵ programes.</li>
+          <li><strong>El resultat:</strong> tornats a calcular a les 15 químiques, coincideixen tots 45, línia a línia.</li>
+          <li><strong>El primer intent no valia:</strong> a la còpia neta hi vaig deixar un fitxer de codi sense seguir, i els registres deien <code>+canvis</code>. Es va tornar a fer, i els registres dels dos intents són iguals, llevat d'aquell camp i del temps (<code>repeticio/</code>).</li>
+        </ul>
+      </li>
+      <li><strong>L'anàlisi:</strong> <code>eines/densitat-analisi.mjs</code>, escrita i provada abans de calcular, des de la mateixa còpia. Valida que hi sigui tot el pla, del mateix commit i amb els mateixos mòduls. La sortida es va desar tal com surt (<code>analisi.txt</code>).</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>L'auditoria 27:</strong> els dos auditors revisaran aquesta entrada i la decisió de la maduració.</li>
+      <li><strong>La prova d'autonomia</strong> (<code>docs/pla-b1.md</code>, §4), exploratòria. Cada replicador trobat es torna a provar amb companys sense cap instrucció, per separar els que es copien sols dels que necessiten el codi del company.</li>
+      <li><strong>La composició dels bytes</strong> (§13): quants replicadors hi ha segons la proporció d'instruccions, de la sopa del començament fins a D½ i més enllà. El codi, en una PR a part, i revisat abans de calcular.</li>
+      <li><strong>El nivell 2, la sopa:</strong> les deu químiques que hi passen, amb un disseny preregistrat, que revisaran els dos auditors abans de llançar-lo.</li>
+      <li><strong>Les variants per cap:</strong> el pla les preveia si S1 tenia un efecte fort, i en té.</li>
     </ul>
   </article>
 

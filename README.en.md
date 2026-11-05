@@ -140,9 +140,26 @@ randomness: 900 branches ([protocol](docs/protocol-maduracio.md), in Catalan).
 
 See notebook entry 14, in Catalan.
 
+**The ingredients of the chemistry.** Which ingredients of the chemistry does a random program need to copy itself?
+We tested 10⁷ random programs with the usual chemistry and with twelve variants, each with one rule changed, and
+counted how many are heritable replicators ([plan](docs/pla-b1.md), in Catalan). This is the first level: whether
+replicators exist and are abundant, not whether they become established in a soup. Everything is descriptive.
+- **Three ingredients, needed in practice:** the copy instructions, loops, and copying from one program to the
+  other. Without any one of them, no replicator in 10⁷ programs. With the usual chemistry, 1,625.
+- **A single copy instruction is enough,** with fewer replicators: with `,`, 71% as many as with the usual
+  chemistry, and with `.`, 39%.
+- **Some rules get in the way:** without arithmetic, there are twice as many replicators, and if a program cannot
+  rewrite itself, four times as many.
+- **With the two heads aligned,** each at the start of a program, there are 31 times as many.
+- **The limits:** with random bytes like those of a fresh soup, they are 44 times rarer, and most of them need their
+  partner's code to be copied. The test also counts those the partner helps.
+
+See notebook entry 15, in Catalan.
+
 **What we study now:**
-- **Chemistry ablations:** removing instructions or capabilities to learn which ones are needed. The first level
-  comes next ([plan](docs/pla-b1.md), in Catalan).
+- **The ingredients of the chemistry, next step:** which replicators copy themselves alone, how many there are
+  depending on the share of instructions, and the soup with the chemistries that have them ([plan](docs/pla-b1.md),
+  in Catalan).
 - **World size.**
 - **A changing weather,** with a current that alternates calm and storm.
 
