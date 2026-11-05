@@ -3,9 +3,6 @@
 **Abiogènesi digital:** un univers de joguina on intentem que la vida sorgeixi sola, sense que ningú
 n'escrigui el primer organisme.
 
-*Fins al 30 d'octubre de 2026 es deia claude-origins, el nom que encara surt als registres dels experiments i a les
-auditories.*
-
 **English:** [README.en.md](README.en.md) · **Glossari català–anglès:** [docs/glossari.md](docs/glossari.md)
 
 ![Animació: una colònia de replicadors que neix i creix en un món 2D](docs/imatges/colonia-animada.png)
@@ -295,6 +292,8 @@ Vegeu l'[entrada 15](quadern/index.html#entrada-15).
   - **Què demostra Bitcoin:** que l'etiqueta existia quan es va minar el bloc 974.134 (14:21:50 UTC de
     l'1-11-2026), 75 minuts abans que comencés la primera branca. També es va esperar l'ancoratge abans de llançar.
   - **El que no demostra:** que ningú no va mirar cap resultat. Ho diu l'acta.
+- **El nom d'abans:** fins al 30 d'octubre de 2026, el projecte es deia claude-origins, el nom que encara surt als
+  registres dels experiments i a les auditories.
 - **Com citar-ho:** [`CITATION.cff`](CITATION.cff). **Com participar-hi:** [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Com obrir-ho
@@ -361,7 +360,8 @@ Els noms de les carpetes són històrics. Els registres i les etiquetes els cite
 
 ## Llicència i crèdits
 
-- **Codi:** Apache 2.0 ([`LICENSE`](LICENSE)).
+- **Codi:** GNU AGPL v3 o posterior ([`LICENSE`](LICENSE)). Fins al 5 de novembre de 2026, Apache 2.0. La funció de
+  referència adaptada de cubff conserva l'Apache 2.0 ([`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt)).
 - **Quadern i documentació:** Creative Commons Reconeixement 4.0 ([`LICENSE-docs.md`](LICENSE-docs.md)).
 - **Dades dels experiments:** Creative Commons Reconeixement 4.0 ([`LICENSE-data.md`](LICENSE-data.md)).
 - **Crèdits** ([`NOTICE`](NOTICE)).
