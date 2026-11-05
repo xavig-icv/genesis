@@ -46,3 +46,12 @@ Per veure que els registres s'han fet de debò (auditor 2):
 **L'executor, provat** (03-11-2026, fora del repositori, amb la llavor de prova 777 i 40 programes): una llista bona, la mateixa un
 altre cop (se salten totes), un registre incomplet, una SHA-256 o un commit que no són els de la llista, una línia que no és cap
 ordre del nivell 1 i un registre repetit.
+
+## Després del càlcul (05-11-2026)
+
+- **El càlcul:** les 15 ordres, de les 21.17.36 del 04-11-2026 a les 06.01.57 del 05-11-2026, totes amb el codi 0 (`estat-llista.txt`).
+  Unes 35 min per ordre, i no 17: 8 h 44 min en total, i no 4,2 h.
+- **`execucio-llista.txt`,** a git (`a146177`) abans de mirar cap resultat.
+- **Els registres no són a git:** dos passen de 50 MB (`d-mig-R0`, 53,7 MB, i `d-mig-S1`, 56,2 MB). Són a la còpia neta del càlcul i,
+  comprimits (101 MB), a la còpia de seguretat. Totes dues coincideixen amb les SHA-256 d'`execucio-llista.txt`.
+- **La repetició:** `repeticio/`, amb el seu README.
