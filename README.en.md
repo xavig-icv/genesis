@@ -158,8 +158,8 @@ We tested 10⁷ random programs with the usual chemistry and with twelve variant
 counted how many are heritable replicators ([plan](docs/pla-b1.md), in Catalan). This is the first level: whether
 replicators exist and are abundant, not whether they become established in a soup. Everything is descriptive.
 - **The three controls give zero, as expected:** without copy instructions, without loops or without any copying
-  from one program to the other, no replicator in 10⁷ programs. They were chosen so that there could be none, and a
-  zero does not prove that there can be none. With the usual chemistry, 1,625.
+  from one program to the other, no replicator in 10⁷ programs. They were chosen to block the known ways of
+  replicating, and a zero does not prove that there can be none. With the usual chemistry, 1,625.
 - **A single copy instruction is enough,** with fewer replicators: with `,`, 71% as many as with the usual
   chemistry, and with `.`, 39%.
 - **Some rules get in the way:** without arithmetic, there are twice as many replicators, and if a program cannot
