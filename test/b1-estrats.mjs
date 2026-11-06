@@ -1,0 +1,194 @@
+// Proves de la composició de bytes de B1 (docs/pla-b1.md, §13). Cap no mira cap resultat del càlcul: les llavors són de prova.
+//   - els enters a l'atzar exactes; els programes de cada estrat, amb exactament k instruccions, a posicions uniformes; el sorteig
+//     d'una composició;
+//   - D½ (d-mig) amb companys uniformes fa exactament les sopes del nivell 1, i amb els dos tipus de company, el mateix programa;
+//   - les 22 composicions de git: la captura de cada una, la del manifest del pilot, i els recomptes, coherents;
+//   - la línia d'ordres, el JSONL, els fils i els trossos;
+//   - l'anàlisi: el pla, la validació (i com s'hi nega), ρ(p) i el seu interval.
+// Executa: node test/b1-estrats.mjs
+import assert from 'assert';
+import { spawnSync } from 'child_process';
+import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, readdirSync } from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
+import { fileURLToPath } from 'url';
+import { OPCODES, PROGRAM_SIZE } from '../fase1/bff.js';
+import { makeRng } from '../fase1/soup.js';
+import { soupFor as level1Soup, DISTRIBUTIONS } from '../eines/densitat.mjs';
+import { strataBlocks, strataSize, soupBlocks, LEVEL1, SOUP_PROGRAMS } from '../eines/b1-llavors.mjs';
+import { uniformInt, stratumProgram, compositionDraw, readComposition, parseSource, soupFor, sourceDraw, dMig, testRange, MODULES, SOUP_BYTES } from '../eines/estrats.mjs';
+import { cohort } from '../eines/composicio.mjs';
+import { planRuns, readRun, readFolder, rho, binomialWeight, COMPOSITIONS } from '../eines/estrats-analisi.mjs';
+import { fayFeuer } from '../eines/b1-estadistica.mjs';
+import { fileHashes } from '../eines/b1-comu.mjs';
+import { lists } from '../eines/b1-llistes.mjs';
+import { compare } from '../eines/b1-compara.mjs';
+
+const root = fileURLToPath(new URL('..', import.meta.url));
+const SEED = 777;
+const INSTR = new Set([...OPCODES].map((c) => c.charCodeAt(0)));
+function withTmp(fn) { const tmp = mkdtempSync(join(tmpdir(), 'estrats-')); try { fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
+const tool = (...a) => spawnSync(process.execPath, [join(root, 'eines', 'estrats.mjs'), ...a], { cwd: root, encoding: 'utf8' });
+const lines = (f) => readFileSync(f, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+const clean = (f) => writeFileSync(f, readFileSync(f, 'utf8').replace(/^(\{"type":"start","code":"[0-9a-f]+)\+canvis"/, '$1"'));
+const comp5001 = join(COMPOSITIONS, '5001.json');
+
+const tests = {
+  "els enters a l'atzar són exactes: es rebutgen els valors de l'atzar que en farien un biaix"() {
+    const seq = (vals) => { let i = 0; return () => vals[i++] / 2 ** 32; };
+    // amb m = 10, el límit és 2³² − 6: els sis últims valors es rebutgen
+    assert.strictEqual(uniformInt(seq([2 ** 32 - 1, 2 ** 32 - 6, 13]), 10), 3);
+    assert.strictEqual(uniformInt(seq([2 ** 32 - 7]), 10), (2 ** 32 - 7) % 10);
+    // amb una potència de 2, no se'n rebutja cap
+    assert.strictEqual(uniformInt(seq([2 ** 32 - 1]), 256), 255);
+    const rng = makeRng(SEED, 'v2'), n = new Array(10).fill(0);
+    for (let i = 0; i < 100000; i++) n[uniformInt(rng, 10)]++;
+    assert.ok(n.every((x) => Math.abs(x - 10000) < 500), String(n));
+  },
+  'un programa de l\'estrat k té exactament k instruccions, a posicions uniformes, i els bytes, uniformes dins de cada classe'() {
+    const rng = makeRng(SEED, 'v2');
+    for (let k = 0; k <= 64; k++) for (let r = 0; r < 20; r++) assert.strictEqual(stratumProgram(rng, k).filter((b) => INSTR.has(b)).length, k, `k = ${k}`);
+    const at = new Array(64).fill(0), values = new Map();
+    for (let r = 0; r < 20000; r++) stratumProgram(rng, 8).forEach((b, i) => { if (INSTR.has(b)) at[i]++; values.set(b, (values.get(b) ?? 0) + 1); });
+    // cada posició, amb probabilitat 8/64 = 1/8: 2.500 de 20.000
+    assert.ok(at.every((x) => Math.abs(x - 2500) < 250), String(at));
+    assert.strictEqual(values.size, 256);
+    for (const b of INSTR) assert.ok(Math.abs(values.get(b) - 16000) < 800, `${b}: ${values.get(b)}`);
+  },
+  "el sorteig d'una composició segueix els recomptes"() {
+    const counts = new Array(256).fill(0);
+    counts[0] = 3; counts[46] = 1; counts[200] = 4;
+    const draw = compositionDraw(counts), rng = makeRng(SEED, 'v2'), n = {};
+    for (let i = 0; i < 80000; i++) { const b = draw(rng); n[b] = (n[b] ?? 0) + 1; }
+    assert.deepStrictEqual(Object.keys(n).map(Number).sort((a, b) => a - b), [0, 46, 200]);
+    assert.ok(Math.abs(n[0] - 30000) < 600 && Math.abs(n[46] - 10000) < 400 && Math.abs(n[200] - 40000) < 600, JSON.stringify(n));
+  },
+  'D½ amb companys uniformes fa les sopes del nivell 1; amb els dos tipus de company, el programa és el mateix'() {
+    assert.deepStrictEqual([...Array(2000)].map((_, i) => dMig(makeRng(i, 'v2'))), [...Array(2000)].map((_, i) => DISTRIBUTIONS['d-mig'](makeRng(i, 'v2'))));
+    const dm = parseSource('d-mig');
+    for (const i of [0, 1, 2, 999, 123456]) {
+      assert.deepStrictEqual(soupFor(i, LEVEL1.from, dm, 'uniforme'), level1Soup(i, LEVEL1.from, 'd-mig'), `programa ${i}`);
+      const a = soupFor(i, SEED, dm, 'uniforme'), b = soupFor(i, SEED, dm, 'programa');
+      assert.deepStrictEqual(a.subarray(0, PROGRAM_SIZE), b.subarray(0, PROGRAM_SIZE));
+      assert.notDeepStrictEqual(a.subarray(PROGRAM_SIZE), b.subarray(PROGRAM_SIZE));
+    }
+    const sopa = parseSource(`sopa:${comp5001}`), draw = sourceDraw(sopa, readComposition(comp5001).counts);
+    const a = soupFor(5, SEED, sopa, 'uniforme', draw), b = soupFor(5, SEED, sopa, 'programa', draw);
+    assert.deepStrictEqual(a.subarray(0, PROGRAM_SIZE), b.subarray(0, PROGRAM_SIZE));
+  },
+  'les 22 composicions de git: la captura de cada una és la del manifest del pilot, i els recomptes quadren'() {
+    const worlds = cohort();
+    assert.strictEqual(worlds.length, 22);
+    assert.deepStrictEqual(readdirSync(join(root, COMPOSITIONS)).sort(), worlds.map((w) => `${w.world}.json`).sort());
+    for (const w of worlds) {
+      const c = readComposition(join(root, COMPOSITIONS, `${w.world}.json`));
+      assert.strictEqual(c.world, w.world);
+      assert.strictEqual(c.epoch, 8000);
+      assert.deepStrictEqual(c.capture, w.capture);
+      assert.strictEqual(c.bytes, SOUP_BYTES);
+      assert.strictEqual(c.instructions, c.counts.reduce((s, x, b) => s + (INSTR.has(b) ? x : 0), 0));
+    }
+  },
+  "l'eina: les opcions, el JSONL, i el resultat no depèn dels fils ni dels trossos"() {
+    withTmp((tmp) => {
+      const f = (n) => join(tmp, `${n}.jsonl`), base = ['--company', 'uniforme', '--llavor', String(SEED), '--programes', '120'];
+      assert.strictEqual(tool('--help').status, 0);
+      for (const a of [['--programa', 'estrat:65', ...base, '--json', f('x')], ['--programa', 'estrat:3', ...base.map((v) => (v === 'uniforme' ? 'programa' : v)), '--json', f('x')],
+        ['--programa', 'cust', ...base, '--json', f('x')], ['--programa', 'sopa:no-hi-es.json', ...base, '--json', f('x')], ['--programa', 'd-mig', ...base],
+        ['--programa', 'd-mig', ...base, '--json', f('x'), '--llavor', '1']]) assert.strictEqual(tool(...a).status, 2, a.join(' '));
+      for (const [name, prog, partner] of [['k', 'estrat:20', 'uniforme'], ['s', `sopa:${comp5001}`, 'programa']]) {
+        const b = base.map((v) => (v === 'uniforme' ? partner : v));
+        assert.strictEqual(tool('--programa', prog, ...b, '--tros', '40', '--json', f(`${name}1`)).status, 0);
+        assert.strictEqual(tool('--programa', prog, ...b, '--tros', '40', '--fils', '3', '--json', f(`${name}3`)).status, 0);
+        const x = lines(f(`${name}1`)), y = lines(f(`${name}3`));
+        assert.deepStrictEqual(x.slice(1, -1), y.slice(1, -1));
+        assert.strictEqual(x[x.length - 1].fingerprint, y[y.length - 1].fingerprint);
+        assert.deepStrictEqual(x[0].modules, fileHashes(MODULES));
+        if (name === 's') assert.strictEqual(x[0].composition.sha256, readComposition(comp5001).sha256);
+        clean(f(`${name}1`));
+        assert.deepStrictEqual(readRun(f(`${name}1`), root).problems, []);
+      }
+      const before = readFileSync(f('k1'), 'utf8');
+      assert.strictEqual(tool('--programa', 'estrat:20', ...base, '--json', f('k1')).status, 2);
+      assert.strictEqual(readFileSync(f('k1'), 'utf8'), before);
+      // la repetició (eines/b1-compara.mjs): la mateixa ordre, en un altre fitxer, coincideix; amb una altra llavor, no
+      assert.strictEqual(tool('--programa', 'estrat:20', ...base, '--tros', '40', '--json', f('k1r')).status, 0);
+      clean(f('k1r'));
+      assert.deepStrictEqual(compare(f('k1'), f('k1r')), []);
+      assert.strictEqual(tool('--programa', 'estrat:20', ...base.map((v) => (v === String(SEED) ? '778' : v)), '--tros', '40', '--json', f('k1x')).status, 0);
+      clean(f('k1x'));
+      const diff = compare(f('k1'), f('k1x'));
+      assert.ok(diff.some((p) => /seed/.test(p)) && diff.some((p) => /fingerprint/.test(p)), diff.join('; '));
+      // la mateixa sopa a l'eina i a testRange
+      const r = testRange(0, 120, { seed: SEED, source: parseSource('estrat:20'), partner: 'uniforme' });
+      assert.deepStrictEqual(r.found, lines(f('k1')).filter((o) => o.type === 'replicator'));
+    });
+  },
+  "el pla: els 65 estrats, les 22 sopes amb els dos companys i D½ amb companys de D½, amb les llavors del mapa"() {
+    const plan = planRuns();
+    assert.strictEqual(plan.length, 65 + 44 + 1);
+    assert.strictEqual(new Set(plan.map((p) => p.key)).size, plan.length);
+    plan.filter((p) => p.k !== undefined).forEach((p) => { assert.strictEqual(p.seed, strataBlocks()[p.k].from); assert.strictEqual(p.programs, strataSize(p.k)); });
+    assert.strictEqual(plan.filter((p) => p.k !== undefined && p.programs === 1e7).length, 10);
+    const soups = soupBlocks(22);
+    cohort().forEach((w, s) => { for (const partner of ['uniforme', 'programa']) assert.strictEqual(plan.find((p) => p.key === `sopa:${w.world}:${partner}`).seed, soups[s].from); });
+    assert.ok(plan.filter((p) => p.world).every((p) => p.programs === SOUP_PROGRAMS));
+    const dm = plan.find((p) => p.key === 'd-mig:programa');
+    assert.deepStrictEqual([dm.seed, dm.programs], [LEVEL1.from, 1e6]);
+  },
+  "les llistes d'ordres de git són les que fa eines/b1-llistes.mjs, amb el pla i el mapa de llavors"() {
+    const all = lists();
+    for (const what of ['autonomia', 'caps', 'estrats']) {
+      assert.strictEqual(readFileSync(join(root, 'fase2', 'resultats', 'b1', what, 'llista.txt'), 'utf8').replace(/\r/g, ''), all[what].join('\n') + '\n', what);
+    }
+    assert.deepStrictEqual([all.autonomia.length, all.caps.length, all.estrats.length], [11, 4, 110]);
+    assert.ok([...all.autonomia, ...all.caps, ...all.estrats].every((l) => / --fils 8 --json fase2\/resultats\/b1\/(autonomia|caps|estrats)\/registres\/\S+\.jsonl$/.test(l)));
+  },
+  "l'anàlisi: la validació d'una carpeta, i com s'hi nega"() {
+    withTmp((tmp) => {
+      const dir = join(tmp, 'r');
+      mkdirSync(dir);
+      const plan = [{ key: 'estrat:12', program: 'estrat:12', partner: 'uniforme', seed: SEED, programs: 90, k: 12 }, { key: 'sopa:5001:programa', program: `sopa:${comp5001}`, partner: 'programa', seed: SEED + 1000, programs: 60, world: '5001' }];
+      // l'estrat, en dos trossos
+      assert.strictEqual(tool('--programa', 'estrat:12', '--company', 'uniforme', '--llavor', String(SEED), '--programes', '50', '--json', join(dir, 'a.jsonl')).status, 0);
+      assert.strictEqual(tool('--programa', 'estrat:12', '--company', 'uniforme', '--llavor', String(SEED), '--programes', '40', '--de', '50', '--json', join(dir, 'b.jsonl')).status, 0);
+      assert.strictEqual(tool('--programa', `sopa:${comp5001}`, '--company', 'programa', '--llavor', String(SEED + 1000), '--programes', '60', '--json', join(dir, 'c.jsonl')).status, 0);
+      for (const f of ['a', 'b', 'c']) clean(join(dir, `${f}.jsonl`));
+      const ok = readFolder(dir, { root, plan });
+      assert.deepStrictEqual(ok.problems, []);
+      assert.strictEqual(ok.runs['estrat:12'].n, 90);
+      // amb el pla de veritat: les llavors no hi són, i hi falten tirades
+      const real = readFolder(dir, { root });
+      assert.ok(real.problems.some((p) => /la llavor és/.test(p)) && real.problems.some((p) => /hi falta/.test(p)));
+      // un forat, un replicador canviat, un altre codi
+      rmSync(join(dir, 'b.jsonl'));
+      assert.ok(readFolder(dir, { root, plan }).problems.some((p) => /50 programes, i el pla en preveu 90/.test(p)));
+      const c = join(dir, 'c.jsonl'), text = readFileSync(c, 'utf8');
+      writeFileSync(c, text.replace(/"modules":\{"fase1\/bff.js":"[0-9a-f]{64}"/, `"modules":{"fase1/bff.js":"${'0'.repeat(64)}"`));
+      assert.ok(readFolder(dir, { root, plan }).problems.some((p) => /un altre codi/.test(p)));
+      writeFileSync(c, text.replace(/("composition":\{"world":")5001/, (_, a) => `${a}5002`));
+      assert.ok(readFolder(dir, { root, plan }).problems.some((p) => /la composició no és la de la captura/.test(p)));
+    });
+  },
+  "ρ(p): la suma dels pesos de la binomial pels rₖ, i l'interval de Fay i Feuer"() {
+    // els pesos sumen 1, per a qualsevol p
+    for (const p of [0.01, 10 / 256, 0.3, 0.5, 0.99]) assert.ok(Math.abs([...Array(65)].reduce((s, _, k) => s + binomialWeight(k, p), 0) - 1) < 1e-12);
+    const strata = Array.from({ length: 65 }, (_, k) => ({ n: strataSize(k), x: k === 10 ? 7 : k === 30 ? 160 : 0 }));
+    const p = 0.25, r = rho(strata, p);
+    assert.ok(Math.abs(r.value - (binomialWeight(10, p) * 7 / 1e7 + binomialWeight(30, p) * 160 / 1e6)) < 1e-18);
+    assert.ok(r.ci[0] < r.value && r.value < r.ci[1]);
+    // amb un sol estrat amb hereditaris, i pes 1 (p = 0 o 1 no; p tal que només pesi k = 0): l'interval de Garwood escalat
+    const one = Array.from({ length: 65 }, (_, k) => ({ n: 1e6, x: k === 0 ? 3 : 0 }));
+    const g = fayFeuer([1 / 1e6], [3]);
+    const r0 = rho(one, 1e-9);
+    assert.ok(Math.abs(r0.ci[0] - g.ci[0]) / g.ci[0] < 1e-6 && Math.abs(r0.ci[1] - g.ci[1]) / g.ci[1] < 1e-3, `${r0.ci} ${g.ci}`);
+  },
+};
+
+let failed = 0;
+for (const [name, fn] of Object.entries(tests)) {
+  try { fn(); console.log('  ok  ', name); }
+  catch (e) { failed++; console.log('  FALLA', name, '\n       ', e.message); }
+}
+console.log(failed ? `\n${failed} proves fallades` : '\nTotes les proves han passat');
+process.exit(failed ? 1 : 0);

@@ -27,7 +27,9 @@ const run = (name, t, maxSteps = MAX_STEPS) => evaluator(name)(t, 0, maxSteps);
 function referenceEvaluate(t, maxSteps, chemistry) {
   const nop = chemistry.nop ?? '', block = chemistry.block ?? null;
   const halfOf = (p) => (p < PROGRAM_SIZE ? 0 : 1);
-  const writable = (p, pc) => {
+  // head: el cap de l'escriptura, 'h0' (',', '+' i '-') o 'h1' ('.'). Amb heads, el bloqueig només val per a les d'aquell cap
+  const writable = (p, pc, head) => {
+    if (chemistry.heads && chemistry.heads !== head) return true;
     if (block === 'pc-half') return halfOf(p) !== halfOf(pc);
     if (block === 'other-half') return halfOf(p) === halfOf(pc);
     if (block === 'first') return p >= PROGRAM_SIZE;
@@ -45,10 +47,10 @@ function referenceEvaluate(t, maxSteps, chemistry) {
     else if (c === '>') h0++;
     else if (c === '{') h1--;
     else if (c === '}') h1++;
-    else if (c === '-') { if (writable(h0, pc)) t[h0]--; }
-    else if (c === '+') { if (writable(h0, pc)) t[h0]++; }
-    else if (c === '.') { if (writable(h1, pc) && readable(h0, pc)) t[h1] = t[h0]; }
-    else if (c === ',') { if (writable(h0, pc) && readable(h1, pc)) t[h0] = t[h1]; }
+    else if (c === '-') { if (writable(h0, pc, 'h0')) t[h0]--; }
+    else if (c === '+') { if (writable(h0, pc, 'h0')) t[h0]++; }
+    else if (c === '.') { if (writable(h1, pc, 'h1') && readable(h0, pc)) t[h1] = t[h0]; }
+    else if (c === ',') { if (writable(h0, pc, 'h0') && readable(h1, pc)) t[h0] = t[h1]; }
     else if (c === '[' && t[h0] === 0) {
       let d = 1; pc++;
       for (; pc < TAPE_SIZE; pc++) { if (t[pc] === 91) d++; if (t[pc] === 93 && --d === 0) break; }
@@ -79,7 +81,7 @@ function mixedSoup(program, seed) {
 const tests = {
   'C0 és evaluate, la mateixa funció, i una química desconeguda és un error'() {
     assert.strictEqual(evaluator('C0'), evaluate);
-    assert.deepStrictEqual(NAMES, ['C0', 'K0', 'L0', 'X0', 'K1', 'K2', 'R0', 'S1', 'S2', 'S3', 'S4', 'X1', 'H64']);
+    assert.deepStrictEqual(NAMES, ['C0', 'K0', 'L0', 'X0', 'K1', 'K2', 'R0', 'S1', 'S2', 'S3', 'S4', 'X1', 'H64', 'S1h0', 'S1h1']);
     for (const bad of ['c0', 'K9', 'toString', '__proto__', '']) assert.throws(() => evaluator(bad), /química desconeguda/);
   },
   "les instruccions ablades no fan res, no compten i consumeixen el pas (K0, K1, K2, R0 i L0)"() {
@@ -139,6 +141,45 @@ const tests = {
         const t = tape('}'.repeat(Number(p)) + '.');
         assert.strictEqual(run(name, t), Number(p) + 1, `${name}, ${p}`);
         assert.strictEqual(t[p], changed ? '}'.charCodeAt(0) : '.'.charCodeAt(0), `${name}, ${p}`);
+      }
+    }
+  },
+  "les variants per cap d'S1: S1h0 només bloqueja les escriptures de h0, i S1h1, les de h1 (docs/pla-b1.md, §14)"() {
+    // '+', i ',' (que copia t[h1 = 2], el mateix ',', a t[h0 = 0]): escriptures de h0 a la meitat del punter
+    for (const [code, value] of [['+', 44], ['}},', 44]]) {
+      for (const [name, changed] of [['C0', true], ['S1', false], ['S1h0', false], ['S1h1', true]]) {
+        const t = tape(code);
+        assert.strictEqual(run(name, t), code.length, `${name}, ${code}`);
+        assert.strictEqual(t[0], changed ? value : code.charCodeAt(0), `${name}, ${code}`);
+      }
+    }
+    // '.' a la posició 1 copia t[h0 = 0], el '}', a t[h1 = 1]: una escriptura de h1 a la meitat del punter
+    for (const [name, changed] of [['C0', true], ['S1', false], ['S1h0', true], ['S1h1', false]]) {
+      const t = tape('}.');
+      assert.strictEqual(run(name, t), 2, name);
+      assert.strictEqual(t[1], changed ? '}'.charCodeAt(0) : '.'.charCodeAt(0), name);
+    }
+    // a l'altra meitat, totes quatre hi escriuen, amb h1 ('{.', a la 127) i amb h0 ('<+', a la 127)
+    for (const name of ['C0', 'S1', 'S1h0', 'S1h1']) {
+      let t = tape('{.');
+      run(name, t);
+      assert.strictEqual(t[TAPE_SIZE - 1], '{'.charCodeAt(0), name);
+      t = tape('<+');
+      run(name, t);
+      assert.strictEqual(t[TAPE_SIZE - 1], 2, name);
+    }
+  },
+  "una cinta de bytes que no són instruccions no canvia amb cap química, i no hi compta cap operació (els companys inerts, §4)"() {
+    const ops = new Set([...'<>{}-+.,[]'].map((c) => c.charCodeAt(0)));
+    const inert = Array.from({ length: 256 }, (_, b) => b).filter((b) => !ops.has(b));
+    assert.strictEqual(inert.length, 246);
+    assert.ok(inert.includes(0));
+    for (const name of NAMES) {
+      const rng = createRng(4600 + NAMES.indexOf(name)), ev = evaluator(name);
+      for (let n = 0; n < 10000; n++) {
+        const t = Uint8Array.from({ length: TAPE_SIZE }, () => inert[(rng() * inert.length) | 0]), before = t.slice();
+        assert.strictEqual(ev(t, 0), 0, `${name}, cinta ${n}`);
+        assert.deepStrictEqual(t, before, `${name}, cinta ${n}`);
       }
     }
   },
