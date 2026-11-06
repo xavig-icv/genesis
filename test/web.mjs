@@ -16,6 +16,9 @@ import { CLASS, PALETTE_SIZE } from '../eines/web-dades.mjs';
 import { trace, check, mirrorStep } from '../web/js/cinta.js';
 import { createWorld, step, runHere, runInWorkers, fingerprint, command, CENSUS_EVERY } from '../web/js/viu-motor.js';
 import { createCensus } from '../fase2/census.js';
+import { TAPE, HALF, slot, positionOf, atomFrame, backbone, rungs, mirrored } from '../web/js/helix.js';
+import { classOfByte, frontierPairs, countPairs, pairAt, pickPair } from '../web/js/trobada.js';
+import { pick } from '../eines/tria.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const tool = join(root, 'eines', 'web-dades.mjs');
@@ -185,6 +188,109 @@ const tests = {
       }
     }
   },
+  'el microscopi: la doble hèlix plega la cinta pel mig, i cada parella del mirall comparteix graó': () => {
+    const seen = new Set();
+    for (let p = 0; p < TAPE; p++) {
+      const { strand, j } = slot(p);
+      assert.strictEqual(positionOf(strand, j), p);
+      seen.add(`${strand},${j}`);
+      // la posició i de la primera cel·la i la 127 − i de la segona: el mateix graó, a les dues cadenes
+      const m = slot(TAPE - 1 - p);
+      assert.ok(m.j === j && m.strand !== strand, `la parella del mirall de ${p}`);
+      // els eixos de l'àtom: unitaris i perpendiculars, i y, enfora de l'eix de l'hèlix (l'eix x)
+      const f = atomFrame(p), dot = (u, v) => u[0] * v[0] + u[1] * v[1] + u[2] * v[2];
+      for (const v of [f.x, f.y, f.z]) assert.ok(Math.abs(dot(v, v) - 1) < 1e-9);
+      assert.ok(Math.abs(dot(f.x, f.y)) < 1e-9 && Math.abs(dot(f.x, f.z)) < 1e-9 && Math.abs(dot(f.y, f.z)) < 1e-9);
+      assert.ok(Math.abs(f.y[1] * f.center[2] - f.y[2] * f.center[1]) < 1e-9 && f.y[0] === 0);
+      // x apunta cap on avança la cinta: cap a l'àtom següent
+      const next = atomFrame((p + 1) % TAPE).center, step = next.map((v, k) => v - f.center[k]), d = Math.hypot(...step);
+      if (p !== HALF - 1 && p !== TAPE - 1) { assert.ok(dot(step, f.x) > 0, `${p}`); assert.ok(d > 1.1 && d < 1.6, `la distància de ${p} a ${p + 1}: ${d}`); }
+    }
+    assert.strictEqual(seen.size, TAPE);
+    // l'esquelet és l'anell sencer, amb els dos graons dels extrems (63-64 i 127-0); a dins, els altres 62
+    const ring = backbone();
+    assert.strictEqual(ring.length, TAPE);
+    assert.ok(ring.some(([a, b]) => a === 63 && b === 64) && ring.some(([a, b]) => a === 127 && b === 0));
+    const inner = rungs();
+    assert.strictEqual(inner.length, 62);
+    assert.ok(inner.every(([a, b]) => a + b === TAPE - 1 && slot(a).j === slot(b).j && a > 0 && a < 63));
+    // els bytes al lloc del mirall: la cinta de la portada en té 64 al final, i cap cinta no en té més
+    const html = readFileSync(join(root, 'web/index.html'), 'utf8');
+    const bytes = Uint8Array.from(Buffer.from(html.match(/id="tape" data-bytes="([0-9a-f]{256})"/)[1], 'hex'));
+    assert.strictEqual(mirrored(trace(bytes).final, bytes.slice(0, HALF)), 64);
+    assert.ok(mirrored(bytes, bytes.slice(0, HALF)) < 64);
+  },
+  'el microscopi: les parelles, i la tria, la mateixa que la de la cinta de la portada (eines/tria.mjs)': () => {
+    for (let b = 0; b < 256; b++) assert.strictEqual(classOfByte(b), CLASS[b], `el byte ${b}`);
+    const mon = JSON.parse(readFileSync(join(one, 'mon.json'), 'utf8')), maps = inflateSync(readFileSync(join(one, 'mapes.z')));
+    let tried = 0;
+    mon.fotogrames.forEach((f, i) => f.f.forEach((id, k) => {
+      const fam = maps.subarray(i * 2 * N, i * 2 * N + N), pairs = frontierPairs(fam, 32, 32, k + 1);
+      // cada parella: una cel·la de la família i una veïna sense família, a dues cel·les com a molt, dins del món
+      for (const [c, n] of pairs) {
+        const dx = Math.abs((c % 32) - (n % 32)), dy = Math.abs(Math.floor(c / 32) - Math.floor(n / 32));
+        assert.ok(fam[c] === k + 1 && fam[n] === 0 && Math.max(dx, dy) <= 2 && c !== n);
+      }
+      assert.strictEqual(countPairs(fam, 32, 32, k + 1), pairs.length);
+      if (!pairs.length) return;
+      assert.deepStrictEqual(pairAt(fam, 32, 32, k + 1, pairs.length - 1), pairs.at(-1));
+      for (const seed of [20261030, 7, 1006]) {
+        const r = pickPair(fam, 32, 32, k + 1, seed);
+        assert.deepStrictEqual(r.pair, pick(seed, 1, pairs)[0], `la llavor ${seed}`);
+        tried++;
+      }
+    }));
+    assert.ok(tried > 0, 'el món de prova no té cap parella');
+  },
+  'les trobades del microscopi (eines/web-trobades.mjs): els bytes de les captures, de la classe del codi, i no sobreescriu res': () => {
+    const t = join(root, 'eines', 'web-trobades.mjs'), go = (...a) => spawnSync(process.execPath, [t, ...a], { encoding: 'utf8' });
+    for (const bad of [[one], [one, caps, '--n', '0'], [one, caps, '--llavor', 'x'], [one, caps, '--color', 'blau']]) assert.strictEqual(go(...bad).status, 2, bad.join(' '));
+    const r = go(one, caps, '--n', '5');
+    assert.strictEqual(r.status, 0, r.stderr);
+    const out = JSON.parse(inflateSync(readFileSync(join(one, 'trobades.z'))));
+    const mon = JSON.parse(readFileSync(join(one, 'mon.json'), 'utf8')), maps = inflateSync(readFileSync(join(one, 'mapes.z')));
+    assert.deepStrictEqual(out.llavors, { des: 20261030, n: 5 });
+    const epochs = Object.keys(out.epoques).map(Number);
+    assert.ok(epochs.length > 0 && epochs.every((e) => mon.codiFitxers[e]), 'només les èpoques amb codi');
+    for (const e of epochs) {
+      const i = mon.fotogrames.findIndex((f) => f.e === e), fam = maps.subarray(i * 2 * N, i * 2 * N + N);
+      const classes = inflateSync(readFileSync(join(one, mon.codiFitxers[e].fitxer)));
+      for (const [id, v] of Object.entries(out.epoques[e].families)) {
+        const j = mon.fotogrames[i].f.indexOf(Number(id)) + 1;
+        assert.strictEqual(v.parelles, countPairs(fam, 32, 32, j));
+        v.trobades.forEach(([a, b, hex], s) => {
+          assert.deepStrictEqual([a, b], pickPair(fam, 32, 32, j, 20261030 + s).pair);
+          const bytes = Buffer.from(hex, 'hex');
+          assert.deepStrictEqual(bytes, Buffer.concat([sources[e].subarray(a * 64, a * 64 + 64), sources[e].subarray(b * 64, b * 64 + 64)]));
+          for (let p = 0; p < 128; p++) assert.strictEqual(CLASS[bytes[p]], classes[(p < 64 ? a : b) * 64 + (p % 64)]);
+        });
+      }
+    }
+    // no sobreescriu; i amb una captura canviada, no escriu res
+    const before = readFileSync(join(one, 'trobades.z'));
+    assert.strictEqual(go(one, caps).status, 2);
+    assert.deepStrictEqual(readFileSync(join(one, 'trobades.z')), before);
+    const caps2 = join(tmp, 'captures-canviades');
+    mkdirSync(caps2);
+    for (const [e, buf] of Object.entries(sources)) { const c = Buffer.from(buf); if (e === '100') c[7] ^= 1; writeFileSync(join(caps2, `mon-epoca${e}.bin`), c); }
+    rmSync(join(one, 'trobades.z'));
+    const bad = go(one, caps2);
+    assert.strictEqual(bad.status, 2);
+    assert.match(bad.stderr, /no té la SHA-256 de mon\.json/);
+    assert.ok(!existsSync(join(one, 'trobades.z')));
+  },
+  'el microscopi: la pàgina, amb tots els seus textos en les dues llengües': () => {
+    const html = readFileSync(join(root, 'web/microscopi/index.html'), 'utf8'), js = readFileSync(join(root, 'web/js/microscopi.js'), 'utf8');
+    for (const id of ['view', 'world', 'play', 'time', 'step', 'copied', 'epoch-sel', 'fam-sel', 'seed', 'reseed', 'pair-text', 'pair-result', 'to-explorer', 'legend', 'marks', 'inspector', 'loading', 'error', 'nowebgl', 'help', 'side', 'dock', 'grab', 'sum']) {
+      assert.ok(html.includes(`id="${id}"`), id);
+    }
+    const i18n = readFileSync(join(root, 'web/js/i18n.js'), 'utf8'), at = i18n.indexOf('\n  en: {');
+    const keys = (s) => new Set([...s.matchAll(/'([a-z0-9][\w.-]*)':/gi)].map((m) => m[1]));
+    const ca = keys(i18n.slice(0, at)), en = keys(i18n.slice(at));
+    const used = new Set([...html.matchAll(/data-i18n(?:-content|-html|-title|-aria)?="([^"]+)"/g)].map((m) => m[1]));
+    for (const m of js.matchAll(/\bt\('([\w.-]+)'/g)) used.add(m[1]);
+    for (const k of used) { assert.ok(ca.has(k), `${k}, en català`); assert.ok(en.has(k), `${k}, en anglès`); }
+  },
   'el món en viu fa la mateixa història que sim.mjs, amb un fil o amb tres: els censos i l’empremta': async () => {
     // tres treballadors de mentida, que executen les cintes com fase1/worker.js i responen més tard
     const fake = () => ({ onmessage: null, onerror: null, postMessage(msg) { runPairs(new Uint8Array(msg.buffer), msg.nPairs); setImmediate(() => this.onmessage({ data: { buffer: msg.buffer } })); } });
@@ -287,9 +393,10 @@ const tests = {
     mkdirSync(join(repo, 'web/dades/7/codi'), { recursive: true });
     writeFileSync(join(repo, 'web/dades/7/mon.json'), '{"id":7}');
     writeFileSync(join(repo, 'web/dades/7/codi/1500.z'), 'codi');
+    writeFileSync(join(repo, 'web/dades/7/trobades.z'), 'trobades');
     const sums = spawnSync(process.execPath, [join(root, 'eines', 'lloc-publica.mjs'), '--sumes', '--arrel', repo], { encoding: 'utf8' });
     assert.strictEqual(sums.status, 0, sums.stderr);
-    assert.deepStrictEqual(sums.stdout.trim().split('\n').map((l) => l.split('  ')[1]), ['7/codi/1500.z', '7/mon.json']);
+    assert.deepStrictEqual(sums.stdout.trim().split('\n').map((l) => l.split('  ')[1]), ['7/codi/1500.z', '7/mon.json', '7/trobades.z']);
     writeFileSync(join(repo, 'web/dades/SHA256SUMS'), sums.stdout);
     assert.strictEqual(git('init', '-q').status, 0);
     git('add', 'LICENSE', 'web/index.html', 'quadern/index.html', 'fase1/bff.js', 'fase2/world.js', 'web/dades/7/fitxa.json', 'web/dades/SHA256SUMS');
