@@ -74,6 +74,18 @@ function frame(now) {
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-ui.start();
+// des d'un enllaç (el microscopi, A1 a X-091: cada escena porta a la mateixa vista del Laboratori): ?e=època posa el temps en
+// aquella època, i ?x=..&y=.., la càmera a prop de la cel·la, fixada a l'inspector
+function focusFromUrl() {
+  const q = new URLSearchParams(location.search), w = ui.state.world;
+  if (!w) return;
+  const e = Number(q.get('e')), x = Number(q.get('x')), y = Number(q.get('y'));
+  if (q.has('e') && Number.isFinite(e) && e >= w.epochs[0] && e <= w.epochs.at(-1)) ui.state.time = e;
+  if (q.has('x') && q.has('y') && Number.isInteger(x) && Number.isInteger(y) && x >= 0 && y >= 0 && x < w.W && y < w.H) {
+    camera.flyTo(x + 0.5, y + 0.5, 14);
+    ui.pick([x + 0.5, y + 0.5]);
+  }
+}
+ui.start().then(focusFromUrl);
 // per provar-lo des de la consola del navegador
 window.explorador = { state: ui.state, camera, renderer, get shownCode() { return shown.code; } };
