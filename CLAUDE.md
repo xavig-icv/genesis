@@ -143,6 +143,14 @@ Llegeix-los abans de proposar canvis.
     No hi ha cap botó per plantar replicadors.
   - **La cinta de la portada:** bytes de dues cel·les reals, que s'executen amb `fase1/bff.js`. Es trien i se'n comproven les
     xifres del peu amb `node eines/web-cinta.mjs captura.bin web/dades/1006 3500 20261030` (`web/img/README.md`).
+  - **El microscopi** (`web/microscopi/`, 06-11-2026): dues cel·les veïnes reals d'un món de les sèries, una d'una família i l'altra
+    sense, i la seva trobada pas a pas, amb la cinta de 128 bytes plegada en una doble hèlix (`web/js/helix.js`).
+    - **La parella** la tria `web/js/trobada.js`, amb la llavor de l'adreça i la tria d'`eines/tria.mjs`, com la cinta de la portada:
+      la llavor 20261030, a l'època 3.500 del 1006, en fa la mateixa trobada. L'execució és la de `cinta.js`, comprovada amb
+      l'intèrpret.
+    - **Els bytes** són a `trobades.z` de cada món (`node eines/web-trobades.mjs web/dades/ID carpeta-de-captures`): el codi del lloc
+      només diu la classe de cada byte. La pàgina en comprova la tria amb el mapa, i la classe de cada byte, amb el codi.
+    - **L'explorador** accepta `?e=` i `?x=&y=`: el microscopi hi porta la mateixa cel·la (la regla de l'auditor 1 a X-091).
   - **Els colors** són fitxes de `web/css/estil.css`, amb un tema clar i un de fosc (per defecte, el del sistema); els dibuixos
     les llegeixen amb `web/js/tema.js`. El color és de les dades: la interfície va en tinta. Les dades diuen la posició de
     cada família a la paleta, no el color. Les imatges de `web/img/` diuen d'on surten (`web/img/README.md`), i es tornen a
