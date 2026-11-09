@@ -130,7 +130,8 @@ export async function strataHeritables(file) {
   };
 }
 
-const OPTIONS = {
+// les opcions, també per a les anàlisis, que llegeixen l'ordre de cada registre amb aquest contracte (AU2-143)
+export const OPTIONS = {
   quimica: { type: 'enum', values: Object.keys(CHEMISTRIES) },
   distribucio: { type: 'enum', values: ['d-mig', 'uniforme'] },
   registre: { type: 'str' },

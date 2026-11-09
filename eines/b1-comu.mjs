@@ -36,34 +36,52 @@ export function fileHashes(files, root = ROOT) {
   return Object.fromEntries(files.map((f) => [f, sha256(readFileSync(join(root, f)))]));
 }
 
-// Les opcions: spec[nom] = { type: 'int'|'num'|'enum'|'str', min, max, values, required, default }. Els errors surten amb el codi 2
-export function parseOptions(argv, spec, usage) {
-  const fail = (m) => { console.error(`Error: ${m}\nFes servir --help per veure les opcions.`); process.exit(2); };
+// Les opcions: spec[nom] = { type: 'int'|'num'|'enum'|'str', min, max, values, required, default }. readOptions les llegeix i les
+// valida estrictament: { opts }, { help: true } si demanen l'ajuda, o { error }. parseOptions, a la línia d'ordres, surt amb el codi 2 si
+// hi ha cap error. Les anàlisis llegeixen l'ordre de cada registre amb el mateix contracte que l'eina (commandOptions, AU2-143)
+const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+export function readOptions(argv, spec) {
   const opts = {};
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
-    if (a === '--help') { console.log(usage); process.exit(0); }
-    if (!a.startsWith('--')) fail(`argument inesperat: ${a}`);
-    const name = a.slice(2), s = spec[name];
-    if (!s) fail(`opció desconeguda: ${a}`);
-    if (name in opts) fail(`opció repetida: ${a}`);
+    if (a === '--help') return { help: true };
+    if (!a.startsWith('--')) return { error: `argument inesperat: ${a}` };
+    const name = a.slice(2), s = own(spec, name) ? spec[name] : null;
+    if (!s) return { error: `opció desconeguda: ${a}` };
+    if (own(opts, name)) return { error: `opció repetida: ${a}` };
     const v = argv[++i];
-    if (v === undefined || v.startsWith('--')) fail(`${a} necessita un valor`);
+    if (v === undefined || v.startsWith('--')) return { error: `${a} necessita un valor` };
     if (s.type === 'int') {
-      if (!/^\d+$/.test(v) || Number(v) < s.min || Number(v) > s.max) fail(`${a} ha de ser un enter de ${s.min} a ${s.max}: ${v}`);
+      if (!/^\d+$/.test(v) || Number(v) < s.min || Number(v) > s.max) return { error: `${a} ha de ser un enter de ${s.min} a ${s.max}: ${v}` };
       opts[name] = Number(v);
     } else if (s.type === 'enum') {
-      if (!s.values.includes(v)) fail(`${a} ha de ser ${s.values.join(', ')}: ${v}`);
+      if (!s.values.includes(v)) return { error: `${a} ha de ser ${s.values.join(', ')}: ${v}` };
       opts[name] = v;
     } else opts[name] = v;
   }
   for (const [name, s] of Object.entries(spec)) {
-    if (name in opts) continue;
-    if (s.required) fail(`falta --${name}`);
+    if (own(opts, name)) continue;
+    if (s.required) return { error: `falta --${name}` };
     opts[name] = s.default;
   }
-  return opts;
+  return { opts };
 }
+export function parseOptions(argv, spec, usage) {
+  const r = readOptions(argv, spec);
+  if (r.help) { console.log(usage); process.exit(0); }
+  if (r.error) { console.error(`Error: ${r.error}\nFes servir --help per veure les opcions.`); process.exit(2); }
+  return r.opts;
+}
+// L'ordre d'un registre (command, a la línia d'inici), sencera, llegida amb el contracte d'opcions de l'eina (AU2-143, auditoria 29):
+// { opts } o { error }. Les eines l'escriuen com a `node TOOL` i les opcions separades per un espai: cap no en porta cap
+export function commandOptions(command, tool, spec) {
+  const prefix = `node ${tool} `;
+  if (typeof command !== 'string' || !command.startsWith(prefix)) return { error: `no és una ordre de ${tool}` };
+  const r = readOptions(command.slice(prefix.length).split(' '), spec);
+  return r.help ? { error: "l'ordre demana l'ajuda" } : r;
+}
+// El nom d'un fitxer, sense la carpeta (amb / o \)
+export const baseName = (p) => String(p).split(/[\\/]/).pop();
 
 // L'extracte dels hereditaris del nivell 1: per a cada registre, la línia d'inici, les dels hereditaris i la final. Si la SHA-256
 // del contingut no és la de l'extracte, es nega

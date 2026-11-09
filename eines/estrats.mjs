@@ -154,7 +154,8 @@ export function testRange(from, to, { seed, source, partner, counts }) {
   }
   return { from, to, counts: tally, found };
 }
-const OPTIONS = {
+// les opcions, també per a l'anàlisi, que llegeix l'ordre de cada registre amb aquest contracte (AU2-143)
+export const OPTIONS = {
   programa: { type: 'str', required: true },
   company: { type: 'enum', values: ['uniforme', 'programa'], required: true },
   llavor: { type: 'int', min: 0, max: 2 ** 32 - 1, required: true },

@@ -5,7 +5,8 @@
 //   node eines/autonomia-analisi.mjs carpeta
 //
 // La validació (si hi ha cap problema, els llista i no analitza res):
-//   - cada fitxer, sencer, amb l'empremta; la línia d'inici, la de l'eina, amb l'ordre que diu el mateix que els camps;
+//   - cada fitxer, sencer, amb l'empremta; la línia d'inici, la de l'eina, amb l'ordre, llegida sencera amb el contracte d'opcions de
+//     l'eina, que diu el mateix que els camps i que escriu aquest fitxer (AU2-143);
 //   - tots del mateix commit, sense "+canvis", i amb la SHA-256 dels mòduls igual que la dels d'aquesta còpia;
 //   - el pla sencer, ni més ni menys (PLAN): les químiques i les distribucions, la llavor, les 100 condicions, els 8 companys, la
 //     prova, l'extracte, i els companys de cada condició, inerts;
@@ -25,9 +26,9 @@ import { join } from 'path';
 import { pathToFileURL } from 'url';
 import { OPCODES } from '../fase1/bff.js';
 import { AUTONOMY } from './b1-llavors.mjs';
-import { EXTRACT_SHA256, fileHashes, readExtract, extractRecord, readJsonl } from './b1-comu.mjs';
+import { EXTRACT_SHA256, fileHashes, readExtract, extractRecord, readJsonl, commandOptions, baseName } from './b1-comu.mjs';
 import { clopperPearsonBeta } from './b1-estadistica.mjs';
-import { MODULES, TEST, PARTNERS, CONDITIONS } from './autonomia.mjs';
+import { MODULES, TEST, PARTNERS, CONDITIONS, OPTIONS } from './autonomia.mjs';
 
 export const PLAN = Object.freeze({
   seed: AUTONOMY.from, conditions: CONDITIONS, partners: PARTNERS, test: TEST, extract: EXTRACT_SHA256,
@@ -55,9 +56,11 @@ export function readFolder(dir, { plan = PLAN, modules = fileHashes(MODULES), ex
     problems.push(...r.problems);
     if (r.problems.length) continue;
     const { name, start: s, lines, end } = r, C = plan.conditions;
-    const arg = (k) => { const m = new RegExp(`(?:^| )--${k} (\\S+)`).exec(s.command ?? ''); return m ? m[1] : undefined; };
-    if (!/^node eines\/autonomia\.mjs /.test(s.command ?? '') || arg('quimica') !== s.chemistry || arg('distribucio') !== s.distribution ||
-        Number(arg('llavor')) !== s.seed || Number(arg('condicions') ?? CONDITIONS) !== s.conditions) problems.push(`${name}: l'ordre no diu el mateix que els camps de la línia d'inici`);
+    // l'ordre, sencera, amb el contracte d'opcions de l'eina: el mateix que els camps de la línia d'inici, sense --registre, i el JSONL,
+    // aquest fitxer (AU2-143)
+    const { opts: o, error } = commandOptions(s.command, 'eines/autonomia.mjs', OPTIONS);
+    if (error || o.registre !== undefined || o.quimica !== s.chemistry || o.distribucio !== s.distribution || o.llavor !== s.seed ||
+        o.condicions !== s.conditions || baseName(o.json) !== name) problems.push(`${name}: l'ordre no diu el mateix que els camps de la línia d'inici, o no és la d'aquest fitxer${error ? ` (${error})` : ''}`);
     if (!plan.runs[s.distribution]?.includes(s.chemistry)) { problems.push(`${name}: ${s.chemistry} amb ${s.distribution} no és del pla`); continue; }
     if ((runs[s.distribution] ??= {})[s.chemistry]) { problems.push(`${name}: ${s.chemistry} amb ${s.distribution}, repetit`); continue; }
     if (s.seed !== plan.seed || s.conditions !== C || s.partners !== plan.partners || s.test !== plan.test || s.extractSha256 !== plan.extract) problems.push(`${name}: la llavor, les condicions, els companys, la prova o l'extracte no són els del pla`);

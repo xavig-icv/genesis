@@ -11,7 +11,9 @@
 // Les tres carpetes:
 //  - carpeta-estrats: els registres de la §13 (eines/estrats.mjs), validats com a eines/estrats-analisi.mjs: el pla sencer;
 //  - carpeta-autonomia-estrats: els d'eines/autonomia.mjs --registre, un per cada registre de la §13. Es validen: cada fitxer sencer,
-//    amb l'empremta; l'ordre, la de l'eina, amb --registre; la química (C0), la llavor, les condicions, els companys, la prova i la
+//    amb l'empremta; l'ordre, llegida sencera amb el contracte d'opcions de l'eina, amb --registre i sense --quimica, --distribucio ni
+//    --extracte, amb el registre, la llavor i les condicions de la línia d'inici, i aquest fitxer (AU2-143); la química (C0), la llavor,
+//    les condicions, els companys, la prova i la
 //    comprovació dels companys inerts, les de la §4; tots del mateix commit, sense canvis, i amb els mòduls d'aquesta còpia; cada
 //    registre de la §13, amb un sol registre d'autonomia, que en porta el nom, la SHA-256 i l'empremta; i els replicadors, els
 //    hereditaris del registre de la §13, tots i en ordre, amb els mateixos bytes, i cada cadena, de 100 caràcters 0 o 1, coherent;
@@ -34,9 +36,9 @@ import { readdirSync } from 'fs';
 import { join } from 'path';
 import { pathToFileURL } from 'url';
 import { AUTONOMY } from './b1-llavors.mjs';
-import { fileHashes, readJsonl } from './b1-comu.mjs';
+import { fileHashes, readJsonl, commandOptions, baseName } from './b1-comu.mjs';
 import { clopperPearsonBeta } from './b1-estadistica.mjs';
-import { MODULES_STRATA, TEST, PARTNERS, CONDITIONS } from './autonomia.mjs';
+import { MODULES_STRATA, TEST, PARTNERS, CONDITIONS, OPTIONS } from './autonomia.mjs';
 import { readFolder as readAutonomyFolder, countsOf } from './autonomia-analisi.mjs';
 import { readFolder as readStrataFolder, planRuns, rho, GRID, COMPOSITIONS } from './estrats-analisi.mjs';
 import { readComposition } from './estrats.mjs';
@@ -61,8 +63,13 @@ export function readStrataAutonomy(dir, strata, { plan = planRuns(), modules = f
     problems.push(...r.problems);
     if (r.problems.length) continue;
     const { name, start: s, lines, end } = r;
-    const m = /^node eines\/autonomia\.mjs --registre (\S+) /.exec(s.command ?? '');
-    if (!m || m[1].split(/[\\/]/).pop() !== s.source?.file) problems.push(`${name}: l'ordre no és la d'eines/autonomia.mjs amb --registre, o no diu el mateix registre que la línia d'inici`);
+    // l'ordre, sencera, amb el contracte d'opcions de l'eina (AU2-143): abans només se'n mirava el registre, i una ordre amb una altra
+    // llavor i unes altres condicions que les de la línia d'inici hi passava
+    const { opts: o, error } = commandOptions(s.command, 'eines/autonomia.mjs', OPTIONS);
+    if (error || o.registre === undefined || baseName(o.registre) !== s.source?.file || o.quimica !== undefined || o.distribucio !== undefined ||
+        o.extracte !== undefined || o.llavor !== s.seed || o.condicions !== s.conditions || baseName(o.json) !== name) {
+      problems.push(`${name}: l'ordre no és la d'eines/autonomia.mjs amb --registre, o no diu el mateix que la línia d'inici (el registre, la llavor, les condicions o aquest fitxer)${error ? ` (${error})` : ''}`);
+    }
     if (s.chemistry !== 'C0' || s.seed !== seed || s.conditions !== C || s.partners !== PARTNERS || s.test !== TEST) problems.push(`${name}: la química, la llavor, les condicions, els companys o la prova no són els del pla`);
     if (s.inertCheck?.active !== 0 || s.inertCheck?.pairs !== C * PARTNERS * (PARTNERS - 1)) problems.push(`${name}: la comprovació dels companys inerts no és la de tots, o en va trobar d'actius`);
     if (code === null) code = s.code;

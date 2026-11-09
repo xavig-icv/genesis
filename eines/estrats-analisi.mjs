@@ -31,10 +31,10 @@ import { join, resolve } from 'path';
 import { pathToFileURL } from 'url';
 import { PROGRAM_SIZE } from '../fase1/bff.js';
 import { LEVEL1, strataBlocks, strataSize, soupBlocks, SOUP_PROGRAMS } from './b1-llavors.mjs';
-import { fileHashes, readExtract, extractRecord, readJsonl, sha256 } from './b1-comu.mjs';
+import { fileHashes, readExtract, extractRecord, readJsonl, sha256, commandOptions, baseName } from './b1-comu.mjs';
 import { clopperPearsonBeta, fayFeuer } from './b1-estadistica.mjs';
 import { ratio } from './densitat-analisi.mjs';
-import { MODULES, TEST, NOISE, parseSource, readComposition, checkRecordComposition, soupFor, sourceDraw } from './estrats.mjs';
+import { MODULES, TEST, NOISE, OPTIONS, parseSource, readComposition, checkRecordComposition, soupFor, sourceDraw } from './estrats.mjs';
 import { cohort, MANIFEST } from './composicio.mjs';
 
 
@@ -58,9 +58,10 @@ export function readRun(file, root) {
   const r = readJsonl(file), { name } = r;
   if (r.problems.length && !r.start) return r;
   const problems = [...r.problems], { start: s, lines, end } = r;
-  const arg = (k, d) => { const m = new RegExp(`(?:^| )--${k} (\\S+)`).exec(s.command ?? ''); return m ? m[1] : d; };
-  if (!/^node eines\/estrats\.mjs /.test(s.command ?? '') || arg('programa') !== s.program || arg('company') !== s.partner || Number(arg('llavor')) !== s.seed ||
-      Number(arg('programes')) !== s.programs || Number(arg('de', '0')) !== s.from) problems.push(`${name}: l'ordre no diu el mateix que els camps de la línia d'inici`);
+  // l'ordre, sencera, amb el contracte d'opcions de l'eina: el mateix que els camps de la línia d'inici, i el JSONL, aquest fitxer (AU2-143)
+  const { opts: o, error } = commandOptions(s.command, 'eines/estrats.mjs', OPTIONS);
+  if (error || o.programa !== s.program || o.company !== s.partner || o.llavor !== s.seed || o.programes !== s.programs || o.de !== s.from ||
+      o.tros !== s.chunk || baseName(o.json) !== name) problems.push(`${name}: l'ordre no diu el mateix que els camps de la línia d'inici, o no és la d'aquest fitxer${error ? ` (${error})` : ''}`);
   if (s.test !== TEST || s.chemistry !== 'C0' || s.noise !== NOISE) problems.push(`${name}: la prova no és la de la §13`);
   // la font dels programes; si no es pot fer, els bytes dels replicadors no es comproven (el problema ja hi és)
   let source = null, draw = null;

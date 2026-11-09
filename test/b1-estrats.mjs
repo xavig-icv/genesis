@@ -277,6 +277,12 @@ const tests = {
       assert.ok(readFolder(dir, { root, plan }).problems.some((p) => /un altre codi/.test(p)));
       writeFileSync(c, text.replace(/("composition":\{"world":")5001/, (_, a) => `${a}5002`));
       assert.ok(readFolder(dir, { root, plan }).problems.some((p) => /la composició no és la de la captura/.test(p)));
+      // l'ordre, sencera (AU2-143): un altre tros que el de la línia d'inici, un altre fitxer, i una opció que l'eina no té
+      for (const [from, to, re] of [['--programes 60 ', '--programes 60 --tros 7 ', /l'ordre no diu el mateix/], ['c.jsonl"', 'd.jsonl"', /l'ordre no diu el mateix/],
+        ['--programes 60 ', '--programes 60 --color blau ', /opció desconeguda: --color/]]) {
+        writeFileSync(c, text.replace(from, to));
+        assert.ok(readFolder(dir, { root, plan }).problems.some((p) => re.test(p)), `${from} -> ${to}`);
+      }
     });
   },
   "ρ(p): la suma dels pesos de la binomial pels rₖ, i l'interval de Fay i Feuer"() {

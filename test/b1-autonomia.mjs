@@ -22,7 +22,7 @@ import { soupFor } from '../eines/densitat.mjs';
 import { clopperPearson } from '../eines/densitat-analisi.mjs';
 import { GOLDEN, LEVEL1, AUTONOMY, seedMap, checkSeedMap, strataBlocks } from '../eines/b1-llavors.mjs';
 import { clopperPearsonBeta, fayFeuer, gammaP, betaI } from '../eines/b1-estadistica.mjs';
-import { readExtract, extractRecord, fileHashes, sha256, runJobs, EXTRACT_SHA256 } from '../eines/b1-comu.mjs';
+import { readExtract, extractRecord, fileHashes, sha256, runJobs, commandOptions, EXTRACT_SHA256 } from '../eines/b1-comu.mjs';
 import { INERT, inertProgram, conditions, checkInert, testReplicator, MODULES, MODULES_STRATA, PARTNERS } from '../eines/autonomia.mjs';
 import { readFolder, analyse, countsOf, FIGURES, PLAN } from '../eines/autonomia-analisi.mjs';
 import { readHeads, analyse as analyseHeads } from '../eines/caps-analisi.mjs';
@@ -230,9 +230,26 @@ const tests = {
       tamper((t) => t.replace(/("index":3406,"bytes":")(..)/, '$1ff'), /empremta/);
       tamper((t) => t.replace(/"code":"[0-9a-f]+"/, '"code":"abc1234+canvis"'), /el codi és/);
       tamper((t) => t.replace(/"eines\/estrats.mjs":"[0-9a-f]{64}"/, `"eines/estrats.mjs":"${'0'.repeat(64)}"`), /un altre codi/);
+      // l'ordre, sencera (AU2-143): el contraexemple de l'auditor 2 (una altra llavor i unes altres condicions que les de la línia
+      // d'inici; abans hi passava), un altre fitxer, una opció de la §4 i una opció repetida
+      const order = /l'ordre no és la d'eines\/autonomia\.mjs amb --registre, o no diu el mateix que la línia d'inici/;
+      tamper((t) => t.replace(' --llavor 777 --condicions 2 ', ' --llavor 1 --condicions 1 '), order);
+      tamper((t) => t.replace(/(--json [^"]*)d-mig-uniforme\.jsonl"/, '$1altre.jsonl"'), order);
+      tamper((t) => t.replace(' --fils 2 ', ' --quimica C0 '), order);
+      tamper((t) => t.replace(' --fils 2 ', ' --llavor 777 '), /opció repetida: --llavor/);
       rmSync(out);
       assert.ok(readStrataAutonomy(testedDir, strata.runs, opts).problems.some((p) => /cap JSONL/.test(p)));
     });
+  },
+  "AU2-143: commandOptions llegeix l'ordre d'un registre sencera, amb el contracte de la línia d'ordres de l'eina"() {
+    const spec = { a: { type: 'int', min: 0, max: 9, required: true }, b: { type: 'enum', values: ['x', 'y'], default: 'x' }, c: { type: 'str' } };
+    assert.deepStrictEqual(commandOptions('node eines/t.mjs --a 3 --c z', 'eines/t.mjs', spec), { opts: { a: 3, b: 'x', c: 'z' } });
+    for (const [cmd, re] of [['node eines/u.mjs --a 3 --c z', /no és una ordre de eines\/t\.mjs/], [undefined, /no és una ordre/], ['node eines/t.mjs --a 3 --a 4', /opció repetida: --a/],
+      ['node eines/t.mjs --a 3 --d 1', /opció desconeguda: --d/], ['node eines/t.mjs --a 3 --constructor 1', /opció desconeguda: --constructor/], ['node eines/t.mjs --b x', /falta --a/],
+      ['node eines/t.mjs --a 10', /--a ha de ser un enter de 0 a 9/], ['node eines/t.mjs --a 3 --b z', /--b ha de ser x, y/], ['node eines/t.mjs --a 3  --c z', /argument inesperat/],
+      ['node eines/t.mjs --a 3 --c', /--c necessita un valor/], ['node eines/t.mjs --a 3 --help', /l'ordre demana l'ajuda/]]) {
+      assert.match(commandOptions(cmd, 'eines/t.mjs', spec).error ?? '(cap error)', re, String(cmd));
+    }
   },
   async "AUD-179: un registre de la §13 sense cap hereditari: amb 8 fils, l'eina el fa sencer, amb 0 replicadors, i la validació l'accepta"() {
     // runJobs sense cap feina, amb 8 fils: acaba de seguida, sense crear cap fil ni cridar res
@@ -352,6 +369,11 @@ const tests = {
       tamper((l) => { const o = JSON.parse(l[0]); o.modules['fase2/replication.js'] = '0'.repeat(64); l[0] = JSON.stringify(o); return l; }, /un altre codi/);
       tamper((l) => { const o = JSON.parse(l[0]); o.inertCheck.active = 1; l[0] = JSON.stringify(o); return l; }, /inerts/);
       tamper((l) => l.slice(0, -1), /no és sencer/);
+      // l'ordre, sencera (AU2-143): una altra llavor, un altre fitxer, i una opció que l'eina no té
+      const cmd = (f) => (l) => { const o = JSON.parse(l[0]); o.command = f(o.command); l[0] = JSON.stringify(o); return l; };
+      tamper(cmd((c) => c.replace('--llavor 777', '--llavor 1')), /l'ordre no diu el mateix/);
+      tamper(cmd((c) => c.replace(/s4\.jsonl$/, 'altre.jsonl')), /l'ordre no diu el mateix/);
+      tamper(cmd((c) => `${c} --color blau`), /opció desconeguda: --color/);
       // un registre de més, o un que hi falta
       copyFileSync(join(dir, 's4.jsonl'), join(dir, 's4-bis.jsonl'));
       assert.ok(readFolder(dir, { plan }).problems.some((p) => /repetit/.test(p)));
