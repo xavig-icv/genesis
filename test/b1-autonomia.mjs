@@ -6,14 +6,15 @@
 //   - l'estadística: Clopper-Pearson amb la beta, igual que el del nivell 1; Fay i Feuer amb un estrat, l'interval de Garwood;
 //   - l'eina de l'autonomia: els companys inerts, les condicions, els controls (positius i negatius), la línia d'ordres, el JSONL;
 //   - l'anàlisi de l'autonomia: les quatre xifres, la validació i cada manera com s'hi ha de negar;
-//   - l'anàlisi de les variants per cap: la comparació amb el nivell 1, que s'hi nega si C0 o S1 no hi coincideixen.
+//   - l'anàlisi de les variants per cap: la comparació amb el nivell 1, que s'hi nega si C0 o S1 no hi coincideixen;
+//   - les feines en fils (runJobs): sense cap feina, i amb un fil que s'atura abans d'hora (AUD-179).
 // Executa: node test/b1-autonomia.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
 import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, copyFileSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { evaluator, CHEMISTRIES, PROGRAM_SIZE, OPCODES } from '../fase1/bff.js';
 import { makeRng } from '../fase1/soup.js';
 import { replicationTest } from '../fase2/replication.js';
@@ -21,7 +22,7 @@ import { soupFor } from '../eines/densitat.mjs';
 import { clopperPearson } from '../eines/densitat-analisi.mjs';
 import { GOLDEN, LEVEL1, AUTONOMY, seedMap, checkSeedMap, strataBlocks } from '../eines/b1-llavors.mjs';
 import { clopperPearsonBeta, fayFeuer, gammaP, betaI } from '../eines/b1-estadistica.mjs';
-import { readExtract, extractRecord, fileHashes, sha256, EXTRACT_SHA256 } from '../eines/b1-comu.mjs';
+import { readExtract, extractRecord, fileHashes, sha256, runJobs, EXTRACT_SHA256 } from '../eines/b1-comu.mjs';
 import { INERT, inertProgram, conditions, checkInert, testReplicator, MODULES, MODULES_STRATA, PARTNERS } from '../eines/autonomia.mjs';
 import { readFolder, analyse, countsOf, FIGURES, PLAN } from '../eines/autonomia-analisi.mjs';
 import { readHeads, analyse as analyseHeads } from '../eines/caps-analisi.mjs';
@@ -31,6 +32,13 @@ import { readStrataAutonomy, checkAgainstLevel1, analyse as analyseStrataAutonom
 const root = fileURLToPath(new URL('..', import.meta.url));
 const SEED = 777;
 function withTmp(fn) { const tmp = mkdtempSync(join(tmpdir(), 'autonomia-')); try { fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
+async function withTmpAsync(fn) { const tmp = mkdtempSync(join(tmpdir(), 'autonomia-')); try { await fn(tmp); } finally { rmSync(tmp, { recursive: true, force: true }); } }
+// Una promesa que ha d'acabar: si no acaba, la prova falla i ho diu, en lloc de deixar el procés sense res pendent (AUD-179)
+async function within(ms, p, what) {
+  let t;
+  try { return await Promise.race([p, new Promise((_, reject) => { t = setTimeout(() => reject(new Error(`${what}: no acaba`)), ms); })]); }
+  finally { clearTimeout(t); }
+}
 const run = (tool, ...a) => spawnSync(process.execPath, [join(root, 'eines', tool), ...a], { cwd: root, encoding: 'utf8' });
 const lines = (f) => readFileSync(f, 'utf8').trim().split('\n').map((l) => JSON.parse(l));
 // Les proves també corren en una còpia amb canvis: el codi de la línia d'inici, sense "+canvis" (no és a l'empremta)
@@ -226,6 +234,42 @@ const tests = {
       assert.ok(readStrataAutonomy(testedDir, strata.runs, opts).problems.some((p) => /cap JSONL/.test(p)));
     });
   },
+  async "AUD-179: un registre de la §13 sense cap hereditari: amb 8 fils, l'eina el fa sencer, amb 0 replicadors, i la validació l'accepta"() {
+    // runJobs sense cap feina, amb 8 fils: acaba de seguida, sense crear cap fil ni cridar res
+    let calls = 0;
+    await within(10000, runJobs([], { threads: 8, compute: () => { calls++; }, workerUrl: new URL('../eines/autonomia.mjs', import.meta.url), data: null, onDone: () => { calls++; } }), 'runJobs sense cap feina');
+    assert.strictEqual(calls, 0);
+    // un fil que s'atura abans d'hora, sense cap error: s'hi nega, en lloc de no acabar mai
+    await withTmpAsync(async (tmp) => {
+      const w = join(tmp, 'fil.mjs');
+      writeFileSync(w, "import { parentPort } from 'worker_threads';\nparentPort.on('message', () => process.exit(3));\n");
+      const p = runJobs([[1], [2], [3]], { threads: 2, compute: null, workerUrl: pathToFileURL(w), data: null, onDone: () => {} });
+      await assert.rejects(within(10000, p, 'runJobs amb un fil que s\'atura'), /s'ha aturat abans d'acabar les seves feines \(codi 3\)/);
+    });
+    withTmp((tmp) => {
+      const strataDir = join(tmp, 'estrats'), testedDir = join(tmp, 'autonomia');
+      mkdirSync(strataDir); mkdirSync(testedDir);
+      // l'estrat 0: cap byte d'instrucció, i cap replicador. Com a la llista de la §13, el mateix nom a les dues carpetes
+      const rec = join(strataDir, 'estrat-00.jsonl'), out = join(testedDir, 'estrat-00.jsonl');
+      let r = run('estrats.mjs', '--programa', 'estrat:0', '--company', 'uniforme', '--llavor', String(SEED), '--programes', '20', '--tros', '10', '--json', rec);
+      assert.strictEqual(r.status, 0, r.stderr);
+      clean(rec);
+      assert.strictEqual(lines(rec).pop().heritable, 0);
+      // amb 8 fils, com a la llista: abans de l'AUD-179, sortia amb el codi 0 i només la línia d'inici
+      r = run('autonomia.mjs', '--registre', rec, '--llavor', String(SEED), '--condicions', '2', '--fils', '8', '--json', out);
+      assert.strictEqual(r.status, 0, r.stderr);
+      clean(out);
+      const ls = lines(out);
+      assert.deepStrictEqual(ls.map((o) => o.type), ['start', 'end'], "la línia d'inici i la final, i cap replicador");
+      assert.deepStrictEqual([ls[0].replicators, ls[1].replicators, ls[1].fingerprint], [0, 0, sha256('')]);
+      const plan = [{ key: 'estrat:0', program: 'estrat:0', partner: 'uniforme', seed: SEED, programs: 20, k: 0 }];
+      const strata = readStrataFolder(strataDir, { root, plan });
+      assert.deepStrictEqual(strata.problems, []);
+      const ok = readStrataAutonomy(testedDir, strata.runs, { plan, seed: SEED, conditions: 2 });
+      assert.deepStrictEqual(ok.problems, []);
+      assert.deepStrictEqual(ok.tested['estrat:0'], []);
+    });
+  },
   "AUD-175: l'anàlisi de ρ_aut, amb dades sintètiques: la corba, m_aut, els grups de k, les sopes i D½ amb companys de D½"() {
     const n = (k) => '1'.repeat(k) + '0'.repeat(100 - k);
     const rep = (index, k) => ({ index, bytes: '00'.repeat(64), solo: n(k), context: n(0), heritableSolo: n(k), heritableContext: n(0) });
@@ -339,7 +383,7 @@ const tests = {
 
 let failed = 0;
 for (const [name, fn] of Object.entries(tests)) {
-  try { fn(); console.log('  ok  ', name); }
+  try { await fn(); console.log('  ok  ', name); }
   catch (e) { failed++; console.log('  FALLA', name, '\n       ', e.message); }
 }
 console.log(failed ? `\n${failed} proves fallades` : '\nTotes les proves han passat');

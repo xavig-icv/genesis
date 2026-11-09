@@ -90,17 +90,20 @@ export function extractRecord(records, chemistry, distribution) {
 }
 
 // Les feines, en fils: compute(job) a cada fil (el fitxer de l'eina, workerUrl, amb serveJobs), o aquí si threads és 1. onDone rep
-// els resultats en l'ordre de les feines
+// els resultats en l'ordre de les feines. Sempre acaba amb totes les feines fetes, o amb un error (AUD-179, auditoria 29): sense cap
+// feina, no crea cap fil, i acaba de seguida (abans, la promesa no es resolia mai, i l'eina sortia amb el codi 0 sense escriure la línia
+// final); i si un fil s'atura abans d'hora sense cap error, s'hi nega
 export async function runJobs(jobs, { threads, compute, workerUrl, data, onDone }) {
   const done = new Map();
   let next = 0;
   const flush = () => { while (done.has(next)) { const r = done.get(next); done.delete(next); onDone(r, next); next++; } };
-  if (threads === 1) jobs.forEach((job, k) => { done.set(k, compute(job, data)); flush(); });
+  if (threads === 1 || jobs.length === 0) jobs.forEach((job, k) => { done.set(k, compute(job, data)); flush(); });
   else {
     await new Promise((resolve, reject) => {
       let given = 0, running = 0;
+      const ended = new Set();
       const give = (w) => {
-        if (given >= jobs.length) { w.terminate(); if (--running === 0) resolve(); return; }
+        if (given >= jobs.length) { ended.add(w); w.terminate(); if (--running === 0) resolve(); return; }
         const k = given++;
         w.postMessage({ k, job: jobs[k] });
       };
@@ -109,6 +112,7 @@ export async function runJobs(jobs, { threads, compute, workerUrl, data, onDone 
         running++;
         w.on('message', ({ k, r }) => { done.set(k, r); flush(); give(w); });
         w.on('error', reject);
+        w.on('exit', (code) => { if (!ended.has(w)) reject(new Error(`un fil s'ha aturat abans d'acabar les seves feines (codi ${code})`)); });
         give(w);
       }
     });

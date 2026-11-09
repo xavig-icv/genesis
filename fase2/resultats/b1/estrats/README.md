@@ -28,10 +28,14 @@ pilot, abans de començar cada tirada d'una sopa (AU2-140).
   COMMIT`, i després el mateix amb `llista-autonomia.txt`. Amb 8 fils, unes 13,7 h la primera, i uns minuts la segona. Si s'atura, es
   torna a llançar: les ordres acabades se salten.
 - **Mentre corre, cap recompte.** El seguiment, només `estat-llista.txt` i `estat-llista-autonomia.txt`.
+- **La consola de cada ordre,** que només porta el progrés, a `consola-llista/` i a `consola-llista-autonomia/`: una carpeta per llista,
+  perquè els registres de totes dues tenen els mateixos noms (AUD-180, auditoria 29).
 - **Els registres:** a git si cap no passa de 50 MB; si no, com al nivell 1.
 
 ## Abans d'analitzar: la repetició
 
 Com la de la prova d'autonomia: tres de les 110 tirades de cada llista, triades amb `node eines/tria.mjs LLAVOR 3` i els noms dels
-registres (sense `.jsonl`), tornades a fer senceres a `repeticio/` i comparades amb `node eines/b1-compara.mjs`. La llavor, la de cada
-`execucio-llista*.txt`. És una verificació per mostreig, no una demostració de totes les tirades (auditor 2).
+registres (sense `.jsonl`), tornades a fer senceres i comparades amb `node eines/b1-compara.mjs`. Les de `llista.txt`, a
+`repeticio/registres/`, i les de `llista-autonomia.txt`, a `repeticio/autonomia/`: si les dues tries fan sortir el mateix nom, no
+coincideixen (AUD-180). La llavor, la de cada `execucio-llista*.txt`. És una verificació per mostreig, no una demostració de totes les
+tirades (auditor 2).

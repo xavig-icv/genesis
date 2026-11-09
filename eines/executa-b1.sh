@@ -8,9 +8,12 @@
 # Abans de començar: la SHA-256 de la llista, el commit, que la còpia no tingui canvis, i la guarda.
 # La guarda (AUD-174): cap fitxer .js o .mjs amb canvis ni sense seguir, abans de començar i abans de cada ordre. Les eines hi
 # escriurien "+canvis" al codi, i l'anàlisi en rebutjaria els registres: és el que va passar al primer intent de la repetició del
-# nivell 1, amb un script copiat a la còpia del càlcul. Després de cada ordre, el registre no pot dir "+canvis".
+# nivell 1, amb un script copiat a la còpia del càlcul.
+# Després de cada ordre: el codi 0; el registre, acabat amb la línia final (AUD-179, auditoria 29: una eina podia sortir amb el codi 0
+# sense escriure-la); i que no digui "+canvis".
 # A l'estat (estat-LLISTA.txt, al costat de la llista), només quina ordre comença, quan acaba i amb quin codi: cap recompte. La
-# consola de cada ordre, que només porta el progrés, va a consola/. Si un registre ja és sencer (amb la línia final), l'ordre se
+# consola de cada ordre, que només porta el progrés, va a consola-LLISTA/: una carpeta per llista, perquè les dues de la §13 són a la
+# mateixa carpeta i els seus registres tenen els mateixos noms (AUD-180). Si un registre ja és sencer (amb la línia final), l'ordre se
 # salta; si n'hi ha un d'incomplet, s'atura sense tocar-lo. Al final: el commit, la versió de Node, la SHA-256 de la llista i la de
 # cada registre (execucio-LLISTA.txt).
 set -u
@@ -20,6 +23,7 @@ dir=$(dirname "$llista")
 nom=$(basename "$llista" .txt)
 estat="$dir/estat-$nom.txt"
 execucio="$dir/execucio-$nom.txt"
+consola="$dir/consola-$nom"
 log() { echo "$(date '+%d-%m-%Y %H.%M.%S') $*" >> "$estat"; }
 atura() { log "aturat: $1"; echo "aturat: $1" >&2; exit "${2:-2}"; }
 guarda() {
@@ -48,7 +52,7 @@ while IFS= read -r ordre || [ -n "$ordre" ]; do
 done < "$llista"
 [ ${#jsons[@]} -gt 0 ] || atura "la llista no té cap ordre"
 
-mkdir -p "$dir/consola"
+mkdir -p "$consola"
 log "comença la llista $llista (${#jsons[@]} ordres, SHA-256 $sha), al commit $commit, amb Node $(node --version)"
 while IFS= read -r ordre || [ -n "$ordre" ]; do
   ordre=${ordre%$'\r'}
@@ -62,10 +66,11 @@ while IFS= read -r ordre || [ -n "$ordre" ]; do
   mkdir -p "$(dirname "$json")"
   log "comença $json"
   # les opcions no porten espais: es poden separar per paraules
-  node ${ordre#node } > "$dir/consola/$(basename "$json" .jsonl).out" 2>&1 < /dev/null
+  node ${ordre#node } > "$consola/$(basename "$json" .jsonl).out" 2>&1 < /dev/null
   codi=$?
   log "acaba $json, codi $codi"
   [ $codi -eq 0 ] || atura "l'ordre ha fallat (codi $codi): $ordre" 1
+  tail -n 1 "$json" 2>/dev/null | grep -q '^{"type":"end"' || atura "el registre $json no acaba amb la línia final, i l'ordre ha sortit amb el codi 0 (AUD-179)" 1
   head -n 1 "$json" | grep -q '"code":"[0-9a-f]*+canvis"' && atura "el registre $json diu +canvis" 1
 done < "$llista"
 
