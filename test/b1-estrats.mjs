@@ -8,7 +8,7 @@
 // Executa: node test/b1-estrats.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
-import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, readdirSync } from 'fs';
+import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, readdirSync, existsSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
@@ -16,7 +16,7 @@ import { OPCODES, PROGRAM_SIZE } from '../fase1/bff.js';
 import { makeRng } from '../fase1/soup.js';
 import { soupFor as level1Soup, DISTRIBUTIONS } from '../eines/densitat.mjs';
 import { strataBlocks, strataSize, soupBlocks, LEVEL1, SOUP_PROGRAMS } from '../eines/b1-llavors.mjs';
-import { uniformInt, stratumProgram, compositionDraw, readComposition, parseSource, soupFor, sourceDraw, dMig, testRange, MODULES, SOUP_BYTES } from '../eines/estrats.mjs';
+import { uniformInt, stratumProgram, compositionDraw, readComposition, checkCohort, parseSource, soupFor, sourceDraw, dMig, testRange, MODULES, SOUP_BYTES } from '../eines/estrats.mjs';
 import { cohort } from '../eines/composicio.mjs';
 import { planRuns, readRun, readFolder, rho, binomialWeight, COMPOSITIONS } from '../eines/estrats-analisi.mjs';
 import { fayFeuer } from '../eines/b1-estadistica.mjs';
@@ -88,6 +88,42 @@ const tests = {
       assert.strictEqual(c.bytes, SOUP_BYTES);
       assert.strictEqual(c.instructions, c.counts.reduce((s, x, b) => s + (INSTR.has(b) ? x : 0), 0));
     }
+  },
+  "AU2-140: la composició es comprova sencera, i l'eina s'hi nega abans de començar, sense deixar cap JSONL"() {
+    // els enters a l'atzar i el sorteig, fora d'1 a 2³²: s'hi neguen, en lloc de no acabar
+    const rng = makeRng(SEED, 'v2');
+    for (const m of [0, -1, 1.5, 2 ** 32 + 1, NaN]) assert.throws(() => uniformInt(rng, m), RangeError, String(m));
+    assert.strictEqual(uniformInt(() => 0.5, 2 ** 32), 2 ** 31);
+    assert.throws(() => compositionDraw(new Array(256).fill(0)), RangeError);
+    assert.throws(() => compositionDraw([2 ** 32 + 1, ...new Array(255).fill(0)]), RangeError);
+    const orig = JSON.parse(readFileSync(join(root, comp5001), 'utf8'));
+    const changed = (f) => { const c = { ...orig, counts: [...orig.counts] }; f(c); return c; };
+    const bad = {
+      // els dos contraexemples de l'auditor 2: un recompte d'instruccions fals, i més de 2³² bytes
+      'instruccions-falses': changed((c) => { c.instructions = 0; }),
+      'mes-de-2-32': changed((c) => { c.bytes = 2 ** 32 + 1; c.counts = [2 ** 32 + 1, ...new Array(255).fill(0)]; c.instructions = 0; }),
+      // un total que no és 2²³, i una suma que no quadra
+      total: changed((c) => { c.counts[1]--; c.bytes--; }),
+      suma: changed((c) => { c.counts[1]++; }),
+    };
+    const outside = {
+      // un món exclòs de la cohort, una altra època, i una altra captura
+      mon: changed((c) => { c.world = '5012'; }),
+      epoca: changed((c) => { c.epoch = 7999; }),
+      captura: changed((c) => { c.capture = { ...c.capture, sha256: '0'.repeat(64) }; }),
+    };
+    withTmp((tmp) => {
+      for (const [name, c] of Object.entries({ ...bad, ...outside })) {
+        const file = join(tmp, `${name}.json`), out = join(tmp, `${name}.jsonl`);
+        writeFileSync(file, JSON.stringify(c) + '\n');
+        const r = tool('--programa', `sopa:${file}`, '--company', 'programa', '--llavor', String(SEED), '--programes', '10', '--json', out);
+        assert.strictEqual(r.status, 2, `${name}: ${r.stderr}`);
+        assert.ok(!existsSync(out), `${name}: ha deixat un JSONL`);
+        if (bad[name]) assert.throws(() => readComposition(file), /no és una composició/, name);
+        else assert.throws(() => checkCohort(readComposition(file)), /cohort|època|captura/, name);
+      }
+    });
+    for (const w of cohort()) assert.doesNotThrow(() => checkCohort(readComposition(join(root, COMPOSITIONS, `${w.world}.json`))), w.world);
   },
   "l'eina: les opcions, el JSONL, i el resultat no depèn dels fils ni dels trossos"() {
     withTmp((tmp) => {

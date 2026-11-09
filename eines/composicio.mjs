@@ -10,9 +10,9 @@ import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { pathToFileURL } from 'url';
 import { OPCODES } from '../fase1/bff.js';
 import { parseOptions, sha256 } from './b1-comu.mjs';
-import { SOUP_BYTES } from './estrats.mjs';
+import { SOUP_BYTES, PILOT_MANIFEST } from './estrats.mjs';
 
-export const MANIFEST = 'fase2/resultats/maduracio/pilot/manifest.json';
+export const MANIFEST = PILOT_MANIFEST;
 const INSTRUCTIONS = new Set([...OPCODES].map((c) => c.charCodeAt(0)));
 
 // Els mons de la cohort del pilot, en l'ordre del manifest: { world, epoch, capture: { file, sha256 } }

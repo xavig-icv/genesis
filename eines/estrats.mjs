@@ -11,12 +11,14 @@
 //  - d-mig: D½, el mateix sorteig que el nivell 1 (eines/densitat.mjs). Amb la llavor del nivell 1 i companys uniformes, fa
 //    exactament les seves sopes;
 //  - sopa:fitxer.json: cada byte, a l'atzar amb la freqüència que té a la sopa (la composició d'eines/composicio.mjs). Amb una sopa
-//    sencera de 512 × 256 cel·les, el total és 2²³, i el sorteig és exacte.
+//    sencera de 512 × 256 cel·les, el total és 2²³, i el sorteig és exacte. Abans de començar, la composició es comprova sencera, i ha
+//    de ser la d'una sopa de la cohort del pilot (AU2-140): si no, s'hi nega, sense crear el JSONL.
 // Els enters a l'atzar són exactes: es rebutgen els valors de l'atzar que en farien un biaix (uniformInt).
 //
 // Els 8 companys de la sopa de la prova (--company): uniforme, de bytes uniformes, com al nivell 1; o programa, de la mateixa
-// distribució que el programa (no amb estrat:K). El company del paper sol és el del cens, de bytes uniformes, sempre: és el que fa
-// el cens a la sopa i al món, i el que fan els escanejos del pilot.
+// distribució que el programa (no amb estrat:K). Amb una sopa, són companys sintetitzats a partir del seu histograma, byte a byte:
+// no són cel·les de la captura, i no en conserven l'estructura (auditor 2). El company del paper sol és el del cens, de bytes
+// uniformes, sempre: és el que fa el cens a la sopa i al món, i el que fan els escanejos del pilot.
 //
 // L'atzar, com al nivell 1: el programa i i els seus companys, amb el generador de la llavor més 2i, en aquest ordre; la prova, amb
 // el de la llavor més 2i + 1. Els mateixos programes amb els dos tipus de company: la comparació és aparellada.
@@ -44,8 +46,10 @@ const TWO32 = 4294967296;
 // d'un fil, eines/densitat.mjs hi posaria el seu receptor de feines
 export const dMig = (rng) => (rng() < 0.5 ? INSTRUCTIONS[(rng() * INSTRUCTIONS.length) | 0] : OTHERS[(rng() * OTHERS.length) | 0]);
 
-// Un enter uniforme de 0 a m - 1, exacte: rng() és un enter de 32 bits dividit per 2³², i es rebutgen els que en farien un biaix
+// Un enter uniforme de 0 a m - 1, exacte: rng() és un enter de 32 bits dividit per 2³², i es rebutgen els que en farien un biaix.
+// Amb m fora d'1 a 2³², s'hi nega: amb m > 2³², el límit seria 0, i no acabaria mai (AU2-140)
 export function uniformInt(rng, m) {
+  if (!(Number.isInteger(m) && m >= 1 && m <= TWO32)) throw new RangeError(`uniformInt: ${m} no és un enter d'1 a 2³²`);
   const limit = TWO32 - (TWO32 % m);
   for (;;) { const x = rng() * TWO32; if (x < limit) return x % m; }
 }
@@ -55,9 +59,11 @@ export function stratumProgram(rng, k) {
   for (let s = 0; s < k; s++) { const j = s + uniformInt(rng, PROGRAM_SIZE - s); [pos[s], pos[j]] = [pos[j], pos[s]]; isInstr[pos[s]] = 1; }
   return Uint8Array.from({ length: PROGRAM_SIZE }, (_, i) => (isInstr[i] ? INSTRUCTIONS[uniformInt(rng, 10)] : OTHERS[uniformInt(rng, 246)]));
 }
-// El sorteig d'una composició: counts[b], quantes vegades hi és el byte b
+// El sorteig d'una composició: counts[b], quantes vegades hi és el byte b. 256 recomptes enters, que sumin d'1 a 2³²
 export function compositionDraw(counts) {
-  const cum = [], total = counts.reduce((s, c) => s + c, 0);
+  const total = Array.isArray(counts) && counts.length === 256 && counts.every((c) => Number.isSafeInteger(c) && c >= 0) ? counts.reduce((s, c) => s + c, 0) : -1;
+  if (!(total >= 1 && total <= TWO32)) throw new RangeError("la composició ha de tenir 256 recomptes enters, no negatius, que sumin d'1 a 2³²");
+  const cum = [];
   let acc = 0;
   for (const c of counts) { acc += c; cum.push(acc); }
   return (rng) => {
@@ -67,11 +73,34 @@ export function compositionDraw(counts) {
     return lo;
   };
 }
-// Una composició d'eines/composicio.mjs: { world, epoch, capture: { file, sha256 }, bytes, counts }
+// Una composició d'eines/composicio.mjs: { world, epoch, capture: { file, sha256 }, bytes, instructions, counts }, comprovada sencera
+// abans de fer-la servir (AU2-140): exactament 2²³ bytes, els d'una sopa sencera; 256 recomptes enters, no negatius, que hi sumen; i
+// els bytes d'instrucció, els que en surten amb els 10 opcodes. Si no, s'hi nega
 export function readComposition(file) {
-  const raw = readFileSync(file), c = JSON.parse(raw);
-  if (!Array.isArray(c.counts) || c.counts.length !== 256 || c.counts.some((x) => !Number.isInteger(x) || x < 0) || c.counts.reduce((s, x) => s + x, 0) !== c.bytes) throw new Error(`${file}: no és una composició`);
+  const raw = readFileSync(file);
+  const bad = (why) => new Error(`${file}: no és una composició (${why})`);
+  let c;
+  try { c = JSON.parse(raw); } catch { throw bad('no és JSON'); }
+  if (c === null || typeof c !== 'object' || Array.isArray(c)) throw bad('no és un objecte');
+  if (typeof c.world !== 'string' || !/^\d+$/.test(c.world) || !Number.isSafeInteger(c.epoch) || c.epoch < 0) throw bad("el món o l'època");
+  if (typeof c.capture?.file !== 'string' || !/^[0-9a-f]{64}$/.test(c.capture?.sha256 ?? '')) throw bad('la captura');
+  if (c.bytes !== SOUP_BYTES) throw bad(`ha de tenir ${SOUP_BYTES} bytes, i en diu ${c.bytes}`);
+  if (!Array.isArray(c.counts) || c.counts.length !== 256 || c.counts.some((x) => !Number.isSafeInteger(x) || x < 0)) throw bad('els recomptes han de ser 256 enters no negatius');
+  const total = c.counts.reduce((s, x) => s + x, 0);
+  if (total !== c.bytes) throw bad(`els recomptes sumen ${total}, i no ${c.bytes}`);
+  const instructions = INSTRUCTIONS.reduce((s, b) => s + c.counts[b], 0);
+  if (c.instructions !== instructions) throw bad(`diu ${c.instructions} bytes d'instrucció, i els recomptes en fan ${instructions}`);
   return { ...c, sha256: sha256(raw) };
+}
+// La composició ha de ser la d'una sopa de la cohort del pilot (AU2-140): un món inclòs al manifest, a l'època de partida (8.000), amb
+// la captura i la SHA-256 que hi diu. L'eina ho comprova abans de començar cada tirada d'una sopa, i l'anàlisi, després
+export const PILOT_MANIFEST = 'fase2/resultats/maduracio/pilot/manifest.json';
+export const PILOT_EPOCH = 8000;
+export function checkCohort(comp, manifestFile = PILOT_MANIFEST) {
+  const w = JSON.parse(readFileSync(manifestFile, 'utf8')).worlds.find((x) => x.included && x.world === comp.world);
+  if (!w) throw new Error(`la composició del món ${comp.world} no és de cap món de la cohort del pilot`);
+  if (comp.epoch !== PILOT_EPOCH || w.start !== PILOT_EPOCH) throw new Error(`la composició del món ${comp.world} és de l'època ${comp.epoch}, i ha de ser de la ${PILOT_EPOCH}`);
+  if (comp.capture.file !== w.capture || comp.capture.sha256 !== w.captureSha256) throw new Error(`la captura de la composició del món ${comp.world} no és la del manifest del pilot`);
 }
 
 // La font dels programes: { kind, k, file, draw }
@@ -129,7 +158,8 @@ async function main() {
   const argv = process.argv.slice(2), opts = parseOptions(argv, OPTIONS, USAGE), t0 = Date.now();
   const fail = (m) => { console.error(`Error: ${m}\nFes servir --help per veure les opcions.`); process.exit(2); };
   let source, comp = null;
-  try { source = parseSource(opts.programa); if (source.kind === 'sopa') comp = readComposition(source.file); } catch (e) { fail(e.message); }
+  // la composició, sencera i de la cohort, abans de començar i abans de crear el JSONL (AU2-140)
+  try { source = parseSource(opts.programa); if (source.kind === 'sopa') { comp = readComposition(source.file); checkCohort(comp); } } catch (e) { fail(e.message); }
   if (source.kind === 'estrat' && opts.company === 'programa') fail('amb estrat:K, els companys són uniformes');
   const from = opts.de, to = opts.de + opts.programes;
   // les llavors dels generadors, de la llavor a la llavor + 2·to - 1, han de cabre en 32 bits
