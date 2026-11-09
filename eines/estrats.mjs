@@ -88,12 +88,14 @@ export function readComposition(file) {
   if (!Array.isArray(c.counts) || c.counts.length !== 256 || c.counts.some((x) => !Number.isSafeInteger(x) || x < 0)) throw bad('els recomptes han de ser 256 enters no negatius');
   const total = c.counts.reduce((s, x) => s + x, 0);
   if (total !== c.bytes) throw bad(`els recomptes sumen ${total}, i no ${c.bytes}`);
+  if (!Number.isSafeInteger(c.instructions) || c.instructions < 0) throw bad("el recompte d'instruccions ha de ser un enter no negatiu");
   const instructions = INSTRUCTIONS.reduce((s, b) => s + c.counts[b], 0);
   if (c.instructions !== instructions) throw bad(`diu ${c.instructions} bytes d'instrucció, i els recomptes en fan ${instructions}`);
   return { ...c, sha256: sha256(raw) };
 }
 // La composició ha de ser la d'una sopa de la cohort del pilot (AU2-140): un món inclòs al manifest, a l'època de partida (8.000), amb
-// la captura i la SHA-256 que hi diu. L'eina ho comprova abans de començar cada tirada d'una sopa, i l'anàlisi, després
+// la captura i la SHA-256 que hi diu. L'eina ho comprova abans de començar cada tirada d'una sopa; la prova d'autonomia dels hereditaris
+// i l'anàlisi, després (checkRecordComposition, AU2-142)
 export const PILOT_MANIFEST = 'fase2/resultats/maduracio/pilot/manifest.json';
 export const PILOT_EPOCH = 8000;
 export function checkCohort(comp, manifestFile = PILOT_MANIFEST) {
@@ -101,6 +103,18 @@ export function checkCohort(comp, manifestFile = PILOT_MANIFEST) {
   if (!w) throw new Error(`la composició del món ${comp.world} no és de cap món de la cohort del pilot`);
   if (comp.epoch !== PILOT_EPOCH || w.start !== PILOT_EPOCH) throw new Error(`la composició del món ${comp.world} és de l'època ${comp.epoch}, i ha de ser de la ${PILOT_EPOCH}`);
   if (comp.capture.file !== w.capture || comp.capture.sha256 !== w.captureSha256) throw new Error(`la captura de la composició del món ${comp.world} no és la del manifest del pilot`);
+}
+// La composició d'un registre d'una sopa, després (AU2-142, auditoria 29): el fitxer, sencer i de la cohort, com abans de la tirada; i la
+// línia d'inici del registre, amb el mateix món, la mateixa època, la mateixa captura i la SHA-256 del fitxer. Si no, s'hi nega. La fan
+// servir la prova d'autonomia dels hereditaris (eines/autonomia.mjs --registre) i l'anàlisi (eines/estrats-analisi.mjs)
+export function checkRecordComposition(start, file, manifestFile = PILOT_MANIFEST) {
+  const comp = readComposition(file);
+  checkCohort(comp, manifestFile);
+  const c = start.composition;
+  if (c?.world !== comp.world || c?.epoch !== comp.epoch || c?.capture?.file !== comp.capture.file || c?.capture?.sha256 !== comp.capture.sha256 || c?.sha256 !== comp.sha256) {
+    throw new Error(`la composició de la línia d'inici no és la de ${file}`);
+  }
+  return comp;
 }
 
 // La font dels programes: { kind, k, file, draw }

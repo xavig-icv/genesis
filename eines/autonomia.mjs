@@ -103,10 +103,11 @@ function computeChunk(job, { chemistry, seed, count }) {
   return job.map(({ index, bytes }) => ({ type: 'replicator', index, bytes, ...testReplicator(Uint8Array.from(Buffer.from(bytes, 'hex')), conds, interpret) }));
 }
 
-// Els hereditaris d'un registre de la §13 (eines/estrats.mjs), sencer i amb l'empremta: { start, end, heritable, source }. Els bytes
-// de cadascun, els del seu programa (el mateix sorteig, amb la composició del registre). Si no, s'hi nega
+// Els hereditaris d'un registre de la §13 (eines/estrats.mjs), sencer i amb l'empremta: { start, end, heritable, source }. Amb una sopa,
+// la composició, sencera i de la cohort del pilot, i la de la línia d'inici, camp a camp (AU2-142). Els bytes de cadascun, els del seu
+// programa (el mateix sorteig, amb la composició del registre). Si no, s'hi nega
 export async function strataHeritables(file) {
-  const { TEST: STRATA_TEST, parseSource, readComposition, sourceDraw, soupFor } = await import('./estrats.mjs');
+  const { TEST: STRATA_TEST, parseSource, checkRecordComposition, sourceDraw, soupFor } = await import('./estrats.mjs');
   const r = readJsonl(file);
   if (r.problems.length) throw new Error(r.problems.join('; '));
   const { name, start: s, lines, end } = r;
@@ -114,9 +115,7 @@ export async function strataHeritables(file) {
   const source = parseSource(s.program);
   let draw;
   if (source.kind === 'sopa') {
-    const comp = readComposition(source.file);
-    if (s.composition?.sha256 !== comp.sha256) throw new Error(`${name}: la composició no és la de ${source.file}`);
-    draw = sourceDraw(source, comp.counts);
+    try { draw = sourceDraw(source, checkRecordComposition(s, source.file).counts); } catch (e) { throw new Error(`${name}: ${e.message}`); }
   } else draw = sourceDraw(source);
   const heritable = [];
   for (const o of lines) {

@@ -5,8 +5,9 @@
 // Llegeix els JSONL d'eines/estrats.mjs d'una carpeta i els valida contra el pla (planRuns): els 65 estrats de la corba, les 22
 // sopes del pilot amb els dos tipus de company, i D½ amb companys de D½. Cada tirada, amb la seva llavor (eines/b1-llavors.mjs) i
 // la seva N, sencera de 0 a N (en un fitxer o en trossos sense forats); tots del mateix commit, sense canvis, i amb els mòduls
-// d'aquesta còpia; els bytes de cada replicador, els del seu programa; cada composició, la del fitxer de git, i la seva captura, la
-// del manifest del pilot. Si hi ha cap problema, els llista i no analitza res.
+// d'aquesta còpia; els bytes de cada replicador, els del seu programa; cada composició, la del fitxer de git, sencera i de la cohort del
+// pilot, com abans de la tirada, amb el mateix món, la mateixa època i la mateixa captura a la línia d'inici (AU2-142). Si hi ha cap
+// problema, els llista i no analitza res.
 //
 // Què en surt (tot descriptiu):
 //  1. la corba: per a cada estrat k, rₖ, la part dels programes amb k instruccions que són hereditaris, amb el seu interval de
@@ -26,14 +27,14 @@
 //     s'amplia després de veure'ls (auditor 2);
 //  3. D½ amb companys de D½: els primers 10⁶ programes del nivell 1, amb uns altres companys, contra C0 al nivell 1.
 import { readdirSync, readFileSync } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { pathToFileURL } from 'url';
 import { PROGRAM_SIZE } from '../fase1/bff.js';
 import { LEVEL1, strataBlocks, strataSize, soupBlocks, SOUP_PROGRAMS } from './b1-llavors.mjs';
 import { fileHashes, readExtract, extractRecord, readJsonl, sha256 } from './b1-comu.mjs';
 import { clopperPearsonBeta, fayFeuer } from './b1-estadistica.mjs';
 import { ratio } from './densitat-analisi.mjs';
-import { MODULES, TEST, NOISE, parseSource, readComposition, soupFor, sourceDraw } from './estrats.mjs';
+import { MODULES, TEST, NOISE, parseSource, readComposition, checkRecordComposition, soupFor, sourceDraw } from './estrats.mjs';
 import { cohort, MANIFEST } from './composicio.mjs';
 
 
@@ -61,14 +62,18 @@ export function readRun(file, root) {
   if (!/^node eines\/estrats\.mjs /.test(s.command ?? '') || arg('programa') !== s.program || arg('company') !== s.partner || Number(arg('llavor')) !== s.seed ||
       Number(arg('programes')) !== s.programs || Number(arg('de', '0')) !== s.from) problems.push(`${name}: l'ordre no diu el mateix que els camps de la línia d'inici`);
   if (s.test !== TEST || s.chemistry !== 'C0' || s.noise !== NOISE) problems.push(`${name}: la prova no és la de la §13`);
+  // la font dels programes; si no es pot fer, els bytes dels replicadors no es comproven (el problema ja hi és)
   let source = null, draw = null;
   try {
-    source = parseSource(s.program);
-    if (source.kind === 'sopa') {
-      const comp = readComposition(join(root, source.file));
-      if (s.composition?.sha256 !== comp.sha256) problems.push(`${name}: la composició no és la de ${source.file}`);
-      draw = sourceDraw(source, comp.counts);
-    } else draw = sourceDraw(source);
+    const src = parseSource(s.program);
+    if (src.kind === 'sopa') {
+      // la composició, sencera i de la cohort, i la de la línia d'inici, camp a camp (AU2-142)
+      draw = sourceDraw(src, checkRecordComposition(s, resolve(root, src.file), join(root, MANIFEST)).counts);
+    } else {
+      if (s.composition !== null) problems.push(`${name}: la línia d'inici diu una composició, i el programa no és d'una sopa`);
+      draw = sourceDraw(src);
+    }
+    source = src;
   } catch (e) { problems.push(`${name}: ${e.message}`); }
   const totals = Object.fromEntries(KEYS.map((k) => [k, 0])), found = [];
   let last = s.from - 1, upTo = s.from;

@@ -20,7 +20,7 @@ import { uniformInt, stratumProgram, compositionDraw, readComposition, checkCoho
 import { cohort } from '../eines/composicio.mjs';
 import { planRuns, readRun, readFolder, rho, binomialWeight, analyse, COMPOSITIONS } from '../eines/estrats-analisi.mjs';
 import { fayFeuer } from '../eines/b1-estadistica.mjs';
-import { fileHashes } from '../eines/b1-comu.mjs';
+import { fileHashes, sha256 } from '../eines/b1-comu.mjs';
 import { lists, LIST_FILES } from '../eines/b1-llistes.mjs';
 import { compare } from '../eines/b1-compara.mjs';
 
@@ -105,6 +105,8 @@ const tests = {
       // un total que no és 2²³, i una suma que no quadra
       total: changed((c) => { c.counts[1]--; c.bytes--; }),
       suma: changed((c) => { c.counts[1]++; }),
+      // les instruccions, en text (l'auditor 1, auditoria 29: abans, el missatge en deia el mateix nombre a totes dues bandes)
+      'instruccions-en-text': changed((c) => { c.instructions = String(c.instructions); }),
     };
     const outside = {
       // un món exclòs de la cohort, una altra època, i una altra captura
@@ -122,8 +124,51 @@ const tests = {
         if (bad[name]) assert.throws(() => readComposition(file), /no és una composició/, name);
         else assert.throws(() => checkCohort(readComposition(file)), /cohort|època|captura/, name);
       }
+      assert.throws(() => readComposition(join(tmp, 'instruccions-en-text.json')), /el recompte d'instruccions ha de ser un enter no negatiu/);
     });
     for (const w of cohort()) assert.doesNotThrow(() => checkCohort(readComposition(join(root, COMPOSITIONS, `${w.world}.json`))), w.world);
+  },
+  "AU2-142: l'anàlisi i la prova d'autonomia dels hereditaris tornen a comprovar la composició, sencera i de la cohort, i la de la línia d'inici, camp a camp"() {
+    withTmp((tmp) => {
+      const dir = join(tmp, 'r'), good = join(tmp, 'bona.json'), bad = join(tmp, 'epoca-7999.json'), aut = join(tmp, 'autonomia.jsonl');
+      mkdirSync(dir);
+      const orig = readFileSync(join(root, comp5001));
+      writeFileSync(good, orig);
+      writeFileSync(bad, JSON.stringify({ ...JSON.parse(orig), epoch: 7999 }) + '\n');
+      const log = join(dir, 'sopa.jsonl'), plan = (f) => [{ key: 'sopa:5001:uniforme', program: `sopa:${f}`, partner: 'uniforme', seed: SEED, programs: 3, world: '5001' }];
+      const autonomy = () => spawnSync(process.execPath, [join(root, 'eines', 'autonomia.mjs'), '--registre', log, '--llavor', String(SEED), '--condicions', '2', '--json', aut], { cwd: root, encoding: 'utf8' });
+      assert.strictEqual(tool('--programa', `sopa:${good}`, '--company', 'uniforme', '--llavor', String(SEED), '--programes', '3', '--tros', '3', '--json', log).status, 0);
+      clean(log);
+      assert.deepStrictEqual(readFolder(dir, { root, plan: plan(good) }).problems, []);
+      const text = readFileSync(log, 'utf8');
+      const rewrite = (f) => { const ls = text.split('\n'), s = JSON.parse(ls[0]); f(s); ls[0] = JSON.stringify(s); writeFileSync(log, ls.join('\n')); };
+      // el contraexemple de l'auditor 2: la mateixa tirada, amb la línia d'inici reescrita, coherent, per a una composició de l'època
+      // 7.999. L'empremta no ho veu: no hi és, la línia d'inici. Abans, l'anàlisi l'acceptava
+      rewrite((s) => { s.program = `sopa:${bad}`; s.command = s.command.replace(`sopa:${good}`, `sopa:${bad}`); s.composition = { ...s.composition, epoch: 7999, sha256: sha256(readFileSync(bad)) }; });
+      assert.ok(readFolder(dir, { root, plan: plan(bad) }).problems.some((p) => /de l'època 7999, i ha de ser de la 8000/.test(p)));
+      // la prova d'autonomia dels seus hereditaris també s'hi nega, sense crear el JSONL
+      let r = autonomy();
+      assert.strictEqual(r.status, 2, r.stderr);
+      assert.match(r.stderr, /de l'època 7999, i ha de ser de la 8000/);
+      assert.ok(!existsSync(aut));
+      // la composició bona, i un camp de la línia d'inici que no és el del fitxer (l'època, o el nom de la captura): s'hi neguen totes dues
+      for (const f of [(s) => { s.composition.epoch = 7999; }, (s) => { s.composition.capture = { ...s.composition.capture, file: 'una-altra.bin' }; }]) {
+        rewrite(f);
+        assert.ok(readFolder(dir, { root, plan: plan(good) }).problems.some((p) => /la composició de la línia d'inici no és la de/.test(p)));
+        r = autonomy();
+        assert.strictEqual(r.status, 2, r.stderr);
+        assert.ok(!existsSync(aut));
+      }
+      // i un estrat que diu una composició
+      const st = join(tmp, 'estrat.jsonl');
+      assert.strictEqual(tool('--programa', 'estrat:3', '--company', 'uniforme', '--llavor', String(SEED), '--programes', '3', '--json', st).status, 0);
+      clean(st);
+      const sl = readFileSync(st, 'utf8').split('\n'), s0 = JSON.parse(sl[0]);
+      s0.composition = JSON.parse(text.split('\n')[0]).composition;
+      sl[0] = JSON.stringify(s0);
+      writeFileSync(st, sl.join('\n'));
+      assert.ok(readRun(st, root).problems.some((p) => /la línia d'inici diu una composició, i el programa no és d'una sopa/.test(p)));
+    });
   },
   "l'eina: les opcions, el JSONL, i el resultat no depèn dels fils ni dels trossos"() {
     withTmp((tmp) => {
