@@ -5,7 +5,7 @@
 // tres dels quatre mots de l'estat, desplaçats; en 2·GOLDEN, dos; en 3·GOLDEN, un. Les seqüències no són iguals, però tampoc no
 // són d'estats independents. Per això, dos generadors de dos càlculs diferents no poden tenir llavors que difereixin en 0, ±GOLDEN,
 // ±2·GOLDEN o ±3·GOLDEN (mòdul 2³²). Dins d'un interval no passa mai: el més ample, el del nivell 1, fa 2·10⁸ (tots els estrats
-// junts, 3,1·10⁸), i 3·GOLDEN (mòdul 2³²) és el més petit dels sis desplaçaments, 626.627.285. checkSeedMap ho comprova.
+// junts, 3,64·10⁸), i 3·GOLDEN (mòdul 2³²) és el més petit dels sis desplaçaments, 626.627.285. checkSeedMap ho comprova.
 //
 // Els càlculs que tornen a fer servir les llavors del nivell 1 són aparellats a propòsit: les variants per cap, C0 i S1 de nou,
 // i D½ amb companys de D½ fan servir els mateixos programes que el nivell 1, i no són mostres noves.
@@ -19,8 +19,9 @@ export const SOUPS_FROM = 2300000000;  // les sopes del pilot, un interval de 2�
 export const COVERAGE_SEED = 2500000000;          // la simulació d'eines/densitat-cobertura.mjs (AUD-146: abans, la del pla)
 export const STRATA_COVERAGE_SEED = 2500000002;   // la d'eines/estrats-cobertura.mjs
 
-// Els programes de cada estrat k (de 0 a 64): 10⁷ de k = 3 a 12, i 10⁶ als altres (§13). Cada programa gasta dos generadors
-export const strataSize = (k) => (k >= 3 && k <= 12 ? 1e7 : 1e6);
+// Els programes de cada estrat k (de 0 a 64): 10⁷ de k = 0 a 12, i 10⁶ als altres (§13). Cada programa gasta dos generadors. A la
+// v0.5, 10⁷ només de k = 3 a 12; els de k = 0 a 2, amb 10⁶, feien el 54 % del pes a p = 10/256 (AUD-178, auditoria 28)
+export const strataSize = (k) => (k <= 12 ? 1e7 : 1e6);
 export function strataBlocks() {
   const out = [];
   let from = STRATA_FROM;

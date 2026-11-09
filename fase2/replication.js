@@ -61,6 +61,9 @@ export function hasWindow(P, set) {
 // Envoltat de "lectors" (programes que copien el company dins seu), fins i tot un bloc de dades sense
 // cap instrucció surt hereditari en context. Per això es distingeix heritableSolo de heritableContext, i
 // el protocol estadístic té una anàlisi de sensibilitat només amb l'herència sola.
+// Sol, el company va segon, i el seu codi també s'executa, després del del programa: «sol» vol dir «el
+// programa primer», no «sense el codi del company» (AUD-175 de l'auditoria 28). Si un programa es copia
+// sense el codi del company, ho diu la prova d'autonomia de B1, amb companys inerts.
 //
 // Dues opcions de la prova d'autonomia de B1 (docs/pla-b1.md, §4), desactivades per defecte: sense, la prova és la de sempre, i
 // gasta el mateix atzar.

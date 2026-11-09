@@ -16,6 +16,8 @@ export const SCENARIOS = Object.freeze({
   'el mateix bony, deu vegades més petit': (k) => (k < 6 ? 0 : 2.4e-5 * Math.exp(-(((k - 32) / 14) ** 2))),
   'pla i baix, 10⁻⁶ des de k = 3': (k) => (k < 3 ? 0 : 1e-6),
   'creixent, 10⁻⁶ · (k / 10)³': (k) => 1e-6 * (k / 10) ** 3,
+  // la de l'auditor 1 a l'auditoria 28 (AUD-175): un terra a tots els k, l'ajuda del company amb bytes uniformes, i el bony de D½
+  'un terra de 4·10⁻⁶ a tots els k, i el bony de D½': (k) => 4e-6 + 1.6e-4 * Math.exp(-(((k - 32) / 10) ** 2)),
 });
 export const PS = [10 / 256, 0.1, 0.25, 0.5, 0.75];
 

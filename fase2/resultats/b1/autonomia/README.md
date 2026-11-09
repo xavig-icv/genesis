@@ -11,9 +11,13 @@
 
 **La SHA-256 de `llista.txt`:** `ca5bb495a84038dc461c024bb2198b8f7acb87fa10e45835626d51572bca859c`
 
+**A la v0.6** (09-11-2026, l'auditoria 28) la llista no canvia. S4 hi és com a control: amb companys inerts, dona 0 per construcció en
+tots dos papers (AUD-176), i l'anàlisi en comprova els zeros, amb els d'S2 en context i S3 sol. «Sol» vol dir que el programa va
+primer (AUD-175). La prova d'autonomia dels hereditaris de la §13 té la seva llista a `fase2/resultats/b1/estrats/`.
+
 ## Com es llança
 
-- **Quan:** després del GO de l'auditoria 28 i del merge de la PR, abans de les variants per cap i de la §13 (§11).
+- **Quan:** després del GO de l'auditoria 29 i del merge de la PR, abans de les variants per cap i de la §13 (§11).
 - **On:** al PC, des d'una còpia neta del commit del merge, sense cap fitxer de codi sense seguir. Amb 8 fils, uns 30 minuts.
 - **L'ordre,** des de l'arrel de la còpia, en una finestra de PowerShell del responsable, fora de l'aplicació, a prioritat baixa:
   `bash eines/executa-b1.sh fase2/resultats/b1/autonomia/llista.txt SHA-256 COMMIT`.

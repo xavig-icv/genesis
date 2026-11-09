@@ -21,10 +21,12 @@ import { soupFor } from '../eines/densitat.mjs';
 import { clopperPearson } from '../eines/densitat-analisi.mjs';
 import { GOLDEN, LEVEL1, AUTONOMY, seedMap, checkSeedMap, strataBlocks } from '../eines/b1-llavors.mjs';
 import { clopperPearsonBeta, fayFeuer, gammaP, betaI } from '../eines/b1-estadistica.mjs';
-import { readExtract, extractRecord, fileHashes, EXTRACT_SHA256 } from '../eines/b1-comu.mjs';
-import { INERT, inertProgram, conditions, checkInert, testReplicator, MODULES, PARTNERS } from '../eines/autonomia.mjs';
+import { readExtract, extractRecord, fileHashes, sha256, EXTRACT_SHA256 } from '../eines/b1-comu.mjs';
+import { INERT, inertProgram, conditions, checkInert, testReplicator, MODULES, MODULES_STRATA, PARTNERS } from '../eines/autonomia.mjs';
 import { readFolder, analyse, countsOf, FIGURES, PLAN } from '../eines/autonomia-analisi.mjs';
 import { readHeads, analyse as analyseHeads } from '../eines/caps-analisi.mjs';
+import { readFolder as readStrataFolder, planRuns } from '../eines/estrats-analisi.mjs';
+import { readStrataAutonomy, checkAgainstLevel1, analyse as analyseStrataAutonomy } from '../eines/estrats-autonomia-analisi.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const SEED = 777;
@@ -43,6 +45,14 @@ const REPLICATORS = {
 const DATA = Array.from({ length: 255 }, (_, i) => i + 1).filter((b) => !INSTR.has(b));
 const AUD140 = Uint8Array.from([...DATA.slice(0, 20), ...[...'{>[>{'].map((c) => c.charCodeAt(0)), ...DATA.slice(20, 59)]);
 const ones = (s) => [...s].filter((c) => c === '1').length;
+const KEYS4 = ['solo', 'context', 'heritableSolo', 'heritableContext'];
+// Un control positiu del context, fet a mà (AUD-177): un palíndrom, `{,[>{,]`, 25 bytes de dades diferents i el seu mirall. Quan va
+// segon, `{` porta h1 a 127, i el bucle copia de h1, que baixa, a h0, que puja: la primera meitat acaba portant el programa al revés,
+// que és ell mateix. Cap byte no és 0, i el bucle no s'atura fins al final del pressupost de passos
+const CONTEXT_CONTROL = (() => {
+  const half = [...[...'{,[>{,]'].map((c) => c.charCodeAt(0)), ...DATA.slice(0, 25)];
+  return Uint8Array.from([...half, ...half.slice().reverse()]);
+})();
 
 // Uns programes per comparar la prova amb i sense les opcions: els tres replicadors i 120 de D½
 function programs() {
@@ -143,6 +153,101 @@ const tests = {
       const r = testReplicator(AUD140, conds, evaluator(name));
       assert.strictEqual(ones(r.solo) + ones(r.context), 0, `AUD-140, ${name}`);
     }
+  },
+  "AUD-177: un control positiu del context, fet a mà, es copia quan va segon amb companys inerts; amb K2 (sense ','), no"() {
+    assert.deepStrictEqual([...CONTEXT_CONTROL], [...CONTEXT_CONTROL].reverse(), 'és un palíndrom');
+    const conds = conditions(SEED, 20), r = testReplicator(CONTEXT_CONTROL, conds, evaluator('C0'));
+    assert.deepStrictEqual(KEYS4.map((k) => ones(r[k])), [0, 20, 0, 20], 'sol, cap; en context, totes, i hereditari');
+    const k2 = testReplicator(CONTEXT_CONTROL, conds, evaluator('K2'));
+    assert.strictEqual(ones(k2.solo) + ones(k2.context), 0, 'amb K2, la còpia no fa res');
+  },
+  "AUD-176: a l'anàlisi, els zeros per construcció (S2 en context, S3 sol i S4 en tots dos papers), comprovats i escrits"() {
+    const z = '0'.repeat(100), one = '1' + '0'.repeat(99);
+    const rep = (solo, context) => ({ index: 1, bytes: '00'.repeat(64), solo, context, heritableSolo: z, heritableContext: z, level1Solo: false });
+    let out = analyse({ 'd-mig': { S4: { reps: [rep(z, z), rep(z, z)] }, S2: { reps: [rep(one, z)] } } }).join('\n');
+    assert.match(out, /S4, d-mig \(un control: 0 per construcció en tots dos papers, AUD-176\)/);
+    assert.match(out, /Els zeros per construcció \(AUD-176\): sol, cap de 2 no s'hi replica \(correcte\); en context, cap de 2 no s'hi replica \(correcte\)/);
+    assert.match(out, /Els zeros per construcció \(AUD-176\): en context, cap de 1 no s'hi replica \(correcte\)/);
+    out = analyse({ 'd-mig': { S4: { reps: [rep(z, one)] } } }).join('\n');
+    assert.match(out, /en context, NO: 1 replicadors s'hi repliquen \(un error del codi\)/);
+  },
+  "AUD-175: l'eina amb --registre prova els hereditaris d'un registre de la §13, i la validació els compara amb el registre"() {
+    withTmp((tmp) => {
+      const strataDir = join(tmp, 'estrats'), testedDir = join(tmp, 'autonomia');
+      mkdirSync(strataDir); mkdirSync(testedDir);
+      // un registre de la §13 amb hereditaris coneguts: D½ amb companys uniformes i la llavor del nivell 1 fa les seves sopes, i els
+      // primers 5.000 programes en tenen dos de C0 (el 3.406 i el 4.560)
+      const rec = join(strataDir, 'd-mig-uniforme.jsonl');
+      let r = run('estrats.mjs', '--programa', 'd-mig', '--company', 'uniforme', '--llavor', String(LEVEL1.from), '--programes', '5000', '--tros', '1000', '--fils', '2', '--json', rec);
+      assert.strictEqual(r.status, 0, r.stderr);
+      clean(rec);
+      const out = join(testedDir, 'd-mig-uniforme.jsonl'), base = ['--registre', rec, '--llavor', String(SEED), '--condicions', '2'];
+      // --registre no va amb --quimica, --distribucio ni --extracte; i cal --registre, o --quimica i --distribucio
+      for (const a of [[...base, '--quimica', 'C0'], [...base, '--distribucio', 'd-mig'], [...base, '--extracte', 'x.gz'], ['--llavor', String(SEED)], ['--registre', join(tmp, 'no.jsonl'), '--llavor', String(SEED)]]) {
+        assert.strictEqual(run('autonomia.mjs', ...a, '--json', out).status, 2, a.join(' '));
+      }
+      r = run('autonomia.mjs', ...base, '--fils', '2', '--tros', '1', '--json', out);
+      assert.strictEqual(r.status, 0, r.stderr);
+      clean(out);
+      const ls = lines(out), s = ls[0], level1 = extractRecord(readExtract(), 'C0', 'd-mig').heritable.filter((o) => o.index < 5000);
+      assert.deepStrictEqual(ls.slice(1, -1).map((o) => [o.index, o.bytes]), level1.map((o) => [o.index, o.bytes]));
+      assert.deepStrictEqual(level1.map((o) => o.index), [3406, 4560]);
+      assert.strictEqual(s.chemistry, 'C0');
+      assert.deepStrictEqual([s.source.file, s.source.sha256, s.source.heritable], ['d-mig-uniforme.jsonl', sha256(readFileSync(rec)), 2]);
+      assert.deepStrictEqual(s.modules, fileHashes(MODULES_STRATA));
+      // la mateixa prova que la de la §4, amb els mateixos bytes i les mateixes condicions
+      const conds = conditions(SEED, 2);
+      for (const o of ls.slice(1, -1)) { const t = testReplicator(Uint8Array.from(Buffer.from(o.bytes, 'hex')), conds, evaluator('C0')); for (const k of KEYS4) assert.strictEqual(o[k], t[k], k); }
+      // un registre de la §13 amb uns bytes canviats: s'hi nega
+      const bad = join(tmp, 'canviat.jsonl');
+      writeFileSync(bad, readFileSync(rec, 'utf8').replace(/("index":3406,"bytes":")(..)/, (_, a, b) => a + (b === 'ff' ? 'fe' : 'ff')));
+      assert.strictEqual(run('autonomia.mjs', '--registre', bad, '--llavor', String(SEED), '--condicions', '2', '--json', join(tmp, 'x.jsonl')).status, 2);
+      // la validació de l'anàlisi, amb un pla de prova
+      const plan = [{ key: 'd-mig:uniforme', program: 'd-mig', partner: 'uniforme', seed: LEVEL1.from, programs: 5000 }];
+      const strata = readStrataFolder(strataDir, { root, plan });
+      assert.deepStrictEqual(strata.problems, []);
+      const opts = { plan, seed: SEED, conditions: 2 }, ok = readStrataAutonomy(testedDir, strata.runs, opts);
+      assert.deepStrictEqual(ok.problems, []);
+      assert.deepStrictEqual(ok.tested['d-mig:uniforme'].map((o) => o.index), [3406, 4560]);
+      // amb el pla de veritat (la llavor i les condicions de la §4), s'hi nega
+      assert.ok(readStrataAutonomy(testedDir, strata.runs, { plan }).problems.some((p) => /no són els del pla/.test(p)));
+      const text = readFileSync(out, 'utf8');
+      const tamper = (fn, re) => {
+        writeFileSync(out, fn(text));
+        const { problems } = readStrataAutonomy(testedDir, strata.runs, opts);
+        assert.ok(problems.some((p) => re.test(p)), `${re}: ${problems.join(' | ')}`);
+        writeFileSync(out, text);
+      };
+      tamper((t) => t.replace(/"sha256":"[0-9a-f]{64}"/, `"sha256":"${'0'.repeat(64)}"`), /no té cap prova d'autonomia/);
+      tamper((t) => t.replace(/("index":3406,"bytes":")(..)/, '$1ff'), /empremta/);
+      tamper((t) => t.replace(/"code":"[0-9a-f]+"/, '"code":"abc1234+canvis"'), /el codi és/);
+      tamper((t) => t.replace(/"eines\/estrats.mjs":"[0-9a-f]{64}"/, `"eines/estrats.mjs":"${'0'.repeat(64)}"`), /un altre codi/);
+      rmSync(out);
+      assert.ok(readStrataAutonomy(testedDir, strata.runs, opts).problems.some((p) => /cap JSONL/.test(p)));
+    });
+  },
+  "AUD-175: l'anàlisi de ρ_aut, amb dades sintètiques: la corba, m_aut, els grups de k, les sopes i D½ amb companys de D½"() {
+    const n = (k) => '1'.repeat(k) + '0'.repeat(100 - k);
+    const rep = (index, k) => ({ index, bytes: '00'.repeat(64), solo: n(k), context: n(0), heritableSolo: n(k), heritableContext: n(0) });
+    const strata = {}, tested = {};
+    for (const p of planRuns()) {
+      strata[p.key] = { n: p.programs };
+      // els estrats: cap hereditari de k = 0 a 4, i dos a cada k ≥ 5, un d'autònom (n = 60) i un que no (n = 0); les sopes, tres
+      // hereditaris, un d'autònom; D½ amb companys de D½, un, autònom a totes
+      tested[p.key] = p.k !== undefined ? (p.k >= 5 ? [rep(1, 60), rep(2, 0)] : []) : p.world ? [rep(1, 1), rep(2, 0), rep(3, 0)] : [rep(7, 100)];
+    }
+    const autonomy = { 'd-mig': { C0: { start: { level1: { programs: 1e7 } }, reps: [rep(7, 100), rep(9, 0)] } }, uniforme: { C0: { start: { level1: { programs: 1e7 } }, reps: [rep(1, 0)] } } };
+    const out = analyseStrataAutonomy(strata, tested, autonomy).join('\n');
+    assert.match(out, /m_aut, el k més petit amb algun autònom: 5 \(/);
+    assert.match(out, /k de 0 a 4: 0 hereditaris de 50000000 programes; n ≥ 1, 0; n > 50, 0/);
+    assert.match(out, /k de 5 a 12: 16 hereditaris de 80000000 programes; n ≥ 1, 8; n > 50, 8/);
+    assert.match(out, /Les 22 sopes juntes: uniformes, 66 hereditaris, 22 autònoms, .*; de la sopa, 66 hereditaris, 22 autònoms/);
+    assert.match(out, /4\. D½ amb companys de D½, els primers 1000000 programes del nivell 1, amb C0: 1 hereditaris; n ≥ 1, 1; n > 50, 1\. Els 1 que també ho eren al nivell 1/);
+    assert.match(out, /Comprovació, D½: ρ_aut = .*, i al nivell 1, C0, a la §4, 1 de 10000000/);
+    // la comprovació amb la §4: una cadena diferent és un problema
+    assert.deepStrictEqual(checkAgainstLevel1(tested, autonomy).problems, []);
+    const other = { ...autonomy, 'd-mig': { C0: { ...autonomy['d-mig'].C0, reps: [rep(7, 99)] } } };
+    assert.ok(checkAgainstLevel1(tested, other).problems.some((p) => /no té les cadenes de la §4/.test(p)));
   },
   "l'eina: les opcions, el JSONL, els fils, i que no sobreescriu res (S4, 2 condicions, sense mirar-ne cap xifra)"() {
     withTmp((tmp) => {

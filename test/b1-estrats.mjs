@@ -18,10 +18,10 @@ import { soupFor as level1Soup, DISTRIBUTIONS } from '../eines/densitat.mjs';
 import { strataBlocks, strataSize, soupBlocks, LEVEL1, SOUP_PROGRAMS } from '../eines/b1-llavors.mjs';
 import { uniformInt, stratumProgram, compositionDraw, readComposition, checkCohort, parseSource, soupFor, sourceDraw, dMig, testRange, MODULES, SOUP_BYTES } from '../eines/estrats.mjs';
 import { cohort } from '../eines/composicio.mjs';
-import { planRuns, readRun, readFolder, rho, binomialWeight, COMPOSITIONS } from '../eines/estrats-analisi.mjs';
+import { planRuns, readRun, readFolder, rho, binomialWeight, analyse, COMPOSITIONS } from '../eines/estrats-analisi.mjs';
 import { fayFeuer } from '../eines/b1-estadistica.mjs';
 import { fileHashes } from '../eines/b1-comu.mjs';
-import { lists } from '../eines/b1-llistes.mjs';
+import { lists, LIST_FILES } from '../eines/b1-llistes.mjs';
 import { compare } from '../eines/b1-compara.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -165,7 +165,9 @@ const tests = {
     assert.strictEqual(plan.length, 65 + 44 + 1);
     assert.strictEqual(new Set(plan.map((p) => p.key)).size, plan.length);
     plan.filter((p) => p.k !== undefined).forEach((p) => { assert.strictEqual(p.seed, strataBlocks()[p.k].from); assert.strictEqual(p.programs, strataSize(p.k)); });
-    assert.strictEqual(plan.filter((p) => p.k !== undefined && p.programs === 1e7).length, 10);
+    // 10⁷ de k = 0 a 12 (AUD-178; a la v0.5, de 3 a 12), i 10⁶ als altres
+    assert.deepStrictEqual(plan.filter((p) => p.k !== undefined && p.programs === 1e7).map((p) => p.k), [...Array(13).keys()]);
+    assert.strictEqual(strataBlocks().at(-1).from + strataBlocks().at(-1).size, 624000000);
     const soups = soupBlocks(22);
     cohort().forEach((w, s) => { for (const partner of ['uniforme', 'programa']) assert.strictEqual(plan.find((p) => p.key === `sopa:${w.world}:${partner}`).seed, soups[s].from); });
     assert.ok(plan.filter((p) => p.world).every((p) => p.programs === SOUP_PROGRAMS));
@@ -174,11 +176,37 @@ const tests = {
   },
   "les llistes d'ordres de git són les que fa eines/b1-llistes.mjs, amb el pla i el mapa de llavors"() {
     const all = lists();
-    for (const what of ['autonomia', 'caps', 'estrats']) {
-      assert.strictEqual(readFileSync(join(root, 'fase2', 'resultats', 'b1', what, 'llista.txt'), 'utf8').replace(/\r/g, ''), all[what].join('\n') + '\n', what);
+    for (const [what, file] of Object.entries(LIST_FILES)) {
+      assert.strictEqual(readFileSync(join(root, file), 'utf8').replace(/\r/g, ''), all[what].join('\n') + '\n', what);
     }
-    assert.deepStrictEqual([all.autonomia.length, all.caps.length, all.estrats.length], [11, 4, 110]);
+    assert.deepStrictEqual(Object.keys(LIST_FILES).map((w) => all[w].length), [11, 4, 110, 110]);
     assert.ok([...all.autonomia, ...all.caps, ...all.estrats].every((l) => / --fils 8 --json fase2\/resultats\/b1\/(autonomia|caps|estrats)\/registres\/\S+\.jsonl$/.test(l)));
+    // l'autonomia dels hereditaris de la §13 (AUD-175): una ordre per registre de la §13, amb les condicions de la §4
+    all.estrats.forEach((l, i) => {
+      const json = l.split(' --json ')[1], name = json.split('/').pop();
+      assert.strictEqual(all['estrats-autonomia'][i], `node eines/autonomia.mjs --registre ${json} --llavor 250000000 --condicions 100 --fils 8 --json fase2/resultats/b1/estrats/autonomia/${name}`);
+    });
+  },
+  "AUD-177: analyse() de la §13, amb 110 tirades sintètiques, acaba i en treu les xifres que toca"() {
+    // com la prova de l'auditor 1 (auditoria 28): cap programa no s'executa, i els recomptes són inventats
+    const runs = {}, mk = (n, idx, solo) => ({ n, found: idx.map((index, j) => ({ index, heritableSolo: j < solo, heritableContext: j >= solo })) });
+    for (const p of planRuns()) {
+      if (p.k !== undefined) runs[p.key] = mk(p.programs, p.k === 0 ? [5, 9] : p.k === 30 ? Array.from({ length: 160 }, (_, j) => 3 * j) : [], 1);
+      else if (p.world) runs[p.key] = mk(p.programs, p.partner === 'uniforme' ? [3, 10, 17] : [10, 17, 24, 31], 0);
+      else runs[p.key] = mk(p.programs, [11, 22], 0);
+    }
+    const out = analyse(runs);
+    assert.strictEqual(out.length, 37);
+    const text = out.join('\n');
+    assert.match(text, /Els estrats, k: hereditaris de n, rₖ \(IC del 95 %\), només els que en tenen: 0: 2 de 10000000; 30: 160 de 1000000/);
+    assert.match(text, /m, el k més petit amb algun hereditari: 0 \(/);
+    // les sopes: a cadascuna, 2 a tots dos, 1 només amb uniformes i 2 només amb els de la sopa; les 22 juntes, aparellades (auditor 1)
+    assert.match(text, /Les 22 sopes juntes: uniformes 66, .*; de la sopa 88, .*; 44, 22, 44, quocient 1\.33 \(/);
+    assert.match(text, /companys sintetitzats a partir de l'histograma de la sopa/);
+    // ρ(½), la suma dels pesos pels rₖ
+    const want = binomialWeight(0, 0.5) * 2 / 1e7 + binomialWeight(30, 0.5) * 160 / 1e6;
+    const got = /ρ\(p\), amb l'interval de Fay i Feuer del 95 %: .*0\.5: ([0-9.]+)·10\^(-?\d+)/.exec(text);
+    assert.ok(got && Math.abs(Number(got[1]) * 10 ** Number(got[2]) - want) / want < 0.01, `${got} ${want}`);
   },
   "l'anàlisi: la validació d'una carpeta, i com s'hi nega"() {
     withTmp((tmp) => {

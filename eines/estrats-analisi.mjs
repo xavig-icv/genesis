@@ -12,19 +12,25 @@
 //  1. la corba: per a cada estrat k, rₖ, la part dels programes amb k instruccions que són hereditaris, amb el seu interval de
 //     Clopper-Pearson; m, el k més petit amb algun hereditari (el de veritat pot ser més petit); i ρ(p) = Σₖ C(64, k) pᵏ (1 − p)⁶⁴⁻ᵏ rₖ,
 //     amb l'interval de Fay i Feuer, a una graella de p, amb p*, la p de la graella fina amb la ρ més alta, i les p on la cota
-//     superior arriba a la inferior de p*. També amb l'herència sola. Dues comprovacions descriptives, amb mostres independents: ρ(½)
-//     contra la densitat de C0 amb D½ al nivell 1, i ρ(10/256) contra la de C0 amb bytes uniformes;
-//  2. les sopes del pilot: per a cada món, la part d'instruccions, la densitat amb companys uniformes i amb companys de la composició
-//     de la sopa (aparellades, amb la taula de 2 × 2 i el quocient), la ρ de la corba a la mateixa part d'instruccions (amb les
-//     instruccions i els altres valors uniformes), i la part de cel·les hereditàries de l'escaneig del braç shuffle-all del pilot
-//     (AUD-121 i AUD-122). Comparar-les no és cap predicció causal de l'origen a la sopa: demanaria un model dels encontres;
+//     superior arriba a la inferior de p*. També amb l'herència sola, que vol dir «el programa primer»: el codi del company també s'hi
+//     executa, després del del programa (AUD-175). Amb companys de soroll, el company hi pot ajudar, i als k petits la corba en mesura
+//     sobretot l'ajuda: la corba sense l'ajuda del company, ρ_aut(p), és a eines/estrats-autonomia-analisi.mjs. Dues comprovacions
+//     descriptives, amb mostres independents: ρ(½) contra la densitat de C0 amb D½ al nivell 1, i ρ(10/256) contra la de C0 amb bytes
+//     uniformes;
+//  2. les sopes del pilot: per a cada món, la part d'instruccions, la densitat amb companys uniformes i amb companys sintetitzats a
+//     partir de l'histograma de la sopa (aparellades, amb la taula de 2 × 2 i el quocient), la ρ de la corba a la mateixa part
+//     d'instruccions (amb les instruccions i els altres valors uniformes), i la part de cel·les hereditàries de l'escaneig del braç
+//     shuffle-all del pilot (AUD-121 i AUD-122); i les 22 juntes, amb la taula de 2 × 2 i el quocient (auditor 1). Els companys
+//     sintetitzats només conserven la freqüència de cada byte, no l'estructura de les cel·les (auditor 2). Comparar-les no és cap
+//     predicció causal de l'origen a la sopa: demanaria un model dels encontres. Tots els recomptes es donen, també els zeros, i N no
+//     s'amplia després de veure'ls (auditor 2);
 //  3. D½ amb companys de D½: els primers 10⁶ programes del nivell 1, amb uns altres companys, contra C0 al nivell 1.
 import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import { pathToFileURL } from 'url';
 import { PROGRAM_SIZE } from '../fase1/bff.js';
 import { LEVEL1, strataBlocks, strataSize, soupBlocks, SOUP_PROGRAMS } from './b1-llavors.mjs';
-import { fileHashes, readExtract, extractRecord, readJsonl } from './b1-comu.mjs';
+import { fileHashes, readExtract, extractRecord, readJsonl, sha256 } from './b1-comu.mjs';
 import { clopperPearsonBeta, fayFeuer } from './b1-estadistica.mjs';
 import { ratio } from './densitat-analisi.mjs';
 import { MODULES, TEST, NOISE, parseSource, readComposition, soupFor, sourceDraw } from './estrats.mjs';
@@ -45,7 +51,8 @@ export function planRuns(worlds = cohort().map((w) => w.world)) {
 }
 const KEYS = ['tested', 'replicates', 'heritable', 'heritableSolo', 'heritableContext'];
 
-// Un fitxer: { name, start, found, problems }, amb els recomptes i els bytes comprovats
+// Un fitxer: { name, sha256, start, found, problems }, amb els recomptes i els bytes comprovats. La SHA-256 és la del fitxer: la prova
+// d'autonomia dels seus hereditaris (eines/autonomia.mjs --registre) la porta a la línia d'inici
 export function readRun(file, root) {
   const r = readJsonl(file), { name } = r;
   if (r.problems.length && !r.start) return r;
@@ -85,7 +92,7 @@ export function readRun(file, root) {
   }
   if (upTo !== s.to || end.from !== s.from || end.to !== s.to || s.to - s.from !== s.programs) problems.push(`${name}: els recomptes o la línia final no arriben al final del tros`);
   for (const k of KEYS) if (end[k] !== totals[k]) problems.push(`${name}: el total de la línia final no és el dels recomptes (${k})`);
-  return { name, start: s, found, problems };
+  return { name, sha256: sha256(readFileSync(file)), start: s, end, found, problems };
 }
 
 // La carpeta, contra el pla. Retorna { runs, problems }: runs[key] = { n, found }
@@ -122,7 +129,8 @@ export function readFolder(dir, { root = process.cwd(), plan = planRuns(), modul
       at = Math.max(at, r.start.to);
     }
     if (at !== p.programs) problems.push(`${p.key}: ${at} programes, i el pla en preveu ${p.programs}`);
-    runs[p.key] = { n: at, found: rs.flatMap((r) => r.found) };
+    // files: cada fitxer de la tirada, amb la seva SHA-256, per a la prova d'autonomia dels seus hereditaris (AUD-175)
+    runs[p.key] = { n: at, found: rs.flatMap((r) => r.found), files: rs.map((r) => ({ name: r.name, sha256: r.sha256, start: r.start, end: r.end, found: r.found })) };
   }
   return { runs, problems };
 }
@@ -144,12 +152,12 @@ export const GRID = [0.01, 0.02, 0.03, 10 / 256, 0.05, 0.075, 0.1, 0.125, 0.15, 
 export function analyse(runs, { extract = readExtract(), manifest = cohort() } = {}) {
   const out = [];
   // 1. la corba
-  for (const [label, sel] of [['hereditaris (sols o en context)', isHer], ['hereditaris sols', (o) => o.heritableSolo]]) {
+  for (const [label, sel] of [['hereditaris (sols o en context)', isHer], ['hereditaris sols (el programa primer; el codi del company també hi és, AUD-175)', (o) => o.heritableSolo]]) {
     const strata = Array.from({ length: 65 }, (_, k) => { const r = runs[`estrat:${k}`]; return { n: r.n, x: r.found.filter(sel).length }; });
     out.push(`1. La corba ρ(p), ${label}, amb C0 i companys uniformes`);
     out.push(`  Els estrats, k: hereditaris de n, rₖ (IC del 95 %), només els que en tenen: ${strata.map((s, k) => (s.x ? `${k}: ${s.x} de ${s.n}` : null)).filter(Boolean).join('; ') || 'cap'}`);
     const m = strata.findIndex((s) => s.x > 0);
-    out.push(`  m, el k més petit amb algun hereditari: ${m < 0 ? 'cap' : `${m} (rₘ = ${cp(strata[m].x, strata[m].n)}); el de veritat pot ser més petit`}`);
+    out.push(`  m, el k més petit amb algun hereditari: ${m < 0 ? 'cap' : `${m} (rₘ = ${cp(strata[m].x, strata[m].n)}); el de veritat pot ser més petit, i amb l'ajuda del company pot ser 0 o 1 (AUD-175)`}`);
     out.push(`  ρ(p), amb l'interval de Fay i Feuer del 95 %: ${GRID.map((p) => { const r = rho(strata, p); return `${p === 10 / 256 ? '10/256' : p}: ${sci(r.value)} (de ${sci(r.ci[0])} a ${sci(r.ci[1])})`; }).join('; ')}`);
     let best = 0, bestP = null;
     for (let i = 1; i < 1000; i++) { const v = rho(strata, i / 1000).value; if (v > best) { best = v; bestP = i / 1000; } }
@@ -167,9 +175,9 @@ export function analyse(runs, { extract = readExtract(), manifest = cohort() } =
   }
   // 2. les sopes del pilot
   const curve = Array.from({ length: 65 }, (_, k) => { const r = runs[`estrat:${k}`]; return { n: r.n, x: r.found.filter(isHer).length }; });
-  out.push(`2. Les sopes del pilot (l'època 8.000), amb C0: la part d'instruccions; hereditaris amb companys uniformes i amb companys de la sopa (de ${SOUP_PROGRAMS}); la taula de 2 × 2 (tots dos, només uniformes, només de la sopa) i el quocient (de la sopa / uniformes); la ρ de la corba a la mateixa part; i l'escaneig de shuffle-all del pilot, hereditaris de les cel·les`);
+  out.push(`2. Les sopes del pilot (l'època 8.000), amb C0: la part d'instruccions; hereditaris amb companys uniformes i amb companys sintetitzats a partir de l'histograma de la sopa (de ${SOUP_PROGRAMS}); la taula de 2 × 2 (tots dos, només uniformes, només de la sopa) i el quocient (de la sopa / uniformes); la ρ de la corba a la mateixa part; i l'escaneig de shuffle-all del pilot, hereditaris de les cel·les`);
   const pilot = JSON.parse(readFileSync(MANIFEST, 'utf8')).worlds;
-  const sum = { u: 0, c: 0, n: 0, sh: 0, cells: 0 };
+  const sum = { u: 0, c: 0, n: 0, both: 0, sh: 0, cells: 0 };
   for (const w of manifest) {
     const u = runs[`sopa:${w.world}:uniforme`], c = runs[`sopa:${w.world}:programa`];
     const comp = readComposition(join(COMPOSITIONS, `${w.world}.json`)), p = comp.instructions / comp.bytes;
@@ -177,9 +185,11 @@ export function analyse(runs, { extract = readExtract(), manifest = cohort() } =
     const both = [...hc].filter((i) => hu.has(i)).length, r = ratio(hc.size, hu.size), d = rho(curve, p);
     const scan = pilot.find((x) => x.world === w.world).arms['shuffle-all'].scan;
     out.push(`  ${w.world}: p = ${p.toFixed(4)}; uniformes ${hu.size}, ${cp(hu.size, u.n)}; de la sopa ${hc.size}, ${cp(hc.size, c.n)}; ${both}, ${hu.size - both}, ${hc.size - both}, quocient ${fmt(r.value)} (de ${fmt(r.ci[0])} a ${fmt(r.ci[1])}); la corba, ${sci(d.value)} (de ${sci(d.ci[0])} a ${sci(d.ci[1])}); shuffle-all, ${scan.heritable} de ${scan.cells}, ${cp(scan.heritable, scan.cells)}`);
-    sum.u += hu.size; sum.c += hc.size; sum.n += u.n; sum.sh += scan.heritable; sum.cells += scan.cells;
+    sum.u += hu.size; sum.c += hc.size; sum.n += u.n; sum.both += both; sum.sh += scan.heritable; sum.cells += scan.cells;
   }
-  out.push(`  Les ${manifest.length} sopes juntes: uniformes ${sum.u}, ${cp(sum.u, sum.n)}; de la sopa ${sum.c}, ${cp(sum.c, sum.n)}; shuffle-all, ${sum.sh} de ${sum.cells}, ${cp(sum.sh, sum.cells)}`);
+  // les 22 juntes, aparellades programa a programa (auditor 1): cada sopa en donarà pocs
+  const rAll = ratio(sum.c, sum.u);
+  out.push(`  Les ${manifest.length} sopes juntes: uniformes ${sum.u}, ${cp(sum.u, sum.n)}; de la sopa ${sum.c}, ${cp(sum.c, sum.n)}; ${sum.both}, ${sum.u - sum.both}, ${sum.c - sum.both}, quocient ${fmt(rAll.value)} (de ${fmt(rAll.ci[0])} a ${fmt(rAll.ci[1])}); shuffle-all, ${sum.sh} de ${sum.cells}, ${cp(sum.sh, sum.cells)}`);
   // 3. D½ amb companys de D½, aparellat amb el nivell 1
   const dm = runs['d-mig:programa'], h3 = new Set(dm.found.filter(isHer).map((o) => o.index));
   const h1 = new Set(extractRecord(extract, 'C0', 'd-mig').heritable.filter((o) => o.index < dm.n).map((o) => o.index));

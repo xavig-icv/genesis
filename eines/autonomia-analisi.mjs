@@ -13,9 +13,13 @@
 //     bytes; i cada cadena, de C caràcters 0 o 1, amb l'herència només on hi ha la replicació.
 // Tot és descriptiu. La xifra principal d'un replicador és en quantes de les 100 condicions és hereditari, sol o en context: n.
 // Les quatre xifres, fixades abans (§4): n ≥ 1, «es pot copiar sense el codi del company»; n > 50, «en la majoria de les condicions
-// assajades»; n ≥ 95, «autonomia robusta»; n = 100, «autonomia estricta». Les dues últimes són classificacions operatives, no
-// propietats demostrades amb un nombre finit de proves. Les mateixes quatre xifres, sol i en context per separat. Els intervals són
-// de Clopper-Pearson, del 95 %: la part dels hereditaris de la química que hi passen.
+// assajades»; n ≥ 95, «autonomia robusta»; n = 100, «autonomia estricta». Les dues últimes són classificacions operatives de les 100
+// condicions assajades, no propietats demostrades amb un nombre finit de proves (auditor 2). Les mateixes quatre xifres, sol i en
+// context per separat. "Sol" vol dir que el programa va primer (AUD-175). Els intervals són de Clopper-Pearson, del 95 %: la part dels
+// hereditaris de la química que hi passen.
+// Els zeros per construcció (AUD-176), comprovats i escrits a la sortida: S2 en context, S3 sol, i S4 en tots dos papers. Amb S4, el
+// codi d'una meitat no pot escriure a l'altra, i un company inert no hi executa res: el company no canvia mai, i la tirada d'S4 és un
+// control. Si cap no dona 0, és un error del codi, i la sortida ho diu.
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { pathToFileURL } from 'url';
@@ -30,6 +34,8 @@ export const PLAN = Object.freeze({
   // les químiques amb hereditaris al nivell 1: les deu de la llista del nivell 2 amb D½, i C0 amb bytes uniformes (exploratori)
   runs: Object.freeze({ 'd-mig': ['C0', 'K1', 'K2', 'R0', 'S1', 'S2', 'S3', 'S4', 'X1', 'H64'], uniforme: ['C0'] }),
 });
+// Els papers on una química no pot replicar res, per construcció: el company, amb companys inerts, no pot canviar (§4; AUD-176)
+export const BY_CONSTRUCTION = Object.freeze({ S2: Object.freeze(['context']), S3: Object.freeze(['solo']), S4: Object.freeze(['solo', 'context']) });
 export const FIGURES = Object.freeze([
   { name: 'en 1 o més', test: (n) => n >= 1, label: 'es pot copiar sense el codi del company' },
   { name: 'en més de 50', test: (n) => n > 50, label: 'en la majoria de les condicions assajades' },
@@ -107,7 +113,15 @@ export function analyse(runs) {
   for (const dist of Object.keys(runs).sort()) {
     for (const chem of PLAN.runs[dist].filter((c) => runs[dist][c])) {
       const { reps } = runs[dist][chem], n = reps.length, cs = reps.map(countsOf), nSolo1 = reps.filter((o) => o.level1Solo).length;
-      out.push(`${chem}, ${dist}${dist === 'uniforme' ? ' (exploratori)' : ''}: ${n} hereditaris del nivell 1 (sols ${nSolo1}, només en context ${n - nSolo1}), ${PLAN.conditions} condicions amb companys inerts`);
+      const zero = BY_CONSTRUCTION[chem];
+      out.push(`${chem}, ${dist}${dist === 'uniforme' ? ' (exploratori)' : ''}${chem === 'S4' ? ' (un control: 0 per construcció en tots dos papers, AUD-176)' : ''}: ${n} hereditaris del nivell 1 (sols ${nSolo1}, només en context ${n - nSolo1}), ${PLAN.conditions} condicions amb companys inerts`);
+      // els zeros per construcció: cap replicació, ni sense herència, en el paper on no n'hi pot haver
+      if (zero) {
+        out.push(`  Els zeros per construcció (AUD-176): ${zero.map((role) => {
+          const k = reps.filter((o) => o[role].includes('1')).length;
+          return `${role === 'solo' ? 'sol' : 'en context'}, ${k ? `NO: ${k} replicadors s'hi repliquen (un error del codi)` : `cap de ${n} no s'hi replica (correcte)`}`;
+        }).join('; ')}`);
+      }
       for (const [role, key] of [['En alguna de les dues proves (la xifra principal)', 'any'], ['Sol (el programa primer)', 'solo'], ['En context (el programa segon)', 'context']]) {
         out.push(`  ${role}:`);
         for (const f of FIGURES) { const k = cs.filter((c) => f.test(c[key])).length; out.push(`    ${f.name}: ${k} (${pct(k, n)}; IC del 95 %, ${ci(k, n)}), ${f.label}`); }
