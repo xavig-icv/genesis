@@ -1,9 +1,22 @@
 # B1, les ablacions de la química · el nivell 1, la densitat de replicadors
 
-**Versió: v0.5 (05-11-2026), per a l'auditoria 28, abans de calcular res del que s'hi afegeix.** El nivell 1 es va calcular el 4 i el
-5-11-2026 amb la v0.4 (l'entrada 15 del quadern), i l'auditoria 27 el va revisar. La v0.5 fixa el que ve després, amb el codi en una
-PR (la branca `b1-autonomia`) i les proves (§9): la prova d'autonomia (§4), la composició de bytes (§13), les variants per cap d'S1
-(§14) i les llavors (§15). D'això, només s'ha mesurat el temps, sense cap recompte (§8).
+**Versió: v0.6 (09-11-2026), amb les decisions de l'auditoria 28, per a l'auditoria 29, abans de calcular res del que s'hi afegeix.**
+El nivell 1 es va calcular el 4 i el 5-11-2026 amb la v0.4 (l'entrada 15 del quadern), i l'auditoria 27 el va revisar. La v0.5 fixa el
+que ve després, amb el codi en una PR (la branca `b1-autonomia`) i les proves (§9): la prova d'autonomia (§4), la composició de bytes
+(§13), les variants per cap d'S1 (§14) i les llavors (§15). D'això, només s'ha mesurat el temps, sense cap recompte (§8).
+- **De la v0.5 a la v0.6** (les decisions de l'auditoria 28, §12). Res no s'ha calculat:
+  - **la composició de cada sopa, comprovada sencera** abans de cada tirada (AU2-140, bloquejant per a la §13): 2²³ bytes, els recomptes
+    i les instruccions, i la cohort del pilot (§13);
+  - **«sol» vol dir «el programa primer»,** no «sense el codi del company», i una corba sense l'ajuda del company, ρ_aut(p): la prova
+    d'autonomia, aplicada als hereditaris de les tirades de la §13, amb el codi i la seva anàlisi escrits abans de calcular (AUD-175, §4 i
+    §13);
+  - **S4 dona 0 per construcció a la prova d'autonomia,** com S2 en context i S3 sol: la seva tirada es queda com a control, i l'anàlisi
+    comprova els tres zeros (AUD-176, §2, §4 i §7);
+  - **un control positiu del context,** fet a mà, i una prova de l'anàlisi de la §13 (AUD-177, §4 i §9);
+  - **10⁷ programes també als estrats de k = 0 a 2,** amb el mapa de llavors i la llista de la §13 refets (AUD-178, §13 i §15);
+  - **les sopes:** «companys sintetitzats a partir de l'histograma de la sopa», tots els recomptes, també els zeros, i les 22 juntes,
+    aparellades (tots dos, §13);
+  - **les precisions:** les 100 condicions (§4), la cobertura de Fay i Feuer, que no és una garantia (§13), i la guarda (§11).
 - **De la v0.4 a la v0.5** (les decisions de l'auditoria 27 i de X-093 i X-094, §12):
   - **la prova d'autonomia:** el criteri (la distribució sencera, sol i en context, i quatre xifres fixades abans), els companys
     inerts (què són, com es fan i com es comprova que ho són), les 100 condicions, els controls, els 37 de bytes uniformes
@@ -95,7 +108,7 @@ hereditaris. És si els replicadors curts **existeixen i són abundants**.
 | **S1** | Escriure a la meitat del punter no fa res | Sense automodificació: el codi que s'executa no es pot reescriure | Sí que n'hi ha: un replicador escriu al company, no a si mateix |
 | **S2** | Escriure a les posicions 0–63 no fa res | El primer programa no es toca | Sol, sí: el primer escriu al segon. En context, cap, per construcció: el segon no pot escriure al primer (auditor 1) |
 | **S3** | Escriure a les posicions 64–127 no fa res | El segon programa no es toca | Sol, cap, per construcció: el primer no pot escriure al segon. En context, sí: el segon escriu al primer |
-| **S4** | Escriure a l'altra meitat que la del punter no fa res | Cada programa només escriu a la seva meitat. Fa parella amb S1: amb S1, el programa només escriu al company; amb S4, el company només escriu a si mateix | Sí, per una via sabuda: el codi del company, que s'executa a la seva meitat, s'hi pot copiar el programa, amb un bucle que el programa obre i es tanca al company (AUD-140). A la v0.2 era un control |
+| **S4** | Escriure a l'altra meitat que la del punter no fa res | Cada programa només escriu a la seva meitat. Fa parella amb S1: amb S1, el programa només escriu al company; amb S4, el company només escriu a si mateix | Sí, per una via sabuda: el codi del company, que s'executa a la seva meitat, s'hi pot copiar el programa, amb un bucle que el programa obre i es tanca al company (AUD-140). A la v0.2 era un control. Amb companys inerts (la prova d'autonomia, §4), 0 per construcció en tots dos papers: un company inert no hi executa res, i el programa no hi pot escriure (AUD-176) |
 | **X1** | Una còpia que llegeix de l'altra meitat que la del punter no fa res: no s'executa, però compta | Sense lectura del company (auditor 2). Només limita les còpies: `+`, `-`, `[` i `]` fan servir `h0` sigui on sigui (auditor 1) | Sí: un replicador llegeix el seu codi, de la seva meitat, i escriu a l'altra |
 | **H64** | `h1` comença a 64, i no a 0 | Els caps alineats amb el company (Knierim i altres, CUST64) | Més que C0. Amb C0, la còpia senzilla és la del mirall (`{` porta `h1` a 127), i el fill és el programa al revés, que també s'ha de saber copiar. Amb H64, la còpia directa (`[.>}]`) deixa un fill idèntic, que es copia igual |
 
@@ -127,7 +140,8 @@ variants: el que canvia és la química, no els programes.
 **La prova és la del cens:** `replicationTest` de `fase2/replication.js`, amb `heredity` i `complete`, i amb l'intèrpret de la
 variant (AUD-65). Cap prova nova (AUD-02).
 - **On:** en una sopa barrejada de 9 programes: el que es prova, a la cel·la 0, i 8 de soroll, de bytes uniformes.
-  - **Sol:** el programa va primer, amb un company de soroll. És el que fa el cens.
+  - **Sol:** el programa va primer, amb un company de soroll. És el que fa el cens. El codi del company també s'executa, després del del
+    programa: «sol» vol dir «el programa primer», i no «sense el codi del company» (auditor 1, AUD-175).
   - **En context:** va segon, amb un dels 8 de soroll primer. Al cens, el company és un veí del món. Aquí no hi ha món, i un
     company de soroll és el més neutre.
 - **La mesura principal:** si el programa és un replicador hereditari, sol o en context (`heritable`).
@@ -141,8 +155,9 @@ variant (AUD-65). Cap prova nova (AUD-02).
 ### La prova d'autonomia (v0.5, per a l'auditoria 28)
 
 **La pregunta:** si un replicador hereditari es copia sense el codi del company. Amb un company de soroll, el codi del company hi pot
-contribuir: és el mecanisme de l'AUD-42, i el de l'AUD-140, que també hi és amb C0. A l'auditoria 27, una comprovació exploratòria de
-l'auditor 1, sense la prova de l'herència, ho va mirar: els 44 d'S4, cap; amb bytes uniformes, 1 de 37.
+contribuir, en tots dos papers: és el mecanisme de l'AUD-42, i el de l'AUD-140, que també hi és amb C0. A l'auditoria 27, una
+comprovació exploratòria de l'auditor 1, sense la prova de l'herència, ho va mirar: amb bytes uniformes, 1 de 37. Els 44 d'S4, cap, però
+és per construcció (AUD-176, aquí sota).
 
 **Els replicadors:** els 75.118 hereditaris del nivell 1, de l'extracte (`fase2/resultats/b1/nivell1/hereditaris.jsonl.gz`,
 comprovat amb la SHA-256 del contingut, `6029d878…`):
@@ -164,11 +179,18 @@ ser els mateixos.
     la cinta igual i cap byte d'instrucció. Si no, s'atura. El resultat va a la línia d'inici, i l'anàlisi el comprova;
   - **els controls,** a les proves: els tres replicadors reals de les proves (el de la Fase 1, l'espaiat i l'immune) es copien sols amb
     companys inerts a 15 o més de 20 condicions amb C0, i a cap amb S4; el programa de l'auditor 1 de l'AUD-140, que necessita el codi
-    del company, no es replica a cap, ni amb C0 ni amb S4.
+    del company, no es replica a cap, ni amb C0 ni amb S4;
+  - **un control positiu del context** (AUD-177; cap dels tres d'abans no es copia quan va segon): un palíndrom fet a mà, `{,[>{,]`, 25
+    bytes de dades diferents i el seu mirall. Quan va segon, `{` porta `h1` a 127, i el bucle copia de `h1`, que baixa, a `h0`, que puja:
+    la primera meitat acaba portant el programa al revés, que és ell mateix. Amb C0, és hereditari en context a les 20 condicions de la
+    prova, i sol a cap; amb K2 (sense `,`), no es replica.
 
 **Les condicions:** 100, les mateixes per a tots els replicadors i totes les químiques.
 - **La condició j** (de 0 a 99): els 8 companys inerts de la sopa, fets amb el generador de la llavor 250.000.000 + 2j, i l'atzar de la
   prova, el de 250.000.000 + 2j + 1 (§15).
+- **Què és el mateix per a tots** (auditor 1, auditoria 28): els 8 companys de la sopa, la llavor de l'atzar de la prova i, per tant, el
+  primer company del paper sol. Els que venen després (els altres intents, i els de l'herència) depenen de l'atzar que ha gastat cada
+  programa, com al cens.
 - **La sopa:** el replicador, a la cel·la 0, i els 8 companys inerts, com la del nivell 1.
 
 **La prova** és la del cens (`fase2/replication.js`, AUD-02), amb l'herència, completa, l'intèrpret de la química i dues opcions noves,
@@ -196,8 +218,8 @@ desactivades per defecte:
   | 95 o més | Autonomia robusta |
   | 100 | Autonomia estricta |
 
-  «Robusta» i «estricta» són classificacions experimentals operatives, no propietats demostrades amb un nombre finit de proves
-  (auditor 2);
+  «Robusta» i «estricta» són classificacions experimentals operatives de les 100 condicions assajades, no propietats demostrades amb un
+  nombre finit de proves (auditor 2, auditories 27 i 28);
 - **per a cada química:** quants replicadors passen cada xifra, amb l'interval de Clopper-Pearson del 95 % (la part dels hereditaris de
   la química); la distribució de *n* (0, de 1 a 10, d'11 a 50, de 51 a 94, de 95 a 99, i 100); les mateixes quatre xifres amb *n*sol i
   amb *n*context; i les quatre, per separat, per als que al nivell 1 eren hereditaris sols i per als que només ho eren en context;
@@ -205,6 +227,11 @@ desactivades per defecte:
   de 95 a 100), quants n'hi ha, la mediana de les instruccions, de les instruccions diferents i de les còpies (`.` i `,`), i la part amb
   `[` i `]`. Fixades abans; si cal mirar-ne d'altres, serà després i es dirà;
 - **S2 i S3:** cadascuna només pot tenir hereditaris en un paper, per construcció. *n* és el del paper que pot (auditor 1).
+- **S4, 0 per construcció en tots dos papers** (auditor 1, AUD-176): amb S4, una escriptura a l'altra meitat que la del punter no fa res,
+  i un company inert no hi executa res. El company no canvia mai, i cap dels 44 no s'hi pot copiar, sigui quin sigui el seu mecanisme.
+  L'auditor 1 ho va comprovar en 200.000 cintes, com amb el control X0. La tirada d'S4 es queda, com a control.
+- **Els zeros per construcció, a l'anàlisi:** S2 en context, S3 sol i S4 en tots dos papers. Cap replicació, ni sense herència: si n'hi
+  hagués cap, seria un error del codi, i la sortida ho diria.
 
 **Què no diu:**
 - **un nombre finit de condicions:** un replicador que no es copia en cap de les 100 es podria copiar en una altra;
@@ -274,7 +301,7 @@ i la mateixa llavor donen el mateix). La decisió és quines variants van a la s
 
 Són les de la taula de la §2, escrites abans de calcular:
 - **Els controls** (K0, L0 i X0): 0, a la pràctica.
-- **Per construcció:** S3, sol, i S2, en context: 0.
+- **Per construcció:** S3, sol, i S2, en context: 0. I, a la prova d'autonomia (§4), S4 en tots dos papers (AUD-176).
 - **Totes les altres:** replicadors, S4 inclosa (AUD-140). Les que més ens poden sorprendre:
   - **K1 i K2:** si una de les dues instruccions de còpia és molt més important que l'altra;
   - **S1:** si l'automodificació hi és necessària;
@@ -317,6 +344,12 @@ uns 0,8 ms per programa i fil, amb Du i amb D½.
   de l'herència (§4 i l'entrada 15). No és la prova d'autonomia, i no en fem servir les xifres.
 - **Les composicions de les 22 sopes del pilot** (§13): de l'11,15 al 11,57 % de bytes d'instrucció. Són dades del pilot, ja
   descrites a la seva acta (AUD-122), i no cap resultat de B1.
+- **A l'auditoria 28** (06-11-2026), cap programa a l'atzar del pla:
+  - **l'auditor 1:** la prova del cens a `main` i a la PR, amb 120.097 programes del nivell 1 i els seus registres (cap no canvia); un
+    tros del nivell 1, el 43, refet amb el codi de la PR; 200.000 cintes d'un programa de D½ i un company inert, per química (AUD-176); i
+    l'anàlisi de la §13 amb tirades sintètiques;
+  - **l'auditor 2:** dues composicions sintètiques, que l'eina acceptava (AU2-140), i la verificació dels 15 registres del nivell 1;
+  - **l'equip,** per a la v0.6: el control positiu del context, fet a mà (§4), i la cobertura de l'interval amb les mides noves (§13).
 
 ## 9. La implementació, en una PR
 
@@ -400,6 +433,27 @@ cubff i les proves de l'intèrpret i del món passen igual.
   dues anàlisis), `test/b1-estrats.mjs` (els sortejos, les composicions, l'eina, el pla, les llistes, l'anàlisi i ρ(p)) i
   `test/executa-b1.mjs` (l'executor i la guarda, en un repositori de prova).
 
+**El que hi afegeix la v0.6** (l'auditoria 28). El que ja hi havia fa el mateix, i les llistes de l'autonomia i de les variants per cap
+no canvien:
+- **`eines/estrats.mjs`** (AU2-140): la composició d'una sopa es comprova sencera abans de començar, i abans de crear el JSONL: exactament
+  2²³ bytes; 256 recomptes enters, no negatius, que hi sumen; les instruccions, les que en surten amb els 10 opcodes; i la cohort del
+  pilot (`checkCohort`: el món, inclòs al manifest, l'època 8.000 i la captura, amb la seva SHA-256). `uniformInt` i el sorteig d'una
+  composició es neguen amb un total fora d'1 a 2³², en lloc de no acabar.
+- **`eines/autonomia.mjs --registre`** (AUD-175): la prova d'autonomia dels hereditaris d'un registre de la §13, amb els bytes de cadascun
+  refets amb el sorteig del registre. La línia d'inici en porta el nom, la SHA-256 i l'empremta, i la SHA-256 d'un mòdul més,
+  `eines/estrats.mjs`.
+- **`eines/estrats-autonomia-analisi.mjs`** (AUD-175): l'anàlisi de ρ_aut(p) (§13), escrita i provada abans de calcular.
+- **`eines/autonomia-analisi.mjs`** (AUD-176): els zeros per construcció, comprovats i escrits a la sortida.
+- **`eines/estrats-analisi.mjs`:** les 22 sopes juntes, aparellades (auditor 1), els noms dels companys de les sopes (auditor 2), i la
+  SHA-256 de cada registre, per a la prova d'autonomia dels seus hereditaris.
+- **`eines/b1-llavors.mjs`** (AUD-178): 10⁷ programes als estrats de k = 0 a 12. **`eines/b1-llistes.mjs`:** la llista nova,
+  `estrats-autonomia`. **`eines/estrats-cobertura.mjs`:** l'escenari de l'auditor 1, un terra a tots els k.
+- **`fase2/replication.js`:** només el comentari de l'AUD-42 («sol» vol dir «el programa primer», AUD-175). El codi no canvia.
+- **Les proves:** les quatre composicions dolentes de l'auditor 2 i tres de fora de la cohort, amb l'eina sencera, que s'hi nega sense
+  deixar cap JSONL (AU2-140); el control del context (AUD-177); els zeros per construcció (AUD-176); l'eina amb `--registre`, amb els
+  hereditaris coneguts dels primers 5.000 programes del nivell 1, i la seva validació, i com s'hi nega (AUD-175); i `analyse()` de les
+  dues anàlisis de la §13, amb dades sintètiques (AUD-177).
+
 ## 10. El nivell 2, la sopa (esbós)
 
 - **Les variants:** les que passin el nivell 1, i C0, M0 (sense mutació) i O (l'ordre simètric).
@@ -432,28 +486,34 @@ cubff i les proves de l'intèrpret i del món passen igual.
 3. **La PR de la v0.5** (la branca `b1-autonomia`): el pla, el codi i les proves, i l'auditoria 28, breu, abans de calcular res. Hi va
    també el que l'auditoria 27 va deixar per a la 28: els 15 registres del nivell 1, per a l'auditor 2 (AU2-139), i les correccions de
    text de l'AU2-138.
+   - **Fet** (06-11-2026): GO de l'auditor 1, amb dos canvis de text; GO de l'auditor 2 per a l'autonomia i les variants per cap, i NO-GO
+     de la §13 fins a l'AU2-140. Les correccions, a la v0.6, i l'auditoria 29, breu, abans de calcular res.
 4. **Després del GO i del merge,** en aquest ordre, cada càlcul amb la seva llista:
 
    | Què | Llista (`fase2/resultats/b1/…`) | Ordres | Temps, amb el PC |
    |---|---|---|---|
    | La prova d'autonomia (§4) | `autonomia/llista.txt` | 11 | unes 0,5 h |
    | Les variants per cap, i C0 i S1 de nou (§14) | `caps/llista.txt` | 4 | unes 2,4 h |
-   | La composició (§13): els 65 estrats, les 44 tirades de les sopes, i D½ amb companys de D½ | `estrats/llista.txt` | 110 | unes 12 h |
+   | La composició (§13): els 65 estrats, les 44 tirades de les sopes, i D½ amb companys de D½ | `estrats/llista.txt` | 110 | unes 13,7 h |
+   | L'autonomia dels hereditaris de la §13 (ρ_aut, AUD-175) | `estrats/llista-autonomia.txt` | 110 | uns minuts |
 
-   - **Les llistes** les fa `node eines/b1-llistes.mjs autonomia|caps|estrats`, a partir del pla i del mapa de llavors, i són a git
-     abans de calcular; `test/b1-estrats.mjs` comprova que són les que en surten. Les SHA-256, al README de cada carpeta.
+   - **Les llistes** les fa `node eines/b1-llistes.mjs autonomia|caps|estrats|estrats-autonomia`, a partir del pla i del mapa de llavors,
+     i són a git abans de calcular; `test/b1-estrats.mjs` comprova que són les que en surten. Les SHA-256, al README de cada carpeta.
    - **D'on:** d'una còpia neta del commit del merge, a D:, sense cap fitxer de codi sense seguir.
    - **Com:** `bash eines/executa-b1.sh LLISTA SHA-256 COMMIT`, des d'una finestra de PowerShell del responsable, fora de l'aplicació
      (la incidència 2 de la maduració). L'executor és el del nivell 1 amb la guarda de l'AUD-174: cap fitxer `.js` o `.mjs` amb canvis
-     o sense seguir, abans de començar i abans de cada ordre, i cap registre que digui `+canvis`.
+     o sense seguir, abans de començar i abans de cada ordre, i cap registre que digui `+canvis`. La guarda és la de git, i no veu els
+     fitxers que git ignora (auditor 2): cap carpeta de codi del repositori no ho és.
    - **Mentre corren:** cap recompte. Només l'estat de l'executor.
    - **Al costat dels registres,** com al nivell 1: el commit, la versió de Node, la llista i la SHA-256 de cada registre.
    - **Els registres:** a git, si cap no passa de 50 MB; si no, com al nivell 1, comprimits a una versió de GitHub, i un extracte a git.
    - **Abans d'analitzar, la repetició** (auditor 2), amb la llavor que surt de la SHA-256 d'`execucio-llista.txt`, com al nivell 1: tres
-     registres sencers de l'autonomia i tres de la §13, triats amb `eines/tria.mjs`, comparats amb `eines/b1-compara.mjs`; i, de les
-     variants per cap, tres trossos de 10⁵ de cada registre, com al nivell 1. Ho diu el README de cada carpeta.
+     registres sencers de l'autonomia, tres de la §13 i tres de l'autonomia dels seus hereditaris, triats amb `eines/tria.mjs`, comparats
+     amb `eines/b1-compara.mjs`; i, de les variants per cap, tres trossos de 10⁵ de cada registre, com al nivell 1. Ho diu el README de
+     cada carpeta. És una verificació per mostreig, no una demostració de totes les tirades (auditor 2).
    - **Les anàlisis,** cadascuna quan acabi la seva llista, des d'una còpia amb els mateixos mòduls: `eines/autonomia-analisi.mjs`,
-     `eines/caps-analisi.mjs` i `eines/estrats-analisi.mjs`. Totes tres es neguen si hi falta o hi sobra res.
+     `eines/caps-analisi.mjs`, `eines/estrats-analisi.mjs` i, quan acabi l'autonomia dels hereditaris de la §13,
+     `eines/estrats-autonomia-analisi.mjs`. Totes quatre es neguen si hi falta o hi sobra res.
 5. **Després:** el disseny del nivell 2, amb la prova d'autonomia feta, i dient que la decisió es pren després de veure el nivell 1
    (auditor 1). Tindrà el seu protocol, amb les hipòtesis i els criteris fixats abans (auditor 2).
 
@@ -462,7 +522,7 @@ l'anàlisi del nivell 1 compara (AUD-139), i des de `main`, després del merge, 
 canvi qualsevol a un mòdul fa que l'anàlisi rebutgi els registres), i la recepta és a `docs/reproduir.md` (§7). C0 i S1, tornats a
 calcular amb el codi nou (§14), han de donar els mateixos registres: és una comprovació de punta a punta que el codi nou fa el mateix.
 
-## 12. Les decisions (auditories 25, 26 i 27)
+## 12. Les decisions (de l'auditoria 25 a la 28)
 
 **Ja decidit pel responsable (01-11-2026):** els dos nivells (§1).
 
@@ -511,6 +571,24 @@ la sèrie.
 **Per a l'auditoria 28,** breu, abans de calcular: la §4, la §13, la §14 i la §15, el codi i les proves. I una proposta nova, on cal el
 parer de tots dos: a la §13, tirades directes per a les sopes del pilot en lloc d'estrats per a cadascuna.
 
+**Decidit a l'auditoria 28** (06-11-2026). L'auditor 2 no va veure les troballes de l'auditor 1, ni l'auditor 1 la de l'auditor 2: totes
+s'accepten, i a l'auditoria 29 cadascú revisa les de l'altre.
+
+| Què | Auditor 1 | Auditor 2 | Ara |
+|---|---|---|---|
+| **GO** | GO per calcular, amb dos canvis de text abans | GO per a l'autonomia i les variants per cap; NO-GO de la §13 i de la PR fins a l'AU2-140, i una verificació breu | Les correccions, a la v0.6; l'auditoria 29, breu, i res no es calcula fins al merge (§11) |
+| **La composició de les sopes** (AU2-140) | — | Es valida sencera abans de cada tirada, amb proves negatives | Feta (§9): 2²³ bytes, les instruccions i la cohort; l'eina s'hi nega sense deixar cap JSONL |
+| **«Sol» i l'ajuda del company** (AUD-175) | «Sol» vol dir «el programa primer»; una corba sense l'ajuda del company, amb la prova d'autonomia als hereditaris dels estrats i de les sopes | — | ρ_aut(p), amb el codi i l'anàlisi escrits ara, no abans de l'anàlisi (§13) |
+| **S4 a la prova d'autonomia** (AUD-176) | 0 per construcció; la tirada, un control | S4, una variant experimental (com a l'auditoria 27) | Totes dues coses: S4 és una variant del nivell 1, i a la prova d'autonomia, un control (§4) |
+| **Les proves** (AUD-177) | Un control positiu del context, i una prova d'`analyse()` | Les negatives de l'AU2-140 | Totes (§9) |
+| **Els estrats de k = 0 a 2** (AUD-178) | Si interessa, 10⁷: la comprovació a Du, d'una ràtio de 2,10 a 1,31, per 1,6 h | No tocar les llavors ni els estrats per l'AU2-140 | 10⁷ (§13): amb l'AUD-175, també fa deu vegades més estreta la cota de ρ_aut als p petits. Les llavors canvien abans de calcular res |
+| **Les sopes** | Tirades directes, d'acord; i les 22 juntes, aparellades | Tirades directes, d'acord, amb «companys sintetitzats a partir de l'histograma», tots els recomptes i cap ampliació després | Tot (§13) |
+| **Fay i Feuer** | Coincideix amb una implementació pròpia, i amb Garwood amb un estrat | No és una garantia universal del 95 % | La cobertura, per simulació, amb l'escenari de l'auditor 1; p\*, descriptiva (§13) |
+| **Els controls de l'entrada 15** (AU2-141) | La cota, «unilateral del 97,5 %» | «Per bloquejar les vies conegudes», no «perquè no n'hi pogués haver» | Corregit a `main` (`0b184e1`), amb una nota |
+
+**Per a l'auditoria 29,** breu, abans de calcular: el diferencial de la PR des de `92d3e8a`. Cada auditor revisa també les troballes de
+l'altre (l'AU2-140, per a l'auditor 1; de l'AUD-175 a l'AUD-178, per a l'auditor 2).
+
 ## 13. La composició de bytes, i què podria ser nou (decidida a l'auditoria 25, i fixada a la v0.5)
 
 **La pregunta del responsable:** si, en unes altres circumstàncies, l'eina trobaria més replicadors. En provar-la amb 300 programes,
@@ -545,8 +623,12 @@ de passos i el company. Proposem només la composició:
   intervals és una comprovació descriptiva, no una equivalència formal (auditor 2).
 
 **Les prediccions,** que són hipòtesis (auditor 2):
-- **Amb p petit, ρ creix com pᵐ,** on m és el k més petit amb rₖ > 0, i no el més petit que es vegi. Si rₘ és tan petit que 10⁷
-  programes de l'estrat no en donen cap, la pendent i la densitat a Du només tindran una cota (auditor 1).
+- **Amb p petit, ρ_aut creix com p^m,** on m és el k més petit amb algun replicador que es copia sense el codi del company, i no el més
+  petit que es vegi. Si és tan rar que 10⁷ programes de l'estrat no en donen cap, la pendent i la densitat a Du només tindran una cota
+  (auditor 1). Un bucle de còpia en demana com a mínim cinc instruccions.
+- **ρ, amb companys de soroll, no:** el company hi pot ajudar, també quan el programa va primer, i amb el total i amb els sols, m pot ser
+  0 o 1 (AUD-175). Al nivell 1, amb bytes uniformes, un hereditari no té cap instrucció, i 17 de 37 en tenen 2 o menys. ρ té un terra
+  als p petits, el de l'ajuda del company, i la predicció pᵐ és la de ρ_aut.
 - **Amb p a prop d'1, baixa:** les instruccions de més es destorben. Si és així, hi ha un p\* on ρ és màxima, que respon la pregunta
   del responsable.
 - **La sopa del començament és a p ≈ 0,039,** molt per sota de p\*.
@@ -557,7 +639,7 @@ de passos i el company. Proposem només la composició:
   s'hi compara, serà exploratori, i es dirà.
 - **La corba ρ(p):**
   - **els estrats:** de k = 0 a 64, tots, amb 10⁶ programes cadascun (auditor 2), i 10⁷ als de k = 3 a 12, on pesen Du i les sopes
-    envellides (Claude i l'auditor 1);
+    envellides (Claude i l'auditor 1). A la v0.6, també als de k = 0 a 2 (AUD-178, aquí sota);
   - **el company:** de bytes uniformes, com al nivell 1 (tots dos);
   - **les llavors** (AUD-146): fora de l'interval dels generadors del nivell 1, [20.261.101, 20.261.101 + 2·10⁸), i un interval
     propi per a cada estrat, sense solapaments. Amb el generador v2, una llavor dins de l'interval en tornaria a fer servir les
@@ -570,15 +652,21 @@ de passos i el company. Proposem només la composició:
 - **El company amb la composició de la sopa:** un estudi a part, una anàlisi de sensibilitat en tirades directes, amb unes quantes
   composicions: Du, les sopes envellides i D½ (tots dos).
 
-**El disseny, fixat a la v0.5** (per a l'auditoria 28). Tot exploratori, amb C0, la prova del cens i 8 companys a la sopa de la prova,
-com al nivell 1. L'eina és `eines/estrats.mjs`, i l'anàlisi, `eines/estrats-analisi.mjs`.
+**El disseny, fixat a la v0.5** (per a l'auditoria 28), **amb els canvis de la v0.6** (l'auditoria 28). Tot exploratori, amb C0, la
+prova del cens i 8 companys a la sopa de la prova, com al nivell 1. L'eina és `eines/estrats.mjs`, i l'anàlisi,
+`eines/estrats-analisi.mjs`; la de ρ_aut, `eines/estrats-autonomia-analisi.mjs`.
 1. **La corba ρ(p):**
    - **els programes de l'estrat k:** exactament k bytes d'instrucció, a k posicions a l'atzar (Fisher-Yates parcial), i cada byte,
      uniforme dins de la seva classe: les 10 instruccions, o els altres 246 valors. És D_p condicionada a k, per a qualsevol p. Els
      enters a l'atzar són exactes: es rebutgen els valors de l'atzar que en farien un biaix;
-   - **quants** (el primer punt de l'auditor 2): 10⁶ a cada estrat, i 10⁷ als de k = 3 a 12. **Els 10⁷ són el total de l'estrat,**
-     amb els primers 10⁶ inclosos: són els programes de 0 a 10⁷ − 1 del seu interval de llavors, i els de 0 a 10⁶ − 1 són els del
-     disseny de base;
+   - **quants** (el primer punt de l'auditor 2): 10⁶ a cada estrat, i 10⁷ als de k = 0 a 12 (a la v0.5, de 3 a 12). **Els 10⁷ són el
+     total de l'estrat,** amb els primers 10⁶ inclosos: són els programes de 0 a 10⁷ − 1 del seu interval de llavors, i els de 0 a
+     10⁶ − 1 són els del disseny de base;
+   - **per què també de k = 0 a 2** (auditor 1, AUD-178): a p = 10/256, aquests estrats fan el 54 % del pes, i amb 10⁶ la comprovació
+     contra el nivell 1 a Du només veuria diferències d'un factor 2 (la mediana de cota superior / inferior, 2,10; amb 10⁷, 1,31). I amb
+     la corba ρ_aut, que hi tindrà pocs èxits, la cota superior la fa el pes més gran per programa, wₖ(p) / nₖ: a p = 10/256, amb 10⁶ a
+     k = 2, la cota amb zero èxits seria de 9,6·10⁻⁷, més que la del nivell 1 sol (3,7·10⁻⁷). Amb 10⁷, deu vegades menys. Són 2,7·10⁷
+     proves més, unes 1,6 h;
    - **els companys:** uniformes, com al nivell 1, i el del paper sol, el del cens;
    - **les llavors:** un interval per estrat, al mapa (§15);
    - **cap ampliació:** si mai calgués, seria un pla nou, amb unes altres llavors (la regla que demanava l'auditor 2).
@@ -587,14 +675,35 @@ com al nivell 1. L'eina és `eines/estrats.mjs`, i l'anàlisi, `eines/estrats-an
    - **ρ(p) = Σₖ wₖ(p) · xₖ / nₖ,** amb wₖ(p) = C(64, k) pᵏ (1 − p)⁶⁴⁻ᵏ: la probabilitat de k instruccions amb D_p. Els pesos són exactes,
      no s'estimen, i sumen 1;
    - **l'interval de ρ(p):** el de Fay i Feuer (1997), el de les taxes estandarditzades, fet per a una suma ponderada de recomptes de
-     Poisson amb pesos coneguts. Amb un sol estrat, és l'interval exacte de Garwood (les proves ho comproven). Amb els nostres pesos i
-     les nostres N, `node eines/estrats-cobertura.mjs` en mesura la cobertura en quatre formes de rₖ i cinc p: del 95,2 al 99,3 %, amb
-     20.000 repeticions (la llavor del mapa, §15);
-   - **m:** el k més petit amb algun hereditari. El de veritat pot ser més petit (auditor 1);
+     Poisson amb pesos coneguts. Amb un sol estrat, és l'interval exacte de Garwood (les proves ho comproven, i l'auditor 1 ho va
+     comprovar amb una implementació pròpia i amb les taules). Amb els nostres pesos i les nostres N, `node eines/estrats-cobertura.mjs`
+     en mesura la cobertura en cinc formes de rₖ (la cinquena, la de l'auditor 1: un terra de 4·10⁻⁶ a tots els k, i el bony de D½) i
+     cinc p: del 95,1 al 99,2 %, amb 20.000 repeticions (la llavor del mapa, §15). **És una comprovació per simulació, no una garantia**
+     del 95 % per a qualsevol rₖ ni per a una p triada després de mirar la corba (auditor 2);
+   - **m:** el k més petit amb algun hereditari. El de veritat pot ser més petit (auditor 1), i amb l'ajuda del company pot ser 0 o 1
+     (AUD-175);
    - **p\*:** la p d'una graella de 0,001 amb la ρ més alta, i les p on la cota superior de ρ arriba a la inferior de ρ(p\*). No és un
      interval de confiança de p\*: és descriptiu;
    - **dues comprovacions,** amb mostres independents: ρ(½) contra C0 amb D½ al nivell 1, i ρ(10/256) contra C0 amb bytes uniformes;
-   - **també amb l'herència sola,** que és la que no depèn del company (AUD-42).
+   - **també amb l'herència sola,** que vol dir «el programa primer»: el codi del company també s'hi executa, després del del programa, i
+     hi pot ajudar (AUD-175; a la v0.5 hi dèiem que «no depèn del company»).
+2b. **La corba sense l'ajuda del company, ρ_aut(p)** (auditor 1, AUD-175; nova a la v0.6):
+   - **com:** cada hereditari de les 110 tirades de la §13, tornat a provar amb la prova d'autonomia de la §4, amb les mateixes 100
+     condicions de companys inerts (`eines/autonomia.mjs --registre`, la llista `estrats/llista-autonomia.txt`, després de la de la §13).
+     Els bytes de cada hereditari es tornen a fer amb el sorteig del seu registre;
+   - **la xifra:** aₖ, els hereditaris de l'estrat k que es copien en almenys una de les 100 condicions (es poden copiar sense el codi del
+     company, la xifra principal de la §4); i, a part, en més de 50;
+   - **ρ_aut(p) = Σₖ wₖ(p) · aₖ / nₖ,** amb nₖ els programes de l'estrat, l'interval de Fay i Feuer, la mateixa graella i p\*; i m_aut, el k
+     més petit amb algun aₖ > 0;
+   - **dues comprovacions,** amb mostres independents: ρ_aut(½) contra la part dels 10⁷ programes de C0 amb D½ del nivell 1 que passen la
+     mateixa xifra a la §4, i ρ_aut(10/256) contra la de C0 amb bytes uniformes;
+   - **per grups de k** (0–4, 5–12, 13–24, 25–40 i 41–64): els hereditaris, i quants passen cada xifra;
+   - **les sopes:** per a cada sopa, i les 22 juntes, els autònoms amb cada tipus de company, i ρ_aut a la seva part d'instruccions;
+   - **D½ amb companys de D½:** els seus autònoms. Els que també eren hereditaris al nivell 1 són els mateixos bytes, amb les mateixes
+     condicions: les seves cadenes han de ser les de la §4, i si no, l'anàlisi s'hi nega;
+   - **l'anàlisi** (`eines/estrats-autonomia-analisi.mjs`) valida els registres de la §13, els de l'autonomia dels seus hereditaris (un per
+     registre, amb la seva SHA-256 i la seva empremta, i els hereditaris tots i en ordre) i els de la §4;
+   - **el cost:** uns quants milers d'hereditaris, a uns 86 ms cadascun en un fil: uns minuts.
 3. **Les sopes del pilot:**
    - **la sopa i l'època** (auditor 2): la captura de cada món de la cohort del pilot a l'època 8.000, sencera (les 131.072 cel·les,
      2²³ bytes). La cohort són els 22 mons sense establiment fins aleshores i sense cap cel·la hereditària, al manifest del pilot. Cap
@@ -608,14 +717,24 @@ com al nivell 1. L'eina és `eines/estrats.mjs`, i l'anàlisi, `eines/estrats-an
        de cada sopa donarien, a més, la corba amb les instruccions i els altres valors de la sopa, que ara no cal: les 22 sopes tenen
        gairebé la mateixa part d'instruccions, i la seva diferència amb la corba de D ja diu què hi fa la composició dins de cada classe;
      - **el cost:** uns 20 estrats per sopa (els que pesen a p ≈ 0,114), 22 vegades, serien 4,4·10⁸ proves, unes 27 h més de càlcul;
-     - **si l'auditoria 28 prefereix els estrats,** cal una opció nova a l'eina, amb la seva revisió;
-   - **els companys** (la sensibilitat de la v0.4, tots dos): els mateixos programes, amb companys uniformes i amb companys de la
-     composició de la sopa, aparellats programa a programa. Els de la composició són els 8 de la sopa de la prova, els del paper en
-     context; el del paper sol és sempre el del cens, uniforme, com als escanejos del pilot;
+     - **si l'auditoria 28 prefereix els estrats,** cal una opció nova a l'eina, amb la seva revisió. **Tots dos van preferir les
+       tirades directes** (auditoria 28), i els estrats globals per a la corba;
+   - **la composició, comprovada abans de cada tirada** (auditor 2, AU2-140): `eines/estrats.mjs` s'hi nega, abans de començar i sense
+     crear el JSONL, si la composició no té exactament 2²³ bytes, si els 256 recomptes no hi sumen, si les instruccions no són les que en
+     surten, o si no és la d'un món de la cohort del pilot (el món, inclòs al manifest; l'època 8.000; la captura i la seva SHA-256).
+     L'anàlisi ho torna a comprovar;
+   - **els companys** (la sensibilitat de la v0.4, tots dos): els mateixos programes, amb companys uniformes i amb **companys sintetitzats
+     a partir de l'histograma de la sopa**, aparellats programa a programa. Els sintetitzats són els 8 de la sopa de la prova, els del
+     paper en context; el del paper sol és sempre el del cens, uniforme, com als escanejos del pilot. No són cel·les de la captura: el
+     sorteig, byte a byte, només en conserva la freqüència de cada valor, i no l'estructura de les cel·les (auditor 2);
    - **què se'n diu:** la densitat amb cada tipus de company (Clopper-Pearson), la taula de 2 × 2 i el quocient (l'interval del nivell
      1); la ρ de la corba de D a la mateixa part d'instruccions; i, al costat, la part de cel·les hereditàries de l'escaneig del braç
      `shuffle-all` del pilot (la primera comprovació de l'auditor 1, AUD-121 i AUD-122). L'escaneig és d'un món barrejat, amb els veïns
-     del radi 2 com a companys en context: s'hi assembla la tirada amb companys de la composició.
+     del radi 2 com a companys en context: s'hi assembla la tirada amb companys de la composició;
+   - **les 22 juntes** (auditor 1, auditoria 28): cada sopa en donarà pocs (de l'ordre de 10 amb 10⁶ programes, segons una estimació de
+     l'auditor 1), i la informació és a les 22 juntes: la taula de 2 × 2 i el quocient de la suma, amb l'interval del nivell 1;
+   - **tots els recomptes i els seus intervals exactes,** també els zeros, i N no s'amplia després de veure'ls (auditor 2). La comparació
+     amb `shuffle-all` és descriptiva, sense cap inferència causal.
 4. **D½ amb companys de D½** (la sensibilitat de la v0.4): els primers 10⁶ programes del nivell 1 (la mateixa llavor), amb companys de
    D½ en lloc d'uniformes, aparellats amb C0 del nivell 1. Du amb companys de Du ja és el nivell 1.
 5. **Cap predicció de l'origen a la sopa** (el tercer punt de l'auditor 2): la densitat diu quants replicadors hi ha a l'espai de
@@ -653,10 +772,11 @@ comprovar amb una cerca de la bibliografia abans d'afirmar-la (auditor 2).
 
 **El cost,** amb la velocitat real del nivell 1 (unes 4.600 proves per segon amb el PC, §8). A la v0.4 dèiem unes 4,3 h per a la
 corba, amb la velocitat d'un fil multiplicada per 8:
-- **la corba:** 6,5·10⁷ proves als 65 estrats, i 9·10⁷ més als de k = 3 a 12: unes 9,3 h;
+- **la corba:** 6,5·10⁷ proves als 65 estrats, i 1,17·10⁸ més als de k = 0 a 12 (a la v0.5, 9·10⁷, de 3 a 12): 1,82·10⁸, unes 11 h;
 - **les sopes del pilot:** 22 sopes, 10⁶ programes, amb dos tipus de company: 4,4·10⁷ proves, unes 2,7 h;
-- **D½ amb companys de D½:** 10⁶ proves, uns 4 minuts.
-- **En total,** unes 12 h.
+- **D½ amb companys de D½:** 10⁶ proves, uns 4 minuts;
+- **l'autonomia dels hereditaris de la §13:** uns minuts.
+- **En total,** unes 13,7 h (a la v0.5, unes 12 h).
 
 ## 14. Les variants per cap d'S1 (v0.5, exploratòries)
 
@@ -691,7 +811,7 @@ splitmix32, que suma la constant G = 0x9e3779b9 a cada pas: les de *s* són les 
 que difereixen en G comparteixen tres dels quatre mots de l'estat, desplaçats; en 2G, dos; en 3G, un. Les seqüències no són iguals,
 però tampoc no són d'estats independents.
 - **La regla:** dos generadors de càlculs diferents no tenen llavors iguals, ni que difereixin en ±G, ±2G o ±3G (mòdul 2³²). Dins d'un
-  interval no passa mai: el més ample, el del nivell 1, fa 2·10⁸ (tots els estrats junts, 3,1·10⁸), i el desplaçament més petit, 3G
+  interval no passa mai: el més ample, el del nivell 1, fa 2·10⁸ (tots els estrats junts, 3,64·10⁸), i el desplaçament més petit, 3G
   mòdul 2³², és de 626.627.285.
 - **`eines/b1-llavors.mjs`** en té el mapa, i `checkSeedMap` el comprova; `test/b1-autonomia.mjs` també comprova que el v2 fa l'estat
   com diem.
@@ -699,8 +819,8 @@ però tampoc no són d'estats independents.
 | Què | Llavors | Generadors |
 |---|---|---|
 | El nivell 1 | de 20.261.101 a 220.261.100 | 2 per programa, 10⁸ programes com a molt |
-| La prova d'autonomia (§4) | de 250.000.000 a 250.000.199 | 2 per condició, 100 condicions |
-| Els estrats de la corba (§13) | de 260.000.000 a 569.999.999, un darrere l'altre: 2·10⁶ per als de k = 0 a 2 i de 13 a 64, i 2·10⁷ per als de 3 a 12 | 2 per programa |
+| La prova d'autonomia (§4), i la dels hereditaris de la §13 (ρ_aut), amb les mateixes condicions | de 250.000.000 a 250.000.199 | 2 per condició, 100 condicions |
+| Els estrats de la corba (§13) | de 260.000.000 a 623.999.999, un darrere l'altre: 2·10⁷ per als de k = 0 a 12, i 2·10⁶ per als de 13 a 64 (a la v0.5, de 260.000.000 a 569.999.999, amb 2·10⁷ només de 3 a 12; AUD-178) | 2 per programa |
 | Les sopes del pilot (§13) | de 2.300.000.000 a 2.343.999.999: 2·10⁶ per sopa, en l'ordre del manifest | 2 per programa |
 | La cobertura del quocient (§6) | 2.500.000.000 (abans, la del pla, 20261101; AUD-146) | 1 |
 | La cobertura de la corba (§13) | 2.500.000.002 | 1 |

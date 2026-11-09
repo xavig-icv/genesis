@@ -131,24 +131,32 @@ Llegeix-los abans de proposar canvis.
     `b1-nivell1-registres-v1` de GitHub, amb la SHA-256 a `execucio-llista.txt`, i es poden refer amb les mateixes ordres. La repetició de tres trossos (`repeticio/`, amb `compara.mjs`), la
     sortida de l'anàlisi (`analisi.txt`), les comprovacions exploratòries (`exploratori/`) i l'extracte dels hereditaris
     (`hereditaris.jsonl.gz`, amb `extreu-hereditaris.mjs`; AUD-174) sí que hi són.
-- B1, després del nivell 1 (`docs/pla-b1.md`, v0.5; la PR `b1-autonomia`, amb l'auditoria 28 abans de calcular). Tot exploratori.
+- B1, després del nivell 1 (`docs/pla-b1.md`, v0.6; la PR #35, `b1-autonomia`, amb les auditories 28 i 29 abans de calcular). Tot
+  exploratori.
+  - **«Sol» vol dir «el programa primer»,** no «sense el codi del company»: amb companys de soroll, el codi del company també s'executa,
+    després del del programa (AUD-175). Qui es copia sense el company, ho diu la prova d'autonomia.
   - **La prova d'autonomia** (§4): `node eines/autonomia.mjs --quimica Q --distribucio d-mig|uniforme --llavor N --json fitxer`, amb
     els hereditaris de l'extracte del nivell 1 i 100 condicions de companys inerts; l'anàlisi, `node eines/autonomia-analisi.mjs carpeta`.
     La prova és la del cens amb dues opcions de `replicationTest`, desactivades per defecte: `soloPartner` (el company del paper sol) i
-    `bothRoles` (l'herència en context, encara que ja ho sigui sol).
+    `bothRoles` (l'herència en context, encara que ja ho sigui sol). Amb companys inerts, S4 dona 0 per construcció: és un control
+    (AUD-176).
   - **La composició de bytes** (§13): `node eines/estrats.mjs --programa estrat:K|d-mig|sopa:fitxer.json --company uniforme|programa ...`;
-    les composicions de les sopes del pilot, `node eines/composicio.mjs`, a `fase2/resultats/b1/composicio/`; l'anàlisi, `node
-    eines/estrats-analisi.mjs carpeta`, amb l'interval de Fay i Feuer (`eines/b1-estadistica.mjs`), i la seva cobertura, `node
-    eines/estrats-cobertura.mjs`.
+    les composicions de les sopes del pilot, `node eines/composicio.mjs`, a `fase2/resultats/b1/composicio/`, que l'eina torna a
+    comprovar senceres i contra la cohort del pilot abans de cada tirada (AU2-140); l'anàlisi, `node eines/estrats-analisi.mjs carpeta`,
+    amb l'interval de Fay i Feuer (`eines/b1-estadistica.mjs`), i la seva cobertura, `node eines/estrats-cobertura.mjs`.
+    - **La corba sense l'ajuda del company, ρ_aut(p)** (AUD-175): `node eines/autonomia.mjs --registre registre-de-la-§13 ...`, i
+      l'anàlisi, `node eines/estrats-autonomia-analisi.mjs carpeta-estrats carpeta-autonomia-estrats carpeta-autonomia`.
   - **Les variants per cap d'S1** (§14): S1h0 i S1h1, a `fase1/bff.js` (la regla `heads`), amb `eines/densitat.mjs` i els programes del
     nivell 1; l'anàlisi, `node eines/caps-analisi.mjs carpeta`, que demana C0 i S1 iguals als del nivell 1. No són del nivell 1 ni del 2.
   - **Les llavors** (§15): el mapa és a `eines/b1-llavors.mjs`. Cap llavor nova no pot coincidir amb una altra ni diferir-ne en ±1, ±2 o
     ±3 vegades la constant de splitmix32 (0x9e3779b9): comparteixen mots de l'estat del v2. `checkSeedMap` ho comprova.
-  - **Les ordres:** `node eines/b1-llistes.mjs autonomia|caps|estrats`, a `fase2/resultats/b1/*/llista.txt` (amb la SHA-256 al README);
-    les executa `bash eines/executa-b1.sh LLISTA SHA-256 COMMIT`, amb la guarda de l'AUD-174: cap `.js` ni `.mjs` amb canvis o sense
-    seguir, abans de començar i abans de cada ordre. La repetició d'un registre sencer: `node eines/b1-compara.mjs original repeticio`.
-  - **Dins d'un fil, cap eina no ha d'importar `eines/densitat.mjs`:** hi posa el seu receptor de feines (`worker_threads`), i contesta
-    abans que el de l'eina.
+  - **Les ordres:** `node eines/b1-llistes.mjs autonomia|caps|estrats|estrats-autonomia`, a `fase2/resultats/b1/*/llista.txt` i
+    `fase2/resultats/b1/estrats/llista-autonomia.txt` (amb la SHA-256 al README); les executa `bash eines/executa-b1.sh LLISTA SHA-256
+    COMMIT`, amb la guarda de l'AUD-174: cap `.js` ni `.mjs` amb canvis o sense seguir, abans de començar i abans de cada ordre. La guarda
+    és la de git, i no veu els fitxers ignorats: cap carpeta de codi no ho ha de ser. La repetició d'un registre sencer: `node
+    eines/b1-compara.mjs original repeticio`.
+  - **Dins d'un fil, cap eina no ha d'importar `eines/densitat.mjs` ni `eines/estrats.mjs`:** hi posen el seu receptor de feines
+    (`worker_threads`), i contesten abans que el de l'eina.
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
   captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
