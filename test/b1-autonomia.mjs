@@ -300,6 +300,9 @@ const tests = {
     const autonomy = { 'd-mig': { C0: { start: { level1: { programs: 1e7 } }, reps: [rep(7, 100), rep(9, 0)] } }, uniforme: { C0: { start: { level1: { programs: 1e7 } }, reps: [rep(1, 0)] } } };
     const out = analyseStrataAutonomy(strata, tested, autonomy).join('\n');
     assert.match(out, /m_aut, el k més petit amb algun autònom: 5 \(/);
+    // què mesura (AU2-144): un estimand conjunt, i m_aut, una cota superior
+    assert.match(out, /Els hereditaris de la §13 que també es copien amb companys inerts, no tots els que es podrien copiar sense el company \(AU2-144\)/);
+    assert.match(out, /el de veritat pot ser més petit, pel mostreig i perquè només es proven els hereditaris de la §13/);
     assert.match(out, /k de 0 a 4: 0 hereditaris de 50000000 programes; n ≥ 1, 0; n > 50, 0/);
     assert.match(out, /k de 5 a 12: 16 hereditaris de 80000000 programes; n ≥ 1, 8; n > 50, 8/);
     assert.match(out, /Les 22 sopes juntes: uniformes, 66 hereditaris, 22 autònoms, .*; de la sopa, 66 hereditaris, 22 autònoms/);

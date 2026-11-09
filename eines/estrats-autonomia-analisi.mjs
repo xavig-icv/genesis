@@ -22,6 +22,10 @@
 //
 // La xifra d'un hereditari, com a la §4: n, en quantes de les 100 condicions és hereditari, sol o en context, amb companys inerts. aₖ,
 // els hereditaris de l'estrat k amb n ≥ 1 (es poden copiar sense el codi del company: la xifra principal), i, a part, amb n > 50.
+// Què mesura (AU2-144, auditoria 29): la densitat dels programes que la §13 detecta com a hereditaris, amb companys de soroll, i que també
+// es copien amb companys inerts, totes dues coses alhora. No és la de tots els que es podrien copiar sense el company: un que ho faria
+// però que no és hereditari amb companys de soroll no es prova mai. Per això, i pel mostreig, m_aut és una cota superior del k més petit
+// dels que es copien sols (l'auditor 1). A la §4, amb els hereditaris del nivell 1, passa el mateix: les comprovacions comparen el mateix.
 // Què en surt:
 //  1. ρ_aut(p) = Σₖ wₖ(p) · aₖ / nₖ, amb nₖ els programes de l'estrat i l'interval de Fay i Feuer, a la graella de la §13; m_aut, el k
 //     més petit amb algun aₖ > 0 (el de veritat pot ser més petit); p*, descriptiva; i dues comprovacions, amb mostres independents:
@@ -130,10 +134,10 @@ export function analyse(strata, tested, autonomy, { manifest = cohort() } = {}) 
   // 1. la corba
   for (const f of XIFRES) {
     const curve = Array.from({ length: 65 }, (_, k) => ({ n: strata[`estrat:${k}`].n, x: count(tested[`estrat:${k}`], f) }));
-    out.push(`1. La corba sense l'ajuda del company, ρ_aut(p), amb C0, ${f.name}: ${f.label}`);
+    out.push(`1. La corba sense l'ajuda del company, ρ_aut(p), amb C0, ${f.name}: ${f.label}. Els hereditaris de la §13 que també es copien amb companys inerts, no tots els que es podrien copiar sense el company (AU2-144)`);
     out.push(`  Els estrats, k: autònoms de n (programes), només els que en tenen: ${curve.map((s, k) => (s.x ? `${k}: ${s.x} de ${s.n}` : null)).filter(Boolean).join('; ') || 'cap'}`);
     const m = curve.findIndex((s) => s.x > 0);
-    out.push(`  m_aut, el k més petit amb algun autònom: ${m < 0 ? 'cap' : `${m} (${cp(curve[m].x, curve[m].n)}); el de veritat pot ser més petit`}`);
+    out.push(`  m_aut, el k més petit amb algun autònom: ${m < 0 ? 'cap' : `${m} (${cp(curve[m].x, curve[m].n)}); el de veritat pot ser més petit, pel mostreig i perquè només es proven els hereditaris de la §13`}`);
     out.push(`  ρ_aut(p), amb l'interval de Fay i Feuer del 95 %: ${GRID.map((p) => { const r = rho(curve, p); return `${p === 10 / 256 ? '10/256' : p}: ${sci(r.value)} (de ${sci(r.ci[0])} a ${sci(r.ci[1])})`; }).join('; ')}`);
     let best = 0, bestP = null;
     for (let i = 1; i < 1000; i++) { const v = rho(curve, i / 1000).value; if (v > best) { best = v; bestP = i / 1000; } }

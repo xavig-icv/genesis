@@ -1,9 +1,22 @@
 # B1, les ablacions de la química · el nivell 1, la densitat de replicadors
 
-**Versió: v0.6 (09-11-2026), amb les decisions de l'auditoria 28, per a l'auditoria 29, abans de calcular res del que s'hi afegeix.**
-El nivell 1 es va calcular el 4 i el 5-11-2026 amb la v0.4 (l'entrada 15 del quadern), i l'auditoria 27 el va revisar. La v0.5 fixa el
-que ve després, amb el codi en una PR (la branca `b1-autonomia`) i les proves (§9): la prova d'autonomia (§4), la composició de bytes
-(§13), les variants per cap d'S1 (§14) i les llavors (§15). D'això, només s'ha mesurat el temps, sense cap recompte (§8).
+**Versió: v0.7 (09-11-2026), amb les correccions de l'auditoria 29, per a l'auditoria 30, breu, abans de calcular res del que s'hi
+afegeix.** El nivell 1 es va calcular el 4 i el 5-11-2026 amb la v0.4 (l'entrada 15 del quadern), i l'auditoria 27 el va revisar. La
+v0.5 fixa el que ve després, amb el codi en una PR (la branca `b1-autonomia`) i les proves (§9): la prova d'autonomia (§4), la
+composició de bytes (§13), les variants per cap d'S1 (§14) i les llavors (§15). D'això, només s'ha mesurat el temps, sense cap
+recompte (§8).
+- **De la v0.6 a la v0.7** (les correccions de l'auditoria 29, §12). Res no s'ha calculat, i cap llista no canvia:
+  - **un registre de la §13 sense cap hereditari** (AUD-179, bloquejant): la prova d'autonomia dels seus hereditaris, amb 8 fils, sortia
+    amb el codi 0 sense la línia final. Ara acaba sencera, i l'executor demana la línia final després de cada ordre (§9 i §11);
+  - **una carpeta de consola per llista,** i la repetició de cada llista de la §13 a part (AUD-180, §11);
+  - **l'anàlisi de la §13 i la prova d'autonomia dels seus hereditaris tornen a comprovar la composició,** sencera i de la cohort, i la de
+    la línia d'inici, camp a camp (AU2-142, bloquejant per a la §13, §13);
+  - **les anàlisis llegeixen l'ordre de cada registre sencera,** amb el contracte d'opcions de l'eina (AU2-143, bloquejant per a ρ_aut,
+    §9);
+  - **què mesura ρ_aut:** la densitat dels programes que la §13 detecta com a hereditaris i que també es copien amb companys inerts, no
+    la de tots els que es podrien copiar sense el company (AU2-144, i l'auditor 1, §13);
+  - **un zero per construcció trencat atura la validació** de la prova d'autonomia, i no només ho diu la sortida (la proposta de
+    l'auditor 2 a l'AUD-176, §4).
 - **De la v0.5 a la v0.6** (les decisions de l'auditoria 28, §12). Res no s'ha calculat:
   - **la composició de cada sopa, comprovada sencera** abans de cada tirada (AU2-140, bloquejant per a la §13): 2²³ bytes, els recomptes
     i les instruccions, i la cohort del pilot (§13);
@@ -231,7 +244,8 @@ desactivades per defecte:
   i un company inert no hi executa res. El company no canvia mai, i cap dels 44 no s'hi pot copiar, sigui quin sigui el seu mecanisme.
   L'auditor 1 ho va comprovar en 200.000 cintes, com amb el control X0. La tirada d'S4 es queda, com a control.
 - **Els zeros per construcció, a l'anàlisi:** S2 en context, S3 sol i S4 en tots dos papers. Cap replicació, ni sense herència: si n'hi
-  hagués cap, seria un error del codi, i la sortida ho diria.
+  hagués cap, seria un error del codi, i la validació s'hi negaria (la proposta de l'auditor 2, auditoria 29; a la v0.6, només ho deia
+  la sortida).
 
 **Què no diu:**
 - **un nombre finit de condicions:** un replicador que no es copia en cap de les 100 es podria copiar en una altra;
@@ -454,6 +468,27 @@ no canvien:
   hereditaris coneguts dels primers 5.000 programes del nivell 1, i la seva validació, i com s'hi nega (AUD-175); i `analyse()` de les
   dues anàlisis de la §13, amb dades sintètiques (AUD-177).
 
+**El que hi afegeix la v0.7** (l'auditoria 29). Cap llista no canvia, i cada prova nova falla amb el codi d'abans:
+- **`eines/b1-comu.mjs`:**
+  - **`runJobs`** (AUD-179) acaba de seguida si no hi ha cap feina: abans, amb més d'un fil, no en creava cap, la promesa no es resolia
+    mai, i l'eina sortia amb el codi 0 sense escriure la línia final. I s'hi nega si un fil s'atura abans d'acabar les seves feines;
+  - **`readOptions` i `commandOptions`** (AU2-143): la lectura de les opcions de les eines, la mateixa a la línia d'ordres
+    (`parseOptions`, que fa el mateix que abans) i a l'ordre de cada registre, sencera.
+- **`eines/executa-b1.sh`:** després de cada ordre, el registre ha d'acabar amb la línia final, a més del codi 0 (AUD-179); la consola de
+  cada ordre, a `consola-LLISTA/`, una carpeta per llista (AUD-180).
+- **`eines/estrats.mjs`** (AU2-142): `checkRecordComposition`, la composició d'un registre d'una sopa, després de la tirada: el fitxer,
+  sencer i de la cohort, i el món, l'època, la captura i la SHA-256 de la línia d'inici, les del fitxer. La fan servir l'anàlisi de la
+  §13 i la prova d'autonomia dels hereditaris (`--registre`), que s'hi nega sense crear el JSONL.
+- **Les tres anàlisis** (AU2-143): l'ordre de cada registre, llegida sencera amb el contracte d'opcions de l'eina, ha de dir el mateix
+  que la línia d'inici, i el seu JSONL ha de ser el fitxer. A l'anàlisi de ρ_aut, abans només se'n mirava el registre.
+- **`eines/autonomia-analisi.mjs`:** un zero per construcció trencat és un problema de la validació, i no només una frase de la sortida
+  (la proposta de l'auditor 2 a l'AUD-176).
+- **`eines/estrats-autonomia-analisi.mjs`** (AU2-144): la sortida diu què mesura ρ_aut.
+- **Les proves:** un registre de la §13 sense hereditaris, amb `--fils 8`, que l'anàlisi de ρ_aut accepta amb 0 replicadors, i un fil
+  que s'atura (AUD-179); l'executor amb una eina que surt amb el codi 0 sense la línia final, i dues llistes a la mateixa carpeta
+  (AUD-179 i AUD-180); el contraexemple de l'auditor 2 de l'AU2-142, i dos camps de la línia d'inici canviats; el de l'AU2-143, i un
+  altre fitxer, una opció d'un altre mode, repetida o desconeguda, a les tres anàlisis; i un replicador d'S4 que es replica sol.
+
 ## 10. El nivell 2, la sopa (esbós)
 
 - **Les variants:** les que passin el nivell 1, i C0, M0 (sense mutació) i O (l'ordre simètric).
@@ -488,6 +523,10 @@ no canvien:
    text de l'AU2-138.
    - **Fet** (06-11-2026): GO de l'auditor 1, amb dos canvis de text; GO de l'auditor 2 per a l'autonomia i les variants per cap, i NO-GO
      de la §13 fins a l'AU2-140. Les correccions, a la v0.6, i l'auditoria 29, breu, abans de calcular res.
+   - **L'auditoria 29** (09-11-2026): NO-GO de tots dos a la PR sencera, per uns defectes petits de les eines i de la validació. L'auditor
+     1, GO quan es corregeixi l'AUD-179; l'auditor 2, GO per a l'autonomia i les variants per cap, i la §13 i ρ_aut, quan es corregeixin
+     l'AU2-142 i l'AU2-143. Les correccions, a la v0.7, i l'auditoria 30, breu. Res no es calcula abans del merge, tampoc l'autonomia:
+     l'AUD-179 canvia `eines/b1-comu.mjs`, un dels mòduls que compara la seva anàlisi (l'auditor 1).
 4. **Després del GO i del merge,** en aquest ordre, cada càlcul amb la seva llista:
 
    | Què | Llista (`fase2/resultats/b1/…`) | Ordres | Temps, amb el PC |
@@ -499,18 +538,21 @@ no canvien:
 
    - **Les llistes** les fa `node eines/b1-llistes.mjs autonomia|caps|estrats|estrats-autonomia`, a partir del pla i del mapa de llavors,
      i són a git abans de calcular; `test/b1-estrats.mjs` comprova que són les que en surten. Les SHA-256, al README de cada carpeta.
-   - **D'on:** d'una còpia neta del commit del merge, a D:, sense cap fitxer de codi sense seguir.
+   - **D'on:** d'una còpia neta del commit del merge, a D:, sense cap fitxer de codi sense seguir. Abans del primer lot, els mòduls i les
+     eines de l'arbre del merge, els mateixos que els de la PR auditada (auditor 2, auditoria 29).
    - **Com:** `bash eines/executa-b1.sh LLISTA SHA-256 COMMIT`, des d'una finestra de PowerShell del responsable, fora de l'aplicació
      (la incidència 2 de la maduració). L'executor és el del nivell 1 amb la guarda de l'AUD-174: cap fitxer `.js` o `.mjs` amb canvis
      o sense seguir, abans de començar i abans de cada ordre, i cap registre que digui `+canvis`. La guarda és la de git, i no veu els
-     fitxers que git ignora (auditor 2): cap carpeta de codi del repositori no ho és.
+     fitxers que git ignora (auditor 2): cap carpeta de codi del repositori no ho és. Després de cada ordre, el registre ha d'acabar amb
+     la línia final, a més del codi 0 (AUD-179). La consola de cada ordre, a `consola-LLISTA/`, al costat de la llista (AUD-180).
    - **Mentre corren:** cap recompte. Només l'estat de l'executor.
    - **Al costat dels registres,** com al nivell 1: el commit, la versió de Node, la llista i la SHA-256 de cada registre.
    - **Els registres:** a git, si cap no passa de 50 MB; si no, com al nivell 1, comprimits a una versió de GitHub, i un extracte a git.
    - **Abans d'analitzar, la repetició** (auditor 2), amb la llavor que surt de la SHA-256 d'`execucio-llista.txt`, com al nivell 1: tres
      registres sencers de l'autonomia, tres de la §13 i tres de l'autonomia dels seus hereditaris, triats amb `eines/tria.mjs`, comparats
      amb `eines/b1-compara.mjs`; i, de les variants per cap, tres trossos de 10⁵ de cada registre, com al nivell 1. Ho diu el README de
-     cada carpeta. És una verificació per mostreig, no una demostració de totes les tirades (auditor 2).
+     cada carpeta; les de les dues llistes de la §13, a `repeticio/registres/` i a `repeticio/autonomia/` (AUD-180). És una verificació
+     per mostreig, no una demostració de totes les tirades (auditor 2).
    - **Les anàlisis,** cadascuna quan acabi la seva llista, des d'una còpia amb els mateixos mòduls: `eines/autonomia-analisi.mjs`,
      `eines/caps-analisi.mjs`, `eines/estrats-analisi.mjs` i, quan acabi l'autonomia dels hereditaris de la §13,
      `eines/estrats-autonomia-analisi.mjs`. Totes quatre es neguen si hi falta o hi sobra res.
@@ -522,7 +564,7 @@ l'anàlisi del nivell 1 compara (AUD-139), i des de `main`, després del merge, 
 canvi qualsevol a un mòdul fa que l'anàlisi rebutgi els registres), i la recepta és a `docs/reproduir.md` (§7). C0 i S1, tornats a
 calcular amb el codi nou (§14), han de donar els mateixos registres: és una comprovació de punta a punta que el codi nou fa el mateix.
 
-## 12. Les decisions (de l'auditoria 25 a la 28)
+## 12. Les decisions (de l'auditoria 25 a la 29)
 
 **Ja decidit pel responsable (01-11-2026):** els dos nivells (§1).
 
@@ -588,6 +630,23 @@ s'accepten, i a l'auditoria 29 cadascú revisa les de l'altre.
 
 **Per a l'auditoria 29,** breu, abans de calcular: el diferencial de la PR des de `92d3e8a`. Cada auditor revisa també les troballes de
 l'altre (l'AU2-140, per a l'auditor 1; de l'AUD-175 a l'AUD-178, per a l'auditor 2).
+
+**Decidit a l'auditoria 29** (09-11-2026). Cap auditor no va veure les troballes noves de l'altre: totes s'accepten, i a l'auditoria 30
+cadascú revisa les de l'altre. Totes dues correccions de l'auditoria 28 que eren de l'altre, bones (l'AU2-140, per a l'auditor 1; de
+l'AUD-175 a l'AUD-178, per a l'auditor 2).
+
+| Què | Auditor 1 | Auditor 2 | Ara |
+|---|---|---|---|
+| **GO** | NO-GO tal com és; GO per calcular-ho tot quan es corregeixi l'AUD-179, sense cap altra auditoria si va en un commit sol | NO-GO a la PR sencera; GO per a l'autonomia i les variants per cap, i la §13 i ρ_aut, després de l'AU2-142 i l'AU2-143 i d'una revalidació breu | Les correccions, a la v0.7, i l'auditoria 30, breu. Res no es calcula fins al merge, tampoc l'autonomia: l'AUD-179 canvia un dels seus mòduls (§11) |
+| **Un registre de la §13 sense hereditaris** (AUD-179) | La seva prova d'autonomia, amb 8 fils, surt amb el codi 0 sense la línia final; l'executor ho dona per bo | — | `runJobs` acaba sense feines, i l'executor demana la línia final (§9 i §11) |
+| **Les consoles i la repetició** (AUD-180) | Les dues llistes de la §13 les comparteixen | — | Una carpeta de consola per llista, i la repetició de cada llista a part (§11) |
+| **La composició a l'anàlisi** (AU2-142) | — | L'anàlisi no torna a comprovar l'època ni tots els camps de la composició | `checkRecordComposition`, a l'anàlisi i a la prova d'autonomia dels hereditaris (§9 i §13) |
+| **L'ordre dels registres** (AU2-143) | — | L'anàlisi de ρ_aut no la compara sencera amb la línia d'inici | Sencera, amb el contracte d'opcions de l'eina, a les tres anàlisis (§9) |
+| **Què mesura ρ_aut** (AU2-144) | Una precisió: només prova els hereditaris de la §13, i m_aut n'és una cota superior | Un estimand conjunt: detectat a la §13 i autònom amb companys inerts | Totes dues coses, al pla i a la sortida de l'anàlisi (§13) |
+| **Els zeros per construcció** (AUD-176) | Tancada | Tancable; una millora opcional: que aturi la validació | Feta (§4) |
+
+**Per a l'auditoria 30,** breu, abans de calcular: el diferencial de la PR des de `6f8bc0b`. Cada auditor revisa també les troballes de
+l'altre (de l'AU2-142 a l'AU2-144, per a l'auditor 1; l'AUD-179 i l'AUD-180, per a l'auditor 2).
 
 ## 13. La composició de bytes, i què podria ser nou (decidida a l'auditoria 25, i fixada a la v0.5)
 
@@ -695,6 +754,11 @@ prova del cens i 8 companys a la sopa de la prova, com al nivell 1. L'eina és `
      company, la xifra principal de la §4); i, a part, en més de 50;
    - **ρ_aut(p) = Σₖ wₖ(p) · aₖ / nₖ,** amb nₖ els programes de l'estrat, l'interval de Fay i Feuer, la mateixa graella i p\*; i m_aut, el k
      més petit amb algun aₖ > 0;
+   - **què mesura** (AU2-144, i la precisió de l'auditor 1, auditoria 29): la densitat dels programes que la §13 detecta com a
+     hereditaris, amb companys de soroll, i que també es copien amb companys inerts. És un estimand conjunt, la probabilitat de totes dues
+     coses alhora, i no la de tots els programes que es podrien copiar sense el company: un que ho faria però que no és hereditari amb
+     companys de soroll no es prova mai. Per això, i pel mostreig, m_aut és una cota superior del k més petit dels que es copien sols. Al
+     nivell 1 (§4) passa el mateix, i les dues comprovacions comparen el mateix. Qualsevol conclusió ho ha de dir així;
    - **dues comprovacions,** amb mostres independents: ρ_aut(½) contra la part dels 10⁷ programes de C0 amb D½ del nivell 1 que passen la
      mateixa xifra a la §4, i ρ_aut(10/256) contra la de C0 amb bytes uniformes;
    - **per grups de k** (0–4, 5–12, 13–24, 25–40 i 41–64): els hereditaris, i quants passen cada xifra;
@@ -702,7 +766,8 @@ prova del cens i 8 companys a la sopa de la prova, com al nivell 1. L'eina és `
    - **D½ amb companys de D½:** els seus autònoms. Els que també eren hereditaris al nivell 1 són els mateixos bytes, amb les mateixes
      condicions: les seves cadenes han de ser les de la §4, i si no, l'anàlisi s'hi nega;
    - **l'anàlisi** (`eines/estrats-autonomia-analisi.mjs`) valida els registres de la §13, els de l'autonomia dels seus hereditaris (un per
-     registre, amb la seva SHA-256 i la seva empremta, i els hereditaris tots i en ordre) i els de la §4;
+     registre, amb la seva SHA-256 i la seva empremta, l'ordre sencera, i els hereditaris tots i en ordre; AU2-143) i els de la §4. Un
+     registre de la §13 sense cap hereditari en dona un d'autonomia sense cap replicador, sencer (AUD-179);
    - **el cost:** uns quants milers d'hereditaris, a uns 86 ms cadascun en un fil: uns minuts.
 3. **Les sopes del pilot:**
    - **la sopa i l'època** (auditor 2): la captura de cada món de la cohort del pilot a l'època 8.000, sencera (les 131.072 cel·les,
@@ -722,7 +787,8 @@ prova del cens i 8 companys a la sopa de la prova, com al nivell 1. L'eina és `
    - **la composició, comprovada abans de cada tirada** (auditor 2, AU2-140): `eines/estrats.mjs` s'hi nega, abans de començar i sense
      crear el JSONL, si la composició no té exactament 2²³ bytes, si els 256 recomptes no hi sumen, si les instruccions no són les que en
      surten, o si no és la d'un món de la cohort del pilot (el món, inclòs al manifest; l'època 8.000; la captura i la seva SHA-256).
-     L'anàlisi ho torna a comprovar;
+     L'anàlisi i la prova d'autonomia dels hereditaris ho tornen a comprovar tot, i la línia d'inici de cada registre ha de dir el món,
+     l'època, la captura i la SHA-256 del fitxer (AU2-142, auditoria 29);
    - **els companys** (la sensibilitat de la v0.4, tots dos): els mateixos programes, amb companys uniformes i amb **companys sintetitzats
      a partir de l'histograma de la sopa**, aparellats programa a programa. Els sintetitzats són els 8 de la sopa de la prova, els del
      paper en context; el del paper sol és sempre el del cens, uniforme, com als escanejos del pilot. No són cel·les de la captura: el
