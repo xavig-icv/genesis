@@ -18,9 +18,9 @@
 // condicions assajades, no propietats demostrades amb un nombre finit de proves (auditor 2). Les mateixes quatre xifres, sol i en
 // context per separat. "Sol" vol dir que el programa va primer (AUD-175). Els intervals són de Clopper-Pearson, del 95 %: la part dels
 // hereditaris de la química que hi passen.
-// Els zeros per construcció (AUD-176), comprovats i escrits a la sortida: S2 en context, S3 sol, i S4 en tots dos papers. Amb S4, el
-// codi d'una meitat no pot escriure a l'altra, i un company inert no hi executa res: el company no canvia mai, i la tirada d'S4 és un
-// control. Si cap no dona 0, és un error del codi, i la sortida ho diu.
+// Els zeros per construcció (AUD-176): S2 en context, S3 sol, i S4 en tots dos papers. Amb S4, el codi d'una meitat no pot escriure a
+// l'altra, i un company inert no hi executa res: el company no canvia mai, i la tirada d'S4 és un control. Si cap no dona 0, és un error
+// del codi: la validació s'hi nega (l'auditor 2, auditoria 29; abans, només ho deia la sortida), i la sortida en diu els zeros.
 import { readdirSync } from 'fs';
 import { join } from 'path';
 import { pathToFileURL } from 'url';
@@ -82,6 +82,11 @@ export function readFolder(dir, { plan = PLAN, modules = fileHashes(MODULES), ex
       for (let j = 0; j < C; j++) if ((o.heritableSolo[j] === '1' && o.solo[j] !== '1') || (o.heritableContext[j] === '1' && o.context[j] !== '1')) { problems.push(`${name}: el replicador ${o.index} no és coherent a la condició ${j}`); return; }
       reps.push({ ...o, level1Solo: h.heritableSolo });
     });
+    // els zeros per construcció (AUD-176): una replicació, encara que no sigui hereditària, en un paper on no n'hi pot haver
+    for (const role of BY_CONSTRUCTION[s.chemistry] ?? []) {
+      const k = reps.filter((o) => o[role].includes('1')).length;
+      if (k) problems.push(`${name}: ${k} replicadors de ${s.chemistry} es repliquen ${role === 'solo' ? 'sols' : 'en context'}, on no n'hi pot haver per construcció (AUD-176): és un error del codi`);
+    }
     runs[s.distribution][s.chemistry] = { start: s, reps };
   }
   for (const [dist, chems] of Object.entries(plan.runs)) {

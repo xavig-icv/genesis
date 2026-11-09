@@ -374,6 +374,15 @@ const tests = {
       tamper(cmd((c) => c.replace('--llavor 777', '--llavor 1')), /l'ordre no diu el mateix/);
       tamper(cmd((c) => c.replace(/s4\.jsonl$/, 'altre.jsonl')), /l'ordre no diu el mateix/);
       tamper(cmd((c) => `${c} --color blau`), /opció desconeguda: --color/);
+      // els zeros per construcció (AUD-176): un replicador d'S4 que es replica sol, amb l'empremta refeta, atura la validació
+      tamper((l) => {
+        const o = JSON.parse(l[1]), e = JSON.parse(l[l.length - 1]);
+        o.solo = '1' + o.solo.slice(1);
+        l[1] = JSON.stringify(o);
+        e.fingerprint = sha256(l.slice(1, -1).map((x) => x + '\n').join(''));
+        l[l.length - 1] = JSON.stringify(e);
+        return l;
+      }, /1 replicadors de S4 es repliquen sols, on no n'hi pot haver per construcció \(AUD-176\)/);
       // un registre de més, o un que hi falta
       copyFileSync(join(dir, 's4.jsonl'), join(dir, 's4-bis.jsonl'));
       assert.ok(readFolder(dir, { plan }).problems.some((p) => /repetit/.test(p)));
