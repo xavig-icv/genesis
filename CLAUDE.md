@@ -148,8 +148,11 @@ Llegeix-los abans de proposar canvis.
     - **La corba sense l'ajuda del company, ρ_aut(p)** (AUD-175): `node eines/autonomia.mjs --registre registre-de-la-§13 ...`, i
       l'anàlisi, `node eines/estrats-autonomia-analisi.mjs carpeta-estrats carpeta-autonomia-estrats carpeta-autonomia`. Mesura els
       hereditaris de la §13 que també es copien amb companys inerts, no tots els que es podrien copiar sense el company (AU2-144).
-  - **Les anàlisis llegeixen l'ordre de cada registre sencera,** amb el contracte d'opcions de l'eina (`commandOptions`, a
-    `eines/b1-comu.mjs`; AU2-143): ha de dir el mateix que la línia d'inici, i el seu JSONL ha de ser el fitxer.
+  - **Les anàlisis de la §4, de la §13 i de ρ_aut llegeixen l'ordre de cada registre sencera,** amb el contracte d'opcions de l'eina
+    (`commandOptions`, a `eines/b1-comu.mjs`; AU2-143): ha de dir el mateix que la línia d'inici, i el seu JSONL ha de tenir el nom del
+    fitxer. Només el nom, no la carpeta: els registres s'han de poder analitzar des d'una còpia, com fan els auditors (AU2-145). **La de la
+    §14** (`eines/caps-analisi.mjs`) fa servir la validació del nivell 1 (`eines/densitat-analisi.mjs`), que compara amb una expressió
+    regular les opcions que fan el resultat, i hi demana C0 i S1 iguals als del nivell 1 (AUD-181).
   - **Les variants per cap d'S1** (§14): S1h0 i S1h1, a `fase1/bff.js` (la regla `heads`), amb `eines/densitat.mjs` i els programes del
     nivell 1; l'anàlisi, `node eines/caps-analisi.mjs carpeta`, que demana C0 i S1 iguals als del nivell 1. No són del nivell 1 ni del 2.
   - **Les llavors** (§15): el mapa és a `eines/b1-llavors.mjs`. Cap llavor nova no pot coincidir amb una altra ni diferir-ne en ±1, ±2 o

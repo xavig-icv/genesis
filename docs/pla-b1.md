@@ -5,6 +5,9 @@ afegeix.** El nivell 1 es va calcular el 4 i el 5-11-2026 amb la v0.4 (l'entrada
 v0.5 fixa el que ve després, amb el codi en una PR (la branca `b1-autonomia`) i les proves (§9): la prova d'autonomia (§4), la
 composició de bytes (§13), les variants per cap d'S1 (§14) i les llavors (§15). D'això, només s'ha mesurat el temps, sense cap
 recompte (§8).
+- **L'auditoria 30** (10-11-2026): **GO de tots dos per calcular la PR sencera,** després del merge i des d'una còpia neta. Dues
+  precisions del text (AUD-181 i AU2-145, §9 i §12) i una de la §13; **cap canvi de codi:** l'auditor 2 demana que el codi fusionat sigui
+  el que han auditat.
 - **De la v0.6 a la v0.7** (les correccions de l'auditoria 29, §12). Res no s'ha calculat, i cap llista no canvia:
   - **un registre de la §13 sense cap hereditari** (AUD-179, bloquejant): la prova d'autonomia dels seus hereditaris, amb 8 fils, sortia
     amb el codi 0 sense la línia final. Ara acaba sencera, i l'executor demana la línia final després de cada ordre (§9 i §11);
@@ -481,6 +484,12 @@ no canvien:
   §13 i la prova d'autonomia dels hereditaris (`--registre`), que s'hi nega sense crear el JSONL.
 - **Les tres anàlisis** (AU2-143): l'ordre de cada registre, llegida sencera amb el contracte d'opcions de l'eina, ha de dir el mateix
   que la línia d'inici, i el seu JSONL ha de ser el fitxer. A l'anàlisi de ρ_aut, abans només se'n mirava el registre.
+  - **Del JSONL, només el nom del fitxer,** no la carpeta (AU2-145, auditoria 30): els registres s'han de poder analitzar des d'una
+    còpia, com fan els auditors, i la ruta de l'ordre no queda certificada.
+  - **La quarta, la de la §14** (`eines/caps-analisi.mjs`), fa servir la validació del nivell 1 (`eines/densitat-analisi.mjs`), que no
+    canvia: compara amb una expressió regular les opcions que fan el resultat, i no hi veu un altre JSONL ni una opció repetida o
+    desconeguda (AUD-181, auditoria 30). Els registres de la §14 hi queden lligats d'altres maneres: C0 i S1 han de donar la línia final
+    del nivell 1, i S1h0 i S1h1, la llavor del pla, els bytes de cada replicador, l'empremta i els mòduls.
 - **`eines/autonomia-analisi.mjs`:** un zero per construcció trencat és un problema de la validació, i no només una frase de la sortida
   (la proposta de l'auditor 2 a l'AUD-176).
 - **`eines/estrats-autonomia-analisi.mjs`** (AU2-144): la sortida diu què mesura ρ_aut.
@@ -527,6 +536,8 @@ no canvien:
      1, GO quan es corregeixi l'AUD-179; l'auditor 2, GO per a l'autonomia i les variants per cap, i la §13 i ρ_aut, quan es corregeixin
      l'AU2-142 i l'AU2-143. Les correccions, a la v0.7, i l'auditoria 30, breu. Res no es calcula abans del merge, tampoc l'autonomia:
      l'AUD-179 canvia `eines/b1-comu.mjs`, un dels mòduls que compara la seva anàlisi (l'auditor 1).
+   - **L'auditoria 30** (10-11-2026): GO de tots dos per calcular la PR sencera, després del merge i des d'una còpia neta. Dues troballes
+     noves, baixes, que no bloquegen (AUD-181 i AU2-145): precisions del text, sense cap canvi de codi (§9 i §12).
 4. **Després del GO i del merge,** en aquest ordre, cada càlcul amb la seva llista:
 
    | Què | Llista (`fase2/resultats/b1/…`) | Ordres | Temps, amb el PC |
@@ -539,7 +550,8 @@ no canvien:
    - **Les llistes** les fa `node eines/b1-llistes.mjs autonomia|caps|estrats|estrats-autonomia`, a partir del pla i del mapa de llavors,
      i són a git abans de calcular; `test/b1-estrats.mjs` comprova que són les que en surten. Les SHA-256, al README de cada carpeta.
    - **D'on:** d'una còpia neta del commit del merge, a D:, sense cap fitxer de codi sense seguir. Abans del primer lot, els mòduls i les
-     eines de l'arbre del merge, els mateixos que els de la PR auditada (auditor 2, auditoria 29).
+     eines de l'arbre del merge, els mateixos que els de la PR auditada, `bc9dd94` (auditor 2, auditories 29 i 30; després de
+     l'auditoria 30, la PR només hi canvia el text), i la comparació, escrita.
    - **Com:** `bash eines/executa-b1.sh LLISTA SHA-256 COMMIT`, des d'una finestra de PowerShell del responsable, fora de l'aplicació
      (la incidència 2 de la maduració). L'executor és el del nivell 1 amb la guarda de l'AUD-174: cap fitxer `.js` o `.mjs` amb canvis
      o sense seguir, abans de començar i abans de cada ordre, i cap registre que digui `+canvis`. La guarda és la de git, i no veu els
@@ -647,6 +659,17 @@ l'AUD-175 a l'AUD-178, per a l'auditor 2).
 
 **Per a l'auditoria 30,** breu, abans de calcular: el diferencial de la PR des de `6f8bc0b`. Cada auditor revisa també les troballes de
 l'altre (de l'AU2-142 a l'AU2-144, per a l'auditor 1; l'AUD-179 i l'AUD-180, per a l'auditor 2).
+
+**Decidit a l'auditoria 30** (10-11-2026). GO de tots dos per calcular la PR sencera, i les correccions de l'auditoria 29, bones per a
+tots dos. Cap no va veure la troballa nova de l'altre.
+
+| Què | Auditor 1 | Auditor 2 | Ara |
+|---|---|---|---|
+| **GO** | GO per calcular-la sencera, després del merge i des d'una còpia neta | GO per als quatre blocs, després del merge, amb l'arbre científic de `bc9dd94`, comprovat, i des d'una còpia neta | El merge, i abans del primer lot, els mòduls i les eines de l'arbre del merge, comparats amb els de `bc9dd94` (§11) |
+| **L'ordre a l'anàlisi de la §14** (AUD-181) | La valida com abans de l'AU2-143. Abans del merge, `commandOptions` també a la §14 (amb les opcions d'`eines/densitat.mjs` exportades), que prefereix, o dir-ho a `CLAUDE.md` | — (no la va veure) | Dir-ho a `CLAUDE.md` i aquí (§9). Exportar les opcions canviaria `eines/densitat.mjs`, un mòdul de la §4 i de la §14, després del GO de tots dos, i l'auditor 2 demana l'arbre auditat |
+| **El JSONL de l'ordre** (AU2-145) | — (no la va veure) | Només se'n mira el nom. Comprovar-ne la ruta relativa del pla, o dir que no queda certificada; una millora posterior | Dir-ho (§9). La ruta del pla, si cal, en un càlcul nou, a les anàlisis, i amb la seva revisió |
+| **m_aut** | Una cota superior (auditoria 29) | Ho és quan n'hi ha, i de la propietat conjunta | Totes dues coses (§13) |
+| **Les condicions del càlcul** | En l'ordre del pla | Els mòduls de l'arbre del merge, comprovats; la còpia neta; les llistes i les llavors, sense canviar; cada registre, sencer; la repetició, abans d'analitzar; cap conclusió causal | Totes (§11) |
 
 ## 13. La composició de bytes, i què podria ser nou (decidida a l'auditoria 25, i fixada a la v0.5)
 
@@ -757,8 +780,10 @@ prova del cens i 8 companys a la sopa de la prova, com al nivell 1. L'eina és `
    - **què mesura** (AU2-144, i la precisió de l'auditor 1, auditoria 29): la densitat dels programes que la §13 detecta com a
      hereditaris, amb companys de soroll, i que també es copien amb companys inerts. És un estimand conjunt, la probabilitat de totes dues
      coses alhora, i no la de tots els programes que es podrien copiar sense el company: un que ho faria però que no és hereditari amb
-     companys de soroll no es prova mai. Per això, i pel mostreig, m_aut és una cota superior del k més petit dels que es copien sols. Al
-     nivell 1 (§4) passa el mateix, i les dues comprovacions comparen el mateix. Qualsevol conclusió ho ha de dir així;
+     companys de soroll no es prova mai. Per això, i pel mostreig, m_aut és una cota superior del k més petit dels que es copien sols,
+     quan n'hi ha: si cap estrat no en té cap, no hi ha cap cota (l'auditor 2, auditoria 30). La cota val per a tots dos, el k més petit
+     dels hereditaris que es copien sols i el de tots els que es copien sols, perquè els primers són una part dels segons. Al nivell 1
+     (§4) passa el mateix, i les dues comprovacions comparen el mateix. Qualsevol conclusió ho ha de dir així;
    - **dues comprovacions,** amb mostres independents: ρ_aut(½) contra la part dels 10⁷ programes de C0 amb D½ del nivell 1 que passen la
      mateixa xifra a la §4, i ρ_aut(10/256) contra la de C0 amb bytes uniformes;
    - **per grups de k** (0–4, 5–12, 13–24, 25–40 i 41–64): els hereditaris, i quants passen cada xifra;
