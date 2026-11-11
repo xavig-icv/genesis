@@ -1,0 +1,252 @@
+LA CORBA DE LA MADURACIÓ ALS MONS SENSE VIDA (P1)
+D = 8 − H0, en bits. Un món compta mentre cap cens no hi ha vist cap hereditari i falten més de 1.000 èpoques per a
+l'establiment. Per època: mons, mediana de D (del 5 % al 95 % dels mons), desviació; mediana de l'HOE; operacions per execució.
+
+llei2-A: sèrie del corrent, món quiet (80 registres)
+    100:  80 mons, D 0.0004 (de 0.0004 a 0.0005), sd 0.0000; HOE 0.093; ops/execució 68.0
+    500:  79 mons, D 0.0045 (de 0.0042 a 0.0048), sd 0.0002; HOE 0.198; ops/execució 81.6
+   1000:  79 mons, D 0.0142 (de 0.0133 a 0.0153), sd 0.0006; HOE 0.271; ops/execució 91.4
+   2000:  77 mons, D 0.0415 (de 0.0393 a 0.0441), sd 0.0015; HOE 0.334; ops/execució 105.0
+   3000:  73 mons, D 0.0716 (de 0.0688 a 0.0768), sd 0.0023; HOE 0.347; ops/execució 118.2
+   4000:  70 mons, D 0.1000 (de 0.0956 a 0.1057), sd 0.0032; HOE 0.341; ops/execució 131.1
+   5000:  69 mons, D 0.1240 (de 0.1189 a 0.1308), sd 0.0036; HOE 0.332; ops/execució 143.2
+   6000:  67 mons, D 0.1427 (de 0.1364 a 0.1494), sd 0.0039; HOE 0.323; ops/execució 152.9
+   7000:  66 mons, D 0.1569 (de 0.1511 a 0.1647), sd 0.0039; HOE 0.315; ops/execució 161.2
+   8000:  64 mons, D 0.1684 (de 0.1633 a 0.1751), sd 0.0037; HOE 0.307; ops/execució 167.6
+  10000:  52 mons, D 0.1828 (de 0.1767 a 0.1903), sd 0.0039; HOE 0.298; ops/execució 178.3
+  12000:  48 mons, D 0.1900 (de 0.1839 a 0.1971), sd 0.0044; HOE 0.292; ops/execució 180.8
+  14000:  47 mons, D 0.1921 (de 0.1883 a 0.2002), sd 0.0038; HOE 0.290; ops/execució 182.3
+  16000:  42 mons, D 0.1946 (de 0.1900 a 0.1994), sd 0.0032; HOE 0.288; ops/execució 183.9
+
+llei2-B: sèrie del corrent, corrent 0,01 (80 registres)
+    100:  78 mons, D 0.0005 (de 0.0004 a 0.0005), sd 0.0000; HOE 0.111; ops/execució 68.5
+    500:  78 mons, D 0.0067 (de 0.0062 a 0.0072), sd 0.0003; HOE 0.331; ops/execució 83.9
+   1000:  76 mons, D 0.0245 (de 0.0229 a 0.0263), sd 0.0011; HOE 0.446; ops/execució 93.6
+   2000:  73 mons, D 0.0812 (de 0.0758 a 0.0868), sd 0.0065; HOE 0.491; ops/execució 114.4
+   3000:  70 mons, D 0.1480 (de 0.1394 a 0.1570), sd 0.0077; HOE 0.468; ops/execució 142.7
+   4000:  68 mons, D 0.2074 (de 0.1973 a 0.2199), sd 0.0068; HOE 0.426; ops/execució 171.8
+   5000:  63 mons, D 0.2518 (de 0.2413 a 0.2604), sd 0.0062; HOE 0.381; ops/execució 195.7
+   6000:  61 mons, D 0.2809 (de 0.2675 a 0.2890), sd 0.0063; HOE 0.337; ops/execució 212.1
+   7000:  56 mons, D 0.2994 (de 0.2863 a 0.3081), sd 0.0069; HOE 0.306; ops/execució 216.3
+   8000:  55 mons, D 0.3128 (de 0.2977 a 0.3201), sd 0.0067; HOE 0.289; ops/execució 218.2
+  10000:  51 mons, D 0.3288 (de 0.3194 a 0.3389), sd 0.0065; HOE 0.277; ops/execució 219.0
+  12000:  44 mons, D 0.3388 (de 0.3298 a 0.3493), sd 0.0065; HOE 0.275; ops/execució 218.0
+  14000:  40 mons, D 0.3436 (de 0.3333 a 0.3563), sd 0.0064; HOE 0.279; ops/execució 217.7
+  16000:  39 mons, D 0.3496 (de 0.3386 a 0.3623), sd 0.0070; HOE 0.280; ops/execució 216.8
+
+mad-envelliment: maduració, l'envelliment de la sèrie (196 registres)
+    100: 195 mons, D 0.0004 (de 0.0004 a 0.0005), sd 0.0000; HOE 0.092; ops/execució 67.8
+    500: 194 mons, D 0.0045 (de 0.0042 a 0.0048), sd 0.0002; HOE 0.197; ops/execució 82.1
+   1000: 191 mons, D 0.0142 (de 0.0133 a 0.0151), sd 0.0005; HOE 0.270; ops/execució 91.2
+   2000: 189 mons, D 0.0413 (de 0.0393 a 0.0439), sd 0.0013; HOE 0.334; ops/execució 105.5
+   3000: 185 mons, D 0.0716 (de 0.0683 a 0.0758), sd 0.0023; HOE 0.347; ops/execució 117.7
+   4000: 182 mons, D 0.0996 (de 0.0950 a 0.1046), sd 0.0029; HOE 0.342; ops/execució 130.8
+   5000: 178 mons, D 0.1229 (de 0.1181 a 0.1292), sd 0.0034; HOE 0.332; ops/execució 142.2
+   6000: 175 mons, D 0.1419 (de 0.1366 a 0.1481), sd 0.0035; HOE 0.322; ops/execució 152.6
+   7000: 171 mons, D 0.1564 (de 0.1513 a 0.1631), sd 0.0035; HOE 0.314; ops/execució 161.6
+   8000: 166 mons, D 0.1678 (de 0.1617 a 0.1743), sd 0.0038; HOE 0.308; ops/execució 168.4
+
+pilot-envelliment: maduració, l'envelliment del pilot (24 registres)
+    100:  24 mons, D 0.0004 (de 0.0004 a 0.0005), sd 0.0000; HOE 0.093; ops/execució 68.2
+    500:  24 mons, D 0.0044 (de 0.0043 a 0.0048), sd 0.0001; HOE 0.198; ops/execució 81.9
+   1000:  24 mons, D 0.0142 (de 0.0135 a 0.0149), sd 0.0005; HOE 0.272; ops/execució 91.4
+   2000:  24 mons, D 0.0416 (de 0.0397 a 0.0441), sd 0.0014; HOE 0.336; ops/execució 105.7
+   3000:  24 mons, D 0.0714 (de 0.0686 a 0.0749), sd 0.0020; HOE 0.346; ops/execució 118.2
+   4000:  24 mons, D 0.1003 (de 0.0952 a 0.1043), sd 0.0031; HOE 0.342; ops/execució 130.6
+   5000:  24 mons, D 0.1238 (de 0.1183 a 0.1287), sd 0.0036; HOE 0.331; ops/execució 143.8
+   6000:  24 mons, D 0.1429 (de 0.1371 a 0.1472), sd 0.0037; HOE 0.323; ops/execució 154.6
+   7000:  24 mons, D 0.1569 (de 0.1520 a 0.1626), sd 0.0034; HOE 0.316; ops/execució 162.0
+   8000:  23 mons, D 0.1686 (de 0.1631 a 0.1746), sd 0.0040; HOE 0.311; ops/execució 168.7
+
+mad-continue: maduració, la sèrie: la sopa que continua (300 registres)
+   8100: 294 mons, D 0.1686 (de 0.1622 a 0.1745), sd 0.0038; HOE 0.307; ops/execució 169.0
+   8500: 294 mons, D 0.1720 (de 0.1657 a 0.1790), sd 0.0040; HOE 0.305; ops/execució 170.9
+   9000: 286 mons, D 0.1761 (de 0.1697 a 0.1823), sd 0.0040; HOE 0.302; ops/execució 173.7
+  10000: 278 mons, D 0.1819 (de 0.1750 a 0.1885), sd 0.0043; HOE 0.298; ops/execució 177.0
+  11000: 268 mons, D 0.1862 (de 0.1793 a 0.1933), sd 0.0043; HOE 0.294; ops/execució 180.1
+  12000: 254 mons, D 0.1891 (de 0.1823 a 0.1959), sd 0.0041; HOE 0.293; ops/execució 181.1
+  14000: 239 mons, D 0.1924 (de 0.1857 a 0.1992), sd 0.0042; HOE 0.289; ops/execució 183.2
+  16000: 222 mons, D 0.1942 (de 0.1885 a 0.2010), sd 0.0039; HOE 0.287; ops/execució 183.6
+
+mad-shuffle-all: maduració, la sèrie: la sopa barrejada (els mateixos bytes) (300 registres)
+   8100: 284 mons, D 0.1685 (de 0.1620 a 0.1754), sd 0.0040; HOE 0.360; ops/execució 265.8
+   8500: 276 mons, D 0.1769 (de 0.1695 a 0.1842), sd 0.0044; HOE 0.482; ops/execució 271.4
+   9000: 265 mons, D 0.1840 (de 0.1761 a 0.1919), sd 0.0047; HOE 0.482; ops/execució 255.9
+  10000: 252 mons, D 0.1939 (de 0.1869 a 0.2022), sd 0.0046; HOE 0.413; ops/execució 227.9
+  11000: 232 mons, D 0.1997 (de 0.1922 a 0.2073), sd 0.0044; HOE 0.352; ops/execució 209.2
+  12000: 223 mons, D 0.2020 (de 0.1948 a 0.2086), sd 0.0043; HOE 0.314; ops/execució 197.4
+  14000: 206 mons, D 0.2015 (de 0.1943 a 0.2077), sd 0.0043; HOE 0.283; ops/execució 185.0
+  16000: 194 mons, D 0.1983 (de 0.1897 a 0.2051), sd 0.0044; HOE 0.276; ops/execució 181.5
+
+mad-reinit: maduració, la sèrie: la sopa nova (300 registres)
+   8100: 297 mons, D 0.0004 (de 0.0004 a 0.0005), sd 0.0000; HOE 0.092; ops/execució 67.7
+   8500: 297 mons, D 0.0045 (de 0.0042 a 0.0049), sd 0.0002; HOE 0.197; ops/execució 82.1
+   9000: 297 mons, D 0.0142 (de 0.0133 a 0.0152), sd 0.0006; HOE 0.271; ops/execució 91.5
+  10000: 289 mons, D 0.0416 (de 0.0392 a 0.0439), sd 0.0014; HOE 0.335; ops/execució 105.2
+  11000: 281 mons, D 0.0715 (de 0.0682 a 0.0754), sd 0.0022; HOE 0.347; ops/execució 117.9
+  12000: 273 mons, D 0.0997 (de 0.0945 a 0.1042), sd 0.0030; HOE 0.342; ops/execució 130.1
+  14000: 256 mons, D 0.1423 (de 0.1355 a 0.1480), sd 0.0038; HOE 0.323; ops/execució 152.9
+  16000: 242 mons, D 0.1682 (de 0.1616 a 0.1750), sd 0.0042; HOE 0.308; ops/execució 168.6
+
+pilot-continue: maduració, el pilot: la sopa que continua (44 registres)
+   8100:  43 mons, D 0.1695 (de 0.1635 a 0.1749), sd 0.0040; HOE 0.309; ops/execució 169.3
+   8500:  43 mons, D 0.1731 (de 0.1659 a 0.1784), sd 0.0043; HOE 0.307; ops/execució 172.6
+   9000:  43 mons, D 0.1779 (de 0.1701 a 0.1838), sd 0.0046; HOE 0.302; ops/execució 174.6
+  10000:  40 mons, D 0.1829 (de 0.1766 a 0.1897), sd 0.0039; HOE 0.298; ops/execució 177.5
+  11000:  39 mons, D 0.1871 (de 0.1795 a 0.1946), sd 0.0043; HOE 0.295; ops/execució 180.6
+  12000:  36 mons, D 0.1898 (de 0.1817 a 0.1975), sd 0.0047; HOE 0.293; ops/execució 182.5
+  14000:  29 mons, D 0.1951 (de 0.1843 a 0.2018), sd 0.0048; HOE 0.289; ops/execució 182.9
+  16000:  27 mons, D 0.1968 (de 0.1913 a 0.2036), sd 0.0036; HOE 0.286; ops/execució 182.5
+
+pilot-shuffle-all: maduració, el pilot: la sopa barrejada (els mateixos bytes) (44 registres)
+   8100:  43 mons, D 0.1691 (de 0.1627 a 0.1756), sd 0.0041; HOE 0.365; ops/execució 268.0
+   8500:  39 mons, D 0.1795 (de 0.1712 a 0.1858), sd 0.0040; HOE 0.486; ops/execució 273.7
+   9000:  36 mons, D 0.1878 (de 0.1764 a 0.1924), sd 0.0043; HOE 0.484; ops/execució 256.0
+  10000:  36 mons, D 0.1980 (de 0.1855 a 0.2025), sd 0.0045; HOE 0.413; ops/execució 227.9
+  11000:  35 mons, D 0.2034 (de 0.1935 a 0.2101), sd 0.0049; HOE 0.350; ops/execució 208.8
+  12000:  34 mons, D 0.2042 (de 0.1940 a 0.2124), sd 0.0049; HOE 0.311; ops/execució 196.5
+  14000:  28 mons, D 0.2022 (de 0.1934 a 0.2108), sd 0.0048; HOE 0.281; ops/execució 185.5
+  16000:  28 mons, D 0.1992 (de 0.1918 a 0.2030), sd 0.0044; HOE 0.275; ops/execució 181.8
+
+pilot-shuffle-programs: maduració, el pilot: els programes canviats de lloc (44 registres)
+   8100:  43 mons, D 0.1748 (de 0.1690 a 0.1815), sd 0.0041; HOE 0.335; ops/execució 175.8
+   8500:  41 mons, D 0.1850 (de 0.1771 a 0.1930), sd 0.0046; HOE 0.352; ops/execució 182.9
+   9000:  41 mons, D 0.1919 (de 0.1833 a 0.1982), sd 0.0048; HOE 0.338; ops/execució 185.8
+  10000:  39 mons, D 0.1983 (de 0.1886 a 0.2057), sd 0.0049; HOE 0.312; ops/execució 189.0
+  11000:  38 mons, D 0.1997 (de 0.1892 a 0.2104), sd 0.0051; HOE 0.297; ops/execució 188.5
+  12000:  36 mons, D 0.1994 (de 0.1900 a 0.2094), sd 0.0048; HOE 0.288; ops/execució 188.1
+  14000:  32 mons, D 0.1993 (de 0.1928 a 0.2067), sd 0.0039; HOE 0.284; ops/execució 186.6
+  16000:  29 mons, D 0.1973 (de 0.1915 a 0.2043), sd 0.0042; HOE 0.281; ops/execució 185.7
+
+pilot-shuffle-within: maduració, el pilot: els bytes barrejats dins de cada programa (44 registres)
+   8100:  43 mons, D 0.1701 (de 0.1652 a 0.1759), sd 0.0041; HOE 0.234; ops/execució 166.5
+   8500:  43 mons, D 0.1738 (de 0.1684 a 0.1800), sd 0.0042; HOE 0.270; ops/execució 183.0
+   9000:  43 mons, D 0.1753 (de 0.1695 a 0.1824), sd 0.0046; HOE 0.281; ops/execució 188.5
+  10000:  42 mons, D 0.1778 (de 0.1715 a 0.1847), sd 0.0045; HOE 0.287; ops/execució 190.8
+  11000:  40 mons, D 0.1809 (de 0.1740 a 0.1885), sd 0.0043; HOE 0.287; ops/execució 190.4
+  12000:  39 mons, D 0.1833 (de 0.1742 a 0.1900), sd 0.0042; HOE 0.288; ops/execució 190.1
+  14000:  37 mons, D 0.1891 (de 0.1776 a 0.1993), sd 0.0142; HOE 0.290; ops/execució 186.6
+  16000:  35 mons, D 0.1910 (de 0.1828 a 0.2003), sd 0.1243; HOE 0.288; ops/execució 184.5
+
+pilot-reinit: maduració, el pilot: la sopa nova (44 registres)
+   8100:  44 mons, D 0.0004 (de 0.0004 a 0.0005), sd 0.0000; HOE 0.092; ops/execució 67.7
+   8500:  44 mons, D 0.0044 (de 0.0041 a 0.0048), sd 0.0002; HOE 0.194; ops/execució 81.9
+   9000:  43 mons, D 0.0141 (de 0.0134 a 0.0153), sd 0.0005; HOE 0.271; ops/execució 91.7
+  10000:  42 mons, D 0.0416 (de 0.0387 a 0.0437), sd 0.0015; HOE 0.335; ops/execució 105.1
+  11000:  40 mons, D 0.0716 (de 0.0680 a 0.0755), sd 0.0023; HOE 0.347; ops/execució 117.7
+  12000:  39 mons, D 0.0999 (de 0.0945 a 0.1038), sd 0.0029; HOE 0.341; ops/execució 130.5
+  14000:  38 mons, D 0.1428 (de 0.1359 a 0.1499), sd 0.0040; HOE 0.323; ops/execució 152.7
+  16000:  33 mons, D 0.1682 (de 0.1595 a 0.1753), sd 0.0045; HOE 0.308; ops/execució 168.2
+
+
+A1: LA CORBA ES REPETEIX? Els mons quiets de la sèrie del corrent (A) i els de l'envelliment de la sèrie de la maduració
+  època 1000: A 0.0142; envelliment 0.0142; diferència 0.1 %; (el pilot: 0.0142, -0.1 %)
+  època 2000: A 0.0415; envelliment 0.0413; diferència -0.4 %; (el pilot: 0.0416, 0.3 %)
+  època 4000: A 0.1000; envelliment 0.0996; diferència -0.5 %; (el pilot: 0.1003, 0.3 %)
+  època 6000: A 0.1427; envelliment 0.1419; diferència -0.5 %; (el pilot: 0.1429, 0.1 %)
+  època 8000: A 0.1684; envelliment 0.1678; diferència -0.4 %; (el pilot: 0.1686, 0.2 %)
+
+
+LA DISPERSIÓ ENTRE MONS ÉS NOMÉS SOROLL? (P1)
+La correlació de rangs (Spearman) entre la D d'un món a dues èpoques, als mons sense vida a totes dues:
+  llei2-A, 1000 i 2000: 77 mons, rho = 0.67
+  llei2-A, 2000 i 4000: 70 mons, rho = 0.50
+  llei2-A, 2000 i 8000: 64 mons, rho = 0.17
+  llei2-A, 4000 i 8000: 64 mons, rho = 0.48
+  llei2-A, 8000 i 16000: 42 mons, rho = -0.04
+  mad-envelliment, 1000 i 2000: 189 mons, rho = 0.57
+  mad-envelliment, 2000 i 4000: 182 mons, rho = 0.54
+  mad-envelliment, 2000 i 8000: 166 mons, rho = 0.10
+  mad-envelliment, 4000 i 8000: 166 mons, rho = 0.29
+  llei2-B, 1000 i 2000: 73 mons, rho = 0.54
+  llei2-B, 2000 i 4000: 68 mons, rho = 0.50
+  llei2-B, 2000 i 8000: 55 mons, rho = 0.15
+  llei2-B, 4000 i 8000: 55 mons, rho = 0.26
+Dues branques del mateix món (la sopa que continua) comparteixen la sopa de l'època 8.000, però no l'atzar de després:
+  època 9000: 136 mons amb les dues branques sense vida; sd entre les dues branques d'un món 0.0019; sd entre mons (de la mitjana de les dues) 0.0038; rho entre les dues branques 0.75; rho amb la D del món a l'època 8.000 0.90
+  època 10000: 128 mons amb les dues branques sense vida; sd entre les dues branques d'un món 0.0027; sd entre mons (de la mitjana de les dues) 0.0038; rho entre les dues branques 0.60; rho amb la D del món a l'època 8.000 0.76
+  època 12000: 107 mons amb les dues branques sense vida; sd entre les dues branques d'un món 0.0034; sd entre mons (de la mitjana de les dues) 0.0033; rho entre les dues branques 0.30; rho amb la D del món a l'època 8.000 0.53
+  època 16000: 81 mons amb les dues branques sense vida; sd entre les dues branques d'un món 0.0040; sd entre mons (de la mitjana de les dues) 0.0025; rho entre les dues branques -0.17; rho amb la D del món a l'època 8.000 0.13
+
+
+QUÈ EN QUEDA QUAN ES TRANSFORMA LA SOPA (P2)
+La mediana als mons sense vida, pel temps passat des de l'època 8.000 (entre parèntesis, els mons). A la fila 0, la sopa
+envellida d'origen, abans de transformar-la: la barrejada en conserva els bytes, i la nova comença de zero.
+
+La sèrie, D (bits): continue | shuffle-all | reinit
+      0: 0.1677 (150), la sopa envellida d'origen
+    100: 0.1686 (294) | 0.1685 (284) | 0.0004 (297)
+    200: 0.1696 (294) | 0.1713 (284) | 0.0011 (297)
+    300: 0.1704 (294) | 0.1735 (279) | 0.0020 (297)
+    500: 0.1720 (294) | 0.1769 (276) | 0.0045 (297)
+   1000: 0.1761 (286) | 0.1840 (265) | 0.0142 (297)
+   2000: 0.1819 (278) | 0.1939 (252) | 0.0416 (289)
+   3000: 0.1862 (268) | 0.1997 (232) | 0.0715 (281)
+   4000: 0.1891 (254) | 0.2020 (223) | 0.0997 (273)
+   6000: 0.1924 (239) | 0.2015 (206) | 0.1423 (256)
+   8000: 0.1942 (222) | 0.1983 (194) | 0.1682 (242)
+
+La sèrie, HOE: continue | shuffle-all | reinit
+      0: 0.307 (150), la sopa envellida d'origen
+    100: 0.307 (294) | 0.360 (284) | 0.092 (297)
+    200: 0.307 (294) | 0.425 (284) | 0.130 (297)
+    300: 0.306 (294) | 0.456 (279) | 0.155 (297)
+    500: 0.305 (294) | 0.482 (276) | 0.197 (297)
+   1000: 0.302 (286) | 0.482 (265) | 0.271 (297)
+   2000: 0.298 (278) | 0.413 (252) | 0.335 (289)
+   3000: 0.294 (268) | 0.352 (232) | 0.347 (281)
+   4000: 0.293 (254) | 0.314 (223) | 0.342 (273)
+   6000: 0.289 (239) | 0.283 (206) | 0.323 (256)
+   8000: 0.287 (222) | 0.276 (194) | 0.308 (242)
+
+La sèrie, operacions per execució: continue | shuffle-all | reinit
+      0: 168.4 (150), la sopa envellida d'origen
+    100: 169.0 (294) | 265.8 (284) | 67.7 (297)
+    200: 169.7 (294) | 277.3 (284) | 73.5 (297)
+    300: 169.8 (294) | 276.9 (279) | 76.9 (297)
+    500: 170.9 (294) | 271.4 (276) | 82.1 (297)
+   1000: 173.7 (286) | 255.9 (265) | 91.5 (297)
+   2000: 177.0 (278) | 227.9 (252) | 105.2 (289)
+   3000: 180.1 (268) | 209.2 (232) | 117.9 (281)
+   4000: 181.1 (254) | 197.4 (223) | 130.1 (273)
+   6000: 183.2 (239) | 185.0 (206) | 152.9 (256)
+   8000: 183.6 (222) | 181.5 (194) | 168.6 (242)
+
+El pilot, D (bits): continue | shuffle-all | shuffle-programs | shuffle-within | reinit
+      0: 0.1685 (22), la sopa envellida d'origen
+    100: 0.1695 (43) | 0.1691 (43) | 0.1748 (43) | 0.1701 (43) | 0.0004 (44)
+    200: 0.1701 (43) | 0.1733 (43) | 0.1781 (43) | 0.1711 (43) | 0.0011 (44)
+    300: 0.1711 (43) | 0.1755 (40) | 0.1809 (42) | 0.1723 (43) | 0.0020 (44)
+    500: 0.1731 (43) | 0.1795 (39) | 0.1850 (41) | 0.1738 (43) | 0.0044 (44)
+   1000: 0.1779 (43) | 0.1878 (36) | 0.1919 (41) | 0.1753 (43) | 0.0141 (43)
+   2000: 0.1829 (40) | 0.1980 (36) | 0.1983 (39) | 0.1778 (42) | 0.0416 (42)
+   3000: 0.1871 (39) | 0.2034 (35) | 0.1997 (38) | 0.1809 (40) | 0.0716 (40)
+   4000: 0.1898 (36) | 0.2042 (34) | 0.1994 (36) | 0.1833 (39) | 0.0999 (39)
+   6000: 0.1951 (29) | 0.2022 (28) | 0.1993 (32) | 0.1891 (37) | 0.1428 (38)
+   8000: 0.1968 (27) | 0.1992 (28) | 0.1973 (29) | 0.1910 (35) | 0.1682 (33)
+
+El pilot, HOE: continue | shuffle-all | shuffle-programs | shuffle-within | reinit
+      0: 0.310 (22), la sopa envellida d'origen
+    100: 0.309 (43) | 0.365 (43) | 0.335 (43) | 0.234 (43) | 0.092 (44)
+    200: 0.310 (43) | 0.431 (43) | 0.348 (43) | 0.250 (43) | 0.129 (44)
+    300: 0.308 (43) | 0.461 (40) | 0.351 (42) | 0.259 (43) | 0.154 (44)
+    500: 0.307 (43) | 0.486 (39) | 0.352 (41) | 0.270 (43) | 0.194 (44)
+   1000: 0.302 (43) | 0.484 (36) | 0.338 (41) | 0.281 (43) | 0.271 (43)
+   2000: 0.298 (40) | 0.413 (36) | 0.312 (39) | 0.287 (42) | 0.335 (42)
+   3000: 0.295 (39) | 0.350 (35) | 0.297 (38) | 0.287 (40) | 0.347 (40)
+   4000: 0.293 (36) | 0.311 (34) | 0.288 (36) | 0.288 (39) | 0.341 (39)
+   6000: 0.289 (29) | 0.281 (28) | 0.284 (32) | 0.290 (37) | 0.323 (38)
+   8000: 0.286 (27) | 0.275 (28) | 0.281 (29) | 0.288 (35) | 0.308 (33)
+
+El pilot, operacions per execució: continue | shuffle-all | shuffle-programs | shuffle-within | reinit
+      0: 168.6 (22), la sopa envellida d'origen
+    100: 169.3 (43) | 268.0 (43) | 175.8 (43) | 166.5 (43) | 67.7 (44)
+    200: 170.2 (43) | 279.2 (43) | 179.5 (43) | 174.9 (43) | 73.4 (44)
+    300: 171.2 (43) | 278.5 (40) | 180.9 (42) | 178.7 (43) | 76.8 (44)
+    500: 172.6 (43) | 273.7 (39) | 182.9 (41) | 183.0 (43) | 81.9 (44)
+   1000: 174.6 (43) | 256.0 (36) | 185.8 (41) | 188.5 (43) | 91.7 (43)
+   2000: 177.5 (40) | 227.9 (36) | 189.0 (39) | 190.8 (42) | 105.1 (42)
+   3000: 180.6 (39) | 208.8 (35) | 188.5 (38) | 190.4 (40) | 117.7 (40)
+   4000: 182.5 (36) | 196.5 (34) | 188.1 (36) | 190.1 (39) | 130.5 (39)
+   6000: 182.9 (29) | 185.5 (28) | 186.6 (32) | 186.6 (37) | 152.7 (38)
+   8000: 182.5 (27) | 181.8 (28) | 185.7 (29) | 184.5 (35) | 168.2 (33)

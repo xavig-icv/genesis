@@ -1,0 +1,259 @@
+EL RITME D'ESTABLIMENT I L'EDAT (P3)
+Per franja d'edat: establiments / mon-èpoques en risc (en milers) = establiments per 100.000 mon-èpoques (interval exacte del 95 %).
+L'edat és l'època, llevat de la sopa nova de les branques, on compta des de l'època 8.000. L'establiment és el primer dels dos censos.
+
+Franges de 4000 èpoques:
+  llei2-A: sèrie del corrent, món quiet (80 registres, 24 establiments)
+    de     0 a  4000:   3 /   316k = 0.95 (de 0.20 a 2.78)
+    de  4000 a  8000:   5 /   299k = 1.67 (de 0.54 a 3.91)
+    de  8000 a 12000:   9 /   269k = 3.34 (de 1.53 a 6.35)
+    de 12000 a 16000:   7 /   240k = 2.92 (de 1.17 a 6.01)
+  llei2-B: sèrie del corrent, corrent 0,01 (80 registres, 34 establiments)
+    de     0 a  4000:   7 /   304k = 2.30 (de 0.93 a 4.75)
+    de  4000 a  8000:  13 /   267k = 4.86 (de 2.59 a 8.32)
+    de  8000 a 12000:   7 /   229k = 3.05 (de 1.23 a 6.29)
+    de 12000 a 16000:   7 /   195k = 3.59 (de 1.44 a 7.39)
+  mad-envelliment: maduració, l'envelliment de la sèrie (196 registres, 14 establiments)
+    de     0 a  4000:   6 /   771k = 0.78 (de 0.29 a 1.69)
+    de  4000 a  8000:   8 /   746k = 1.07 (de 0.46 a 2.11)
+  pilot-envelliment: maduració, l'envelliment del pilot (24 registres, 0 establiments)
+    de     0 a  4000:   0 /    96k = 0.00 (de 0.00 a 3.84)
+    de  4000 a  8000:   0 /    96k = 0.00 (de 0.00 a 3.84)
+  mad-continue: maduració, la sèrie: la sopa que continua (300 registres, 64 establiments)
+    de  8000 a 12000:  27 /  1152k = 2.34 (de 1.54 a 3.41)
+    de 12000 a 16000:  37 /  1018k = 3.64 (de 2.56 a 5.01)
+  mad-shuffle-all: maduració, la sèrie: la sopa barrejada (els mateixos bytes) (300 registres, 82 establiments)
+    de  8000 a 12000:  53 /  1090k = 4.86 (de 3.64 a 6.36)
+    de 12000 a 16000:  29 /   931k = 3.11 (de 2.09 a 4.47)
+  mad-reinit: maduració, la sèrie: la sopa nova (300 registres, 40 establiments)
+    de     0 a  4000:  14 /  1179k = 1.19 (de 0.65 a 1.99)
+    de  4000 a  8000:  26 /  1090k = 2.39 (de 1.56 a 3.50)
+  pilot-continue: maduració, el pilot: la sopa que continua (44 registres, 12 establiments)
+    de  8000 a 12000:   4 /   171k = 2.34 (de 0.64 a 6.00)
+    de 12000 a 16000:   8 /   147k = 5.46 (de 2.36 a 10.76)
+  pilot-shuffle-all: maduració, el pilot: la sopa barrejada (els mateixos bytes) (44 registres, 12 establiments)
+    de  8000 a 12000:   7 /   162k = 4.33 (de 1.74 a 8.93)
+    de 12000 a 16000:   5 /   136k = 3.68 (de 1.20 a 8.60)
+  pilot-shuffle-programs: maduració, el pilot: els programes canviats de lloc (44 registres, 13 establiments)
+    de  8000 a 12000:   5 /   165k = 3.03 (de 0.98 a 7.06)
+    de 12000 a 16000:   8 /   140k = 5.73 (de 2.48 a 11.30)
+  pilot-shuffle-within: maduració, el pilot: els bytes barrejats dins de cada programa (44 registres, 6 establiments)
+    de  8000 a 12000:   2 /   171k = 1.17 (de 0.14 a 4.22)
+    de 12000 a 16000:   4 /   158k = 2.53 (de 0.69 a 6.47)
+  pilot-reinit: maduració, el pilot: la sopa nova (44 registres, 8 establiments)
+    de     0 a  4000:   3 /   172k = 1.75 (de 0.36 a 5.11)
+    de  4000 a  8000:   5 /   158k = 3.17 (de 1.03 a 7.41)
+
+Franges de 2000 èpoques:
+  llei2-A: sèrie del corrent, món quiet (80 registres, 24 establiments)
+    de     0 a  2000:   1 /   159k = 0.63 (de 0.02 a 3.50)
+    de  2000 a  4000:   2 /   156k = 1.28 (de 0.16 a 4.62)
+    de  4000 a  6000:   2 /   151k = 1.32 (de 0.16 a 4.78)
+    de  6000 a  8000:   3 /   148k = 2.03 (de 0.42 a 5.93)
+    de  8000 a 10000:   5 /   141k = 3.56 (de 1.16 a 8.30)
+    de 10000 a 12000:   4 /   129k = 3.11 (de 0.85 a 7.95)
+    de 12000 a 14000:   2 /   123k = 1.63 (de 0.20 a 5.89)
+    de 14000 a 16000:   5 /   117k = 4.26 (de 1.38 a 9.95)
+  llei2-B: sèrie del corrent, corrent 0,01 (80 registres, 34 establiments)
+    de     0 a  2000:   6 /   156k = 3.84 (de 1.41 a 8.36)
+    de  2000 a  4000:   1 /   148k = 0.68 (de 0.02 a 3.78)
+    de  4000 a  6000:   6 /   141k = 4.27 (de 1.57 a 9.29)
+    de  6000 a  8000:   7 /   127k = 5.52 (de 2.22 a 11.38)
+    de  8000 a 10000:   2 /   118k = 1.69 (de 0.20 a 6.11)
+    de 10000 a 12000:   5 /   111k = 4.50 (de 1.46 a 10.51)
+    de 12000 a 14000:   5 /   101k = 4.94 (de 1.60 a 11.52)
+    de 14000 a 16000:   2 /    94k = 2.13 (de 0.26 a 7.69)
+  mad-envelliment: maduració, l'envelliment de la sèrie (196 registres, 14 establiments)
+    de     0 a  2000:   5 /   389k = 1.29 (de 0.42 a 3.00)
+    de  2000 a  4000:   1 /   382k = 0.26 (de 0.01 a 1.46)
+    de  4000 a  6000:   3 /   377k = 0.80 (de 0.16 a 2.33)
+    de  6000 a  8000:   5 /   370k = 1.35 (de 0.44 a 3.16)
+  pilot-envelliment: maduració, l'envelliment del pilot (24 registres, 0 establiments)
+    de     0 a  2000:   0 /    48k = 0.00 (de 0.00 a 7.69)
+    de  2000 a  4000:   0 /    48k = 0.00 (de 0.00 a 7.69)
+    de  4000 a  6000:   0 /    48k = 0.00 (de 0.00 a 7.69)
+    de  6000 a  8000:   0 /    48k = 0.00 (de 0.00 a 7.69)
+  mad-continue: maduració, la sèrie: la sopa que continua (300 registres, 64 establiments)
+    de  8000 a 10000:  13 /   591k = 2.20 (de 1.17 a 3.76)
+    de 10000 a 12000:  14 /   562k = 2.49 (de 1.36 a 4.18)
+    de 12000 a 14000:  18 /   527k = 3.41 (de 2.02 a 5.40)
+    de 14000 a 16000:  19 /   491k = 3.87 (de 2.33 a 6.05)
+  mad-shuffle-all: maduració, la sèrie: la sopa barrejada (els mateixos bytes) (300 registres, 82 establiments)
+    de  8000 a 10000:  31 /   573k = 5.41 (de 3.68 a 7.68)
+    de 10000 a 12000:  22 /   518k = 4.25 (de 2.66 a 6.44)
+    de 12000 a 14000:  15 /   482k = 3.11 (de 1.74 a 5.14)
+    de 14000 a 16000:  14 /   450k = 3.11 (de 1.70 a 5.23)
+  mad-reinit: maduració, la sèrie: la sopa nova (300 registres, 40 establiments)
+    de     0 a  2000:   5 /   597k = 0.84 (de 0.27 a 1.96)
+    de  2000 a  4000:   9 /   583k = 1.55 (de 0.71 a 2.93)
+    de  4000 a  6000:  15 /   558k = 2.69 (de 1.51 a 4.44)
+    de  6000 a  8000:  11 /   532k = 2.07 (de 1.03 a 3.70)
+  pilot-continue: maduració, el pilot: la sopa que continua (44 registres, 12 establiments)
+    de  8000 a 10000:   1 /    87k = 1.15 (de 0.03 a 6.42)
+    de 10000 a 12000:   3 /    84k = 3.57 (de 0.74 a 10.44)
+    de 12000 a 14000:   3 /    78k = 3.86 (de 0.80 a 11.28)
+    de 14000 a 16000:   5 /    69k = 7.27 (de 2.36 a 16.97)
+  pilot-shuffle-all: maduració, el pilot: la sopa barrejada (els mateixos bytes) (44 registres, 12 establiments)
+    de  8000 a 10000:   5 /    85k = 5.88 (de 1.91 a 13.73)
+    de 10000 a 12000:   2 /    77k = 2.61 (de 0.32 a 9.44)
+    de 12000 a 14000:   4 /    71k = 5.61 (de 1.53 a 14.37)
+    de 14000 a 16000:   1 /    65k = 1.55 (de 0.04 a 8.64)
+  pilot-shuffle-programs: maduració, el pilot: els programes canviats de lloc (44 registres, 13 establiments)
+    de  8000 a 10000:   3 /    86k = 3.51 (de 0.72 a 10.25)
+    de 10000 a 12000:   2 /    80k = 2.51 (de 0.30 a 9.06)
+    de 12000 a 14000:   5 /    74k = 6.76 (de 2.19 a 15.77)
+    de 14000 a 16000:   3 /    66k = 4.58 (de 0.94 a 13.39)
+  pilot-shuffle-within: maduració, el pilot: els bytes barrejats dins de cada programa (44 registres, 6 establiments)
+    de  8000 a 10000:   1 /    87k = 1.16 (de 0.03 a 6.44)
+    de 10000 a 12000:   1 /    85k = 1.18 (de 0.03 a 6.57)
+    de 12000 a 14000:   3 /    81k = 3.72 (de 0.77 a 10.86)
+    de 14000 a 16000:   1 /    78k = 1.29 (de 0.03 a 7.19)
+  pilot-reinit: maduració, el pilot: la sopa nova (44 registres, 8 establiments)
+    de     0 a  2000:   2 /    88k = 2.28 (de 0.28 a 8.23)
+    de  2000 a  4000:   1 /    84k = 1.19 (de 0.03 a 6.65)
+    de  4000 a  6000:   1 /    80k = 1.25 (de 0.03 a 6.94)
+    de  6000 a  8000:   4 /    77k = 5.18 (de 1.41 a 13.26)
+
+
+A2: EL RITME VA LLIGAT A L'EDAT? Tots els mons quiets junts (la sèrie del corrent A, els envelliments, la sopa que continua i la sopa nova)
+  de     0 a  2000:  13 /  1281k = 1.02 (de 0.54 a 1.74)
+  de  2000 a  4000:  13 /  1252k = 1.04 (de 0.55 a 1.78)
+  de  4000 a  6000:  21 /  1214k = 1.73 (de 1.07 a 2.65)
+  de  6000 a  8000:  23 /  1175k = 1.96 (de 1.24 a 2.94)
+  de  8000 a 10000:  19 /   818k = 2.32 (de 1.40 a 3.63)
+  de 10000 a 12000:  21 /   775k = 2.71 (de 1.68 a 4.14)
+  de 12000 a 14000:  23 /   728k = 3.16 (de 2.00 a 4.74)
+  de 14000 a 16000:  29 /   677k = 4.29 (de 2.87 a 6.16)
+  de 0 a 4.000:  26 /  2533k = 1.03 (de 0.67 a 1.50)
+  de 4.000 a 8.000:  44 /  2389k = 1.84 (de 1.34 a 2.47)
+  de 8.000 a 16.000:  92 /  2997k = 3.07 (de 2.48 a 3.77)
+  el quocient del ritme de 8.000 a 16.000 sobre el de 0 a 4.000: 2.99 (de 1.92 a 4.82)
+  el de 4.000 a 8.000 sobre el de 0 a 4.000: 1.79 (de 1.08 a 3.04)
+  el de 8.000 a 16.000 sobre el de 4.000 a 8.000: 1.67 (de 1.15 a 2.44)
+  Sense les branques (només mons que comencen a l'època 0: la sèrie del corrent A i els envelliments):
+    de 0 a 4000:   9 /  1182k = 0.76 (de 0.35 a 1.45)
+    de 4000 a 8000:  13 /  1141k = 1.14 (de 0.61 a 1.95)
+    de 8000 a 16000:  16 /   509k = 3.14 (de 1.80 a 5.10)
+
+
+A LA MATEIXA MADURACIÓ, EL MATEIX RITME? (P4)
+Els mons quiets (els mateixos de l'A2) i els de corrent 0,01 (la sèrie del corrent B), per franja de D.
+
+Amb la D de la condició a aquella edat (la mediana dels mons sense vida):
+  D de 0.00 a 0.05 : quiet  13 /  1407k = 0.92 (de 0.49 a 1.58); corrent   2 /   110k = 1.82 (de 0.22 a 6.57); quocient corrent/quiet 1.97 (de 0.22 a 8.69)
+  D de 0.05 a 0.10 : quiet  13 /  1126k = 1.15 (de 0.61 a 1.97); corrent   4 /    61k = 6.55 (de 1.78 a 16.76); quocient corrent/quiet 5.67 (de 1.35 a 18.36)
+  D de 0.10 a 0.15 : quiet  23 /  1452k = 1.58 (de 1.00 a 2.38); corrent   0 /    59k = 0.00 (de 0.00 a 6.23); quocient corrent/quiet 0.00 (de 0.00 a 4.27)
+  D de 0.15 a 0.20 : quiet 113 /  3933k = 2.87 (de 2.37 a 3.45); corrent   1 /    59k = 1.70 (de 0.04 a 9.46); quocient corrent/quiet 0.59 (de 0.01 a 3.36)
+  D de 0.20 a 0.30 : quiet —; corrent  12 /   222k = 5.42 (de 2.80 a 9.46)
+  D 0.30 o més     : quiet —; corrent  15 /   485k = 3.09 (de 1.73 a 5.10)
+  A les franges on hi ha totes dues condicions: amb corrent, 7 establiments; amb el ritme dels mons quiets a la mateixa D, se n'esperarien 4.4. Observats/esperats: 1.61 (de 0.65 a 3.31; l'interval només compta l'atzar dels observats)
+
+Sensibilitat: amb la D del mateix món 1.000 èpoques abans (els primers 1.000 passos de cada registre no hi compten):
+  D de 0.00 a 0.05 : quiet  15 /  1411k = 1.06 (de 0.60 a 1.75); corrent   4 /   110k = 3.65 (de 0.99 a 9.34); quocient corrent/quiet 3.43 (de 0.83 a 10.77)
+  D de 0.05 a 0.10 : quiet  18 /  1070k = 1.68 (de 1.00 a 2.66); corrent   0 /    59k = 0.00 (de 0.00 a 6.31); quocient corrent/quiet 0.00 (de 0.00 a 4.16)
+  D de 0.10 a 0.15 : quiet  26 /  1472k = 1.77 (de 1.15 a 2.59); corrent   1 /    55k = 1.82 (de 0.05 a 10.15); quocient corrent/quiet 1.03 (de 0.03 a 6.28)
+  D de 0.15 a 0.20 : quiet  91 /  2942k = 3.09 (de 2.49 a 3.80); corrent   2 /    60k = 3.33 (de 0.40 a 12.01); quocient corrent/quiet 1.07 (de 0.13 a 4.00)
+  D de 0.20 a 0.30 : quiet   1 /    38k = 2.61 (de 0.07 a 14.57); corrent  11 /   214k = 5.14 (de 2.57 a 9.21); quocient corrent/quiet 1.97 (de 0.29 a 84.71)
+  D 0.30 o més     : quiet —; corrent  14 /   420k = 3.33 (de 1.82 a 5.60)
+  A les franges on hi ha totes dues condicions: amb corrent, 18 establiments; amb el ritme dels mons quiets a la mateixa D, se n'esperarien 10.6. Observats/esperats: 1.70 (de 1.01 a 2.69; l'interval només compta l'atzar dels observats)
+
+I per edat, les mateixes dues condicions (per comparar):
+  de 0 a 2000: quiet  13 /  1281k = 1.02 (de 0.54 a 1.74); corrent   6 /   156k = 3.84 (de 1.41 a 8.36); quocient 3.78 (de 1.18 a 10.67)
+  de 2000 a 4000: quiet  13 /  1252k = 1.04 (de 0.55 a 1.78); corrent   1 /   148k = 0.68 (de 0.02 a 3.78); quocient 0.65 (de 0.02 a 4.35)
+  de 4000 a 8000: quiet  44 /  2389k = 1.84 (de 1.34 a 2.47); corrent  13 /   267k = 4.86 (de 2.59 a 8.32); quocient 2.64 (de 1.30 a 4.99)
+  de 8000 a 16000: quiet  92 /  2997k = 3.07 (de 2.48 a 3.77); corrent  14 /   425k = 3.30 (de 1.80 a 5.53); quocient 1.07 (de 0.57 a 1.90)
+
+
+APARÈIXER I ESTABLIR-SE, ALS CENSOS (P5)
+Cada cens mira 2.048 cel·les de 131.072. Un episodi: censos seguits amb algun hereditari a la mostra.
+Per conjunt: censos en risc; amb alguna cel·la que es replica; amb algun hereditari; episodis que acaben en establiment i episodis que s'apaguen
+(dels que s'apaguen: quants censos duren i el màxim d'hereditaris vistos); i establiments sense cap hereditari al cens d'abans.
+  llei2-A               : 4494 censos; es replica 1486; hereditari 60; episodis: 24 acaben en establiment, 16 s'apaguen (durada: mediana 1 censos, màxim 2; hereditaris vistos: mediana 1, màxim 35); establiments 24, dels quals 9 sense cap hereditari al cens d'abans
+  llei2-B               : 3982 censos; es replica 1455; hereditari 69; episodis: 34 acaben en establiment, 12 s'apaguen (durada: mediana 1 censos, màxim 5; hereditaris vistos: mediana 1, màxim 195); establiments 34, dels quals 18 sense cap hereditari al cens d'abans
+  mad-envelliment       : 6068 censos; es replica 1892; hereditari 51; episodis: 14 acaben en establiment, 19 s'apaguen (durada: mediana 1 censos, màxim 3; hereditaris vistos: mediana 1, màxim 44); establiments 14, dels quals 6 sense cap hereditari al cens d'abans
+  pilot-envelliment     : 768 censos; es replica 252; hereditari 1; episodis: 0 acaben en establiment, 1 s'apaguen (durada: mediana 1 censos, màxim 1; hereditaris vistos: mediana 2, màxim 2); establiments 0, dels quals 0 sense cap hereditari al cens d'abans
+  mad-continue          : 8680 censos; es replica 2807; hereditari 162; episodis: 64 acaben en establiment, 16 s'apaguen (durada: mediana 1 censos, màxim 2; hereditaris vistos: mediana 1, màxim 48); establiments 64, dels quals 11 sense cap hereditari al cens d'abans
+  mad-shuffle-all       : 8086 censos; es replica 3795; hereditari 236; episodis: 82 acaben en establiment, 28 s'apaguen (durada: mediana 1 censos, màxim 2; hereditaris vistos: mediana 1, màxim 56); establiments 82, dels quals 10 sense cap hereditari al cens d'abans
+  mad-reinit            : 9076 censos; es replica 2760; hereditari 119; episodis: 40 acaben en establiment, 19 s'apaguen (durada: mediana 1 censos, màxim 9; hereditaris vistos: mediana 1, màxim 15); establiments 40, dels quals 10 sense cap hereditari al cens d'abans
+  pilot-continue        : 1269 censos; es replica 393; hereditari 29; episodis: 12 acaben en establiment, 6 s'apaguen (durada: mediana 1 censos, màxim 2; hereditaris vistos: mediana 1, màxim 10); establiments 12, dels quals 3 sense cap hereditari al cens d'abans
+  pilot-shuffle-all     : 1189 censos; es replica 575; hereditari 42; episodis: 12 acaben en establiment, 4 s'apaguen (durada: mediana 1 censos, màxim 1; hereditaris vistos: mediana 1, màxim 1); establiments 12, dels quals 0 sense cap hereditari al cens d'abans
+  pilot-shuffle-programs: 1219 censos; es replica 400; hereditari 26; episodis: 13 acaben en establiment, 2 s'apaguen (durada: mediana 2 censos, màxim 3; hereditaris vistos: mediana 3, màxim 5); establiments 13, dels quals 5 sense cap hereditari al cens d'abans
+  pilot-shuffle-within  : 1318 censos; es replica 408; hereditari 15; episodis: 6 acaben en establiment, 4 s'apaguen (durada: mediana 1 censos, màxim 1; hereditaris vistos: mediana 1, màxim 1); establiments 6, dels quals 1 sense cap hereditari al cens d'abans
+  pilot-reinit          : 1316 censos; es replica 422; hereditari 23; episodis: 8 acaben en establiment, 4 s'apaguen (durada: mediana 1 censos, màxim 1; hereditaris vistos: mediana 1, màxim 1); establiments 8, dels quals 0 sense cap hereditari al cens d'abans
+Tots els mons quiets junts, per l'edat en què comença l'episodi: episodis, i quants acaben en establiment
+  de 0 a 4000: 50 episodis, 31 acaben en establiment (62 %)
+  de 4000 a 8000: 71 episodis, 39 acaben en establiment (55 %)
+  de 8000 a 12000: 63 episodis, 44 acaben en establiment (70 %)
+  de 12000 a 16000: 59 episodis, 48 acaben en establiment (81 %)
+
+Per franja d'edat, als censos de mons sense vida (cap hereditari vist fins llavors, i a més de 1.000 èpoques de l'establiment):
+censos; amb alguna cel·la que es replica (%); cel·les que es repliquen per cens (de 2.048), i el que seria a tot el món (131.072)
+  Tots els mons quiets junts (edat):
+    de     0 a  1000:  2547 censos; 31.6 %; 0.382 per cens, 24.4 al món
+    de  1000 a  2000:  2503 censos; 29.7 %; 0.349 per cens, 22.3 al món
+    de  2000 a  4000:  4822 censos; 29.9 %; 0.353 per cens, 22.6 al món
+    de  4000 a  6000:  4576 censos; 30.3 %; 0.366 per cens, 23.5 al món
+    de  6000 a  8000:  4354 censos; 30.6 %; 0.359 per cens, 23.0 al món
+    de  8000 a 12000:  5935 censos; 30.5 %; 0.367 per cens, 23.5 al món
+    de 12000 a 16000:  4996 censos; 31.8 %; 0.381 per cens, 24.4 al món
+  Corrent 0,01 (la sèrie del corrent B):
+    de     0 a  1000:   308 censos; 35.4 %; 0.412 per cens, 26.4 al món
+    de  1000 a  2000:   292 censos; 26.7 %; 0.356 per cens, 22.8 al món
+    de  2000 a  4000:   563 censos; 35.0 %; 0.428 per cens, 27.4 al món
+    de  4000 a  6000:   509 censos; 40.1 %; 0.497 per cens, 31.8 al món
+    de  6000 a  8000:   448 censos; 37.7 %; 0.453 per cens, 29.0 al món
+    de  8000 a 12000:   800 censos; 37.4 %; 0.448 per cens, 28.6 al món
+    de 12000 a 16000:   657 censos; 32.7 %; 0.405 per cens, 25.9 al món
+  mad-continue (època):
+    de  8000 a  8500:   588 censos; 32.8 %; 0.379 per cens, 24.3 al món
+    de  8500 a  9000:   576 censos; 26.6 %; 0.311 per cens, 19.9 al món
+    de  9000 a 10000:  1128 censos; 27.7 %; 0.347 per cens, 22.2 al món
+    de 10000 a 12000:  2126 censos; 31.4 %; 0.383 per cens, 24.5 al món
+    de 12000 a 16000:  3788 censos; 32.3 %; 0.391 per cens, 25.0 al món
+  mad-shuffle-all (època):
+    de  8000 a  8500:   557 censos; 79.9 %; 1.637 per cens, 104.8 al món
+    de  8500 a  9000:   534 censos; 64.0 %; 1.039 per cens, 66.5 al món
+    de  9000 a 10000:  1032 censos; 54.5 %; 0.734 per cens, 47.0 al món
+    de 10000 a 12000:  1869 censos; 43.2 %; 0.584 per cens, 37.4 al món
+    de 12000 a 16000:  3298 censos; 35.5 %; 0.434 per cens, 27.8 al món
+  mad-reinit (època):
+    de     0 a  1000:  1188 censos; 29.2 %; 0.356 per cens, 22.8 al món
+    de  1000 a  2000:  1170 censos; 30.6 %; 0.354 per cens, 22.6 al món
+    de  2000 a  4000:  2241 censos; 29.5 %; 0.344 per cens, 22.0 al món
+    de  4000 a  6000:  2108 censos; 29.6 %; 0.360 per cens, 23.0 al món
+    de  6000 a  8000:  1997 censos; 28.7 %; 0.335 per cens, 21.4 al món
+  pilot-shuffle-programs (època):
+    de  8000 a  8500:    84 censos; 31.0 %; 0.369 per cens, 23.6 al món
+    de  8500 a  9000:    82 censos; 23.2 %; 0.280 per cens, 18.0 al món
+    de  9000 a 10000:   157 censos; 23.6 %; 0.255 per cens, 16.3 al món
+    de 10000 a 12000:   303 censos; 30.7 %; 0.370 per cens, 23.7 al món
+    de 12000 a 16000:   511 censos; 35.4 %; 0.419 per cens, 26.8 al món
+  pilot-shuffle-within (època):
+    de  8000 a  8500:    86 censos; 41.9 %; 0.512 per cens, 32.7 al món
+    de  8500 a  9000:    86 censos; 22.1 %; 0.267 per cens, 17.1 al món
+    de  9000 a 10000:   171 censos; 24.6 %; 0.310 per cens, 19.8 al món
+    de 10000 a 12000:   321 censos; 28.0 %; 0.352 per cens, 22.5 al món
+    de 12000 a 16000:   580 censos; 32.8 %; 0.660 per cens, 42.3 al món
+
+
+LES DUES BRANQUES D'UN MATEIX MÓN (afegit després de veure P3; no era a la nota)
+Mons amb les dues branques establertes, amb una i amb cap; i les que s'esperarien amb les dues establertes si fossin independents.
+  mad-continue          : 150 mons; dues 7, una 50, cap 93; esperades amb dues, si fossin independents: 6.8; quan hi són totes dues, la diferència entre els dos establiments: mediana 2250 èpoques (de 750 a 4000)
+  mad-shuffle-all       : 150 mons; dues 12, una 58, cap 80; esperades amb dues, si fossin independents: 11.2; quan hi són totes dues, la diferència entre els dos establiments: mediana 2375 èpoques (de 0 a 5750)
+  mad-reinit            : 150 mons; dues 4, una 32, cap 114; esperades amb dues, si fossin independents: 2.7; quan hi són totes dues, la diferència entre els dos establiments: mediana 2125 èpoques (de 1250 a 2250)
+  pilot-continue        : 22 mons; dues 1, una 10, cap 11; esperades amb dues, si fossin independents: 1.6; quan hi són totes dues, la diferència entre els dos establiments: mediana 6000 èpoques (de 6000 a 6000)
+  pilot-shuffle-all     : 22 mons; dues 0, una 12, cap 10; esperades amb dues, si fossin independents: 1.6
+  pilot-shuffle-programs: 22 mons; dues 3, una 7, cap 12; esperades amb dues, si fossin independents: 1.9; quan hi són totes dues, la diferència entre els dos establiments: mediana 3250 èpoques (de 750 a 3500)
+  pilot-shuffle-within  : 22 mons; dues 1, una 4, cap 17; esperades amb dues, si fossin independents: 0.4; quan hi són totes dues, la diferència entre els dos establiments: mediana 500 èpoques (de 500 a 500)
+  pilot-reinit          : 22 mons; dues 2, una 4, cap 16; esperades amb dues, si fossin independents: 0.7; quan hi són totes dues, la diferència entre els dos establiments: mediana 1625 èpoques (de 500 a 2750)
+
+
+LA SOPA NOVA DE LES BRANQUES I ELS MONS QUE COMENCEN A L'ÈPOCA 0 (afegit després de veure P3; no era a la nota)
+  de 0 a 4000: mons que comencen a l'època 0,   9 /  1182k = 0.76 (de 0.35 a 1.45); la sopa nova de les branques,  17 /  1351k = 1.26 (de 0.73 a 2.02); quocient 1.65 (de 0.70 a 4.21)
+  de 4000 a 8000: mons que comencen a l'època 0,  13 /  1141k = 1.14 (de 0.61 a 1.95); la sopa nova de les branques,  31 /  1248k = 2.48 (de 1.69 a 3.53); quocient 2.18 (de 1.11 a 4.54)
+  de 0 a 8000: mons que comencen a l'època 0,  22 /  2323k = 0.95 (de 0.59 a 1.43); la sopa nova de les branques,  48 /  2598k = 1.85 (de 1.36 a 2.45); quocient 1.95 (de 1.16 a 3.39)
+    llei2-A:   8 /   614k = 1.30 (de 0.56 a 2.57)
+    mad-envelliment:  14 /  1517k = 0.92 (de 0.50 a 1.55)
+    pilot-envelliment:   0 /   192k = 0.00 (de 0.00 a 1.92)
+    mad-reinit:  40 /  2269k = 1.76 (de 1.26 a 2.40)
+    pilot-reinit:   8 /   329k = 2.43 (de 1.05 a 4.79)
