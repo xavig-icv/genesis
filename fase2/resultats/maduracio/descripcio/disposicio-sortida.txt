@@ -1,0 +1,14 @@
+LA DISPOSICIÓ DE LES INSTRUCCIONS AL MÓN 1034 (quiet, sense vida)
+Per programa: la mitjana d'instruccions i la dispersió (variància / la d'una binomial; 1 = repartides a l'atzar), comptant:
+  totes; sense els '<'; amb cada tirada de '<' com una sola; i la part de les instruccions que són en programes amb 16 o més.
+època: totes (mitjana, dispersió); sense els < (mitjana, dispersió); tirades de < com una (mitjana, dispersió); % en programes de 16 o més
+    100: 2.64, 2.63; 2.34, 2.69; 2.63, 2.51; 4.1 %
+    500: 3.12, 5.22; 2.65, 5.45; 3.07, 4.93; 11.1 %
+   1000: 3.66, 7.49; 2.96, 7.74; 3.54, 6.84; 17.6 %
+   2000: 4.68, 9.89; 3.50, 10.20; 4.40, 8.78; 26.4 %
+   4000: 6.07, 10.06; 4.17, 10.70; 5.60, 8.94; 31.9 %
+   6000: 6.89, 9.09; 4.56, 9.86; 6.35, 8.14; 32.2 %
+   8000: 7.36, 8.58; 4.73, 9.43; 6.76, 7.64; 31.9 %
+  10000: 7.49, 8.02; 4.81, 8.83; 6.91, 7.14; 30.9 %
+  12000: 7.58, 7.77; 4.82, 8.47; 6.97, 6.82; 30.3 %
+  16000: 7.64, 7.73; 4.88, 8.46; 7.05, 6.83; 30.0 %

@@ -1,0 +1,65 @@
+
+LA SÈRIE DE LA MADURACIÓ: 186 mons al manifest, 150 inclosos
+  exclosos, 14: establiment abans de l'època N
+  exclosos, 22: N cel·les hereditàries a l'escaneig de l'època N
+
+  Cel·les que es repliquen i cel·les hereditàries, de 131.072, a cada sopa (l'escaneig de totes les cel·les):
+    la sopa envellida, tots els mons escanejats: es repliquen, mitjana 45.26, mediana 23, de 11 a 1835; total 7785 en 172 sopes; amb alguna, 172
+                                                 hereditàries, mitjana 17.87, mediana 0, de 0 a 1116; total 3074 en 172 sopes; amb alguna, 22
+    continue, els mons inclosos: es repliquen, mitjana 22.69, mediana 23, de 11 a 35; total 3404 en 150 sopes; amb alguna, 150
+                                hereditàries, mitjana 0.00, mediana 0, de 0 a 0; total 0 en 150 sopes; amb alguna, 0; d'aquestes, sense ajuda del company: 0
+    shuffle-all, els mons inclosos: es repliquen, mitjana 706.01, mediana 700.5, de 596 a 831; total 105902 en 150 sopes; amb alguna, 150
+                                   hereditàries, mitjana 6.83, mediana 6, de 1 a 16; total 1025 en 150 sopes; amb alguna, 150; d'aquestes, sense ajuda del company: 99
+    reinit, els mons inclosos: es repliquen, mitjana 117.85, mediana 117, de 91 a 155; total 17677 en 150 sopes; amb alguna, 150
+                              hereditàries, mitjana 0.41, mediana 0, de 0 a 3; total 62 en 150 sopes; amb alguna, 49; d'aquestes, sense ajuda del company: 17
+
+  A3, món a món (150 mons): cel·les que es repliquen, més a continue: 0; igual: 0; més a reinit: 150
+      la barrejada i la nova: es repliquen, més a shuffle-all: 150; igual: 0; més a reinit: 0; hereditàries, més a shuffle-all: 149; igual: 1; més a reinit: 0
+
+  El recompte de la sopa de partida prediu l'establiment? Les branques de cada braç, segons el que hi havia a la sopa:
+    continue: sense cap hereditària a la sopa, s'estableix a 64 de 300 (21 %); amb alguna, a 0 de 0; amb 5 o més, a 0 de 0
+              establiments en les primeres 1.000 èpoques: 6 sense cap hereditària, 0 amb alguna; en les primeres 2.000: 13 i 0
+              per les cel·les que es repliquen: fins a la mediana (23), 36 de 168 (21 %); per sobre, 28 de 132 (21 %); rho de Spearman amb l'establiment, -0.00
+    shuffle-all: sense cap hereditària a la sopa, s'estableix a 0 de 0; amb alguna, a 82 de 300 (27 %); amb 5 o més, a 66 de 224 (29 %)
+                 establiments en les primeres 1.000 èpoques: 0 sense cap hereditària, 16 amb alguna; en les primeres 2.000: 0 i 31
+                 per les cel·les que es repliquen: fins a la mediana (700.5), 41 de 150 (27 %); per sobre, 41 de 150 (27 %); rho de Spearman amb l'establiment, -0.03
+    reinit: sense cap hereditària a la sopa, s'estableix a 28 de 202 (14 %); amb alguna, a 12 de 98 (12 %); amb 5 o més, a 0 de 0
+            establiments en les primeres 1.000 èpoques: 3 sense cap hereditària, 0 amb alguna; en les primeres 2.000: 5 i 0
+            per les cel·les que es repliquen: fins a la mediana (117), 15 de 156 (10 %); per sobre, 25 de 144 (17 %); rho de Spearman amb l'establiment, 0.07
+
+EL PILOT DE LA MADURACIÓ: 24 mons al manifest, 22 inclosos
+  exclosos, 2: N cel·les hereditàries a l'escaneig de l'època N
+
+  Cel·les que es repliquen i cel·les hereditàries, de 131.072, a cada sopa (l'escaneig de totes les cel·les):
+    la sopa envellida, tots els mons escanejats: es repliquen, mitjana 23.63, mediana 23, de 14 a 31; total 567 en 24 sopes; amb alguna, 24
+                                                 hereditàries, mitjana 0.13, mediana 0, de 0 a 2; total 3 en 24 sopes; amb alguna, 2
+    continue, els mons inclosos: es repliquen, mitjana 23.68, mediana 23.5, de 14 a 31; total 521 en 22 sopes; amb alguna, 22
+                                hereditàries, mitjana 0.00, mediana 0, de 0 a 0; total 0 en 22 sopes; amb alguna, 0; d'aquestes, sense ajuda del company: 0
+    shuffle-programs, els mons inclosos: es repliquen, mitjana 31.23, mediana 30.5, de 19 a 43; total 687 en 22 sopes; amb alguna, 22
+                                        hereditàries, mitjana 0.14, mediana 0, de 0 a 1; total 3 en 22 sopes; amb alguna, 3; d'aquestes, sense ajuda del company: 2
+    shuffle-within, els mons inclosos: es repliquen, mitjana 91.14, mediana 87.5, de 71 a 116; total 2005 en 22 sopes; amb alguna, 22
+                                      hereditàries, mitjana 0.64, mediana 0, de 0 a 2; total 14 en 22 sopes; amb alguna, 9; d'aquestes, sense ajuda del company: 4
+    shuffle-all, els mons inclosos: es repliquen, mitjana 714.95, mediana 712.5, de 641 a 776; total 15729 en 22 sopes; amb alguna, 22
+                                   hereditàries, mitjana 7.68, mediana 7, de 4 a 16; total 169 en 22 sopes; amb alguna, 22; d'aquestes, sense ajuda del company: 10
+    reinit, els mons inclosos: es repliquen, mitjana 118.64, mediana 119, de 105 a 138; total 2610 en 22 sopes; amb alguna, 22
+                              hereditàries, mitjana 0.36, mediana 0, de 0 a 2; total 8 en 22 sopes; amb alguna, 7; d'aquestes, sense ajuda del company: 4
+
+  A3, món a món (22 mons): cel·les que es repliquen, més a continue: 0; igual: 0; més a reinit: 22
+      la barrejada i la nova: es repliquen, més a shuffle-all: 22; igual: 0; més a reinit: 0; hereditàries, més a shuffle-all: 22; igual: 0; més a reinit: 0
+
+  El recompte de la sopa de partida prediu l'establiment? Les branques de cada braç, segons el que hi havia a la sopa:
+    continue: sense cap hereditària a la sopa, s'estableix a 12 de 44 (27 %); amb alguna, a 0 de 0; amb 5 o més, a 0 de 0
+              establiments en les primeres 1.000 èpoques: 1 sense cap hereditària, 0 amb alguna; en les primeres 2.000: 1 i 0
+              per les cel·les que es repliquen: fins a la mediana (23.5), 7 de 22 (32 %); per sobre, 5 de 22 (23 %); rho de Spearman amb l'establiment, -0.04
+    shuffle-programs: sense cap hereditària a la sopa, s'estableix a 12 de 38 (32 %); amb alguna, a 1 de 6 (17 %); amb 5 o més, a 0 de 0
+                      establiments en les primeres 1.000 èpoques: 0 sense cap hereditària, 1 amb alguna; en les primeres 2.000: 2 i 1
+                      per les cel·les que es repliquen: fins a la mediana (30.5), 4 de 22 (18 %); per sobre, 9 de 22 (41 %); rho de Spearman amb l'establiment, 0.24
+    shuffle-within: sense cap hereditària a la sopa, s'estableix a 2 de 26 (8 %); amb alguna, a 4 de 18 (22 %); amb 5 o més, a 0 de 0
+                    establiments en les primeres 1.000 èpoques: 1 sense cap hereditària, 0 amb alguna; en les primeres 2.000: 1 i 0
+                    per les cel·les que es repliquen: fins a la mediana (87.5), 1 de 22 (5 %); per sobre, 5 de 22 (23 %); rho de Spearman amb l'establiment, 0.28
+    shuffle-all: sense cap hereditària a la sopa, s'estableix a 0 de 0; amb alguna, a 12 de 44 (27 %); amb 5 o més, a 11 de 40 (28 %)
+                 establiments en les primeres 1.000 èpoques: 0 sense cap hereditària, 1 amb alguna; en les primeres 2.000: 0 i 5
+                 per les cel·les que es repliquen: fins a la mediana (712.5), 7 de 22 (32 %); per sobre, 5 de 22 (23 %); rho de Spearman amb l'establiment, -0.09
+    reinit: sense cap hereditària a la sopa, s'estableix a 5 de 30 (17 %); amb alguna, a 3 de 14 (21 %); amb 5 o més, a 0 de 0
+            establiments en les primeres 1.000 èpoques: 0 sense cap hereditària, 0 amb alguna; en les primeres 2.000: 1 i 1
+            per les cel·les que es repliquen: fins a la mediana (119), 6 de 24 (25 %); per sobre, 2 de 20 (10 %); rho de Spearman amb l'establiment, -0.23

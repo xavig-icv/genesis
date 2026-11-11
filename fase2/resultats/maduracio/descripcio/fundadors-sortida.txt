@@ -1,0 +1,75 @@
+ELS FUNDADORS (P7): la instrucció de còpia del nucli de la família més gran al cens que confirma l'establiment
+
+llei2-A: sèrie del corrent, món quiet (24 establiments amb família)
+  la família més gran: només ',' 19; només '.' 3; totes dues 2; cap 0; amb '<' 22 de 24  ->  86 % amb ',' (de 22)
+  totes les famílies d'aquell cens (32): només ',' 25; només '.' 5; totes dues 2; cap 0; amb '<' 28 de 32
+  els nuclis més freqüents: <]<},[ (4); [<,}]] (3); [<,}]} (3); [[<,}] (2); [[}<,] (1); <[<,}] (1)
+
+llei2-B: sèrie del corrent, corrent 0,01 (34 establiments amb família)
+  la família més gran: només ',' 25; només '.' 6; totes dues 3; cap 0; amb '<' 25 de 34  ->  81 % amb ',' (de 31)
+  totes les famílies d'aquell cens (57): només ',' 39; només '.' 11; totes dues 6; cap 1; amb '<' 39 de 57
+  els nuclis més freqüents: [<,}]] (7); [{.>]] (4); <]<},[ (3); [{.,>] (2); ,<}][[ (1); [},<]] (1)
+
+mad-envelliment: maduració, l'envelliment de la sèrie (14 establiments amb família)
+  la família més gran: només ',' 10; només '.' 4; totes dues 0; cap 0; amb '<' 10 de 14  ->  71 % amb ',' (de 14)
+  totes les famílies d'aquell cens (17): només ',' 11; només '.' 6; totes dues 0; cap 0; amb '<' 11 de 17
+  els nuclis més freqüents: ,[<,}] (1); [.{>]] (1); [<,,}] (1); ,<}]]] (1); [,}<]] (1); [[[<,} (1)
+
+mad-continue: maduració, la sèrie: la sopa que continua (64 establiments amb família)
+  la família més gran: només ',' 48; només '.' 13; totes dues 3; cap 0; amb '<' 50 de 64  ->  79 % amb ',' (de 61)
+  totes les famílies d'aquell cens (80): només ',' 58; només '.' 18; totes dues 4; cap 0; amb '<' 60 de 80
+  els nuclis més freqüents: [<,}]] (7); [,<}]} (5); [{.>]] (4); [[<,}] (3); [.>{]] (3); [<,}]} (3)
+
+mad-shuffle-all: maduració, la sèrie: la sopa barrejada (els mateixos bytes) (82 establiments amb família)
+  la família més gran: només ',' 64; només '.' 17; totes dues 0; cap 1; amb '<' 66 de 82  ->  79 % amb ',' (de 81)
+  totes les famílies d'aquell cens (115): només ',' 90; només '.' 21; totes dues 2; cap 2; amb '<' 93 de 115
+  els nuclis més freqüents: [<,}]] (8); <]<},[ (5); [<,}]} (5); <]<,}[ (4); ,<}]<} (3); [.{>]] (3)
+
+mad-reinit: maduració, la sèrie: la sopa nova (40 establiments amb família)
+  la família més gran: només ',' 23; només '.' 15; totes dues 1; cap 1; amb '<' 24 de 40  ->  61 % amb ',' (de 38)
+  totes les famílies d'aquell cens (53): només ',' 30; només '.' 20; totes dues 2; cap 1; amb '<' 31 de 53
+  els nuclis més freqüents: [{.>]] (5); [<,}]] (3); <]<},[ (3); [.>{]] (2); <]<,}[ (2); [[<,}] (2)
+
+pilot-continue: maduració, el pilot: la sopa que continua (12 establiments amb família)
+  la família més gran: només ',' 10; només '.' 2; totes dues 0; cap 0; amb '<' 11 de 12  ->  83 % amb ',' (de 12)
+  totes les famílies d'aquell cens (12): només ',' 10; només '.' 2; totes dues 0; cap 0; amb '<' 11 de 12
+  els nuclis més freqüents: <[<,}] (1); [[},<] (1); [[{.>] (1); <]>.{[ (1); [},,<] (1); [<,}]] (1)
+
+pilot-shuffle-all: maduració, el pilot: la sopa barrejada (els mateixos bytes) (12 establiments amb família)
+  la família més gran: només ',' 10; només '.' 0; totes dues 2; cap 0; amb '<' 10 de 12  ->  100 % amb ',' (de 10)
+  totes les famílies d'aquell cens (19): només ',' 15; només '.' 1; totes dues 3; cap 0; amb '<' 16 de 19
+  els nuclis més freqüents: [<,}]] (2); ,<}]}< (2); [,<}]} (2); [<,}]} (1); [>{.,] (1); [},<]] (1)
+
+pilot-shuffle-programs: maduració, el pilot: els programes canviats de lloc (13 establiments amb família)
+  la família més gran: només ',' 9; només '.' 3; totes dues 0; cap 1; amb '<' 10 de 13  ->  75 % amb ',' (de 12)
+  totes les famílies d'aquell cens (15): només ',' 10; només '.' 4; totes dues 0; cap 1; amb '<' 11 de 15
+  els nuclis més freqüents: [<,}]} (2); [{.>]] (2); [[<,}] (1); ,<}[,< (1); ,}<][[ (1); <[[[[[ (1)
+
+pilot-shuffle-within: maduració, el pilot: els bytes barrejats dins de cada programa (6 establiments amb família)
+  la família més gran: només ',' 5; només '.' 0; totes dues 1; cap 0; amb '<' 5 de 6  ->  100 % amb ',' (de 5)
+  totes les famílies d'aquell cens (8): només ',' 7; només '.' 0; totes dues 1; cap 0; amb '<' 7 de 8
+  els nuclis més freqüents: <]<},[ (1); ,[{.>] (1); [,}<}{ (1); [<,,}] (1); <]},<[ (1); [[<,}] (1)
+
+pilot-reinit: maduració, el pilot: la sopa nova (8 establiments amb família)
+  la família més gran: només ',' 5; només '.' 3; totes dues 0; cap 0; amb '<' 6 de 8  ->  63 % amb ',' (de 8)
+  totes les famílies d'aquell cens (10): només ',' 5; només '.' 5; totes dues 0; cap 0; amb '<' 6 de 10
+  els nuclis més freqüents: <]<},[ (2); [{.>]] (1); ><.{[[ (1); <[,}<] (1); ,<}]}< (1); >]>.{[ (1)
+
+
+PER L'EDAT DE LA SOPA EN ESTABLIR-SE (la família més gran)
+  Tots els mons quiets junts (edat):
+    de     0 a  2000: només ',' 6; només '.' 7; totes dues 0; cap 0; amb '<' 8 de 13  ->  46 % amb ',' (de 13)
+    de  2000 a  4000: només ',' 9; només '.' 4; totes dues 0; cap 0; amb '<' 9 de 13  ->  69 % amb ',' (de 13)
+    de  4000 a  8000: només ',' 30; només '.' 12; totes dues 1; cap 1; amb '<' 30 de 44  ->  71 % amb ',' (de 42)
+    de  8000 a 12000: només ',' 32; només '.' 5; totes dues 3; cap 0; amb '<' 36 de 40  ->  86 % amb ',' (de 37)
+    de 12000 a 16000: només ',' 38; només '.' 12; totes dues 2; cap 0; amb '<' 40 de 52  ->  76 % amb ',' (de 50)
+  Corrent 0,01 (la sèrie del corrent B):
+    de     0 a  2000: només ',' 3; només '.' 2; totes dues 1; cap 0; amb '<' 3 de 6  ->  60 % amb ',' (de 5)
+    de  2000 a  4000: només ',' 1; només '.' 0; totes dues 0; cap 0; amb '<' 1 de 1  ->  100 % amb ',' (de 1)
+    de  4000 a  8000: només ',' 11; només '.' 1; totes dues 1; cap 0; amb '<' 11 de 13  ->  92 % amb ',' (de 12)
+    de  8000 a 12000: només ',' 5; només '.' 1; totes dues 1; cap 0; amb '<' 5 de 7  ->  83 % amb ',' (de 6)
+    de 12000 a 16000: només ',' 5; només '.' 2; totes dues 0; cap 0; amb '<' 5 de 7  ->  71 % amb ',' (de 7)
+  La sopa barrejada, la sèrie i el pilot (temps des de la barreja):
+    de     0 a  2000: només ',' 31; només '.' 5; totes dues 0; cap 0; amb '<' 33 de 36  ->  86 % amb ',' (de 36)
+    de  2000 a  4000: només ',' 17; només '.' 5; totes dues 1; cap 1; amb '<' 17 de 24  ->  77 % amb ',' (de 22)
+    de  4000 a  8000: només ',' 26; només '.' 7; totes dues 1; cap 0; amb '<' 26 de 34  ->  79 % amb ',' (de 33)
