@@ -303,3 +303,30 @@ El que la maduració canvia és, sobretot, quina part arrela, i de quin tipus s�
 - **L'HOE depèn de la versió de zlib** (AUD-55), i els conjunts es van fer amb dues versions.
 - **No s'ha fet:** dels `.log`, els fragments de 12 bytes; i de les captures, les 24 del pilot (les 150 de la sèrie i les 22
   composicions del pilot ja diuen el mateix).
+
+---
+
+# Afegit: els replicadors d'un món sense vida, al llarg del temps (la nota, abans de calcular)
+
+**Per què:** dels resultats d'aquí dalt en surt que la sopa sempre té unes 23 cel·les que es repliquen, que de tant en tant hi ha
+una hereditària sola, i que gairebé totes es perden. Però només en tenim una foto per món, a l'època 8.000. El món 1034 (quiet, sense
+vida fins a l'època 16.000) té una captura cada 100 èpoques: es pot mirar què hi passa al llarg del temps, sense simular res.
+
+**Què es fa:** l'escaneig de totes les cel·les de cada captura, amb la prova de replicació del projecte (`fase2/replication.js`, la
+completa i la de segona generació; la mateixa de `eines/transforma.mjs --scan`). De cada cel·la que es replica se'n desa la posició,
+el programa i si és hereditària. L'atzar de la prova: la llavor 711.000 més l'època, que no és de cap pla.
+
+**Quines captures:** totes les del món 1034, de l'època 100 a la 16.000, cada 100 èpoques (160).
+
+**Les preguntes:**
+1. **Quantes cel·les es repliquen i quantes són hereditàries a cada època.** En especial al començament: una sopa nova en té 118, i
+   una d'envellida, 23.
+2. **Quant duren:** d'una captura a la següent (100 èpoques), quantes continuen al mateix lloc, amb el mateix programa.
+3. **De què estan fetes** les hereditàries, i si canvien amb l'edat de la sopa.
+
+**Què en canviaria la lectura:**
+- si les hereditàries duren moltes captures sense escampar-se, el que falla no és que es perdin, sinó que no es copien prou;
+- si gairebé cap no arriba a la captura següent, el que falla és que es perden de seguida.
+
+**Els límits, d'entrada:** és un sol món, i la prova fa servir l'atzar (el company de cada cel·la). El tall de les 150 sopes de la
+sèrie a l'època 8.000 és a `escanejos-sortida.txt`.
