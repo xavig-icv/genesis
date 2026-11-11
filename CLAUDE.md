@@ -269,3 +269,15 @@ Llegeix-los abans de proposar canvis.
 - Els registres dels experiments van a `*/resultats/`. Els fitxers `.bin` són captures de la sopa o del
   món (8 MB cadascun).
 - Per provar la interfície es pot plantar un replicador des de la consola, però mai en un experiment.
+- **Dos carrils** (11-11-2026, `docs/disseny.md`):
+  - **Explorar,** sense auditoria abans de calcular: una nota a git abans de calcular (la pregunta, les dades, les llavors, el pressupost
+    de màquina, dos dies com a molt, i què faria canviar d'opinió); des d'un commit net, amb l'script i la sortida tal com surt; la llista
+    de tot el que s'ha provat, també del que no ha sortit; cap llavor de cap pla ni cap dada d'una sèrie no decidida; l'etiqueta
+    «exploratori», també al quadern; una prova sencera curta abans d'un càlcul llarg. L'auditoria, després i en una sola ronda.
+  - **Confirmar,** com ara: protocol, auditoria, etiqueta i segell, amb mons nous, i l'efecte mínim i la potència fixats abans.
+- **La línia de la maduració** (11-11-2026): on actua la maduració (que aparegui un replicador, o que hi arreli) i per quin procés. El
+  pas 1 (exploratori) és a `fase2/resultats/maduracio/descripcio/`.
+  - **Una hereditària s'ha de tornar a provar** abans de comptar-la com una aparició: les soles dels escanejos solen ser falsos positius de
+    la prova (la còpia la fa el company de soroll).
+  - **«La família dominant a l'establiment»,** i no «els fundadors» (AU2-147). Cap «llei» de la D sense un model que predigui fora de
+    mostra (AU2-148). La idea general ja és a Greenbaum i Pargellis (2017) (AU2-146).
