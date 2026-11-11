@@ -364,3 +364,33 @@ sèrie a l'època 8.000 és a `escanejos-sortida.txt`.
 
 **La resposta a la pregunta de la nota:** les hereditàries es perden de seguida, i les soles ni tan sols ho eren. En 16.000 èpoques, al
 1034 només hi ha hagut un brot de debò, i va durar entre 200 i 400 èpoques.
+
+## La disposició de les instruccions al 1034 (11-11-2026, al vespre; una proposta de l'auditor 1)
+
+`disposicio.mjs` i `disposicio-sortida.txt`, sense simular res. Per programa: la mitjana d'instruccions i la dispersió (la variància
+dividida per la d'una binomial amb la mateixa mitjana; 1 vol dir repartides a l'atzar).
+- **Les instruccions s'amunteguen en pocs programes:** la dispersió ja és de 2,6 a l'època 100, arriba a 10 cap a l'època 2.000–4.000 i
+  baixa a 7,7 a la 16.000, mentre la D continua pujant. Des de l'època 4.000, el 30 % de les instruccions són en programes que en tenen 16 o
+  més.
+- **No és per les tirades de `<`:** sense comptar cap `<`, la dispersió encara és més alta (9,4 a l'època 8.000, contra 8,6 comptant-les
+  totes), i comptant cada tirada com una sola, gairebé igual (7,6). L'amuntegament i l'acumulació de `<` són dos fenòmens diferents.
+
+## Després de les avaluacions dels dos auditors (X-102, 11-11-2026)
+
+Tots dos han refet les meves quatre anàlisis de l'avaluació, i les han contradit amb dades. El que canvia d'aquest pas 1:
+- **P3, el ritme i l'edat:** la pujada del ritme amb l'edat és, en bona part, l'arrencada de qualsevol sopa que comença sense hereditaris.
+  Al braç `continue`, la sopa ja és madura i el ritme també puja (l'auditor 1). La part que es pot atribuir a la maduració és d'1,29, amb un
+  interval que inclou l'1. I a la mateixa edat i al mateix braç, la D no distingeix els mons que s'establiran (l'auditor 2, AU2-148). Queda
+  el nivell: a igual temps des d'una sopa neta, la sopa vella s'estableix més sovint.
+- **P7, els fundadors:** el que es compta no són els fundadors, sinó la família dominant al cens que confirma l'establiment (AU2-147). I la
+  diferència no té dosi: dins de `reinit`, amb corrent i per terços de la D, no creix amb la maduració (l'auditor 1). La frase «creix amb
+  l'edat de la sopa» no se sosté.
+- **P6, els bytes:** els `<` nous surten sobretot dels programes que comencen amb `<`, i el motiu `<,` n'explica un 5 % (l'auditor 1). Les
+  tirades de `<` són reals, més enllà de dos models nuls (l'auditor 2, AU2-149).
+- **La novetat:** Greenbaum i Pargellis (2017) ja descriuen a Amoeba una fase prèvia semblant: les instruccions s'esbiaixen, s'escampen blocs
+  curts i després apareixen els replicadors (AU2-146). La idea general no és nova.
+- **El que no canvia:** la corba es repeteix; la barreja l'accelera; la sopa vella té menys cel·les que es copien que la nova (l'auditor 1
+  hi arriba pel seu compte); i dues branques d'un mateix món s'estableixen de manera independent.
+
+**I una cosa que els afecta a tots dos:** les hereditàries soles són falsos positius de la prova (l'escaneig del 1034, a dalt). Qualsevol
+ritme d'aparició s'ha de comptar amb les hereditàries tornades a provar.
