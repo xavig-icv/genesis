@@ -238,8 +238,8 @@ l'atzar amb la química de sempre i amb dotze variants, cadascuna amb una regla 
 replicadors hereditaris ([pla](docs/pla-b1.md)). És el primer nivell: si els replicadors existeixen i són abundants,
 no si s'estableixen en una sopa. Tot és descriptiu.
 - **Els tres controls donen zero, com esperàvem:** sense instruccions de còpia, sense bucles o sense cap còpia d'un
-  programa a l'altre, cap replicador en 10⁷ programes. Es van triar perquè no n'hi pogués haver, i el zero no demostra
-  que no n'hi pugui haver cap. Amb la química de sempre, 1.625.
+  programa a l'altre, cap replicador en 10⁷ programes. Es van triar per bloquejar les vies de replicació que coneixem, i
+  el zero no demostra que no n'hi pugui haver cap. Amb la química de sempre, 1.625.
 - **Una sola instrucció de còpia n'hi ha prou,** amb menys replicadors: amb la `,`, el 71 % dels de la química de
   sempre, i amb el `.`, el 39 %.
 - **Algunes regles fan nosa:** sense aritmètica, hi ha el doble de replicadors, i si el programa no es pot reescriure

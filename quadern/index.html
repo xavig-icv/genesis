@@ -1576,14 +1576,14 @@
           <li><strong>La densitat dels que es copien sols</strong> amb bytes uniformes és, doncs, més baixa que 3,7·10⁻⁶. Segons aquesta comprovació, de l'ordre de 10⁻⁷, amb molta incertesa.</li>
         </ul>
       </li>
-      <li><strong>Amb D½, el nombre d'instruccions no ho diu.</strong> El replicador de C0 amb menys instruccions en té 21, i els programes en tenen 32 de mitjana. Si el company hi ajuda o no, ho dirà la prova d'autonomia. A la comprovació exploratòria de l'auditor 1, amb 200 hereditaris de cada variant i un company sense cap instrucció, entre el 68 % i el 99 % s'hi copien en algun dels 200 assaigs, segons la variant (amb C0, el 73 %). S4 n'és l'excepció.</li>
+      <li><strong>Amb D½, el nombre d'instruccions no ho diu.</strong> El replicador de C0 amb menys instruccions en té 21, i els programes en tenen 32 de mitjana. Si el company hi ajuda o no, ho dirà la prova d'autonomia. A la comprovació exploratòria de l'auditor 1, amb 200 hereditaris de cada variant i un company sense cap instrucció, entre el 68 % i el 99 % s'hi copien en algun dels 200 assaigs, segons la variant (amb C0, el 73 %). S4 n'és l'excepció, per construcció (AUD-176).</li>
       <li><strong>H64, la còpia directa:</strong> el replicador més curt, el programa 2.357.905, té 14 instruccions i porta el bucle <code>[.&gt;}]</code>, amb bytes sense efecte entremig. És la còpia directa que preveia el pla, la que deixa un fill idèntic. No hem mirat els altres.</li>
-      <li><strong>S4:</strong> els 44 són tots en context. L'AUD-140 hi preveia una via amb el codi del company, però no n'hem mirat el mecanisme. A la comprovació de l'auditor 1, cap dels 44 no es copia amb un company sense cap instrucció.</li>
+      <li><strong>S4:</strong> els 44 són tots en context. L'AUD-140 hi preveia una via amb el codi del company, però no n'hem mirat el mecanisme. Amb un company sense cap instrucció, cap no s'hi pot copiar, per construcció: amb S4, el codi d'una meitat no pot escriure a l'altra, i un company inert no hi executa res (AUD-176). La prova d'autonomia no en dirà res de nou; en dirà més una sopa, amb companys que tenen codi.</li>
     </ul>
 
     <h2>Què en traiem</h2>
     <ul>
-      <li><strong>Els tres controls donen zero, com esperàvem.</strong> Sense instruccions de còpia, sense bucles o sense cap còpia d'un programa a l'altre, cap detecció en els 10⁷ programes de D½ de cada control, amb aquesta química. Es van triar perquè no hi pogués haver cap replicador: el zero diu que la prova no hi ha trobat cap fals positiu, no que no n'hi pugui haver (si n'hi ha, menys de 3,69·10⁻⁷), ni res de nou dels ingredients.</li>
+      <li><strong>Els tres controls donen zero, com esperàvem.</strong> Sense instruccions de còpia, sense bucles o sense cap còpia d'un programa a l'altre, cap detecció en els 10⁷ programes de D½ de cada control, amb aquesta química. Es van triar per bloquejar les vies de replicació que coneixem, i per comprovar que el mètode no hi detecta cap positiu en les condicions assajades: el zero diu que la prova no hi ha trobat cap fals positiu, no que no n'hi pugui haver (si n'hi ha, menys de 3,69·10⁻⁷, l'extrem superior de l'interval bilateral del 95 %), ni res de nou dels ingredients.</li>
       <li><strong>N'hi ha que no calen:</strong>
         <ul>
           <li><strong>una sola instrucció de còpia:</strong> amb <code>,</code>, n'hi ha el 71 %, i amb <code>.</code>, el 39 %;</li>
@@ -1634,6 +1634,14 @@
         <li><strong>El context de Knierim i altres (2026)</strong> (AUD-173): CUST64 i H64, i D½ i CUST.</li>
       </ul>
       <p>També hi hem afegit les comprovacions exploratòries de l'auditor 1 amb companys sense cap instrucció, i la precisió de l'auditor 2: l'argument de les instruccions no diu programa a programa qui es copia sol.</p>
+    </div>
+
+    <div class="pending">
+      <p><strong>Correccions de l'auditoria 28 (06-11-2026).</strong> Els dos auditors van revisar les correccions d'aquí dalt, que donen per bones, i el pla del que ve. Hi van trobar dues frases més per corregir:</p>
+      <ul>
+        <li><strong>Per què es van triar els controls</strong> (AU2-141). Dèiem que «es van triar perquè no hi pogués haver cap replicador», com si fos impossible. No ho hem demostrat, i amb X0 encara menys: es van triar per bloquejar les vies que coneixem. Ara ho diu així, amb la redacció de l'auditor 2. I el 3,69·10⁻⁷ és l'extrem superior de l'interval bilateral del 95 %, que és la cota unilateral del 97,5 % (tots dos).</li>
+        <li><strong>S4 amb companys sense cap instrucció</strong> (AUD-176). Dèiem que «a la comprovació de l'auditor 1, cap dels 44 no es copia amb un company sense cap instrucció», com un resultat. És per construcció: amb S4, el codi d'una meitat no pot escriure a l'altra, i un company inert no hi executa res, de manera que el company no canvia mai. L'auditor 1 ho va comprovar amb 200.000 cintes, com amb el control X0, i diu que l'error de presentar-ho com una observació va ser seu.</li>
+      </ul>
     </div>
   </article>
 

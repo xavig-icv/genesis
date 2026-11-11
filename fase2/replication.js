@@ -61,7 +61,19 @@ export function hasWindow(P, set) {
 // Envoltat de "lectors" (programes que copien el company dins seu), fins i tot un bloc de dades sense
 // cap instrucció surt hereditari en context. Per això es distingeix heritableSolo de heritableContext, i
 // el protocol estadístic té una anàlisi de sensibilitat només amb l'herència sola.
-export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete = true, heredity = false, evaluate: interpret = evaluate } = {}) {
+// Sol, el company va segon, i el seu codi també s'executa, després del del programa: «sol» vol dir «el
+// programa primer», no «sense el codi del company» (AUD-175 de l'auditoria 28). Si un programa es copia
+// sense el codi del company, ho diu la prova d'autonomia de B1, amb companys inerts.
+//
+// Dues opcions de la prova d'autonomia de B1 (docs/pla-b1.md, §4), desactivades per defecte: sense, la prova és la de sempre, i
+// gasta el mateix atzar.
+//  - soloPartner: la funció que fa el company del paper sol (i el del fill, a la prova de l'herència sola), a partir de l'atzar de
+//    la prova: soloPartner(rng) ha de tornar 64 bytes. Per defecte, bytes uniformes. En context, els companys són els de la sopa.
+//  - bothRoles: prova l'herència en context encara que ja s'hagi demostrat sola. Llavors heritableContext vol dir "hereditari en
+//    context", i no "només en context". solo, context, heritableSolo i heritable no canvien: el paper sol es prova igual, i el de
+//    context, quan l'herència sola no s'ha demostrat, també. Amb bothRoles, la prova no para al primer èxit, encara que complete
+//    sigui false.
+export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete = true, heredity = false, evaluate: interpret = evaluate, soloPartner = null, bothRoles = false } = {}) {
   const n = soup.length / PROGRAM_SIZE;
   const height = width ? n / width : 0;
   const side = 2 * radius + 1;
@@ -88,7 +100,11 @@ export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete 
     const partner = tape.subarray(partnerOffset, partnerOffset + PROGRAM_SIZE);
     return hasWindow(partner, set) ? partner.slice() : null;
   };
-  const noise = () => Uint8Array.from({ length: PROGRAM_SIZE }, () => (rng() * 256) | 0);
+  const noise = soloPartner === null ? () => Uint8Array.from({ length: PROGRAM_SIZE }, () => (rng() * 256) | 0) : () => {
+    const P = soloPartner(rng);
+    if (!(P instanceof Uint8Array) || P.length !== PROGRAM_SIZE) throw new Error(`soloPartner ha de tornar ${PROGRAM_SIZE} bytes`);
+    return P;
+  };
   const contextPartner = () => {
     for (let tries = 0; tries < 20; tries++) {
       const p = partnerCell();
@@ -115,8 +131,8 @@ export function replicationTest(soup, c, rng, { width = 0, radius = 2, complete 
     }
   }
   result.heritable = result.heritableSolo;
-  if (result.solo && !complete && (!heredity || result.heritable)) return result;
-  const pending = () => heredity && !result.heritableSolo && !result.heritableContext;
+  if (result.solo && !complete && !bothRoles && (!heredity || result.heritable)) return result;
+  const pending = () => heredity && (bothRoles || !result.heritableSolo) && !result.heritableContext;
   for (let t = 0; t < CONTEXT_TRIALS && (!result.context || pending()); t++) {
     const B = contextPartner();
     const child = B && run(B, A, 0);
