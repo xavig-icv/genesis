@@ -172,12 +172,28 @@ replicators exist and are abundant, not whether they become established in a sou
 
 See notebook entry 15, in Catalan, or its [English summary](quadern/resum.en.md#entry-15).
 
+**The soup before life (exploratory).** What happens in the soup before life appears? Since 11 November 2026 the
+project focuses on this question, after an evaluation of our own and of both auditors. The first step used the data we
+already had, with no new simulation, and everything in it is exploratory: a lead, not a result.
+- **The lifeless soup matures the same way in every world,** piling up instructions, mainly `<`, crowded into a few
+  programs. Flow speeds it up.
+- **Yet an aged soup has fewer self-copying programs than a fresh one,** and the few replicators that appear are lost
+  at once. Life becomes established there more often, but not because there are more replicators.
+- **Establishment is a chance event:** two branches of the same world become established independently.
+- **The isolated heritable cells that show up now and then in scans are false positives of the test:** the random
+  partner does the copying. They must be retested before being counted.
+- **What does not hold:** that the establishment rate follows maturation, and that the life which becomes
+  established is made of what the soup piles up. Both auditors showed it.
+- **What was already known:** the idea of a phase in which instructions become biased was described in the Amoeba
+  system (Greenbaum and Pargellis, 2017). A specific mechanism in BFF, tested by intervention, could be new.
+
+See notebook entry 16, in Catalan, or its [English summary](quadern/resum.en.md#entry-16).
+
 **What we study now:**
-- **The ingredients of the chemistry, next step:** which replicators copy themselves alone, how many there are
-  depending on the share of instructions, and the soup with the chemistries that have them ([plan](docs/pla-b1.md),
-  in Catalan).
-- **World size.**
-- **A changing weather,** with a current that alternates calm and storm.
+- **The soup before life:** which operations write the bytes that pile up, and then, separately, whether a
+  replicator appears and whether it takes root ([decisions](docs/disseny.md), in Catalan).
+- **The ingredients of the chemistry, next step:** which replicators copy themselves alone, and how many there are
+  depending on the share of instructions ([plan](docs/pla-b1.md), in Catalan). Being computed now.
 
 ## How we work
 

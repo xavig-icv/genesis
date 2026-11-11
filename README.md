@@ -252,12 +252,31 @@ no si s'estableixen en una sopa. Tot és descriptiu.
 
 Vegeu l'[entrada 15](quadern/index.html#entrada-15).
 
+### La sopa abans de la vida (exploratori)
+
+Què passa a la sopa abans que hi aparegui la vida? És la pregunta on el projecte es concentra des de l'11-11-2026,
+després d'una avaluació nostra i dels dos auditors. El primer pas s'ha fet amb les dades que ja teníem, sense simular
+res, i tot és exploratori: una pista, no un resultat.
+- **La sopa sense vida madura igual a tots els mons,** i hi acumula instruccions, sobretot `<`, que s'amunteguen en
+  pocs programes. El corrent ho accelera.
+- **Però la sopa vella té menys programes que es copien que una de nova,** i els pocs replicadors que hi apareixen es
+  perden de seguida. Que la vida s'hi estableixi més sovint no és perquè n'hi hagi més.
+- **L'establiment és un esdeveniment d'atzar:** dues branques d'un mateix món s'estableixen de manera independent.
+- **Les hereditàries soles que surten de tant en tant als escanejos són falsos positius de la prova:** la còpia la fa
+  el company de soroll. Abans de comptar-les, cal tornar-les a provar.
+- **El que no se sosté:** que el ritme d'establiment segueixi la maduració, i que la vida que s'hi estableix estigui
+  feta del que la sopa acumula. Ho van mostrar els dos auditors.
+- **El que ja se sabia:** la idea d'una fase prèvia en què les instruccions s'esbiaixen ja és al sistema Amoeba
+  (Greenbaum i Pargellis, 2017). Podria ser nou un mecanisme concret de BFF, provat amb una intervenció.
+
+Vegeu l'[entrada 16](quadern/index.html#entrada-16).
+
 ### El que estudiem ara
 
-- **Els ingredients de la química, el pas següent:** quins replicadors es copien sols, quants n'hi ha segons la
-  proporció d'instruccions, i la sopa amb les químiques que en tenen ([pla](docs/pla-b1.md)).
-- **La mida del món,** començant pels mons petits.
-- **Un temps que canvia:** un corrent que alterna la calma i el temporal.
+- **La sopa abans de la vida:** quines operacions escriuen els bytes que s'acumulen, i després, per separat, que
+  aparegui un replicador i que hi arreli ([les decisions](docs/disseny.md)).
+- **Els ingredients de la química, el pas següent:** quins replicadors es copien sols, i quants n'hi ha segons la
+  proporció d'instruccions ([pla](docs/pla-b1.md)). Es calcula ara.
 
 ## Com es treballa
 
