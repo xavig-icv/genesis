@@ -682,3 +682,11 @@ body.viewer { position: relative; height: 100vh; height: 100dvh; overflow: hidde
 @media (prefers-reduced-motion: reduce) {
   .co *, .co *::before, .co *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
+
+/* ───────────────────────── El microscopi (web/microscopi/) ───────────────────────── */
+/* la tria de la parella, al panell: l'època i la família, de costat, i la llavor a sota */
+.co .micro-pick .field-row > .field { flex: 1; min-width: 0; }
+.co .micro-pick .select, .co .micro-pick .select select { width: 100%; }
+.co .micro-marks { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--c-line); }
+.co .panel-body #pair-result { color: var(--c-ink-2); }
+@media (max-width: 820px) { .co #done-mark span { display: none; } }

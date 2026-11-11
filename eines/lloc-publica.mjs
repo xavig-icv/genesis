@@ -5,7 +5,7 @@
 //
 // Què hi va (la llista tancada, AUD-12 i la revisió del lloc), i només el que git segueix:
 // - web/, sencer;
-// - les dades generades de cada món (web/dades/ID/mon.json, mapes.z, codi/ i sols/), que no són a git: es baixen d'una versió
+// - les dades generades de cada món (web/dades/ID/mon.json, mapes.z, codi/, sols/ i trobades.z), que no són a git: es baixen d'una versió
 //   de GitHub (.github/workflows/lloc.yml) i es comproven una per una amb web/dades/SHA256SUMS. Si en falta cap, en sobra cap o
 //   alguna no hi coincideix, no es publica res;
 // - quadern/, sencer;
@@ -39,8 +39,9 @@ if (sums && noData) fail('--sumes i --sense-dades no van junts');
 
 const sha = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
 const posix = (p) => p.split(sep).join('/');
-// les dades generades: el que eines/web-dades.mjs escriu a cada món i .gitignore no deixa entrar a git
-const GENERATED = /^web\/dades\/\d{1,6}\/(mon\.json|mapes\.z|codi\/\d{1,6}\.z|sols\/\d{1,6}\.z)$/;
+// les dades generades: el que eines/web-dades.mjs (i eines/web-trobades.mjs, trobades.z) escriu a cada món i .gitignore no deixa
+// entrar a git
+const GENERATED = /^web\/dades\/\d{1,6}\/(mon\.json|mapes\.z|trobades\.z|codi\/\d{1,6}\.z|sols\/\d{1,6}\.z)$/;
 function walk(dir) {
   if (!existsSync(dir)) return [];
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(dir, e.name)) : [join(dir, e.name)]));
