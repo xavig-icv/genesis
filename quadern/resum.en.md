@@ -148,3 +148,18 @@ twice as many, and if a program cannot rewrite itself, four times as many. With 
 al.'s CUST64 distribution suggests. With uniform random bytes, replicators are 44 times rarer, and an exploratory check suggests that
 almost none copy themselves without their partner's code. Whether these chemistries let life become established in a soup is the
 question of level 2.
+
+<a id="entry-16"></a>
+## Entry 16 · 12 November 2026 · The soup before life: what the data we already had say (exploratory)
+
+The first step of the line the project now focuses on (what happens in the soup before life), done without any new simulation, from the
+records and snapshots of already decided series. The lifeless soup matures along the same curve in every world (the byte distribution
+drifts away from uniform, faster with flow), and it piles up instructions, mainly `<` (ten times its random frequency), crowded into a
+few programs. Yet an aged soup has fewer cells that copy themselves than a fresh one (23 against 118 of 131,072; shuffled, the same bytes
+give 706), and the few replicators that appear are lost at once: in one world scanned every 100 epochs, a single real outbreak reached
+76 cells and vanished. Isolated "heritable" cells in such scans turned out to be false positives of the replication test (none passed
+any of 200 retests; the outbreak's cells passed all), because the random partner sometimes does the copying. Two branches of the same
+world become established independently, so establishment is a chance event. Two earlier readings do not hold, as both auditors showed:
+the establishment rate rises with age even when the soup no longer matures (so the rise is mostly the start-up delay of any clean soup),
+and the dominant family at establishment is not made of what the soup piles up. The general idea of a pre-replicator phase was already
+described in the Amoeba system (Greenbaum and Pargellis, 2017). What may be new is a specific mechanism in BFF, tested by intervention.

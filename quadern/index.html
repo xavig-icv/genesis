@@ -26,6 +26,7 @@
     <a href="#entrada-13">Entrada 13</a>
     <a href="#entrada-14">Entrada 14</a>
     <a href="#entrada-15">Entrada 15</a>
+    <a href="#entrada-16">Entrada 16</a>
   </nav>
 
   <article id="entrada-1">
@@ -1643,6 +1644,117 @@
         <li><strong>S4 amb companys sense cap instrucció</strong> (AUD-176). Dèiem que «a la comprovació de l'auditor 1, cap dels 44 no es copia amb un company sense cap instrucció», com un resultat. És per construcció: amb S4, el codi d'una meitat no pot escriure a l'altra, i un company inert no hi executa res, de manera que el company no canvia mai. L'auditor 1 ho va comprovar amb 200.000 cintes, com amb el control X0, i diu que l'error de presentar-ho com una observació va ser seu.</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-16">
+    <header>
+      <p class="date">Entrada 16 · 12 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida: el que diuen les dades que ja teníem</h1>
+      <p class="lede">Abans de calcular res de nou, hem mirat què passa a la sopa sense vida amb els registres i les captures de les sèries ja decidides. La sopa madura igual a tots els mons i hi acumula instruccions, sobretot <code>&lt;</code>, que s'amunteguen en pocs programes. Però té menys programes que es copien que una sopa nova, i els pocs replicadors que hi apareixen es perden de seguida. Dues coses que crèiem no se sostenen: que el ritme d'establiment segueixi la maduració, i que la vida que s'hi estableix estigui feta del que la sopa acumula. És una descripció exploratòria, no una prova.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>L'11-11-2026, el responsable ens va demanar una avaluació del projecte i del camí cap a un descobriment. Les tres avaluacions independents, la de Claude i les dels dos auditors, coincideixen: encara no hi ha cap descobriment, i la maduració (<a href="#entrada-14">entrada 14</a>) és el més a prop, un efecte confirmat sense mecanisme. El responsable va decidir concentrar-hi el projecte, amb dos carrils: explorar sense auditoria abans de calcular, i confirmar com sempre (<code>docs/disseny.md</code>).</p>
+    <p>Aquesta entrada és el primer pas, pel carril d'explorar. La nota amb les preguntes i amb el que ens faria canviar d'opinió es va escriure abans de calcular res, i les xifres surten de scripts que només llegeixen dades (<code>fase2/resultats/maduracio/descripcio/</code>). Els dos auditors en van refer una part i en van corregir dues conclusions.</p>
+    <div class="params">
+      <div class="param"><b>1.500</b><span>registres de sèries ja decidides</span></div>
+      <div class="param"><b>150</b><span>sopes envellides, a l'època 8.000</span></div>
+      <div class="param"><b>160</b><span>captures d'un món sense vida, una cada 100 èpoques</span></div>
+      <div class="param"><b>0</b><span>simulacions noves</span></div>
+    </div>
+
+    <h2>El que surt</h2>
+    <p><strong>1. La sopa sense vida madura igual a tots els mons.</strong> La mesura és D, els bits que la distribució dels bytes del món s'allunya de la uniforme. Als mons quiets sense vida, la mediana de cinc conjunts independents:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Època</th><th style="text-align:left">Sèrie del corrent (80 mons)</th><th style="text-align:left">Maduració, l'envelliment (196)</th><th style="text-align:left">Pilot (24)</th><th style="text-align:left">Sopa nova de les branques (300)</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">1.000</td><td style="text-align:left">0,0142</td><td style="text-align:left">0,0142</td><td style="text-align:left">0,0142</td><td style="text-align:left">0,0142</td></tr>
+          <tr><td style="text-align:left">4.000</td><td style="text-align:left">0,1000</td><td style="text-align:left">0,0996</td><td style="text-align:left">0,1003</td><td style="text-align:left">0,0997</td></tr>
+          <tr><td style="text-align:left">8.000</td><td style="text-align:left">0,1684</td><td style="text-align:left">0,1678</td><td style="text-align:left">0,1686</td><td style="text-align:left">0,1682</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>Que sigui igual a tots els mons és d'esperar:</strong> és la mitjana de 8 milions de bytes. No ho és la direcció, ni que s'aplani.</li>
+      <li><strong>La barreja l'accelera:</strong> amb el corrent 0,01, la D és de 0,207 a l'època 4.000 i de 0,350 a la 16.000, contra 0,100 i 0,195 sense corrent. També als mons on el cens no ha vist mai cap hereditari (l'auditor 1).</li>
+    </ul>
+
+    <p><strong>2. La sopa vella té els bytes d'una sopa rica i la disposició d'una de pobra.</strong> Cel·les que es repliquen i cel·les hereditàries, de 131.072, a l'escaneig de totes les cel·les (la mitjana dels 150 mons de la sèrie, o dels 22 del pilot):</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Sopa</th><th style="text-align:left">Es repliquen</th><th style="text-align:left">Hereditàries</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Nova, a l'atzar</td><td style="text-align:left">118</td><td style="text-align:left">0,41</td></tr>
+          <tr><td style="text-align:left">Envellida, tal com és (època 8.000)</td><td style="text-align:left">23</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">Envellida i barrejada (els mateixos bytes)</td><td style="text-align:left">706</td><td style="text-align:left">6,8</td></tr>
+          <tr><td style="text-align:left">Envellida, amb els bytes barrejats dins de cada programa (pilot)</td><td style="text-align:left">91</td><td style="text-align:left">0,64</td></tr>
+          <tr><td style="text-align:left">Envellida, amb els programes canviats de lloc (pilot)</td><td style="text-align:left">31</td><td style="text-align:left">0,14</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>Els bytes:</strong> la sopa envellida té un 11,3 % de bytes d'instrucció, contra el 3,9 % de l'atzar. Sobretot <code>&lt;</code>, deu vegades més freqüent (el 4 % dels bytes), i <code>,</code>, quatre vegades. Igual als 150 mons.</li>
+      <li><strong>La disposició:</strong> les instruccions s'amunteguen en pocs programes, de 8 a 10 vegades més del que donaria l'atzar, des de l'època 2.000. No és per les tirades de <code>&lt;</code>: sense comptar-ne cap, l'amuntegament encara és més gran.</li>
+      <li><strong>L'auditor 1 hi va arribar pel seu compte,</strong> també a tres mons de l'<a href="#entrada-3">entrada 3</a>, d'un altre generador: la sopa envellida té cinc vegades menys cel·les que es copien que una de nova, i trenta vegades menys que la mateixa barrejada.</li>
+    </ul>
+
+    <p><strong>3. Els replicadors que hi apareixen es perden de seguida.</strong> Hem escanejat les 160 captures del món 1034, quiet i sense vida fins a l'època 16.000, una cada 100 èpoques.</p>
+    <ul>
+      <li><strong>A cada captura,</strong> de 20 a 30 cel·les es repliquen, gairebé sempre soles, i cap no ho continua fent 100 èpoques després amb el mateix programa. En 100 èpoques, la sopa es reescriu gairebé sencera.</li>
+      <li><strong>Un sol brot de debò:</strong> a les èpoques 5.200, 5.300 i 5.400, una família arriba a 76 cel·les hereditàries, en un racó del món. A la 5.500 ja no n'hi ha cap. El cens només en va veure 2, lluny de l'1 % que cal per a l'establiment.</li>
+      <li><strong>Les hereditàries soles són falsos positius de la prova.</strong> Fora del brot, l'escaneig en troba 11, d'una a una i amb molt poques instruccions. Tornades a provar 200 vegades cadascuna amb llavors noves, cap no és hereditària en cap prova; les del brot, en totes. La prova posa al costat de la cel·la un company de bytes a l'atzar, i, de tant en tant, és aquest soroll el que fa la còpia.</li>
+      <li><strong>Ja n'hi havia senyals:</strong> a l'<a href="#entrada-15">entrada 15</a>, dels 37 hereditaris amb bytes a l'atzar, 36 no es copien amb un company sense cap instrucció; a l'<a href="#entrada-14">entrada 14</a>, repetir l'escaneig hi feia aparèixer hereditàries marginals (AUD-136). D'ara endavant, una hereditària s'ha de tornar a provar abans de comptar-la.</li>
+    </ul>
+
+    <p><strong>4. L'establiment és un esdeveniment d'atzar.</strong></p>
+    <ul>
+      <li><strong>Dues branques d'un mateix món s'estableixen de manera independent:</strong> amb la sopa que continua, la vida s'estableix a totes dues branques en 7 mons, i si fossin independents se n'esperarien 6,8. Amb la barrejada, 12 contra 11,2; amb la nova, 4 contra 2,7. La sopa de partida no ho porta escrit.</li>
+      <li><strong>Començar amb hereditàries no hi ajuda:</strong> amb una sopa nova que en té alguna, la vida s'estableix al 12 % de les branques, i sense cap, al 14 %. La sopa barrejada en té unes 7 per món, i només el 5 % de les branques s'estableixen en les primeres 1.000 èpoques.</li>
+    </ul>
+
+    <p><strong>5. El ritme d'establiment puja amb l'edat de la sopa, però no se sap si és per la maduració.</strong> Amb tots els mons quiets junts, per l'edat de la sopa:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Edat de la sopa (èpoques)</th><th style="text-align:left">Establiments</th><th style="text-align:left">Per 100.000 mon-èpoques (IC del 95 %)</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">De 0 a 2.000</td><td style="text-align:left">13</td><td style="text-align:left">1,02 (0,54–1,74)</td></tr>
+          <tr><td style="text-align:left">De 4.000 a 6.000</td><td style="text-align:left">21</td><td style="text-align:left">1,73 (1,07–2,65)</td></tr>
+          <tr><td style="text-align:left">De 8.000 a 10.000</td><td style="text-align:left">19</td><td style="text-align:left">2,32 (1,40–3,63)</td></tr>
+          <tr><td style="text-align:left">De 14.000 a 16.000</td><td style="text-align:left">29</td><td style="text-align:left">4,29 (2,87–6,16)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li><strong>Però també puja quan la maduració no es mou</strong> (l'auditor 1). Les branques que continuen la sopa envellida ja són madures, i el seu ritme passa de 2,34 a 3,64 entre la primera i la segona meitat. Tota sopa que comença sense hereditaris triga a fer el primer establiment. La part de la pujada que es pot atribuir a la maduració és d'1,29, amb un interval que inclou l'1.</li>
+      <li><strong>I la D no prediu qui s'establirà</strong> (l'auditor 2, AU2-148): a la mateixa edat i al mateix braç, la D dels mons que s'establiran en les 4.000 èpoques següents no és més alta que la dels altres.</li>
+      <li><strong>El que queda és el nivell</strong> de l'entrada 14: amb el mateix temps des d'una sopa neta, la sopa envellida s'estableix més sovint que una de nova.</li>
+    </ul>
+
+    <p><strong>6. D'on surten els <code>&lt;</code>.</strong> La majoria, dels programes que comencen amb <code>&lt;</code> (l'auditor 1, amb 200.000 parelles de veïns de cada captura del 1034). El cap d'escriptura comença al primer byte, i un <code>&lt;</code> el porta a l'últim byte del company: qualsevol escriptura posterior hi va a parar. El motiu de dos bytes <code>&lt;,</code>, que copia el seu primer byte al final del company, n'explica només un 5 %. Les tirades de <code>&lt;</code> són més del que donarien la posició o el nombre de <code>&lt;</code> de cada programa (l'auditor 2: el 36,5 % dels <code>&lt;</code> en tenen un altre al costat, contra el 10 i el 20 %).</p>
+
+    <p><strong>7. La família dominant a l'establiment no està feta del que la sopa acumula.</strong> Amb la sopa envellida, 4 de cada 5 copien amb <code>,</code>, i amb la nova, 3 de cada 5. Però cap comprovació de dosi no ho sosté (l'auditor 1), i el que es compta és la família més gran al cens que confirma l'establiment, no els fundadors (AU2-147).</p>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>La pregunta queda més clara.</strong> La sopa vella té menys programes que es copien que una de nova, i tot i així la vida s'hi estableix més sovint. El que canvia amb la maduració no deu ser quants replicadors hi apareixen, sinó quants n'hi arrelen. Encara no ho hem mesurat.</li>
+      <li><strong>La idea general no és nova.</strong> Greenbaum i Pargellis (2017) ja descriuen, al sistema Amoeba, una fase prèvia en què les instruccions s'esbiaixen, s'escampen blocs curts i després apareixen els replicadors (AU2-146). Pot ser nou un mecanisme concret de BFF, provat amb una intervenció.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>Qui escriu els bytes que s'acumulen,</strong> amb una còpia de l'intèrpret que avisa de cada escriptura, comprovada contra el del simulador, a les mateixes captures. Preparat; es fa quan acabi el càlcul de B1.</li>
+      <li><strong>Després, un pilot</strong> que mesuri per separat que aparegui un replicador i que hi arreli, amb sopes que conservin l'histograma, en mons nous.</li>
+      <li><strong>La confirmació,</strong> si n'hi ha, amb mons nous i dos controls: les 150 sopes de la sèrie ja s'han fet servir per fer la pista.</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>És exploratori:</strong> mirat després de les decisions, amb moltes comparacions, i els intervals són descriptius.</li>
+      <li><strong>El 1034 és un sol món:</strong> el brot, els falsos positius i la disposició al llarg del temps en surten.</li>
+      <li><strong>Les branques no són mons independents:</strong> dues per món, de mons triats a l'època 8.000.</li>
+      <li><strong>El cens mira 2.048 cel·les de 131.072:</strong> un replicador amb poques còpies gairebé mai no s'hi veu.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>
