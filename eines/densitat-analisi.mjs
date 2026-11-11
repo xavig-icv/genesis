@@ -26,11 +26,13 @@ import { OPCODES, CHEMISTRIES, PROGRAM_SIZE } from '../fase1/bff.js';
 import { soupFor, moduleHashes, MODULES, NOISE, DISTRIBUTIONS, TEST } from './densitat.mjs';
 
 // El pla (§5): la llavor, el soroll de la prova, i, per a cada distribució, les químiques i les N possibles. Si hi falta o hi
-// sobra res, no s'analitza res (AUD-142, AU2-103)
+// sobra res, no s'analitza res (AUD-142, AU2-103). Les químiques del nivell 1 són les 13 de la §2, escrites aquí: les variants per
+// cap d'S1 (§14), que són a fase1/bff.js des de la v0.5 del pla, no en són
+export const LEVEL1_CHEMISTRIES = Object.freeze(['C0', 'K0', 'L0', 'X0', 'K1', 'K2', 'R0', 'S1', 'S2', 'S3', 'S4', 'X1', 'H64']);
 export const PLAN = Object.freeze({
   seed: 20261101,
   noise: NOISE,
-  distributions: { 'd-mig': { chemistries: Object.keys(CHEMISTRIES), sizes: [1e7, 1e8] }, uniforme: { chemistries: ['C0', 'K0'], sizes: [1e7] } },
+  distributions: { 'd-mig': { chemistries: LEVEL1_CHEMISTRIES, sizes: [1e7, 1e8] }, uniforme: { chemistries: ['C0', 'K0'], sizes: [1e7] } },
 });
 export const CONTROLS = ['K0', 'L0', 'X0'];  // han de donar 0 (§2). S4 no: el company hi pot copiar el programa (AUD-140)
 export const EXTEND_BELOW = 30;              // si C0 en té menys, amb d-mig, totes les variants passen a 10⁸ programes (§5)
@@ -151,7 +153,7 @@ export function readFolder(dir, { plan = PLAN, modules = moduleHashes() } = {}) 
       }
       if (n !== null && at !== n) problems.push(`${dist}, ${chem}: ${at} programes, i les altres químiques en tenen ${n}`);
       n ??= at;
-      groups[dist][chem] = { n: at, found: rs.flatMap((r) => r.found) };
+      groups[dist][chem] = { n: at, found: rs.flatMap((r) => r.found), ends: rs.map((r) => r.end) };
     }
     const sizes = plan.distributions[dist]?.sizes;
     if (sizes && n !== null && !sizes.includes(n)) problems.push(`${dist}: ${n} programes, i el pla en preveu ${sizes.join(' o ')}`);

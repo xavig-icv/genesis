@@ -13,8 +13,11 @@
 import { pathToFileURL } from 'url';
 import { ratio } from './densitat-analisi.mjs';
 import { makeRng } from '../fase1/soup.js';
+import { COVERAGE_SEED } from './b1-llavors.mjs';
 
-const SEED = 20261101;  // la llavor de la simulació, declarada
+// la llavor de la simulació, declarada: la del mapa de B1 (eines/b1-llavors.mjs). Fins a la v0.5 del pla era la del nivell 1, 20261101,
+// que ha de ser només la del càlcul (AUD-146)
+const SEED = COVERAGE_SEED;
 
 // Poisson(l) amb el mètode de Knuth, en trossos de 50 perquè exp(-l) no es perdi
 function poissonSampler(u) {

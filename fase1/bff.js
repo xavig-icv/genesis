@@ -116,6 +116,8 @@ export function evaluate(t, base, maxSteps = MAX_STEPS) {
 //      pc-half, a la meitat del punter; other-half, a l'altra meitat; first, a les posicions 0-63; second, a les 64-127.
 //  - noReadOther: una còpia que llegeix de l'altra meitat que la del punter no fa res (llegeix h0 '.', i h1 ',').
 //  - h1: on comença h1.
+//  - heads: amb block, de quin cap són les escriptures que no fan res: 'h0' (les de ',', '+' i '-') o 'h1' (les de '.'). Sense,
+//    les de tots dos. Són les variants per cap d'S1, S1h0 i S1h1 (docs/pla-b1.md, §14), que no són del nivell 1.
 // El control X0 té dues regles alhora, block: 'other-half' i noReadOther (S4 i X1): cap còpia ni cap escriptura d'una meitat a
 // l'altra. Amb S4 sola, el codi del company encara hi pot copiar el programa, des de la seva meitat (AUD-140).
 // Una escriptura bloquejada, o una còpia que no es pot fer, no canvia la cinta, consumeix el pas i compta com a operació.
@@ -133,8 +135,11 @@ export const CHEMISTRIES = Object.freeze({
   S4: { block: 'other-half', description: "escriure a l'altra meitat que la del punter no fa res (cada programa només escriu a la seva meitat)" },
   X1: { noReadOther: true, description: "una còpia que llegeix de l'altra meitat que la del punter no fa res" },
   H64: { h1: 64, description: 'h1 comença a 64, i no a 0' },
+  S1h0: { block: 'pc-half', heads: 'h0', description: "escriure amb h0 (',', '+' i '-') a la meitat del punter no fa res; amb h1 ('.'), sí" },
+  S1h1: { block: 'pc-half', heads: 'h1', description: "escriure amb h1 ('.') a la meitat del punter no fa res; amb h0 (',', '+' i '-'), sí" },
 });
 const BLOCKS = { none: 0, 'pc-half': 1, 'other-half': 2, first: 3, second: 4 };
+const HEADS = { both: 0, h0: 1, h1: 2 };
 
 // L'intèrpret d'una química, amb els mateixos arguments que evaluate. Amb C0, és evaluate, la mateixa funció: la sopa, el
 // món i el cens no canvien
@@ -144,18 +149,21 @@ export function evaluator(name) {
   if (name === 'C0') return evaluate;
   const kind = KIND.slice();
   for (const ch of c.nop ?? '') kind[ch.charCodeAt(0)] = NOP;
-  const block = BLOCKS[c.block ?? 'none'], noReadOther = c.noReadOther === true, h1Start = c.h1 ?? 0;
-  return (t, base, maxSteps = MAX_STEPS) => evaluateWith(t, base, maxSteps, kind, block, noReadOther, h1Start);
+  const block = BLOCKS[c.block ?? 'none'], noReadOther = c.noReadOther === true, h1Start = c.h1 ?? 0, heads = HEADS[c.heads ?? 'both'];
+  return (t, base, maxSteps = MAX_STEPS) => evaluateWith(t, base, maxSteps, kind, block, noReadOther, h1Start, heads);
 }
 
 // Com evaluate, amb les regles d'una química: la taula dels tipus, quines escriptures no fan res, si una còpia pot llegir de
-// l'altra meitat i on comença h1. Les mateixes dues optimitzacions. Una escriptura bloquejada també marca dirty, com totes les
-// instruccions que no són claudàtors: el resultat és el de la versió de referència (test/quimiques.mjs)
-function evaluateWith(t, base, maxSteps, kind, block, noReadOther, h1Start) {
+// l'altra meitat, on comença h1 i de quin cap són les escriptures bloquejades. Les mateixes dues optimitzacions. Una escriptura
+// bloquejada també marca dirty, com totes les instruccions que no són claudàtors: el resultat és el de la versió de referència
+// (test/quimiques.mjs)
+function evaluateWith(t, base, maxSteps, kind, block, noReadOther, h1Start, heads) {
   let pc = 0, h0 = 0, h1 = h1Start, ops = 0, steps = 0;
   let lastEnd = -1, lastEndSteps = 0, lastEndOps = 0, dirty = true;
   // si es pot escriure a la posició p, amb el punter a la meitat half (0 o 1)
   const writable = (p, half) => block === 0 || (block === 1 ? p >> 6 !== half : block === 2 ? p >> 6 === half : block === 3 ? p >= PROGRAM_SIZE : p < PROGRAM_SIZE);
+  // les escriptures de h0 (',', '+' i '-') i les de h1 ('.'): amb heads, el bloqueig només val per a les d'un cap
+  const always = () => true, writable0 = heads === 2 ? always : writable, writable1 = heads === 1 ? always : writable;
   while (steps < maxSteps) {
     const k = kind[t[base + pc]];
     if (k === NOP) {
@@ -197,14 +205,14 @@ function evaluateWith(t, base, maxSteps, kind, block, noReadOther, h1Start) {
     } else {
       dirty = true;
       const half = pc >> 6;
-      if (k === DOT) { if (writable(h1, half) && (!noReadOther || h0 >> 6 === half)) t[base + h1] = t[base + h0]; }
-      else if (k === COM) { if (writable(h0, half) && (!noReadOther || h1 >> 6 === half)) t[base + h0] = t[base + h1]; }
+      if (k === DOT) { if (writable1(h1, half) && (!noReadOther || h0 >> 6 === half)) t[base + h1] = t[base + h0]; }
+      else if (k === COM) { if (writable0(h0, half) && (!noReadOther || h1 >> 6 === half)) t[base + h0] = t[base + h1]; }
       else if (k === GT) h0 = (h0 + 1) & MASK;
       else if (k === LT) h0 = (h0 - 1) & MASK;
       else if (k === RB) h1 = (h1 + 1) & MASK;
       else if (k === LB) h1 = (h1 - 1) & MASK;
-      else if (k === INC) { if (writable(h0, half)) t[base + h0]++; }
-      else if (writable(h0, half)) t[base + h0]--; // DEC
+      else if (k === INC) { if (writable0(h0, half)) t[base + h0]++; }
+      else if (writable0(h0, half)) t[base + h0]--; // DEC
     }
     steps++;
     if (++pc >= TAPE_SIZE) return ops;
