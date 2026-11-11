@@ -301,6 +301,8 @@ mida que diuen Chou i Reggia (1997) (§5).
 - **Què ja se sap:**
   - la idea d'una fase prèvia en què la sopa s'organitza (Greenbaum i Pargellis, 2017);
   - que la distribució de bytes importa (Knierim i altres, 2026).
+- **Des de l'11-11-2026, la línia del projecte** (`docs/disseny.md`). La matriu de novetat de les seves afirmacions possibles, font per
+  font, és a `docs/novetat-maduracio.md` (esborrany del 12-11-2026).
 - **Què no hem trobat enlloc:** cap prova a una edat fixada, que continuï, barregi o reiniciï la sopa, ni cap
   estimació del risc d'aparició segons l'edat.
 - **Per què hi ha lloc:** les dades de Knierim i altres ho permeten. Amb el seu propi histograma, ja madur, i al
