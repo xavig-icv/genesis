@@ -1,0 +1,35 @@
+QUI ESCRIU ELS BYTES QUE S'ACUMULEN (pas 2a, exploratori; PROVA CURTA): 2000 parelles per sopa, executades una vegada
+Per 1.000 parelles, la mitjana de les sopes de cada grup. 'Fets': escriptures que posen el byte on no hi era; 'desfets': que el treuen.
+
+envellida (2 sopes):
+  '<' fets 75.3, desfets 75.5, net -0.3; dels fets, per còpia 92.0 %, amb + o - 8.0 %; en parelles que comencen amb '<' 46.2 %, amb '<,' 5.0 %
+  instruccions fetes 220.5, desfetes 222.0, net -1.5; de les fetes, per còpia 77.3 %
+  còpies 6120.5, de les quals en tirades de 8 o més 0.0 %
+  instruccions per programa 7.199 -> 7.198; dispersió 8.267 -> 8.263
+  parelles amb 16 bytes del primer programa al company 0.000 %
+
+barrejada (2 sopes):
+  '<' fets 212.3, desfets 262.0, net -49.8; dels fets, per còpia 90.1 %, amb + o - 9.9 %; en parelles que comencen amb '<' 20.3 %, amb '<,' 0.6 %
+  instruccions fetes 890.3, desfetes 945.8, net -55.5; de les fetes, per còpia 85.7 %
+  còpies 19238.8, de les quals en tirades de 8 o més 1.0 %
+  instruccions per programa 7.304 -> 7.276; dispersió 1.024 -> 1.418
+  parelles amb 16 bytes del primer programa al company 0.125 %
+
+nova (2 sopes):
+  '<' fets 30.8, desfets 12.3, net 18.5; dels fets, per còpia 65.9 %, amb + o - 34.1 %; en parelles que comencen amb '<' 5.7 %, amb '<,' 1.6 %
+  instruccions fetes 194.0, desfetes 171.8, net 22.3; de les fetes, per còpia 32.6 %
+  còpies 4936.8, de les quals en tirades de 8 o més 0.0 %
+  instruccions per programa 2.507 -> 2.518; dispersió 1.008 -> 1.245
+  parelles amb 16 bytes del primer programa al company 0.025 %
+
+El món 1034 al llarg del temps:
+    100: '<' fets 10.0, desfets 9.5, net 0.5; dels fets, per còpia 45.0 %, amb + o - 55.0 %; en parelles que comencen amb '<' 50.0 %, amb '<,' 0.0 %
+         instruccions per programa 2.674 -> 2.675; dispersió 2.208 -> 2.209; parelles amb 16 bytes del primer programa al company 0.000 %
+   8000: '<' fets 106.0, desfets 104.5, net 1.5; dels fets, per còpia 89.2 %, amb + o - 10.8 %; en parelles que comencen amb '<' 33.5 %, amb '<,' 1.4 %
+         instruccions per programa 7.339 -> 7.336; dispersió 8.461 -> 8.419; parelles amb 16 bytes del primer programa al company 0.000 %
+
+Els quatre criteris de la nota (§5):
+  1. '<' nous per còpia, a la sopa envellida: 92.0 % (cau si és menys del 50 %)
+  2. '<' nous en parelles que comencen amb '<', a la sopa envellida: 46.2 % (cau si és menys del 20 %)
+  3. el canvi de la dispersió en una ronda: envellida -0.0039, nova 0.2371 (cau si no creix a cap de les dues)
+  4. les còpies de 16 bytes, món a món: més a l'envellida que a la barrejada a 0 mons, iguals a 0, menys a 2
