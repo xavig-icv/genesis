@@ -1,0 +1,203 @@
+L'ESCANEIG DEL MÓN 1034 (quiet, sense vida): 160 captures, de l'època 100 a la 16000
+
+1. Quantes cel·les es repliquen (de 131.072), a cada captura dels primers 1.000 passos i després per franges
+   època: es repliquen (soles / només en context); hereditàries (soles)
+     100: 52 (38 / 14); 0 (0)
+     200: 27 (21 / 6); 0 (0)
+     300: 24 (20 / 4); 0 (0)
+     400: 28 (26 / 2); 0 (0)
+     500: 24 (22 / 2); 0 (0)
+     600: 23 (21 / 2); 0 (0)
+     700: 32 (27 / 5); 0 (0)
+     800: 26 (23 / 3); 0 (0)
+     900: 18 (16 / 2); 0 (0)
+    1000: 23 (20 / 3); 0 (0)
+   franja: captures; cel·les que es repliquen, mitjana (mínim a màxim), de les quals soles; captures amb alguna hereditària; hereditàries en total
+   de     0 a   500:  5; 31.0 (24 a 52), soles 25.4; 0; 0
+   de   500 a  1000:  5; 24.4 (18 a 32), soles 21.4; 0; 0
+   de  1000 a  2000: 10; 20.3 (14 a 26), soles 17.6; 2; 2
+   de  2000 a  4000: 20; 21.4 (15 a 29), soles 18.4; 2; 2
+   de  4000 a  8000: 40; 29.0 (13 a 103), soles 26.4; 5; 171
+   de  8000 a 12000: 40; 23.8 (15 a 33), soles 21.1; 3; 3
+   de 12000 a 16000: 40; 22.8 (12 a 35), soles 20.3; 2; 2
+
+2. Quant duren: d'una captura a la següent (100 èpoques), les cel·les que es replicaven
+   franja: cel·les que es replicaven; a la captura següent, la mateixa cel·la encara es replica; amb el mateix programa (dins de les que encara es repliquen)
+   de     0 a  1000: 277; 8 (2.9 %); 0
+   de  1000 a  4000: 630; 12 (1.9 %); 0
+   de  4000 a  8000: 1161; 36 (3.1 %); 0
+   de  8000 a 16000: 1839; 16 (0.9 %); 0
+
+3. Les hereditàries: totes les que surten, amb les instruccions del programa (sense les dades)
+   180 en 160 captures (14 captures amb alguna); soles, 180
+   època  1500, cel·la 104113: sola; hereditària també a 0 captures següents; instruccions (3): <+>
+   època  1900, cel·la  12506: sola; hereditària també a 0 captures següents; instruccions (8): ,<}[+,{<
+   època  2700, cel·la  80375: sola; hereditària també a 0 captures següents; instruccions (2): ..
+   època  3000, cel·la  54761: sola; hereditària també a 0 captures següents; instruccions (2): [<
+   època  5200, cel·la  15361: sola; hereditària també a 0 captures següents; instruccions (17): {[[[[<},]],}<[[[[
+   època  5200, cel·la  15875: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  15879: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[{
+   època  5200, cel·la  16897: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  16904: sola; hereditària també a 0 captures següents; instruccions (17): {[[[[<},]],}<[[[[
+   època  5200, cel·la  16905: sola; hereditària també a 0 captures següents; instruccions (17): [[[<},]],}<[[[[{<
+   època  5200, cel·la  16906: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  17416: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[{
+   època  5200, cel·la  17417: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  17418: sola; hereditària també a 0 captures següents; instruccions (17): {[[[[<},]],}<[[[[
+   època  5200, cel·la  17923: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  17927: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  17928: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  17932: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[{
+   època  5200, cel·la  17933: sola; hereditària també a 0 captures següents; instruccions (19): {[{{[[[[<},]],}<[[[
+   època  5200, cel·la  17935: sola; hereditària també a 0 captures següents; instruccions (19): [[[[<},]],}<[[[[{{[
+   època  5200, cel·la  18443: sola; hereditària també a 0 captures següents; instruccions (17): {[[[[<},]],}<[[[[
+   època  5200, cel·la  18952: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  18953: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  18954: sola; hereditària també a 0 captures següents; instruccions (17): {[[[[<},]],}<[[[[
+   època  5200, cel·la  18955: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  18956: sola; hereditària també a 0 captures següents; instruccions (17): {[[[[<},]],}<[[[[
+   època  5200, cel·la  18960: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5200, cel·la  18961: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  19464: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  19471: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  19476: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  19975: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  19978: sola; hereditària també a 0 captures següents; instruccions (17): ,[[[[<},]],}<[[[[
+   època  5200, cel·la  19979: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  19980: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  19983: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5200, cel·la  19985: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  20488: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  20491: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  20493: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  20498: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  21001: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  21002: sola; hereditària també a 0 captures següents; instruccions (17): .[[[[<},]],}<[[[[
+   època  5200, cel·la  21004: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5200, cel·la  21005: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  21007: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  22028: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5200, cel·la  23563: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[{
+   època  5200, cel·la  24073: sola; hereditària també a 0 captures següents; instruccions (17): {{[[[[<},]],}<[[[
+   època  5200, cel·la  25095: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[{
+   època  5300, cel·la  12820: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  13332: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[[
+   època  5300, cel·la  13333: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[[
+   època  5300, cel·la  17433: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  17948: sola; hereditària també a 0 captures següents; instruccions (21): [[[[<},],}<[[[[<[[<[[
+   època  5300, cel·la  17950: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  18432: sola; hereditària també a 0 captures següents; instruccions (13): [[[[<},],}<[[
+   època  5300, cel·la  18455: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  18457: sola; hereditària també a 1 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  18461: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  18462: sola; hereditària també a 1 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  18968: sola; hereditària també a 1 captures següents; instruccions (16): [<},],}<[[[[<[[<
+   època  5300, cel·la  18971: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  18972: sola; hereditària també a 0 captures següents; instruccions (20): [<[[<[[[[<},],}<[[[[
+   època  5300, cel·la  18973: sola; hereditària també a 1 captures següents; instruccions (17): ,[[[[<},]],}<[[[[
+   època  5300, cel·la  18974: sola; hereditària també a 1 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  18975: sola; hereditària també a 1 captures següents; instruccions (18): {<[[<[[[[<},],}<[[
+   època  5300, cel·la  19475: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  19478: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  19480: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  19481: sola; hereditària també a 0 captures següents; instruccions (17): <[[<[[[[<},],}<[[
+   època  5300, cel·la  19485: sola; hereditària també a 1 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  19487: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  19993: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  20000: sola; hereditària també a 1 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  20003: sola; hereditària també a 0 captures següents; instruccions (14): [<},]],}<[[[<[
+   època  5300, cel·la  20499: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  20500: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  20506: sola; hereditària també a 0 captures següents; instruccions (17): <[[<[[[[<},],}<[[
+   època  5300, cel·la  20507: sola; hereditària també a 0 captures següents; instruccions (18): [<[[<[[[[<},],}<[[
+   època  5300, cel·la  20508: sola; hereditària també a 1 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  20509: sola; hereditària també a 1 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  20513: sola; hereditària també a 0 captures següents; instruccions (17): {[[[[<},]],}<[[[[
+   època  5300, cel·la  21013: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  21017: sola; hereditària també a 1 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  21018: sola; hereditària també a 1 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  21022: sola; hereditària també a 1 captures següents; instruccions (19): [[<[[<[[[[<},],}<[[
+   època  5300, cel·la  21524: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  21525: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  21526: sola; hereditària també a 1 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  21532: sola; hereditària també a 0 captures següents; instruccions (18): [[<},],}<[[[[<[[<[
+   època  5300, cel·la  21534: sola; hereditària també a 0 captures següents; instruccions (18): [<},],}<[[[[<[[<[[
+   època  5300, cel·la  21536: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[{
+   època  5300, cel·la  21538: sola; hereditària també a 0 captures següents; instruccions (17): [[[[<},]],}<[[[[{
+   època  5300, cel·la  22039: sola; hereditària també a 1 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5300, cel·la  22041: sola; hereditària també a 1 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5300, cel·la  22559: sola; hereditària també a 0 captures següents; instruccions (16): {[[[[<},]],}<[[[
+   època  5400, cel·la  18459: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  18460: sola; hereditària també a 0 captures següents; instruccions (14): [[[[<},]],}<[[
+   època  5400, cel·la  18977: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  19483: sola; hereditària també a 0 captures següents; instruccions (14): [[<},]],}<[[[[
+   època  5400, cel·la  19484: sola; hereditària també a 0 captures següents; instruccions (14): [[[[<},]],}<[[
+   època  5400, cel·la  19490: sola; hereditària també a 0 captures següents; instruccions (15): [[[[[<},]],}<[[
+   època  5400, cel·la  19996: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  19999: sola; hereditària també a 0 captures següents; instruccions (14): [[[[<},]],}<[[
+   època  5400, cel·la  20504: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5400, cel·la  20510: sola; hereditària també a 0 captures següents; instruccions (14): [[<},]],}<[[[[
+   època  5400, cel·la  21024: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5400, cel·la  21028: sola; hereditària també a 0 captures següents; instruccions (16): [<},]],}<[[[[<[[
+   època  5400, cel·la  21531: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  21537: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5400, cel·la  22042: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  22552: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5400, cel·la  22556: sola; hereditària també a 0 captures següents; instruccions (15): [[[[<},]],}<[[[
+   època  5400, cel·la  22558: sola; hereditària també a 0 captures següents; instruccions (16): [[[[[<},]],}<[[[
+   època  5400, cel·la  22562: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5400, cel·la  23067: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5400, cel·la  23068: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  23069: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  23070: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  23071: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  23072: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  23076: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  23080: sola; hereditària també a 0 captures següents; instruccions (17): ,[[[[<},]],}<[[[[
+   època  5400, cel·la  23579: sola; hereditària també a 0 captures següents; instruccions (15): [[[[<},]],}<[[[
+   època  5400, cel·la  23581: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  23585: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  23593: sola; hereditària també a 0 captures següents; instruccions (17): [[[[[<},]],}<[[[[
+   època  5400, cel·la  24092: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  24093: sola; hereditària també a 0 captures següents; instruccions (15): [[[[<},]],}<[[[
+   època  5400, cel·la  24100: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  24102: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  24604: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  24605: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  24606: sola; hereditària també a 0 captures següents; instruccions (14): [[[[<},]],}<[[
+   època  5400, cel·la  24614: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  25113: sola; hereditària també a 0 captures següents; instruccions (15): {[[<},]],}<[[[[
+   època  5400, cel·la  25114: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  25115: sola; hereditària també a 0 captures següents; instruccions (14): [[[[<},]],}<[[
+   època  5400, cel·la  25117: sola; hereditària també a 0 captures següents; instruccions (14): [[<},]],}<[[[[
+   època  5400, cel·la  25119: sola; hereditària també a 0 captures següents; instruccions (16): [[[[[<},]],}<[[[
+   època  5400, cel·la  25121: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  25626: sola; hereditària també a 0 captures següents; instruccions (15): [[[[<},]],}<[[[
+   època  5400, cel·la  25628: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  25630: sola; hereditària també a 0 captures següents; instruccions (15): [[[<},]],}<[[[[
+   època  5400, cel·la  25633: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  25634: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  26139: sola; hereditària també a 0 captures següents; instruccions (15): <[[[[<},]],}<[[
+   època  5400, cel·la  26140: sola; hereditària també a 0 captures següents; instruccions (15): [[[[[<},]],}<[[
+   època  5400, cel·la  26147: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  26651: sola; hereditària també a 0 captures següents; instruccions (14): [[[[<},]],}<[[
+   època  5400, cel·la  26653: sola; hereditària també a 0 captures següents; instruccions (14): [[<},]],}<[[[[
+   època  5400, cel·la  26662: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  27679: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  28188: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5400, cel·la  28702: sola; hereditària també a 0 captures següents; instruccions (17): >[[[[<},]],}<[[[[
+   època  5400, cel·la  28705: sola; hereditària també a 0 captures següents; instruccions (16): [[[[<},]],}<[[[[
+   època  5600, cel·la  60239: sola; hereditària també a 0 captures següents; instruccions (6): .<<,,,
+   època  7600, cel·la  25739: sola; hereditària també a 0 captures següents; instruccions (5): {<[<<
+   època  8300, cel·la  24661: sola; hereditària també a 0 captures següents; instruccions (12): <<<<[,,{[[<,
+   època  9300, cel·la  22380: sola; hereditària també a 0 captures següents; instruccions (9): <[><<<<<{
+   època 12000, cel·la 104544: sola; hereditària també a 0 captures següents; instruccions (8): .><><<,,
+   època 13000, cel·la 121872: sola; hereditària també a 0 captures següents; instruccions (1): }
+   època 13300, cel·la 126565: sola; hereditària també a 0 captures següents; instruccions (6): <<<<[<
+
+4. El programa, 100 èpoques després (amb les captures): igual byte a byte, a la mateixa cel·la
+   franja: totes les cel·les, % amb el programa igual; les que es replicaven, quantes i % amb el programa igual; les que es replicaven soles, %
+   de     0 a  1000: 1.8 %; 277, 1.1 %; 0.4 %
+   de  1000 a  4000: 1.8 %; 630, 0.2 %; 0.0 %
+   de  4000 a  8000: 1.1 %; 1161, 0.3 %; 0.3 %
+   de  8000 a 16000: 0.7 %; 1839, 0.2 %; 0.1 %

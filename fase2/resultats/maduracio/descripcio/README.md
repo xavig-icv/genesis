@@ -225,7 +225,7 @@ Cel·les de cada sopa, de 131.072, a l'escaneig de totes les cel·les (la mitjan
   - A la sopa barrejada: cada sopa comença amb unes 7 hereditàries, i només el 5 % de les branques s'estableixen en les primeres
     1.000 èpoques (16 de 300).
 - **Als mons envellits sense vida, de tant en tant hi ha una hereditària sola.** Dels 172 mons escanejats a l'època 8.000, 19 en
-  tenien exactament una, i 3 en tenien un miler (la vida hi creixia).
+  tenien exactament una, i 3 en tenien un miler (la vida hi creixia). *(Les soles, segurament falsos positius de la prova: vegeu l'escaneig del 1034, a sota.)*
 - **Als censos,** els episodis d'hereditaris que s'apaguen són freqüents: a la sèrie del corrent sense corrent, 16 s'apaguen i 24
   acaben en establiment. La part que acaba bé puja amb l'edat: del 62 % (de 0 a 4.000) al 81 % (de 12.000 a 16.000).
 - **Amb corrent hi ha explosions que s'apaguen** (`anomalies-sortida.txt`): als mons 2014 i 2059 de la sèrie del corrent, un replicador
@@ -330,3 +330,37 @@ el programa i si és hereditària. L'atzar de la prova: la llavor 711.000 més l
 
 **Els límits, d'entrada:** és un sol món, i la prova fa servir l'atzar (el company de cada cel·la). El tall de les 150 sopes de la
 sèrie a l'època 8.000 és a `escanejos-sortida.txt`.
+
+## Resultats de l'escaneig del món 1034 (11-11-2026)
+
+**L'escaneig** (`escaneig-1034.jsonl` i `escaneig-analisi-sortida.txt`): les 160 captures, de les 11.00 h a les 12.05 h.
+
+1. **Les cel·les que es repliquen són poques, i sempre en el mateix nombre:** 52 a l'època 100, i de 12 a 35 a totes les captures
+   següents fins a la 16.000, llevat del brot (la mitjana per franges, de 20 a 31). Gairebé nou de cada deu es repliquen soles.
+2. **Cap no dura:**
+   - d'una captura a la següent (100 èpoques), només de l'1 al 3 % de les cel·les que es replicaven ho continuen fent a la mateixa
+     cel·la, i cap amb el mateix programa;
+   - en 100 èpoques, la sopa es reescriu gairebé sencera: només l'1,8 % dels programes (a la sopa jove) i el 0,7 % (a la vella)
+     continuen iguals byte a byte.
+3. **Un brot que s'apaga:** a les captures 5.200, 5.300 i 5.400, una família (`[[[[<},]],}<[[[[`) arriba a 46, 47 i 76 cel·les
+   hereditàries, totes en un racó de 20 × 21 cel·les. A la 5.100 i a la 5.500 no n'hi ha cap. El cens només en va veure 2, a l'època
+   5.250, lluny de l'1 % de la mostra que cal per a l'establiment.
+4. **Les hereditàries soles són falsos positius de la prova** (`reprova-hereditaries-sortida.txt`; afegit després de veure l'escaneig,
+   no era a la nota).
+   - **Què hi ha:** fora del brot, l'escaneig en troba 11, una per captura, totes soles, d'1 a 12 instruccions (`}`, `..`, `[<`…).
+   - **La comprovació:** tornades a provar 200 vegades cadascuna amb llavors noves, cap no és hereditària en cap prova, i només una es
+     replica (2 vegades de 200). Les del brot (una de cada quatre, 43), hereditàries en 200 de 200.
+   - **Què deu passar:** la prova posa al costat de la cel·la un company de bytes a l'atzar. Si aquest soroll porta un bucle que copia,
+     la còpia la fa el soroll, i el fill pot ser un replicador fet amb el codi del soroll i un tros de la cel·la.
+
+**Què en canvia:**
+- **Del pas 1:** les 19 sopes envellides amb exactament una hereditària, de les 172 escanejades a l'època 8.000, segurament són falsos
+  positius com aquests. També ho poden ser, en part, les 0,41 hereditàries per món de la sopa nova.
+- **De la sèrie de la maduració:** 19 dels 22 mons exclosos per tenir hereditàries a l'escaneig en tenien una. No canvia la decisió: el
+  criteri es va fixar abans, i s'aplicava a cada món abans de repartir-lo en braços.
+- **De B1:** les densitats d'hereditaris de programes a l'atzar poden incloure casos com aquests. La prova d'autonomia (§4), amb
+  companys sense cap instrucció, ho dirà.
+- **Per al pas 2:** una hereditària s'ha de tornar a provar abans de comptar-la com una aparició.
+
+**La resposta a la pregunta de la nota:** les hereditàries es perden de seguida, i les soles ni tan sols ho eren. En 16.000 èpoques, al
+1034 només hi ha hagut un brot de debò, i va durar entre 200 i 400 èpoques.
