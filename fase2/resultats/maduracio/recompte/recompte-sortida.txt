@@ -1,0 +1,25 @@
+El recompte amb companys inerts (la maduració, pas 2b; exploratori): 150 mons, 450 sopes; el codi 43289a3
+La prova: la d'autonomia de B1, C0, 100 condicions de companys inerts, la llavor 3000000000
+
+l'envellida (continue), 150 sopes de 131072 cel·les:
+  l'escaneig (la prova del cens, amb companys de soroll): es repliquen 3404 (22.69 per sopa); hereditàries 0 (0.00 per sopa)
+  amb companys inerts, es copien: en alguna, 11 (0.07 per sopa); en 95 o més, 11 (0.07 per sopa); en totes 100, 3 (0.02 per sopa)
+  amb companys inerts, són hereditàries: en alguna, 0 (0.00 per sopa); en 95 o més, 0 (0.00 per sopa); en totes 100, 0 (0.00 per sopa)
+  de les hereditàries de l'escaneig, ho són també amb companys inerts (en alguna condició): 0 de 0
+
+la barrejada (shuffle-all), 150 sopes de 131072 cel·les:
+  l'escaneig (la prova del cens, amb companys de soroll): es repliquen 105902 (706.01 per sopa); hereditàries 1025 (6.83 per sopa)
+  amb companys inerts, es copien: en alguna, 16661 (111.07 per sopa); en 95 o més, 16505 (110.03 per sopa); en totes 100, 11374 (75.83 per sopa)
+  amb companys inerts, són hereditàries: en alguna, 11 (0.07 per sopa); en 95 o més, 2 (0.01 per sopa); en totes 100, 2 (0.01 per sopa)
+  de les hereditàries de l'escaneig, ho són també amb companys inerts (en alguna condició): 5 de 1025
+
+la nova (reinit), 150 sopes de 131072 cel·les:
+  l'escaneig (la prova del cens, amb companys de soroll): es repliquen 17677 (117.85 per sopa); hereditàries 62 (0.41 per sopa)
+  amb companys inerts, es copien: en alguna, 885 (5.90 per sopa); en 95 o més, 857 (5.71 per sopa); en totes 100, 644 (4.29 per sopa)
+  amb companys inerts, són hereditàries: en alguna, 0 (0.00 per sopa); en 95 o més, 0 (0.00 per sopa); en totes 100, 0 (0.00 per sopa)
+  de les hereditàries de l'escaneig, ho són també amb companys inerts (en alguna condició): 0 de 62
+
+Món a món (A2), les cel·les que es copien amb companys inerts en alguna condició:
+  l'envellida contra la nova: 0 més, 0 igual, 150 menys
+  la barrejada contra la nova: 150 més, 0 igual, 0 menys
+  (amb l'escaneig, per comparar: l'envellida contra la nova, 0 més, 0 igual, 150 menys; la barrejada contra la nova, 150 més, 0 igual, 0 menys)
