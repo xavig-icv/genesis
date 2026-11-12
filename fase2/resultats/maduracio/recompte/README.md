@@ -77,6 +77,38 @@ Un món sencer (els tres braços), i els seus recomptes, comparats amb els del m
   - **El temps,** amb el càlcul de B1 en marxa: 148 s, 322 s i 179 s per sopa. Sense B1, menys. Per a les 450 sopes, unes 20 h de CPU com
     a molt: unes 2,5 h amb 8 processos.
 
+## El que surt (12-11-2026, exploratori)
+
+**El càlcul:** el responsable el va llançar el 12-11-2026 a les 19.36 des d'una finestra seva, amb `llanca-2b.sh` (fora del repositori) i
+`43289a3`; va acabar a les 23.41, els vuit trossos amb el codi 0 (`llanca-2b.log`). A totes 450 sopes, l'escaneig dona els tres recomptes
+del manifest. Els registres, tal com surten, a git abans del resum (`aad89e9`; les SHA-256, a `recompte-sha256.txt`). El resum,
+`recompte-sortida.txt` (`recompte-analisi.mjs --tots`).
+
+**Dues coses que no deia la nota:** es va llançar mentre corria el pas 2a, que la seva nota preveia d'uns minuts i en va trigar quatre
+hores i mitja (la nota deia «després del pas 2a»; cap dels dos no fa servir l'altre); i va trigar unes 4 h amb 8 processos, una mica més
+del previst, perquè els va compartir amb el 2a.
+
+**Les cel·les que es copien, per sopa (la mitjana dels 150 mons):**
+
+| La sopa | L'escaneig (companys de soroll) | Es copien amb companys inerts (en alguna condició) | En totes 100 | Hereditàries amb companys inerts |
+|---|---|---|---|---|
+| L'envellida, tal com és | 22,69 | 0,07 (11 en total) | 0,02 | 0 |
+| La nova | 117,85 | 5,90 | 4,29 | 0 |
+| La barrejada (els mateixos bytes de l'envellida) | 706,01 | 111,07 | 75,83 | 0,07 (11 en total) |
+
+- **La majoria dels positius de l'escaneig eren de la prova:** el 99,7 % a la sopa envellida, el 95 % a la nova i el 84 % a la barrejada.
+  De les hereditàries de l'escaneig, amb companys inerts només ho són 5 de 1.025 a la barrejada, i cap de 62 a la nova.
+- **L'ordre es manté, a tots 150 mons:** la barrejada en té més que la nova, i la nova més que l'envellida (150 de 150 a totes dues
+  comparacions).
+- **El criteri de la nota:** «si amb companys inerts l'ordre es manté, A2 i el contrapunt se sostenen, amb un recompte net». Se sostenen, i
+  amb més força: amb companys inerts, la sopa envellida té unes 80 vegades menys cel·les que es copien que una de nova, i els seus bytes,
+  barrejats, unes 19 vegades més.
+- **Coincideix amb B1** (la §13; l'entrada 17): amb la composició de les sopes envellides, uns 6·10⁻⁷ programes per programa es copien sols
+  i són hereditaris, uns 0,08 per sopa de 131.072; a les sopes barrejades n'hi ha 0,07.
+
+**Els límits:** és un recompte en un moment, no un ritme (AUD-184); «es copia» vol dir una còpia del programa al company en alguna de les
+100 condicions, no un replicador hereditari; i és exploratori, amb les sopes d'una sèrie ja decidida.
+
 ## Les sortides
 
 - **`recompte-I-J.jsonl`,** un per procés (els mons del I al J del manifest): una línia per sopa, amb el món, el braç, la SHA-256 de la
