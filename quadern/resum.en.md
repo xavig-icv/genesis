@@ -163,3 +163,7 @@ world become established independently, so establishment is a chance event. Two 
 the establishment rate rises with age even when the soup no longer matures (so the rise is mostly the start-up delay of any clean soup),
 and the dominant family at establishment is not made of what the soup piles up. The general idea of a pre-replicator phase was already
 described in the Amoeba system (Greenbaum and Pargellis, 2017). What may be new is a specific mechanism in BFF, tested by intervention.
+*(Updated on 12-11-2026 with the 2016 conference version, read in full; the 2017 article is paywalled.)* They measure the bias with the
+entropy of single instructions, the same kind of measure as our D, and they make no intervention. In Amoeba, time works against
+emergence: after a million generations, replicators rarely appear. In BFF, life becomes established more often in an aged soup
+(entry 14). The source-by-source comparison is in `docs/novetat-maduracio.md`.
