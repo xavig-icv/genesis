@@ -65,6 +65,18 @@ Un món sencer (els tres braços), i els seus recomptes, comparats amb els del m
   d'una altra manera.
 - **Si l'envellida en té tantes o més que la nova:** A2 cau, i la maduració podria actuar també sobre l'aparició (A7).
 
+## El que s'ha provat (12-11-2026)
+
+- **La primera prova curta** (el món 6001, el primer del manifest, amb `7ee8160`): l'escaneig hi reprodueix els tres recomptes del
+  manifest a totes tres sopes. Però l'script encara no desava, per a cada condició, si el programa es copia sol **o** en context, que és
+  la xifra principal de la prova d'autonomia de B1. **Queda substituïda** per la segona, i no se n'ha fet cap resum. Els fitxers, tal com
+  van sortir: `recompte-prova-7ee8160-0-1.jsonl` i `.err`.
+- **La segona prova curta** (el mateix món, amb `83d82c3`, que desa aquest recompte i té el resum): l'escaneig hi torna a reproduir el
+  manifest. Els fitxers, tal com surten: `recompte-prova-0-1.jsonl`, `.err` i el resum, `recompte-prova-sortida.txt`.
+  - **És un sol món:** no en traiem cap resultat. Serveix per veure que el càlcul funciona de punta a punta.
+  - **El temps,** amb el càlcul de B1 en marxa: 148 s, 322 s i 179 s per sopa. Sense B1, menys. Per a les 450 sopes, unes 20 h de CPU com
+    a molt: unes 2,5 h amb 8 processos.
+
 ## Les sortides
 
 - **`recompte-I-J.jsonl`,** un per procés (els mons del I al J del manifest): una línia per sopa, amb el món, el braç, la SHA-256 de la
