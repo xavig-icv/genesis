@@ -28,6 +28,7 @@
     <a href="#entrada-15">Entrada 15</a>
     <a href="#entrada-16">Entrada 16</a>
     <a href="#entrada-17">Entrada 17</a>
+    <a href="#entrada-18">Entrada 18</a>
   </nav>
 
   <article id="entrada-1">
@@ -1891,6 +1892,84 @@
       <li><strong>El pas 2b de la maduració:</strong> tornar a comptar les cel·les que es repliquen de les sopes de la sèrie amb companys sense cap instrucció. Ja és preparat i provat.</li>
       <li><strong>Una ronda d'auditoria</strong> dels resultats exploratoris de B1 v0.7 i de la maduració, com mana el carril d'explorar.</li>
       <li><strong>El nivell 2 de B1 (la sopa),</strong> si es fa, anirà amb un disseny preregistrat. Ara el projecte es concentra en la maduració.</li>
+    </ul>
+  </article>
+
+  <article id="entrada-18">
+    <header>
+      <p class="date">Entrada 18 · 12 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, segona part: qui escriu els bytes, i qui es copia de debò</h1>
+      <p class="lede">Hem seguit qui escriu cada byte en 10⁵ interaccions de cadascuna de 483 sopes, i hem tornat a comptar, amb companys sense cap instrucció, les cel·les que es repliquen de les 450 sopes de la sèrie. El <code>&lt;</code> que la sopa acumula s'hi escampa sobretot copiant-lo, i sobretot des dels programes que ja comencen amb <code>&lt;</code>. Gairebé tots els «replicadors» que trobava l'escaneig eren obra del company de la prova. Però l'ordre de les tres sopes es manté a tots els mons: la sopa envellida té unes 80 vegades menys cel·les que es copien que una de nova, i els seus mateixos bytes, barrejats, unes 19 vegades més. És exploratori, amb les dades de sèries ja decidides.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>L'<a href="#entrada-16">entrada 16</a> deixava dues preguntes per a les captures, sense simular res, pel carril d'explorar (<code>docs/disseny.md</code>): qui escriu els bytes que la sopa acumula (el pas 2a), i quantes de les cel·les que es repliquen ho fan de debò (el pas 2b). La segona era el primer que faltava a la matriu de novetat, i els dos auditors hi estaven d'acord (la consulta X-105). Totes dues tenen una nota escrita abans de calcular, amb el que ens faria canviar d'opinió (<code>fase2/resultats/maduracio/escriptures/</code> i <code>recompte/</code>).</p>
+
+    <h2>El que surt</h2>
+    <p><strong>Qui escriu els bytes que s'acumulen</strong> (el pas 2a). Un intèrpret que avisa de cada escriptura, comprovat contra el del simulador, executa una vegada 10⁵ parelles de veïns de debò de cada sopa: 150 sopes envellides, les mateixes 150 barrejades, 150 de noves i 33 captures del món 1034 al llarg del temps. Els quatre criteris de la nota, cap dels quals no cau:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">El criteri</th><th style="text-align:left">El que surt</th><th style="text-align:left">Què vol dir</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">Els <code>&lt;</code> nous, per còpia (cau per sota del 50 %)</td><td style="text-align:left">85 % a la sopa envellida</td><td style="text-align:left">El <code>&lt;</code> s'escampa copiant-lo. A la sopa nova, en canvi, el fan sobretot <code>+</code> i <code>-</code> (68 %)</td></tr>
+          <tr><td style="text-align:left">Els <code>&lt;</code> nous, en parelles en què el primer programa comença amb <code>&lt;</code> (cau per sota del 20 %)</td><td style="text-align:left">55 % a l'envellida</td><td style="text-align:left">Aquests programes només són el 7,5 % de la sopa: unes 7 vegades la seva part. La regla del primer byte hi té un efecte fort</td></tr>
+          <tr><td style="text-align:left">La dispersió de les instruccions, en una ronda (cau si no creix a cap sopa)</td><td style="text-align:left">Creix: poc a l'envellida, que ja és a prop de l'equilibri, i molt a la barrejada (d'1,00 a 1,41)</td><td style="text-align:left">Les mateixes interaccions amunteguen les instruccions</td></tr>
+          <tr><td style="text-align:left">Les còpies de 16 bytes, l'envellida contra la seva barrejada (cau si són iguals)</td><td style="text-align:left">Deu vegades menys a l'envellida, a tots 150 mons</td><td style="text-align:left">La disposició de la sopa envellida fa menys còpies que els seus mateixos bytes barrejats</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">La línia de base del segon criteri, quina part dels programes comencen amb <code>&lt;</code>, es va calcular després de mirar la sortida, i no era a la nota. La sortida, a <code>fase2/resultats/maduracio/escriptures/escriptures-sortida.txt</code>.</p>
+    <ul>
+      <li><strong>La sopa envellida és a prop de l'equilibri:</strong> en una ronda, fa i desfà gairebé els mateixos <code>&lt;</code> (82 i 80 per 1.000 parelles). La barrejada en perd (268 i 293): la disposició de la sopa envellida conserva els <code>&lt;</code>.</li>
+      <li><strong>Al món 1034,</strong> els <code>&lt;</code> nous per còpia passen del 62 % a l'època 100 a un 85–90 %. Les còpies de 16 bytes salten a l'època 5.500, deu vegades per sobre del normal: és el brot que l'escaneig ja hi havia trobat.</li>
+    </ul>
+
+    <p><strong>Qui es copia de debò</strong> (el pas 2b). Hem repetit l'escaneig de cada sopa de la sèrie, que dona exactament els recomptes que s'hi van desar, i cada cel·la que hi donava positiu s'ha tornat a provar en 100 condicions amb companys sense cap instrucció, com la prova d'autonomia de B1 (<a href="#entrada-17">entrada 17</a>). Per sopa, la mitjana dels 150 mons:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">La sopa</th><th style="text-align:left">L'escaneig (companys de soroll)</th><th style="text-align:left">Es copien amb companys sense cap instrucció</th><th style="text-align:left">Hereditàries amb companys sense cap instrucció</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">L'envellida, tal com és</td><td style="text-align:left">22,7</td><td style="text-align:left">0,07</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">La nova</td><td style="text-align:left">118</td><td style="text-align:left">5,9</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">La barrejada (els mateixos bytes de l'envellida)</td><td style="text-align:left">706</td><td style="text-align:left">111</td><td style="text-align:left">0,07</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">«Es copia»: una còpia del programa al company en alguna de les 100 condicions. El resum, a <code>fase2/resultats/maduracio/recompte/recompte-sortida.txt</code>.</p>
+    <ul>
+      <li><strong>La majoria dels positius de l'escaneig eren de la prova:</strong> el 99,7 % a la sopa envellida, el 95 % a la nova i el 84 % a la barrejada. De les 1.025 hereditàries de l'escaneig a les sopes barrejades, només 5 ho són amb companys sense cap instrucció; de les 62 de les noves, cap.</li>
+      <li><strong>L'ordre es manté a tots 150 mons:</strong> la barrejada en té més que la nova, i la nova més que l'envellida, en tots els mons.</li>
+      <li><strong>Coincideix amb B1:</strong> amb la composició de les sopes envellides, la corba de l'entrada 17 en preveu uns 0,08 hereditaris de debò per sopa barrejada, i n'hi ha 0,07.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>Hi ha un mecanisme concret per al <code>&lt;</code>:</strong> s'escampa copiant-lo, i sobretot des dels programes que ja comencen amb <code>&lt;</code>. És la regla del primer byte que proposava l'auditor 1, ara amb dades, però descriptiva: la línia de base es va calcular després, i no hi hem intervingut.</li>
+      <li><strong>La disposició desfà el que la composició faria</strong> (A2, ara amb un recompte net). Els bytes de la sopa envellida, barrejats, fan 19 vegades més cel·les que es copien que una sopa nova; tal com són, 80 vegades menys. És el contrapunt de la «màquina d'escriure esbiaixada» d'Adami i LaBar (2017), que Knierim i altres (2026) ja havien vist a BFF per a la composició.</li>
+      <li><strong>Quan comença, a cap sopa no hi ha replicadors fets:</strong> 0, 0 i 0,07 hereditaris de debò per sopa. La vida que s'hi estableix després no hi era. On actua la maduració, l'aparició o l'arrelament, encara no ho sabem: un recompte en un moment no és un ritme (AUD-184).</li>
+      <li><strong>La prova del cens compta sobretot el company,</strong> a les tres sopes: un escaneig s'ha de tornar a comptar amb companys inerts abans de fer-lo servir.</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>És exploratori:</strong> les sopes d'una sèrie ja decidida, i moltes mirades.</li>
+      <li><strong>Un recompte en un moment</strong> no és un ritme d'aparició, i cada parella del pas 2a s'executa una sola vegada.</li>
+      <li><strong>«Es copia» no vol dir replicador:</strong> és una còpia al company, no una que també es copiï.</li>
+      <li><strong>Els temps no eren els previstos:</strong> el pas 2a va trigar 4 h 38 min, no uns minuts; el 2b es va llançar mentre corria el 2a, i en va trigar unes 4.</li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>El carril d'explorar:</strong> les notes, a git abans de calcular; els scripts, des de commits nets; les proves curtes abans dels càlculs llargs (al pas 2b, la primera es va substituir perquè l'script encara no comptava per condició); i les sortides, a git tal com surten abans de mirar-les.</li>
+      <li><strong>Les llavors</strong> no són de cap pla: a partir de 940.000 al pas 2a, i 3.000.000.000 al 2b.</li>
+      <li><strong>El pas 2b</strong> el va llançar el responsable des d'una finestra seva, amb vuit processos, i va trigar unes 4 h.</li>
+      <li><strong>Les dues branques</strong> són a <code>main</code>, amb tot el que s'ha provat.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>Una ronda d'auditoria</strong> dels resultats exploratoris de B1 v0.7 i dels passos 2a i 2b, com mana el carril d'explorar.</li>
+      <li><strong>El pilot de la línia:</strong> mesurar per separat l'aparició i l'arrelament, en mons nous, amb braços que conservin la composició i en canviïn la disposició. La regla del primer byte en dona un candidat d'intervenció. El disseny, abans de calcular res.</li>
     </ul>
   </article>
 

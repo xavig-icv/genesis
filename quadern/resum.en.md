@@ -187,3 +187,18 @@ bytes, about 6 in 10⁷ with an aged soup's composition, 8 in 10⁵ with half in
 which Knierim et al. (2026) had already seen with their detector.
 The effect of not being able to write to one's own half (S1) comes from both heads (2.36 and 1.48 times, 3.95 together). The census
 counts of the soup before life (entry 16) must be redone with inert partners.
+
+<a id="entry-18"></a>
+## Entry 18 · 12 November 2026 · The soup before life, part two: who writes the bytes, and who really copies itself (exploratory)
+
+Two steps with the snapshots of already decided series, each with a note written before computing. First, an interpreter that reports
+every write (checked against the simulator's) ran 10⁵ real neighbour pairs once in each of 483 soups. None of the note's four criteria
+fails: in the aged soup, 85% of new `<` come from copying (in a fresh soup, mostly from `+` and `-`); pairs whose first program starts
+with `<` make 55% of them, about 7 times their 7.5% share (a baseline computed after seeing the output, and said so), so the first-byte
+rule has a strong effect; one round of interactions crowds instructions into fewer programs; and the aged soup makes ten times fewer
+16-byte copies than its own bytes shuffled, in all 150 worlds. Second, every cell that the scan of each of the 450 series soups found
+replicating was retested in 100 conditions with partners that have no instructions. Almost all were the work of the test's partner
+(99.7% in aged soups), but the order holds in all 150 worlds: 0.07 cells per soup copy themselves in an aged soup, 5.9 in a fresh one and
+111 in the same aged bytes shuffled. The arrangement of the aged soup undoes what its composition would do. At the start, no soup has
+ready-made heritable replicators (0, 0 and 0.07 per soup, as entry 17's curve predicts for the shuffled soup). Whether maturation acts
+on appearance or on taking root, we do not know yet: a count at one moment is not a rate.

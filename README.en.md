@@ -207,10 +207,23 @@ exploratory.
 
 See notebook entry 17, in Catalan, or its [English summary](quadern/resum.en.md#entry-17).
 
+**Who writes the bytes, and who really copies itself (exploratory).** The second step of the soup before life, with the
+snapshots of the series and no new simulation.
+- **`<` spreads by being copied,** mostly from programs that already start with `<`: they make 55% of the new ones,
+  about 7 times their share. The first-byte rule has a strong effect.
+- **Almost all the "replicators" found by the scan were the work of the test's partner:** with partners that have no
+  instructions, 0.07 cells per soup copy themselves in an aged soup, 5.9 in a fresh one, and 111 in the same bytes
+  shuffled.
+- **The order holds in all 150 worlds:** the arrangement of the aged soup undoes what its composition would do.
+- **At the start, no soup has ready-made replicators.** Whether maturation acts on their appearance or on their taking
+  root, we do not know yet.
+
+See notebook entry 18, in Catalan, or its [English summary](quadern/resum.en.md#entry-18).
+
 **What we study now:**
-- **The soup before life:** which operations write the bytes that pile up; how many cells copy themselves alone in
-  fresh, aged and shuffled soups; and then, separately, whether a replicator appears and whether it takes root
-  ([decisions](docs/disseny.md), in Catalan).
+- **The soup before life:** a pilot that measures separately whether a replicator appears and whether it takes root,
+  in new worlds, with arms that keep the composition and change the arrangement ([decisions](docs/disseny.md), in
+  Catalan).
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 

@@ -290,11 +290,23 @@ dels programes ([pla](docs/pla-b1.md)). Tot és exploratori.
 
 Vegeu l'[entrada 17](quadern/index.html#entrada-17).
 
+### Qui escriu els bytes, i qui es copia de debò (exploratori)
+
+El segon pas de la sopa abans de la vida, amb les captures de les sèries i sense simular res.
+- **El `<` s'escampa copiant-lo,** i sobretot des dels programes que ja comencen amb `<`: en fan el 55 % dels nous, unes
+  7 vegades la seva part. La regla del primer byte hi té un efecte fort.
+- **Gairebé tots els «replicadors» de l'escaneig eren obra del company de la prova:** amb companys sense cap
+  instrucció, se'n copien sols 0,07 per sopa a la sopa envellida, 5,9 a una de nova i 111 als mateixos bytes barrejats.
+- **L'ordre es manté a tots 150 mons:** la disposició de la sopa envellida desfà el que la seva composició faria.
+- **Quan comença, cap sopa no té replicadors fets.** On actua la maduració, que n'apareguin o que hi arrelin, encara no
+  ho sabem.
+
+Vegeu l'[entrada 18](quadern/index.html#entrada-18).
+
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** quines operacions escriuen els bytes que s'acumulen; quantes cel·les es copien soles a
-  les sopes nova, envellida i barrejada; i després, per separat, que aparegui un replicador i que hi arreli
-  ([les decisions](docs/disseny.md)).
+- **La sopa abans de la vida:** el pilot que mesuri per separat que aparegui un replicador i que hi arreli, en mons
+  nous, amb braços que conservin la composició i en canviïn la disposició ([les decisions](docs/disseny.md)).
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 
