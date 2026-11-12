@@ -62,3 +62,40 @@ Les captures, amb la SHA-256 del manifest de la sèrie i de `docs/captures.sha25
 
 - **Cap simulació,** cap llavor de cap pla, i cap resultat de B1 v0.7 (encara no n'hi ha).
 - **Cap prova confirmatòria.** Els recomptes són descriptius. Les sopes de la sèrie ja no serveixen per confirmar res (la taula de tres).
+
+## 7. El que surt (12-11-2026, exploratori)
+
+**El càlcul:** `node escriptures.mjs` amb les captures de la sèrie i les del món 1034, des de `9664d07`, a prioritat baixa, de les 16.49 a
+les 21.28 del 12-11-2026, amb el codi 0: 483 sopes, 10⁵ parelles cadascuna. **El pressupost de la nota («uns minuts») era equivocat:**
+va trigar 4 h 38 min, encara molt per sota dels dos dies. La sortida, tal com surt, és a `escriptures-sortida.txt` i `escriptures.jsonl`
+(`acbc25f`), a git abans de mirar-la.
+
+**Els quatre criteris (§5): cap no cau.**
+
+| | El criteri | El que surt | Què vol dir |
+|---|---|---|---|
+| 1 | Els `<` nous, per còpia | 85,4 % a la sopa envellida (cau per sota del 50 %) | El `<` s'acumula sobretot copiant-lo. A la sopa nova, en canvi, el fan sobretot `+` i `-` (67,5 %) |
+| 2 | Els `<` nous, en parelles que comencen amb `<` | 54,8 % a l'envellida (cau per sota del 20 %) | Vegeu la línia de base, a sota: unes 7 vegades el que en sortiria sense enriquiment |
+| 3 | La dispersió de les instruccions, en una ronda | Creix a totes dues: l'envellida, de 8,449 a 8,452; la nova, d'1,000 a 1,062 | L'amuntegament pot venir de les escriptures d'una interacció. Amb la sopa barrejada, d'1,000 a 1,413 en una sola ronda |
+| 4 | Les còpies de 16 bytes, l'envellida contra la seva barrejada | Menys a l'envellida a tots 150 mons (0,016 % contra 0,171 % de les parelles) | La disposició sí que explica que la sopa vella tingui menys copiadors: els mateixos bytes, barrejats, en fan deu vegades més |
+
+**La línia de base del criteri 2** (`linia-base.mjs` i `linia-base-sortida.txt`, **afegida després de mirar la sortida**, per poder-lo
+interpretar). El primer programa d'una parella és una cel·la a l'atzar: sense cap enriquiment, la part dels `<` nous que surten de parelles
+que comencen amb `<` seria la dels programes que comencen amb `<`.
+
+| La sopa | Programes que comencen amb `<` | Bytes que són `<` | `<` nous en parelles que comencen amb `<` | L'enriquiment |
+|---|---|---|---|---|
+| Envellida | 7,46 % | 4,03 % | 54,8 % | unes 7 vegades |
+| Barrejada | 4,03 % | 4,03 % | 23,0 % | unes 6 vegades |
+| Nova | 0,39 % | 0,39 % | 11,3 % | unes 29 vegades, però amb pocs `<` nous i fets sobretot amb `+` i `-` |
+
+**Què més s'hi veu,** descriptivament:
+- **La sopa envellida és a prop de l'equilibri:** en fa i en desfà gairebé els mateixos (82,1 i 80,2 `<` per 1.000 parelles). La barrejada,
+  en una ronda, en perd (268,5 fets i 292,9 desfets): la disposició de la sopa envellida conserva els `<`.
+- **La barrejada copia molt més:** 19.041 còpies per 1.000 parelles, contra 6.035 a l'envellida i 4.207 a la nova.
+- **El món 1034 al llarg del temps:** els `<` nous per còpia passen del 62 % (l'època 100) a un 85–90 %, i els de parelles que comencen
+  amb `<`, del 26 % a un 50–60 %. La dispersió puja de 2,7 a uns 10 cap a les èpoques 2.500–3.500, i després baixa fins a 7,6 a la 16.000.
+  Les còpies de 16 bytes salten a l'època 5.500 (0,313 %, deu vegades el normal): és el brot de l'escaneig del pas 1 (76 cel·les a la 5.400).
+
+**Els límits:** cada parella s'executa una vegada, sense dinàmica; els percentatges són de tota la cohort; i la línia de base és posterior.
+És exploratori: una descripció, no una prova.
