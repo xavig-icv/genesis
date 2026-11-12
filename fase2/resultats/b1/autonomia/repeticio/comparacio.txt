@@ -1,0 +1,30 @@
+La repetició de la prova d'autonomia de B1 v0.7 (docs/pla-b1.md, §11; el README d'aquesta carpeta)
+
+La llavor: els vuit primers dígits hexadecimals de la SHA-256 d'execucio-llista.txt (3f1774c4…), com a enter: 1058501828
+La tria: node eines/tria.mjs 1058501828 3 d-mig-C0 d-mig-K1 d-mig-K2 d-mig-R0 d-mig-S1 d-mig-S2 d-mig-S3 d-mig-S4 d-mig-X1 d-mig-H64 uniforme-C0
+  -> d-mig-K1 d-mig-H64 uniforme-C0
+
+Les ordres, les de llista.txt amb el registre a repeticio/, des de la còpia neta del càlcul (680d130), a prioritat baixa, el 12-11-2026:
+  node eines/autonomia.mjs --quimica K1 --distribucio d-mig --llavor 250000000 --condicions 100 --fils 8 --json fase2/resultats/b1/autonomia/repeticio/d-mig-K1.jsonl
+  node eines/autonomia.mjs --quimica H64 --distribucio d-mig --llavor 250000000 --condicions 100 --fils 8 --json fase2/resultats/b1/autonomia/repeticio/d-mig-H64.jsonl
+  node eines/autonomia.mjs --quimica C0 --distribucio uniforme --llavor 250000000 --condicions 100 --fils 8 --json fase2/resultats/b1/autonomia/repeticio/uniforme-C0.jsonl
+
+El registre de la repetició:
+  12-11-2026 00.40.15 comença d-mig-K1
+  12-11-2026 00.42.29 acaba d-mig-K1, codi 
+  12-11-2026 00.42.29 comença d-mig-H64
+  12-11-2026 01.23.13 acaba d-mig-H64, codi 
+  12-11-2026 01.23.13 comença uniforme-C0
+  12-11-2026 01.23.22 acaba uniforme-C0, codi 
+  12-11-2026 01.23.22 acabat
+  (el codi de sortida no hi consta: PowerShell no el dona amb Start-Process i -NoNewWindow; cada registre acaba amb la línia final)
+
+La comparació (node eines/b1-compara.mjs registres/X.jsonl repeticio/X.jsonl):
+  d-mig-K1: Coincideixen (codi 0)
+  d-mig-H64: Coincideixen (codi 0)
+  uniforme-C0: Coincideixen (codi 0)
+
+Les SHA-256 dels tres registres repetits (no són a git: es poden refer amb les mateixes ordres; la línia d'inici en canvia el fitxer de --json, i la final, els segons):
+  bab5ed36a7a4fa8f80eff7ee0becd432257bf533fd7d7cfb1b18a7b45da44dda *d-mig-H64.jsonl
+  88d2d85ecf7ec91e04479d992d6f2bd27e533e1b68ebe2a53b1c53b8a9907e69 *d-mig-K1.jsonl
+  e97fd1692538e54917aca18ab569ef54f38089324a394e4d57d164ecf77db7c8 *uniforme-C0.jsonl

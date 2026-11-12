@@ -1,0 +1,301 @@
+C0, d-mig: 1625 hereditaris del nivell 1 (sols 371, només en context 1254), 100 condicions amb companys inerts
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 810 (49.8 %; IC del 95 %, de 47.4 a 52.3 %), es pot copiar sense el codi del company
+    en més de 50: 569 (35.0 %; IC del 95 %, de 32.7 a 37.4 %), en la majoria de les condicions assajades
+    en 95 o més: 437 (26.9 %; IC del 95 %, de 24.7 a 29.1 %), autonomia robusta (operativa)
+    en totes 100: 289 (17.8 %; IC del 95 %, de 16.0 a 19.7 %), autonomia estricta (operativa)
+    la distribució: 0: 815; 1-10: 149; 11-50: 92; 51-94: 132; 95-99: 148; 100: 289
+  Sol (el programa primer):
+    en 1 o més: 309 (19.0 %; IC del 95 %, de 17.1 a 21.0 %), es pot copiar sense el codi del company
+    en més de 50: 235 (14.5 %; IC del 95 %, de 12.8 a 16.3 %), en la majoria de les condicions assajades
+    en 95 o més: 142 (8.7 %; IC del 95 %, de 7.4 a 10.2 %), autonomia robusta (operativa)
+    en totes 100: 98 (6.0 %; IC del 95 %, de 4.9 a 7.3 %), autonomia estricta (operativa)
+    la distribució: 0: 1316; 1-10: 49; 11-50: 25; 51-94: 93; 95-99: 44; 100: 98
+  En context (el programa segon):
+    en 1 o més: 511 (31.4 %; IC del 95 %, de 29.2 a 33.8 %), es pot copiar sense el codi del company
+    en més de 50: 334 (20.6 %; IC del 95 %, de 18.6 a 22.6 %), en la majoria de les condicions assajades
+    en 95 o més: 295 (18.2 %; IC del 95 %, de 16.3 a 20.1 %), autonomia robusta (operativa)
+    en totes 100: 191 (11.8 %; IC del 95 %, de 10.2 a 13.4 %), autonomia estricta (operativa)
+    la distribució: 0: 1114; 1-10: 110; 11-50: 67; 51-94: 39; 95-99: 104; 100: 191
+  dels sols al nivell 1 (371): en 1 o més, 302; en més de 50, 235; en 95 o més, 142; en totes 100, 98
+  dels només en context al nivell 1 (1254): en 1 o més, 508; en més de 50, 334; en 95 o més, 295; en totes 100, 191
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 815; 32, 10, 7; amb '[' i ']', 96.8 %
+    1-50: 241; 33, 10, 7; amb '[' i ']', 100.0 %
+    51-94: 132; 33, 10, 6; amb '[' i ']', 100.0 %
+    95-100: 437; 33, 10, 7; amb '[' i ']', 100.0 %
+K1, d-mig: 1152 hereditaris del nivell 1 (sols 279, només en context 873), 100 condicions amb companys inerts
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 611 (53.0 %; IC del 95 %, de 50.1 a 56.0 %), es pot copiar sense el codi del company
+    en més de 50: 374 (32.5 %; IC del 95 %, de 29.8 a 35.3 %), en la majoria de les condicions assajades
+    en 95 o més: 258 (22.4 %; IC del 95 %, de 20.0 a 24.9 %), autonomia robusta (operativa)
+    en totes 100: 157 (13.6 %; IC del 95 %, de 11.7 a 15.7 %), autonomia estricta (operativa)
+    la distribució: 0: 541; 1-10: 113; 11-50: 124; 51-94: 116; 95-99: 101; 100: 157
+  Sol (el programa primer):
+    en 1 o més: 248 (21.5 %; IC del 95 %, de 19.2 a 24.0 %), es pot copiar sense el codi del company
+    en més de 50: 172 (14.9 %; IC del 95 %, de 12.9 a 17.1 %), en la majoria de les condicions assajades
+    en 95 o més: 96 (8.3 %; IC del 95 %, de 6.8 a 10.1 %), autonomia robusta (operativa)
+    en totes 100: 53 (4.6 %; IC del 95 %, de 3.5 a 6.0 %), autonomia estricta (operativa)
+    la distribució: 0: 904; 1-10: 54; 11-50: 22; 51-94: 76; 95-99: 43; 100: 53
+  En context (el programa segon):
+    en 1 o més: 366 (31.8 %; IC del 95 %, de 29.1 a 34.5 %), es pot copiar sense el codi del company
+    en més de 50: 202 (17.5 %; IC del 95 %, de 15.4 a 19.9 %), en la majoria de les condicions assajades
+    en 95 o més: 162 (14.1 %; IC del 95 %, de 12.1 a 16.2 %), autonomia robusta (operativa)
+    en totes 100: 104 (9.0 %; IC del 95 %, de 7.4 a 10.8 %), autonomia estricta (operativa)
+    la distribució: 0: 786; 1-10: 62; 11-50: 102; 51-94: 40; 95-99: 58; 100: 104
+  dels sols al nivell 1 (279): en 1 o més, 245; en més de 50, 172; en 95 o més, 96; en totes 100, 53
+  dels només en context al nivell 1 (873): en 1 o més, 366; en més de 50, 202; en 95 o més, 162; en totes 100, 104
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 541; 32, 10, 7; amb '[' i ']', 97.8 %
+    1-50: 237; 33, 10, 7; amb '[' i ']', 100.0 %
+    51-94: 116; 34, 10, 6; amb '[' i ']', 100.0 %
+    95-100: 258; 33, 10, 7; amb '[' i ']', 100.0 %
+K2, d-mig: 640 hereditaris del nivell 1 (sols 114, només en context 526), 100 condicions amb companys inerts
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 313 (48.9 %; IC del 95 %, de 45.0 a 52.9 %), es pot copiar sense el codi del company
+    en més de 50: 208 (32.5 %; IC del 95 %, de 28.9 a 36.3 %), en la majoria de les condicions assajades
+    en 95 o més: 160 (25.0 %; IC del 95 %, de 21.7 a 28.5 %), autonomia robusta (operativa)
+    en totes 100: 110 (17.2 %; IC del 95 %, de 14.3 a 20.3 %), autonomia estricta (operativa)
+    la distribució: 0: 327; 1-10: 55; 11-50: 50; 51-94: 48; 95-99: 50; 100: 110
+  Sol (el programa primer):
+    en 1 o més: 99 (15.5 %; IC del 95 %, de 12.8 a 18.5 %), es pot copiar sense el codi del company
+    en més de 50: 65 (10.2 %; IC del 95 %, de 7.9 a 12.8 %), en la majoria de les condicions assajades
+    en 95 o més: 26 (4.1 %; IC del 95 %, de 2.7 a 5.9 %), autonomia robusta (operativa)
+    en totes 100: 25 (3.9 %; IC del 95 %, de 2.5 a 5.7 %), autonomia estricta (operativa)
+    la distribució: 0: 541; 1-10: 13; 11-50: 21; 51-94: 39; 95-99: 1; 100: 25
+  En context (el programa segon):
+    en 1 o més: 223 (34.8 %; IC del 95 %, de 31.2 a 38.7 %), es pot copiar sense el codi del company
+    en més de 50: 143 (22.3 %; IC del 95 %, de 19.2 a 25.8 %), en la majoria de les condicions assajades
+    en 95 o més: 134 (20.9 %; IC del 95 %, de 17.8 a 24.3 %), autonomia robusta (operativa)
+    en totes 100: 85 (13.3 %; IC del 95 %, de 10.7 a 16.2 %), autonomia estricta (operativa)
+    la distribució: 0: 417; 1-10: 49; 11-50: 31; 51-94: 9; 95-99: 49; 100: 85
+  dels sols al nivell 1 (114): en 1 o més, 94; en més de 50, 65; en 95 o més, 26; en totes 100, 25
+  dels només en context al nivell 1 (526): en 1 o més, 219; en més de 50, 143; en 95 o més, 134; en totes 100, 85
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 327; 33, 10, 7; amb '[' i ']', 98.2 %
+    1-50: 105; 33, 10, 7; amb '[' i ']', 100.0 %
+    51-94: 48; 33, 10, 7; amb '[' i ']', 100.0 %
+    95-100: 160; 33, 10, 7; amb '[' i ']', 100.0 %
+R0, d-mig: 3272 hereditaris del nivell 1 (sols 766, només en context 2506), 100 condicions amb companys inerts
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 1540 (47.1 %; IC del 95 %, de 45.3 a 48.8 %), es pot copiar sense el codi del company
+    en més de 50: 1341 (41.0 %; IC del 95 %, de 39.3 a 42.7 %), en la majoria de les condicions assajades
+    en 95 o més: 1216 (37.2 %; IC del 95 %, de 35.5 a 38.8 %), autonomia robusta (operativa)
+    en totes 100: 921 (28.1 %; IC del 95 %, de 26.6 a 29.7 %), autonomia estricta (operativa)
+    la distribució: 0: 1732; 1-10: 108; 11-50: 91; 51-94: 125; 95-99: 295; 100: 921
+  Sol (el programa primer):
+    en 1 o més: 678 (20.7 %; IC del 95 %, de 19.3 a 22.2 %), es pot copiar sense el codi del company
+    en més de 50: 620 (18.9 %; IC del 95 %, de 17.6 a 20.3 %), en la majoria de les condicions assajades
+    en 95 o més: 511 (15.6 %; IC del 95 %, de 14.4 a 16.9 %), autonomia robusta (operativa)
+    en totes 100: 402 (12.3 %; IC del 95 %, de 11.2 a 13.5 %), autonomia estricta (operativa)
+    la distribució: 0: 2594; 1-10: 40; 11-50: 18; 51-94: 109; 95-99: 109; 100: 402
+  En context (el programa segon):
+    en 1 o més: 865 (26.4 %; IC del 95 %, de 24.9 a 28.0 %), es pot copiar sense el codi del company
+    en més de 50: 721 (22.0 %; IC del 95 %, de 20.6 a 23.5 %), en la majoria de les condicions assajades
+    en 95 o més: 705 (21.5 %; IC del 95 %, de 20.1 a 23.0 %), autonomia robusta (operativa)
+    en totes 100: 519 (15.9 %; IC del 95 %, de 14.6 a 17.2 %), autonomia estricta (operativa)
+    la distribució: 0: 2407; 1-10: 72; 11-50: 72; 51-94: 16; 95-99: 186; 100: 519
+  dels sols al nivell 1 (766): en 1 o més, 676; en més de 50, 620; en 95 o més, 511; en totes 100, 402
+  dels només en context al nivell 1 (2506): en 1 o més, 864; en més de 50, 721; en 95 o més, 705; en totes 100, 519
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 1732; 32, 10, 7; amb '[' i ']', 97.1 %
+    1-50: 199; 33, 10, 7; amb '[' i ']', 100.0 %
+    51-94: 125; 33, 10, 7; amb '[' i ']', 100.0 %
+    95-100: 1216; 32, 10, 7; amb '[' i ']', 100.0 %
+S1, d-mig: 6420 hereditaris del nivell 1 (sols 2293, només en context 4127), 100 condicions amb companys inerts
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 4225 (65.8 %; IC del 95 %, de 64.6 a 67.0 %), es pot copiar sense el codi del company
+    en més de 50: 3065 (47.7 %; IC del 95 %, de 46.5 a 49.0 %), en la majoria de les condicions assajades
+    en 95 o més: 2661 (41.4 %; IC del 95 %, de 40.2 a 42.7 %), autonomia robusta (operativa)
+    en totes 100: 2176 (33.9 %; IC del 95 %, de 32.7 a 35.1 %), autonomia estricta (operativa)
+    la distribució: 0: 2195; 1-10: 521; 11-50: 639; 51-94: 404; 95-99: 485; 100: 2176
+  Sol (el programa primer):
+    en 1 o més: 2691 (41.9 %; IC del 95 %, de 40.7 a 43.1 %), es pot copiar sense el codi del company
+    en més de 50: 1775 (27.6 %; IC del 95 %, de 26.6 a 28.8 %), en la majoria de les condicions assajades
+    en 95 o més: 1368 (21.3 %; IC del 95 %, de 20.3 a 22.3 %), autonomia robusta (operativa)
+    en totes 100: 978 (15.2 %; IC del 95 %, de 14.4 a 16.1 %), autonomia estricta (operativa)
+    la distribució: 0: 3729; 1-10: 504; 11-50: 412; 51-94: 407; 95-99: 390; 100: 978
+  En context (el programa segon):
+    en 1 o més: 3408 (53.1 %; IC del 95 %, de 51.9 a 54.3 %), es pot copiar sense el codi del company
+    en més de 50: 2270 (35.4 %; IC del 95 %, de 34.2 a 36.5 %), en la majoria de les condicions assajades
+    en 95 o més: 2078 (32.4 %; IC del 95 %, de 31.2 a 33.5 %), autonomia robusta (operativa)
+    en totes 100: 1611 (25.1 %; IC del 95 %, de 24.0 a 26.2 %), autonomia estricta (operativa)
+    la distribució: 0: 3012; 1-10: 578; 11-50: 560; 51-94: 192; 95-99: 467; 100: 1611
+  dels sols al nivell 1 (2293): en 1 o més, 2170; en més de 50, 1838; en 95 o més, 1595; en totes 100, 1386
+  dels només en context al nivell 1 (4127): en 1 o més, 2055; en més de 50, 1227; en 95 o més, 1066; en totes 100, 790
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 2195; 32, 10, 7; amb '[' i ']', 97.5 %
+    1-50: 1160; 33, 10, 7; amb '[' i ']', 100.0 %
+    51-94: 404; 33, 10, 7; amb '[' i ']', 100.0 %
+    95-100: 2661; 33, 10, 7; amb '[' i ']', 100.0 %
+S2, d-mig: 2252 hereditaris del nivell 1 (sols 2252, només en context 0), 100 condicions amb companys inerts
+  Els zeros per construcció (AUD-176): en context, cap de 2252 no s'hi replica (correcte)
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 2104 (93.4 %; IC del 95 %, de 92.3 a 94.4 %), es pot copiar sense el codi del company
+    en més de 50: 1705 (75.7 %; IC del 95 %, de 73.9 a 77.5 %), en la majoria de les condicions assajades
+    en 95 o més: 1269 (56.3 %; IC del 95 %, de 54.3 a 58.4 %), autonomia robusta (operativa)
+    en totes 100: 952 (42.3 %; IC del 95 %, de 40.2 a 44.3 %), autonomia estricta (operativa)
+    la distribució: 0: 148; 1-10: 161; 11-50: 238; 51-94: 436; 95-99: 317; 100: 952
+  Sol (el programa primer):
+    en 1 o més: 2104 (93.4 %; IC del 95 %, de 92.3 a 94.4 %), es pot copiar sense el codi del company
+    en més de 50: 1705 (75.7 %; IC del 95 %, de 73.9 a 77.5 %), en la majoria de les condicions assajades
+    en 95 o més: 1269 (56.3 %; IC del 95 %, de 54.3 a 58.4 %), autonomia robusta (operativa)
+    en totes 100: 952 (42.3 %; IC del 95 %, de 40.2 a 44.3 %), autonomia estricta (operativa)
+    la distribució: 0: 148; 1-10: 161; 11-50: 238; 51-94: 436; 95-99: 317; 100: 952
+  En context (el programa segon):
+    en 1 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 0.2 %), es pot copiar sense el codi del company
+    en més de 50: 0 (0.0 %; IC del 95 %, de 0.0 a 0.2 %), en la majoria de les condicions assajades
+    en 95 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 0.2 %), autonomia robusta (operativa)
+    en totes 100: 0 (0.0 %; IC del 95 %, de 0.0 a 0.2 %), autonomia estricta (operativa)
+    la distribució: 0: 2252; 1-10: 0; 11-50: 0; 51-94: 0; 95-99: 0; 100: 0
+  dels sols al nivell 1 (2252): en 1 o més, 2104; en més de 50, 1705; en 95 o més, 1269; en totes 100, 952
+  dels només en context al nivell 1 (0): en 1 o més, 0; en més de 50, 0; en 95 o més, 0; en totes 100, 0
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 148; 31, 10, 7; amb '[' i ']', 87.2 %
+    1-50: 399; 33, 10, 7; amb '[' i ']', 100.0 %
+    51-94: 436; 32, 10, 7; amb '[' i ']', 100.0 %
+    95-100: 1269; 33, 10, 8; amb '[' i ']', 100.0 %
+S3, d-mig: 5746 hereditaris del nivell 1 (sols 0, només en context 5746), 100 condicions amb companys inerts
+  Els zeros per construcció (AUD-176): sol, cap de 5746 no s'hi replica (correcte)
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 3171 (55.2 %; IC del 95 %, de 53.9 a 56.5 %), es pot copiar sense el codi del company
+    en més de 50: 2223 (38.7 %; IC del 95 %, de 37.4 a 40.0 %), en la majoria de les condicions assajades
+    en 95 o més: 2048 (35.6 %; IC del 95 %, de 34.4 a 36.9 %), autonomia robusta (operativa)
+    en totes 100: 1608 (28.0 %; IC del 95 %, de 26.8 a 29.2 %), autonomia estricta (operativa)
+    la distribució: 0: 2575; 1-10: 488; 11-50: 460; 51-94: 175; 95-99: 440; 100: 1608
+  Sol (el programa primer):
+    en 1 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 0.1 %), es pot copiar sense el codi del company
+    en més de 50: 0 (0.0 %; IC del 95 %, de 0.0 a 0.1 %), en la majoria de les condicions assajades
+    en 95 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 0.1 %), autonomia robusta (operativa)
+    en totes 100: 0 (0.0 %; IC del 95 %, de 0.0 a 0.1 %), autonomia estricta (operativa)
+    la distribució: 0: 5746; 1-10: 0; 11-50: 0; 51-94: 0; 95-99: 0; 100: 0
+  En context (el programa segon):
+    en 1 o més: 3171 (55.2 %; IC del 95 %, de 53.9 a 56.5 %), es pot copiar sense el codi del company
+    en més de 50: 2223 (38.7 %; IC del 95 %, de 37.4 a 40.0 %), en la majoria de les condicions assajades
+    en 95 o més: 2048 (35.6 %; IC del 95 %, de 34.4 a 36.9 %), autonomia robusta (operativa)
+    en totes 100: 1608 (28.0 %; IC del 95 %, de 26.8 a 29.2 %), autonomia estricta (operativa)
+    la distribució: 0: 2575; 1-10: 488; 11-50: 460; 51-94: 175; 95-99: 440; 100: 1608
+  dels sols al nivell 1 (0): en 1 o més, 0; en més de 50, 0; en 95 o més, 0; en totes 100, 0
+  dels només en context al nivell 1 (5746): en 1 o més, 3171; en més de 50, 2223; en 95 o més, 2048; en totes 100, 1608
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 2575; 32, 10, 7; amb '[' i ']', 97.8 %
+    1-50: 948; 33, 10, 7; amb '[' i ']', 100.0 %
+    51-94: 175; 34, 10, 7; amb '[' i ']', 100.0 %
+    95-100: 2048; 33, 10, 7; amb '[' i ']', 100.0 %
+S4, d-mig (un control: 0 per construcció en tots dos papers, AUD-176): 44 hereditaris del nivell 1 (sols 0, només en context 44), 100 condicions amb companys inerts
+  Els zeros per construcció (AUD-176): sol, cap de 44 no s'hi replica (correcte); en context, cap de 44 no s'hi replica (correcte)
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), es pot copiar sense el codi del company
+    en més de 50: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), en la majoria de les condicions assajades
+    en 95 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), autonomia robusta (operativa)
+    en totes 100: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), autonomia estricta (operativa)
+    la distribució: 0: 44; 1-10: 0; 11-50: 0; 51-94: 0; 95-99: 0; 100: 0
+  Sol (el programa primer):
+    en 1 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), es pot copiar sense el codi del company
+    en més de 50: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), en la majoria de les condicions assajades
+    en 95 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), autonomia robusta (operativa)
+    en totes 100: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), autonomia estricta (operativa)
+    la distribució: 0: 44; 1-10: 0; 11-50: 0; 51-94: 0; 95-99: 0; 100: 0
+  En context (el programa segon):
+    en 1 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), es pot copiar sense el codi del company
+    en més de 50: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), en la majoria de les condicions assajades
+    en 95 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), autonomia robusta (operativa)
+    en totes 100: 0 (0.0 %; IC del 95 %, de 0.0 a 8.0 %), autonomia estricta (operativa)
+    la distribució: 0: 44; 1-10: 0; 11-50: 0; 51-94: 0; 95-99: 0; 100: 0
+  dels sols al nivell 1 (0): en 1 o més, 0; en més de 50, 0; en 95 o més, 0; en totes 100, 0
+  dels només en context al nivell 1 (44): en 1 o més, 0; en més de 50, 0; en 95 o més, 0; en totes 100, 0
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 44; 32, 10, 6; amb '[' i ']', 90.9 %
+    1-50: 0; —, —, —; amb '[' i ']', —
+    51-94: 0; —, —, —; amb '[' i ']', —
+    95-100: 0; —, —, —; amb '[' i ']', —
+X1, d-mig: 2883 hereditaris del nivell 1 (sols 902, només en context 1981), 100 condicions amb companys inerts
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 1629 (56.5 %; IC del 95 %, de 54.7 a 58.3 %), es pot copiar sense el codi del company
+    en més de 50: 1075 (37.3 %; IC del 95 %, de 35.5 a 39.1 %), en la majoria de les condicions assajades
+    en 95 o més: 927 (32.2 %; IC del 95 %, de 30.5 a 33.9 %), autonomia robusta (operativa)
+    en totes 100: 780 (27.1 %; IC del 95 %, de 25.4 a 28.7 %), autonomia estricta (operativa)
+    la distribució: 0: 1254; 1-10: 312; 11-50: 242; 51-94: 148; 95-99: 147; 100: 780
+  Sol (el programa primer):
+    en 1 o més: 917 (31.8 %; IC del 95 %, de 30.1 a 33.5 %), es pot copiar sense el codi del company
+    en més de 50: 673 (23.3 %; IC del 95 %, de 21.8 a 24.9 %), en la majoria de les condicions assajades
+    en 95 o més: 472 (16.4 %; IC del 95 %, de 15.0 a 17.8 %), autonomia robusta (operativa)
+    en totes 100: 355 (12.3 %; IC del 95 %, de 11.1 a 13.6 %), autonomia estricta (operativa)
+    la distribució: 0: 1966; 1-10: 173; 11-50: 71; 51-94: 201; 95-99: 117; 100: 355
+  En context (el programa segon):
+    en 1 o més: 1298 (45.0 %; IC del 95 %, de 43.2 a 46.9 %), es pot copiar sense el codi del company
+    en més de 50: 836 (29.0 %; IC del 95 %, de 27.3 a 30.7 %), en la majoria de les condicions assajades
+    en 95 o més: 754 (26.2 %; IC del 95 %, de 24.6 a 27.8 %), autonomia robusta (operativa)
+    en totes 100: 574 (19.9 %; IC del 95 %, de 18.5 a 21.4 %), autonomia estricta (operativa)
+    la distribució: 0: 1585; 1-10: 263; 11-50: 199; 51-94: 82; 95-99: 180; 100: 574
+  dels sols al nivell 1 (902): en 1 o més, 791; en més de 50, 674; en 95 o més, 594; en totes 100, 541
+  dels només en context al nivell 1 (1981): en 1 o més, 838; en més de 50, 401; en 95 o més, 333; en totes 100, 239
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 1254; 32, 10, 7; amb '[' i ']', 97.5 %
+    1-50: 554; 33, 10, 7; amb '[' i ']', 100.0 %
+    51-94: 148; 32, 10, 6; amb '[' i ']', 100.0 %
+    95-100: 927; 32, 10, 7; amb '[' i ']', 100.0 %
+H64, d-mig: 51047 hereditaris del nivell 1 (sols 19165, només en context 31882), 100 condicions amb companys inerts
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 40248 (78.8 %; IC del 95 %, de 78.5 a 79.2 %), es pot copiar sense el codi del company
+    en més de 50: 36134 (70.8 %; IC del 95 %, de 70.4 a 71.2 %), en la majoria de les condicions assajades
+    en 95 o més: 34866 (68.3 %; IC del 95 %, de 67.9 a 68.7 %), autonomia robusta (operativa)
+    en totes 100: 29891 (58.6 %; IC del 95 %, de 58.1 a 59.0 %), autonomia estricta (operativa)
+    la distribució: 0: 10799; 1-10: 1571; 11-50: 2543; 51-94: 1268; 95-99: 4975; 100: 29891
+  Sol (el programa primer):
+    en 1 o més: 18827 (36.9 %; IC del 95 %, de 36.5 a 37.3 %), es pot copiar sense el codi del company
+    en més de 50: 18135 (35.5 %; IC del 95 %, de 35.1 a 35.9 %), en la majoria de les condicions assajades
+    en 95 o més: 17324 (33.9 %; IC del 95 %, de 33.5 a 34.3 %), autonomia robusta (operativa)
+    en totes 100: 13408 (26.3 %; IC del 95 %, de 25.9 a 26.7 %), autonomia estricta (operativa)
+    la distribució: 0: 32220; 1-10: 289; 11-50: 403; 51-94: 811; 95-99: 3916; 100: 13408
+  En context (el programa segon):
+    en 1 o més: 21535 (42.2 %; IC del 95 %, de 41.8 a 42.6 %), es pot copiar sense el codi del company
+    en més de 50: 18000 (35.3 %; IC del 95 %, de 34.8 a 35.7 %), en la majoria de les condicions assajades
+    en 95 o més: 17544 (34.4 %; IC del 95 %, de 34.0 a 34.8 %), autonomia robusta (operativa)
+    en totes 100: 16482 (32.3 %; IC del 95 %, de 31.9 a 32.7 %), autonomia estricta (operativa)
+    la distribució: 0: 29512; 1-10: 1384; 11-50: 2151; 51-94: 456; 95-99: 1062; 100: 16482
+  dels sols al nivell 1 (19165): en 1 o més, 18839; en més de 50, 18172; en 95 o més, 17359; en totes 100, 13444
+  dels només en context al nivell 1 (31882): en 1 o més, 21409; en més de 50, 17962; en 95 o més, 17507; en totes 100, 16447
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 10799; 32, 10, 7; amb '[' i ']', 95.3 %
+    1-50: 4114; 32, 10, 7; amb '[' i ']', 99.7 %
+    51-94: 1268; 32, 10, 6; amb '[' i ']', 100.0 %
+    95-100: 34866; 32, 10, 7; amb '[' i ']', 100.0 %
+C0, uniforme (exploratori): 37 hereditaris del nivell 1 (sols 7, només en context 30), 100 condicions amb companys inerts
+  En alguna de les dues proves (la xifra principal):
+    en 1 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), es pot copiar sense el codi del company
+    en més de 50: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), en la majoria de les condicions assajades
+    en 95 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), autonomia robusta (operativa)
+    en totes 100: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), autonomia estricta (operativa)
+    la distribució: 0: 37; 1-10: 0; 11-50: 0; 51-94: 0; 95-99: 0; 100: 0
+  Sol (el programa primer):
+    en 1 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), es pot copiar sense el codi del company
+    en més de 50: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), en la majoria de les condicions assajades
+    en 95 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), autonomia robusta (operativa)
+    en totes 100: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), autonomia estricta (operativa)
+    la distribució: 0: 37; 1-10: 0; 11-50: 0; 51-94: 0; 95-99: 0; 100: 0
+  En context (el programa segon):
+    en 1 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), es pot copiar sense el codi del company
+    en més de 50: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), en la majoria de les condicions assajades
+    en 95 o més: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), autonomia robusta (operativa)
+    en totes 100: 0 (0.0 %; IC del 95 %, de 0.0 a 9.5 %), autonomia estricta (operativa)
+    la distribució: 0: 37; 1-10: 0; 11-50: 0; 51-94: 0; 95-99: 0; 100: 0
+  dels sols al nivell 1 (7): en 1 o més, 0; en més de 50, 0; en 95 o més, 0; en totes 100, 0
+  dels només en context al nivell 1 (30): en 1 o més, 0; en més de 50, 0; en 95 o més, 0; en totes 100, 0
+  Els robustos i els fràgils (exploratori): grup de n, quants, instruccions, instruccions diferents i còpies (medianes), amb bucle:
+    0: 37; 3, 2, 0; amb '[' i ']', 5.4 %
+    1-50: 0; —, —, —; amb '[' i ']', —
+    51-94: 0; —, —, —; amb '[' i ']', —
+    95-100: 0; —, —, —; amb '[' i ']', —
+Resum: química i distribució, hereditaris, i la part que ho és en 1 o més; en més de 50; en 95 o més; en totes 100 de les 100 condicions:
+  C0, d-mig: 1625; 49.8 %; 35.0 %; 26.9 %; 17.8 %
+  K1, d-mig: 1152; 53.0 %; 32.5 %; 22.4 %; 13.6 %
+  K2, d-mig: 640; 48.9 %; 32.5 %; 25.0 %; 17.2 %
+  R0, d-mig: 3272; 47.1 %; 41.0 %; 37.2 %; 28.1 %
+  S1, d-mig: 6420; 65.8 %; 47.7 %; 41.4 %; 33.9 %
+  S2, d-mig: 2252; 93.4 %; 75.7 %; 56.3 %; 42.3 %
+  S3, d-mig: 5746; 55.2 %; 38.7 %; 35.6 %; 28.0 %
+  S4, d-mig: 44; 0.0 %; 0.0 %; 0.0 %; 0.0 %
+  X1, d-mig: 2883; 56.5 %; 37.3 %; 32.2 %; 27.1 %
+  H64, d-mig: 51047; 78.8 %; 70.8 %; 68.3 %; 58.6 %
+  C0, uniforme: 37; 0.0 %; 0.0 %; 0.0 %; 0.0 %
