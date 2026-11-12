@@ -246,9 +246,9 @@ no si s'estableixen en una sopa. Tot és descriptiu.
   a si mateix, el quàdruple.
 - **Amb els dos caps alineats,** cadascun a l'inici d'un programa, n'hi ha 31 vegades més. Knierim i altres (2026)
   ja ho apunten, amb una altra química.
-- **Els límits:** amb bytes a l'atzar com els de la sopa del començament, són 44 vegades més rars, i, segons una
-  comprovació exploratòria, gairebé cap no es copia sense el codi del company. La prova també compta els que el
-  company ajuda.
+- **Els límits:** amb bytes a l'atzar com els de la sopa del començament, la prova en troba 44 vegades menys, i cap no
+  es copia sol: amb companys sense cap instrucció, cap dels 37 no es copia, i la còpia la feia el company de soroll de
+  la prova (la prova d'autonomia, 12-11-2026). La prova també compta els que el company ajuda.
 
 Vegeu l'[entrada 15](quadern/index.html#entrada-15).
 

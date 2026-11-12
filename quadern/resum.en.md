@@ -145,8 +145,8 @@ twelve variants, each with one rule changed. The three controls (no copy instruc
 other) give no heritable replicator, as expected; a zero does not prove there can be none. The usual chemistry gives 1,625, one in
 6,150 programs. With only one of the two copy instructions there are fewer (71% with `,`, 39% with `.`). Without arithmetic there are
 twice as many, and if a program cannot rewrite itself, four times as many. With the two heads aligned, 31 times as many, as Knierim et
-al.'s CUST64 distribution suggests. With uniform random bytes, replicators are 44 times rarer, and an exploratory check suggests that
-almost none copy themselves without their partner's code. Whether these chemistries let life become established in a soup is the
+al.'s CUST64 distribution suggests. With uniform random bytes, the test finds 44 times fewer, and none of them copies itself: with inert
+partners none of the 37 copies (the autonomy test of 12 November 2026), and the copying was done by the test's random partner. Whether these chemistries let life become established in a soup is the
 question of level 2.
 
 <a id="entry-16"></a>

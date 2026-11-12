@@ -166,9 +166,9 @@ replicators exist and are abundant, not whether they become established in a sou
   rewrite itself, four times as many.
 - **With the two heads aligned,** each at the start of a program, there are 31 times as many. Knierim et al. (2026)
   already point to this, with another chemistry.
-- **The limits:** with random bytes like those of a fresh soup, they are 44 times rarer, and, according to an
-  exploratory check, almost none copy themselves without their partner's code. The test also counts those the
-  partner helps.
+- **The limits:** with random bytes like those of a fresh soup, the test finds 44 times fewer, and none copies
+  itself: with inert partners, none of the 37 copies, and the copying was done by the test's random partner (the
+  autonomy test, 12 November 2026). The test also counts those the partner helps.
 
 See notebook entry 15, in Catalan, or its [English summary](quadern/resum.en.md#entry-15).
 
