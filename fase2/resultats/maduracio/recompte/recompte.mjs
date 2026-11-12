@@ -43,10 +43,15 @@ export function scanPositions(soup, seed, { width, radius }) {
 }
 
 const ones = (s) => [...s].filter((ch) => ch === '1').length;
+// En quantes condicions hi ha un 1 a alguna de les dues cadenes (la xifra principal de la prova d'autonomia de B1)
+const anyOf = (a, b) => { let n = 0; for (let j = 0; j < a.length; j++) if (a[j] === '1' || b[j] === '1') n++; return n; };
 
-// Una sopa: { world, arm, file, sha256, seed, width, radius, cells, replicating, heritable, heritableSolo, positives }. Cada positiu, en
-// una llista compacta: [cel·la, escaneig (solo, context, heritable, heritableSolo, com a 0 i 1), i, de les 100 condicions, en quantes es
-// copia sol, en context, és hereditari sol i en context]
+// Les columnes de cada positiu: la cel·la; el que en deia l'escaneig (0 o 1); i, de les 100 condicions de companys inerts, en quantes es
+// copia sol, en context i d'alguna de les dues maneres, i en quantes és hereditari sol, en context i d'alguna de les dues maneres
+export const FIELDS = ['cell', 'scanSolo', 'scanContext', 'scanHeritable', 'scanHeritableSolo', 'solo', 'context', 'anyCopy', 'heritableSolo', 'heritableContext', 'anyHeritable'];
+
+// Una sopa: { world, arm, file, sha256, seed, width, radius, cells, replicating, heritable, heritableSolo, positives }, amb cada positiu
+// en una llista compacta, amb les columnes de FIELDS
 export function recountSoup(root, world, arm, entry, { interpret, conds }) {
   const file = entry.file, buf = new Uint8Array(readFileSync(join(root, file)));
   const hash = sha256(buf);
@@ -59,7 +64,8 @@ export function recountSoup(root, world, arm, entry, { interpret, conds }) {
   const positives = s.positives.map((p) => {
     const bytes = Uint8Array.from(buf.subarray(p.cell * PROGRAM_SIZE, (p.cell + 1) * PROGRAM_SIZE));
     const t = testReplicator(bytes, conds, interpret);
-    return [p.cell, +p.solo, +p.context, +p.heritable, +p.heritableSolo, ones(t.solo), ones(t.context), ones(t.heritableSolo), ones(t.heritableContext)];
+    return [p.cell, +p.solo, +p.context, +p.heritable, +p.heritableSolo, ones(t.solo), ones(t.context), anyOf(t.solo, t.context),
+      ones(t.heritableSolo), ones(t.heritableContext), anyOf(t.heritableSolo, t.heritableContext)];
   });
   return { type: 'soup', world, arm, file, sha256: hash, seed, width, radius, cells: s.cells, replicating: s.replicating, heritable: s.heritable, heritableSolo: s.heritableSolo, positives };
 }
@@ -80,7 +86,7 @@ function main(argv) {
   if (b > worlds.length) { console.error(`només hi ha ${worlds.length} mons inclosos`); process.exit(2); }
   const interpret = evaluator(CHEMISTRY), conds = conditions(SEED, CONDITIONS);
   const out = (o) => process.stdout.write(JSON.stringify(o) + '\n');
-  out({ type: 'start', code: codeVersion(ROOT), node: process.version, manifest: MANIFEST, manifestSha256: sha256(readFileSync(join(ROOT, MANIFEST))), from: a, to: b, arms: ARMS, chemistry: CHEMISTRY, seed: SEED, conditions: CONDITIONS, date: new Date().toISOString() });
+  out({ type: 'start', code: codeVersion(ROOT), node: process.version, manifest: MANIFEST, manifestSha256: sha256(readFileSync(join(ROOT, MANIFEST))), from: a, to: b, arms: ARMS, chemistry: CHEMISTRY, seed: SEED, conditions: CONDITIONS, fields: FIELDS, date: new Date().toISOString() });
   let soups = 0;
   for (const w of worlds.slice(a, b)) {
     for (const arm of ARMS) {
