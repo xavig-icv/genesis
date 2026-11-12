@@ -1,0 +1,76 @@
+La repetició de les variants per cap de B1 v0.7 (docs/pla-b1.md, §11 i §14; el README d'aquesta carpeta)
+
+La llavor: els vuit primers dígits hexadecimals de la SHA-256 d'execucio-llista.txt (9f8c5c5f…), com a enter: 2676776031
+La tria: node eines/tria.mjs 2676776031 3 0 1 2 … 99
+  -> 20 64 86: els programes del 2.000.000 al 2.099.999, del 6.400.000 al 6.499.999 i del 8.600.000 al 8.699.999, a les quatre tirades
+
+Les ordres, les de llista.txt amb --de al començament del tros, --programes 100000 i el registre a repeticio/, des de la còpia neta del càlcul (680d130), a prioritat baixa, una darrere l'altra, el 12-11-2026:
+  node eines/densitat.mjs --quimica C0 --distribucio d-mig --llavor 20261101 --de 2000000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-C0-tros20.jsonl
+  node eines/densitat.mjs --quimica S1 --distribucio d-mig --llavor 20261101 --de 2000000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1-tros20.jsonl
+  node eines/densitat.mjs --quimica S1h0 --distribucio d-mig --llavor 20261101 --de 2000000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1h0-tros20.jsonl
+  node eines/densitat.mjs --quimica S1h1 --distribucio d-mig --llavor 20261101 --de 2000000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1h1-tros20.jsonl
+  node eines/densitat.mjs --quimica C0 --distribucio d-mig --llavor 20261101 --de 6400000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-C0-tros64.jsonl
+  node eines/densitat.mjs --quimica S1 --distribucio d-mig --llavor 20261101 --de 6400000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1-tros64.jsonl
+  node eines/densitat.mjs --quimica S1h0 --distribucio d-mig --llavor 20261101 --de 6400000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1h0-tros64.jsonl
+  node eines/densitat.mjs --quimica S1h1 --distribucio d-mig --llavor 20261101 --de 6400000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1h1-tros64.jsonl
+  node eines/densitat.mjs --quimica C0 --distribucio d-mig --llavor 20261101 --de 8600000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-C0-tros86.jsonl
+  node eines/densitat.mjs --quimica S1 --distribucio d-mig --llavor 20261101 --de 8600000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1-tros86.jsonl
+  node eines/densitat.mjs --quimica S1h0 --distribucio d-mig --llavor 20261101 --de 8600000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1h0-tros86.jsonl
+  node eines/densitat.mjs --quimica S1h1 --distribucio d-mig --llavor 20261101 --de 8600000 --programes 100000 --tros 100000 --fils 8 --json fase2/resultats/b1/caps/repeticio/d-mig-S1h1-tros86.jsonl
+
+El registre de la repetició:
+  12-11-2026 14.27.05 comença d-mig-C0-tros20
+  12-11-2026 14.30.11 acaba d-mig-C0-tros20, codi 
+  12-11-2026 14.30.11 comença d-mig-S1-tros20
+  12-11-2026 14.32.49 acaba d-mig-S1-tros20, codi 
+  12-11-2026 14.32.49 comença d-mig-S1h0-tros20
+  12-11-2026 14.36.15 acaba d-mig-S1h0-tros20, codi 
+  12-11-2026 14.36.15 comença d-mig-S1h1-tros20
+  12-11-2026 14.39.40 acaba d-mig-S1h1-tros20, codi 
+  12-11-2026 14.39.40 comença d-mig-C0-tros64
+  12-11-2026 14.41.39 acaba d-mig-C0-tros64, codi 
+  12-11-2026 14.41.39 comença d-mig-S1-tros64
+  12-11-2026 14.45.14 acaba d-mig-S1-tros64, codi 
+  12-11-2026 14.45.14 comença d-mig-S1h0-tros64
+  12-11-2026 14.48.53 acaba d-mig-S1h0-tros64, codi 
+  12-11-2026 14.48.53 comença d-mig-S1h1-tros64
+  12-11-2026 14.51.43 acaba d-mig-S1h1-tros64, codi 
+  12-11-2026 14.51.43 comença d-mig-C0-tros86
+  12-11-2026 14.56.46 acaba d-mig-C0-tros86, codi 
+  12-11-2026 14.56.46 comença d-mig-S1-tros86
+  12-11-2026 15.00.23 acaba d-mig-S1-tros86, codi 
+  12-11-2026 15.00.23 comença d-mig-S1h0-tros86
+  12-11-2026 15.04.08 acaba d-mig-S1h0-tros86, codi 
+  12-11-2026 15.04.08 comença d-mig-S1h1-tros86
+  12-11-2026 15.07.38 acaba d-mig-S1h1-tros86, codi 
+  12-11-2026 15.07.38 acabat
+  (el codi de sortida no hi consta: PowerShell no el dona amb Start-Process i -NoNewWindow; cada registre acaba amb la línia final, i la sortida d'error de les dotze és buida)
+
+La comparació (node fase2/resultats/b1/nivell1/repeticio/compara.mjs fase2/resultats/b1/caps/registres fase2/resultats/b1/caps/repeticio 20 64 86), codi 0:
+  d-mig-C0, tros 20: coincideix
+  d-mig-C0, tros 64: coincideix
+  d-mig-C0, tros 86: coincideix
+  d-mig-S1, tros 20: coincideix
+  d-mig-S1, tros 64: coincideix
+  d-mig-S1, tros 86: coincideix
+  d-mig-S1h0, tros 20: coincideix
+  d-mig-S1h0, tros 64: coincideix
+  d-mig-S1h0, tros 86: coincideix
+  d-mig-S1h1, tros 20: coincideix
+  d-mig-S1h1, tros 64: coincideix
+  d-mig-S1h1, tros 86: coincideix
+  12 de 12 coincideixen
+
+Les SHA-256 dels dotze registres repetits (no són a git: es poden refer amb les mateixes ordres):
+  4903610e3420f7afe5ef4247497e1b9fcd6f488dc3c26f4e0282b4f557859e30 *d-mig-C0-tros20.jsonl
+  ef2c336657011f981f93778a4d470b6ad373edc5e9a02526096d570c484c6ead *d-mig-C0-tros64.jsonl
+  e3b64f8d2a40b126452c602f63e20493834f0316618e65a1449904bd5ef075dd *d-mig-C0-tros86.jsonl
+  8bb46cf8e76897434ebb314461b48ea857e7576bbf6f73530e0f715b5b3457c0 *d-mig-S1-tros20.jsonl
+  311c34566b3bc14c2f51a95c3e48802ec363a25f7308c6f8b85719587c55e6bd *d-mig-S1-tros64.jsonl
+  6e64211b02baf0201f95d08d0208a6edc1de108ce8996580251c74ef882e193c *d-mig-S1-tros86.jsonl
+  185f7d8124b9005b27487334100f2a3fd59542e141b33d5f2fad3ae2e91b9648 *d-mig-S1h0-tros20.jsonl
+  df492705cc62d5aea045507f24da4d8ddccce8f31cf3b3626c2cbd14a4fa283c *d-mig-S1h0-tros64.jsonl
+  f6445f45421f24a63202f3c1176788acb08f9ffbc3ea2d4e93cf1f09220fb552 *d-mig-S1h0-tros86.jsonl
+  e30de9a4cae3e646b7c3b35d46f02171be6b03834494bdf29bcfbaaa55aecfc4 *d-mig-S1h1-tros20.jsonl
+  f7a45ed953e45f28f08b7e284b23c9dc6d84be0f29e2d6c8784762f83889beba *d-mig-S1h1-tros64.jsonl
+  054b3bb8ae4929b1103ef020ba3db8d5c8ef96c09e682e8bc4b1bfd301f68946 *d-mig-S1h1-tros86.jsonl

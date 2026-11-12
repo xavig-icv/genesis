@@ -26,3 +26,37 @@ que són aquestes.
 La del nivell 1 (`fase2/resultats/b1/nivell1/README.md`): tres trossos de 10⁵ programes, triats amb `eines/tria.mjs` i la llavor que surt
 de la SHA-256 d'`execucio-llista.txt`, tornats a fer a `repeticio/` amb `--de` i `--programes 100000`, i comparats amb
 `node fase2/resultats/b1/nivell1/repeticio/compara.mjs registres repeticio TROS...`.
+
+## El càlcul i els resultats (12-11-2026, exploratori)
+
+- **El càlcul:** la segona llista de B1 v0.7, de l'11-11-2026 a les 23.26 al 12-11-2026 a les 02.31, les quatre ordres amb el codi 0, des
+  de la còpia neta del merge (`680d130`), amb Node 16.15.1 (`estat-llista.txt` i `consola-llista/`). `execucio-llista.txt` va anar a
+  git abans de mirar res (`788923d`).
+- **La repetició:** la llavor `0x9f8c5c5f` = 2676776031 i els trossos 20, 64 i 86, a les quatre tirades: 12 de 12 coincideixen
+  (`repeticio/comparacio.txt`).
+- **L'anàlisi:** `node eines/caps-analisi.mjs fase2/resultats/b1/caps/registres`, des de la còpia del càlcul, tal com surt a
+  `analisi.txt`. C0 i S1 fan el mateix que al nivell 1.
+
+  | Química | Hereditaris (de 10⁷) | El quocient contra C0 | El quocient contra S1 |
+  |---|---|---|---|
+  | C0 | 1.625 | — | — |
+  | S1 | 6.420 | 3,95 (de 3,74 a 4,17) | — |
+  | S1h0 | 3.835 | 2,36 (de 2,23 a 2,50) | 0,60 (de 0,57 a 0,62) |
+  | S1h1 | 2.400 | 1,48 (de 1,39 a 1,57) | 0,37 (de 0,36 a 0,39) |
+
+- **Què diu, descriptivament:** l'efecte d'S1 ve de tots dos caps.
+  - Bloquejar només les escriptures de `h0` (`+`, `-` i `,`) a la meitat del punter dona 2,36 vegades els hereditaris de C0, i només
+    les de `h1` (`.`), 1,48. Junts (S1), 3,95, una mica més que el producte (3,49).
+  - La major part és de `h0`, com esperàvem (§14), però `h1` també hi compta.
+  - Programa a programa, S1h1 conserva més hereditaris de C0 (1.119 de 1.625) que S1h0 (875) i que S1 (644): bloquejar les escriptures
+    de `h0` en treu més dels que ja hi havia.
+- **Els registres no són a git:** dos passen de 50 MB (`d-mig-S1`, 56,2 MB, i `d-mig-S1h0`, 50,4 MB). Són a la còpia neta del càlcul i,
+  comprimits (51 MB), a la còpia de seguretat. Aniran a una versió de GitHub quan acabi el càlcul de B1 v0.7. Descomprimits, cada un té
+  la SHA-256 d'`execucio-llista.txt`.
+- **L'extracte dels hereditaris,** com el del nivell 1 (AUD-174): `hereditaris.jsonl.gz`.
+  - **Com es fa:** `node fase2/resultats/b1/nivell1/extreu-hereditaris.mjs CARPETA-DELS-REGISTRES fase2/resultats/b1/caps/execucio-llista.txt
+    hereditaris.jsonl`. Comprova cada registre amb la SHA-256 d'`execucio-llista.txt`, i el recompte amb la línia final.
+  - **Què hi ha:** 14.288 línies, 14.280 hereditaris i les 8 línies d'inici i de final.
+  - **La SHA-256 del contingut** (sense comprimir, 3.581.389 bytes): `a817a57e7e6f90d1c9f4fe5375f85b7ebcc4c4e075a93ea7d714fb437c3c7acd`.
+    És la que s'ha de comprovar: la del fitxer comprimit depèn de la versió de zlib (AUD-55).
+  - **La del fitxer comprimit** (`gzip -n -9`, 1.074.884 bytes): `d1fb9ef86c9a6f2984e7bbde4beef53ecd131d37cb35235845f689a24aa157f2`.
