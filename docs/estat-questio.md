@@ -349,7 +349,9 @@ que no s'han incorporat:
 - Pargellis AN (1996). The spontaneous generation of digital "life". *Physica D* 91:86–96. doi:10.1016/0167-2789(95)00268-5 (parcial)
 - Pargellis AN (1996). The evolution of self-replicating computer organisms. *Physica D* 98:111–127. doi:10.1016/0167-2789(96)00089-9 (parcial)
 - Pargellis AN (2001). Digital life behavior in the Amoeba world. *Artificial Life* 7:63–75. doi:10.1162/106454601300328025
-- Greenbaum B, Pargellis AN (2017). Self-replicators emerge from a self-organizing prebiotic computer world. *Artificial Life* 23:318–342. doi:10.1162/artl_a_00234
+- Greenbaum B, Pargellis AN (2017). Self-replicators emerge from a self-organizing prebiotic computer world. *Artificial Life* 23:318–342. doi:10.1162/artl_a_00234 (el resum: el text és de pagament)
+- Greenbaum B, Pargellis AN (2016). Digital replicators emerge from a self-organizing prebiotic world. *Proceedings of the Artificial Life Conference 2016 (ALIFE XV)*, pp. 60–67. doi:10.1162/978-0-262-33936-0-ch016 (el resum; el PDF és obert, pendent de llegir)
+- Agüera y Arcas B (2025). *What Is Intelligence? Lessons from AI About Evolution, Computing, and Minds.* Antikythera. https://whatisintelligence.antikythera.org (el capítol 1, llegit en línia el 12-11-2026)
 - Ray TS (1991). An approach to the synthesis of life. *Artificial Life II*, SFI vol. XI, pp. 371–408.
 - Adami C, Brown CT (1994). Evolutionary learning in the 2D artificial life system "Avida". *Artificial Life IV*. arXiv:adap-org/9405003
 - Ofria C, Wilke CO (2004). Avida: a software platform for research in computational evolutionary biology. *Artificial Life* 10:191–229. doi:10.1162/106454604773563612
