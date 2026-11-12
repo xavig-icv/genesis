@@ -259,11 +259,13 @@ després d'una avaluació nostra i dels dos auditors. El primer pas s'ha fet amb
 res, i tot és exploratori: una pista, no un resultat.
 - **La sopa sense vida madura igual a tots els mons,** i hi acumula instruccions, sobretot `<`, que s'amunteguen en
   pocs programes. El corrent ho accelera.
-- **Però la sopa vella té menys programes que es copien que una de nova,** i els pocs replicadors que hi apareixen es
-  perden de seguida. Que la vida s'hi estableixi més sovint no és perquè n'hi hagi més.
-- **L'establiment és un esdeveniment d'atzar:** dues branques d'un mateix món s'estableixen de manera independent.
-- **Les hereditàries soles que surten de tant en tant als escanejos són falsos positius de la prova:** la còpia la fa
-  el company de soroll. Abans de comptar-les, cal tornar-les a provar.
+- **Però la sopa vella té menys programes que es copien que una de nova,** amb la prova del cens, i els pocs
+  replicadors que hi apareixen es perden de seguida. Si la vida s'hi estableix més sovint perquè n'hi apareixen més, perquè
+  n'hi arrelen més o per totes dues coses, encara no ho sabem (consulta X-105).
+- **L'establiment té una part d'atzar:** les dues branques d'un mateix món s'hi comporten de manera compatible amb la
+  independència, amb poca potència.
+- **Les hereditàries soles que surten de tant en tant als escanejos són falsos positius de l'autonomia:** la còpia la
+  fa el company de soroll. Abans de comptar-les, cal tornar-les a provar.
 - **El que no se sosté:** que el ritme d'establiment segueixi la maduració, i que la vida que s'hi estableix estigui
   feta del que la sopa acumula. Ho van mostrar els dos auditors.
 - **El que ja se sabia:** la idea d'una fase prèvia en què les instruccions s'esbiaixen ja és al sistema Amoeba
@@ -281,7 +283,8 @@ dels programes ([pla](docs/pla-b1.md)). Tot és exploratori.
 - **Com més instruccions, més replicadors,** però per sota de 9 instruccions cap no es copia sol: aquests els copia el
   company de la prova. Amb un 10 % d'instruccions, només el 3 % dels que troba la prova es copien sols.
 - **La composició importa:** amb la d'una sopa envellida, uns 6 de cada 10 milions de programes es copien sols; amb
-  bytes a l'atzar, cap de 10 milions. És la «màquina d'escriure esbiaixada» d'Adami i LaBar (2017), aquí a BFF.
+  bytes a l'atzar, cap de 10 milions. És la «màquina d'escriure esbiaixada» d'Adami i LaBar (2017), que Knierim i altres
+  (2026) ja havien vist a BFF; aquí, sense l'ajuda del company.
 - **Per a la sopa abans de la vida:** els recomptes fets amb la prova del cens s'han de tornar a fer amb companys sense
   cap instrucció. És el pas següent.
 

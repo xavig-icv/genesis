@@ -286,6 +286,9 @@ Llegeix-los abans de proposar canvis.
 - **La línia de la maduració** (11-11-2026): on actua la maduració (que aparegui un replicador, o que hi arreli) i per quin procés. El
   pas 1 (exploratori) és a `fase2/resultats/maduracio/descripcio/`.
   - **Una hereditària s'ha de tornar a provar** abans de comptar-la com una aparició: les soles dels escanejos solen ser falsos positius de
-    la prova (la còpia la fa el company de soroll).
+    l'autonomia (la còpia la fa el company de soroll; AU2-152).
+  - **On actua, encara no ho sabem:** cap afirmació de si la maduració actua sobre l'aparició, sobre l'arrelament o sobre totes dues fins al
+    pilot que les mesuri per separat (AUD-184 = AU2-151). Les branques d'un món, «compatibles amb la independència, amb poca potència»
+    (AUD-183). La matriu de novetat, amb la consulta X-105, és a `docs/novetat-maduracio.md`.
   - **«La família dominant a l'establiment»,** i no «els fundadors» (AU2-147). Cap «llei» de la D sense un model que predigui fora de
     mostra (AU2-148). La idea general ja és a Greenbaum i Pargellis (2017) (AU2-146).

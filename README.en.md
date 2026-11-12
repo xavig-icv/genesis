@@ -177,10 +177,12 @@ project focuses on this question, after an evaluation of our own and of both aud
 already had, with no new simulation, and everything in it is exploratory: a lead, not a result.
 - **The lifeless soup matures the same way in every world,** piling up instructions, mainly `<`, crowded into a few
   programs. Flow speeds it up.
-- **Yet an aged soup has fewer self-copying programs than a fresh one,** and the few replicators that appear are lost
-  at once. Life becomes established there more often, but not because there are more replicators.
-- **Establishment is a chance event:** two branches of the same world become established independently.
-- **The isolated heritable cells that show up now and then in scans are false positives of the test:** the random
+- **Yet an aged soup has fewer self-copying programs than a fresh one,** by the census test, and the few replicators
+  that appear are lost at once. Whether life becomes established there more often because more replicators appear,
+  because more of them take root, or both, we do not know yet (consultation X-105).
+- **Establishment has a chance component:** the two branches of the same world behave in a way compatible with
+  independence, with little power.
+- **The isolated heritable cells that show up now and then in scans are false positives of autonomy:** the random
   partner does the copying. They must be retested before being counted.
 - **What does not hold:** that the establishment rate follows maturation, and that the life which becomes
   established is made of what the soup piles up. Both auditors showed it.
@@ -198,7 +200,8 @@ exploratory.
 - **The more instructions, the more replicators,** but below 9 instructions none copies itself: the test's partner
   copies those. With 10% instructions, only 3% of those the test finds copy themselves.
 - **Composition matters:** with that of an aged soup, about 6 in 10 million programs copy themselves; with random bytes,
-  none in 10 million. This is Adami and LaBar's (2017) "biased typewriter", here in BFF.
+  none in 10 million. This is Adami and LaBar's (2017) "biased typewriter", which Knierim et al. (2026) had already seen
+  in BFF; here, without the partner's help.
 - **For the soup before life:** the counts made with the census test must be redone with partners that have no
   instructions. That is the next step.
 

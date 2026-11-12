@@ -1759,6 +1759,16 @@
       <li><strong>Les branques no són mons independents:</strong> dues per món, de mons triats a l'època 8.000.</li>
       <li><strong>El cens mira 2.048 cel·les de 131.072:</strong> un replicador amb poques còpies gairebé mai no s'hi veu.</li>
     </ul>
+
+    <div class="pending">
+      <p><strong>Correccions de la consulta de novetat X-105 (12-11-2026).</strong> Els dos auditors van llegir les fonts de la matriu de novetat (<code>docs/novetat-maduracio.md</code>) i la van contradir, cadascú pel seu compte. Tots dos hi van trobar dues frases d'aquesta entrada que van més enllà de les dades:</p>
+      <ul>
+        <li><strong>«Dues branques d'un mateix món s'estableixen de manera independent»</strong> (AUD-183, AU2-152). Els recomptes en són compatibles, però amb poca potència. La concordança entre les dues branques (la phi), amb un interval per món, arriba a 0,18, 0,20 i 0,27 als tres braços, i no exclou una dependència d'uns 0,2. A més, dues branques comparteixen la història del món, i la independència seria, com a molt, condicional. Ha de dir: <em>compatibles amb la independència, amb poca potència</em>. La mateixa frase ja es va corregir al pilot (AUD-125).</li>
+        <li><strong>«El que canvia amb la maduració no deu ser quants replicadors hi apareixen, sinó quants n'hi arrelen»</strong> (AUD-184, AU2-151). Un recompte en un moment no és un ritme d'aparició: les cel·les que es copien no duren gaire, i 23 per sopa poden ser un flux alt. L'establiment pot pujar perquè n'apareixen més, perquè n'arrelen més o per totes dues coses. Ha de dir: <em>encara no sabem si és l'aparició, l'arrelament o totes dues; ho ha de dir el pilot que les mesuri per separat</em>.</li>
+        <li><strong>Els falsos positius</strong> (AU2-152). Les hereditàries soles de l'escaneig ho són de l'<em>autonomia</em>: la còpia la fa el company. Un programa que es copia amb l'ajuda del context pot ser un positiu legítim de replicació en context.</li>
+      </ul>
+      <p>També hi ha un precedent més proper del que dèiem per a la pregunta de la línia: Pigozzi i Levin (2026), en un model químic, intervenen abans dels replicadors i n'augmenten la persistència sense canviar el temps fins al primer replicador (AU2-150).</p>
+    </div>
   </article>
 
   <article id="entrada-17">
@@ -1853,7 +1863,7 @@
     <h2>Què en traiem</h2>
     <ul>
       <li><strong>Amb poques instruccions, la prova del cens compta sobretot el company.</strong> Amb els bytes d'una sopa nova, cap hereditari no es copia sol; amb un 10 % d'instruccions, el 3 %. Els recomptes del pas 1 de la maduració (<a href="#entrada-16">entrada 16</a>) i els escanejos de la sèrie es fan amb aquesta prova, i s'han de tornar a comptar amb companys sense cap instrucció: és el pas 2b, preparat.</li>
-      <li><strong>La composició sí que importa per als que es copien sols.</strong> Amb bytes uniformes no se n'hi troba cap de 10⁷. Amb la composició de les sopes envellides n'hi ha uns 6 de cada 10 milions, i amb D½, 8 de cada 100.000. És la «màquina d'escriure esbiaixada» d'Adami i LaBar (2017), aquí a BFF i sense l'ajuda del company. Però en una sopa envellida barrejada encara són molt rars: uns 0,08 per sopa de 131.072 programes.</li>
+      <li><strong>La composició sí que importa per als que es copien sols.</strong> Amb bytes uniformes no se n'hi troba cap de 10⁷. Amb la composició de les sopes envellides n'hi ha uns 6 de cada 10 milions, i amb D½, 8 de cada 100.000. És la «màquina d'escriure esbiaixada» d'Adami i LaBar (2017), aquí a BFF i sense l'ajuda del company. Knierim i altres (2026) ja ho havien vist a BFF amb el seu detector: amb els bytes que escriu la sopa, la cerca a l'atzar troba el primer replicador unes 17 vegades abans que amb bytes uniformes. Però en una sopa envellida barrejada encara són molt rars: uns 0,08 per sopa de 131.072 programes.</li>
       <li><strong>Amb D½, la meitat dels hereditaris es copien sols,</strong> i amb H64, quatre de cada cinc. Els replicadors de l'entrada 15 amb D½ són, en bona part, replicadors de debò.</li>
       <li><strong>L'efecte d'S1 és dels dos caps.</strong> Junts, una mica més que el producte dels dos (3,95 contra 3,49). La major part és del primer cap, com esperàvem, però el segon també hi compta.</li>
       <li><strong>Què no diem:</strong> que la vida neixi o s'estableixi més en cap d'aquestes condicions. Tot és d'un programa a la vegada, sense cap sopa.</li>

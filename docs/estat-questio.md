@@ -303,7 +303,9 @@ mida que diuen Chou i Reggia (1997) (§5).
     (Greenbaum i Pargellis, 2016 i 2017);
   - que una composició propera a la dels replicadors en multiplica la probabilitat, i la hipòtesi, que no proven, que l'activitat
     d'abans dels replicadors pot canviar la composició en aquesta direcció (Adami i LaBar, 2017, a Avida);
-  - que una intervenció en l'organització d'abans dels replicadors en canviï la persistència (Pigozzi i Levin, 2026, en un model químic);
+  - que una intervenció en l'organització d'abans dels replicadors en canviï la persistència, sense canviar el temps fins al primer
+    replicador (Pigozzi i Levin, 2026, en un model químic; la consulta X-105);
+  - seguir l'origen de cada byte a cada còpia (els *tokens* de l'article de 2024);
   - que la distribució de bytes importa (Knierim i altres, 2026).
 - **Des de l'11-11-2026, la línia del projecte** (`docs/disseny.md`). La matriu de novetat de les seves afirmacions possibles, font per
   font, és a `docs/novetat-maduracio.md` (esborrany del 12-11-2026).
@@ -391,7 +393,7 @@ que no s'han incorporat:
 - Vasas V, Szathmáry E, Santos M (2010). Lack of evolvability in self-sustaining autocatalytic networks constraints metabolism-first scenarios for the origin of life. *PNAS* 107:1470–1475. doi:10.1073/pnas.0912628107
 - Vasas V, Fernando C, Santos M, Kauffman S, Szathmáry E (2012). Evolution before genes. *Biology Direct* 7:1. doi:10.1186/1745-6150-7-1
 - Peng Z, Linderoth J, Baum DA (2022). The hierarchical organization of autocatalytic reaction networks and its relevance to the origin of life. *PLoS Comput. Biol.* 18:e1010498. doi:10.1371/journal.pcbi.1010498 (amb una eina que en resumeix el text)
-- Pigozzi F, Levin M (2026). Causal organization prior to and promoting self-replication in a catalytic model of the origin of life. arXiv:2607.28250 (preprint; el resum)
+- Pigozzi F, Levin M (2026). Causal organization prior to and promoting self-replication in a catalytic model of the origin of life. arXiv:2607.28250 (preprint; la taula 1 i els resultats, el 12-11-2026)
 - Bansho Y, Furubayashi T, Ichihashi N, Yomo T (2016). Host–parasite oscillation dynamics and evolution in a compartmentalized RNA replication system. *PNAS* 113:4045–4050. doi:10.1073/pnas.1524404113
 - Colizzi ES, Hogeweg P (2016). Parasites sustain and enhance RNA-like replicators through spatial self-organisation. *PLoS Comput. Biol.* 12:e1004902. doi:10.1371/journal.pcbi.1004902
 - Furubayashi T i altres (2020). Emergence and diversification of a host-parasite RNA ecosystem through Darwinian evolution. *eLife* 9:e56038. doi:10.7554/eLife.56038

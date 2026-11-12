@@ -159,7 +159,10 @@ few programs. Yet an aged soup has fewer cells that copy themselves than a fresh
 give 706), and the few replicators that appear are lost at once: in one world scanned every 100 epochs, a single real outbreak reached
 76 cells and vanished. Isolated "heritable" cells in such scans turned out to be false positives of the replication test (none passed
 any of 200 retests; the outbreak's cells passed all), because the random partner sometimes does the copying. Two branches of the same
-world become established independently, so establishment is a chance event. Two earlier readings do not hold, as both auditors showed:
+world become established independently, so establishment is a chance event. *(Corrected on 12-11-2026, consultation X-105: the branches
+are compatible with independence, with little power (AUD-183); the false positives are of autonomy (AU2-152); and whether maturation
+acts on appearance, on rooting or on both, we do not know yet: a count at one moment is not a rate (AUD-184, AU2-151).)* Two earlier
+readings do not hold, as both auditors showed:
 the establishment rate rises with age even when the soup no longer matures (so the rise is mostly the start-up delay of any clean soup),
 and the dominant family at establishment is not made of what the soup piles up. The general idea of a pre-replicator phase was already
 described in the Amoeba system (Greenbaum and Pargellis, 2017). What may be new is a specific mechanism in BFF, tested by intervention.
@@ -180,6 +183,7 @@ share of instructions, but no heritable program with fewer than 9 instructions c
 10% instructions, only 3% of what the test finds copies itself; with 50%, 52%. In the 22 pilot soups (11.3% instructions), partners
 made from the soup's own byte histogram give 6.25 times more heritable programs than uniform partners, but the self-copiers are the
 same (10 and 13 in 2.2·10⁷): the effect belongs to the partner. Composition matters for real self-copiers (none in 10⁷ with uniform
-bytes, about 6 in 10⁷ with an aged soup's composition, 8 in 10⁵ with half instructions): Adami and LaBar's "biased typewriter", in BFF.
+bytes, about 6 in 10⁷ with an aged soup's composition, 8 in 10⁵ with half instructions): Adami and LaBar's "biased typewriter", in BFF,
+which Knierim et al. (2026) had already seen with their detector.
 The effect of not being able to write to one's own half (S1) comes from both heads (2.36 and 1.48 times, 3.95 together). The census
 counts of the soup before life (entry 16) must be redone with inert partners.
