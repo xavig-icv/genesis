@@ -301,13 +301,16 @@ mida que diuen Chou i Reggia (1997) (§5).
 - **Què ja se sap:**
   - la idea d'una fase prèvia en què la sopa s'organitza, i la mesura amb què ho veiem, l'entropia de les instruccions soles
     (Greenbaum i Pargellis, 2016 i 2017);
-  - que una composició esbiaixada fa més probables els replicadors (Adami i LaBar, 2017, a Avida);
+  - que una composició propera a la dels replicadors en multiplica la probabilitat, i la hipòtesi, que no proven, que l'activitat
+    d'abans dels replicadors pot canviar la composició en aquesta direcció (Adami i LaBar, 2017, a Avida);
+  - que una intervenció en l'organització d'abans dels replicadors en canviï la persistència (Pigozzi i Levin, 2026, en un model químic);
   - que la distribució de bytes importa (Knierim i altres, 2026).
 - **Des de l'11-11-2026, la línia del projecte** (`docs/disseny.md`). La matriu de novetat de les seves afirmacions possibles, font per
   font, és a `docs/novetat-maduracio.md` (esborrany del 12-11-2026).
 - **Què no hem trobat enlloc:** cap prova a una edat fixada, que continuï, barregi o reiniciï la sopa. Del risc
   d'aparició segons l'edat, només la distribució dels temps d'aparició d'Amoeba, on baixa amb el temps (Greenbaum
-  i Pargellis, 2016), al revés que el ritme d'establiment a BFF (l'entrada 16).
+  i Pargellis, 2016), al revés que el ritme d'establiment a BFF (l'entrada 16). La cerca datada del 12-11-2026 és a
+  `docs/novetat-maduracio.md`.
 - **Per què hi ha lloc:** les dades de Knierim i altres ho permeten. Amb el seu propi histograma, ja madur, i al
   seu ritme de canvi, la mutació a l'atzar és 2 a 4 vegades més lenta que la sopa, segons un càlcul nostre (§1).
   Aquesta diferència podria ser l'estructura que la sopa ha acumulat.
@@ -363,7 +366,7 @@ que no s'han incorporat:
 - Kruszewski G, Mikolov T (2021). Emergence of self-reproducing metabolisms as recursive algorithms in an artificial chemistry. *Artificial Life* 27:277–299. doi:10.1162/artl_a_00355
 - Liu Y, Sumpter D (2018). Spontaneous emergence of self-replication in chemical reaction systems. *J. Biol. Chem.* 293:18854–18863. doi:10.1074/jbc.RA118.003795
 - C G N, LaBar T, Hintze A, Adami C (2017). Origin of life in a digital microcosm. *Phil. Trans. R. Soc. A* 375:20160350. doi:10.1098/rsta.2016.0350
-- Adami C, LaBar T (2017). From entropy to information: biased typewriters and the origin of life. A: Walker SI, Davies PCW, Ellis GFR (eds.), *From Matter to Life: Information and Causality*, Cambridge University Press, pp. 130–154. arXiv:1506.06988 (el resum)
+- Adami C, LaBar T (2017). From entropy to information: biased typewriters and the origin of life. A: Walker SI, Davies PCW, Ellis GFR (eds.), *From Matter to Life: Information and Causality*, Cambridge University Press, pp. 130–154. arXiv:1506.06988 (llegit el 12-11-2026: els resultats, la discussió i els mètodes)
 - Hickinbotham S (2023). Drivers of replicator organisation in the Nanopond artificial chemistry. *GECCO '23 Companion*, pp. 147–150. doi:10.1145/3583133.3590572 (el resum)
 - Agüera y Arcas B, Alakuijala J, Evans J, Laurie B, Mordvintsev A, Niklasson E, Randazzo E, Versari L (2024). Computational life: how well-formed, self-replicating programs emerge from simple interaction. arXiv:2406.19108
 - Mathis C, Patel D, Weimer W, Forrest S (2024). Self-organization in computation & chemistry: return to AlChemy. arXiv:2408.12137
@@ -388,6 +391,7 @@ que no s'han incorporat:
 - Vasas V, Szathmáry E, Santos M (2010). Lack of evolvability in self-sustaining autocatalytic networks constraints metabolism-first scenarios for the origin of life. *PNAS* 107:1470–1475. doi:10.1073/pnas.0912628107
 - Vasas V, Fernando C, Santos M, Kauffman S, Szathmáry E (2012). Evolution before genes. *Biology Direct* 7:1. doi:10.1186/1745-6150-7-1
 - Peng Z, Linderoth J, Baum DA (2022). The hierarchical organization of autocatalytic reaction networks and its relevance to the origin of life. *PLoS Comput. Biol.* 18:e1010498. doi:10.1371/journal.pcbi.1010498 (amb una eina que en resumeix el text)
+- Pigozzi F, Levin M (2026). Causal organization prior to and promoting self-replication in a catalytic model of the origin of life. arXiv:2607.28250 (preprint; el resum)
 - Bansho Y, Furubayashi T, Ichihashi N, Yomo T (2016). Host–parasite oscillation dynamics and evolution in a compartmentalized RNA replication system. *PNAS* 113:4045–4050. doi:10.1073/pnas.1524404113
 - Colizzi ES, Hogeweg P (2016). Parasites sustain and enhance RNA-like replicators through spatial self-organisation. *PLoS Comput. Biol.* 12:e1004902. doi:10.1371/journal.pcbi.1004902
 - Furubayashi T i altres (2020). Emergence and diversification of a host-parasite RNA ecosystem through Darwinian evolution. *eLife* 9:e56038. doi:10.7554/eLife.56038

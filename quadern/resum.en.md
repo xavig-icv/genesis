@@ -166,4 +166,5 @@ described in the Amoeba system (Greenbaum and Pargellis, 2017). What may be new 
 *(Updated on 12-11-2026 with the 2016 conference version, read in full; the 2017 article is paywalled.)* They measure the bias with the
 entropy of single instructions, the same kind of measure as our D, and they make no intervention. In Amoeba, time works against
 emergence: after a million generations, replicators rarely appear. In BFF, life becomes established more often in an aged soup
-(entry 14). The source-by-source comparison is in `docs/novetat-maduracio.md`.
+(entry 14). And Adami and LaBar (2017), in Avida, already proposed, without testing it, that activity before replicators changes
+the composition and can make them more likely. The source-by-source comparison is in `docs/novetat-maduracio.md`.
