@@ -39,3 +39,34 @@ registres (sense `.jsonl`), tornades a fer senceres i comparades amb `node eines
 `repeticio/registres/`, i les de `llista-autonomia.txt`, a `repeticio/autonomia/`: si les dues tries fan sortir el mateix nom, no
 coincideixen (AUD-180). La llavor, la de cada `execucio-llista*.txt`. És una verificació per mostreig, no una demostració de totes les
 tirades (auditor 2).
+
+## El càlcul i els resultats (12-11-2026, exploratori)
+
+- **El càlcul,** al commit `680d130`, amb Node 16.15.1. `llista.txt`, de les 02.31 a les 16.21 del 12-11-2026, i `llista-autonomia.txt`,
+  de les 16.21 a les 16.47: les 220 ordres amb el codi 0 (`estat-llista*.txt` i `consola-llista*/`). Els dos `execucio-llista*.txt` van
+  anar a git abans de mirar res (`d46b242`).
+- **La repetició:** de `llista.txt`, `estrat-25`, `estrat-51` i `sopa-5024-uniforme`; de `llista-autonomia.txt`, `estrat-09`,
+  `sopa-5001-uniforme` i `sopa-5002-uniforme`. Les sis coincideixen (`repeticio/comparacio.txt`).
+- **Les anàlisis,** des de la còpia del càlcul, tal com surten: `analisi.txt` (`node eines/estrats-analisi.mjs
+  fase2/resultats/b1/estrats/registres`) i `analisi-autonomia.txt` (l'ordre de la taula de dalt).
+  - **Les comprovacions hi quadren:** a D½, ρ = 1,61·10⁻⁴ (al nivell 1, 1,62·10⁻⁴); amb bytes uniformes, 3,85·10⁻⁶ (3,70·10⁻⁶); i a D½,
+    ρ_aut = 8,44·10⁻⁵ (a la prova d'autonomia de la §4, 8,10·10⁻⁵).
+- **Què diuen, descriptivament:**
+  - **La corba ρ(p) creix amb la part d'instruccions,** sense cap màxim a l'interior: de 3,9·10⁻⁶ amb bytes uniformes (p = 10/256) a
+    4,3·10⁻⁴ a p = 0,99.
+  - **Sense l'ajuda del company, ρ_aut(p), és molt més baixa a les p petites.** Cap hereditari amb menys de 9 instruccions no es copia amb
+    companys inerts (n'hi ha 190 de 0 a 4 instruccions). A p = 0,1, ρ_aut és el 3 % de ρ; a p = 0,5, el 52 %.
+  - **Les 22 sopes del pilot** (l'època 8.000, p ≈ 0,113). Amb companys sintetitzats a partir de l'histograma de la sopa hi ha 6,25
+    vegades més hereditaris que amb companys uniformes (de 5,39 a 7,29). Però sense l'ajuda del company n'hi ha els mateixos o menys (10 i
+    13 de 2,2·10⁷), i coincideixen amb la corba (uns 6·10⁻⁷ per programa): l'efecte dels companys de la sopa és del company, no del
+    programa.
+  - **D½ amb companys de D½:** 595 hereditaris de 10⁶, 3,84 vegades els que hi ha amb companys uniformes. Sense l'ajuda del company, 24.
+- **Els registres de `llista.txt` (321 MB) encara no són a git.** Cap no passa de 50 MB, però el repositori en faria uns 120: on van, ho
+  decideix el responsable. Són a la còpia neta del càlcul i, comprimits (95 MB), a la còpia de seguretat; descomprimits, tots 110 tenen la
+  SHA-256 d'`execucio-llista.txt`. Els de `llista-autonomia.txt` (`autonomia/`, 9,7 MB) sí que hi són.
+- **L'extracte dels hereditaris de `llista.txt`,** com el del nivell 1 (AUD-174): `hereditaris.jsonl.gz`, fet amb `node
+  fase2/resultats/b1/nivell1/extreu-hereditaris.mjs CARPETA-DELS-REGISTRES fase2/resultats/b1/estrats/execucio-llista.txt hereditaris.jsonl`.
+  - **Què hi ha:** 15.342 línies, 15.122 hereditaris i les 220 línies d'inici i de final.
+  - **La SHA-256 del contingut** (sense comprimir, 3.918.836 bytes): `bafcccfb8cef9fdebb9b3a0d442a34efad600444aa2823b3f51b69e798f78327`. És
+    la que s'ha de comprovar (AUD-55).
+  - **La del fitxer comprimit** (`gzip -n -9`, 1.056.030 bytes): `3bf81fe9b0dd7ac40e793e7c1ccae44dedb636b9b44da0e88ea03e54f2585117`.

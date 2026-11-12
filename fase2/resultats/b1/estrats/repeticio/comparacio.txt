@@ -1,0 +1,47 @@
+La repetició de la composició de bytes (§13) i de la seva prova d'autonomia, de B1 v0.7 (docs/pla-b1.md, §11; el README d'aquesta carpeta)
+
+Les llavors: els vuit primers dígits hexadecimals de la SHA-256 de cada execucio-llista, com a enter
+  execucio-llista.txt (e3dcf639…): 3822908985; execucio-llista-autonomia.txt (bc1617bd…): 3155564477
+La tria: node eines/tria.mjs LLAVOR 3 i els noms dels 110 registres de cada llista, sense .jsonl, en l'ordre de la llista
+  -> llista.txt: estrat-25 estrat-51 sopa-5024-uniforme
+  -> llista-autonomia.txt: estrat-09 sopa-5001-uniforme sopa-5002-uniforme
+
+Les ordres, les de cada llista amb el registre a repeticio/registres/ o a repeticio/autonomia/, des de la còpia neta del càlcul (680d130), a prioritat baixa, una darrere l'altra, el 12-11-2026:
+  node eines/estrats.mjs --programa estrat:25 --company uniforme --llavor 544000000 --programes 1000000 --tros 100000 --fils 8 --json fase2/resultats/b1/estrats/repeticio/registres/estrat-25.jsonl
+  node eines/estrats.mjs --programa estrat:51 --company uniforme --llavor 596000000 --programes 1000000 --tros 100000 --fils 8 --json fase2/resultats/b1/estrats/repeticio/registres/estrat-51.jsonl
+  node eines/estrats.mjs --programa sopa:fase2/resultats/b1/composicio/5024.json --company uniforme --llavor 2342000000 --programes 1000000 --tros 100000 --fils 8 --json fase2/resultats/b1/estrats/repeticio/registres/sopa-5024-uniforme.jsonl
+  node eines/autonomia.mjs --registre fase2/resultats/b1/estrats/registres/estrat-09.jsonl --llavor 250000000 --condicions 100 --fils 8 --json fase2/resultats/b1/estrats/repeticio/autonomia/estrat-09.jsonl
+  node eines/autonomia.mjs --registre fase2/resultats/b1/estrats/registres/sopa-5001-uniforme.jsonl --llavor 250000000 --condicions 100 --fils 8 --json fase2/resultats/b1/estrats/repeticio/autonomia/sopa-5001-uniforme.jsonl
+  node eines/autonomia.mjs --registre fase2/resultats/b1/estrats/registres/sopa-5002-uniforme.jsonl --llavor 250000000 --condicions 100 --fils 8 --json fase2/resultats/b1/estrats/repeticio/autonomia/sopa-5002-uniforme.jsonl
+
+El registre de la repetició:
+  12-11-2026 16.49.32 comença registres-estrat-25
+  12-11-2026 16.54.07 acaba registres-estrat-25, codi 
+  12-11-2026 16.54.07 comença registres-estrat-51
+  12-11-2026 16.58.53 acaba registres-estrat-51, codi 
+  12-11-2026 16.58.53 comença registres-sopa-5024-uniforme
+  12-11-2026 17.03.02 acaba registres-sopa-5024-uniforme, codi 
+  12-11-2026 17.03.02 comença autonomia-estrat-09
+  12-11-2026 17.03.26 acaba autonomia-estrat-09, codi 
+  12-11-2026 17.03.26 comença autonomia-sopa-5001-uniforme
+  12-11-2026 17.03.28 acaba autonomia-sopa-5001-uniforme, codi 
+  12-11-2026 17.03.28 comença autonomia-sopa-5002-uniforme
+  12-11-2026 17.03.29 acaba autonomia-sopa-5002-uniforme, codi 
+  12-11-2026 17.03.29 acabat
+  (el codi de sortida no hi consta: PowerShell no el dona amb Start-Process i -NoNewWindow; cada registre acaba amb la línia final, i la sortida d'error de les sis és buida)
+
+La comparació (node eines/b1-compara.mjs ORIGINAL REPETIT):
+  registres/estrat-25: Coincideixen (codi 0)
+  registres/estrat-51: Coincideixen (codi 0)
+  registres/sopa-5024-uniforme: Coincideixen (codi 0)
+  autonomia/estrat-09: Coincideixen (codi 0)
+  autonomia/sopa-5001-uniforme: Coincideixen (codi 0)
+  autonomia/sopa-5002-uniforme: Coincideixen (codi 0)
+
+Les SHA-256 dels sis registres repetits (no són a git: es poden refer amb les mateixes ordres; la línia d'inici en canvia el fitxer de --json, i la final, els segons):
+  f45fc78504c5222ba19ac2e19a9b09568c4dd2556a95925893170a395bc6a933 *registres/estrat-25.jsonl
+  5f5326ce558268b3dd67bcb2ef1f223f05aac4f6daaaf9d3e98c42c2ef53227c *registres/estrat-51.jsonl
+  55cc89c0e7705305d1dcbb9c34223da77cdf57f210a9efc5526f9ba4b01e48b5 *registres/sopa-5024-uniforme.jsonl
+  3cdc6c9da31ddae05fa116f111266a9dde50c7787f41da20b771ef4babcae649 *autonomia/estrat-09.jsonl
+  6e4fa0f6f544393ce4d22f20c4465d28731f4e46123bf5001977c717eb3855c2 *autonomia/sopa-5001-uniforme.jsonl
+  e292cf3ce0a4eac527bfd70dbc2b77813d857b05c0348d206b86dc3a8334ba0d *autonomia/sopa-5002-uniforme.jsonl
