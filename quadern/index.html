@@ -27,6 +27,7 @@
     <a href="#entrada-14">Entrada 14</a>
     <a href="#entrada-15">Entrada 15</a>
     <a href="#entrada-16">Entrada 16</a>
+    <a href="#entrada-17">Entrada 17</a>
   </nav>
 
   <article id="entrada-1">
@@ -1757,6 +1758,129 @@
       <li><strong>El 1034 és un sol món:</strong> el brot, els falsos positius i la disposició al llarg del temps en surten.</li>
       <li><strong>Les branques no són mons independents:</strong> dues per món, de mons triats a l'època 8.000.</li>
       <li><strong>El cens mira 2.048 cel·les de 131.072:</strong> un replicador amb poques còpies gairebé mai no s'hi veu.</li>
+    </ul>
+  </article>
+
+  <article id="entrada-17">
+    <header>
+      <p class="date">Entrada 17 · 12 de novembre de 2026 · exploratori</p>
+      <h1>Qui es copia sol: els replicadors a l'atzar, amb companys sense cap instrucció</h1>
+      <p class="lede">Hem tornat a provar els replicadors de l'entrada 15 amb companys sense cap instrucció, i hem mesurat com canvia el nombre de replicadors amb la part d'instruccions dels programes. Amb la química de sempre i D½, la meitat dels hereditaris es copien sols en alguna condició, i el 18 % en totes; amb els bytes d'una sopa nova, cap. Com més instruccions té un programa, més replicadors hi ha. Però cap hereditari amb menys de 9 instruccions no es copia sol: aquests els copia el company de la prova. I l'efecte de no poder escriure a la pròpia meitat (S1) ve de tots dos caps. Tot és exploratori, amb el pla escrit i revisat abans de calcular.</p>
+    </header>
+
+    <h2>Què volíem saber</h2>
+    <p>L'<a href="#entrada-15">entrada 15</a> comptava els replicadors hereditaris de 10⁷ programes a l'atzar amb la prova del cens, que fa servir companys de soroll i també n'executa el codi. Quedaven tres preguntes, fixades abans de calcular al pla v0.7 (<code>docs/pla-b1.md</code>), amb el vistiplau dels dos auditors (auditories 28, 29 i 30):</p>
+    <ul>
+      <li><strong>Qui es copia sol</strong> (§4): cada hereditari, tornat a provar en 100 condicions amb companys sense cap instrucció. Si s'hi copia, es copia ell sol.</li>
+      <li><strong>D'on ve l'efecte d'S1</strong> (§14): S1 bloqueja dues menes d'escriptura a la pròpia meitat, les del primer cap (<code>+</code>, <code>-</code> i <code>,</code>) i les del segon (<code>.</code>). Dues variants, S1h0 i S1h1, només en bloquegen una.</li>
+      <li><strong>Quants replicadors hi ha segons la part d'instruccions</strong> (§13): programes amb k instruccions de 64, de k = 0 a 64. D'aquí surt la corba ρ(p) per a cada part p d'instruccions, des de la sopa del començament (p = 10/256) fins a programes fets només d'instruccions. També hi ha la mateixa corba sense l'ajuda del company, ρ_aut(p), i les 22 sopes del pilot de la maduració, a l'època 8.000.</li>
+    </ul>
+    <div class="params">
+      <div class="param"><b>235</b><span>ordres, en quatre llistes</span></div>
+      <div class="param"><b>100</b><span>condicions de companys sense cap instrucció</span></div>
+      <div class="param"><b>65</b><span>estrats, de 0 a 64 instruccions</span></div>
+      <div class="param"><b>18 h</b><span>de càlcul, amb 8 fils</span></div>
+    </div>
+
+    <h2>El que surt</h2>
+    <p><strong>Qui es copia sol</strong> (§4). Dels hereditaris de l'entrada 15, quants es copien amb companys sense cap instrucció en alguna de les 100 condicions, en 95 o més, i en totes:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Química</th><th style="text-align:left">Hereditaris</th><th style="text-align:left">En alguna</th><th style="text-align:left">En 95 o més</th><th style="text-align:left">En totes 100</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">C0, D½</td><td style="text-align:left">1.625</td><td style="text-align:left">810 (49,8 %)</td><td style="text-align:left">437 (26,9 %)</td><td style="text-align:left">289 (17,8 %)</td></tr>
+          <tr><td style="text-align:left">C0, bytes uniformes</td><td style="text-align:left">37</td><td style="text-align:left">0</td><td style="text-align:left">0</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">K1</td><td style="text-align:left">1.152</td><td style="text-align:left">611 (53,0 %)</td><td style="text-align:left">258 (22,4 %)</td><td style="text-align:left">157 (13,6 %)</td></tr>
+          <tr><td style="text-align:left">K2</td><td style="text-align:left">640</td><td style="text-align:left">313 (48,9 %)</td><td style="text-align:left">160 (25,0 %)</td><td style="text-align:left">110 (17,2 %)</td></tr>
+          <tr><td style="text-align:left">R0</td><td style="text-align:left">3.272</td><td style="text-align:left">1.540 (47,1 %)</td><td style="text-align:left">1.216 (37,2 %)</td><td style="text-align:left">921 (28,1 %)</td></tr>
+          <tr><td style="text-align:left">S1</td><td style="text-align:left">6.420</td><td style="text-align:left">4.225 (65,8 %)</td><td style="text-align:left">2.661 (41,4 %)</td><td style="text-align:left">2.176 (33,9 %)</td></tr>
+          <tr><td style="text-align:left">S2</td><td style="text-align:left">2.252</td><td style="text-align:left">2.104 (93,4 %)</td><td style="text-align:left">1.269 (56,3 %)</td><td style="text-align:left">952 (42,3 %)</td></tr>
+          <tr><td style="text-align:left">S3</td><td style="text-align:left">5.746</td><td style="text-align:left">3.171 (55,2 %)</td><td style="text-align:left">2.048 (35,6 %)</td><td style="text-align:left">1.608 (28,0 %)</td></tr>
+          <tr><td style="text-align:left">S4</td><td style="text-align:left">44</td><td style="text-align:left">0</td><td style="text-align:left">0</td><td style="text-align:left">0 (per construcció, AUD-176)</td></tr>
+          <tr><td style="text-align:left">X1</td><td style="text-align:left">2.883</td><td style="text-align:left">1.629 (56,5 %)</td><td style="text-align:left">927 (32,2 %)</td><td style="text-align:left">780 (27,1 %)</td></tr>
+          <tr><td style="text-align:left">H64</td><td style="text-align:left">51.047</td><td style="text-align:left">40.248 (78,8 %)</td><td style="text-align:left">34.866 (68,3 %)</td><td style="text-align:left">29.891 (58,6 %)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">«En alguna» és la xifra principal: el programa s'hi pot copiar sense el codi del company. «En 95 o més» i «en totes» són classificacions operatives. Una condició compta si s'hi copia amb el programa primer o segon. Els intervals són a <code>fase2/resultats/b1/autonomia/analisi.txt</code>.</p>
+
+    <p><strong>D'on ve l'efecte d'S1</strong> (§14), amb els mateixos 10⁷ programes de D½:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Química</th><th style="text-align:left">Què no fa res a la pròpia meitat</th><th style="text-align:left">Hereditaris de 10⁷</th><th style="text-align:left">Contra C0 (IC del 95 %)</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">C0</td><td style="text-align:left">Res</td><td style="text-align:left">1.625</td><td style="text-align:left">1</td></tr>
+          <tr><td style="text-align:left">S1h1</td><td style="text-align:left">Les escriptures del segon cap (<code>.</code>)</td><td style="text-align:left">2.400</td><td style="text-align:left">1,48 (1,39–1,57)</td></tr>
+          <tr><td style="text-align:left">S1h0</td><td style="text-align:left">Les del primer cap (<code>+</code>, <code>-</code> i <code>,</code>)</td><td style="text-align:left">3.835</td><td style="text-align:left">2,36 (2,23–2,50)</td></tr>
+          <tr><td style="text-align:left">S1</td><td style="text-align:left">Totes dues</td><td style="text-align:left">6.420</td><td style="text-align:left">3,95 (3,74–4,17)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">C0 i S1, refets amb el codi nou, donen exactament el mateix que a l'entrada 15. L'anàlisi: <code>fase2/resultats/b1/caps/analisi.txt</code>.</p>
+
+    <p><strong>Quants replicadors hi ha segons la part d'instruccions</strong> (§13). Els hereditaris per programa amb companys de soroll (ρ), i els que, a més, es copien amb companys sense cap instrucció en alguna condició (ρ_aut):</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Part d'instruccions, p</th><th style="text-align:left">ρ</th><th style="text-align:left">ρ_aut</th><th style="text-align:left">ρ_aut / ρ</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">10/256 (bytes uniformes, la sopa del començament)</td><td style="text-align:left">3,85·10⁻⁶</td><td style="text-align:left">6·10⁻¹⁰ (fins a 1·10⁻⁷)</td><td style="text-align:left">—</td></tr>
+          <tr><td style="text-align:left">0,1</td><td style="text-align:left">9,83·10⁻⁶</td><td style="text-align:left">3,14·10⁻⁷</td><td style="text-align:left">3 %</td></tr>
+          <tr><td style="text-align:left">0,2</td><td style="text-align:left">3,76·10⁻⁵</td><td style="text-align:left">8,15·10⁻⁶</td><td style="text-align:left">22 %</td></tr>
+          <tr><td style="text-align:left">0,5 (D½)</td><td style="text-align:left">1,61·10⁻⁴</td><td style="text-align:left">8,44·10⁻⁵</td><td style="text-align:left">52 %</td></tr>
+          <tr><td style="text-align:left">0,99</td><td style="text-align:left">4,30·10⁻⁴</td><td style="text-align:left">2,49·10⁻⁴</td><td style="text-align:left">58 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">La corba es fa amb els 65 estrats, pesats amb la binomial de cada p. Els intervals, de Fay i Feuer, són a <code>fase2/resultats/b1/estrats/analisi.txt</code> i <code>analisi-autonomia.txt</code>.</p>
+    <ul>
+      <li><strong>La corba puja sempre:</strong> no té cap màxim a l'interior. El més alt és a p = 0,999, amb programes fets gairebé només d'instruccions.</li>
+      <li><strong>Sense el company, per sota de 9 instruccions no n'hi ha cap.</strong> Dels 190 hereditaris dels estrats de 0 a 4 instruccions, cap no es copia sol, i el primer que ho fa en té 9. Amb poques instruccions, els «replicadors» que troba la prova els fa el company de soroll.</li>
+      <li><strong>Les 22 sopes del pilot,</strong> a l'època 8.000, tenen un 11,3 % d'instruccions.
+        <ul>
+          <li><strong>Amb companys fets de l'histograma de la mateixa sopa,</strong> hi ha 6,25 vegades més hereditaris que amb companys uniformes (de 5,39 a 7,29).</li>
+          <li><strong>Però dels que es copien sols n'hi ha els mateixos:</strong> 10, contra 13 amb companys uniformes, de 2,2·10⁷. Coincideixen amb la corba, uns 6·10⁻⁷ per programa. L'efecte dels companys de la sopa és del company, no del programa.</li>
+        </ul>
+      </li>
+      <li><strong>D½ amb companys de D½:</strong> 595 hereditaris de 10⁶, 3,84 vegades més que amb companys uniformes. Dels que es copien sols, 24.</li>
+    </ul>
+
+    <h2>El que s'hi veu, sense provar-ho</h2>
+    <ul>
+      <li><strong>Els companys amb codi en fan i en desfan.</strong> Amb companys de D½, dels 155 hereditaris amb companys uniformes només 33 ho continuen sent, i n'hi ha 562 de nous. Una lectura possible, que no hem provat: el codi del company copia, però també espatlla còpies.</li>
+      <li><strong>Una sopa barrejada és com la seva composició.</strong> Al pilot, l'escaneig de les sopes barrejades hi troba 5,86·10⁻⁵ hereditaris per cel·la, gairebé el mateix que els programes fets de l'histograma de la sopa amb companys de la sopa (5,77·10⁻⁵). Tots dos, amb la prova del cens.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>Amb poques instruccions, la prova del cens compta sobretot el company.</strong> Amb els bytes d'una sopa nova, cap hereditari no es copia sol; amb un 10 % d'instruccions, el 3 %. Els recomptes del pas 1 de la maduració (<a href="#entrada-16">entrada 16</a>) i els escanejos de la sèrie es fan amb aquesta prova, i s'han de tornar a comptar amb companys sense cap instrucció: és el pas 2b, preparat.</li>
+      <li><strong>La composició sí que importa per als que es copien sols.</strong> Amb bytes uniformes no se n'hi troba cap de 10⁷. Amb la composició de les sopes envellides n'hi ha uns 6 de cada 10 milions, i amb D½, 8 de cada 100.000. És la «màquina d'escriure esbiaixada» d'Adami i LaBar (2017), aquí a BFF i sense l'ajuda del company. Però en una sopa envellida barrejada encara són molt rars: uns 0,08 per sopa de 131.072 programes.</li>
+      <li><strong>Amb D½, la meitat dels hereditaris es copien sols,</strong> i amb H64, quatre de cada cinc. Els replicadors de l'entrada 15 amb D½ són, en bona part, replicadors de debò.</li>
+      <li><strong>L'efecte d'S1 és dels dos caps.</strong> Junts, una mica més que el producte dels dos (3,95 contra 3,49). La major part és del primer cap, com esperàvem, però el segon també hi compta.</li>
+      <li><strong>Què no diem:</strong> que la vida neixi o s'estableixi més en cap d'aquestes condicions. Tot és d'un programa a la vegada, sense cap sopa.</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>«Sol» vol dir amb aquests companys:</strong> 100 condicions de 8 companys sense cap instrucció. Un programa que no s'hi copia pot copiar-se amb altres companys. ρ_aut compta els hereditaris de la prova del cens que també es copien amb companys inerts, no tots els que es podrien copiar sense el company (AU2-144).</li>
+      <li><strong>A les p petites, la corba és una extrapolació</strong> dels estrats: amb bytes uniformes, l'interval de ρ_aut arriba a 10⁻⁷.</li>
+      <li><strong>Tot és descriptiu:</strong> densitats, quocients i intervals, sense cap prova d'hipòtesi.</li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>El pla</strong> (v0.7) i el codi (la PR #35) tenen el GO dels dos auditors (auditories 28, 29 i 30). El merge és <code>680d130</code>.</li>
+      <li><strong>L'execució:</strong> el responsable el va llançar des d'una finestra seva l'11-11-2026 a les 22.48, des d'una còpia neta del merge, i va acabar el 12-11 a les 16.47. Les quatre llistes van córrer en ordre: la prova d'autonomia, les variants per cap, la §13 i la seva prova d'autonomia. Totes van acabar amb el codi 0. Mentre corria, només es mirava l'estat de l'executor.</li>
+      <li><strong>Abans de mirar res,</strong> cada <code>execucio-llista</code> va anar a git (<code>3fb0f12</code>, <code>788923d</code> i <code>d46b242</code>).</li>
+      <li><strong>La repetició</strong> d'una mostra de cada llista, triada amb la llavor de la SHA-256 del seu <code>execucio-llista</code>, coincideix sempre: 3 de 3 a la prova d'autonomia, 12 de 12 trossos a les variants per cap i 6 de 6 a la §13 i la seva prova d'autonomia.</li>
+      <li><strong>Les anàlisis,</strong> escrites i provades abans de calcular, s'han fet des de la mateixa còpia, i les sortides són tal com surten. Les comprovacions hi quadren: C0 i S1, refets, donen el mateix que a l'entrada 15; ρ a D½ i amb bytes uniformes, i ρ_aut a D½, donen el mateix que el nivell 1 i la prova d'autonomia.</li>
+      <li><strong>Els registres:</strong> els de les dues proves d'autonomia són a git. Els de les variants per cap i de la §13 en són fora: dos passen de 50 MB, i els de la §13 fan 321 MB. De tots dos hi ha un extracte dels hereditaris a git (<code>fase2/resultats/b1/</code>).</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>El pas 2b de la maduració:</strong> tornar a comptar les cel·les que es repliquen de les sopes de la sèrie amb companys sense cap instrucció. Ja és preparat i provat.</li>
+      <li><strong>Una ronda d'auditoria</strong> dels resultats exploratoris de B1 v0.7 i de la maduració, com mana el carril d'explorar.</li>
+      <li><strong>El nivell 2 de B1 (la sopa),</strong> si es fa, anirà amb un disseny preregistrat. Ara el projecte es concentra en la maduració.</li>
     </ul>
   </article>
 

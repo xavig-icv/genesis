@@ -83,6 +83,10 @@ de la topologia de les xarxes, sense temps ni ritmes.
     proposen ells, sinó per l'arrelament (A7).
   - **La reserva:** aquests recomptes són de la prova del cens, amb companys de soroll, que dona falsos positius (A6; i els 37 hereditaris
     de bytes uniformes de B1 no es copien sols). Abans de fer servir el contrapunt, cal tornar a comptar les tres sopes amb companys inerts.
+  - **Per programes a l'atzar, ja ho sabem** (B1 v0.7, la §13; l'entrada 17, exploratori). Amb companys inerts, amb la composició de les
+    sopes envellides (un 11,3 % d'instruccions), uns 6·10⁻⁷ programes es copien sols i són hereditaris; amb bytes uniformes, cap de 10⁷
+    (la corba en dona uns 6·10⁻¹⁰, amb un interval que arriba a 10⁻⁷). La màquina d'escriure esbiaixada funciona a BFF sense l'ajuda del
+    company. El que falta és la disposició de les sopes de debò: el pas 2b, preparat a la branca `maduracio-recompte`.
 - **Agüera y Arcas (2025), capítol 1:** a BFF, des del començament apareixen replicadors imperfectes, «trossos molt curts de codi», i el
   replicador sencer es forma per fusió de replicadors més petits («simbiosi multifractal»). Hi tracta cada instrucció com un replicador
   «atòmic». No diu quins bytes s'acumulen, no fa cap intervenció i no parla de l'edat de la sopa. **És un precedent a BFF de la idea
@@ -147,7 +151,8 @@ de la topologia de les xarxes, sense temps ni ritmes.
 
 1. **Tornar a comptar les cel·les que es repliquen** de les tres sopes (la nova, l'envellida i la barrejada) amb companys inerts, com la
    prova d'autonomia de B1. Sense això, el contrapunt d'A2 i la prova de la hipòtesi d'Adami i LaBar no es poden fer servir. Pel carril
-   d'explorar, sense simular: n'hi ha prou amb les captures.
+   d'explorar, sense simular: n'hi ha prou amb les captures. És el pas 2b: la nota, els scripts i la prova curta, a la branca
+   `maduracio-recompte` (12-11-2026); el càlcul sencer, unes 2,5 h.
 2. **La lectura sencera de Pigozzi i Levin (2026)** (arXiv 2607.28250, obert): si separen l'aparició de la persistència, A7 hi té un
    precedent més proper, encara que en un model químic.
 3. **Una cerca més àmplia,** amb Google Scholar, que des d'aquí no hem pogut fer servir, i amb els preprints que OpenAlex no lliga.

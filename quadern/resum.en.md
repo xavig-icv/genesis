@@ -168,3 +168,18 @@ entropy of single instructions, the same kind of measure as our D, and they make
 emergence: after a million generations, replicators rarely appear. In BFF, life becomes established more often in an aged soup
 (entry 14). And Adami and LaBar (2017), in Avida, already proposed, without testing it, that activity before replicators changes
 the composition and can make them more likely. The source-by-source comparison is in `docs/novetat-maduracio.md`.
+
+<a id="entry-17"></a>
+## Entry 17 · 12 November 2026 · Who copies itself: random replicators with partners that have no instructions (exploratory)
+
+B1 v0.7, planned and reviewed before computing. The heritable replicators of entry 15 were retested in 100 conditions with partners
+that have no instructions: if a program copies itself there, it does so alone. With the usual chemistry and half of the bytes being
+instructions, half of them copy themselves in some condition and 18% in all; with aligned heads (H64), four in five; with the uniform
+bytes of a fresh soup, none of the 37. Across programs with 0 to 64 instructions, the number of replicators rises steadily with the
+share of instructions, but no heritable program with fewer than 9 instructions copies itself: the test's random partner does it. With
+10% instructions, only 3% of what the test finds copies itself; with 50%, 52%. In the 22 pilot soups (11.3% instructions), partners
+made from the soup's own byte histogram give 6.25 times more heritable programs than uniform partners, but the self-copiers are the
+same (10 and 13 in 2.2·10⁷): the effect belongs to the partner. Composition matters for real self-copiers (none in 10⁷ with uniform
+bytes, about 6 in 10⁷ with an aged soup's composition, 8 in 10⁵ with half instructions): Adami and LaBar's "biased typewriter", in BFF.
+The effect of not being able to write to one's own half (S1) comes from both heads (2.36 and 1.48 times, 3.95 together). The census
+counts of the soup before life (entry 16) must be redone with inert partners.

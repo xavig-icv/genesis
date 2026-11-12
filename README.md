@@ -271,12 +271,29 @@ res, i tot és exploratori: una pista, no un resultat.
 
 Vegeu l'[entrada 16](quadern/index.html#entrada-16).
 
+### Qui es copia sol (exploratori)
+
+Dels replicadors a l'atzar dels ingredients de la química, quins es copien sense el codi del company de la prova? Els
+hem tornat a provar amb companys sense cap instrucció, i hem comptat els replicadors segons la proporció d'instruccions
+dels programes ([pla](docs/pla-b1.md)). Tot és exploratori.
+- **Amb la meitat d'instruccions,** la meitat dels replicadors es copien sols en alguna condició, i el 18 % en totes.
+  Amb els bytes d'una sopa nova, cap.
+- **Com més instruccions, més replicadors,** però per sota de 9 instruccions cap no es copia sol: aquests els copia el
+  company de la prova. Amb un 10 % d'instruccions, només el 3 % dels que troba la prova es copien sols.
+- **La composició importa:** amb la d'una sopa envellida, uns 6 de cada 10 milions de programes es copien sols; amb
+  bytes a l'atzar, cap de 10 milions. És la «màquina d'escriure esbiaixada» d'Adami i LaBar (2017), aquí a BFF.
+- **Per a la sopa abans de la vida:** els recomptes fets amb la prova del cens s'han de tornar a fer amb companys sense
+  cap instrucció. És el pas següent.
+
+Vegeu l'[entrada 17](quadern/index.html#entrada-17).
+
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** quines operacions escriuen els bytes que s'acumulen, i després, per separat, que
-  aparegui un replicador i que hi arreli ([les decisions](docs/disseny.md)).
-- **Els ingredients de la química, el pas següent:** quins replicadors es copien sols, i quants n'hi ha segons la
-  proporció d'instruccions ([pla](docs/pla-b1.md)). Es calcula ara.
+- **La sopa abans de la vida:** quines operacions escriuen els bytes que s'acumulen; quantes cel·les es copien soles a
+  les sopes nova, envellida i barrejada; i després, per separat, que aparegui un replicador i que hi arreli
+  ([les decisions](docs/disseny.md)).
+- **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
+  amb un disseny preregistrat.
 
 ## Com es treballa
 

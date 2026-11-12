@@ -189,11 +189,27 @@ already had, with no new simulation, and everything in it is exploratory: a lead
 
 See notebook entry 16, in Catalan, or its [English summary](quadern/resum.en.md#entry-16).
 
+**Who copies itself (exploratory).** Of the random replicators of the ingredients of the chemistry, which copy
+themselves without the code of the test's partner? We retested them with partners that have no instructions, and
+counted replicators by the share of instructions in the programs ([plan](docs/pla-b1.md), in Catalan). Everything is
+exploratory.
+- **With half of the bytes being instructions,** half of the replicators copy themselves in some condition, and 18% in
+  all of them. With the bytes of a fresh soup, none.
+- **The more instructions, the more replicators,** but below 9 instructions none copies itself: the test's partner
+  copies those. With 10% instructions, only 3% of those the test finds copy themselves.
+- **Composition matters:** with that of an aged soup, about 6 in 10 million programs copy themselves; with random bytes,
+  none in 10 million. This is Adami and LaBar's (2017) "biased typewriter", here in BFF.
+- **For the soup before life:** the counts made with the census test must be redone with partners that have no
+  instructions. That is the next step.
+
+See notebook entry 17, in Catalan, or its [English summary](quadern/resum.en.md#entry-17).
+
 **What we study now:**
-- **The soup before life:** which operations write the bytes that pile up, and then, separately, whether a
-  replicator appears and whether it takes root ([decisions](docs/disseny.md), in Catalan).
-- **The ingredients of the chemistry, next step:** which replicators copy themselves alone, and how many there are
-  depending on the share of instructions ([plan](docs/pla-b1.md), in Catalan). Being computed now.
+- **The soup before life:** which operations write the bytes that pile up; how many cells copy themselves alone in
+  fresh, aged and shuffled soups; and then, separately, whether a replicator appears and whether it takes root
+  ([decisions](docs/disseny.md), in Catalan).
+- **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
+  done, with a preregistered design.
 
 ## How we work
 
