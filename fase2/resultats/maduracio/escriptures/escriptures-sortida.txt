@@ -1,0 +1,97 @@
+QUI ESCRIU ELS BYTES QUE S'ACUMULEN (pas 2a, exploratori): 100000 parelles per sopa, executades una vegada
+Per 1.000 parelles, la mitjana de les sopes de cada grup. 'Fets': escriptures que posen el byte on no hi era; 'desfets': que el treuen.
+
+envellida (150 sopes):
+  '<' fets 82.1, desfets 80.2, net 1.9; dels fets, per còpia 85.4 %, amb + o - 14.6 %; en parelles que comencen amb '<' 54.8 %, amb '<,' 3.1 %
+  instruccions fetes 242.1, desfetes 238.6, net 3.5; de les fetes, per còpia 66.3 %
+  còpies 6034.8, de les quals en tirades de 8 o més 0.0 %
+  instruccions per programa 7.249 -> 7.251; dispersió 8.449 -> 8.452
+  parelles amb 16 bytes del primer programa al company 0.016 %
+
+barrejada (150 sopes):
+  '<' fets 268.5, desfets 292.9, net -24.4; dels fets, per còpia 86.4 %, amb + o - 13.6 %; en parelles que comencen amb '<' 23.0 %, amb '<,' 0.6 %
+  instruccions fetes 1113.7, desfetes 1157.6, net -43.9; de les fetes, per còpia 70.1 %
+  còpies 19040.9, de les quals en tirades de 8 o més 1.0 %
+  instruccions per programa 7.249 -> 7.227; dispersió 1.000 -> 1.413
+  parelles amb 16 bytes del primer programa al company 0.171 %
+
+nova (150 sopes):
+  '<' fets 14.8, desfets 13.9, net 0.9; dels fets, per còpia 32.5 %, amb + o - 67.5 %; en parelles que comencen amb '<' 11.3 %, amb '<,' 0.2 %
+  instruccions fetes 184.7, desfetes 185.1, net -0.4; de les fetes, per còpia 30.6 %
+  còpies 4206.8, de les quals en tirades de 8 o més 0.6 %
+  instruccions per programa 2.500 -> 2.500; dispersió 1.000 -> 1.062
+  parelles amb 16 bytes del primer programa al company 0.017 %
+
+El món 1034 al llarg del temps:
+    100: '<' fets 14.3, desfets 13.6, net 0.8; dels fets, per còpia 62.3 %, amb + o - 37.7 %; en parelles que comencen amb '<' 26.3 %, amb '<,' 0.7 %
+         instruccions per programa 2.642 -> 2.644; dispersió 2.716 -> 2.724; parelles amb 16 bytes del primer programa al company 0.038 %
+    500: '<' fets 39.7, desfets 37.0, net 2.7; dels fets, per còpia 64.8 %, amb + o - 35.2 %; en parelles que comencen amb '<' 41.9 %, amb '<,' 13.1 %
+         instruccions per programa 3.127 -> 3.129; dispersió 5.324 -> 5.355; parelles amb 16 bytes del primer programa al company 0.029 %
+   1000: '<' fets 28.5, desfets 26.1, net 2.3; dels fets, per còpia 70.5 %, amb + o - 29.5 %; en parelles que comencen amb '<' 53.8 %, amb '<,' 4.7 %
+         instruccions per programa 3.661 -> 3.663; dispersió 7.483 -> 7.487; parelles amb 16 bytes del primer programa al company 0.013 %
+   1500: '<' fets 31.7, desfets 29.5, net 2.2; dels fets, per còpia 80.4 %, amb + o - 19.6 %; en parelles que comencen amb '<' 59.5 %, amb '<,' 6.0 %
+         instruccions per programa 4.221 -> 4.223; dispersió 8.991 -> 8.998; parelles amb 16 bytes del primer programa al company 0.022 %
+   2000: '<' fets 44.8, desfets 42.8, net 2.0; dels fets, per còpia 65.4 %, amb + o - 34.6 %; en parelles que comencen amb '<' 46.3 %, amb '<,' 8.1 %
+         instruccions per programa 4.653 -> 4.655; dispersió 9.744 -> 9.765; parelles amb 16 bytes del primer programa al company 0.027 %
+   2500: '<' fets 37.8, desfets 37.0, net 0.8; dels fets, per còpia 79.7 %, amb + o - 20.3 %; en parelles que comencen amb '<' 56.0 %, amb '<,' 4.7 %
+         instruccions per programa 5.069 -> 5.070; dispersió 10.133 -> 10.136; parelles amb 16 bytes del primer programa al company 0.021 %
+   3000: '<' fets 52.6, desfets 51.8, net 0.7; dels fets, per còpia 79.8 %, amb + o - 20.2 %; en parelles que comencen amb '<' 58.0 %, amb '<,' 9.2 %
+         instruccions per programa 5.466 -> 5.467; dispersió 10.245 -> 10.254; parelles amb 16 bytes del primer programa al company 0.011 %
+   3500: '<' fets 49.2, desfets 47.6, net 1.5; dels fets, per còpia 85.9 %, amb + o - 14.1 %; en parelles que comencen amb '<' 54.1 %, amb '<,' 3.7 %
+         instruccions per programa 5.792 -> 5.795; dispersió 10.207 -> 10.213; parelles amb 16 bytes del primer programa al company 0.021 %
+   4000: '<' fets 59.9, desfets 59.8, net 0.1; dels fets, per còpia 82.8 %, amb + o - 17.2 %; en parelles que comencen amb '<' 62.9 %, amb '<,' 2.9 %
+         instruccions per programa 6.092 -> 6.093; dispersió 10.166 -> 10.179; parelles amb 16 bytes del primer programa al company 0.019 %
+   4500: '<' fets 53.4, desfets 53.6, net -0.2; dels fets, per còpia 86.1 %, amb + o - 13.9 %; en parelles que comencen amb '<' 51.8 %, amb '<,' 4.9 %
+         instruccions per programa 6.306 -> 6.307; dispersió 9.742 -> 9.746; parelles amb 16 bytes del primer programa al company 0.015 %
+   5000: '<' fets 58.5, desfets 57.6, net 0.9; dels fets, per còpia 79.8 %, amb + o - 20.2 %; en parelles que comencen amb '<' 47.2 %, amb '<,' 4.2 %
+         instruccions per programa 6.479 -> 6.480; dispersió 9.562 -> 9.561; parelles amb 16 bytes del primer programa al company 0.010 %
+   5500: '<' fets 70.7, desfets 70.3, net 0.4; dels fets, per còpia 78.6 %, amb + o - 21.4 %; en parelles que comencen amb '<' 49.2 %, amb '<,' 2.9 %
+         instruccions per programa 6.714 -> 6.715; dispersió 9.260 -> 9.262; parelles amb 16 bytes del primer programa al company 0.313 %
+   6000: '<' fets 81.8, desfets 78.9, net 2.9; dels fets, per còpia 86.8 %, amb + o - 13.2 %; en parelles que comencen amb '<' 54.9 %, amb '<,' 2.7 %
+         instruccions per programa 6.867 -> 6.869; dispersió 9.056 -> 9.060; parelles amb 16 bytes del primer programa al company 0.035 %
+   6500: '<' fets 70.4, desfets 68.5, net 1.9; dels fets, per còpia 87.6 %, amb + o - 12.4 %; en parelles que comencen amb '<' 49.3 %, amb '<,' 3.9 %
+         instruccions per programa 7.052 -> 7.055; dispersió 9.024 -> 9.034; parelles amb 16 bytes del primer programa al company 0.013 %
+   7000: '<' fets 87.1, desfets 83.7, net 3.4; dels fets, per còpia 87.0 %, amb + o - 13.0 %; en parelles que comencen amb '<' 60.4 %, amb '<,' 4.7 %
+         instruccions per programa 7.145 -> 7.149; dispersió 8.676 -> 8.688; parelles amb 16 bytes del primer programa al company 0.022 %
+   7500: '<' fets 83.2, desfets 82.6, net 0.6; dels fets, per còpia 87.2 %, amb + o - 12.8 %; en parelles que comencen amb '<' 55.2 %, amb '<,' 3.7 %
+         instruccions per programa 7.236 -> 7.236; dispersió 8.502 -> 8.498; parelles amb 16 bytes del primer programa al company 0.012 %
+   8000: '<' fets 84.5, desfets 84.1, net 0.3; dels fets, per còpia 91.0 %, amb + o - 9.0 %; en parelles que comencen amb '<' 52.8 %, amb '<,' 3.1 %
+         instruccions per programa 7.321 -> 7.322; dispersió 8.474 -> 8.480; parelles amb 16 bytes del primer programa al company 0.007 %
+   8500: '<' fets 80.9, desfets 80.6, net 0.3; dels fets, per còpia 90.1 %, amb + o - 9.9 %; en parelles que comencen amb '<' 50.7 %, amb '<,' 3.4 %
+         instruccions per programa 7.422 -> 7.423; dispersió 8.573 -> 8.573; parelles amb 16 bytes del primer programa al company 0.009 %
+   9000: '<' fets 107.9, desfets 106.1, net 1.9; dels fets, per còpia 92.0 %, amb + o - 8.0 %; en parelles que comencen amb '<' 59.8 %, amb '<,' 9.0 %
+         instruccions per programa 7.409 -> 7.410; dispersió 8.321 -> 8.316; parelles amb 16 bytes del primer programa al company 0.011 %
+   9500: '<' fets 80.9, desfets 80.5, net 0.4; dels fets, per còpia 84.0 %, amb + o - 16.0 %; en parelles que comencen amb '<' 49.7 %, amb '<,' 2.9 %
+         instruccions per programa 7.502 -> 7.503; dispersió 8.234 -> 8.234; parelles amb 16 bytes del primer programa al company 0.009 %
+  10000: '<' fets 74.1, desfets 71.9, net 2.2; dels fets, per còpia 87.8 %, amb + o - 12.2 %; en parelles que comencen amb '<' 52.9 %, amb '<,' 3.2 %
+         instruccions per programa 7.507 -> 7.509; dispersió 8.130 -> 8.131; parelles amb 16 bytes del primer programa al company 0.008 %
+  10500: '<' fets 79.6, desfets 79.5, net 0.2; dels fets, per còpia 77.7 %, amb + o - 22.3 %; en parelles que comencen amb '<' 49.6 %, amb '<,' 2.7 %
+         instruccions per programa 7.486 -> 7.487; dispersió 7.993 -> 7.992; parelles amb 16 bytes del primer programa al company 0.015 %
+  11000: '<' fets 80.0, desfets 76.0, net 4.1; dels fets, per còpia 82.4 %, amb + o - 17.6 %; en parelles que comencen amb '<' 54.0 %, amb '<,' 2.5 %
+         instruccions per programa 7.521 -> 7.523; dispersió 8.029 -> 8.036; parelles amb 16 bytes del primer programa al company 0.013 %
+  11500: '<' fets 91.4, desfets 88.0, net 3.4; dels fets, per còpia 72.5 %, amb + o - 27.5 %; en parelles que comencen amb '<' 46.0 %, amb '<,' 3.1 %
+         instruccions per programa 7.542 -> 7.544; dispersió 7.868 -> 7.872; parelles amb 16 bytes del primer programa al company 0.009 %
+  12000: '<' fets 79.3, desfets 78.6, net 0.7; dels fets, per còpia 85.7 %, amb + o - 14.3 %; en parelles que comencen amb '<' 48.9 %, amb '<,' 3.5 %
+         instruccions per programa 7.594 -> 7.596; dispersió 7.818 -> 7.814; parelles amb 16 bytes del primer programa al company 0.017 %
+  12500: '<' fets 89.8, desfets 87.5, net 2.3; dels fets, per còpia 79.9 %, amb + o - 20.1 %; en parelles que comencen amb '<' 50.2 %, amb '<,' 2.5 %
+         instruccions per programa 7.573 -> 7.575; dispersió 7.714 -> 7.713; parelles amb 16 bytes del primer programa al company 0.023 %
+  13000: '<' fets 86.0, desfets 82.0, net 4.0; dels fets, per còpia 81.1 %, amb + o - 18.9 %; en parelles que comencen amb '<' 49.0 %, amb '<,' 2.8 %
+         instruccions per programa 7.571 -> 7.575; dispersió 7.668 -> 7.678; parelles amb 16 bytes del primer programa al company 0.016 %
+  13500: '<' fets 75.9, desfets 73.0, net 2.9; dels fets, per còpia 88.1 %, amb + o - 11.9 %; en parelles que comencen amb '<' 51.6 %, amb '<,' 3.6 %
+         instruccions per programa 7.581 -> 7.583; dispersió 7.695 -> 7.697; parelles amb 16 bytes del primer programa al company 0.010 %
+  14000: '<' fets 168.1, desfets 169.1, net -1.0; dels fets, per còpia 94.7 %, amb + o - 5.3 %; en parelles que comencen amb '<' 75.0 %, amb '<,' 1.5 %
+         instruccions per programa 7.638 -> 7.636; dispersió 7.834 -> 7.832; parelles amb 16 bytes del primer programa al company 0.010 %
+  14500: '<' fets 83.9, desfets 84.0, net -0.1; dels fets, per còpia 89.5 %, amb + o - 10.5 %; en parelles que comencen amb '<' 54.7 %, amb '<,' 3.0 %
+         instruccions per programa 7.716 -> 7.719; dispersió 8.038 -> 8.045; parelles amb 16 bytes del primer programa al company 0.011 %
+  15000: '<' fets 111.6, desfets 111.5, net 0.1; dels fets, per còpia 92.5 %, amb + o - 7.5 %; en parelles que comencen amb '<' 64.9 %, amb '<,' 2.2 %
+         instruccions per programa 7.697 -> 7.699; dispersió 7.826 -> 7.823; parelles amb 16 bytes del primer programa al company 0.017 %
+  15500: '<' fets 79.2, desfets 78.1, net 1.1; dels fets, per còpia 89.6 %, amb + o - 10.4 %; en parelles que comencen amb '<' 50.3 %, amb '<,' 3.0 %
+         instruccions per programa 7.626 -> 7.628; dispersió 7.734 -> 7.742; parelles amb 16 bytes del primer programa al company 0.023 %
+  16000: '<' fets 79.1, desfets 77.7, net 1.5; dels fets, per còpia 89.4 %, amb + o - 10.6 %; en parelles que comencen amb '<' 54.1 %, amb '<,' 2.6 %
+         instruccions per programa 7.616 -> 7.616; dispersió 7.611 -> 7.609; parelles amb 16 bytes del primer programa al company 0.013 %
+
+Els quatre criteris de la nota (§5):
+  1. '<' nous per còpia, a la sopa envellida: 85.4 % (cau si és menys del 50 %)
+  2. '<' nous en parelles que comencen amb '<', a la sopa envellida: 54.8 % (cau si és menys del 20 %)
+  3. el canvi de la dispersió en una ronda: envellida 0.0031, nova 0.0617 (cau si no creix a cap de les dues)
+  4. les còpies de 16 bytes, món a món: més a l'envellida que a la barrejada a 0 mons, iguals a 0, menys a 150
