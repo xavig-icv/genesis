@@ -51,8 +51,10 @@ de la SHA-256 d'`execucio-llista.txt`, tornats a fer a `repeticio/` amb `--de` i
   - Programa a programa, S1h1 conserva més hereditaris de C0 (1.119 de 1.625) que S1h0 (875) i que S1 (644): bloquejar les escriptures
     de `h0` en treu més dels que ja hi havia.
 - **Els registres no són a git:** dos passen de 50 MB (`d-mig-S1`, 56,2 MB, i `d-mig-S1h0`, 50,4 MB). Són a la còpia neta del càlcul i,
-  comprimits (51 MB), a la còpia de seguretat. Aniran a una versió de GitHub quan acabi el càlcul de B1 v0.7. Descomprimits, cada un té
-  la SHA-256 d'`execucio-llista.txt`.
+  comprimits (51 MB), a la còpia de seguretat i a la versió `b1-v07-registres-v1` de GitHub
+  (<https://github.com/xavig-icv/genesis/releases/tag/b1-v07-registres-v1>, des del 12-11-2026). La versió és un `tar` de 151.930.880
+  bytes (SHA-256 `0b710924c7b3b014ba19a039c637d01823278e694d941ea419f09c1b18ddc355`) amb aquests registres i els de la §13, comprimits,
+  els dos `execucio-llista.txt` i `sha256-gz.txt`. Descomprimits, cada un té la SHA-256 d'`execucio-llista.txt`.
 - **L'extracte dels hereditaris,** com el del nivell 1 (AUD-174): `hereditaris.jsonl.gz`.
   - **Com es fa:** `node fase2/resultats/b1/nivell1/extreu-hereditaris.mjs CARPETA-DELS-REGISTRES fase2/resultats/b1/caps/execucio-llista.txt
     hereditaris.jsonl`. Comprova cada registre amb la SHA-256 d'`execucio-llista.txt`, i el recompte amb la línia final.

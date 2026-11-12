@@ -61,9 +61,12 @@ tirades (auditor 2).
     13 de 2,2·10⁷), i coincideixen amb la corba (uns 6·10⁻⁷ per programa): l'efecte dels companys de la sopa és del company, no del
     programa.
   - **D½ amb companys de D½:** 595 hereditaris de 10⁶, 3,84 vegades els que hi ha amb companys uniformes. Sense l'ajuda del company, 24.
-- **Els registres de `llista.txt` (321 MB) encara no són a git.** Cap no passa de 50 MB, però el repositori en faria uns 120: on van, ho
-  decideix el responsable. Són a la còpia neta del càlcul i, comprimits (95 MB), a la còpia de seguretat; descomprimits, tots 110 tenen la
-  SHA-256 d'`execucio-llista.txt`. Els de `llista-autonomia.txt` (`autonomia/`, 9,7 MB) sí que hi són.
+- **Els registres de `llista.txt` (321 MB) no són a git.** Cap no passa de 50 MB, com demanava aquest README, però el repositori en
+  faria uns 120, i el responsable va decidir el 12-11-2026 posar-los a una versió de GitHub, com els del nivell 1. Són a la còpia neta del
+  càlcul, comprimits (95 MB) a la còpia de seguretat, i a la versió `b1-v07-registres-v1`
+  (<https://github.com/xavig-icv/genesis/releases/tag/b1-v07-registres-v1>): un `tar` de 151.930.880 bytes (SHA-256
+  `0b710924c7b3b014ba19a039c637d01823278e694d941ea419f09c1b18ddc355`), amb els de les variants per cap. Descomprimits, tots 110 tenen la
+  SHA-256 d'`execucio-llista.txt`. Els de `llista-autonomia.txt` (`autonomia/`, 9,7 MB) sí que són a git.
 - **L'extracte dels hereditaris de `llista.txt`,** com el del nivell 1 (AUD-174): `hereditaris.jsonl.gz`, fet amb `node
   fase2/resultats/b1/nivell1/extreu-hereditaris.mjs CARPETA-DELS-REGISTRES fase2/resultats/b1/estrats/execucio-llista.txt hereditaris.jsonl`.
   - **Què hi ha:** 15.342 línies, 15.122 hereditaris i les 220 línies d'inici i de final.
