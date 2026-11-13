@@ -1,0 +1,105 @@
+LA MADURACIÓ, PAS 3 (EXPLORATORI): QUANT VIUEN ELS REPLICADORS NOUS DEL MÓN 1034, I QUANTS EN VEU L'ESCANEIG
+Els registres: 33 captures, codi abd988b, v16.15.1; la química C0, la llavor 3000000000, 10 condicions a totes les cel·les i 100 a les tornades a provar.
+L'anàlisi: codi 270dc0c, v16.15.1.
+
+1. QUANTS: les cel·les que es copien amb companys inerts (a les 10 condicions), de 131.072, i les hereditàries
+   època: es copien (sola / en context); hereditàries; de les que es copien, a les 100: menys de 95 | de 95 a 99 | totes 100; de les hereditàries, a les 100: el mateix
+   El tram jove (de la 100 a la 1100):
+     100: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+     200: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+     300: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+     400: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+     500: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+     600: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+     700: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+     800: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+     900: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    1000: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    1100: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+   mitjana per captura: es copien 0.00, hereditàries 0.00; captures amb alguna que es copia, 0 de 11; amb alguna hereditària, 0
+   El tram brot (de la 5000 a la 6000):
+    5000: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    5100: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    5200: 50 (50 / 0); 46; 0 | 0 | 50; 0 | 0 | 46
+    5300: 56 (56 / 0); 47; 0 | 0 | 56; 0 | 0 | 47
+    5400: 76 (76 / 0); 76; 0 | 0 | 76; 0 | 0 | 76
+    5500: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    5600: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    5700: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    5800: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    5900: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    6000: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+   mitjana per captura: es copien 16.55, hereditàries 15.36; captures amb alguna que es copia, 3 de 11; amb alguna hereditària, 3
+   El tram vell (de la 8000 a la 9000):
+    8000: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    8100: 1 (1 / 0); 0; 1 | 0 | 0; 0 | 0 | 0
+    8200: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    8300: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    8400: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    8500: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    8600: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+    8700: 1 (1 / 0); 0; 1 | 0 | 0; 0 | 0 | 0
+    8800: 1 (0 / 1); 0; 0 | 1 | 0; 0 | 0 | 0
+    8900: 1 (0 / 1); 0; 0 | 0 | 1; 0 | 0 | 0
+    9000: 0 (0 / 0); 0; 0 | 0 | 0; 0 | 0 | 0
+   mitjana per captura: es copien 0.36, hereditàries 0.00; captures amb alguna que es copia, 4 de 11; amb alguna hereditària, 0
+
+2. LA SENSIBILITAT DE L'ESCANEIG DEL CENS (el del pas 1, a les mateixes captures)
+   el tram jove:
+     de les que es copien amb companys inerts (a les 10), 0: l'escaneig en veu 0 (—); per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 0 de 0
+     de les hereditàries amb companys inerts (a les 10), 0: hereditàries a l'escaneig, 0 (—); positius de l'escaneig, 0; per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 0 de 0
+     al revés: dels positius de l'escaneig, 294, es copien amb companys inerts a les 100 0 (0 %), i 0 d'aquests no s'havien copiat a les 10; de les seves hereditàries, 0, ho són amb companys inerts 0 (—)
+   el tram brot:
+     de les que es copien amb companys inerts (a les 10), 182: l'escaneig en veu 182 (100 %); per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 182 de 182
+     de les hereditàries amb companys inerts (a les 10), 169: hereditàries a l'escaneig, 169 (100 %); positius de l'escaneig, 169; per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 169 de 169
+     al revés: dels positius de l'escaneig, 438, es copien amb companys inerts a les 100 182 (42 %), i 0 d'aquests no s'havien copiat a les 10; de les seves hereditàries, 170, ho són amb companys inerts 169 (99 %)
+   el tram vell:
+     de les que es copien amb companys inerts (a les 10), 4: l'escaneig en veu 1 (25 %); per classe (a les 100), menys de 95: 0 de 2; de 95 a 99: 0 de 1; totes 100: 1 de 1
+     de les hereditàries amb companys inerts (a les 10), 0: hereditàries a l'escaneig, 0 (—); positius de l'escaneig, 0; per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 0 de 0
+     al revés: dels positius de l'escaneig, 245, es copien amb companys inerts a les 100 1 (0 %), i 0 d'aquests no s'havien copiat a les 10; de les seves hereditàries, 1, ho són amb companys inerts 0 (0 %)
+   els tres trams:
+     de les que es copien amb companys inerts (a les 10), 186: l'escaneig en veu 183 (98 %); per classe (a les 100), menys de 95: 0 de 2; de 95 a 99: 0 de 1; totes 100: 183 de 183
+     de les hereditàries amb companys inerts (a les 10), 169: hereditàries a l'escaneig, 169 (100 %); positius de l'escaneig, 169; per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 169 de 169
+     al revés: dels positius de l'escaneig, 977, es copien amb companys inerts a les 100 183 (19 %), i 0 d'aquests no s'havien copiat a les 10; de les seves hereditàries, 171, ho són amb companys inerts 169 (99 %)
+
+3. LES FAMÍLIES I QUANT VIUEN (les cel·les que es copien a les 10, unides per les finestres; els llinatges, d'una captura a la següent)
+   El tram jove: 0 famílies (0 hereditàries), en 0 llinatges (0 hereditaris)
+     la durada, en captures: ; ja hi eren al principi 0, encara hi són al final 0
+     els llinatges de més d'una captura, o hereditaris: de - a (captures); cel·les màximes en una captura; membres en total, vistos per l'escaneig; a les 100, es copia fins a / hereditària fins a; el codi (instruccions) del membre més robust
+   El tram brot: 3 famílies (3 hereditàries), en 1 llinatges (1 hereditaris)
+     la durada, en captures: 3: 1; ja hi eren al principi 0, encara hi són al final 0
+     de les 3 famílies que tenen captura següent al tram: hi continuen (amb alguna cel·la que es copia) 2; hi deixen rastres (alguna cel·la amb una finestra seva) 3; el mateix programa, en algun lloc, 1
+     les 1 que no hi continuen: amb algun rastre, 1; cel·les amb rastres, la mediana 749 i el màxim 749
+     els llinatges de més d'una captura, o hereditaris: de - a (captures); cel·les màximes en una captura; membres en total, vistos per l'escaneig; a les 100, es copia fins a / hereditària fins a; el codi (instruccions) del membre més robust
+       5200 - 5400 (3); 76; 182, 182; 100 / 100; {[[[[<},]],}<[[[[
+   El tram vell: 4 famílies (0 hereditàries), en 4 llinatges (0 hereditaris)
+     la durada, en captures: 1: 4; ja hi eren al principi 0, encara hi són al final 0
+     de les 4 famílies que tenen captura següent al tram: hi continuen (amb alguna cel·la que es copia) 0; hi deixen rastres (alguna cel·la amb una finestra seva) 4; el mateix programa, en algun lloc, 0
+     les 4 que no hi continuen: amb algun rastre, 4; cel·les amb rastres, la mediana 1 i el màxim 3
+     els llinatges de més d'una captura, o hereditaris: de - a (captures); cel·les màximes en una captura; membres en total, vistos per l'escaneig; a les 100, es copia fins a / hereditària fins a; el codi (instruccions) del membre més robust
+
+4. LES APARICIONS: els llinatges que no hi eren a la primera captura del tram
+   El tram jove: 0 aparicions en 10 intervals de 100 èpoques (0.00 per interval); hereditàries 0; d'una sola captura 0; robustes (es copien en 95 o més de 100) 0
+   El tram brot: 1 aparicions en 10 intervals de 100 èpoques (0.10 per interval); hereditàries 1; d'una sola captura 0; robustes (es copien en 95 o més de 100) 1
+   El tram vell: 4 aparicions en 10 intervals de 100 èpoques (0.40 per interval); hereditàries 0; d'una sola captura 4; robustes (es copien en 95 o més de 100) 2
+
+5. EL BROT: el llinatge del tram del brot amb més cel·les hereditàries, captura a captura
+   el codi del membre més robust: {[[[[<},]],}<[[[[
+   època: cel·les que es copien (a les 10); hereditàries a les 100; on (x, y); a les 100, mediana de condicions en què es copia / hereditària; l'escaneig en veu (positius / hereditàries); rastres a la captura següent
+   5000: —
+   5100: —
+   5200: 50; 46; x 0-23, y 28-49; 100 / 100; 50 / 46; 553
+   5300: 56; 47; x 0-35, y 24-44; 100 / 100; 56 / 47; 652
+   5400: 76; 76; x 22-41, y 36-56; 100 / 100; 76 / 76; 749
+   5500: —
+   5600: —
+   5700: —
+   5800: —
+   5900: —
+   6000: —
+
+6. ELS FRÀGILS QUE LES 10 CONDICIONS ES DEIXEN (orientatiu): les detectades, i l'estimació del total
+   el tram jove: es copien 0, estimades 0.0; hereditàries 0, estimades 0.0
+   el tram brot: es copien 182, estimades 182.0; hereditàries 169, estimades 169.0
+   el tram vell: es copien 4, estimades 21.3; hereditàries 0, estimades 0.0
+   els tres trams: es copien 186, estimades 203.3; hereditàries 169, estimades 169.0
