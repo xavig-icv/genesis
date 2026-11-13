@@ -117,3 +117,18 @@ versió de Node i la mateixa llavor.
 - **10 condicions no veuen tots els fràgils:** una cel·la que es copia en 3 condicions de 100 es detecta una vegada de cada quatre. L'estimació
   del punt 6 de l'anàlisi ho corregeix només de mitjana.
 - **«Es copia» no és «hereditari»** (AUD-186): totes dues xifres, cadascuna amb el seu nom.
+
+## El que s'ha provat (13-11-2026)
+
+- **El temps,** abans de la nota: 2.000 cel·les de les captures 1.000, 5.000 (en dos llocs) i 12.000, amb 10 condicions (un script al
+  directori temporal de la sessió). Només el temps: de 0,74 a 0,77 ms per cel·la i condició.
+- **Una prova de fum** de `durationCapture`, abans de desar l'script: les files 25 a 44 de la captura 5.300 (10.240 cel·les), 81 s. La
+  comprovació de les 10 primeres condicions no s'atura, i les hereditàries del brot hi surten.
+- **La prova curta,** amb `42babd5`: la captura 5.300 sencera, amb el llançador i un sol procés a prioritat baixa, de les 20.59 a les 21.15.
+  Codi 0 i el registre sencer, en 955 s. El control de l'escaneig, igual byte a byte, en 102 s. Les sortides, tal com van sortir, a `prova/`.
+  No en traiem cap resultat.
+- **L'anàlisi** es va escriure mentre corria la prova, quan els dos processos ja havien llegit el codi (el registre i el control diuen
+  `42babd5`, sense canvis). Provada amb el registre de la prova (`--prova`; la sortida, des de `5961c94`, a `prova/durada-analisi-sortida.txt`) i
+  amb un registre sintètic de l'època 5.400, per fer córrer els llinatges i els rastres, que necessiten dues captures seguides: les cel·les de
+  la 5.300 amb la SHA-256 de la captura 5.400, al directori temporal de la sessió. Funciona; els rastres de cada interval triguen uns 7 s.
+- **Per a les 33 captures,** amb 8 processos: unes 2 o 2,5 h.
