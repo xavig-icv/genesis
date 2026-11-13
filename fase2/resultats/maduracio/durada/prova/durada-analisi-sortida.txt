@@ -1,0 +1,37 @@
+LA MADURACIÓ, PAS 3 (EXPLORATORI): QUANT VIUEN ELS REPLICADORS NOUS DEL MÓN 1034, I QUANTS EN VEU L'ESCANEIG
+Els registres: 1 captures, codi 42babd5, v16.15.1; la química C0, la llavor 3000000000, 10 condicions a totes les cel·les i 100 a les tornades a provar.
+L'anàlisi: codi 5961c94, v16.15.1. PROVA: només 1 de les 33 èpoques; cap resultat.
+
+1. QUANTS: les cel·les que es copien amb companys inerts (a les 10 condicions), de 131.072, i les hereditàries
+   època: es copien (sola / en context); hereditàries; de les que es copien, a les 100: menys de 95 | de 95 a 99 | totes 100; de les hereditàries, a les 100: el mateix
+   El tram brot (de la 5000 a la 6000):
+    5300: 56 (56 / 0); 47; 0 | 0 | 56; 0 | 0 | 47
+   mitjana per captura: es copien 56.00, hereditàries 47.00; captures amb alguna que es copia, 1 de 1; amb alguna hereditària, 1
+
+2. LA SENSIBILITAT DE L'ESCANEIG DEL CENS (el del pas 1, a les mateixes captures)
+   el tram brot:
+     de les que es copien amb companys inerts (a les 10), 56: l'escaneig en veu 56 (100 %); per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 56 de 56
+     de les hereditàries amb companys inerts (a les 10), 47: hereditàries a l'escaneig, 47 (100 %); positius de l'escaneig, 47; per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 47 de 47
+     al revés: dels positius de l'escaneig, 74, es copien amb companys inerts a les 100 56 (76 %), i 0 d'aquests no s'havien copiat a les 10; de les seves hereditàries, 47, ho són amb companys inerts 47 (100 %)
+   els tres trams:
+     de les que es copien amb companys inerts (a les 10), 56: l'escaneig en veu 56 (100 %); per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 56 de 56
+     de les hereditàries amb companys inerts (a les 10), 47: hereditàries a l'escaneig, 47 (100 %); positius de l'escaneig, 47; per classe (a les 100), menys de 95: 0 de 0; de 95 a 99: 0 de 0; totes 100: 47 de 47
+     al revés: dels positius de l'escaneig, 74, es copien amb companys inerts a les 100 56 (76 %), i 0 d'aquests no s'havien copiat a les 10; de les seves hereditàries, 47, ho són amb companys inerts 47 (100 %)
+
+3. LES FAMÍLIES I QUANT VIUEN (les cel·les que es copien a les 10, unides per les finestres; els llinatges, d'una captura a la següent)
+   El tram brot: 1 famílies (1 hereditàries), en 1 llinatges (1 hereditaris)
+     la durada, en captures: 1: 1; ja hi eren al principi 1, encara hi són al final 1
+     els llinatges de més d'una captura, o hereditaris: de - a (captures); cel·les màximes en una captura; membres en total, vistos per l'escaneig; a les 100, es copia fins a / hereditària fins a; el codi (instruccions) del membre més robust
+       5300 - 5300 (1, ja hi era, encara hi és); 56; 56, 56; 100 / 100; [[[[[<},]],}<[[[[
+
+4. LES APARICIONS: els llinatges que no hi eren a la primera captura del tram
+   El tram brot: 0 aparicions en 0 intervals de 100 èpoques (— per interval); hereditàries 0; d'una sola captura 0; robustes (es copien en 95 o més de 100) 0
+
+5. EL BROT: el llinatge del tram del brot amb més cel·les hereditàries, captura a captura
+   el codi del membre més robust: [[[[[<},]],}<[[[[
+   època: cel·les que es copien (a les 10); hereditàries a les 100; on (x, y); a les 100, mediana de condicions en què es copia / hereditària; l'escaneig en veu (positius / hereditàries); rastres a la captura següent
+   5300: 56; 47; x 0-35, y 24-44; 100 / 100; 56 / 47; —
+
+6. ELS FRÀGILS QUE LES 10 CONDICIONS ES DEIXEN (orientatiu): les detectades, i l'estimació del total
+   el tram brot: es copien 56, estimades 56.0; hereditàries 47, estimades 47.0
+   els tres trams: es copien 56, estimades 56.0; hereditàries 47, estimades 47.0
