@@ -99,3 +99,42 @@ que comencen amb `<` seria la dels programes que comencen amb `<`.
 
 **Els límits:** cada parella s'executa una vegada, sense dinàmica; els percentatges són de tota la cohort; i la línia de base és posterior.
 És exploratori: una descripció, no una prova.
+
+## 8. Correccions de l'auditoria 31 (13-11-2026)
+
+Els dos auditors van refer el resum des d'`escriptures.jsonl`, i l'auditor 1, vuit sopes senceres: tot quadra. La lectura, en canvi, deia més
+del que mostren les dades. El §7 es queda tal com era.
+
+- **El criteri 4 no compta còpies** (AUD-185 = AU2-155). `escriptures.mjs` compta una parella si, després d'executar-se, el company porta
+  alguna finestra de 16 bytes del primer programa, sense mirar si ja la portava abans: una parella sense cap instrucció ja hi suma 1 (el
+  contraexemple de l'auditor 2). És una coincidència de finestres després de la interacció, no una còpia nova. Quantes en són de noves,
+  amb les mateixes parelles i les mateixes llavors:
+
+  | La sopa | Les del criteri 4 | El company ja la portava | Noves |
+  |---|---|---|---|
+  | Envellida (150 sopes) | 2.426 (0,016 % de les parelles) | 2.246 | 180 (0,0012 %) |
+  | Barrejada (150 sopes) | 25.652 (0,171 %) | 0 | 25.652 (0,171 %) |
+  | Nova (150 sopes) | 2.560 (0,017 %) | 0 | 2.560 (0,017 %) |
+  | El 1034 (33 captures) | 842 | 803 | 39 |
+  | El 1034, a l'època 5.500 | 313 | 312 | 1 |
+
+  - **Com s'han comptat** (l'equip, en verificar l'auditoria 31): les mateixes parelles, executades una altra vegada, mirant també si el
+    company ja portava la finestra abans d'executar-se (l'script de l'auditor 1, a les 150 sopes envellides i les 33 del 1034; les 183
+    línies que en surten són idèntiques a `escriptures.jsonl`). A les barrejades i a les noves, el company no porta mai la finestra abans
+    (0 de 15 milions de parelles a cadascuna). La cota de l'auditor 1, sense executar res, en dava 167 a l'envellida: 16 finestres que el
+    company portava abans s'esborren durant la interacció.
+  - **Què vol dir:** el sentit del criteri es manté, i amb més força: comptant només les noves, la sopa envellida en fa unes 140
+    vegades menys que la mateixa barrejada (no deu), i unes 14 menys que la nova. Però **el salt del 1034 a l'època 5.500 no és de
+    còpies:** les cel·les del brot, veïnes, ja compartien les finestres, i «és el brot» no se sosté.
+- **Les còpies de trossos** (AUD-187), una mesura de la nota (§4.2) que no era al §7: a la sopa envellida, el 0,04 % de les còpies són dins
+  de tirades de 8 o més (38.231 de 90,5 milions); a la barrejada, l'1,0 %, i a la nova, el 0,6 %. Les instruccions s'hi amunteguen amb
+  escriptures soltes, no amb blocs: és la diferència amb els «propagadors» d'Amoeba (Greenbaum i Pargellis, 2016).
+- **La línia de base de la barrejada** (AUD-187): també s'enriqueix unes 6 vegades. Que un `<` al primer byte faci més `<` és, sobretot, una
+  regla de BFF. El que és propi de la sopa envellida és que hi ha més programes que comencen amb `<` (el 7,46 %, contra el 4,03 % dels seus
+  bytes). Les dades d'aquest pas descriuen d'on surten els `<` nous; no diuen per què n'hi ha més al primer byte, ni que això faci acumular la
+  sopa. I el 54,8 % és una associació de la traça, no una prova causal (AU2-155).
+- **La dispersió «en una ronda»** (AU2-155) és la diferència mitjana de 10⁵ parelles a l'atzar, amb reemplaçament, executades una vegada
+  cadascuna; no és l'evolució d'una sopa.
+- **`escriptures.jsonl` no diu de quin commit surt ni amb quin Node** (l'auditor 1). Que el càlcul es va fer des de `9664d07` només es pot
+  comprovar refent-lo, com ells han fet amb vuit sopes. Les sortides que vinguin portaran el commit i la versió de Node, com la línia d'inici
+  dels registres del 2b (`CLAUDE.md`).

@@ -1893,6 +1893,16 @@
       <li><strong>Una ronda d'auditoria</strong> dels resultats exploratoris de B1 v0.7 i de la maduració, com mana el carril d'explorar.</li>
       <li><strong>El nivell 2 de B1 (la sopa),</strong> si es fa, anirà amb un disseny preregistrat. Ara el projecte es concentra en la maduració.</li>
     </ul>
+
+    <div class="pending">
+      <p><strong>Precisat (auditoria 31, 13-11-2026).</strong> Els dos auditors van refer les quatre anàlisis des d'una còpia del càlcul, i surten idèntiques byte a byte; l'auditor 1 va repetir sencera la xifra principal (C0 amb D½), i l'auditor 2 va tornar a comptar els estrats i els caps amb un programa seu. Totes les xifres d'aquesta entrada hi són. Quatre precisions:</p>
+      <ul>
+        <li><strong>Què compta una condició</strong> (AUD-186). A la taula de la prova d'autonomia, una condició compta si el programa hi és <em>hereditari</em> amb companys inerts (es copia, i la còpia també es copia), amb el programa primer o segon; no n'hi ha prou que s'hi copiï. A l'<a href="#entrada-18">entrada 18</a>, «es copia» vol dir una altra cosa: una còpia al company, en una sola generació.</li>
+        <li><strong>«La corba puja sempre».</strong> ρ baixa una mica de p = 0,01 a 0,03 (de 3,93·10⁻⁶ a 3,69·10⁻⁶), dins dels intervals; ρ_aut sí que puja sempre. No hi ha cap màxim a l'interior, i el més alt és a 0,999.</li>
+        <li><strong>«Per sota de 9 instruccions no n'hi ha cap»</strong> és de la mostra: 9 és una cota superior del mínim, com diu l'anàlisi. I que no es copiïn amb companys inerts vol dir que necessiten el company, el seu codi o els seus bytes; no prova que la còpia la faci el codi del company (AU2-153).</li>
+        <li><strong>El 6,25 de les sopes del pilot</strong> és una comparació aparellada sobre programes sintètics; no és l'efecte dels veïns d'una sopa que evoluciona (l'auditor 2).</li>
+      </ul>
+    </div>
   </article>
 
   <article id="entrada-18">
@@ -1971,6 +1981,20 @@
       <li><strong>Una ronda d'auditoria</strong> dels resultats exploratoris de B1 v0.7 i dels passos 2a i 2b, com mana el carril d'explorar.</li>
       <li><strong>El pilot de la línia:</strong> mesurar per separat l'aparició i l'arrelament, en mons nous, amb braços que conservin la composició i en canviïn la disposició. La regla del primer byte en dona un candidat d'intervenció. El disseny, abans de calcular res.</li>
     </ul>
+
+    <div class="pending">
+      <p><strong>Correccions de l'auditoria 31 (13-11-2026).</strong> Els dos auditors van refer les xifres d'aquesta entrada des dels registres, i l'auditor 1, vuit sopes del pas 2a i un món sencer del 2b: tot quadra. Però, cadascú pel seu compte, tots dos hi van trobar que la lectura diu més del que mostren les dades. El text de dalt es queda tal com era.</p>
+      <ul>
+        <li><strong>«Quan comença, a cap sopa no hi ha replicadors fets» i «La vida que s'hi estableix després no hi era»</strong> (AUD-189, AU2-153, AU2-154). El pas 2b només torna a provar amb companys inerts les cel·les que l'escaneig dona com a positives, i l'escaneig se'n deixa: a 2 de 16 sopes envellides, l'auditor 1 hi va trobar una cel·la hereditària amb companys inerts que l'escaneig no havia vist (fràgils: en 2 condicions de 100). I a 11 sopes barrejades n'hi ha una entre els positius; a dues, en totes 100 condicions. Ha de dir: <em>de les cel·les que la prova del cens hi troba, gairebé cap no és hereditària amb companys inerts; els recomptes depenen de l'escaneig, i no permeten dir que no n'hi hagi d'altres</em>. Les hereditàries no es poden comparar entre les sopes.</li>
+        <li><strong>Els factors de la taula del pas 2b</strong> són dels positius de l'escaneig, i en són cotes inferiors. L'ordre de les tres sopes no en depèn, però a la sopa envellida l'escaneig se'n deixa, en proporció, més que a les altres: a les 16 que va mirar l'auditor 1, 3 cel·les que es copien fora de l'escaneig, contra 2 de dins. Les «80 vegades menys» que la nova podrien ser menys.</li>
+        <li><strong>«Es copia»</strong> (AUD-186). A l'<a href="#entrada-17">entrada 17</a> vol dir ser hereditari amb companys inerts; aquí, una còpia al company, en una sola generació. La comparació amb B1 s'ha de fer amb les hereditàries de l'escaneig que també ho són amb companys inerts: 5 de 1.025, 0,033 per sopa barrejada (de 0,011 a 0,078), contra unes 0,06 (de 0,03 a 0,11) que en dona B1 amb els programes i els companys de les sopes del pilot. Coincideixen, però amb 5, no amb 11.</li>
+        <li><strong>«Obra del company»</strong> (AU2-153). Que un programa no es copiï amb companys inerts vol dir que necessita el company, el seu codi o els seus bytes; no prova que la còpia la fes el codi del company. També val per a l'<a href="#entrada-16">entrada 16</a>.</li>
+        <li><strong>«Les còpies de 16 bytes»</strong> (AUD-185, AU2-155). El criteri 4 compta les parelles en què el company acaba amb una finestra de 16 bytes del primer programa, encara que ja la portés abans: una parella sense cap instrucció ja hi suma. Al 1034, a l'època 5.500, el company ja la portava a 312 de 313: <strong>el salt del brot no és de còpies</strong>, i «és el brot» no se sosté. Comptant només les noves, la sopa envellida en fa 180 de 15 milions de parelles, unes 140 vegades menys que la mateixa barrejada (no deu), i unes 14 menys que la nova. El sentit del criteri es manté, amb més força.</li>
+        <li><strong>Dos resultats del pas 2a que hi faltaven</strong> (AUD-187). Les còpies de trossos, una mesura de la nota: a la sopa envellida, només el 0,04 % de les còpies són dins de tirades de 8 o més (l'1,0 % a la barrejada, el 0,6 % a la nova). Les instruccions s'hi amunteguen amb escriptures soltes, no amb blocs, a diferència dels «propagadors» d'Amoeba. I la línia de base de la barrejada: també s'enriqueix unes 6 vegades. <strong>Que un <code>&lt;</code> al primer byte faci més <code>&lt;</code> és, sobretot, una regla de BFF;</strong> el que és propi de la sopa envellida és que hi ha més programes que comencen amb <code>&lt;</code> (el 7,5 %, contra el 4 % dels seus bytes). «La regla del primer byte hi té un efecte fort» ha de dir: <em>és un mecanisme de BFF que la sopa envellida aprofita; que això la faci acumular, encara s'ha de provar</em>. I el 55 % és una associació de la traça, no una prova causal (AU2-155).</li>
+        <li><strong>La dispersió «en una ronda»</strong> (AU2-155) és la diferència mitjana de 10⁵ parelles a l'atzar, amb reemplaçament, executades una vegada cadascuna; no és l'evolució d'una sopa.</li>
+      </ul>
+      <p>El pilot, doncs, ha de provar les cel·les amb companys inerts directament, i no només els positius d'un escaneig, i comptar només les còpies noves (els dos auditors; <code>docs/disseny.md</code>). Ho hem corregit també als README de cada pas, a la matriu de novetat i als README de l'arrel.</p>
+    </div>
   </article>
 
   <script type="module" src="quadern.js"></script>

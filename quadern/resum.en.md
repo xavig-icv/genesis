@@ -188,6 +188,13 @@ which Knierim et al. (2026) had already seen with their detector.
 The effect of not being able to write to one's own half (S1) comes from both heads (2.36 and 1.48 times, 3.95 together). The census
 counts of the soup before life (entry 16) must be redone with inert partners.
 
+*Clarified after audit 31 (13 November 2026).* Both auditors redid the four analyses byte for byte. In the autonomy table, a condition
+counts if the program is *heritable* with inert partners (it copies itself and the copy copies itself too), not merely if it copies
+itself; in entry 18, "copies itself" means something else (one copy to the partner). "None below 9 instructions" holds for the sample
+(9 is an upper bound of the minimum), and failing with inert partners means needing the partner, its code or its bytes; it does not
+prove that the partner's code made the copy. The 6.25 of the pilot soups is a paired comparison on synthetic programs, not the effect
+of the neighbours in an evolving soup.
+
 <a id="entry-18"></a>
 ## Entry 18 · 12 November 2026 · The soup before life, part two: who writes the bytes, and who really copies itself (exploratory)
 
@@ -202,3 +209,16 @@ replicating was retested in 100 conditions with partners that have no instructio
 111 in the same aged bytes shuffled. The arrangement of the aged soup undoes what its composition would do. At the start, no soup has
 ready-made heritable replicators (0, 0 and 0.07 per soup, as entry 17's curve predicts for the shuffled soup). Whether maturation acts
 on appearance or on taking root, we do not know yet: a count at one moment is not a rate.
+
+*Corrected after audit 31 (13 November 2026).* Both auditors redid the figures, and each found on their own that the reading went beyond
+the data. Step 2b only retested the scan's positives, and the scan misses real replicators: in 2 of 16 aged soups, auditor 1 found a
+fragile cell heritable with inert partners that the scan had not seen, and 11 shuffled soups have one among the positives (two in all 100
+conditions). So the counts are lower bounds of the scan's positives, heritable cells cannot be compared between soups, and "no soup has
+ready-made replicators" and "the life that later becomes established was not there" do not hold. The order of the three soups holds, but
+not the factors: the scan misses proportionally more in the aged soup. "Copies itself" here means one copy to the partner, not entry 17's
+heritable self-copier; the comparable B1 figure is 5 of 1,025 scan heritables (0.033 per shuffled soup, against about 0.06 from B1). Failing
+with inert partners means needing the partner, not that the partner's code made the copy. The "16-byte copies" counted windows the partner
+already carried: in world 1034 at epoch 5,500, 312 of 313, so the jump is not the outbreak copying; counting only new ones, the aged soup
+makes about 140 times fewer than its shuffled bytes, not ten. Only 0.04% of the aged soup's copies are in runs of 8 or more: single
+writes, not Amoeba-like propagators. And a shuffled soup is enriched about 6 times too, so the first-byte rule is a rule of BFF; what is
+specific to the aged soup is that more of its programs start with `<`.

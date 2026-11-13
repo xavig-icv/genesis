@@ -1,7 +1,8 @@
 # La matriu de novetat de la línia de la maduració
 
 **Esborrany del 12-11-2026**, posat al dia el mateix dia tres vegades: amb les fonts obertes que va proposar el responsable, amb els PDF que
-ens va fer arribar, i, al vespre, amb les respostes dels dos auditors a la consulta X-105 (la secció del final). És la quarta decisió de
+ens va fer arribar, i, al vespre, amb les respostes dels dos auditors a la consulta X-105 (la secció del final). El 13-11-2026, amb les
+correccions de l'auditoria 31 (A2, A5, A6 i el contrapunt; la secció del final). És la quarta decisió de
 l'11-11-2026 (`docs/disseny.md`; AU2-146): abans de dissenyar cap confirmació, comparar cada afirmació que la línia podria fer amb el que ja
 s'ha publicat, dient com s'ha llegit cada font i quan. **No és una revisió sistemàtica.** L'article de 2017 de Greenbaum i Pargellis és de
 pagament, i no l'hem pogut llegir. La versió del congrés de 2016, amb un resum que diu el mateix, és oberta, i l'hem llegida sencera.
@@ -34,11 +35,11 @@ pagament, i no l'hem pogut llegir. La versió del congrés de 2016, amb un resum
 | | L'afirmació | 2024 | Knierim (2026) | Greenbaum i Pargellis (2016) | C G (2017) | Adami i LaBar (2017) | Pigozzi i Levin (2026) | Jha (2026) | Estat a Genesis |
 |---|---|---|---|---|---|---|---|---|---|
 | A1 | La sopa sense vida de BFF deriva per un camí comú cap a una composició rica en instruccions (el `<`, deu vegades l'atzar). A BFF, Agüera y Arcas (2025) ja hi descriu fragments curts que es copien des del començament | En part: abans de la transició l'HOE puja i els bytes diferents baixen; cap freqüència de bytes | En part: la distribució dels bytes que la sopa escriu poc abans que la prengui un replicador; sense el curs en el temps ni el mecanisme | **Hi és, a Amoeba:** el joc d'instruccions s'esbiaixa sempre, de 25 instruccions efectives a unes 20 en les primeres 50.000 generacions, mesurat amb l'entropia de les instruccions soles (la mateixa mena de mesura que la nostra D, no la mateixa magnitud); abans dels replicadors hi pugen les que fan servir (els NOP, des d'unes 70.000 generacions abans, i el MALL). Ja s'esbiaixava a Amoeba-II i III, sense blocs | No hi surt: no hi ha cap sopa sense replicadors | En part, com a hipòtesi que no proven: l'activitat de molècules que no es copien canviaria la composició dels monòmers | No hi surt | No hi surt | Exploratori (entrada 16) |
-| A2 | La sopa envellida té menys programes que es copien que una de nova: les instruccions s'amunteguen en pocs programes | No hi surt | En part, per a la composició: amb els bytes que escriu la sopa, la cerca a l'atzar troba el primer replicador unes 17 vegades abans que amb bytes uniformes, una màquina d'escriure esbiaixada a BFF. Sense la disposició ni la sopa tal com és | No hi surt: no compten quants programes es copien abans dels replicadors | No hi surt | No hi surt. És el contrapunt (vegeu sota): amb una composició propera a la dels replicadors, en troben 250 vegades més (seqüències de 15 instruccions), però en seqüències a l'atzar, sense cap disposició | No hi surt | No hi surt | Exploratori (entrades 16 i 18): amb companys inerts, se sosté a tots 150 mons (el pas 2b: 0,07, 5,9 i 111 cel·les per sopa que es copien soles, a l'envellida, la nova i la barrejada) |
+| A2 | La sopa envellida té menys programes que es copien que una de nova: les instruccions s'amunteguen en pocs programes | No hi surt | En part, per a la composició: amb els bytes que escriu la sopa, la cerca a l'atzar troba el primer replicador unes 17 vegades abans que amb bytes uniformes, una màquina d'escriure esbiaixada a BFF. Sense la disposició ni la sopa tal com és | No hi surt: no compten quants programes es copien abans dels replicadors | No hi surt | No hi surt. És el contrapunt (vegeu sota): amb una composició propera a la dels replicadors, en troben 250 vegades més (seqüències de 15 instruccions), però en seqüències a l'atzar, sense cap disposició | No hi surt | No hi surt | Exploratori (entrades 16 i 18): amb companys inerts, l'ordre se sosté a tots 150 mons en còpies d'una generació (el pas 2b: 0,07, 5,9 i 111 cel·les per sopa que es copien al company, a l'envellida, la nova i la barrejada). Són dels positius de l'escaneig, i en són cotes inferiors: l'escaneig se'n deixa, i a l'envellida, en proporció, més. Les hereditàries amb companys inerts no es poden comparar entre les sopes (AUD-186, AUD-189 = AU2-153) |
 | A3 | A igual temps des d'una sopa neta, la vida s'estableix més sovint en una sopa envellida | No hi surt: cap prova a una edat fixada | No hi surt | No hi surt. Els autors diuen que, a Amoeba, l'aparició es fa menys probable amb el temps, però és la distribució dels temps de les 25 tirades amb replicadors, sense les 24 censurades, i d'un altre estimand (el primer replicador, no l'establiment): només es pot comparar qualitativament | No hi surt | En part, com a hipòtesi que no proven: si la composició canvia «en la bona direcció», els replicadors podrien ser inevitables. I ja diuen que l'esbiaixament pot ajudar o perjudicar, segons l'entorn | No hi surt: cap edat del medi | No hi surt | **Confirmat** (entrada 14, preregistrat) |
 | A4 | L'establiment té una part d'atzar: les dues branques d'un mateix món s'hi comporten de manera compatible amb la independència | No hi surt | No hi surt | No hi surt: 49 tirades independents, sense branques | No hi surt. Una pregunta veïna: quan competeixen tots els replicadors mínims, qui pren la població depèn poc de l'atzar (tres genotips, el 65 % de les 200 rèpliques) | No hi surt | No hi surt | No hi surt | Exploratori (entrada 16): compatible amb la independència, amb poca potència (AUD-183, AU2-152) |
-| A5 | El `<` s'acumula per la regla del primer byte (el cap d'escriptura comença al primer byte, i un `<` el porta al final del company) | En part, el mètode: els *tokens* ja segueixen l'origen de cada byte a cada còpia. No la regla del primer byte | No hi surt | Un anàleg, no el mateix: els «propagadors», bucles de còpia que no s'acaben (no fan cap fill) i escampen per la memòria les seves instruccions i d'altres. Els dedueixen de les freqüències de parelles; no segueixen qui escriu cada instrucció | No hi surt | No hi surt | No hi surt | No hi surt | Exploratori (l'entrada 18, el pas 2a): el `<` s'escampa copiant-lo (85 %), i el 55 % dels nous surten de parelles que comencen amb `<`, unes 7 vegades la seva part (una línia de base calculada després) |
-| A6 | Una prova de replicació amb companys de soroll dona falsos positius de l'autonomia (programes que només es copien amb el codi del company) quan s'escaneja una sopa sencera | No hi surt (no ho hem buscat) | En part: el seu detector ja vol evitar els falsos positius (deu branques de cinc execucions seguides, amb soroll nou cada vegada), sense mesurar-ne cap taxa | No hi surt. Hi expliquen una dificultat veïna: saber quan apareix un ancestre (en registren un quan es copia fidelment quatre generacions) | No hi pot sortir: a Avida, la prova es fa amb el programa sol | No hi pot sortir, per la mateixa raó | No hi surt | — | Exploratori (entrades 16, 17 i 18): amb companys inerts, el 99,7 % dels positius de l'escaneig de les sopes envellides eren de la prova |
+| A5 | El `<` s'acumula per la regla del primer byte (el cap d'escriptura comença al primer byte, i un `<` el porta al final del company): una regla de BFF, que la sopa envellida aprofitaria perquè hi té més programes que comencen amb `<` (AUD-187) | En part, el mètode: els *tokens* ja segueixen l'origen de cada byte a cada còpia. No la regla del primer byte | No hi surt | Un anàleg, no el mateix: els «propagadors», bucles de còpia que no s'acaben (no fan cap fill) i escampen per la memòria les seves instruccions i d'altres. Els dedueixen de les freqüències de parelles; no segueixen qui escriu cada instrucció | No hi surt | No hi surt | No hi surt | No hi surt | Exploratori (l'entrada 18, el pas 2a): el `<` s'escampa copiant-lo (85 %), amb escriptures soltes (només el 0,04 % de les còpies són dins de tirades de 8 o més: no són propagadors). El 55 % dels nous surten de parelles que comencen amb `<`, unes 7 vegades la seva part (una línia de base calculada després); però la sopa barrejada també s'hi enriqueix unes 6 vegades. El que és propi de l'envellida és que més programes hi comencen amb `<` (el 7,5 %, contra el 4 % dels seus bytes). És una associació de la traça, no una prova causal (AU2-155), i que faci acumular la sopa és per confirmar (AUD-187) |
+| A6 | Una prova de replicació amb companys de soroll dona falsos positius de l'autonomia (programes que només es copien amb l'ajuda del company, el seu codi o els seus bytes) quan s'escaneja una sopa sencera, i també es deixa replicadors de debò | No hi surt (no ho hem buscat) | En part: el seu detector ja vol evitar els falsos positius (deu branques de cinc execucions seguides, amb soroll nou cada vegada), sense mesurar-ne cap taxa | No hi surt. Hi expliquen una dificultat veïna: saber quan apareix un ancestre (en registren un quan es copia fidelment quatre generacions) | No hi pot sortir: a Avida, la prova es fa amb el programa sol | No hi pot sortir, per la mateixa raó | No hi surt | — | Exploratori (entrades 16, 17 i 18): amb companys inerts, el 99,7 % dels positius de l'escaneig de les sopes envellides no s'hi copien (necessiten el company; AU2-153). I l'escaneig es deixa replicadors fràgils: a 2 de 16 sopes envellides, una cel·la hereditària amb companys inerts que no hi era (AUD-189) |
 | A7 | La maduració actua sobre l'arrelament dels replicadors, no sobre la seva aparició | No hi surt | En part: sense fusions, els replicadors apareixen però no prenen la sopa | No hi surt cap prova. La seva explicació actua sobre l'aparició: els replicadors apareixen quan la densitat de blocs és prou alta | En part: separen que hi hagi replicadors (un de cada 200 milions de programes de 8 instruccions) de qui pren la població quan n'hi ha molts (els de més eficàcia). Hi compta el replicador, no l'estat de la sopa | No hi surt. La seva hipòtesi actua sobre l'aparició (la probabilitat de trobar un replicador per atzar) | **En part, en un model químic:** intervenir en l'organització del medi abans dels replicadors en puja la persistència (874 contra 716) i no canvia el temps fins al primer replicador (36 % contra 37 %) | En part: proves d'invasió amb llinatges evolucionats, sembrats a l'1 % en una sopa nova (A.2); no amb un fundador acabat de néixer | **Per provar** (el pilot). Encara no sabem on actua (AUD-184, AU2-151) |
 
 **Cicala i altres (2026), Mathis i altres (2024) i Peng, Linderoth i Baum (2022)** no tracten cap d'aquestes afirmacions: la coevolució
@@ -90,8 +91,10 @@ de la topologia de les xarxes, sense temps ni ritmes.
       maduració, encara no ho sabem (AUD-184 = AU2-151);
     - la hipòtesi parla d'aparició, i la sèrie de la maduració mesura l'establiment. `shuffle-all` contra `reinit` (82 contra 40
       establiments, a l'entrada 14, preregistrat) hi és coherent pel que fa a l'establiment, però no en prova l'aparició.
-    - **Amb companys inerts** (el pas 2b; l'entrada 18), el contrapunt es manté a tots 150 mons: 111 cel·les per sopa que es copien soles a
-      la barrejada, 5,9 a la nova i 0,07 a l'envellida. Hereditàries de debò, gairebé cap: 0, 0 i 0,07 per sopa.
+    - **Amb companys inerts** (el pas 2b; l'entrada 18), el contrapunt es manté a tots 150 mons en còpies d'una generació: 111 cel·les per
+      sopa que es copien al company a la barrejada, 5,9 a la nova i 0,07 a l'envellida. Són dels positius de l'escaneig, i en són cotes
+      inferiors (AUD-189 = AU2-153). Les hereditàries amb companys inerts, entre aquests positius, 0, 0 i 0,07 per sopa, no es poden
+      comparar entre les sopes: l'escaneig se'n deixa, també a les envellides (AUD-186, AUD-189, AU2-154).
   - **Per programes a l'atzar** (B1 v0.7, la §13; l'entrada 17, exploratori): amb companys inerts, amb la composició de les sopes
     envellides (un 11,3 % d'instruccions), uns 6·10⁻⁷ programes es copien sols i són hereditaris; amb bytes uniformes, cap de 10⁷ (la corba
     en dona uns 6·10⁻¹⁰, amb un interval que arriba a 10⁻⁷). La màquina d'escriure esbiaixada funciona a BFF sense l'ajuda del company, com
@@ -159,14 +162,16 @@ de la topologia de les xarxes, sense temps ni ritmes.
     nou, amb els seus límits: un contrast preregistrat de l'establiment a BFF després de la maduració (tots dos auditors). No en prova cap
     mecanisme, ni la hipòtesi d'Adami i LaBar (AU2-151). La comparació amb Amoeba només és qualitativa.
   - **A2,** amb el contrapunt de la màquina d'escriure esbiaixada: si és nou, és que la disposició desfà el que la composició faria.
-    Amb el pas 2b, se sosté amb un recompte net (l'entrada 18).
+    Amb el pas 2b, se sosté en còpies d'una generació, dels positius de l'escaneig (l'entrada 18; AUD-186, AUD-189).
   - **A4** (compatible amb l'atzar, amb poca potència) i **A5** (un mecanisme concret). D'A5, Greenbaum i Pargellis en tenen un anàleg, els
-    propagadors, i el mètode de seguir els bytes ja és a l'article de 2024: el que pot ser nou és la regla del primer byte, a la qual el
-    pas 2a dona suport descriptiu (l'entrada 18).
+    propagadors, i el mètode de seguir els bytes ja és a l'article de 2024. La regla del primer byte és de BFF: la sopa barrejada també
+    s'hi enriqueix. El que pot ser nou és que la sopa envellida l'aprofita, amb escriptures soltes i no amb blocs (el pas 2a, descriptiu;
+    AUD-187).
   - **I, sobretot, A7** (on actua la maduració), que és el que la línia vol provar. Pigozzi i Levin en tenen un precedent en part, en un
     model químic. A BFF, encara no sabem si la maduració actua sobre l'aparició, sobre l'arrelament o sobre totes dues (AUD-184 = AU2-151).
 - **El més segur de tot és metodològic** (A6), però és petit: a Avida la prova es fa amb el programa sol, i Knierim i altres ja dissenyen
-  el seu detector per evitar els falsos positius.
+  el seu detector per evitar els falsos positius. Que la mateixa prova també es deixi replicadors fràgils ho hem vist a l'auditoria 31
+  (AUD-189).
 
 ## El que falta abans de dir res
 
@@ -177,6 +182,8 @@ de la topologia de les xarxes, sense temps ni ritmes.
    la mateixa família dominant? Si és així, la família ja hi era abans de la branca, i això diria alguna cosa d'A7. Al pas 1 hi ha 23 mons
    amb la vida a totes dues branques (7, 12 i 4): poca potència, i es podria mirar sense simular si els registres guarden prou de cada
    família.
+5. **Un recompte d'hereditaris que no depengui de l'escaneig** (AUD-189 = AU2-153): la prova amb companys inerts a totes les cel·les, o un
+   registre de les còpies durant la simulació. I una mesura de còpies que compti només les noves (AUD-185 = AU2-155).
 
 **Ja fetes, el 12-11-2026:** la lectura sencera de Greenbaum i Pargellis (2016) (s'hi acumulen els NOP, el MALL i les parelles del bucle de
 còpia; s'escampen amb propagadors; i no ho proven amb cap intervenció); la d'Adami i LaBar (2017), el precedent més proper de la hipòtesi de
@@ -198,3 +205,20 @@ contradir, cadascú pel seu compte. Totes les afirmacions comprovades són certe
 
 **On és tot:** al repositori de les auditories, que no es publica (`equip/consulta-novetat/sintesi.md`, amb la taula de tres, i
 `equip/annexos-x105/verificacio/`). Al xat, X-105 a X-107.
+
+## L'auditoria 31 (13-11-2026)
+
+La ronda única dels resultats exploratoris del carril d'explorar (B1 v0.7 i els passos 2a i 2b). Tots dos auditors van refer les xifres, que
+quadren, i, cadascú pel seu compte, hi van trobar les mateixes dues coses. Tots tres coincidim en les correccions, que ja són a dalt.
+
+| Troballa | Gravetat | Què | La correcció |
+|---|---|---|---|
+| AUD-189 = AU2-153 | Mitjana | El pas 2b només torna a provar els positius de l'escaneig, i l'escaneig es deixa replicadors fràgils | A2, A6 i el contrapunt: cotes inferiors dels positius de l'escaneig; les hereditàries no es comparen entre les sopes |
+| AU2-154 | Mitjana | «A cap sopa no hi ha replicadors fets»: 11 sopes barrejades en tenen un, dos en totes 100 condicions | Retirada (l'entrada 18, un requadre) |
+| AUD-185 = AU2-155 | Baixa i mitjana | El criteri 4 del pas 2a compta finestres que el company ja portava | Les còpies noves, comptades: 180 a l'envellida, unes 140 vegades menys que la barrejada i unes 14 menys que la nova (el sentit es manté); el salt del brot del 1034 no és de còpies |
+| AUD-186 | Baixa | «Es copia» (una generació) no és «hereditari amb companys inerts» (la xifra de B1) | A2 i el contrapunt, amb els dos noms; la comparació amb B1, amb 5 de 1.025 |
+| AUD-187 | Baixa | Les còpies de trossos (0,04 %) i la línia de base de la barrejada (6 vegades) no eren a l'entrada 18 | A5, reescrita: una regla de BFF que la sopa envellida aprofita, amb escriptures soltes |
+| AUD-188 | Baixa | Les correccions de X-105 no havien arribat al README del pas 1 | Un requadre |
+
+**On és tot:** al repositori de les auditories, que no es publica (`equip/sintesi-audit31.md`, amb la taula de tres, i
+`equip/annexos-audit31/verificacio/`). Al xat, X-108 a X-110.

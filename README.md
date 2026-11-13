@@ -280,8 +280,9 @@ hem tornat a provar amb companys sense cap instrucció, i hem comptat els replic
 dels programes ([pla](docs/pla-b1.md)). Tot és exploratori.
 - **Amb la meitat d'instruccions,** la meitat dels replicadors es copien sols en alguna condició, i el 18 % en totes.
   Amb els bytes d'una sopa nova, cap.
-- **Com més instruccions, més replicadors,** però per sota de 9 instruccions cap no es copia sol: aquests els copia el
-  company de la prova. Amb un 10 % d'instruccions, només el 3 % dels que troba la prova es copien sols.
+- **Com més instruccions, més replicadors,** però per sota de 9 instruccions no n'hem trobat cap que es copiï sol:
+  aquests necessiten el company de la prova. Amb un 10 % d'instruccions, només el 3 % dels que troba la prova es copien
+  sols.
 - **La composició importa:** amb la d'una sopa envellida, uns 6 de cada 10 milions de programes es copien sols; amb
   bytes a l'atzar, cap de 10 milions. És la «màquina d'escriure esbiaixada» d'Adami i LaBar (2017), que Knierim i altres
   (2026) ja havien vist a BFF; aquí, sense l'ajuda del company.
@@ -292,13 +293,18 @@ Vegeu l'[entrada 17](quadern/index.html#entrada-17).
 
 ### Qui escriu els bytes, i qui es copia de debò (exploratori)
 
-El segon pas de la sopa abans de la vida, amb les captures de les sèries i sense simular res.
-- **El `<` s'escampa copiant-lo,** i sobretot des dels programes que ja comencen amb `<`: en fan el 55 % dels nous, unes
-  7 vegades la seva part. La regla del primer byte hi té un efecte fort.
-- **Gairebé tots els «replicadors» de l'escaneig eren obra del company de la prova:** amb companys sense cap
-  instrucció, se'n copien sols 0,07 per sopa a la sopa envellida, 5,9 a una de nova i 111 als mateixos bytes barrejats.
-- **L'ordre es manté a tots 150 mons:** la disposició de la sopa envellida desfà el que la seva composició faria.
-- **Quan comença, cap sopa no té replicadors fets.** On actua la maduració, que n'apareguin o que hi arrelin, encara no
+El segon pas de la sopa abans de la vida, amb les captures de les sèries i sense simular res. Els dos auditors en van
+refer les xifres, i en van corregir la lectura (l'auditoria 31).
+- **El `<` s'escampa copiant-lo, amb escriptures soltes,** i sobretot des dels programes que ja comencen amb `<`: en fan
+  el 55 % dels nous, unes 7 vegades la seva part. Però una sopa barrejada també s'hi enriqueix unes 6 vegades: és una
+  regla de BFF, que la sopa envellida aprofita perquè hi té més programes que comencen amb `<`.
+- **Gairebé tots els «replicadors» de l'escaneig necessitaven el company de la prova:** amb companys sense cap
+  instrucció, de les cel·les que l'escaneig hi troba, se'n copien al company 0,07 per sopa a la sopa envellida, 5,9 a
+  una de nova i 111 als mateixos bytes barrejats.
+- **L'ordre es manté a tots 150 mons:** la disposició de la sopa envellida desfà el que la seva composició faria. Els
+  factors, en canvi, són dels positius de l'escaneig, que es deixa replicadors de debò.
+- **Alguna sopa ja en té de fets al començament:** a 11 sopes barrejades n'hi ha un d'hereditari, i a 2 de 16 sopes
+  envellides, un de fràgil que l'escaneig no veia. On actua la maduració, que n'apareguin o que hi arrelin, encara no
   ho sabem.
 
 Vegeu l'[entrada 18](quadern/index.html#entrada-18).

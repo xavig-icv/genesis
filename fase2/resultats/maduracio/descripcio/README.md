@@ -111,6 +111,20 @@ alt que el món quiet, el corrent fa alguna cosa més que madurar la sopa.
 
 # Resultats (11-11-2026)
 
+> **Corregit (la consulta X-105, 12-11-2026, i l'auditoria 31, 13-11-2026; AUD-188).** Tres frases d'aquests resultats diuen més del que
+> mostren les dades. Es queden tal com eren, i valen les correccions de l'[entrada 16](../../../../quadern/index.html#entrada-16):
+> - **«El que canvia amb l'edat no és quants n'hi ha, sinó quants arrelen»** (aquí a sota). Un recompte en un moment no és un ritme
+>   d'aparició. Encara no sabem si la maduració actua sobre l'aparició, sobre l'arrelament o sobre totes dues: ho ha de dir el pilot que les
+>   mesuri per separat (AUD-184 = AU2-151).
+> - **«Dues branques d'un mateix món s'estableixen de manera independent»** (P3 i el final). Els recomptes en són compatibles, però amb
+>   poca potència, i la independència seria, com a molt, condicional: les dues branques comparteixen la història del món (AUD-183, AU2-152).
+> - **«Les hereditàries soles són falsos positius de la prova»** (P5, l'escaneig del 1034 i el final). Ho són de l'autonomia: no es copien
+>   sense el company (AU2-152). I que no es copiïn amb companys inerts no prova que la còpia la fes el codi del company (AU2-153).
+>
+> I una precisió: «la sopa vella té menys cel·les que es copien que la nova» és dels positius de l'escaneig. El pas 2b ho manté amb companys
+> inerts, però l'escaneig es deixa replicadors de debò, i les hereditàries no es poden comparar entre les sopes (AUD-189,
+> `../recompte/README.md`).
+
 Tot és exploratori: una descripció feta després de les decisions, amb moltes mirades. Les xifres són a les sortides dels scripts.
 
 **En una frase:** la sopa sense vida madura igual a tots els mons, i la vida s'hi estableix més sovint com més vella és. Però la sopa

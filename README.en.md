@@ -197,8 +197,8 @@ counted replicators by the share of instructions in the programs ([plan](docs/pl
 exploratory.
 - **With half of the bytes being instructions,** half of the replicators copy themselves in some condition, and 18% in
   all of them. With the bytes of a fresh soup, none.
-- **The more instructions, the more replicators,** but below 9 instructions none copies itself: the test's partner
-  copies those. With 10% instructions, only 3% of those the test finds copy themselves.
+- **The more instructions, the more replicators,** but below 9 instructions we found none that copies itself: those
+  need the test's partner. With 10% instructions, only 3% of those the test finds copy themselves.
 - **Composition matters:** with that of an aged soup, about 6 in 10 million programs copy themselves; with random bytes,
   none in 10 million. This is Adami and LaBar's (2017) "biased typewriter", which Knierim et al. (2026) had already seen
   in BFF; here, without the partner's help.
@@ -208,15 +208,18 @@ exploratory.
 See notebook entry 17, in Catalan, or its [English summary](quadern/resum.en.md#entry-17).
 
 **Who writes the bytes, and who really copies itself (exploratory).** The second step of the soup before life, with the
-snapshots of the series and no new simulation.
-- **`<` spreads by being copied,** mostly from programs that already start with `<`: they make 55% of the new ones,
-  about 7 times their share. The first-byte rule has a strong effect.
-- **Almost all the "replicators" found by the scan were the work of the test's partner:** with partners that have no
-  instructions, 0.07 cells per soup copy themselves in an aged soup, 5.9 in a fresh one, and 111 in the same bytes
-  shuffled.
-- **The order holds in all 150 worlds:** the arrangement of the aged soup undoes what its composition would do.
-- **At the start, no soup has ready-made replicators.** Whether maturation acts on their appearance or on their taking
-  root, we do not know yet.
+snapshots of the series and no new simulation. Both auditors recomputed the figures and corrected how we read them
+(audit 31).
+- **`<` spreads by being copied, in single writes,** mostly from programs that already start with `<`: they make 55% of
+  the new ones, about 7 times their share. But a shuffled soup is enriched about 6 times too: it is a rule of BFF, which
+  the aged soup exploits because more of its programs start with `<`.
+- **Almost all the "replicators" found by the scan needed the test's partner:** with partners that have no
+  instructions, of the cells the scan finds, 0.07 per soup copy themselves to the partner in an aged soup, 5.9 in a
+  fresh one, and 111 in the same bytes shuffled.
+- **The order holds in all 150 worlds:** the arrangement of the aged soup undoes what its composition would do. The
+  factors, however, belong to the scan's positives, and the scan misses real replicators.
+- **Some soups already have one at the start:** 11 shuffled soups have a heritable one, and 2 of 16 aged soups a fragile
+  one that the scan did not see. Whether maturation acts on their appearance or on their taking root, we do not know yet.
 
 See notebook entry 18, in Catalan, or its [English summary](quadern/resum.en.md#entry-18).
 

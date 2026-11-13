@@ -279,16 +279,23 @@ Llegeix-los abans de proposar canvis.
 - Per provar la interfície es pot plantar un replicador des de la consola, però mai en un experiment.
 - **Dos carrils** (11-11-2026, `docs/disseny.md`):
   - **Explorar,** sense auditoria abans de calcular: una nota a git abans de calcular (la pregunta, les dades, les llavors, el pressupost
-    de màquina, dos dies com a molt, i què faria canviar d'opinió); des d'un commit net, amb l'script i la sortida tal com surt; la llista
-    de tot el que s'ha provat, també del que no ha sortit; cap llavor de cap pla ni cap dada d'una sèrie no decidida; l'etiqueta
+    de màquina, dos dies com a molt, i què faria canviar d'opinió); des d'un commit net, amb l'script i la sortida tal com surt (amb el
+    commit i la versió de Node a la sortida, com la línia d'inici dels registres del pas 2b); la llista de tot el que s'ha provat, també
+    del que no ha sortit; cap llavor de cap pla ni cap dada d'una sèrie no decidida; l'etiqueta
     «exploratori», també al quadern; una prova sencera curta abans d'un càlcul llarg. L'auditoria, després i en una sola ronda.
   - **Confirmar,** com ara: protocol, auditoria, etiqueta i segell, amb mons nous, i l'efecte mínim i la potència fixats abans.
 - **La línia de la maduració** (11-11-2026): on actua la maduració (que aparegui un replicador, o que hi arreli) i per quin procés. El
   pas 1 (exploratori) és a `fase2/resultats/maduracio/descripcio/`.
   - **Una hereditària s'ha de tornar a provar** abans de comptar-la com una aparició: les soles dels escanejos solen ser falsos positius de
-    l'autonomia (la còpia la fa el company de soroll; AU2-152).
+    l'autonomia (necessiten el company de soroll, el seu codi o els seus bytes; AU2-152, AU2-153).
   - **On actua, encara no ho sabem:** cap afirmació de si la maduració actua sobre l'aparició, sobre l'arrelament o sobre totes dues fins al
     pilot que les mesuri per separat (AUD-184 = AU2-151). Les branques d'un món, «compatibles amb la independència, amb poca potència»
     (AUD-183). La matriu de novetat, amb la consulta X-105, és a `docs/novetat-maduracio.md`.
   - **«La família dominant a l'establiment»,** i no «els fundadors» (AU2-147). Cap «llei» de la D sense un model que predigui fora de
     mostra (AU2-148). La idea general ja és a Greenbaum i Pargellis (2017) (AU2-146).
+  - **Un escaneig tornat a provar no és un recompte** (AUD-189 = AU2-153): els positius de la prova del cens, tornats a provar amb companys
+    inerts, en són una cota inferior, perquè l'escaneig es deixa replicadors fràgils. Per comptar hereditaris, o per dir que no n'hi ha, la
+    prova amb companys inerts a totes les cel·les, o un registre de les còpies. «Es copia al company» (una generació) i «hereditari amb
+    companys inerts» (la xifra de B1) són dues xifres, amb dos noms (AUD-186).
+  - **Una mesura de còpies compta només les noves** (AUD-185 = AU2-155): la finestra que el company no portava abans de la interacció, i,
+    al pilot, amb l'escriptura que l'ha feta.

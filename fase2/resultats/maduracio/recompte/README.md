@@ -109,6 +109,39 @@ del previst, perquè els va compartir amb el 2a.
 **Els límits:** és un recompte en un moment, no un ritme (AUD-184); «es copia» vol dir una còpia del programa al company en alguna de les
 100 condicions, no un replicador hereditari; i és exploratori, amb les sopes d'una sèrie ja decidida.
 
+## Correccions de l'auditoria 31 (13-11-2026)
+
+Els dos auditors van refer el resum des dels registres, i l'auditor 1, un món sencer (el 6095): tot quadra. La lectura, en canvi, deia més
+del que mostren les dades. El que hi ha a dalt es queda tal com era.
+
+- **Només s'hi tornen a provar els positius de l'escaneig** (AUD-189 = AU2-153). Les altres 58.855.417 cel·les de les 450 sopes no s'han
+  provat amb companys inerts, i l'escaneig, amb els sis intents de la prova del cens, es deixa replicadors de debò, sobretot els fràgils.
+  - **A les sopes envellides,** l'auditor 1 va provar totes les cel·les de 16 sopes en una condició de companys inerts. Fora de l'escaneig,
+    3 s'hi copien, i 2 en són hereditàries (als mons 6090 i 6095, en 2 condicions de 100, totes dues amb el programa segon). Entre els
+    positius de l'escaneig d'aquestes 16 sopes, se'n copien 2, i cap no és hereditari. Hem tornat a provar les dues cel·les: és així.
+  - **A les barrejades,** unes 4 de cada 100 cel·les que es copien queden fora de l'escaneig (els mons 6095 i 6001).
+  - **Què vol dir:** les xifres de la taula són dels positius de l'escaneig, i en són cotes inferiors. L'ordre de les tres sopes no en
+    depèn, però els factors sí. A la sopa envellida, l'escaneig se'n deixa, en proporció, més que a les altres: les «80 vegades menys» que
+    la nova podrien ser menys. Les hereditàries no es poden comparar entre les sopes.
+- **«Cap sopa no té replicadors fets» no se sosté** (AU2-154; l'entrada 18 ho deia). A 11 sopes barrejades, una cel·la és hereditària amb
+  companys inerts, i a dues (els mons 6071 i 6186), en totes 100 condicions. Ha de dir: *a les 150 sopes envellides i a les 150 noves no hem
+  trobat cap hereditari amb companys inerts entre els positius tornats a provar; a 11 sopes barrejades, sí. Els recomptes depenen de
+  l'escaneig, i no permeten dir que cap altra cel·la no ho sigui.* Als 11 mons, la sopa barrejada s'estableix a 7 de 22 branques, i als
+  altres 139, a 75 de 278 (l'auditor 1): no s'hi veu cap efecte, amb poca potència.
+- **«Es copia» no és «hereditari»** (AUD-186). La xifra principal de la prova d'autonomia de B1 és si el programa és **hereditari** amb
+  companys inerts (es copia, i la còpia també es copia), no si es copia. Ho dèiem malament a «El que s'ha provat» (la primera prova curta),
+  i el comentari d'`anyOf` a `recompte.mjs` diu el mateix. L'script es queda tal com va córrer (el de `43289a3`); la correcció és aquí.
+  - **La comparació amb B1,** doncs, s'ha de fer amb les hereditàries de l'escaneig que també ho són amb companys inerts: 5 de 1.025, 0,033
+    per sopa barrejada (de 0,011 a 0,078). B1 en dona unes 0,06 (de 0,03 a 0,11) amb els programes i els companys de les sopes del pilot
+    (4,55·10⁻⁷ per programa, la §13). Coincideixen, però amb 5, no amb 11.
+- **Que no es copiïn amb companys inerts** (AU2-153) vol dir que necessiten el company, el seu codi o els seus bytes. No prova que la còpia
+  la fes el codi del company.
+- **El codi de `llanca-2b.log`** (ho vam trobar nosaltres, en verificar l'auditoria 31). `llanca-2b.sh`, fora del repositori, escrivia el
+  codi de cada tros en una línia que començava amb un `$(ts)`, i aquesta ordre posa `$?` a 0: els «codi 0» del registre no diuen res, i la
+  guarda del final no hauria vist cap error. El que sí que es va comprovar és que els vuit registres són sencers: la línia d'inici i la final,
+  les 450 sopes, i l'escaneig igual al manifest a totes (també ho van comprovar els dos auditors). I els `.err` només hi tenen el temps de
+  cada sopa. Les eines del repositori desen el codi just després de l'ordre (`codi=$?`).
+
 ## Les sortides
 
 - **`recompte-I-J.jsonl`,** un per procés (els mons del I al J del manifest): una línia per sopa, amb el món, el braç, la SHA-256 de la
