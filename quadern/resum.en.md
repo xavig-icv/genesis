@@ -222,3 +222,20 @@ already carried: in world 1034 at epoch 5,500, 312 of 313, so the jump is not th
 makes about 140 times fewer than its shuffled bytes, not ten. Only 0.04% of the aged soup's copies are in runs of 8 or more: single
 writes, not Amoeba-like propagators. And a shuffled soup is enriched about 6 times too, so the first-byte rule is a rule of BFF; what is
 specific to the aged soup is that more of its programs start with `<`.
+
+<a id="entry-19"></a>
+## Entry 19 · 13 November 2026 · The soup before life, part three: how long new replicators live (exploratory)
+
+Every cell of 33 snapshots of world 1034 (131,072 each), in three stretches of its life (epochs 100 to 1,100, 5,000 to 6,000 and 8,000
+to 9,000), was tested in 10 conditions with partners that have no instructions, and the cells that copy themselves were retested in 100.
+Outside the outbreak we already knew, no heritable replicator appears: no cell of the young soup copies itself, and in the old soup four
+loose cells do, none of them heritable, and none reaches the next snapshot. The outbreak lived 300 to 500 epochs (snapshots 5,200 to
+5,400; 50 to 76 cells, all copying in all 100 conditions) and died out without becoming established. The cells carrying 16-byte pieces of
+it were about ten times as many, and there were still 749 at epoch 5,500, when none copied any more. The census scan saw the whole outbreak
+(182 of 182 copying cells, 169 of 169 heritable), but outside it only 1 of 4 copying cells, and 81% of its 977 positives do not copy with
+inert partners. By the rule of the note written before computing, the heritable appearances in this world are, in practice, the
+outbreaks (one in 16,000 epochs), so whether the pilot may plant a replicator to measure taking root goes back to the project owner. A
+periodic census with inert partners (a sample of 2,048 cells every 100 epochs) would have caught this outbreak about 9 times in 10; cells
+that copy without being heritable do not reach the next snapshot, and counting them needs a log of the copies. One observation that was
+not in the note: a fresh soup at epoch 0 has at least 5.9 cells per soup that copy with inert partners (step 2b), and world 1034 has none
+from epoch 100 to 1,100. One world and one outbreak: exploratory.

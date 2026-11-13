@@ -223,6 +223,17 @@ snapshots of the series and no new simulation. Both auditors recomputed the figu
 
 See notebook entry 18, in Catalan, or its [English summary](quadern/resum.en.md#entry-18).
 
+**How long new replicators live (exploratory).** The third step, with the snapshots of world 1034 and no new simulation: every
+cell of 33 snapshots, at three moments of its life, tested with partners that have no instructions.
+- **Outside the outbreak we already knew, no heritable replicator:** no cell of the young soup copies itself, and in the old
+  soup a few loose ones do, none of them heritable, and none reaches the next snapshot.
+- **The outbreak lived 300 to 500 epochs** and died out without becoming established. The census scan saw all its cells, but
+  outside it only 1 in 4 of the cells that copy themselves.
+- **In this world, heritable appearances are the outbreaks:** one in 16,000 epochs. Whether the pilot may plant a replicator
+  to measure taking root is for the project owner to decide.
+
+See notebook entry 19, in Catalan, or its [English summary](quadern/resum.en.md#entry-19).
+
 **What we study now:**
 - **The soup before life:** a pilot that measures separately whether a replicator appears and whether it takes root,
   in new worlds, with arms that keep the composition and change the arrangement ([decisions](docs/disseny.md), in

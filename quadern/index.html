@@ -29,6 +29,7 @@
     <a href="#entrada-16">Entrada 16</a>
     <a href="#entrada-17">Entrada 17</a>
     <a href="#entrada-18">Entrada 18</a>
+    <a href="#entrada-19">Entrada 19</a>
   </nav>
 
   <article id="entrada-1">
@@ -1995,6 +1996,69 @@
       </ul>
       <p>El pilot, doncs, ha de provar les cel·les amb companys inerts directament, i no només els positius d'un escaneig, i comptar només les còpies noves (els dos auditors; <code>docs/disseny.md</code>). Ho hem corregit també als README de cada pas, a la matriu de novetat i als README de l'arrel.</p>
     </div>
+  </article>
+
+  <article id="entrada-19">
+    <header>
+      <p class="date">Entrada 19 · 13 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, tercera part: quant viuen els replicadors nous</h1>
+      <p class="lede">Hem provat amb companys sense cap instrucció totes les cel·les de 33 captures del món 1034, en tres moments de la seva vida, i hem seguit d'una captura a la següent les que es copien. Fora del brot que ja coneixíem, no hi apareix cap replicador hereditari. A la sopa jove no es copia cap cel·la; a la vella, unes poques de soltes, que no són hereditàries i no arriben a la captura següent. El brot va viure de 300 a 500 èpoques, l'escaneig del cens en va veure totes les cel·les, i es va apagar sense establir-se. És exploratori, amb un sol món d'una sèrie ja decidida.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>El pilot de la línia ha de mesurar per separat que hi aparegui un replicador i que hi arreli (<a href="#entrada-16">entrada 16</a>). L'auditoria 31 hi posava abans dues preguntes: quant viuen els replicadors nous (l'auditor 1), i quants en veu l'escaneig del cens, que a l'<a href="#entrada-18">entrada 18</a> es deixava replicadors de debò (l'auditor 2). Les dues decideixen el detector del pilot, i també si el pilot pot plantar un replicador per mesurar l'arrelament: una excepció a la regla del projecte que el responsable va voler decidir amb aquestes dades. La nota, amb el que ens faria canviar d'opinió, es va escriure abans de calcular (<code>fase2/resultats/maduracio/durada/</code>).</p>
+
+    <h2>El que surt</h2>
+    <p>Totes les cel·les de cada captura, 131.072, provades en 10 condicions amb companys sense cap instrucció, i les que es copien, en 100. Tres trams d'11 captures, una cada 100 èpoques:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">El tram</th><th style="text-align:left">Captures amb alguna que es copia</th><th style="text-align:left">Es copien</th><th style="text-align:left">Hereditàries</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">El jove (de l'època 100 a la 1.100)</td><td style="text-align:left">0 d'11</td><td style="text-align:left">0</td><td style="text-align:left">0</td></tr>
+          <tr><td style="text-align:left">El del brot (de la 5.000 a la 6.000)</td><td style="text-align:left">3 d'11</td><td style="text-align:left">182 (50, 56 i 76)</td><td style="text-align:left">169, totes del brot</td></tr>
+          <tr><td style="text-align:left">El vell (de la 8.000 a la 9.000)</td><td style="text-align:left">4 d'11</td><td style="text-align:left">4, una per captura</td><td style="text-align:left">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">«Es copia»: una còpia al company en alguna de les 10 condicions; «hereditària»: que la còpia també es copiï. La sortida, a <code>fase2/resultats/maduracio/durada/durada-analisi-sortida.txt</code>.</p>
+    <ul>
+      <li><strong>El brot</strong> és l'únic hereditari dels tres trams, i totes les seves cel·les es copien en les 100 condicions. Va aparèixer entre l'època 5.100 i la 5.200, i a la 5.500 ja s'havia apagat: va viure de 300 a 500 èpoques, sense establir-se.</li>
+      <li><strong>El que en queda:</strong> a cada captura següent, les cel·les que porten algun tros de 16 bytes del brot són unes deu vegades les que es copien (553, 652 i 749). A la 5.500, quan ja no se'n copia cap, n'hi ha 749. El material del brot s'escampa més que els seus replicadors, i hi és encara quan s'apaguen.</li>
+      <li><strong>Al tram vell,</strong> les quatre cel·les que es copien no són hereditàries, i a la captura següent el mateix programa ja no hi és enlloc. Dues es copien en 1 condició de 100, sense cap instrucció de còpia; les altres dues, en 99 i en 100.</li>
+      <li><strong>L'escaneig del cens veu el brot sencer,</strong> les 182 cel·les i les 169 hereditàries. Però fora del brot en veu 1 de 4, la que es copia en totes 100 condicions. I dels seus 977 positius a les 33 captures, només 183 es copien amb companys sense cap instrucció; fora del brot, 1 de 539.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>En aquest món, les aparicions hereditàries són els brots:</strong> un en 16.000 èpoques. Fora del brot no n'hi ha cap a les captures; si n'hi ha de més curtes, viuen menys de 100 èpoques.</li>
+      <li><strong>Un brot es veu bé:</strong> dura centenars d'èpoques, i un cens amb companys sense cap instrucció, d'una mostra de 2.048 cel·les cada 100 èpoques, l'hauria vist unes 9 vegades de cada 10 (calculat després, amb els recomptes del brot). Les cel·les que es copien sense ser hereditàries, en canvi, no arriben a la captura següent: per comptar-les, cal un registre de les còpies durant la simulació.</li>
+      <li><strong>L'escaneig del cens no és un recompte, però sí un detector de brots:</strong> els veu sencers, i gairebé tots els seus altres positius són de la prova.</li>
+      <li><strong>Per a la inoculació,</strong> la regla de la nota diu que ho decideixi el responsable: fora del brot no hi apareix cap família hereditària nova. El brot és, ell mateix, una aparició que fracassa i que es veu. Mesurar l'arrelament sense plantar res vol dir comptar brots, i amb el ritme d'aquest món, n'hi ha pocs.</li>
+    </ul>
+
+    <h2>Una observació que no era a la nota</h2>
+    <p>A la sopa jove del 1034, de l'època 100 a la 1.100, cap cel·la no es copia amb companys sense cap instrucció. Una sopa nova, a l'època 0, en té almenys 5,9 de mitjana (el pas 2b, a 150 mons). Si és general, el que té una sopa nova desapareix en les primeres 100 èpoques, i la sopa de l'època 0 no és com una sopa jove qualsevol. És un sol món: una pista per al disseny del pilot.</p>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>Un sol món i un sol brot:</strong> la seva durada, el que en queda i com el veu l'escaneig són d'un sol cas. Amb un brot, el ritme pot anar d'un per cada 2.900 mon-èpoques a un per cada 630.000 (l'interval del 95 %).</li>
+      <li><strong>La resolució és de 100 èpoques:</strong> el que neix i mor entre dues captures no es veu.</li>
+      <li><strong>10 condicions es deixen els fràgils:</strong> al tram vell, de 4 cel·les detectades, n'hi hauria unes 21.</li>
+      <li><strong>Els quatre programes del tram vell</strong> els vam mirar després de l'anàlisi, i l'observació de la sopa jove no era a la nota.</li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>El carril d'explorar:</strong> la nota, a git abans de calcular; els scripts, des d'un commit net; una prova curta, amb la captura 5.300 sencera i un control que refà l'escaneig del pas 1 byte a byte; els registres, a git abans de mirar-los; i l'anàlisi, fixada a la nota.</li>
+      <li><strong>La llavor</strong> no és de cap pla: és la del pas 2b, i les 10 condicions són les 10 primeres de les seves 100.</li>
+      <li><strong>El càlcul:</strong> vuit processos a prioritat baixa, de les 21.16 a les 23.40 del 13-11-2026, i 33 captures de 33.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>La decisió del responsable:</strong> si el pilot pot plantar un replicador nascut als mons del projecte, en un assaig a part, per mesurar l'arrelament.</li>
+      <li><strong>El disseny del pilot,</strong> amb el detector que en surt d'aquí (un cens amb companys sense cap instrucció, i el registre de les còpies si cal), i la seva auditoria abans de calcular, amb la ronda d'aquest pas.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

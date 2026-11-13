@@ -309,6 +309,19 @@ refer les xifres, i en van corregir la lectura (l'auditoria 31).
 
 Vegeu l'[entrada 18](quadern/index.html#entrada-18).
 
+### Quant viuen els replicadors nous (exploratori)
+
+El tercer pas, amb les captures del món 1034 i sense simular res: totes les cel·les de 33 captures, en tres moments de la
+seva vida, provades amb companys sense cap instrucció.
+- **Fora del brot que ja coneixíem, cap replicador hereditari:** a la sopa jove no es copia cap cel·la, i a la vella,
+  unes poques de soltes, que no són hereditàries i no arriben a la captura següent.
+- **El brot va viure de 300 a 500 èpoques** i es va apagar sense establir-se. L'escaneig del cens en va veure totes les
+  cel·les, però fora del brot, només 1 de cada 4 de les que es copien.
+- **En aquest món, les aparicions hereditàries són els brots:** un en 16.000 èpoques. Si el pilot pot plantar un
+  replicador per mesurar l'arrelament, ho decideix el responsable.
+
+Vegeu l'[entrada 19](quadern/index.html#entrada-19).
+
 ### El que estudiem ara
 
 - **La sopa abans de la vida:** el pilot que mesuri per separat que aparegui un replicador i que hi arreli, en mons

@@ -163,8 +163,9 @@ Llegeix-los abans de proposar canvis.
     és la de git, i no veu els fitxers ignorats: cap carpeta de codi no ho ha de ser. Després de cada ordre, el registre ha d'acabar amb
     la línia final, a més del codi 0 (AUD-179); la consola, a `consola-LLISTA/`, una carpeta per llista (AUD-180). La repetició d'un
     registre sencer: `node eines/b1-compara.mjs original repeticio`.
-  - **Dins d'un fil, cap eina no ha d'importar `eines/densitat.mjs` ni `eines/estrats.mjs`:** hi posen el seu receptor de feines
-    (`worker_threads`), i contesten abans que el de l'eina.
+  - **Dins d'un fil, cap eina no ha d'importar `eines/densitat.mjs`, `eines/estrats.mjs` ni `eines/autonomia.mjs`:** hi posen el seu
+    receptor de feines (`worker_threads`), i contesten abans que el de l'eina. Per fer servir la prova d'autonomia en paral·lel, processos a
+    part (com el pas 3 de la maduració).
 - Anàlisi d'una captura: `node fase2/analitza.mjs fitxer.bin` (prova de replicació i registre de famílies).
 - Imatges per al README i el quadern: `node eines/imatges.mjs sopa|mon|codi|animacio|km ...`, a partir de les
   captures, sense dependències (PNG i PNG animat amb `eines/png.mjs`). Les del README són a `docs/imatges/`, i
@@ -285,7 +286,7 @@ Llegeix-los abans de proposar canvis.
     «exploratori», també al quadern; una prova sencera curta abans d'un càlcul llarg. L'auditoria, després i en una sola ronda.
   - **Confirmar,** com ara: protocol, auditoria, etiqueta i segell, amb mons nous, i l'efecte mínim i la potència fixats abans.
 - **La línia de la maduració** (11-11-2026): on actua la maduració (que aparegui un replicador, o que hi arreli) i per quin procés. El
-  pas 1 (exploratori) és a `fase2/resultats/maduracio/descripcio/`.
+  pas 1 (exploratori) és a `fase2/resultats/maduracio/descripcio/`, i els passos 2a, 2b i 3, a `escriptures/`, `recompte/` i `durada/`.
   - **Una hereditària s'ha de tornar a provar** abans de comptar-la com una aparició: les soles dels escanejos solen ser falsos positius de
     l'autonomia (necessiten el company de soroll, el seu codi o els seus bytes; AU2-152, AU2-153).
   - **On actua, encara no ho sabem:** cap afirmació de si la maduració actua sobre l'aparició, sobre l'arrelament o sobre totes dues fins al
