@@ -132,3 +132,81 @@ versió de Node i la mateixa llavor.
   amb un registre sintètic de l'època 5.400, per fer córrer els llinatges i els rastres, que necessiten dues captures seguides: les cel·les de
   la 5.300 amb la SHA-256 de la captura 5.400, al directori temporal de la sessió. Funciona; els rastres de cada interval triguen uns 7 s.
 - **Per a les 33 captures,** amb 8 processos: unes 2 o 2,5 h.
+
+## El que surt (13-11-2026, exploratori)
+
+**El càlcul:** des d'`abd988b`, amb `llanca.sh` i 8 processos a prioritat baixa, llançat des de l'aplicació el 13-11-2026 a les 21.16.48.
+Va acabar a les 23.40.16: 33 de 33 captures, cadascuna amb el codi 0 (desat just després de l'ordre) i la línia final, i cap d'interrompuda
+(`registres/llanca.log`). Cada captura, uns 32 min amb vuit processos alhora; la 9.000, que va córrer sola, 15 min. Els registres, a git
+abans de mirar-los (`270dc0c`); l'anàlisi, des d'aquest commit, i la sortida, tal com va sortir, a `durada-analisi-sortida.txt` (`2f3b21c`).
+
+**Quants** (el punt 1). Totes les cel·les de cada captura, 131.072; «es copia»: una còpia al company en alguna de les 10 condicions;
+«hereditària»: que la còpia també es copiï.
+
+| El tram | Captures amb alguna que es copia | Es copien | Hereditàries | Robustes (95 condicions de 100 o més) |
+|---|---|---|---|---|
+| El jove (de la 100 a la 1.100) | 0 d'11 | 0 | 0 | 0 |
+| El del brot (de la 5.000 a la 6.000) | 3 d'11: la 5.200, la 5.300 i la 5.400 | 182 (50, 56 i 76) | 169 (46, 47 i 76) | 182 |
+| El vell (de la 8.000 a la 9.000) | 4 d'11 | 4, una per captura | 0 | 2 |
+
+- **A la sopa jove, cap:** ni una cel·la que es copiï amb companys inerts, en 11 captures senceres.
+- **El brot és l'únic hereditari dels tres trams.** Totes les seves cel·les es copien en les 100 condicions, i les hereditàries ho són en
+  totes 100. A la 5.100 i a la 5.500, no n'hi ha cap.
+- **Al tram vell, quatre cel·les soltes, cap d'hereditària.** Mirades després de l'anàlisi (no era a la nota): dues de fràgils, que es
+  copien en 1 condició de 100 i tenen 6 instruccions, cap de còpia (`<-[<+}` i `<[<}+{`), de manera que la còpia la fan bytes que l'execució
+  converteix en instruccions; i dues de robustes, que només es copien en context (`[[[,{{<>[,{>]<<<`, en 99 de 100, i `>{,][,[[[`, en
+  totes 100).
+
+**Quant viuen** (els punts 3 i 5):
+- **El brot:** un sol llinatge, de la 5.200 a la 5.400, tres captures seguides. Va aparèixer entre la 5.100 i la 5.200, i a la 5.500
+  s'havia apagat: va viure de 300 a 500 èpoques, sense establir-se. El membre més robust té el codi `{[[[[<},]],}<[[[[`. Es desplaça: de
+  x 0–23 i y 28–49 a la 5.200, a x 22–41 i y 36–56 a la 5.400.
+- **El que en queda:** a la captura següent, les cel·les que porten algun tros de 16 bytes d'un membre del brot són 553, 652 i 749, unes
+  deu vegades les que es copien. A la 5.500, quan ja no se'n copia cap, encara n'hi ha 749. El material del brot s'escampa més que els seus
+  replicadors, i s'hi queda quan s'apaguen.
+- **Les quatre del tram vell** hi són en una sola captura. A la següent, el mateix programa ja no hi és enlloc, i en queden trossos a
+  entre 1 i 3 cel·les.
+
+**Les aparicions** (el punt 4): al tram jove, cap en 10 intervals de 100 èpoques; al del brot, una, el brot, hereditària i de tres
+captures; al vell, quatre, cap d'hereditària i totes d'una sola captura.
+
+**L'escaneig del cens, a les mateixes captures** (el punt 2):
+- **Veu el brot sencer:** les 182 cel·les que es copien amb companys inerts, i les 169 hereditàries, com a hereditàries.
+- **Fora del brot, en veu 1 de 4:** la que es copia en totes 100 condicions. Se li escapen la de 99 de 100 i les dues fràgils.
+- **Al revés:** dels seus 977 positius, se'n copien amb companys inerts 183 (el 19 %); fora del brot, 1 de 539. De les seves 171
+  hereditàries, 169 ho són amb companys inerts, totes del brot. Les altres dues són cel·les soltes, lluny del brot (a la 5.600 i a la
+  8.300), que no es copien en cap de les 100 condicions: els falsos positius de l'escaneig del pas 1 (AU2-152).
+- **Els fràgils que les 10 condicions es deixen** (el punt 6, orientatiu): al tram vell, de 4 cel·les detectades, n'hi hauria unes 21; al
+  brot, cap.
+
+**Les regles de la nota:**
+- **El detector.** 4 de les 5 aparicions hi són en una sola captura: per la regla, comptar-les demana el registre de les còpies. Però
+  totes quatre són de cel·les que es copien sense ser hereditàries. L'única aparició hereditària, el brot, dura de 300 a 500 èpoques, i un
+  cens periòdic amb companys inerts l'hauria vista: amb una mostra de 2.048 cel·les cada 100 èpoques, unes 9 vegades de cada 10 (calculat
+  després, amb els recomptes del brot). Amb un sol brot, no en sabem la distribució de durades.
+- **L'escaneig del cens.** Per cel·la, veu 183 de les 186 que es copien (el 98 %) i 169 de 169 hereditàries: per la regla, tornat a
+  provar, podria servir per comptar els robustos. Però les xifres són d'un sol brot. Fora del brot, en veu 1 de 4, i dels robustos, 1 de
+  2. Veu els brots hereditaris com aquest; les cel·les que es copien sense ser hereditàries, no.
+- **La inoculació (T-62).** Fora del brot, no hi apareix cap família hereditària nova en cap dels tres trams. És la segona branca de la
+  regla: les aparicions hereditàries són, a la pràctica, els brots, i n'hi ha un en 16.000 èpoques en aquest món. **Ho decideix el
+  responsable.** Per decidir-ho, dues dades:
+  - **el brot és, ell mateix, una aparició que fracassa, i es veu bé:** l'escaneig en veu totes les cel·les, durant tres captures;
+  - **un pilot sense plantar res hauria de comptar brots:** un per cada 16.000 mon-èpoques, si tots els mons fossin com aquest. Amb un sol
+    brot, l'interval del 95 % va d'un per cada 2.900 mon-èpoques a un per cada 630.000.
+
+**Una observació que no era a la nota:** a la sopa jove del 1034, de l'època 100 a la 1.100, cap cel·la no es copia amb companys inerts.
+Una sopa nova, a l'època 0, en té almenys 5,9 de mitjana, 4,3 en totes 100 condicions (els positius de l'escaneig tornats a provar, al
+pas 2b, a 150 mons). En aquest món, a l'època 100 no n'hi ha cap. Si és general, la sopa nova del pas 2b, la de l'època 0, no és com
+una sopa jove qualsevol: el que tenia desapareix en les primeres 100 èpoques. És un sol món: una pista per al disseny del pilot.
+
+**Els límits, a més dels d'entrada:** un sol brot, de manera que la seva durada, el que en queda i com el veu l'escaneig són d'un sol cas; i
+els quatre programes del tram vell els he mirat després de l'anàlisi.
+
+## Les sortides
+
+- **`registres/durada-E.jsonl`,** un per captura (33): la línia d'inici, amb el commit, la versió de Node, la SHA-256 de la captura i la de
+  l'escaneig del pas 1; una línia per cel·la tornada a provar (la posició, el programa, el que en deia l'escaneig i les quatre cadenes de
+  les 100 condicions); i la línia final, amb els recomptes de les 131.072 cel·les i els segons.
+- **`registres/durada-E.err`:** la consola de cada procés (el progrés). **`registres/llanca.log`:** el registre del llançador.
+- **`durada-analisi-sortida.txt`** (i `.err`, buit): l'anàlisi, tal com va sortir.
+- **`prova/`:** la prova curta (la captura 5.300, el control de l'escaneig i l'anàlisi de prova).
