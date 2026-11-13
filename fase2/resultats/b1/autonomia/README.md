@@ -25,6 +25,9 @@ primer (AUD-175). La prova d'autonomia dels hereditaris de la §13 té la seva l
 - **Al final,** `execucio-llista.txt`, amb el commit, la versió de Node, la SHA-256 de la llista i la de cada registre. Va a git abans de
   mirar cap resultat.
 - **Els registres,** a git si cap no passa de 50 MB (H64 en farà uns 32). Si no, com al nivell 1.
+- **Com es va llançar** (afegit el 13-11-2026, a proposta de l'auditor 1 a l'auditoria 31): les quatre llistes de B1 v0.7, una darrere
+  l'altra, amb un llançador de fora del repositori que comprovava que els fitxers de B1 de la còpia fossin els de `bc9dd94`. El que va
+  passar, tal com el va escriure: `../llanca-v07.log`.
 
 ## Abans d'analitzar: la repetició
 
