@@ -250,13 +250,13 @@ export async function prepare(d = DESIGN, { root = ROOT, parallel = 6, log = con
   const soups = [...d.arms, ...d.byte0Arms];
   log(`Les ${cohort.length * soups.length} transformacions:`);
   await runPool(cohort.flatMap((w) => soups.map((arm) => ({ label: `${w.world} ${arm}`,
-    args: [TRANSFORM, '--from', w.capture, '--kind', arm, '--seed', String(Number(w.world) + (d.byte0Arms.includes(arm) ? d.byte0Offset : d.transformOffset)), '--width', String(d.world[0]), '--out', armPath(d, w.world, arm)] }))), parallel, root);
+    args: [TRANSFORM, '--from', w.capture, '--kind', arm, '--seed', String(Number(w.world) + (d.byte0Arms.includes(arm) ? d.byte0Offset : d.transformOffset)), '--width', String(d.world[0]), '--out', armPath(d, w.world, arm)] }))), parallel, root, log);
   log(`Els ${cohort.length * soups.length} escanejos amb la prova del cens:`);
   await runPool(cohort.flatMap((w) => soups.map((arm) => ({ label: `escaneig de ${w.world} ${arm}`,
-    args: [TRANSFORM, '--scan', '--from', armPath(d, w.world, arm), '--seed', String(Number(w.world) + d.transformOffset), '--width', String(d.world[0]), '--radius', String(d.radius), '--out', scanPath(d, w.world, arm)] }))), parallel, root);
+    args: [TRANSFORM, '--scan', '--from', armPath(d, w.world, arm), '--seed', String(Number(w.world) + d.transformOffset), '--width', String(d.world[0]), '--radius', String(d.radius), '--out', scanPath(d, w.world, arm)] }))), parallel, root, log);
   log(`Els ${cohort.length * d.arms.length} escanejos amb companys inerts:`);
   await runPool(cohort.flatMap((w) => d.arms.map((arm) => ({ label: `escaneig inert de ${w.world} ${arm}`,
-    args: ['eines/arrelament.mjs', '--escaneig-inert', '--from', armPath(d, w.world, arm), '--out', inertScanPath(d, w.world, arm)] }))), parallel, root);
+    args: ['eines/arrelament.mjs', '--escaneig-inert', '--from', armPath(d, w.world, arm), '--out', inertScanPath(d, w.world, arm)] }))), parallel, root, log);
   for (const w of cohort) {
     w.arms = {};
     for (const arm of soups) {
