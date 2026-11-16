@@ -232,7 +232,7 @@ const tests = {
     // que la prova esborra
     const folder = `fase2/resultats/arrelament/prova-eina-${process.pid}`;
     const d = designFor({ folder, candidates: ['9001', '9002', '9003', '9004', '9005', '9006'], aging: 6, cohort: 3, age: 300, world: [W, H],
-      horizonA: 200, horizonB: 300, sham: { genotype: 'G4', worlds: 1 } });
+      horizonA: 200, horizonB: 300, sham: { genotype: 'G4', worlds: 1 }, census: { version: 'v3', every: 250, sample: W * H, seed: 20261016 } });
     const abs = join(root, folder);
     try {
       assert.strictEqual(agingLine(d, '9001'), `e9001 --world ${W}x${H} --seed 9001 --mixing 0 --epochs 300 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json ${folder}/envelliment/e9001.jsonl --save ${folder}/envelliment/captures`);

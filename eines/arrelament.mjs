@@ -39,7 +39,7 @@ export const DESIGN = Object.freeze({
   folder: 'fase2/resultats/arrelament/pilot',
   candidates: Array.from({ length: 100 }, (_, i) => String(7001 + i)),
   aging: 74, cohort: 60, age: 8000,
-  world: COMMON.world, radius: COMMON.radius,
+  world: COMMON.world, radius: COMMON.radius, census: COMMON.census,
   arms: ['continue', 'shuffle-all', 'reinit'], byte0Arms: ['byte0', 'byte0-placebo'],
   transformOffset: 600000, byte0Offset: 650000, continuation: 400000, positionStep: 1000000, lineageOffset: 900000, shamOffset: 800000,
   // les variants de la part A (§4.1 i §4.2): K posicions per a les informatives, 1 per a G2 i G3
@@ -118,16 +118,16 @@ export function validateAging(d, world, { root = ROOT, needCapture = true } = {}
   if (Object.keys(s).sort().join(',') !== START_KEYS) q("la línia d'inici no té els camps esperats");
   const expect = {
     seed: Number(world), programs: d.world[0] * d.world[1], world: d.world, radius: d.radius, mixing: 0, diffusion: 0, flow: 0, renewal: 0,
-    mutation: COMMON.mutation, from: null, start: 0, epochs: d.age, every: COMMON.every, rng: COMMON.rng, census: COMMON.census,
+    mutation: COMMON.mutation, from: null, start: 0, epochs: d.age, every: COMMON.every, rng: COMMON.rng, census: d.census,
     event: { share: 0.01, censuses: 2, stopAfter: 0 }, command: `node sim.mjs ${agingLine(d, world).split(' ').slice(1).join(' ')}`,
   };
   for (const [k, v] of Object.entries(expect)) if (!same(s[k], v)) q(`${k} és ${JSON.stringify(s[k])}, i el disseny diu ${JSON.stringify(v)}`);
   if (!(typeof s.code === 'string' && s.code.length >= 7 && !s.code.includes('+'))) q(`el codi del registre no és un commit net (${s.code})`);
   if (!end || end.type !== 'end') return { problems: [...problems, `e${world}: no acaba amb la línia final (incomplet)`] };
   const cs = r.filter((x) => x.type === 'census'), want = [];
-  for (let e = COMMON.census.every; e <= end.epoch; e += COMMON.census.every) want.push(e);
-  if (!same(cs.map((c) => c.epoch), want)) q(`els censos no són exactament els de cada ${COMMON.census.every} èpoques fins a l'època ${end.epoch}`);
-  for (const c of cs) { const bad = censusProblem(c, COMMON.census); if (bad) { q(`el cens de l'època ${c.epoch} no és vàlid: ${bad}`); break; } }
+  for (let e = d.census.every; e <= end.epoch; e += d.census.every) want.push(e);
+  if (!same(cs.map((c) => c.epoch), want)) q(`els censos no són exactament els de cada ${d.census.every} èpoques fins a l'època ${end.epoch}`);
+  for (const c of cs) { const bad = censusProblem(c, d.census); if (bad) { q(`el cens de l'època ${c.epoch} no és vàlid: ${bad}`); break; } }
   structureProblems(r, 0, end.epoch, COMMON).forEach(q);
   if (r.filter((x) => x.type === 'start').length !== 1 || r.filter((x) => x.type === 'end').length !== 1) q("té més d'una línia d'inici o de final");
   const ev = r.find((x) => x.type === 'event');
