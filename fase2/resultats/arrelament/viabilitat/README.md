@@ -18,14 +18,14 @@ coses:
 ## Les dades
 
 - **Els mons:** els 22 inclosos al pilot de la maduració (l'entrada 12; `fase2/resultats/maduracio/pilot/manifest.json`).
-  - **Les captures:** les dels braços `continue`, `shuffle-all` i `reinit` a l'època 8.000, a
-    `D:\abiogenesis-backup\maduracio-pilot\origen\alicuotes`.
+  - **Les captures:** les dels braços `continue`, `shuffle-all` i `reinit` a l'època 8.000, a la còpia de seguretat del pilot de la
+    maduració (`origen/alicuotes/`; el camí, a `CLAUDE.local.md`).
   - **La comprovació:** cadascuna, amb la SHA-256 del manifest, que és a git.
   - **Per què aquests:** no són mons del pilot (7001 a 7100). Les xifres que fixen el disseny no surten de les dades que es mesuraran.
 - **G1:** el registre del pas 3 de la captura 5.200 del món 1034 (`fase2/resultats/maduracio/durada/registres/durada-5200.jsonl`, a git).
 - **G2, G3 i G4:**
   - **les branques establertes del pilot de la maduració:** els registres de `fase2/resultats/maduracio/pilot/branques/`, a git;
-  - **les captures dels seus establiments:** `D:\abiogenesis-backup\maduracio-pilot\pc\captures` i `...\vm\captures`, comprovades amb el
+  - **les captures dels seus establiments:** a la mateixa còpia de seguretat (`pc/captures/` i `vm/captures/`), comprovades amb el
     `sha256.txt` de cada carpeta.
 - **Els bessons naturals:** les branques del pilot de la maduració amb la llavor a (`W-BRAÇ-a`). Tenen la mateixa ordre, la mateixa llavor
   i la mateixa captura de partida, però sense res plantat.
@@ -264,3 +264,16 @@ s'hi afegeix `llinatge.sh`. La resta de la sortida no en depèn.
 - 6 mons per cel·la de la taula;
 - 4 genotips: G2 i G3 venen de famílies grans, però no necessàriament de la dominant (la comprovació dels genotips);
 - les captures cada 100 èpoques: els temps d'extinció tenen aquesta resolució.
+
+## Una correcció del 16-11-2026: els camins de la màquina
+
+Els camins de la còpia de seguretat del pilot de la maduració són una dada interna. `CLAUDE.md` ho diu: els camins de la màquina van a
+`CLAUDE.local.md`, mai al repositori. Fins a `e5f12e7`, en aquesta carpeta n'hi havia en tres llocs. Ho va veure la comprovació del paquet
+de l'auditoria 32. Ara:
+- **el README** diu «la còpia de seguretat del pilot de la maduració», i el camí és a `CLAUDE.local.md`;
+- **`comu.mjs`** el llegeix de la variable d'entorn `GENESIS_PILOT_BACKUP`. Per refer la tria dels genotips o les sembres, cal
+  donar-la-hi. L'anàlisi i el llinatge no la fan servir;
+- **el camp `source` de les 90 sembres** (`sembres/*.json`) diu el camí relatiu a la còpia de seguretat (`origen/alicuotes/...`). La
+  SHA-256 de la captura de partida és la mateixa, i és la que es comprova.
+
+La història de git, que és pública, encara els porta. Ho decideix el responsable.

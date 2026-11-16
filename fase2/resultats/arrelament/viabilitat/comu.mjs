@@ -12,7 +12,10 @@ import { codeVersion } from '../../../../eines/b1-comu.mjs';
 
 export const ROOT = fileURLToPath(new URL('../../../../', import.meta.url));
 export const DIR = 'fase2/resultats/arrelament/viabilitat';
-export const BACKUP = 'D:/abiogenesis-backup/maduracio-pilot';
+// La còpia de seguretat de les captures del pilot de la maduració (origen/, pc/ i vm/, amb el sha256.txt de cada carpeta). El camí és
+// una dada interna (CLAUDE.local.md): es dona amb la variable d'entorn GENESIS_PILOT_BACKUP. Quan es va calcular, era una constant
+// d'aquest fitxer (fins a e5f5c6d).
+export const BACKUP = process.env.GENESIS_PILOT_BACKUP ?? 'GENESIS_PILOT_BACKUP-no-definida';
 export const PILOT = 'fase2/resultats/maduracio/pilot';
 export const WIDTH = 512, HEIGHT = 256, CELLS = WIDTH * HEIGHT;
 export const ARMS = ['continue', 'shuffle-all', 'reinit'];
