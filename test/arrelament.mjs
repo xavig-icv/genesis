@@ -261,7 +261,8 @@ const tests = {
         assert.strictEqual(r.status, 0, r.stderr);
       }
       const a = readJsonl(join(abs, 'part-a', `${lines[0].split(' ')[0]}.jsonl`));
-      assert.ok(a[0].plant && a.some((l) => l.type === 'lineage') && a.some((l) => l.type === 'inert'));
+      assert.ok(a[0].plant && a.some((l) => l.type === 'lineage'), 'la branca de la part A no té la sembra o el llinatge');
+      assert.strictEqual(a.filter((l) => l.type === 'inert').length, a.filter((l) => l.type === 'census').length, 'cada cens, amb el seu cens inert');
       // ara la part A ha començat; i una sembra o una llista tocades són un problema
       assert.ok(preflight(d, { root }).some((x) => /ja ha començat/.test(x)));
       assert.deepStrictEqual(checkManifest(d, { root }), []);

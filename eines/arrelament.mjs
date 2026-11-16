@@ -171,7 +171,7 @@ export function inertScan(soup) {
 }
 
 // Les feines a part (eines/transforma.mjs i l'escaneig inert), N alhora
-function runPool(jobs, parallel, root) {
+function runPool(jobs, parallel, root, log = console.log) {
   return new Promise((resolve, reject) => {
     let next = 0, running = 0, done = 0, failed = false;
     const launch = () => {
@@ -185,7 +185,7 @@ function runPool(jobs, parallel, root) {
         child.on('close', (code) => {
           running--; done++;
           if (code) { failed = true; reject(new Error(`${job.label}: ${err.trim()}`)); return; }
-          if (done % 25 === 0 || done === jobs.length) console.log(`  ${done} de ${jobs.length}`);
+          if (done % 25 === 0 || done === jobs.length) log(`  ${done} de ${jobs.length}`);
           launch();
         });
       }
@@ -236,7 +236,7 @@ export async function prepare(d = DESIGN, { root = ROOT, parallel = 6, log = con
     while (batch.length < d.cohort - included && i < worlds.length) { const w = worlds[i++]; if (w.included) batch.push(w); }
     for (const w of batch) mkdirSync(join(root, d.folder, 'alicuotes', w.world), { recursive: true });
     log(`L'escaneig de ${batch.length} mons envellits:`);
-    await runPool(batch.map((w) => ({ label: `escaneig de ${w.world}`, args: [TRANSFORM, '--scan', '--from', w.capture, '--seed', String(Number(w.world) + d.transformOffset), '--width', String(d.world[0]), '--radius', String(d.radius), '--out', scanPath(d, w.world)] })), parallel, root);
+    await runPool(batch.map((w) => ({ label: `escaneig de ${w.world}`, args: [TRANSFORM, '--scan', '--from', w.capture, '--seed', String(Number(w.world) + d.transformOffset), '--width', String(d.world[0]), '--radius', String(d.radius), '--out', scanPath(d, w.world)] })), parallel, root, log);
     for (const w of batch) {
       w.scan = scanRecord(root, scanPath(d, w.world));
       if (w.scan.heritable > 0) { w.included = false; w.reason = `${w.scan.heritable} cel·les hereditàries a l'escaneig de l'època ${d.age}`; } else included++;
