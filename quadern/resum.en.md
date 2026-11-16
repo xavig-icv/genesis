@@ -172,6 +172,13 @@ emergence: after a million generations, replicators rarely appear. In BFF, life 
 (entry 14). And Adami and LaBar (2017), in Avida, already proposed, without testing it, that activity before replicators changes
 the composition and can make them more likely. The source-by-source comparison is in `docs/novetat-maduracio.md`.
 
+*Corrected after the source review (16 November 2026).* A Fable 5.2 model checked the project's Internet sources against their text. The
+general idea is not new in BFF either: Agüera y Arcas's book (2025, chapter 1) already describes phases of "pre-life", rising computation
+before tapes replicate and, as imperfect replicators proliferate, a rising density of instructions per tape, without figures and without
+saying which bytes; what may be new is the measurement. The version of Greenbaum and Pargellis that was read is the 2016 one, and they
+attribute the late drop in emergence in Amoeba to the continued biasing of the instruction set (NOPs above 25%): the closest published
+case of a soup state that lowers the chance of a replicator appearing, opposite in sign to entry 14 and untested.
+
 <a id="entry-17"></a>
 ## Entry 17 · 12 November 2026 · Who copies itself: random replicators with partners that have no instructions (exploratory)
 
@@ -239,3 +246,8 @@ periodic census with inert partners (a sample of 2,048 cells every 100 epochs) w
 that copy without being heritable do not reach the next snapshot, and counting them needs a log of the copies. One observation that was
 not in the note: a fresh soup at epoch 0 has at least 5.9 cells per soup that copy with inert partners (step 2b), and world 1034 has none
 from epoch 100 to 1,100. One world and one outbreak: exploratory.
+
+*Corrected after the source review (16 November 2026).* Knierim et al. (2026) already report that their detector lets them see
+replicators that appear and die out before taking over the soup. And the 2024 paper already measures taking root by seeding: one
+replicator, extracted from one of their runs and cleaned, seeded in 1,000 fresh soups, leads to a transition in 22% of them within 128
+epochs. No one has made the same measurement in soups of different ages.

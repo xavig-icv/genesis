@@ -269,7 +269,9 @@ res, i tot és exploratori: una pista, no un resultat.
 - **El que no se sosté:** que el ritme d'establiment segueixi la maduració, i que la vida que s'hi estableix estigui
   feta del que la sopa acumula. Ho van mostrar els dos auditors.
 - **El que ja se sabia:** la idea d'una fase prèvia en què les instruccions s'esbiaixen ja és al sistema Amoeba
-  (Greenbaum i Pargellis, 2017). Podria ser nou un mecanisme concret de BFF, provat amb una intervenció.
+  (Greenbaum i Pargellis, 2016 i 2017), i, a BFF, el llibre d'Agüera y Arcas (2025) ja descriu, sense xifres, que
+  abans de la transició hi pugen el càlcul i la densitat d'instruccions. Podria ser nou un mecanisme concret de BFF,
+  provat amb una intervenció.
 
 Vegeu l'[entrada 16](quadern/index.html#entrada-16).
 
@@ -318,7 +320,8 @@ seva vida, provades amb companys sense cap instrucció.
 - **El brot va viure de 300 a 500 èpoques** i es va apagar sense establir-se. L'escaneig del cens en va veure totes les
   cel·les, però fora del brot, només 1 de cada 4 de les que es copien.
 - **En aquest món, les aparicions hereditàries són els brots:** un en 16.000 èpoques. Si el pilot pot plantar un
-  replicador per mesurar l'arrelament, ho decideix el responsable.
+  replicador per mesurar l'arrelament, com ja fa l'article de 2024 en sopes noves (una de cada cinc vegades en pren
+  la sopa), ho decideix el responsable.
 
 Vegeu l'[entrada 19](quadern/index.html#entrada-19).
 

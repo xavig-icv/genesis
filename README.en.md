@@ -187,7 +187,9 @@ already had, with no new simulation, and everything in it is exploratory: a lead
 - **What does not hold:** that the establishment rate follows maturation, and that the life which becomes
   established is made of what the soup piles up. Both auditors showed it.
 - **What was already known:** the idea of a phase in which instructions become biased was described in the Amoeba
-  system (Greenbaum and Pargellis, 2017). A specific mechanism in BFF, tested by intervention, could be new.
+  system (Greenbaum and Pargellis, 2016 and 2017), and in BFF Agüera y Arcas's book (2025) already describes, without
+  figures, rising computation and instruction density before the transition. A specific mechanism in BFF, tested by
+  intervention, could be new.
 
 See notebook entry 16, in Catalan, or its [English summary](quadern/resum.en.md#entry-16).
 
@@ -230,7 +232,8 @@ cell of 33 snapshots, at three moments of its life, tested with partners that ha
 - **The outbreak lived 300 to 500 epochs** and died out without becoming established. The census scan saw all its cells, but
   outside it only 1 in 4 of the cells that copy themselves.
 - **In this world, heritable appearances are the outbreaks:** one in 16,000 epochs. Whether the pilot may plant a replicator
-  to measure taking root is for the project owner to decide.
+  to measure taking root, as the 2024 paper already does in fresh soups (one time in five it takes over), is for the
+  project owner to decide.
 
 See notebook entry 19, in Catalan, or its [English summary](quadern/resum.en.md#entry-19).
 

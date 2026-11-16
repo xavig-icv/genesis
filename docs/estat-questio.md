@@ -12,6 +12,9 @@ de 2024 i de Knierim, Cicala i Jha (2026) s'han tornat a llegir sencers. S'hi ha
 - l'ablació de LDIR de Cicala i altres (§2);
 - la CNP de Cicala i altres és el mateix mecanisme que el nostre corrent (§4).
 
+**Revisat el 16-11-2026** amb la revisió de les fonts d'un model Fable 5.2 (`docs/novetat-maduracio.md`, la secció del final): la §3, la
+§11 i la bibliografia.
+
 **Com s'ha fet.** Les referències s'han comprovat una per una al registre del DOI (Crossref), a PubMed, a
 la pàgina d'arXiv o a la pàgina dels autors.
 - Les que porten **(parcial)** tenen les dades bibliogràfiques comprovades, però el contingut surt de
@@ -131,13 +134,15 @@ flexibles les interaccions entre instruccions (Bryson i Ofria, 2013).
 
 **Els primers replicadors sovint duren poc.**
 - El replicador sembrat a Coreworld es va extingir (parcial).
+- A BFF, un replicador sorgit d'una tirada i netejat, sembrat en una sopa nova, fa la transició el 22 % de les vegades en 128 èpoques
+  (l'article de 2024, la figura 7). *(Afegit el 16-11-2026: no el citàvem; FON-16.)*
 - Els de Kruszewski i Mikolov eren transitoris.
 - A BFF, n'hi ha que s'extingeixen abans d'envair la sopa (Knierim i altres, 2026).
 - Les famílies se succeeixen, a Z80 i a BFF, on els zeros enverinen la sopa. Ho descriu l'article de 2024
   (fig. 2), i ho vam retrobar a l'entrada 2. *(Corregit el 19-10-2026: no citàvem l'article de 2024.)*
 - **La història d'un llinatge** en condiciona el destí: si se'n sembra un 1 % en una sopa nova, la fixació
-  depèn de la història evolutiva. Els llinatges evolucionats en sopes ben barrejades i amb molta energia
-  s'hi desfan (Jha i altres, 2026, apèndix A.2).
+  depèn de la història evolutiva (a Z80). Els llinatges «de la cinta» evolucionats en sopes ben barrejades i amb
+  molta energia s'hi desfan; els «de la CPU», s'hi fixen sempre (Jha i altres, 2026, apèndix A.2; FON-11).
 
 **L'espai protegeix dels paràsits.**
 - En un autòmat cel·lular, els hipercicles s'organitzen en espirals, i els paràsits en queden fora
@@ -307,6 +312,10 @@ mida que diuen Chou i Reggia (1997) (§5).
     replicador (Pigozzi i Levin, 2026, en un model químic; la consulta X-105);
   - seguir l'origen de cada byte a cada còpia (els *tokens* de l'article de 2024);
   - que la distribució de bytes importa (Knierim i altres, 2026).
+  - **afegit el 16-11-2026** (la revisió de les fonts): que a BFF, abans de la transició, pugen el càlcul i la densitat d'instruccions,
+    i hi ha instruccions que en certes posicions es copien més del que tocaria (Agüera y Arcas, 2025, sense xifres; FON-01); que a
+    Amoeba l'esbiaixament continuat de la sopa n'abaixa l'aparició (Greenbaum i Pargellis, 2016, sense prova; FON-03); i que a BFF un
+    replicador sembrat en una sopa nova fa la transició el 22 % de les vegades (l'article de 2024; FON-16).
 - **Des de l'11-11-2026, la línia del projecte** (`docs/disseny.md`). La matriu de novetat de les seves afirmacions possibles, font per
   font, és a `docs/novetat-maduracio.md` (esborrany del 12-11-2026).
 - **Què no hem trobat enlloc:** cap prova a una edat fixada, que continuï, barregi o reiniciï la sopa. Del risc
@@ -333,7 +342,8 @@ mida que diuen Chou i Reggia (1997) (§5).
 **4. La persistència i el canvi de llei: en part, un buit.**
 - **El buit, confirmat:** no hem trobat distribucions publicades de la durada de la vida BFF espontània (§3).
 - **La dependència de la història** sí que té un precedent, amb proves d'invasió: replicadors de llinatges
-  evolucionats, sembrats a l'1 % en una sopa nova (Jha i altres, 2026, A.2).
+  evolucionats, sembrats a l'1 % en una sopa nova (Jha i altres, 2026, A.2, a Z80). A BFF, l'article de 2024 ja
+  sembra un sol replicador en sopes noves (FON-16).
 - **El que no hem trobat:** cap prova que canviar la llei del món, després que la vida s'hi hagi establert,
   n'alteri la persistència.
 
@@ -352,7 +362,7 @@ que no s'han incorporat:
 
 **Químiques artificials i sopes de programes**
 - Rasmussen S, Knudsen C, Feldberg R, Hindsholm M (1990). The coreworld: emergence and evolution of cooperative structures in a computational chemistry. *Physica D* 42:111–134. doi:10.1016/0167-2789(90)90070-6 (parcial)
-- Fontana W (1991/1992). Algorithmic chemistry. *Artificial Life II*, SFI vol. XI, Addison-Wesley, pp. 159–209. (Pendent de comprovar l'any i les pàgines.)
+- Fontana W (1991/1992). Algorithmic chemistry. *Artificial Life II*, SFI Proceedings vol. X, Addison-Wesley, pp. 159–209. (Pendent de comprovar l'any i les pàgines.)
 - Fontana W, Buss LW (1994). "The arrival of the fittest": toward a theory of biological organization. *Bull. Math. Biol.* 56:1–64. doi:10.1007/BF02458289
 - Fontana W, Buss LW (1994). What would be conserved if "the tape were played twice"? *PNAS* 91:757–761. doi:10.1073/pnas.91.2.757
 - Pargellis AN (1996). The spontaneous generation of digital "life". *Physica D* 91:86–96. doi:10.1016/0167-2789(95)00268-5 (parcial)
@@ -361,14 +371,14 @@ que no s'han incorporat:
 - Greenbaum B, Pargellis AN (2017). Self-replicators emerge from a self-organizing prebiotic computer world. *Artificial Life* 23:318–342. doi:10.1162/artl_a_00234 (el resum: el text és de pagament)
 - Greenbaum B, Pargellis AN (2016). Digital replicators emerge from a self-organizing prebiotic world. *Proceedings of the Artificial Life Conference 2016 (ALIFE XV)*, pp. 60–67. doi:10.1162/978-0-262-33936-0-ch016 (sencer, el 12-11-2026)
 - Agüera y Arcas B (2025). *What Is Intelligence? Lessons from AI About Evolution, Computing, and Minds.* Antikythera. https://whatisintelligence.antikythera.org (el capítol 1, en línia el 12-11-2026, amb una eina que en resumeix el text)
-- Ray TS (1991). An approach to the synthesis of life. *Artificial Life II*, SFI vol. XI, pp. 371–408.
+- Ray TS (1991). An approach to the synthesis of life. *Artificial Life II*, SFI Proceedings vol. X, pp. 371–408.
 - Adami C, Brown CT (1994). Evolutionary learning in the 2D artificial life system "Avida". *Artificial Life IV*. arXiv:adap-org/9405003
 - Ofria C, Wilke CO (2004). Avida: a software platform for research in computational evolutionary biology. *Artificial Life* 10:191–229. doi:10.1162/106454604773563612
 - Hutton TJ (2002). Evolvable self-replicating molecules in an artificial chemistry. *Artificial Life* 8:341–356. doi:10.1162/106454602321202417
 - Kruszewski G, Mikolov T (2021). Emergence of self-reproducing metabolisms as recursive algorithms in an artificial chemistry. *Artificial Life* 27:277–299. doi:10.1162/artl_a_00355
-- Liu Y, Sumpter D (2018). Spontaneous emergence of self-replication in chemical reaction systems. *J. Biol. Chem.* 293:18854–18863. doi:10.1074/jbc.RA118.003795
+- Liu Y, Sumpter D (2018). Mathematical modeling reveals spontaneous emergence of self-replication in chemical reaction systems. *J. Biol. Chem.* 293:18854–18863. doi:10.1074/jbc.RA118.003795
 - C G N, LaBar T, Hintze A, Adami C (2017). Origin of life in a digital microcosm. *Phil. Trans. R. Soc. A* 375:20160350. doi:10.1098/rsta.2016.0350
-- Adami C, LaBar T (2017). From entropy to information: biased typewriters and the origin of life. A: Walker SI, Davies PCW, Ellis GFR (eds.), *From Matter to Life: Information and Causality*, Cambridge University Press, pp. 130–154. arXiv:1506.06988 (llegit el 12-11-2026: els resultats, la discussió i els mètodes)
+- Adami C, LaBar T (2017). From entropy to information: biased typewriters and the origin of life. A: Walker SI, Davies PCW, Ellis GFR (eds.), *From Matter to Life: Information and Causality*, Cambridge University Press, pp. 130–154. doi:10.1017/9781316584200.007; arXiv:1506.06988 (llegit el 12-11-2026: els resultats, la discussió i els mètodes)
 - Hickinbotham S (2023). Drivers of replicator organisation in the Nanopond artificial chemistry. *GECCO '23 Companion*, pp. 147–150. doi:10.1145/3583133.3590572 (el resum)
 - Agüera y Arcas B, Alakuijala J, Evans J, Laurie B, Mordvintsev A, Niklasson E, Randazzo E, Versari L (2024). Computational life: how well-formed, self-replicating programs emerge from simple interaction. arXiv:2406.19108
 - Mathis C, Patel D, Weimer W, Forrest S (2024). Self-organization in computation & chemistry: return to AlChemy. arXiv:2408.12137
@@ -381,7 +391,7 @@ que no s'han incorporat:
 - Cotler J, Hongler C, Hudcová B (2025). Self-replication and computational universality. arXiv:2510.08342
 - Ofria C, Adami C, Collier TC (2002). Design of evolvable computer languages. *IEEE Trans. Evol. Comput.* 6:420–424. doi:10.1109/TEVC.2002.802442
 - Bryson DM, Ofria C (2013). Understanding evolutionary potential in virtual CPU instruction set architectures. *PLoS ONE* 8:e83242. doi:10.1371/journal.pone.0083242
-- Sarkar S, England JL (2019). Design of conditions for emergence of self-replicators. *Phys. Rev. E* 100:022414. doi:10.1103/PhysRevE.100.022414
+- Sarkar S, England JL (2019). Design of conditions for self-replication. *Phys. Rev. E* 100:022414. doi:10.1103/PhysRevE.100.022414 (a arXiv:1709.09191, «Design of conditions for emergence of self-replicators»)
 - Wilke CO, Wang JL, Ofria C, Lenski RE, Adami C (2001). Evolution of digital organisms at high mutation rates leads to survival of the flattest. *Nature* 412:331–333. doi:10.1038/35085569
 
 **Establiment, paràsits i xarxes autocatalítiques**
@@ -424,7 +434,7 @@ que no s'han incorporat:
 
 **Compartiments i minerals**
 - Szathmáry E, Demeter L (1987). Group selection of early replicators and the origin of life. *J. Theor. Biol.* 128:463–486. doi:10.1016/S0022-5193(87)80191-1
-- Martin W, Russell MJ (2003). On the origins of cells. *Phil. Trans. R. Soc. B* 358:59–83. doi:10.1098/rstb.2002.1183
+- Martin W, Russell MJ (2003). On the origins of cells: a hypothesis for the evolutionary transitions from abiotic geochemistry to chemoautotrophic prokaryotes, and from prokaryotes to nucleated cells. *Phil. Trans. R. Soc. B* 358:59–85. doi:10.1098/rstb.2002.1183
 - Koonin EV, Martin W (2005). On the origin of genomes and cells within inorganic compartments. *Trends Genet.* 21:647–654. doi:10.1016/j.tig.2005.09.006
 - Baaske P i altres (2007). Extreme accumulation of nucleotides in simulated hydrothermal pore systems. *PNAS* 104:9346–9351. doi:10.1073/pnas.0609592104
 - Hanczyc MM, Fujikawa SM, Szostak JW (2003). Experimental models of primitive cellular compartments. *Science* 302:618–622. doi:10.1126/science.1089904
@@ -445,3 +455,22 @@ que no s'han incorporat:
 - Chou H-H, Reggia JA (1997). Emergence of self-replicating structures in a cellular automata space. *Physica D* 110:252–276. doi:10.1016/S0167-2789(97)00132-2 (parcial)
 - Sayama H (1999). A new structurally dissolvable self-reproducing loop evolving in a simple cellular automata space. *Artificial Life* 5:343–365. doi:10.1162/106454699568818
 - Sayama H, Nehaniv CL (2025). Self-reproduction and evolution in cellular automata: 25 years after evoloops. *Artificial Life* 31:81–95. doi:10.1162/artl_a_00451
+
+**La fase d'abans dels replicadors i la pre-vida** *(afegides el 16-11-2026, amb la revisió de les fonts, FON-12; pel resum, si no es
+diu altra cosa)*
+- Pargellis AN (2003). Self-organizing genetic codes and the emergence of digital life. *Complexity* 8(4):69–78. doi:10.1002/cplx.10095 (no llegit; el citen Greenbaum i Pargellis, 2016)
+- Nowak MA, Ohtsuki H (2008). Prevolutionary dynamics and the origin of evolution. *PNAS* 105:14924–14927. doi:10.1073/pnas.0806714105
+- Kinsler G, Sinai S, Lee NK, Nowak MA (2017). Prebiotic selection for motifs in a model of template-free elongation of polymers within compartments. *PLoS ONE* 12:e0180208. doi:10.1371/journal.pone.0180208
+- Wu M, Higgs PG (2012). The origin of life is a spatially localized stochastic transition. *Biology Direct* 7:42. doi:10.1186/1745-6150-7-42
+- Mathis C, Bhattacharya T, Walker SI (2017). The emergence of life as a first-order phase transition. *Astrobiology* 17:266–276. doi:10.1089/ast.2016.1481; arXiv:1503.02776
+- Jain S, Krishna S (1998). Autocatalytic sets and the growth of complexity in an evolutionary model. *Phys. Rev. Lett.* 81:5684–5687. doi:10.1103/PhysRevLett.81.5684; arXiv:adap-org/9809003
+- Dorn ED, Adami C (2011). Robust monomer-distribution biosignatures in evolving digital biota. *Astrobiology* 11:959–968. doi:10.1089/ast.2010.0556
+- Schaeffer G, Eleveld MJ, Ottelé J, Kroon PC, Frederix PWJM, Yang S, Otto S (2022). Stochastic emergence of two distinct self-replicators from a dynamic combinatorial library. *J. Am. Chem. Soc.* 144:6291–6297. doi:10.1021/jacs.1c12591
+- Vimal D, Mathis C, Weimer W, Forrest S (2025). Prebiotic functional programs: endogenous selection in an artificial chemistry. arXiv:2509.03534 (preprint)
+- Stepney S (2025). Towards origins of virtual artificial life: an overview. *Phil. Trans. R. Soc. B* 380:20240298. doi:10.1098/rstb.2024.0298 (no llegit)
+- Papale F, Kulish Y, Bielawski JP, Haraoui L-P (2025). A niche construction-based perspective on chemical evolution before replication and reproduction. bioRxiv. doi:10.1101/2025.07.29.667458 (no comprovat si l'article dels mateixos autors a *R. Soc. Open Sci.* 13:260737, de 2026 i amb un altre títol, n'és la versió publicada)
+- Fischbacher T (2025). Life at the boundary of chemical kinetics and program execution. *Phys. Rev. E* 112:035309. doi:10.1103/dyzr-m21s; arXiv:2503.19177
+- Adler D (2026). How information evolves: stability-driven assembly and the emergence of a natural genetic algorithm. arXiv:2601.17061 (preprint; amb una eina que en resumeix el text)
+- Adami C, C G N (2022). Emergence of functional information from multivariate correlations. *Phil. Trans. R. Soc. A* 380:20210250. doi:10.1098/rsta.2021.0250
+- Citen Greenbaum i Pargellis, vistos només pel títol: Banzhaf W, Hu T (2019). Evolutionary computation. *Oxford Bibliographies*. doi:10.1093/obo/9780199941728-0122; Witkowski O, Ikegami T (2019). How to make swarms open-ended? Evolving collective intelligence through a constricted exploration of adjacent possibles. *Artificial Life* 25:178–197. doi:10.1162/artl_a_00288; Szász C (2017). Three-dimensional artificial organism model developed upon a two-layer coarse-fine-grid network approach. *Int. Rev. Appl. Sci. Eng.* 8:127–133. doi:10.1556/1848.2017.8.2.4
+- Descartat (un model de protocèl·lules): Silvestre DAMM, Fontanari JF (2007). Package models and the information crisis of prebiotic evolution. arXiv:0710.3278
