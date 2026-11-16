@@ -47,8 +47,9 @@ coses:
      pas 3). Diferents, en l'ordre del registre. Se'n tria un amb `pick(20261116, 1, …)` d'`eines/tria.mjs`.
    - **G2, G3 i G4:** de cada braç (`continue`, `shuffle-all` i `reinit`), les branques establertes del pilot, amb l'identificador en ordre
      alfabètic. Se'n tria una amb `pick(20261116, 1, …)`.
-     - **La captura:** la del cens que confirma l'establiment (`…-establimentT-epocaT.bin`). Si un altre establiment del pilot té la
-       mateixa llavor i la mateixa *T*, el nom seria ambigu, i l'script s'atura.
+     - **La captura:** la de l'època de l'establiment, *T*, el primer dels dos censos del criteri (`…-establimentT-epocaT.bin`). La del
+       cens que el confirma no es desa. Si un altre establiment del pilot té la mateixa llavor i la mateixa *T*, el nom seria ambigu, i
+       l'script s'atura.
      - **Els programes que es proven:** els 64 bytes de les 131.072 cel·les es compten, i els 50 més freqüents (desempat: l'hexadecimal,
        en ordre) es proven en les 100 condicions (`testReplicator` d'`eines/autonomia.mjs`, la química C0).
      - **El que es tria:** el més freqüent dels que són hereditaris sols en 95 o més.
