@@ -3,7 +3,7 @@
 // --plant, --lineage-every i --stop-on-extinction) i els tipus byte0 i byte0-placebo d'eines/transforma.mjs.
 // Executa: node test/arrelament.mjs
 import assert from 'assert';
-import { spawnSync } from 'child_process';
+import { spawnSync, spawn } from 'child_process';
 import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
@@ -17,6 +17,7 @@ import { conditions as conditionsB1, testCondition as testConditionB1, inertProg
 import { positions, makeSham, plantCells } from '../eines/sembra.mjs';
 import { transform, checkInvariants } from '../eines/transforma.mjs';
 import { designFor, agingLine, branchesOf, prepare, preflight, checkManifest } from '../eines/arrelament.mjs';
+import { partA, families, dominantFamily, mh, bootstrap, reading, analyse } from '../eines/arrelament-analisi.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const sim = (...args) => spawnSync(process.execPath, ['sim.mjs', ...args], { cwd: root, encoding: 'utf8' });
@@ -227,6 +228,41 @@ const tests = {
     [bad2[c * PROGRAM_SIZE], bad2[c * PROGRAM_SIZE + 1]] = [bad2[c * PROGRAM_SIZE + 1], bad2[c * PROGRAM_SIZE]];
     assert.ok(checkInvariants(soup, bad2, pl.info).length > 0);
   },
+  'l\'anàlisi: arrelar, extingir-se, la família dominant, Mantel i Haenszel i la lectura': () => {
+    const L = (epoch, F) => ({ type: 'lineage', epoch, M: F, tested: F, copying: F, functional: F, F, windows: 1 });
+    const end = (epoch) => ({ type: 'end', epoch, reason: 'horitzó' });
+    let r = partA([{ type: 'start' }, L(8000, 1), L(8050, 5), L(8100, 1400), L(8150, 1500), L(8200, 1300), L(8350, 2000), end(8350)], { start: 8000, horizon: 1500 });
+    assert.strictEqual(r.rootedAt, 8100); assert.strictEqual(r.outcome, 'arrela'); assert.strictEqual(r.Fmax, 2000);
+    r = partA([{ type: 'start' }, L(8000, 1), L(8050, 1400), L(8300, 1000), end(8300)], { start: 8000, horizon: 1500 });
+    assert.strictEqual(r.rootedAt, null, 'el segon punt, a 250 èpoques, no hi arriba');
+    r = partA([{ type: 'start' }, L(8000, 1), L(8050, 0), L(8100, 3), L(8150, 0), L(8200, 0), end(8200)], { start: 8000, horizon: 1500 });
+    assert.strictEqual(r.extinctAt, 8150); assert.strictEqual(r.outcome, "s'extingeix");
+    const inertAt = (epoch, heritableN, lineage) => ({ type: 'inert', epoch, sample: 4096, copying: heritableN, heritable: heritableN, lineage, cells: [] });
+    r = partA([{ type: 'start' }, L(8000, 1), inertAt(8250, 10, 1), { type: 'event', epoch: 8250, confirmed: 8500 }, inertAt(8500, 10, 6), end(8500)], { start: 8000, horizon: 1500 });
+    assert.deepStrictEqual(r.law2, { epoch: 8250, confirmed: 8500, dominant: true }); assert.strictEqual(r.detectedAt, 8250);
+    r = partA([{ type: 'start' }, L(8000, 1), { type: 'event', epoch: 8250, confirmed: 8500 }, inertAt(8500, 10, 4), end(8500)], { start: 8000, horizon: 1500 });
+    assert.strictEqual(r.law2.dominant, false); assert.strictEqual(r.detectedAt, null);
+    // les famílies del cens inert
+    const rnd = (s) => { const g = makeRng(s, 'v2'); return Array.from({ length: PROGRAM_SIZE }, () => ((g() * 256) | 0).toString(16).padStart(2, '0')).join(''); };
+    const X = rnd(1), Y = rnd(2);
+    const cell = (program, h = '111') => ({ cell: 0, program, solo: h, context: '000', heritableSolo: h, heritableContext: '000' });
+    const recs = [
+      { type: 'inert', epoch: 8250, cells: [cell(G1), cell(G1), cell(X), cell(Y, '000')] },
+      { type: 'inert', epoch: 8500, cells: [cell(G1), cell(G1), cell(G1), cell(Y), cell(X)] },
+    ];
+    const fams = families(recs);
+    assert.deepStrictEqual(fams.map((f) => f.first), [8250, 8250, 8500], 'G1 i X a la primera; Y, quan és hereditària');
+    assert.strictEqual(dominantFamily(fams, recs[1]), fams[0]);
+    // Mantel i Haenszel, el bootstrap i la lectura
+    assert.strictEqual(mh([{ a: 2, n1: 4, b: 1, n0: 4 }, { a: 1, n1: 4, b: 1, n0: 4 }]), 1.5);
+    assert.strictEqual(mh([{ a: 2, n1: 4, b: 0, n0: 4 }]), null);
+    const worlds = [[1], [2], [3], [4]];
+    assert.deepStrictEqual(bootstrap(worlds, (s) => s.flat().reduce((a, b) => a + b, 0), { count: 500 }), bootstrap(worlds, (s) => s.flat().reduce((a, b) => a + b, 0), { count: 500 }));
+    assert.match(reading([1.2, 2.0], 1.6), /sobre l'arrelament/);
+    assert.match(reading([0.5, 0.9], 1.6), /més difícil/);
+    assert.match(reading([0.8, 1.3], 1.6), /no hi canvia gaire/);
+    assert.match(reading([0.8, 2.0], 1.6), /no ho pot dir/);
+  },
   'eines/arrelament.mjs: l\'envelliment, la preparació, el manifest, les comprovacions i les dues parts, amb un disseny petit': async () => {
     // Un disseny petit, dins del repositori (la preparació demana un commit net i el simulador de l'envelliment), en una carpeta
     // que la prova esborra
@@ -263,9 +299,40 @@ const tests = {
       const a = readJsonl(join(abs, 'part-a', `${lines[0].split(' ')[0]}.jsonl`));
       assert.ok(a[0].plant && a.some((l) => l.type === 'lineage'), 'la branca de la part A no té la sembra o el llinatge');
       assert.strictEqual(a.filter((l) => l.type === 'inert').length, a.filter((l) => l.type === 'census').length, 'cada cens, amb el seu cens inert');
-      // ara la part A ha començat; i una sembra o una llista tocades són un problema
+      // ara la part A ha començat
       assert.ok(preflight(d, { root }).some((x) => /ja ha començat/.test(x)));
       assert.deepStrictEqual(checkManifest(d, { root }), []);
+      // l'anàlisi, només amb el pilot sencer
+      let text = [];
+      assert.strictEqual(analyse(d, { root, out: (l) => text.push(l), count: 100 }).ok, false);
+      assert.match(text.join('\n'), /No s'analitza res/);
+      // totes les branques, 8 alhora, i l'anàlisi sencera
+      const all = ['llista-a-pc.txt', 'llista-a-vm.txt', 'llista-b-pc.txt', 'llista-b-vm.txt'].flatMap((f) => readFileSync(join(abs, f), 'utf8').trim().split('\n').filter(Boolean))
+        .filter((l) => !existsSync(join(abs, l.includes('--plant') ? 'part-a' : 'part-b', `${l.split(' ')[0]}.jsonl`)));
+      await new Promise((resolve, reject) => {
+        let next = 0, running = 0, done = 0;
+        const go = () => {
+          if (done === all.length) return resolve();
+          while (running < 8 && next < all.length) {
+            const [, ...args] = all[next++].split(' ');
+            running++;
+            const c = spawn(process.execPath, ['sim.mjs', ...args], { cwd: root, stdio: 'ignore' });
+            c.on('close', (code) => { running--; done++; if (code) return reject(new Error(`una branca ha sortit amb el codi ${code}`)); go(); });
+          }
+        };
+        go();
+      });
+      text = [];
+      const res = analyse(d, { root, out: (l) => text.push(l), count: 200 });
+      const t = text.join('\n');
+      assert.ok(res.ok, t.slice(0, 2000));
+      for (const s of ['1. pR', '2. El contrast principal', '3. λA', '4. La consistència', '5. La lectura', '6. Els descriptius']) assert.ok(t.includes(s), `falta la secció ${s}`);
+      assert.ok(Object.keys(res.main).includes('continue') && Object.keys(res.main).includes('λ shuffle-all'));
+      // l'anàlisi és determinista
+      const again = [];
+      analyse(d, { root, out: (l) => again.push(l), count: 200 });
+      assert.strictEqual(again.join('\n'), t);
+      // una sembra o una llista tocades són un problema
       const plant = join(root, m.branches.find((b) => b.part === 'A').plant);
       const pj = JSON.parse(readFileSync(plant, 'utf8')); pj.lineageSeed++; writeFileSync(plant, JSON.stringify(pj, null, 2) + '\n');
       assert.ok(checkManifest(d, { root }).some((x) => /la sembra no és la del manifest/.test(x)));
