@@ -62,7 +62,48 @@ export function plantCells(x, y, width, height, square) {
   return square ? [-1, 0, 1].flatMap((dy) => [-1, 0, 1].map((dx) => (y + dy) * width + (x + dx))) : [y * width + x];
 }
 
+// El registre d'una sembra (el que llegeix sim.mjs --plant). `soup` és el món de partida, sencer; `from`, el seu camí. Amb `cache`,
+// les proves del genotip i del sham es fan una sola vegada per programa i llavor (eines/arrelament.mjs en fa milers)
+export function makePlant({ from, soup, width = 512, cells, program, genotype = null, sham = null, lineageSeed, cache = null }) {
+  if (!/^[0-9a-f]{128}$/.test(program)) throw new Error(`el programa ha de tenir ${PROGRAM_SIZE} bytes en hexadecimal (en minúscules)`);
+  if (soup.length % (PROGRAM_SIZE * width)) throw new Error(`${from} no és un món d'amplada ${width}`);
+  if (!Number.isInteger(lineageSeed)) throw new Error('falta la llavor del llinatge');
+  const height = soup.length / PROGRAM_SIZE / width;
+  const memo = (key, fn) => { if (!cache) return fn(); if (!cache.has(key)) cache.set(key, fn()); return cache.get(key); };
+  const g = fromHex(program);
+  const genotypeResult = memo(`g:${program}`, () => genotypeTest(g));
+  if (genotypeResult.heritableSolo < GENOTYPE_MIN) throw new Error(`el genotip és hereditari sol en ${genotypeResult.heritableSolo} de 100 condicions, i en cal ${GENOTYPE_MIN}`);
+  let bytes = g, shamInfo = null, planted = genotypeResult;
+  if (sham !== null) {
+    const s = memo(`s:${program}:${sham}`, () => makeSham(g, sham));
+    bytes = s.bytes; planted = s.test;
+    shamInfo = { seed: sham, attempts: s.attempts };
+  }
+  const out = Uint8Array.from(soup);
+  for (const c of cells) out.set(bytes, c * PROGRAM_SIZE);
+  const allowed = new Set(cells);
+  for (let i = 0; i < out.length; i++) if (out[i] !== soup[i] && !allowed.has((i / PROGRAM_SIZE) | 0)) throw new Error('ha canviat un byte fora de les cel·les plantades');
+  return {
+    type: 'plant', code: codeVersion(), node: process.version, date: new Date().toISOString(),
+    from, sourceSha256: sha256(soup), outputSha256: sha256(out), width, height, cells,
+    genotype, program, hex: toHex(bytes), sham: shamInfo, lineageSeed,
+    genotypeTest: genotypeResult, plantedTest: planted, conditions: { seed: INERT_CONDITIONS_SEED, count: 100 },
+  };
+}
+// L'escriu, sense sobreescriure mai res
+export function writePlant(out, record) {
+  if (existsSync(out) || existsSync(`${out}.part`)) throw new Error(`${out} ja hi és: no el sobreescric`);
+  writeFileSync(`${out}.part`, JSON.stringify(record, null, 2) + '\n', { flag: 'wx' });
+  renameSync(`${out}.part`, out);
+}
+
+let codeMemo = null;
 function codeVersion() {
+  if (codeMemo) return codeMemo;
+  codeMemo = gitVersion();
+  return codeMemo;
+}
+function gitVersion() {
   const here = fileURLToPath(new URL('..', import.meta.url));
   const run = (cmd) => execSync(cmd, { cwd: here, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
   try { return run('git rev-parse --short HEAD') + (run('git status --porcelain -- "*.js" "*.mjs"') ? '+canvis' : ''); }
@@ -107,29 +148,14 @@ function main(argv) {
   if (!m) fail('--cell ha de ser X,Y');
   let cells;
   try { cells = plantCells(Number(m[1]), Number(m[2]), width, height, !!opts.square); } catch (e) { fail(e.message); }
-  if (!/^[0-9a-f]{128}$/.test(opts.program)) fail(`--program ha de ser un programa de ${PROGRAM_SIZE} bytes en hexadecimal (en minúscules)`);
-  const genotype = fromHex(opts.program);
-  const genotypeResult = genotypeTest(genotype);
-  if (genotypeResult.heritableSolo < GENOTYPE_MIN) fail(`el genotip és hereditari sol en ${genotypeResult.heritableSolo} de 100 condicions, i en cal ${GENOTYPE_MIN}`);
-  let bytes = genotype, sham = null, planted = genotypeResult;
-  if (opts.sham !== undefined) {
-    const s = makeSham(genotype, int('sham', opts.sham));
-    bytes = s.bytes; planted = s.test;
-    sham = { seed: Number(opts.sham), attempts: s.attempts };
-  }
-  const sourceSha256 = sha256(soup);
-  const out = Uint8Array.from(soup);
-  for (const c of cells) out.set(bytes, c * PROGRAM_SIZE);
-  for (let i = 0; i < out.length; i++) if (out[i] !== soup[i] && !cells.includes((i / PROGRAM_SIZE) | 0)) fail('ha canviat un byte fora de les cel·les plantades');
-  const record = {
-    type: 'plant', code: codeVersion(), node: process.version, date: new Date().toISOString(),
-    from: opts.from, sourceSha256, outputSha256: sha256(out), width, height, cells,
-    genotype: opts.genotype ?? null, program: opts.program, hex: toHex(bytes), sham, lineageSeed: int('lineage-seed', opts['lineage-seed']),
-    genotypeTest: genotypeResult, plantedTest: planted, conditions: { seed: INERT_CONDITIONS_SEED, count: 100 },
-  };
-  writeFileSync(`${opts.out}.part`, JSON.stringify(record, null, 2) + '\n');
-  renameSync(`${opts.out}.part`, opts.out);
-  console.log(`${opts.out}: ${sham ? `sham (la permutació ${sham.attempts})` : `el genotip ${record.genotype ?? ''}`} a ${cells.length} cel·la${cells.length > 1 ? 'es' : ''}; hereditari sol en ${planted.heritableSolo} de 100`);
+  let record;
+  try {
+    record = makePlant({ from: opts.from, soup, width, cells, program: opts.program, genotype: opts.genotype ?? null,
+      sham: opts.sham === undefined ? null : int('sham', opts.sham), lineageSeed: int('lineage-seed', opts['lineage-seed']) });
+    writePlant(opts.out, record);
+  } catch (e) { fail(e.message); }
+  const planted = record.plantedTest;
+  console.log(`${opts.out}: ${record.sham ? `sham (la permutació ${record.sham.attempts})` : `el genotip ${record.genotype ?? ''}`} a ${cells.length} cel·la${cells.length > 1 ? 'es' : ''}; hereditari sol en ${planted.heritableSolo} de 100`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main(process.argv.slice(2));
