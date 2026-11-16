@@ -151,3 +151,43 @@ Les sortides, tal com surten, a `prova/`. No en traiem cap resultat.
 - **3 condicions** no veuen tots els fràgils, i *F* és una estimació.
 - **Les captures són cada 100 èpoques:** és la resolució dels temps.
 - **«Arrela» no és «s'estableix»:** el criteri del llinatge és amb companys inerts, i el de la llei 2, amb companys de soroll.
+
+## El que s'ha provat (16-11-2026)
+
+- **La tria dels genotips, el primer intent** (`bf262b4`, a `intent-1/`, tal com va sortir):
+  - **l'error:** el resultat de la prova sobreescrivia els recomptes de 100 amb les cadenes de 0 i 1. El llindar de 95 no filtrava res, i es
+    triava el primer programa que fos hereditari en alguna condició;
+  - **per què la tria no canvia:** els quatre triats fan 100, 96, 96 i 100 de 100, i cap dels anteriors no era hereditari en cap condició;
+  - **refet amb l'script corregit** (`b391491`): els mateixos quatre programes. També escriu els recomptes dels programes anteriors.
+- **Els genotips** (`genotips-sortida.txt`):
+  - **G1:** un dels 37 programes del brot del 1034;
+  - **G2:** de `5015-continue-a`, a l'època 13.250;
+  - **G3:** de `5017-shuffle-all-a`, a l'època 9.000;
+  - **G4:** de `5018-reinit-a`, a l'època 12.250.
+
+  Tots es copien sols, i cap no ho fa en context amb companys inerts.
+- **Una comprovació que no era a la nota** (`comprova-genotips.mjs`, a `8800616`). G3 és un programa d'una sola cel·la. La regla tria el
+  programa més freqüent, però en un món establert els membres de la família poden ser tots diferents. Per això, a la captura d'origen de
+  cada un:
+  - **les cel·les que porten alguna finestra seva:** 2.540 (G2), 3.796 (G3) i 10.745 (G4), totes per sobre de l'1 % del món;
+  - **F, les hereditàries amb companys inerts:** unes 1.080, 1.080 i 1.850.
+
+  Comparades amb els hereditaris que estima el cens v3, l'script diu «de la família dominant» per a G3 i G4, i no per a G2 (1.081 contra
+  3.968). Però compara dues proves diferents: el cens v3 fa servir companys de soroll i veïns.
+  - **El que en traiem:** tots tres són de famílies grans, però la regla no garanteix que siguin de la dominant.
+  - **Al pla v0.2:** la família dominant s'ha de definir per les finestres, agrupant les cel·les hereditàries, i no pel programa més
+    freqüent.
+- **Les sembres** (`beb3422`):
+  - **els 6 mons:** 5004, 5006, 5008, 5014, 5019 i 5020;
+  - **les posicions:** a `sembra-sortida.txt`;
+  - **les captures:** 90 a `sembres/`, que no van a git;
+  - **les ordres:** 90 a `llista.txt`.
+- **La prova curta** (`75e4c8d`, a `prova/`, tal com va sortir):
+  - **la branca:** `5004-reinit-G1`, fins a l'època 8.300, amb el llançador i un procés a prioritat baixa: codi 0 i el registre sencer, en
+    38 s;
+  - **el llinatge i l'anàlisi:** corren de punta a punta.
+
+  No en traiem cap resultat.
+  - **El cost:** 124 s per cada 1.000 èpoques, amb un sol procés i la màquina lliure (la nota en preveia unes 400, amb la càrrega de la
+    sèrie).
+  - **Les 90 branques, amb 8 processos:** unes 3 a 5 h.

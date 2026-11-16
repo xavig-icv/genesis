@@ -1,0 +1,35 @@
+La prova de viabilitat (la prova curta): l'anàlisi de la nota. codi=75e4c8d  node=v16.15.1
+
+Cada branca (1): el desenllaç, el temps (des de la sembra), F màxim, l'establiment de la llei 2 i el del bessó (fins a la mateixa època)
+  5004-reinit-G1         censurada a 300            Fmàx    274  sense llei 2; bessó: no
+
+Per variant i sopa: arrelen / s'extingeixen / censurades (de n); la mediana del temps d'arrelar i d'extingir-se
+  G1 reinit            0 / 0 / 1 (de 1); arrelar —, extingir-se —
+
+Per variant (les tres sopes juntes):
+  G1     0 / 0 / 1 (de 1)
+
+Per sopa (els quatre genotips en una cel·la):
+  reinit       0 / 0 / 1 (de 1)
+
+Quan s'extingeixen (0 llinatges): en 100 èpoques, 0; en 200, 0; en 500, 0; en 1.000, 0; més tard, 0
+Quan arrelen (0): la mediana —, el percentil 90 —, el màxim —
+
+La dosi (G1): una cel·la contra el quadrat de 3 × 3, per sopa
+  continue     una: 0 de 0 arrelen; nou: 0 de 0 arrelen
+  shuffle-all  una: 0 de 0 arrelen; nou: 0 de 0 arrelen
+  reinit       una: 0 de 1 arrelen; nou: 0 de 0 arrelen
+
+El detector (orientatiu): la probabilitat mitjana de veure el llinatge alguna vegada
+  2048 cel·les cada 100 èpoques: els que s'extingeixen —; els que arrelen —; els censurats 1.00
+  4096 cel·les cada 100 èpoques: els que s'extingeixen —; els que arrelen —; els censurats 1.00
+  4096 cel·les cada 250 èpoques: els que s'extingeixen —; els que arrelen —; els censurats 1.00
+
+El cost: 124 s per cada 1.000 èpoques (la mediana; del 124 al 124)
+
+Les regles del pla (§9), amb les xifres:
+  1. Algun genotip arrela en alguna sopa? NO: la part A, amb el quadrat de 3 × 3 o amb un H més llarg
+  2. Arrelen gairebé sempre (més del 90 %) a totes les sopes? G1 0 %: no
+  3. La mediana del temps d'arrelar, contra H/2 = 1.000 (H = 2.000, la proposta): —
+  4. S'extingeixen en 200 èpoques: 0 de 0
+  5. La mesura del llinatge: rebrots després de l'extinció, cap; llinatges extingits que surten «dominants» a un establiment de la llei 2, cap

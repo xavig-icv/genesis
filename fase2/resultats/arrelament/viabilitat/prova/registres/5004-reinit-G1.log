@@ -1,0 +1,15 @@
+codi=75e4c8d  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G1.bin --start 8000 --epochs 8300 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/prova/registres/5004-reinit-G1.jsonl --save fase2/resultats/arrelament/viabilitat/prova/captures/5004-reinit-G1 --save-every 100
+llavor=405004 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G1.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.999  HOE=0.104  ops/execució=68.2  parelles=75%  bytes ,:0.5% <:0.5% 0:0.4%  fragments [[[[[[[[[[[[ (0.1%)  >>>>>>>>>>>> (0.1%)  ,,,,,,,,,,,, (0.1%)  12s
+època 8200  H0=7.997  HOE=0.197  ops/execució=76.5  parelles=75%  bytes <:0.6% [:0.5% ,:0.5%  fragments >>>>>>>>>>>> (0.2%)  [[[[[[[[[[[[ (0.2%)  [[[[[[[·[[[[ (0.1%)  23s
+cens 8250  mostra=2048  hereditaris=0.1% (sols 0.1%, només en context 0.0%)  es repliquen=0.1% (sols 0.1%, en context 0.0%)  famílies=0
+època 8300  H0=7.994  HOE=0.259  ops/execució=82.0  parelles=75%  bytes <:0.7% [:0.6% #59:0.6%  fragments [[[[[[[[[[[[ (0.2%)  [[[[[[[·[[[[ (0.1%)  >>>>>>>>>>>> (0.1%)  37s
+
+empremta del món: 5d036d38
+
+programes diferents: 131021 de 131072
+      9  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      5  |[[ <  }               ,  ] ,           ,               }  < [[  |
+      4  |0[[  [[ <  }               , ]] ,               }  < [[  [[     |
+      3  |][[ <  }               , ]] ,               }  < [[  [[         |
+      3  |[     [[  [  <  }               , ]] ,               }  < [[  [[|
