@@ -191,3 +191,76 @@ Les sortides, tal com surten, a `prova/`. No en traiem cap resultat.
   - **El cost:** 124 s per cada 1.000 èpoques, amb un sol procés i la màquina lliure (la nota en preveia unes 400, amb la càrrega de la
     sèrie).
   - **Les 90 branques, amb 8 processos:** unes 3 a 5 h.
+
+## El que surt (16-11-2026, exploratori)
+
+**El càlcul:**
+- **les branques:** des de `cdc2e78`, amb `llanca.sh` i 8 processos a prioritat baixa, del 16-11-2026 a les 13.45.47 a les 15.47.44. Les 90,
+  amb el codi 0 i la línia final, cap d'interrompuda. Els registres, a git abans de mirar-los (`149e5c3`);
+- **el llinatge:** des de `f603368`, amb `llinatge.sh` i 8 processos, de les 15.48 a les 15.53 (`e5f5c6d`);
+- **l'anàlisi:** des d'`e5f5c6d`, a `analisi-sortida.txt`, tal com va sortir (`06dd455`).
+
+**Un error de l'anàlisi.** Surt amb el codi 1 i 90 «problemes». La comprovació demanava que el registre i el llinatge fossin del mateix
+commit, i el llinatge es fa per força després de desar els registres. Entre `cdc2e78` i `f603368` no hi canvia cap fitxer de codi: només
+s'hi afegeix `llinatge.sh`. La resta de la sortida no en depèn.
+
+**Arrelar depèn sobretot del genotip.** Una cel·la, les tres sopes juntes (de 18 sembres):
+
+| Genotip | Arrelen | S'extingeixen | Censurades |
+|---|---|---|---|
+| G1 (el brot del 1034) | 2 | 15 | 1 |
+| G2 (`5015-continue-a`) | 17 | 0 | 1 |
+| G3 (`5017-shuffle-all-a`) | 15 | 0 | 3 |
+| G4 (`5018-reinit-a`) | 4 | 14 | 0 |
+| G1 en 3 × 3 | 7 | 9 | 2 |
+
+- **Dues menes de genotips:**
+  - **G2 i G3** arrelen gairebé sempre, en 100 o 200 èpoques;
+  - **G1 i G4** s'extingeixen gairebé sempre.
+- **La dosi:** nou cel·les de G1 arrelen més que una (7 de 18, contra 2).
+- **Per sopa,** els quatre genotips en una cel·la (de 24): `continue` 11 / 10 / 3, `shuffle-all` 12 / 10 / 2 i `reinit` 15 / 9 / 0
+  (arrelen / s'extingeixen / censurades).
+  - **G1 només arrela a la sopa nova:** 2 de 6. En el quadrat, 1, 2 i 4 de 6 (envellida, barrejada i nova).
+  - **Amb 6 mons, no és cap resultat.** Però la diferència entre sopes, si n'hi ha, pot ser petita o anar al revés del que es veia a
+    l'establiment.
+- **Quan s'extingeixen** (38): 31 en 100 èpoques, 34 en 200, 36 en 500. La majoria no arriben a copiar-se: *F* màxim 1.
+- **Quan arrelen** (45): la mediana, 200 èpoques; el percentil 90, 700; el màxim, 1.100.
+- **Les censurades** (7) són branques que es van aturar a l'establiment de la llei 2 abans que el criteri del llinatge es pogués complir.
+  Mirat després: en 5 de les 7, el llinatge hi era dominant.
+- **Els bessons:** tres bessons es van establir sols (`5004-reinit`, `5008-shuffle-all`, i `5004-continue` a l'època 4.000). A les quatre
+  branques on el llinatge plantat s'havia extingit, l'establiment de la llei 2 arriba a la mateixa època que el del bessó, i el llinatge no
+  hi és (*F* = 0). L'atzar comú funciona: quan la sembra s'apaga, el món torna a la història del bessó.
+- **El detector:** un cens inert veuria els llinatges que arrelen (1,00 amb totes tres mides), però dels que s'extingeixen, només un 10 o
+  13 %. S'apaguen abans de fer-se grans.
+- **El cost:** 253 s per cada 1.000 èpoques, la mediana amb 8 processos (del 203 al 622).
+- **La mesura del llinatge:** cap rebrot després d'una extinció, i cap llinatge extingit no surt dominant en un establiment.
+  - **Però «dominant» compara dues proves:** *F* amb companys inerts, i el cens v3 amb companys de soroll.
+  - **Un exemple:** a `5019-shuffle-all-G1x9`, el llinatge arrela a les 800 èpoques, però l'establiment de la llei 2 no arriba fins a les
+    3.250, i el llinatge no hi surt dominant. G1 es copia sol amb companys inerts en les 100 condicions, però el cens v3 el prova amb
+    companys de soroll.
+
+**Les regles de la nota:**
+1. **Algun genotip arrela?** Sí: el disseny es manté.
+2. **Arrelen gairebé sempre?** No en conjunt: G2 i G3, sí (el 94 i el 83 %); G1 i G4, no (l'11 i el 22 %). Amb G2 i G3, la part A no
+   podria veure que una sopa n'afavoreix l'arrelament, perquè ja hi són al sostre.
+3. **La mediana del temps d'arrelar** és 200, molt per sota de *H*/2 = 1.000: *H* = 2.000 sobra. 1.500 n'hi hauria prou.
+4. **S'extingeixen en 200 èpoques** 34 de 38, el 89 %, just per sota del «gairebé tots» (el 90 %). L'aturada a l'extinció fa la part A
+   molt barata: *K* pot pujar.
+5. **La mesura del llinatge:** sense errors visibles. Però l'establiment de la llei 2 ha d'aturar la branca més tard, perquè el criteri
+   del llinatge s'hi pugui complir, i la família dominant s'ha de mesurar amb la mateixa prova (el cens inert).
+
+**Què canvia al pla v0.2** (proposta, a `docs/pla-aparicio-arrelament.md`):
+- **cada món, els quatre genotips,** cadascun en branques a part: les sembres que s'extingeixen costen menys d'un minut;
+- **la contrast entre sopes, per genotip,** i una estimació conjunta estratificada per genotip. G2 i G3 al sostre no hi diuen gaire, i
+  G1 i G4 són els informatius;
+- **una dosi de 3 × 3 per a G1,** que el porta a la zona del mig;
+- ***H* = 1.500, i l'aturada a l'establiment 500 èpoques més tard** (`--stop-after-event 500`), perquè el criteri del llinatge s'hi
+  pugui complir;
+- **la família dominant a l'establiment, amb el cens inert;**
+- **la consistència de la part B, condicionada a la detecció,** com ja deia el pla: el detector no veu les aparicions que s'apaguen de
+  seguida.
+
+**Els límits, a més dels d'entrada:**
+- 6 mons per cel·la de la taula;
+- 4 genotips: G2 i G3 venen de famílies grans, però no necessàriament de la dominant (la comprovació dels genotips);
+- les captures cada 100 èpoques: els temps d'extinció tenen aquesta resolució.
