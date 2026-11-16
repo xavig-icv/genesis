@@ -28,6 +28,13 @@
 //                     també codi de les deixalles (AUD-112), i s'ha de llegir contra continue
 //   zeros-all         els bytes zero de totes les cel·les
 //   control-all       el control de zeros-all
+//   byte0             la regla del primer byte (el pilot de l'aparició i l'arrelament, docs/pla-aparicio-arrelament.md,
+//                     §4.3): a cada programa que comença amb '<', el primer byte s'intercanvia amb un byte del mateix
+//                     programa que no sigui '<', triat a l'atzar. Conserva la composició de cada cel·la i l'histograma, i
+//                     cap programa no hi comença amb '<' (llevat dels que són tots '<', que no canvien)
+//   byte0-placebo     el seu placebo: als mateixos programes, s'intercanvien dos bytes diferents de les posicions 1 a 63,
+//                     triats a l'atzar. Conserva el mateix, i el primer byte no canvia (si les posicions 1 a 63 són totes
+//                     iguals, el programa no canvia)
 //
 // Els replicadors detectats són les cel·les que passen la prova de replicació (fase2/replication.js, sola o en
 // context), provades totes una per una (uns 95 s en un món de 512 × 256). És una prova finita, no una garantia que
@@ -51,7 +58,8 @@ import { makeRng, randomSoup } from '../fase1/soup.js';
 import { replicationTest } from '../fase2/replication.js';
 
 export const KINDS = ['continue', 'shuffle-programs', 'shuffle-within', 'shuffle-all', 'reinit',
-  'zeros-data', 'placebo-cell', 'zeros-inert', 'zeros-outside', 'control-outside', 'zeros-all', 'control-all'];
+  'zeros-data', 'placebo-cell', 'zeros-inert', 'zeros-outside', 'control-outside', 'zeros-all', 'control-all', 'byte0', 'byte0-placebo'];
+const LT = '<'.charCodeAt(0);
 // L'abast de cada tipus que en té: les cel·les de fora dels replicadors detectats, o totes
 const SCOPE = { 'zeros-data': 'outside', 'placebo-cell': 'outside', 'zeros-inert': 'outside', 'zeros-outside': 'outside', 'control-outside': 'outside', 'zeros-all': 'all', 'control-all': 'all' };
 // Els bytes de dades: ni 0 ni cap instrucció
@@ -110,6 +118,31 @@ export function transform(soup, kind, seed, { width = 0, radius = 2 } = {}) {
     shuffleArray(out, rng);
   } else if (kind === 'reinit') {
     out.set(randomSoup(n, rng));
+  } else if (kind === 'byte0' || kind === 'byte0-placebo') {
+    // un sol intercanvi a cada programa que comença amb '<': amb el primer byte (byte0) o entre dues posicions de l'1 al 63 (placebo)
+    let programs = 0, swapped = 0;
+    const cand = new Uint8Array(PROGRAM_SIZE);
+    for (let c = 0; c < n; c++) {
+      const o = c * PROGRAM_SIZE;
+      if (soup[o] !== LT) continue;
+      programs++;
+      let a, b;
+      if (kind === 'byte0') {
+        let k = 0;
+        for (let i = 1; i < PROGRAM_SIZE; i++) if (soup[o + i] !== LT) cand[k++] = i;
+        if (!k) continue;
+        a = 0; b = cand[(rng() * k) | 0];
+      } else {
+        a = 1 + ((rng() * (PROGRAM_SIZE - 1)) | 0);
+        let k = 0;
+        for (let i = 1; i < PROGRAM_SIZE; i++) if (soup[o + i] !== soup[o + a]) cand[k++] = i;
+        if (!k) continue;
+        b = cand[(rng() * k) | 0];
+      }
+      out[o + a] = soup[o + b]; out[o + b] = soup[o + a];
+      swapped++;
+    }
+    info.byte0 = { programs, swapped, unchanged: programs - swapped };
   } else if (kind !== 'continue') {
     const mask = SCOPE[kind] === 'outside' ? replicatingCells(soup, rng, { width, radius }) : new Uint8Array(n);
     const inScope = (c) => !mask[c];
@@ -224,6 +257,29 @@ export function checkInvariants(input, output, info) {
     case 'reinit':
       if (!sameArray(output, randomSoup(n, makeRng(info.seed, 'v2')))) p.push('reinit no és la sopa a l\'atzar de la seva llavor');
       break;
+    case 'byte0':
+    case 'byte0-placebo': {
+      if (!sameArray(histogram(input), histogram(output))) { p.push(`${info.kind} no conserva l'histograma`); break; }
+      let programs = 0, swapped = 0;
+      for (let c = 0; c < n; c++) {
+        const a = cell(input, c), b = cell(output, c);
+        const diff = [];
+        for (let i = 0; i < PROGRAM_SIZE; i++) if (a[i] !== b[i]) diff.push(i);
+        if (a[0] !== LT) { if (diff.length) { p.push(`${info.kind} ha canviat la cel·la ${c}, que no comença amb '<'`); return p; } continue; }
+        programs++;
+        if (!diff.length) {
+          const constant = info.kind === 'byte0' ? a.every((v) => v === LT) : a.subarray(1).every((v) => v === a[1]);
+          if (!constant) { p.push(`${info.kind} no ha canviat la cel·la ${c}, i podia`); return p; }
+          continue;
+        }
+        swapped++;
+        if (diff.length !== 2 || a[diff[0]] !== b[diff[1]] || a[diff[1]] !== b[diff[0]]) { p.push(`${info.kind}: la cel·la ${c} no és un intercanvi de dos bytes`); return p; }
+        if (info.kind === 'byte0' && (diff[0] !== 0 || b[0] === LT)) { p.push(`byte0: la cel·la ${c} encara comença amb '<'`); return p; }
+        if (info.kind === 'byte0-placebo' && diff[0] === 0) { p.push(`byte0-placebo ha tocat el primer byte de la cel·la ${c}`); return p; }
+      }
+      if (programs !== info.byte0.programs || swapped !== info.byte0.swapped) p.push(`${info.kind}: el registre diu ${info.byte0.programs} programes i ${info.byte0.swapped} intercanvis, i n'hi ha ${programs} i ${swapped}`);
+      break;
+    }
     default: {
       const mask = info.mask;
       const sameMap = info.kind === 'zeros-data' || info.kind === 'placebo-cell' || info.kind === 'zeros-inert';

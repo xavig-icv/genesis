@@ -309,3 +309,13 @@ Llegeix-los abans de proposar canvis.
   - **El pilot de l'aparició i l'arrelament** (`docs/pla-aparicio-arrelament.md`, v0.1 del 16-11-2026): la part A (l'assaig d'invasió) i la
     part B (les aparicions naturals, amb un cens de companys inerts), als mateixos mons nous. Abans de calcular: la prova de viabilitat (§9,
     exploratòria), el pla v0.2, les eines en una PR i l'auditoria 32.
+    - **Les eines** (§7 del pla; `test/arrelament.mjs`):
+      - **`sim.mjs`:** `--plant FITXER --lineage-every N --stop-on-extinction N` (l'assaig d'invasió; el llinatge, a `fase2/llinatge.js`)
+        i `--inert-census N` (el cens inert; `fase2/inert.js`). Sense aquestes opcions, fa el mateix que abans, línia a línia. El cens inert i
+        el llinatge tenen un atzar propi: no canvien la història del món.
+      - **`fase2/inert.js`:** còpies de les funcions de la prova d'autonomia de B1 (`eines/autonomia.mjs`), perquè el simulador no depengui
+        d'una eina de B1. La prova comprova que fan el mateix.
+      - **`node eines/sembra.mjs --from captura.bin --program HEX --cell X,Y [--square] [--sham LLAVOR] --lineage-seed N --out
+        fitxer.json`:** el fitxer de la sembra, mai la captura (sim.mjs planta a la memòria, si la SHA-256 del món de partida hi coincideix).
+        El genotip, 95 de 100 o més; el sham, 0 de 100. Les posicions: `--positions MON K`.
+      - **`eines/transforma.mjs`:** els tipus `byte0` i `byte0-placebo` (la regla del primer byte, amb el seu placebo).
