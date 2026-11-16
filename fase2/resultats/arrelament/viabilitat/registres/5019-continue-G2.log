@@ -1,0 +1,20 @@
+codi=cdc2e78  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-continue-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-continue-G2 --save-every 100
+llavor=405019 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G2.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.811  HOE=0.410  ops/execució=166.4  parelles=75%  bytes <:4.1% ,:1.7% #61:1.6%  fragments [0·,}<····]] (0.8%)  <·0··[[··,}< (0.8%)  ]]····<},·0[ (0.7%)  22s
+època 8200  H0=7.717  HOE=0.626  ops/execució=162.9  parelles=75%  bytes <:4.3% 0:3.5% #61:2.0%  fragments [0·,}<····]] (2.8%)  ]]····<},·0[ (2.3%)  <·0··[[··,}< (1.9%)  45s
+*** PRIMERA FAMÍLIA a l'època 8250 ***
+cens 8250  mostra=2048  hereditaris=4.1% (sols 4.1%, només en context 0.0%)  es repliquen=7.8% (sols 7.8%, en context 0.0%)  famílies=1  #1:10.80%([,}<]])
+època 8300  H0=7.600  HOE=0.753  ops/execució=157.1  parelles=75%  bytes 0:5.7% <:4.5% #61:2.3%  fragments [0·,}<····]] (4.1%)  ]]····<},·0[ (3.5%)  <·0··[[··,}< (2.2%)  70s
+època 8400  H0=7.403  HOE=0.920  ops/execució=152.7  parelles=75%  bytes 0:8.8% <:4.7% #61:2.7%  fragments [0·,}<····]] (5.8%)  ]]····<},·0[ (4.8%)  <·0··[[··,}< (2.5%)  91s
+cens 8500  mostra=2048  hereditaris=7.7% (sols 7.7%, només en context 0.0%)  es repliquen=15.8% (sols 15.8%, en context 0.0%)  famílies=1  #1:26.00%([,}<]])
+*** ESTABLIMENT DE LA VIDA a l'època 8250 (confirmat al cens 8500) ***
+època 8500  H0=7.200  HOE=1.009  ops/execució=146.9  parelles=75%  bytes 0:11.7% <:4.9% #61:3.0%  fragments [0·,}<····]] (5.7%)  ]]····<},·0[ (4.3%)  <·0··[[··,}< (2.7%)  117s
+
+empremta del món: d6b9a8b
+
+programes diferents: 131041 de 131072
+      5  |0  0 0    00<  0  [   ,}<0000     0000 ]]]    <}, 0[0 0<0  0 00 |
+      3  |0000000000000000000000000000000000000000000000000000000000000000|
+      3  | 00 0  0<0 0[0 ,}<    ]]] 0000     0000<},   [  0  <00    0 0  0|
+      3  | 0 [[0 ,}<    ]]] 00000    0000<},  [[  0<    0     0[[ 0   00  |
+      2  |                                                                |
