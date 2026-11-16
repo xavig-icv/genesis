@@ -1,0 +1,30 @@
+codi=cdc2e78  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-reinit-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-reinit-G1x9 --save-every 100
+llavor=405020 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G1x9.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.999  HOE=0.126  ops/execució=67.1  parelles=75%  bytes <:0.5% ,:0.5% 0:0.5%  fragments ,,,,,,,,,,,, (0.1%)  >>>>>>>>>>>> (0.1%)  [[[[[[[[[[[[ (0.1%)  22s
+època 8200  H0=7.997  HOE=0.211  ops/execució=75.6  parelles=75%  bytes [:0.6% <:0.6% #59:0.5%  fragments >>>>>>>>>>>> (0.1%)  [·····[[··[[ (0.1%)  [[[[[[[[[[[[ (0.1%)  46s
+cens 8250  mostra=2048  hereditaris=0.2% (sols 0.2%, només en context 0.0%)  es repliquen=0.3% (sols 0.3%, en context 0.0%)  famílies=0
+època 8300  H0=7.994  HOE=0.256  ops/execució=80.4  parelles=75%  bytes <:0.6% [:0.6% #59:0.6%  fragments >>>>>>>>>>>> (0.2%)  [[[[[[[[[[[[ (0.1%)  [[··[[·····[ (0.1%)  71s
+època 8400  H0=7.989  HOE=0.324  ops/execució=87.2  parelles=75%  bytes [:0.8% <:0.7% #59:0.7%  fragments >>>>>>>>>>>> (0.2%)  [[··[[·····[ (0.2%)  [·····[[··[[ (0.2%)  94s
+*** PRIMERA FAMÍLIA a l'època 8500 ***
+cens 8500  mostra=2048  hereditaris=0.6% (sols 0.6%, només en context 0.0%)  es repliquen=0.7% (sols 0.7%, en context 0.0%)  famílies=1  #1:4.31%([[[[<})
+època 8500  H0=7.977  HOE=0.437  ops/execució=96.3  parelles=75%  bytes [:1.0% <:0.9% #59:0.8%  fragments >>>>>>>>>>>> (0.3%)  [·····[[··[[ (0.3%)  <·[[··[[···[ (0.2%)  123s
+època 8600  H0=7.964  HOE=0.529  ops/execució=104.6  parelles=75%  bytes [:1.1% <:1.0% #59:1.0%  fragments [[··[[·····[ (0.3%)  [·····[[··[[ (0.3%)  >>>>>>>>>>>> (0.3%)  149s
+època 8700  H0=7.950  HOE=0.613  ops/execució=109.8  parelles=75%  bytes [:1.3% #59:1.1% <:1.1%  fragments [·····[[··[[ (0.4%)  >>>>>>>>>>>> (0.3%)  <·[[··[[···[ (0.3%)  178s
+cens 8750  mostra=2048  hereditaris=1.0% (sols 1.0%, només en context 0.0%)  es repliquen=1.3% (sols 1.3%, en context 0.0%)  famílies=1  #1:7.38%(<[[[[{)
+època 8800  H0=7.935  HOE=0.683  ops/execució=112.8  parelles=75%  bytes [:1.4% #59:1.2% <:1.2%  fragments >>>>>>>>>>>> (0.3%)  <·[[··[[···[ (0.3%)  [·····[[··[[ (0.2%)  209s
+època 8900  H0=7.921  HOE=0.747  ops/execució=116.4  parelles=75%  bytes [:1.5% #59:1.3% <:1.3%  fragments >>>>>>>>>>>> (0.3%)  <·[[··[[···[ (0.3%)  [·····[[··[[ (0.2%)  235s
+cens 9000  mostra=2048  hereditaris=1.1% (sols 1.0%, només en context 0.0%)  es repliquen=1.2% (sols 1.1%, en context 0.0%)  famílies=1  #1:9.31%(,}<[[[)
+època 9000  H0=7.904  HOE=0.815  ops/execució=121.2  parelles=75%  bytes [:1.7% #59:1.5% <:1.4%  fragments <·[[··[[···[ (0.3%)  [[[[·[[[[[[[ (0.2%)  [[[[[[[[[[[[ (0.2%)  264s
+època 9100  H0=7.883  HOE=0.907  ops/execució=127.1  parelles=75%  bytes [:1.8% #59:1.6% <:1.5%  fragments [[[[[[[[[[[[ (0.2%)  >>>>>>>>>>>> (0.2%)  [[[[[·[[[[[[ (0.2%)  291s
+època 9200  H0=7.858  HOE=1.001  ops/execució=135.1  parelles=75%  bytes [:2.0% #59:1.8% <:1.6%  fragments >>>>>>>>>>>> (0.3%)  .[[··[[·<··} (0.2%)  [[·[[[[[[[[[ (0.2%)  317s
+cens 9250  mostra=2048  hereditaris=1.7% (sols 1.7%, només en context 0.0%)  es repliquen=1.8% (sols 1.8%, en context 0.0%)  famílies=1  #1:11.55%([[<},])
+*** ESTABLIMENT DE LA VIDA a l'època 9000 (confirmat al cens 9250) ***
+
+empremta del món: 726f177e
+
+programes diferents: 130576 de 131072
+     13  |[   [[  [[ <  }               ,  ] ,               }  < [   [[  |
+      9  |    [{  [  [[ <  }               ,  ] ,               }  < [   {|
+      9  |{   [ <  }               , ]  ,               }  < [[  [  {[    |
+      8  |[  [[   [ <  }               , ]  ,               }  < [[  [[   |
+      8  |[  [[  [  <  }               , ]] ,               }  < [[   [   |

@@ -1,0 +1,20 @@
+codi=cdc2e78  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-reinit-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-reinit-G2 --save-every 100
+llavor=405004 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G2.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.990  HOE=0.197  ops/execució=67.6  parelles=75%  bytes 0:1.1% #61:0.6% <:0.6%  fragments ]]····<},·0[ (0.7%)  [0·,}<····]] (0.7%)  <},··[[··0·< (0.6%)  23s
+època 8200  H0=7.938  HOE=0.429  ops/execució=72.1  parelles=75%  bytes 0:2.7% #61:1.0% <:0.9%  fragments ]]····<},·0[ (2.6%)  [0·,}<····]] (2.1%)  <·0··[[··,}< (1.0%)  45s
+*** PRIMERA FAMÍLIA a l'època 8250 ***
+cens 8250  mostra=2048  hereditaris=4.7% (sols 4.7%, només en context 0.0%)  es repliquen=6.9% (sols 6.9%, en context 0.0%)  famílies=1  #1:8.75%([,}<]])
+època 8300  H0=7.854  HOE=0.613  ops/execució=74.7  parelles=75%  bytes 0:4.5% #61:1.4% <:1.2%  fragments ]]····<},·0[ (3.8%)  [0·,}<····]] (3.1%)  <},·0[0···0< (0.9%)  72s
+època 8400  H0=7.723  HOE=0.797  ops/execució=76.0  parelles=75%  bytes 0:6.7% #61:1.9% <:1.5%  fragments ]]····<},·0[ (4.6%)  [0·,}<····]] (4.2%)  <},·0[0···0< (0.8%)  95s
+cens 8500  mostra=2048  hereditaris=8.7% (sols 8.7%, només en context 0.0%)  es repliquen=16.1% (sols 16.1%, en context 0.0%)  famílies=1  #1:23.11%([,}<]])
+*** ESTABLIMENT DE LA VIDA a l'època 8250 (confirmat al cens 8500) ***
+època 8500  H0=7.552  HOE=0.964  ops/execució=80.6  parelles=75%  bytes 0:9.2% #61:2.4% <:1.8%  fragments ]]····<},·0[ (5.5%)  [0·,}<····]] (5.1%)  ]···0<},·0·[ (0.8%)  123s
+
+empremta del món: 4298790e
+
+programes diferents: 131055 de 131072
+      3  |00 0<0  [[00 ,}<0   ]]] 0000     0000<},0   [[<0   0 0 0 000   0|
+      2  |0 0  [[00 ,}<0   ]]] 0000     0000<},0   [[<0   0 0 0   0 0   0 |
+      2  |0   0 0 0 0 0   0<[[   0,}<0000     0000 ]]]   0<}, 00[[  0<0 00|
+      2  |00 0<0  [[00 ,}<0   ]]] 0000     0000<},0   [[<0   0 0 0 0 0  00|
+      2  |0   0 0 0 0 0   0<[[   0,}<0000     0000 ]]]   0<}, 00[[  0 0  0|
