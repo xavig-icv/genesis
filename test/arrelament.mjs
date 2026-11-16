@@ -135,6 +135,7 @@ const tests = {
     assert.strictEqual(census(a), census(b));
     assert.strictEqual(a.at(-1).fingerprint, b.at(-1).fingerprint);
     assert.strictEqual(b.filter((l) => l.type === 'inert').length, 6);
+    assert.ok(b.filter((l) => l.type === 'inert').every((l) => !('lineage' in l)), 'sense llinatge, el cens inert no en parla');
     assert.deepStrictEqual(b[0].inertCensus, { sample: 64, seed: 20261116, conditions: { seed: 3000000000, count: 3 } });
     assert.ok(!('inertCensus' in a[0]) && !('plant' in a[0]) && !('lineage' in a[0]), 'sense les opcions, la línia d\'inici és la de sempre');
     assert.ok(!('extinction' in a.at(-1)));
@@ -154,9 +155,17 @@ const tests = {
     assert.ok(rec.genotypeTest.heritableSolo >= 95);
     // amb el llinatge
     const json = join(tmp, 'p.jsonl');
-    r = sim('--world', `${W}x${H}`, '--seed', '9', '--from', cap, '--start', '100', '--epochs', '400', '--census', '50', '--plant', plant, '--lineage-every', '25', '--json', json);
+    r = sim('--world', `${W}x${H}`, '--seed', '9', '--from', cap, '--start', '100', '--epochs', '400', '--census', '50', '--plant', plant, '--lineage-every', '25', '--inert-census', String(W * H), '--json', json);
     assert.strictEqual(r.status, 0, r.stderr);
     const L = readJsonl(json);
+    // el cens inert (de tot el món) diu quantes hereditàries són del llinatge: cap més que les hereditàries, i les que porten el genotip
+    const inertLines = L.filter((l) => l.type === 'inert');
+    assert.strictEqual(inertLines.length, 6);
+    for (const l of inertLines) {
+      assert.ok(Number.isInteger(l.lineage) && l.lineage <= l.heritable, JSON.stringify(l).slice(0, 200));
+      const g1 = l.cells.filter((c) => c.program === G1 && (c.heritableSolo.includes('1') || c.heritableContext.includes('1'))).length;
+      assert.ok(l.lineage >= g1, 'el llinatge no compta les cel·les amb el genotip mateix');
+    }
     assert.strictEqual(L[0].plant.outputSha256, rec.outputSha256);
     assert.deepStrictEqual(L[0].lineage, { every: 25, seed: 1, sample: 256, conditions: { seed: 3000000000, count: 3 }, stopOnExtinction: null });
     const lin = L.filter((l) => l.type === 'lineage');

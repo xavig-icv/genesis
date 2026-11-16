@@ -82,6 +82,8 @@ export function createLineage({ program, seed, sample = LINEAGE_SAMPLE, count = 
   }
   return {
     step,
+    // si un programa porta alguna finestra del llinatge (les de l'últim punt)
+    has: (P) => windows.has(P),
     get extinctAt() { return extinctAt; },
     description: { seed, sample, conditions: { seed: conditionsSeed, count } },
   };

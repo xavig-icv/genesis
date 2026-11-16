@@ -69,7 +69,7 @@ import {
 import { topMotifs, DATA } from './fase1/motifs.js';
 import { pairNeighbors, applyCurrents, applyFlow, DEFAULT_RADIUS } from './fase2/world.js';
 import { createCensus, CENSUS_VERSIONS, CENSUS_SAMPLE, CENSUS_SEED, EVENT_SHARE, EVENT_CENSUSES, establishment } from './fase2/census.js';
-import { createInertCensus, fromHex } from './fase2/inert.js';
+import { createInertCensus, fromHex, heritable } from './fase2/inert.js';
 import { createLineage } from './fase2/llinatge.js';
 
 // Quina versió del codi fa aquest experiment (per a la traçabilitat dels resultats):
@@ -360,7 +360,9 @@ for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
     json(record);
     if (inertCensus) {
       const ir = inertCensus.run(soup, nPrograms, epoch);
-      console.log(`cens inert ${epoch}  mostra=${ir.sample}  es copien=${ir.copying}  hereditàries=${ir.heritable}`);
+      // amb un llinatge, quantes de les hereditàries en són (les finestres de l'últim punt): la família dominant, amb la mateixa prova
+      if (lineage) ir.lineage = ir.cells.filter((c) => heritable(c) && lineage.has(fromHex(c.program))).length;
+      console.log(`cens inert ${epoch}  mostra=${ir.sample}  es copien=${ir.copying}  hereditàries=${ir.heritable}${lineage ? `  del llinatge=${ir.lineage}` : ''}`);
       json(ir);
     }
     if (detectEvent) {
