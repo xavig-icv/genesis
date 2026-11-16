@@ -14,9 +14,11 @@ const OUT = at(`${DIR}/genotips.json`);
 if (existsSync(OUT)) { console.error(`${OUT} ja hi és: no el sobreescric`); process.exit(2); }
 const conds = inertConditions(100);
 const count1 = (s) => [...s].filter((c) => c === '1').length;
+// Els recomptes (de 100) i les cadenes, a part: al primer intent, les cadenes sobreescrivien els recomptes, i el llindar de 95 no filtrava
+// res (intent-1/)
 const test = (h) => {
   const r = testReplicator(fromHex(h), conds, interpret);
-  return { heritableSolo: count1(r.heritableSolo), heritableContext: count1(r.heritableContext), solo: count1(r.solo), context: count1(r.context), ...r };
+  return { solo: count1(r.solo), context: count1(r.context), heritableSolo: count1(r.heritableSolo), heritableContext: count1(r.heritableContext), strings: r };
 };
 const out = { type: 'genotypes', ...header(), seed: GENOTYPE_SEED, conditions: { seed: INERT_SEED, count: 100, chemistry: 'C0' }, genotypes: [] };
 console.log(`codi=${out.code}  node=${out.node}  llavor=${GENOTYPE_SEED}  condicions=${INERT_SEED} (100)`);
@@ -82,9 +84,12 @@ console.log(`codi=${out.code}  node=${out.node}  llavor=${GENOTYPE_SEED}  condic
       for (let c = 0; c < CELLS; c++) { const h = hex(programAt(soup, c)); counts.set(h, (counts.get(h) ?? 0) + 1); }
       const top = [...counts].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0)).slice(0, 50);
       console.log(`  tria amb la llavor ${seed}: ${id}, establerta a l'època ${e.epoch}; ${name(e)} (${counts.size} programes diferents)`);
+      const before = [];
       for (const [h, n] of top) {
         const r = test(h);
-        if (r.heritableSolo >= 95) {
+        if (r.heritableSolo < 95) { before.push(`${n}:${r.heritableSolo}`); continue; }
+        {
+          console.log(`  els anteriors (cel·les:hereditari sol, de 100): ${before.join(' ') || 'cap'}`);
           console.log(`  el més freqüent dels 50 que fa 95 o més: ${h}  (${n} cel·les; hereditari sol en ${r.heritableSolo} de 100)`);
           chosen = { id: genIds[arm], hex: h, origin: { source: `la família dominant a l'establiment de ${id} (el pilot de la maduració)`, branch: id, world: e.world, arm, seed: e.seed, epoch: e.epoch, capture: name(e), captureSha256: entry.sha256, cells: n, rank: top.findIndex((t) => t[0] === h) + 1, pickSeed: seed }, test: r };
           break;
