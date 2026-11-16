@@ -251,7 +251,7 @@ s'hi afegeix `llinatge.sh`. La resta de la sortida no en depèn.
 
 **Què canvia al pla v0.2** (proposta, a `docs/pla-aparicio-arrelament.md`):
 - **cada món, els quatre genotips,** cadascun en branques a part: les sembres que s'extingeixen costen menys d'un minut;
-- **la contrast entre sopes, per genotip,** i una estimació conjunta estratificada per genotip. G2 i G3 al sostre no hi diuen gaire, i
+- **el contrast entre sopes, per genotip,** i una estimació conjunta estratificada per genotip. G2 i G3 al sostre no hi diuen gaire, i
   G1 i G4 són els informatius;
 - **una dosi de 3 × 3 per a G1,** que el porta a la zona del mig;
 - ***H* = 1.500, i l'aturada a l'establiment 500 èpoques més tard** (`--stop-after-event 500`), perquè el criteri del llinatge s'hi
