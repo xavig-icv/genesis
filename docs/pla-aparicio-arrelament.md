@@ -290,15 +290,24 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
   I les posicions (`--positions`), les mateixes que a la prova de viabilitat.
 - **`eines/transforma.mjs`:** `byte0` i `byte0-placebo`, amb els invariants comprovats.
 - **`eines/potencia-arrelament.mjs`:** la precisió del contrast principal, simulada per món amb les *p*R de la prova de viabilitat (§8).
-
-**Per fer, a la mateixa PR, abans de l'auditoria 32:**
-- **`eines/arrelament.mjs`:** les llistes, el manifest i les comprovacions abans de llançar:
-  - l'envelliment;
-  - els escanejos i les transformacions;
-  - les sembres;
-  - les branques de les dues parts.
-- **`eines/arrelament-analisi.mjs`:** l'anàlisi de la §6, provada amb dades sintètiques.
-- **Si es vol, la PR petita de l'auditoria 31** (el punt 5): `windowsOf` amb un `Buffer`.
+- **`eines/arrelament.mjs`:** les llistes, el manifest i les comprovacions abans de llançar, amb les mateixes regles que la sèrie de la
+  maduració (`eines/pilot.mjs`):
+  - **`--envelliment [--mons N]`:** l'envelliment dels 74 primers mons de la llista;
+  - **`--prepara`:**
+    - valida l'envelliment, amb el mateix simulador;
+    - escaneja els mons per rondes fins a tenir-ne 60;
+    - fa les cinc sopes de cada món i n'escaneja el punt de partida, amb la prova del cens i, a les tres de la part B, amb companys inerts;
+    - fa les sembres i escriu les llistes de les dues parts, per màquina, i el manifest;
+  - **`--comprova [--maquina pc|vm]`:** el manifest contra el disseny, les captures, les sembres i les llistes contra el manifest, i que cap
+    branca no hagi començat.
+- **`eines/arrelament-analisi.mjs`:** l'anàlisi de la §6. Només amb el pilot sencer: totes les branques del manifest, cadascuna amb
+  l'ordre i la sembra del manifest, i del mateix commit.
+- **Les proves** (`test/arrelament.mjs`), entre d'altres:
+  - un pilot sencer amb un disseny petit (mons de 32 × 16), de l'envelliment a l'anàlisi, amb les 162 branques;
+  - l'anàlisi, determinista;
+  - les comprovacions, que detecten una sembra i una llista tocades.
+- **El que no hi és:** la PR petita de l'auditoria 31 (el punt 5, `windowsOf` amb un `Buffer`). No afecta el pilot, que només hi passa
+  `Uint8Array`, i va a part.
 
 ## 8. El cost i la precisió
 
@@ -370,7 +379,7 @@ barrejada i en 15 a la nova. Les diferències, si n'hi ha, poden anar en qualsev
 
 ## 11. El que ve
 
-1. **A la PR:** `eines/arrelament.mjs` i `eines/arrelament-analisi.mjs`, amb proves, i prova-neta.
+1. **La PR** (la branca `arrelament-eines`), amb prova-neta i les proves de GitHub.
 2. **L'auditoria 32** del pla i de la PR, abans de calcular.
 3. **El merge,** i el pilot des d'una còpia neta:
    - l'envelliment;
