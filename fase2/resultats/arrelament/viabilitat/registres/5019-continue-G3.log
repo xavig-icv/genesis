@@ -1,0 +1,20 @@
+codi=cdc2e78  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-continue-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-continue-G3 --save-every 100
+llavor=405019 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G3.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.822  HOE=0.385  ops/execució=166.9  parelles=75%  bytes <:4.0% ,:1.7% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  >>>>>>·>>>>> (0.2%)  [[[[[[[[·[[[ (0.2%)  23s
+època 8200  H0=7.778  HOE=0.578  ops/execució=167.8  parelles=75%  bytes <:4.1% 0:2.2% ,:2.0%  fragments <··[000,0,·, (0.4%)  >>>>>>>>>>>> (0.4%)  ,·,0,000[··< (0.2%)  46s
+*** PRIMERA FAMÍLIA a l'època 8250 ***
+cens 8250  mostra=2048  hereditaris=2.6% (sols 2.6%, només en context 0.0%)  es repliquen=5.3% (sols 5.3%, en context 0.0%)  famílies=1  #1:7.86%([,<}]})
+època 8300  H0=7.708  HOE=0.741  ops/execució=165.3  parelles=75%  bytes <:4.2% 0:3.6% ,:2.4%  fragments <··[000,0,·, (0.4%)  >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.3%)  72s
+època 8400  H0=7.602  HOE=0.917  ops/execució=162.6  parelles=75%  bytes 0:5.5% <:4.2% ,:2.7%  fragments <··[000,0,·, (0.4%)  >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.3%)  96s
+cens 8500  mostra=2048  hereditaris=7.0% (sols 7.0%, només en context 0.0%)  es repliquen=14.0% (sols 14.0%, en context 0.0%)  famílies=1  #1:17.45%([,<}]})
+*** ESTABLIMENT DE LA VIDA a l'època 8250 (confirmat al cens 8500) ***
+època 8500  H0=7.422  HOE=1.132  ops/execució=158.5  parelles=75%  bytes 0:8.1% <:4.3% ,:3.1%  fragments >>>>>>>>>>>> (0.3%)  <··[000,0,·, (0.2%)  [[[[[[[[[[[[ (0.2%)  126s
+
+empremta del món: 974ac3ac
+
+programes diferents: 131036 de 131072
+      8  | 00 0<[0,,       0 0[[,          <}00   ]}<0         ,,0[<0 0000|
+      3  | 0  0<[0,,       0 0[[,          <}00   ]}<0         ,,0[<0 0 00|
+      3  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      3  |0000 0<[0,,         0<}]   00}<          ,[[0 0       ,,0[<0 00 |
+      2  |000 00[0 0 0 0 [ , ,, ,     0 0<}]   00}<          ,[0 0 0     <|

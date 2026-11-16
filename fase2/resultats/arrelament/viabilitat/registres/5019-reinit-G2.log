@@ -1,0 +1,20 @@
+codi=cdc2e78  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-reinit-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-reinit-G2 --save-every 100
+llavor=405019 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G2.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.991  HOE=0.196  ops/execució=69.3  parelles=75%  bytes 0:1.1% <:0.6% #61:0.6%  fragments ]]····<},·0[ (0.9%)  [[0·,}<····] (0.8%)  <·0··[[··,}< (0.3%)  21s
+època 8200  H0=7.924  HOE=0.487  ops/execució=73.2  parelles=75%  bytes 0:3.1% #61:1.0% <:0.9%  fragments [0·,}<····]] (2.9%)  ]]····<},·0[ (2.5%)  ,·0[·[[··0·< (0.6%)  40s
+*** PRIMERA FAMÍLIA a l'època 8250 ***
+cens 8250  mostra=2048  hereditaris=5.5% (sols 5.5%, només en context 0.0%)  es repliquen=8.1% (sols 8.1%, en context 0.0%)  famílies=1  #1:11.50%([,}<]])
+època 8300  H0=7.766  HOE=0.805  ops/execució=76.1  parelles=75%  bytes 0:6.0% #61:1.6% [:1.4%  fragments [0·,}<····]] (5.0%)  ]]····<},·0[ (4.6%)  },··[[0··0·< (0.6%)  62s
+època 8400  H0=7.483  HOE=1.140  ops/execució=82.5  parelles=75%  bytes 0:10.0% #61:2.4% [:2.1%  fragments [0·,}<····]] (7.2%)  ]]····<},·0[ (6.6%)  },··[[0··0·< (1.5%)  81s
+cens 8500  mostra=2048  hereditaris=19.0% (sols 19.0%, només en context 0.0%)  es repliquen=26.6% (sols 26.6%, en context 0.0%)  famílies=1  #1:37.90%([,}<]])
+*** ESTABLIMENT DE LA VIDA a l'època 8250 (confirmat al cens 8500) ***
+època 8500  H0=7.153  HOE=1.375  ops/execució=91.3  parelles=75%  bytes 0:14.0% #61:3.1% [:2.7%  fragments ]]····<},·0[ (8.4%)  [0·,}<····]] (8.3%)  },··[[0··0·< (1.6%)  104s
+
+empremta del món: 8e41d9c9
+
+programes diferents: 131044 de 131072
+      4  |]]<          },  [                     0  >                     |
+      4  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      3  |                                                                |
+      3  |][[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      2  |0[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|

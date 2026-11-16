@@ -1,0 +1,1471 @@
+{
+  "type": "design",
+  "code": "beb3422",
+  "node": "v16.15.1",
+  "date": "2026-11-16T12:42:57.676Z",
+  "worldSeed": 20261117,
+  "worlds": [
+    "5004",
+    "5006",
+    "5008",
+    "5014",
+    "5019",
+    "5020"
+  ],
+  "positions": {
+    "5004": {
+      "x": 494,
+      "y": 61,
+      "cell": 31726
+    },
+    "5006": {
+      "x": 505,
+      "y": 70,
+      "cell": 36345
+    },
+    "5008": {
+      "x": 306,
+      "y": 121,
+      "cell": 62258
+    },
+    "5014": {
+      "x": 506,
+      "y": 5,
+      "cell": 3066
+    },
+    "5019": {
+      "x": 144,
+      "y": 53,
+      "cell": 27280
+    },
+    "5020": {
+      "x": 134,
+      "y": 20,
+      "cell": 10374
+    }
+  },
+  "genotypes": [
+    {
+      "id": "G1",
+      "hex": "1f1414191faf5b5b66335b5b9a3cf0887dbf3bf03bcff4ff393939ff17f45ccf2c3b5d5d3b2ccf5cf417ff393939fff4cf3bf03bbf7d88f03c9a5b5b33665b5b"
+    },
+    {
+      "id": "G2",
+      "hex": "000000000000e1007f3c7f00bd3d5b5b7c2a2c7d3c000000003d3d245e6f00000000335d5d5d3d6f24243c7d2c2f005b5b3dcf00b000ceb03c67000079000000"
+    },
+    {
+      "id": "G3",
+      "hex": "00000000000001003c4ba25b0000002c002c572c2cc6e7f85af106e533d1003c7d5d65652300007d3cf5d033d606b95a53e7c62c5b5b4b0000002d3000002f00"
+    },
+    {
+      "id": "G4",
+      "hex": "780d5b74d27b8127575104632ed7ff3e36f6ab3ba0a0563b55ab86f67a365d3e5d367ad168ab553b56a0a0deabf6363effd72e8804515727817bd2745b0d7878"
+    }
+  ],
+  "branches": [
+    {
+      "id": "5004-continue-G1",
+      "world": "5004",
+      "arm": "continue",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-continue-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-continue-G1 --save-every 100"
+    },
+    {
+      "id": "5004-continue-G2",
+      "world": "5004",
+      "arm": "continue",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-continue-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-continue-G2 --save-every 100"
+    },
+    {
+      "id": "5004-continue-G3",
+      "world": "5004",
+      "arm": "continue",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-continue-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-continue-G3 --save-every 100"
+    },
+    {
+      "id": "5004-continue-G4",
+      "world": "5004",
+      "arm": "continue",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-continue-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-continue-G4 --save-every 100"
+    },
+    {
+      "id": "5004-continue-G1x9",
+      "world": "5004",
+      "arm": "continue",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        31213,
+        31214,
+        31215,
+        31725,
+        31726,
+        31727,
+        32237,
+        32238,
+        32239
+      ],
+      "seed": 405004,
+      "twin": "5004-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-continue-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-continue-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-continue-G1x9 --save-every 100"
+    },
+    {
+      "id": "5004-shuffle-all-G1",
+      "world": "5004",
+      "arm": "shuffle-all",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-shuffle-all-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-shuffle-all-G1 --save-every 100"
+    },
+    {
+      "id": "5004-shuffle-all-G2",
+      "world": "5004",
+      "arm": "shuffle-all",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-shuffle-all-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-shuffle-all-G2 --save-every 100"
+    },
+    {
+      "id": "5004-shuffle-all-G3",
+      "world": "5004",
+      "arm": "shuffle-all",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-shuffle-all-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-shuffle-all-G3 --save-every 100"
+    },
+    {
+      "id": "5004-shuffle-all-G4",
+      "world": "5004",
+      "arm": "shuffle-all",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-shuffle-all-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-shuffle-all-G4 --save-every 100"
+    },
+    {
+      "id": "5004-shuffle-all-G1x9",
+      "world": "5004",
+      "arm": "shuffle-all",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        31213,
+        31214,
+        31215,
+        31725,
+        31726,
+        31727,
+        32237,
+        32238,
+        32239
+      ],
+      "seed": 405004,
+      "twin": "5004-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-shuffle-all-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-shuffle-all-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-shuffle-all-G1x9 --save-every 100"
+    },
+    {
+      "id": "5004-reinit-G1",
+      "world": "5004",
+      "arm": "reinit",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-reinit-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-reinit-G1 --save-every 100"
+    },
+    {
+      "id": "5004-reinit-G2",
+      "world": "5004",
+      "arm": "reinit",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-reinit-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-reinit-G2 --save-every 100"
+    },
+    {
+      "id": "5004-reinit-G3",
+      "world": "5004",
+      "arm": "reinit",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-reinit-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-reinit-G3 --save-every 100"
+    },
+    {
+      "id": "5004-reinit-G4",
+      "world": "5004",
+      "arm": "reinit",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        31726
+      ],
+      "seed": 405004,
+      "twin": "5004-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-reinit-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-reinit-G4 --save-every 100"
+    },
+    {
+      "id": "5004-reinit-G1x9",
+      "world": "5004",
+      "arm": "reinit",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        31213,
+        31214,
+        31215,
+        31725,
+        31726,
+        31727,
+        32237,
+        32238,
+        32239
+      ],
+      "seed": 405004,
+      "twin": "5004-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405004 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5004-reinit-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5004-reinit-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5004-reinit-G1x9 --save-every 100"
+    },
+    {
+      "id": "5006-continue-G1",
+      "world": "5006",
+      "arm": "continue",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-continue-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-continue-G1 --save-every 100"
+    },
+    {
+      "id": "5006-continue-G2",
+      "world": "5006",
+      "arm": "continue",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-continue-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-continue-G2 --save-every 100"
+    },
+    {
+      "id": "5006-continue-G3",
+      "world": "5006",
+      "arm": "continue",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-continue-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-continue-G3 --save-every 100"
+    },
+    {
+      "id": "5006-continue-G4",
+      "world": "5006",
+      "arm": "continue",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-continue-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-continue-G4 --save-every 100"
+    },
+    {
+      "id": "5006-continue-G1x9",
+      "world": "5006",
+      "arm": "continue",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        35832,
+        35833,
+        35834,
+        36344,
+        36345,
+        36346,
+        36856,
+        36857,
+        36858
+      ],
+      "seed": 405006,
+      "twin": "5006-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-continue-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-continue-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-continue-G1x9 --save-every 100"
+    },
+    {
+      "id": "5006-shuffle-all-G1",
+      "world": "5006",
+      "arm": "shuffle-all",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-shuffle-all-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-shuffle-all-G1 --save-every 100"
+    },
+    {
+      "id": "5006-shuffle-all-G2",
+      "world": "5006",
+      "arm": "shuffle-all",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-shuffle-all-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-shuffle-all-G2 --save-every 100"
+    },
+    {
+      "id": "5006-shuffle-all-G3",
+      "world": "5006",
+      "arm": "shuffle-all",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-shuffle-all-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-shuffle-all-G3 --save-every 100"
+    },
+    {
+      "id": "5006-shuffle-all-G4",
+      "world": "5006",
+      "arm": "shuffle-all",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-shuffle-all-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-shuffle-all-G4 --save-every 100"
+    },
+    {
+      "id": "5006-shuffle-all-G1x9",
+      "world": "5006",
+      "arm": "shuffle-all",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        35832,
+        35833,
+        35834,
+        36344,
+        36345,
+        36346,
+        36856,
+        36857,
+        36858
+      ],
+      "seed": 405006,
+      "twin": "5006-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-shuffle-all-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-shuffle-all-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-shuffle-all-G1x9 --save-every 100"
+    },
+    {
+      "id": "5006-reinit-G1",
+      "world": "5006",
+      "arm": "reinit",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-reinit-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-reinit-G1 --save-every 100"
+    },
+    {
+      "id": "5006-reinit-G2",
+      "world": "5006",
+      "arm": "reinit",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-reinit-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-reinit-G2 --save-every 100"
+    },
+    {
+      "id": "5006-reinit-G3",
+      "world": "5006",
+      "arm": "reinit",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-reinit-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-reinit-G3 --save-every 100"
+    },
+    {
+      "id": "5006-reinit-G4",
+      "world": "5006",
+      "arm": "reinit",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        36345
+      ],
+      "seed": 405006,
+      "twin": "5006-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-reinit-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-reinit-G4 --save-every 100"
+    },
+    {
+      "id": "5006-reinit-G1x9",
+      "world": "5006",
+      "arm": "reinit",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        35832,
+        35833,
+        35834,
+        36344,
+        36345,
+        36346,
+        36856,
+        36857,
+        36858
+      ],
+      "seed": 405006,
+      "twin": "5006-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405006 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5006-reinit-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5006-reinit-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5006-reinit-G1x9 --save-every 100"
+    },
+    {
+      "id": "5008-continue-G1",
+      "world": "5008",
+      "arm": "continue",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-continue-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-continue-G1 --save-every 100"
+    },
+    {
+      "id": "5008-continue-G2",
+      "world": "5008",
+      "arm": "continue",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-continue-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-continue-G2 --save-every 100"
+    },
+    {
+      "id": "5008-continue-G3",
+      "world": "5008",
+      "arm": "continue",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-continue-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-continue-G3 --save-every 100"
+    },
+    {
+      "id": "5008-continue-G4",
+      "world": "5008",
+      "arm": "continue",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-continue-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-continue-G4 --save-every 100"
+    },
+    {
+      "id": "5008-continue-G1x9",
+      "world": "5008",
+      "arm": "continue",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        61745,
+        61746,
+        61747,
+        62257,
+        62258,
+        62259,
+        62769,
+        62770,
+        62771
+      ],
+      "seed": 405008,
+      "twin": "5008-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-continue-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-continue-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-continue-G1x9 --save-every 100"
+    },
+    {
+      "id": "5008-shuffle-all-G1",
+      "world": "5008",
+      "arm": "shuffle-all",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-shuffle-all-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-shuffle-all-G1 --save-every 100"
+    },
+    {
+      "id": "5008-shuffle-all-G2",
+      "world": "5008",
+      "arm": "shuffle-all",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-shuffle-all-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-shuffle-all-G2 --save-every 100"
+    },
+    {
+      "id": "5008-shuffle-all-G3",
+      "world": "5008",
+      "arm": "shuffle-all",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-shuffle-all-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-shuffle-all-G3 --save-every 100"
+    },
+    {
+      "id": "5008-shuffle-all-G4",
+      "world": "5008",
+      "arm": "shuffle-all",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-shuffle-all-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-shuffle-all-G4 --save-every 100"
+    },
+    {
+      "id": "5008-shuffle-all-G1x9",
+      "world": "5008",
+      "arm": "shuffle-all",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        61745,
+        61746,
+        61747,
+        62257,
+        62258,
+        62259,
+        62769,
+        62770,
+        62771
+      ],
+      "seed": 405008,
+      "twin": "5008-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-shuffle-all-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-shuffle-all-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-shuffle-all-G1x9 --save-every 100"
+    },
+    {
+      "id": "5008-reinit-G1",
+      "world": "5008",
+      "arm": "reinit",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-reinit-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-reinit-G1 --save-every 100"
+    },
+    {
+      "id": "5008-reinit-G2",
+      "world": "5008",
+      "arm": "reinit",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-reinit-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-reinit-G2 --save-every 100"
+    },
+    {
+      "id": "5008-reinit-G3",
+      "world": "5008",
+      "arm": "reinit",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-reinit-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-reinit-G3 --save-every 100"
+    },
+    {
+      "id": "5008-reinit-G4",
+      "world": "5008",
+      "arm": "reinit",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        62258
+      ],
+      "seed": 405008,
+      "twin": "5008-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-reinit-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-reinit-G4 --save-every 100"
+    },
+    {
+      "id": "5008-reinit-G1x9",
+      "world": "5008",
+      "arm": "reinit",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        61745,
+        61746,
+        61747,
+        62257,
+        62258,
+        62259,
+        62769,
+        62770,
+        62771
+      ],
+      "seed": 405008,
+      "twin": "5008-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405008 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5008-reinit-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5008-reinit-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5008-reinit-G1x9 --save-every 100"
+    },
+    {
+      "id": "5014-continue-G1",
+      "world": "5014",
+      "arm": "continue",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-continue-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-continue-G1 --save-every 100"
+    },
+    {
+      "id": "5014-continue-G2",
+      "world": "5014",
+      "arm": "continue",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-continue-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-continue-G2 --save-every 100"
+    },
+    {
+      "id": "5014-continue-G3",
+      "world": "5014",
+      "arm": "continue",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-continue-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-continue-G3 --save-every 100"
+    },
+    {
+      "id": "5014-continue-G4",
+      "world": "5014",
+      "arm": "continue",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-continue-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-continue-G4 --save-every 100"
+    },
+    {
+      "id": "5014-continue-G1x9",
+      "world": "5014",
+      "arm": "continue",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        2553,
+        2554,
+        2555,
+        3065,
+        3066,
+        3067,
+        3577,
+        3578,
+        3579
+      ],
+      "seed": 405014,
+      "twin": "5014-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-continue-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-continue-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-continue-G1x9 --save-every 100"
+    },
+    {
+      "id": "5014-shuffle-all-G1",
+      "world": "5014",
+      "arm": "shuffle-all",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-shuffle-all-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-shuffle-all-G1 --save-every 100"
+    },
+    {
+      "id": "5014-shuffle-all-G2",
+      "world": "5014",
+      "arm": "shuffle-all",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-shuffle-all-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-shuffle-all-G2 --save-every 100"
+    },
+    {
+      "id": "5014-shuffle-all-G3",
+      "world": "5014",
+      "arm": "shuffle-all",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-shuffle-all-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-shuffle-all-G3 --save-every 100"
+    },
+    {
+      "id": "5014-shuffle-all-G4",
+      "world": "5014",
+      "arm": "shuffle-all",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-shuffle-all-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-shuffle-all-G4 --save-every 100"
+    },
+    {
+      "id": "5014-shuffle-all-G1x9",
+      "world": "5014",
+      "arm": "shuffle-all",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        2553,
+        2554,
+        2555,
+        3065,
+        3066,
+        3067,
+        3577,
+        3578,
+        3579
+      ],
+      "seed": 405014,
+      "twin": "5014-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-shuffle-all-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-shuffle-all-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-shuffle-all-G1x9 --save-every 100"
+    },
+    {
+      "id": "5014-reinit-G1",
+      "world": "5014",
+      "arm": "reinit",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-reinit-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-reinit-G1 --save-every 100"
+    },
+    {
+      "id": "5014-reinit-G2",
+      "world": "5014",
+      "arm": "reinit",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-reinit-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-reinit-G2 --save-every 100"
+    },
+    {
+      "id": "5014-reinit-G3",
+      "world": "5014",
+      "arm": "reinit",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-reinit-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-reinit-G3 --save-every 100"
+    },
+    {
+      "id": "5014-reinit-G4",
+      "world": "5014",
+      "arm": "reinit",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        3066
+      ],
+      "seed": 405014,
+      "twin": "5014-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-reinit-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-reinit-G4 --save-every 100"
+    },
+    {
+      "id": "5014-reinit-G1x9",
+      "world": "5014",
+      "arm": "reinit",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        2553,
+        2554,
+        2555,
+        3065,
+        3066,
+        3067,
+        3577,
+        3578,
+        3579
+      ],
+      "seed": 405014,
+      "twin": "5014-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405014 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5014-reinit-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5014-reinit-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5014-reinit-G1x9 --save-every 100"
+    },
+    {
+      "id": "5019-continue-G1",
+      "world": "5019",
+      "arm": "continue",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-continue-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-continue-G1 --save-every 100"
+    },
+    {
+      "id": "5019-continue-G2",
+      "world": "5019",
+      "arm": "continue",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-continue-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-continue-G2 --save-every 100"
+    },
+    {
+      "id": "5019-continue-G3",
+      "world": "5019",
+      "arm": "continue",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-continue-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-continue-G3 --save-every 100"
+    },
+    {
+      "id": "5019-continue-G4",
+      "world": "5019",
+      "arm": "continue",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-continue-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-continue-G4 --save-every 100"
+    },
+    {
+      "id": "5019-continue-G1x9",
+      "world": "5019",
+      "arm": "continue",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        26767,
+        26768,
+        26769,
+        27279,
+        27280,
+        27281,
+        27791,
+        27792,
+        27793
+      ],
+      "seed": 405019,
+      "twin": "5019-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-continue-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-continue-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-continue-G1x9 --save-every 100"
+    },
+    {
+      "id": "5019-shuffle-all-G1",
+      "world": "5019",
+      "arm": "shuffle-all",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-shuffle-all-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-shuffle-all-G1 --save-every 100"
+    },
+    {
+      "id": "5019-shuffle-all-G2",
+      "world": "5019",
+      "arm": "shuffle-all",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-shuffle-all-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-shuffle-all-G2 --save-every 100"
+    },
+    {
+      "id": "5019-shuffle-all-G3",
+      "world": "5019",
+      "arm": "shuffle-all",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-shuffle-all-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-shuffle-all-G3 --save-every 100"
+    },
+    {
+      "id": "5019-shuffle-all-G4",
+      "world": "5019",
+      "arm": "shuffle-all",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-shuffle-all-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-shuffle-all-G4 --save-every 100"
+    },
+    {
+      "id": "5019-shuffle-all-G1x9",
+      "world": "5019",
+      "arm": "shuffle-all",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        26767,
+        26768,
+        26769,
+        27279,
+        27280,
+        27281,
+        27791,
+        27792,
+        27793
+      ],
+      "seed": 405019,
+      "twin": "5019-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-shuffle-all-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-shuffle-all-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-shuffle-all-G1x9 --save-every 100"
+    },
+    {
+      "id": "5019-reinit-G1",
+      "world": "5019",
+      "arm": "reinit",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-reinit-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-reinit-G1 --save-every 100"
+    },
+    {
+      "id": "5019-reinit-G2",
+      "world": "5019",
+      "arm": "reinit",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-reinit-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-reinit-G2 --save-every 100"
+    },
+    {
+      "id": "5019-reinit-G3",
+      "world": "5019",
+      "arm": "reinit",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-reinit-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-reinit-G3 --save-every 100"
+    },
+    {
+      "id": "5019-reinit-G4",
+      "world": "5019",
+      "arm": "reinit",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        27280
+      ],
+      "seed": 405019,
+      "twin": "5019-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-reinit-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-reinit-G4 --save-every 100"
+    },
+    {
+      "id": "5019-reinit-G1x9",
+      "world": "5019",
+      "arm": "reinit",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        26767,
+        26768,
+        26769,
+        27279,
+        27280,
+        27281,
+        27791,
+        27792,
+        27793
+      ],
+      "seed": 405019,
+      "twin": "5019-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405019 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5019-reinit-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5019-reinit-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5019-reinit-G1x9 --save-every 100"
+    },
+    {
+      "id": "5020-continue-G1",
+      "world": "5020",
+      "arm": "continue",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-continue-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-continue-G1 --save-every 100"
+    },
+    {
+      "id": "5020-continue-G2",
+      "world": "5020",
+      "arm": "continue",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-continue-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-continue-G2 --save-every 100"
+    },
+    {
+      "id": "5020-continue-G3",
+      "world": "5020",
+      "arm": "continue",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-continue-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-continue-G3 --save-every 100"
+    },
+    {
+      "id": "5020-continue-G4",
+      "world": "5020",
+      "arm": "continue",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-continue-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-continue-G4 --save-every 100"
+    },
+    {
+      "id": "5020-continue-G1x9",
+      "world": "5020",
+      "arm": "continue",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        9861,
+        9862,
+        9863,
+        10373,
+        10374,
+        10375,
+        10885,
+        10886,
+        10887
+      ],
+      "seed": 405020,
+      "twin": "5020-continue-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-continue-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-continue-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-continue-G1x9 --save-every 100"
+    },
+    {
+      "id": "5020-shuffle-all-G1",
+      "world": "5020",
+      "arm": "shuffle-all",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-shuffle-all-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-shuffle-all-G1 --save-every 100"
+    },
+    {
+      "id": "5020-shuffle-all-G2",
+      "world": "5020",
+      "arm": "shuffle-all",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-shuffle-all-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-shuffle-all-G2 --save-every 100"
+    },
+    {
+      "id": "5020-shuffle-all-G3",
+      "world": "5020",
+      "arm": "shuffle-all",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-shuffle-all-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-shuffle-all-G3 --save-every 100"
+    },
+    {
+      "id": "5020-shuffle-all-G4",
+      "world": "5020",
+      "arm": "shuffle-all",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-shuffle-all-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-shuffle-all-G4 --save-every 100"
+    },
+    {
+      "id": "5020-shuffle-all-G1x9",
+      "world": "5020",
+      "arm": "shuffle-all",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        9861,
+        9862,
+        9863,
+        10373,
+        10374,
+        10375,
+        10885,
+        10886,
+        10887
+      ],
+      "seed": 405020,
+      "twin": "5020-shuffle-all-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-shuffle-all-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-shuffle-all-G1x9 --save-every 100"
+    },
+    {
+      "id": "5020-reinit-G1",
+      "world": "5020",
+      "arm": "reinit",
+      "variant": "G1",
+      "genotype": "G1",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G1.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G1.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-reinit-G1.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-reinit-G1 --save-every 100"
+    },
+    {
+      "id": "5020-reinit-G2",
+      "world": "5020",
+      "arm": "reinit",
+      "variant": "G2",
+      "genotype": "G2",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G2.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G2.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-reinit-G2.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-reinit-G2 --save-every 100"
+    },
+    {
+      "id": "5020-reinit-G3",
+      "world": "5020",
+      "arm": "reinit",
+      "variant": "G3",
+      "genotype": "G3",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G3.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-reinit-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-reinit-G3 --save-every 100"
+    },
+    {
+      "id": "5020-reinit-G4",
+      "world": "5020",
+      "arm": "reinit",
+      "variant": "G4",
+      "genotype": "G4",
+      "cells": [
+        10374
+      ],
+      "seed": 405020,
+      "twin": "5020-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G4.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G4.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-reinit-G4.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-reinit-G4 --save-every 100"
+    },
+    {
+      "id": "5020-reinit-G1x9",
+      "world": "5020",
+      "arm": "reinit",
+      "variant": "G1x9",
+      "genotype": "G1",
+      "cells": [
+        9861,
+        9862,
+        9863,
+        10373,
+        10374,
+        10375,
+        10885,
+        10886,
+        10887
+      ],
+      "seed": 405020,
+      "twin": "5020-reinit-a",
+      "plant": "fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G1x9.json",
+      "command": "node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-reinit-G1x9.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-reinit-G1x9.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-reinit-G1x9 --save-every 100"
+    }
+  ]
+}

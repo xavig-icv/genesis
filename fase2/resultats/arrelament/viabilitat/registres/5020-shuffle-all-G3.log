@@ -1,0 +1,20 @@
+codi=cdc2e78  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 405020 --mixing 0 --from fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G3.bin --start 8000 --epochs 12000 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json fase2/resultats/arrelament/viabilitat/registres/5020-shuffle-all-G3.jsonl --save fase2/resultats/arrelament/viabilitat/captures/5020-shuffle-all-G3 --save-every 100
+llavor=405020 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/viabilitat/sembres/5020-shuffle-all-G3.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+0
+època 8100  H0=7.824  HOE=0.413  ops/execució=265.1  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments [[[[[[[[[[[[ (0.4%)  <<<<<<<<<<<< (0.3%)  ,,,,,,,,,,,, (0.3%)  62s
+època 8200  H0=7.798  HOE=0.599  ops/execució=271.3  parelles=75%  bytes <:4.0% ,:1.8% 0:1.8%  fragments [[[[[[[[[[[[ (0.4%)  ,,,,,,,,,,,, (0.3%)  <<<<<<<<<<<< (0.3%)  118s
+*** PRIMERA FAMÍLIA a l'època 8250 ***
+cens 8250  mostra=2048  hereditaris=2.3% (sols 2.3%, només en context 0.0%)  es repliquen=4.3% (sols 4.3%, en context 0.0%)  famílies=1  #1:5.61%(,,,<}])
+època 8300  H0=7.745  HOE=0.798  ops/execució=262.1  parelles=75%  bytes <:4.0% 0:3.1% ,:2.1%  fragments [[[[[[[[[[[[ (0.4%)  ,,,,,,,,,,,, (0.3%)  <<<<<<<<<<<< (0.2%)  182s
+època 8400  H0=7.651  HOE=0.998  ops/execució=249.7  parelles=75%  bytes 0:4.9% <:4.0% ,:2.4%  fragments [[[[[[[[[[[[ (0.4%)  ,,,,,,,,,,,, (0.3%)  <<<<<<<<<<<< (0.2%)  243s
+cens 8500  mostra=2048  hereditaris=6.3% (sols 6.3%, només en context 0.0%)  es repliquen=11.6% (sols 11.6%, en context 0.0%)  famílies=1  #1:15.32%(,,<}]})
+*** ESTABLIMENT DE LA VIDA a l'època 8250 (confirmat al cens 8500) ***
+època 8500  H0=7.541  HOE=1.139  ops/execució=231.5  parelles=75%  bytes 0:6.8% <:4.0% ,:2.8%  fragments ,,,,,,,,,,,, (0.3%)  [[[[[[[[[[[[ (0.3%)  ,,,,,·,,,,,, (0.2%)  297s
+
+empremta del món: 22f9f7a
+
+programes diferents: 131053 de 131072
+      9  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      3  |                                                                |
+      2  |                                                                |
+      2  |                                                                |
+      2  |[         .   <              >{ < ,,    [[[[[[[[[ [[ [[[]       |
