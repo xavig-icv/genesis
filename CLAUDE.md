@@ -300,3 +300,6 @@ Llegeix-los abans de proposar canvis.
     companys inerts» (la xifra de B1) són dues xifres, amb dos noms (AUD-186).
   - **Una mesura de còpies compta només les noves** (AUD-185 = AU2-155): la finestra que el company no portava abans de la interacció, i,
     al pilot, amb l'escriptura que l'ha feta.
+  - **Les fonts de la matriu de novetat** (la revisió de les fonts, 16-11-2026): una font llegida pel resum o amb una eina que en
+    resumeix el text no serveix per dir què no hi és. Abans d'una afirmació de novetat, s'ha de llegir directament (FON-01). Les
+    troballes FON-xx són a `docs/auditories.md`.

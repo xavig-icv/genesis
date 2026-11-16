@@ -325,3 +325,26 @@ Els documents del projecte citen troballes de les auditories (AUD-xx, de l'audit
 | AU2-153 | 31 | Mitjana | El pas 2b només prova amb companys inerts els 126.983 positius de l'escaneig: és un endpoint conjunt, no un recompte dels autònoms. I fallar amb companys inerts no prova que la còpia la fes el codi del company. | Acceptada (= AUD-189). Cotes inferiors, i «necessiten el company, el seu codi o els seus bytes» (les entrades 17 i 18, `CLAUDE.md`). La calibració de l'escaneig, al primer pas del pilot. |
 | AU2-154 | 31 | Mitjana | «A cap sopa no hi ha replicadors fets» queda refutat pels mateixos registres: 11 sopes barrejades tenen una cel·la hereditària amb companys inerts, i dues, en totes 100 condicions. | Acceptada, amb la redacció de l'auditor 2 (el README del 2b, l'entrada 18). Al pilot, el control dels replicadors de la sopa de partida, amb una regla escrita abans. |
 | AU2-155 | 31 | Mitjana | `copy16` (el criteri 4 del pas 2a) compta coincidències de finestres després de la interacció, no còpies noves: un contraexemple sense cap operació ni escriptura hi suma 1. | Acceptada (= AUD-185). Reetiquetat, i les còpies noves, comptades exactes; al pilot, amb l'escriptura que les fa. La dispersió «en una ronda», dita com el que és. |
+
+## La revisió de les fonts (FON-xx)
+
+Una revisió de les fonts d'Internet que el projecte cita, feta del 14 al 16-11-2026 per un model Fable 5.2 a petició del responsable. No és independent: es va fer dins de la sessió de l'equip, i la seva cerca pròpia tampoc no va ser cega del tot. L'equip va comprovar cada troballa a les fonts. El detall és a `docs/novetat-maduracio.md`, la secció del final.
+
+| ID | Gravetat | Què | Resolució |
+|---|---|---|---|
+| FON-01 | Mitjana | El llibre d'Agüera y Arcas (2025), llegit amb una eina que resumeix, ja descriu a BFF que abans de la transició pugen el càlcul i la densitat d'instruccions, i que hi ha instruccions que en certes posicions es copien més del que tocaria. | Acceptada. A1 i A5 només poden ser nous en la mesura; la tensió amb A2, dita (`63676e4`). |
+| FON-02 | Baixa | A l'article de 2024, el que baixa abans de la transició són els *tokens* únics, no els bytes diferents. | Acceptada (`63676e4`). |
+| FON-03 | Mitjana | Greenbaum i Pargellis (2016) atribueixen la caiguda de l'aparició amb el temps a l'esbiaixament continuat del joc d'instruccions, i la matriu no ho recollia. | Acceptada: el precedent publicat més proper d'un estat de la sopa que canvia l'aparició, de signe contrari i sense prova (`63676e4`). |
+| FON-04 | Baixa | Jha i altres (2026) només fan servir Z80, no BFF. | Acceptada (`63676e4`). |
+| FON-05 | Baixa | El detector de Knierim i altres: l'algorisme diu deu branques, i el text i la figura, nou. | Acceptada: «nou o deu» (`63676e4`). |
+| FON-06 | Baixa | Knierim i altres sí que mesuren l'aparició amb les fusions bloquejades (la seva figura 4). | Acceptada (`63676e4`). |
+| FON-07 | Baixa | «Sense l'ajuda del company» és de B1: el detector de Knierim i altres fa servir companys de soroll. | Acceptada en part: corregida a la matriu; el quadern ja deia què van veure (`63676e4`). |
+| FON-08 | Baixa | A Pigozzi i Levin (2026), les intervencions que baixen l'organització no empitjoren la consistència, encara que el text ho digui. | Acceptada (`63676e4`). |
+| FON-09 | Baixa | Que la transició té una part d'atzar ja és a l'article de 2024. | Acceptada: A4, reduïda a les branques d'un mateix estat (`63676e4`). |
+| FON-10 | Baixa | Set diferències menors a la bibliografia: el volum d'*Artificial Life II*, dos títols, unes pàgines, un DOI, un any i l'ordre d'uns autors. | Acceptada en part: cinc corregides; l'any de Vostinar i Ofria i l'ordre dels autors de 2016 no calia canviar-los (`63676e4`). |
+| FON-11 | Informativa | A l'assaig d'invasió de Jha i altres, només els llinatges «de la cinta» es desfan; els «de la CPU» es fixen sempre. | Acceptada (`63676e4`). |
+| FON-12 | Baixa | Deu treballs citats a la matriu sense referència a la bibliografia. | Acceptada: a la bibliografia, amb quinze fonts més (`63676e4`). |
+| FON-13 | Baixa | Knierim i altres ja veuen replicadors que apareixen i s'extingeixen abans de prendre la sopa, i la matriu i l'entrada 19 no ho deien. | Acceptada: A7 i un requadre a l'entrada 19 (`63676e4`). |
+| FON-14 | Mitjana | Els README i el quadern només citaven Amoeba com a precedent de la fase prèvia, i també és a BFF. | Acceptada: els README i un requadre a l'entrada 16 (`63676e4`). |
+| FON-15 | Informativa | Hi faltava llegir directament el que només s'havia llegit pel resum, abans de dir què no hi és. | Acceptada: a la matriu, i una regla a `CLAUDE.md`. |
+| FON-16 | Mitjana | L'article de 2024 ja sembra a BFF un replicador, sorgit d'una tirada i netejat, en 1.000 sopes noves, i el 22 % fan la transició en 128 èpoques. El projecte no el citava enlloc. | Acceptada: A7, l'estat de la qüestió i un requadre a l'entrada 19. Compta per a la decisió de la inoculació (`63676e4`). |
