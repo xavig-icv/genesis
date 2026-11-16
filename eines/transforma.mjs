@@ -388,8 +388,8 @@ function main(argv) {
   writeNew(opts.out, out);
   writeNew(record, JSON.stringify({
     ...head, kind: opts.kind, seed: Number(opts.seed), width, radius,
-    out: opts.out, outSha256: sha256(out), changed: info.changed, scope: info.scope ?? null,
-    zeros: { before: input.reduce((s, v) => s + (v === 0), 0), after: out.reduce((s, v) => s + (v === 0), 0) },
+    out: opts.out, outSha256: sha256(out), changed: info.changed, scope: info.scope ?? null, ...(info.byte0 ? { byte0: info.byte0 } : {}),
+    zeros:{ before: input.reduce((s, v) => s + (v === 0), 0), after: out.reduce((s, v) => s + (v === 0), 0) },
     invariants: 'correctes',
   }, null, 1) + '\n');
   console.log(`${opts.kind}: ${info.changed} bytes canviats${info.scope ? ` (abast: ${info.scope.cells} cel·les fora dels replicadors detectats, ${info.scope.zeros} zeros)` : ''}; invariants correctes; ${opts.out}`);

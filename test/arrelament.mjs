@@ -4,7 +4,7 @@
 // Executa: node test/arrelament.mjs
 import assert from 'assert';
 import { spawnSync } from 'child_process';
-import { mkdtempSync, rmSync, readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
+import { mkdtempSync, mkdirSync, rmSync, readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
@@ -16,6 +16,7 @@ import { Windows, createLineage } from '../fase2/llinatge.js';
 import { conditions as conditionsB1, testCondition as testConditionB1, inertProgram as inertProgramB1, INERT as INERT_B1 } from '../eines/autonomia.mjs';
 import { positions, makeSham, plantCells } from '../eines/sembra.mjs';
 import { transform, checkInvariants } from '../eines/transforma.mjs';
+import { designFor, agingLine, branchesOf, prepare, preflight, checkManifest } from '../eines/arrelament.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const sim = (...args) => spawnSync(process.execPath, ['sim.mjs', ...args], { cwd: root, encoding: 'utf8' });
@@ -226,11 +227,60 @@ const tests = {
     [bad2[c * PROGRAM_SIZE], bad2[c * PROGRAM_SIZE + 1]] = [bad2[c * PROGRAM_SIZE + 1], bad2[c * PROGRAM_SIZE]];
     assert.ok(checkInvariants(soup, bad2, pl.info).length > 0);
   },
+  'eines/arrelament.mjs: l\'envelliment, la preparació, el manifest, les comprovacions i les dues parts, amb un disseny petit': async () => {
+    // Un disseny petit, dins del repositori (la preparació demana un commit net i el simulador de l'envelliment), en una carpeta
+    // que la prova esborra
+    const folder = `fase2/resultats/arrelament/prova-eina-${process.pid}`;
+    const d = designFor({ folder, candidates: ['9001', '9002', '9003', '9004', '9005', '9006'], aging: 6, cohort: 3, age: 300, world: [W, H],
+      horizonA: 200, horizonB: 300, sham: { genotype: 'G4', worlds: 1 } });
+    const abs = join(root, folder);
+    try {
+      assert.strictEqual(agingLine(d, '9001'), `e9001 --world ${W}x${H} --seed 9001 --mixing 0 --epochs 300 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 0 --json ${folder}/envelliment/e9001.jsonl --save ${folder}/envelliment/captures`);
+      // les branques d'un món: 3 sopes × 14 sembres, 2 × 4 de byte0, 3 sham al primer món, i 3 naturals
+      const bs = branchesOf(d, '9001', 0);
+      assert.strictEqual(bs.filter((b) => b.part === 'A').length, 3 * 14 + 2 * 4 + 3);
+      assert.strictEqual(bs.filter((b) => b.part === 'B').length, 3);
+      assert.strictEqual(branchesOf(d, '9001', 1).filter((b) => b.variant === 'sham').length, 0);
+      assert.deepStrictEqual([...new Set(bs.filter((b) => b.part === 'A').map((b) => b.seed))], [409001, 1409001, 2409001, 3409001]);
+      assert.ok(bs.filter((b) => b.variant === 'sham').every((b) => !b.line.includes('--lineage-every')));
+      // l'envelliment, amb sim.mjs
+      for (const w of d.candidates) {
+        const [, ...args] = agingLine(d, w).split(' ');
+        const r = sim(...args);
+        assert.strictEqual(r.status, 0, r.stderr);
+      }
+      const m = await prepare(d, { root, parallel: 4, log: () => {} });
+      assert.strictEqual(m.worlds.filter((w) => w.included).length, 3);
+      assert.deepStrictEqual(preflight(d, { root }), []);
+      // una branca de la part A i una de la part B, amb les seves ordres
+      const lines = readFileSync(join(abs, 'llista-a-pc.txt'), 'utf8').trim().split('\n');
+      mkdirSync(join(abs, 'part-a')); mkdirSync(join(abs, 'part-b')); // com fa eines/llanca-lot.sh amb la seva carpeta
+      for (const l of [lines[0], readFileSync(join(abs, 'llista-b-pc.txt'), 'utf8').trim().split('\n')[0]]) {
+        const [, ...args] = l.split(' ');
+        const r = sim(...args);
+        assert.strictEqual(r.status, 0, r.stderr);
+      }
+      const a = readJsonl(join(abs, 'part-a', `${lines[0].split(' ')[0]}.jsonl`));
+      assert.ok(a[0].plant && a.some((l) => l.type === 'lineage') && a.some((l) => l.type === 'inert'));
+      // ara la part A ha començat; i una sembra o una llista tocades són un problema
+      assert.ok(preflight(d, { root }).some((x) => /ja ha començat/.test(x)));
+      assert.deepStrictEqual(checkManifest(d, { root }), []);
+      const plant = join(root, m.branches.find((b) => b.part === 'A').plant);
+      const pj = JSON.parse(readFileSync(plant, 'utf8')); pj.lineageSeed++; writeFileSync(plant, JSON.stringify(pj, null, 2) + '\n');
+      assert.ok(checkManifest(d, { root }).some((x) => /la sembra no és la del manifest/.test(x)));
+      writeFileSync(join(abs, 'llista-b-vm.txt'), 'x\n');
+      assert.ok(checkManifest(d, { root }).some((x) => /la llista B-vm no és exactament/.test(x)));
+      // la preparació no es torna a fer
+      await assert.rejects(prepare(d, { root, log: () => {} }), /ja existeix/);
+    } finally {
+      rmSync(abs, { recursive: true, force: true });
+    }
+  },
 };
 
 let failed = 0;
 for (const [name, fn] of Object.entries(tests)) {
-  try { fn(); console.log('  ok  ', name); }
+  try { await fn(); console.log('  ok  ', name); }
   catch (e) { failed++; console.log('  FALLA', name, '\n       ', e.message); }
 }
 console.log(failed ? `\n${failed} proves fallades` : '\nTotes les proves han passat');
