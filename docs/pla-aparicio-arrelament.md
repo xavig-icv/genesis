@@ -289,6 +289,7 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
 
   I les posicions (`--positions`), les mateixes que a la prova de viabilitat.
 - **`eines/transforma.mjs`:** `byte0` i `byte0-placebo`, amb els invariants comprovats.
+- **`eines/potencia-arrelament.mjs`:** la precisió del contrast principal, simulada per món amb les *p*R de la prova de viabilitat (§8).
 
 **Per fer, a la mateixa PR, abans de l'auditoria 32:**
 - **`eines/arrelament.mjs`:** les llistes, el manifest i les comprovacions abans de llançar:
@@ -297,7 +298,6 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
   - les sembres;
   - les branques de les dues parts.
 - **`eines/arrelament-analisi.mjs`:** l'anàlisi de la §6, provada amb dades sintètiques.
-- **`eines/potencia-arrelament.mjs`:** la precisió del contrast principal, simulada per món amb les *p*R de la prova de viabilitat (§8).
 - **Si es vol, la PR petita de l'auditoria 31** (el punt 5): `windowsOf` amb un `Buffer`.
 
 ## 8. El cost i la precisió
@@ -321,9 +321,14 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
 - **La precisió del contrast principal** (la regla de la v0.1: *N* i *K* han de distingir 1 de 1,6, una semiamplada de log(1,6)/2 = 0,235
   com a molt).
   - **Les dades:** 240 sembres per variant i sopa, i les *p*R de la prova de viabilitat (G1 0,11, G1 × 9 0,39 i G4 0,22).
-  - **El resultat:** l'error típic del logaritme del quocient estratificat és d'uns 0,09, i la semiamplada, d'uns 0,18.
-  - **Amb un efecte de disseny de 1,5** (les posicions d'un mateix món s'assemblen), uns 0,21: dins de la regla, amb poc marge.
-  - **On es confirma:** `eines/potencia-arrelament.mjs` (§7) ho farà simulant per món, abans de l'auditoria.
+  - **El càlcul aproximat:** l'error típic del logaritme del quocient estratificat és d'uns 0,09, i la semiamplada, d'uns 0,18.
+  - **La simulació per món** (`node eines/potencia-arrelament.mjs`, 400 pilots simulats per cas, amb el bootstrap per món de la §6). Un
+    efecte del món (sigma) i un de cada sopa del món (tau, la interacció), sobre el logit de *p*R:
+    - **sense interacció o amb una de moderada** (tau fins a 0,5): la semiamplada va de 0,13 a 0,23, dins de la regla;
+    - **amb una interacció forta** (sigma = tau = 1): de 0,21 a 0,25, al límit;
+    - **en tots els casos,** si el quocient de debò és 1, l'interval exclou 1,6 en el 97 % dels pilots o més, i si és 1,6, exclou 1 en el
+      96 % o més.
+  - **El que no hi és:** les *p*R de la prova de viabilitat són de 6 mons. Si al pilot són més baixes, l'interval s'eixampla.
 - **Si cal més de tres dies,** es redueix la part B abans que la part A, i es diu.
 
 ## 9. La prova de viabilitat (feta el 16-11-2026, exploratori)
@@ -365,7 +370,7 @@ barrejada i en 15 a la nova. Les diferències, si n'hi ha, poden anar en qualsev
 
 ## 11. El que ve
 
-1. **A la PR:** `eines/arrelament.mjs`, `eines/arrelament-analisi.mjs` i `eines/potencia-arrelament.mjs`, amb proves, i prova-neta.
+1. **A la PR:** `eines/arrelament.mjs` i `eines/arrelament-analisi.mjs`, amb proves, i prova-neta.
 2. **L'auditoria 32** del pla i de la PR, abans de calcular.
 3. **El merge,** i el pilot des d'una còpia neta:
    - l'envelliment;
