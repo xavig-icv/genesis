@@ -241,7 +241,7 @@ const tests = {
     r = partA([{ type: 'start' }, L(8000, 1), inertAt(8250, 10, 1), { type: 'event', epoch: 8250, confirmed: 8500 }, inertAt(8500, 10, 6), end(8500)], { start: 8000, horizon: 1500 });
     assert.deepStrictEqual(r.law2, { epoch: 8250, confirmed: 8500, dominant: true }); assert.strictEqual(r.detectedAt, 8250);
     r = partA([{ type: 'start' }, L(8000, 1), { type: 'event', epoch: 8250, confirmed: 8500 }, inertAt(8500, 10, 4), end(8500)], { start: 8000, horizon: 1500 });
-    assert.strictEqual(r.law2.dominant, false); assert.strictEqual(r.detectedAt, null);
+    assert.strictEqual(r.law2.dominant, false); assert.strictEqual(r.detectedAt, 8500);
     // les famílies del cens inert
     const rnd = (s) => { const g = makeRng(s, 'v2'); return Array.from({ length: PROGRAM_SIZE }, () => ((g() * 256) | 0).toString(16).padStart(2, '0')).join(''); };
     const X = rnd(1), Y = rnd(2);
