@@ -127,7 +127,7 @@ export function validateAging(d, world, { root = ROOT, needCapture = true } = {}
   const cs = r.filter((x) => x.type === 'census'), want = [];
   for (let e = d.census.every; e <= end.epoch; e += d.census.every) want.push(e);
   if (!same(cs.map((c) => c.epoch), want)) q(`els censos no són exactament els de cada ${d.census.every} èpoques fins a l'època ${end.epoch}`);
-  for (const c of cs) { const bad = censusProblem(c, d.census); if (bad) { q(`el cens de l'època ${c.epoch} no és vàlid: ${bad}`); break; } }
+  for (const c of cs) { const bad = censusProblem(c, { ...d.census, sample: Math.min(d.census.sample, d.world[0] * d.world[1]) }); if (bad) { q(`el cens de l'època ${c.epoch} no és vàlid: ${bad}`); break; } }
   structureProblems(r, 0, end.epoch, COMMON).forEach(q);
   if (r.filter((x) => x.type === 'start').length !== 1 || r.filter((x) => x.type === 'end').length !== 1) q("té més d'una línia d'inici o de final");
   const ev = r.find((x) => x.type === 'event');
