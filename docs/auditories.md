@@ -346,7 +346,7 @@ Els documents del projecte citen troballes de les auditories (AUD-xx, de l'audit
 | AU2-165 | 32 | Mitjana | El llindar de *F* hereta l'error de la mostra de 256. | Acceptada. El criteri estricte (la cota inferior de Wilson de la mostra), com a sensibilitat. |
 | AU2-166 | 32 | Mitjana | El `sham` no pot demanar la mateixa època d'establiment que el bessó. | Acceptada (amb l'AUD-196). |
 | AU2-167 | 32 | Baixa | Els 90 avisos de procedència de l'anàlisi de la prova de viabilitat. | Ja declarats al README (la comprovació del commit estava mal pensada), que ara hi remet. Al pilot, la comprovació és la del manifest (AU2-162). |
-| AU2-168 | 32 | Baixa | Un nom de fitxer del paquet de l'auditoria (un annex de l'auditoria 29, `traçabilitat.txt`) mal codificat al zip. | Acceptada. El nom es feia malbé en copiar el context amb les eines de Git Bash; el paquet de l'auditoria 33 el copia d'una altra manera i comprova els noms del zip. |
+| AU2-168 | 32 | Baixa | Un nom de fitxer del paquet de l'auditoria (un annex de l'auditoria 29, `traçabilitat.txt`) mal codificat al zip. | Acceptada en part. El zip és correcte: el nom en UTF-8, amb la marca de la norma ZIP. Es fa malbé en desempaquetar-lo amb una eina que no llegeix la marca. El paquet de l'auditoria 33 comprova la marca de cada nom que no és ASCII, i els llista al LLEGEIX-ME. |
 | AU2-169 | 32 | Control negatiu | El suposat error de tipus al validador del `sham` no existeix: els camps són numèrics. | Cap canvi. |
 
 ## La revisió de les fonts (FON-xx)
