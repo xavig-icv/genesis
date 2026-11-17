@@ -300,6 +300,9 @@ dues branques senceres. El que es va escriure a «El que surt» es queda tal com
 - **Cinc extincions de 38 es van declarar d'una mostra** (AUD-192 = AU2-157): totes de G1 × 9, amb de 519 a 2.300 cel·les del llinatge i *F*
   estimada amb 256. Aquí les branques van continuar, i cap no va rebrotar; al pilot, la branca s'atura a l'extinció, i ara, quan *M* passa
   de 256 i cap de la mostra no és funcional, es proven totes les cel·les.
+  - **Refetes amb la prova sencera** (l'auditor 1, auditoria 33; l'equip ho ha refet igual): quatre de les cinc eren extincions de debò. A
+    la cinquena, `5020-shuffle-all-G1x9`, la mostra de 256 deixava fora l'única cel·la funcional de 1.031: amb la prova sencera, l'extinció
+    surt 100 èpoques més tard (a les 600 de la sembra, no a les 500), i no rebrota.
 - **Els 90 «problemes» de l'anàlisi** (AU2-167) són els de l'error ja dit a «El que surt»: la comprovació del commit estava mal pensada.
 - **G2, G3 i G4, i la família dominant** (AU2-163): l'auditor 1 ho va mesurar a la captura d'origen de cadascun (totes les cel·les amb
   companys inerts, en les 3 condicions, i les famílies per finestres compartides). G3 i G4 són de la família dominant del seu establiment
