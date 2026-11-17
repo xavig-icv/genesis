@@ -392,6 +392,48 @@ export function checkManifest(d = DESIGN, { root = ROOT, machine = null } = {}) 
   return p;
 }
 
+// El manifest contra el disseny, per a l'anàlisi (AU2-170; AU2-171 = AUD-202): els paràmetres, la cohort, cada branca del disseny
+// exactament una vegada i en ordre (cap de menys, cap de més, cap de repetida), amb la seva ordre, i l'escaneig inert del punt de partida
+// de cada sopa de la part B, amb la SHA-256 del manifest i la llista de les cel·les que es copien. No mira les captures: l'anàlisi no les
+// fa servir. Retorna la llista de problemes
+export function designProblems(d, m, { root = ROOT } = {}) {
+  const p = [], q = (x) => p.push(x);
+  if (!same(m.params, { ...d, candidates: [d.candidates[0], d.candidates.at(-1)] })) q('els paràmetres del manifest no són els del disseny');
+  const worlds = Array.isArray(m.worlds) ? m.worlds : [];
+  const cohort = worlds.filter((w) => w.included);
+  if (cohort.length !== d.cohort) q(`el manifest té ${cohort.length} mons inclosos, i el disseny en diu ${d.cohort}`);
+  if (!same(worlds.map((w) => w.world), d.candidates.slice(0, worlds.length))) q('els mons del manifest no són els primers de la llista, en ordre');
+  const want = cohort.flatMap((w, idx) => branchesOf(d, w.world, idx));
+  const got = Array.isArray(m.branches) ? m.branches : [];
+  const ids = got.map((b) => b.id), wantIds = new Set(want.map((b) => b.id)), gotIds = new Set(ids);
+  const dup = [...new Set(ids.filter((id, i) => ids.indexOf(id) !== i))];
+  const missing = want.filter((b) => !gotIds.has(b.id)).map((b) => b.id), extra = ids.filter((id) => !wantIds.has(id));
+  if (missing.length) q(`al manifest hi falten ${missing.length} branques del disseny (${missing.slice(0, 5).join(', ')})`);
+  if (extra.length) q(`el manifest té ${extra.length} branques que no són del disseny (${extra.slice(0, 5).join(', ')})`);
+  if (dup.length) q(`el manifest té branques repetides (${dup.slice(0, 5).join(', ')})`);
+  if (!missing.length && !extra.length && !dup.length && !same(ids, want.map((b) => b.id))) q("les branques del manifest no són en l'ordre del disseny");
+  for (const b of got) {
+    const exp = want.find((x) => x.id === b.id);
+    if (!exp) continue;
+    if (b.command !== `node sim.mjs ${exp.line.split(' ').slice(1).join(' ')}`) q(`${b.id}: l'ordre no és la del disseny`);
+    for (const k of ['part', 'world', 'soup', 'variant', 'position', 'seed']) if (b[k] !== exp[k]) q(`${b.id}: «${k}» no és el del disseny`);
+    if (b.part === 'A' && b.plant !== exp.plant) q(`${b.id}: la sembra no és la del disseny`);
+    if (b.part === 'B' && b.track !== exp.track) q(`${b.id}: el seguiment no és el del disseny`);
+  }
+  for (const w of cohort) {
+    for (const soup of d.arms) {
+      const s = w.arms?.[soup]?.inertScan;
+      if (!s?.file) { q(`${w.world} ${soup}: el manifest no diu l'escaneig inert del punt de partida`); continue; }
+      if (!existsSync(join(root, s.file))) { q(`${w.world} ${soup}: no hi ha l'escaneig inert del punt de partida (${s.file})`); continue; }
+      if (shaFile(root, s.file) !== s.sha256) { q(`${w.world} ${soup}: l'escaneig inert del punt de partida no té la SHA-256 del manifest`); continue; }
+      let j = null;
+      try { j = JSON.parse(readFileSync(join(root, s.file), 'utf8')); } catch { q(`${w.world} ${soup}: l'escaneig inert del punt de partida no es pot llegir`); continue; }
+      if (!Array.isArray(j.copiers) || j.copiers.length !== j.copying) q(`${w.world} ${soup}: l'escaneig inert del punt de partida no porta la llista de les cel·les que es copien`);
+    }
+  }
+  return p;
+}
+
 // Abans de llançar: el manifest, i que cap branca no hagi començat
 export function preflight(d = DESIGN, { root = ROOT, machine = null } = {}) {
   const p = checkManifest(d, { root, machine });
