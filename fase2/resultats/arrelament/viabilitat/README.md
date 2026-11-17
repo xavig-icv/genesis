@@ -277,3 +277,31 @@ de l'auditoria 32. Ara:
   SHA-256 de la captura de partida és la mateixa, i és la que es comprova.
 
 La història de git, que és pública, encara els porta. Ho decideix el responsable.
+
+## Les correccions de l'auditoria 32 (17-11-2026)
+
+Els dos auditors en van refer l'anàlisi, igual byte a byte, i l'auditor 1, la tria dels genotips, les sembres, el llinatge de 7 branques i
+dues branques senceres. El que es va escriure a «El que surt» es queda tal com era. Aquestes frases no se sostenen tal com són escrites:
+- **«L'atzar comú funciona: quan la sembra s'apaga, el món torna a la història del bessó»** (AUD-194). No hi torna cap de les 90 branques.
+  Les parelles de cada època són les mateixes que al bessó, però el nombre d'operacions és diferent a totes les mesures, també a les 38 que
+  s'extingeixen. Plantar una cel·la canvia la història de tot el món, encara que el llinatge s'apagui de seguida. El que és cert: en 3 casos
+  de 3 (`5004-reinit-G4`, `5008-shuffle-all-G1` i `5008-shuffle-all-G4`), l'establiment arriba al mateix cens que al bessó. No són quatre:
+  a `5004-continue-G1` i `G1x9` el bessó s'estableix just a l'horitzó de la branca, i no es poden mirar. El `sham` del pilot es basava en
+  aquest supòsit: a la v0.3 del pla, és un descriptiu.
+- **«La majoria no arriben a copiar-se: *F* màxim 1».** De les 27 extincions amb *F* màxim 1, 12 van deixar trossos del genotip en altres
+  cel·les (de 2 a 137 cel·les amb alguna finestra seva). Amb els noms de l'AUD-186, «es copien al company»: el que no fan és cap còpia
+  hereditària.
+- **La regla 2 de la nota** demanava més del 90 %. G2 hi arriba (el 94 %); G3, no (el 83 %). Si G3 és al sostre és perquè no s'extingeix
+  mai: 15 arrelen i 3 censurades.
+- **La regla 4** («gairebé tots en 200 èpoques»): 34 de 38, el 89 %, no es compleix. Que *K* pugi és una decisió de disseny, que no surt de
+  la regla.
+- **Els temps d'arrelar:** el màxim de 1.100 èpoques és dels que van arrelar abans que l'establiment aturés la branca. Dues sembres de
+  G1 × 9 van viure 1.600 i 2.100 èpoques abans d'extingir-se: amb *H* = 1.500, al pilot, quedarien censurades.
+- **Cinc extincions de 38 es van declarar d'una mostra** (AUD-192 = AU2-157): totes de G1 × 9, amb de 519 a 2.300 cel·les del llinatge i *F*
+  estimada amb 256. Aquí les branques van continuar, i cap no va rebrotar; al pilot, la branca s'atura a l'extinció, i ara, quan *M* passa
+  de 256 i cap de la mostra no és funcional, es proven totes les cel·les.
+- **Els 90 «problemes» de l'anàlisi** (AU2-167) són els de l'error ja dit a «El que surt»: la comprovació del commit estava mal pensada.
+- **G2, G3 i G4, i la família dominant** (AU2-163): l'auditor 1 ho va mesurar a la captura d'origen de cadascun (totes les cel·les amb
+  companys inerts, en les 3 condicions, i les famílies per finestres compartides). G3 i G4 són de la família dominant del seu establiment
+  (el 99 i el 100 % de les hereditàries); G2, de la segona (1.435 cel·les, contra 2.731 de la primera). `genotips.json` diu «la família
+  dominant a l'establiment» als tres: és la sortida tal com va sortir, i no es toca.

@@ -278,9 +278,12 @@ Llegeix-los abans de proposar canvis.
 - Els registres dels experiments van a `*/resultats/`. Els fitxers `.bin` són captures de la sopa o del
   món (8 MB cadascun).
 - Per provar la interfície es pot plantar un replicador des de la consola, però mai en un experiment.
-  - **L'única excepció** (T-64, 16-11-2026): l'assaig d'invasió, la part A del pilot de l'aparició i l'arrelament
-    (`docs/pla-aparicio-arrelament.md`). S'hi pot plantar un replicador nascut als mons del projecte, amb `--plant` a l'ordre. No s'hi val
-    en cap sèrie de l'abiogènesi, ni a la part B. Es diu «arrela un replicador plantat», mai «la vida hi neix».
+  - **L'única excepció** (T-64, 16-11-2026): plantar un replicador nascut als mons del projecte, amb `--plant` a l'ordre i en branques a
+    part que comencen d'una còpia d'una captura, per mesurar si hi arrela: a la part A del pilot de l'aparició i l'arrelament
+    (`docs/pla-aparicio-arrelament.md`), a la seva prova de viabilitat (feta el 16-11-2026) i a les proves de les seves eines. Mai en cap
+    sèrie de l'abiogènesi, ni a la part B, ni en cap experiment que mesuri si la vida hi apareix, i una confirmació que torni a plantar
+    necessita una decisió nova del responsable. Es diu «arrela un replicador plantat», mai «la vida hi neix». (La mateixa frase, al principi
+    1 de `docs/disseny.md` i a la §2 del pla; AUD-198.)
 - **Dos carrils** (11-11-2026, `docs/disseny.md`):
   - **Explorar,** sense auditoria abans de calcular: una nota a git abans de calcular (la pregunta, les dades, les llavors, el pressupost
     de màquina, dos dies com a molt, i què faria canviar d'opinió); des d'un commit net, amb l'script i la sortida tal com surt (amb el
@@ -306,6 +309,12 @@ Llegeix-los abans de proposar canvis.
   - **Les fonts de la matriu de novetat** (la revisió de les fonts, 16-11-2026): una font llegida pel resum o amb una eina que en
     resumeix el text no serveix per dir què no hi és. Abans d'una afirmació de novetat, s'ha de llegir directament (FON-01). Les
     troballes FON-xx són a `docs/auditories.md`.
-  - **El pilot de l'aparició i l'arrelament** (`docs/pla-aparicio-arrelament.md`, v0.1 del 16-11-2026): la part A (l'assaig d'invasió) i la
-    part B (les aparicions naturals, amb un cens de companys inerts), als mateixos mons nous. Abans de calcular: la prova de viabilitat (§9,
-    exploratòria), el pla v0.2, les eines en una PR i l'auditoria 32.
+  - **El pilot de l'aparició i l'arrelament** (`docs/pla-aparicio-arrelament.md`; a `main`, la v0.1 del 16-11-2026, i a la PR #37, la v0.3
+    del 17-11-2026): la part A (l'assaig d'invasió) i la part B (les aparicions naturals, amb un cens de companys inerts), als mateixos mons
+    nous. La prova de viabilitat (§9, exploratòria) és feta; l'auditoria 32 (GO de l'auditor 1 amb condicions, NO-GO de l'auditor 2) va
+    portar a la v0.3. Abans de calcular: la revisió de tancament (l'auditoria 33) i el merge.
+    - **El llinatge és de finestres, no de descendència:** el control de les col·lisions (`--track`, sense plantar res) als bessons de la
+      part B, i `preCarriers` a cada sembra (AU2-156). *F* = 0 sempre és exacte: amb més de 256 cel·les i cap de funcional a la mostra, es
+      proven totes (AUD-192).
+    - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
+      aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).
