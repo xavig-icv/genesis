@@ -429,7 +429,7 @@ const tests = {
       assert.ok(res.ok, t.slice(0, 2000));
       for (const s of ['1. pR', '2. El contrast principal', '3. λdet', '4. La consistència', '5. La lectura', '6. Els descriptius']) assert.ok(t.includes(s), `falta la secció ${s}`);
       // els dos llindars amb i sense les de partida i les emparentades, i la calibració del detector (AU2-175); els competidors (AU2-172)
-      for (const s of ['robustes, sense les de partida', 'en alguna, sense les emparentades', 'La calibració del detector', 'per llinatge:', 'competidor ', 'censurades ']) assert.ok(t.includes(s), `falta «${s}»`);
+      for (const s of ['robustes, sense les de partida', 'en alguna, sense les emparentades', 'La calibració del detector', 'per llinatge:', 'competidor ', 'censurades ', 'amb els competidors com a fracassos']) assert.ok(t.includes(s), `falta «${s}»`);
       assert.ok(Object.keys(res.main).includes('continue') && Object.keys(res.main).includes('λ shuffle-all robustes'), 'falten els quocients de λdet');
       // l'anàlisi és determinista
       const again = [];

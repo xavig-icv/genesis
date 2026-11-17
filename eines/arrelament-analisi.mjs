@@ -101,7 +101,8 @@ export function partA(lines, { start, horizon, rooted = ANALYSIS.rooted, interva
 // El seguiment d'una família o d'un llinatge detectat, per a la consistència (AUD-199 = AU2-172). La mateixa regla a totes dues parts, des
 // de la primera detecció (detected) i durant `window` èpoques:
 //  - 'arrela': un establiment a l'època T ≤ detected + window, i n'és dominant;
-//  - 'competidor': un establiment a T ≤ detected + window, i no n'és dominant (un altre s'hi estableix: es compta a part);
+//  - 'competidor': un establiment a T ≤ detected + window, i no n'és dominant. Un altre s'hi estableix i interromp el seguiment: es compta a
+//    part, i no és un fracàs per defecte (l'auditor 2, AU2-172);
 //  - 'no arrela': cap establiment fins a detected + window, i la branca s'ha pogut seguir fins aquí (detected + window ≤ lastObservable,
 //    l'últim establiment que la branca pot confirmar);
 //  - 'censurada': cap establiment, i la branca no s'ha pogut seguir tota la finestra. No entra al denominador.
@@ -397,7 +398,8 @@ export function analyse(d = DESIGN, { root = ROOT, out = console.log, count = AN
   }
 
   // la consistència: la mateixa definició (AU2-158), i la mateixa finestra i la mateixa regla de seguiment a les dues parts (AUD-199 =
-  // AU2-172). P = arrela / (arrela + competidor + no arrela); les censurades no hi entren, i es compten
+  // AU2-172). P = arrela / (arrela + no arrela): les competidores i les censurades no hi entren, i es compten; amb les competidores com a
+  // fracassos, una sensibilitat
   out(`\n4. La consistència: P(arrela | detectada), dominant (la meitat o més) a un establiment en ${ANALYSIS.followUp} èpoques des de la primera detecció, amb la mateixa regla de seguiment a les dues parts`);
   const sizeClass = (n) => (n <= 1 ? '1' : n <= 4 ? '2 a 4' : '5 o més');
   const natClass = ({ f, b }) => followUpClass({ detected: f.first, event: b.ev ? b.ev.epoch : null, dominant: b.rootedIds.has(f.id), lastObservable: b.lastObservable });
@@ -405,16 +407,16 @@ export function analyse(d = DESIGN, { root = ROOT, out = console.log, count = AN
   // llinatge s'extingeix, i llavors ja no pot ser dominant)
   const plClass = (b) => followUpClass({ detected: b.r.detectedAt, event: b.r.law2 ? b.r.law2.epoch : null, dominant: !!b.r.law2?.dominant, lastObservable: start + d.horizonA });
   const tally = (xs, cls) => { const t = { arrela: 0, competidor: 0, 'no arrela': 0, censurada: 0 }; for (const x of xs) t[cls(x)]++; return t; };
-  const pOf = (t) => { const n = t.arrela + t.competidor + t['no arrela']; return { k: t.arrela, n }; };
+  const pOf = (t) => ({ k: t.arrela, n: t.arrela + t['no arrela'] });
   const fr = ({ k, n }) => `${k} de ${n} (${fmt(n ? k / n : null, 2)})`;
   const counts = (t) => `arrela ${t.arrela}, competidor ${t.competidor}, no arrela ${t['no arrela']}, censurades ${t.censurada}`;
-  const sansComp = (t) => ({ k: t.arrela, n: t.arrela + t['no arrela'] });
+  const withComp = (t) => ({ k: t.arrela, n: t.arrela + t.competidor + t['no arrela'] });
   for (const soup of d.arms) {
     const nat = B.filter((b) => b.soup === soup).flatMap((b) => b.apps.filter(robust).map((x) => ({ f: x.f, b })));
     const pl = A.filter((b) => b.soup === soup && b.variant !== 'sham' && b.r.detectedAt !== null);
     const tn = tally(nat, natClass), tp = tally(pl, plClass);
     out(`   ${soup.padEnd(12)} naturals robustes ${fr(pOf(tn))}; plantats ${fr(pOf(tp))}`);
-    out(`     naturals: ${counts(tn)}; plantats: ${counts(tp)}; sense els competidors: naturals ${fr(sansComp(tn))}, plantats ${fr(sansComp(tp))}`);
+    out(`     naturals: ${counts(tn)}; plantats: ${counts(tp)}; amb els competidors com a fracassos: naturals ${fr(withComp(tn))}, plantats ${fr(withComp(tp))}`);
     for (const cls of ['1', '2 a 4', '5 o més']) {
       const n1 = tally(nat.filter(({ f }) => sizeClass(f.size) === cls), natClass), p1 = tally(pl.filter((b) => sizeClass(b.r.detectedSize) === cls), plClass);
       out(`     la mida a la primera detecció, ${cls}: naturals ${fr(pOf(n1))}; plantats ${fr(pOf(p1))}`);

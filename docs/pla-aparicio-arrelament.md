@@ -12,8 +12,8 @@ pilot, no s'ha calculat res. La prova de viabilitat (§9) sí, pel carril d'expl
     disseny (AU2-170);
   - **els escanejos inerts del punt de partida,** obligatoris, amb la SHA-256 del manifest (AU2-171 = AUD-202);
   - **la consistència, amb la mateixa finestra i la mateixa regla de seguiment a les dues parts:** 1.250 èpoques des de la primera detecció,
-    i quatre classes (arrela, competidor, no arrela, censurada); les censurades no entren al denominador (§6.4; AUD-199 = AU2-172). Les
-    famílies unides en cadena hi compten (AUD-200);
+    i quatre classes (arrela, competidor, no arrela, censurada); les competidores i les censurades no entren al denominador, i es compten
+    (§6.4; AUD-199 = AU2-172). Les famílies unides en cadena hi compten (AUD-200);
   - **«de partida»,** més estret: els programes de la primera detecció contra les cel·les **hereditàries** del punt de partida; la regla
     d'abans es queda com a «emparentades» (§5; AUD-201);
   - **els dos llindars amb i sense les de partida, i la calibració del detector,** amb la part A (§5 i §6.3; AU2-175);
@@ -379,13 +379,14 @@ algun dia. Per això:
    - **les quatre classes** (`followUpClass`), de cada família o llinatge detectat:
      - **arrela:** un establiment de la llei 2 dins de la finestra, i n'és dominant (la meitat o més de les hereditàries del cens inert; les
        famílies que s'hi han unit, també en cadena, AUD-200);
-     - **competidor:** un establiment dins de la finestra, i no n'és dominant;
+     - **competidor:** un establiment dins de la finestra, i no n'és dominant. Un altre s'hi estableix i n'interromp el seguiment: no és un
+       fracàs per defecte (l'auditor 2);
      - **no arrela:** cap establiment dins de la finestra, i la branca s'ha pogut seguir tota la finestra (fins a l'últim establiment que
        pot confirmar: a la part A, el de l'època 9.500; a la part B, el de 250 èpoques abans del final);
      - **censurada:** cap establiment, i la branca no s'ha pogut seguir tota la finestra. **No entra al denominador**, ni a la A ni a la B
        (la v0.3 les treia als naturals i les comptava com a fracassos als plantats; AU2-172);
-   - ***P*** = arrela / (arrela + competidor + no arrela), amb els recomptes de les quatre classes a totes dues parts, i una sensibilitat
-     sense els competidors;
+   - ***P*** = arrela / (arrela + no arrela), amb els recomptes de les quatre classes a totes dues parts, i una sensibilitat amb els
+     competidors com a fracassos;
    - **per la mida a la primera detecció** (1 cel·la, de 2 a 4, 5 o més): la comparació pot sortir diferent només per la mida.
    - **Els temps comencen a la detecció,** a totes dues parts. A la part A, la sembra és abans: la diferència es diu. Els que es detecten
      tard (a la part A, després de l'època 8.250, sense establiment) queden censurats: la consistència parla sobretot dels que es detecten
