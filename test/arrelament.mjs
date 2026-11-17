@@ -324,7 +324,7 @@ const tests = {
     assert.match(reading([1.7, 2.6], 1.6), /per sobre del de l'establiment/);
     assert.match(reading([0.6, 0.9], 1.6), /per sota d'1/);
     assert.match(reading([0.85, 1.3], 1.6), /compatible amb 1 i no amb el de l'establiment.*No és cap prova/);
-    assert.match(reading([0.9, 1.7], 1.6), /no discrimina/);
+    assert.match(reading([1.0, 1.6], 1.6), /no discrimina/);
     assert.match(reading([0.8, 2.0], 1.6), /inconcloent: l'interval és massa ample/);
     assert.match(reading([1.1, 1.4], 1.6, { quantity: 'λ' }), /el ritme de les aparicions detectades explica una part.*de l'arrelament/);
     assert.doesNotMatch(reading([0.85, 1.3], 1.6, { quantity: 'λ' }), /l'aparició.*l'aparició/);
@@ -393,7 +393,7 @@ const tests = {
       const t = text.join('\n');
       assert.ok(res.ok, t.slice(0, 2000));
       for (const s of ['1. pR', '2. El contrast principal', '3. λdet', '4. La consistència', '5. La lectura', '6. Els descriptius']) assert.ok(t.includes(s), `falta la secció ${s}`);
-      assert.ok(Object.keys(res.main).includes('continue') && Object.keys(res.main).includes('λ shuffle-all'));
+      assert.ok(Object.keys(res.main).includes('continue') && Object.keys(res.main).includes('λ shuffle-all robustes'), 'falten els quocients de λdet');
       // l'anàlisi és determinista
       const again = [];
       analyse(d, { root, out: (l) => again.push(l), count: 200 });
