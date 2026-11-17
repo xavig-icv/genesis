@@ -12,7 +12,7 @@ import { PROGRAM_SIZE } from '../fase1/bff.js';
 import { makeRng, randomSoup } from '../fase1/soup.js';
 import { windowsOf, hasWindow } from '../fase2/replication.js';
 import * as inert from '../fase2/inert.js';
-import { Windows, createLineage } from '../fase2/llinatge.js';
+import { Windows, createLineage, carriers } from '../fase2/llinatge.js';
 import { conditions as conditionsB1, testCondition as testConditionB1, inertProgram as inertProgramB1, INERT as INERT_B1 } from '../eines/autonomia.mjs';
 import { positions, makeSham, plantCells } from '../eines/sembra.mjs';
 import { transform, checkInvariants } from '../eines/transforma.mjs';
@@ -113,6 +113,19 @@ const tests = {
     for (let c = 0; c < 300; c++) many.set(g, c * PROGRAM_SIZE);
     const m = createLineage({ program: g, seed: 2 }).step(many, n, 0);
     assert.strictEqual(m.M, 300); assert.strictEqual(m.tested, 256); assert.strictEqual(m.F, 300);
+    assert.ok(!m.exhaustive);
+    // més cel·les que la mostra i cap de funcional: es proven totes, i F = 0 és exacte (AUD-192 = AU2-157)
+    const dead = randomSoup(n, makeRng(9, 'v2'));
+    for (let c = 0; c < 300; c++) dead.set(half, c * PROGRAM_SIZE);
+    const z = createLineage({ program: g, seed: 3 }).step(dead, n, 0);
+    assert.strictEqual(z.M, 300); assert.strictEqual(z.tested, 300); assert.strictEqual(z.F, 0); assert.strictEqual(z.exhaustive, true);
+    // i una sola funcional entre 300: la mostra la pot perdre, però la prova sencera la troba (F > 0 amb qualsevol llavor)
+    const one = Uint8Array.from(dead); one.set(g, 150 * PROGRAM_SIZE);
+    for (let s = 0; s < 8; s++) assert.ok(createLineage({ program: g, seed: 10 + s }).step(one, n, 0).F > 0, `la llavor ${10 + s} perd l'única funcional`);
+    // uns quants programes alhora (el seguiment del bessó): les finestres de tots
+    const two = createLineage({ program: [g, inert.fromHex('00'.repeat(64))], seed: 4 }).step(soup, n, 0);
+    assert.strictEqual(two.M, 4);
+    assert.strictEqual(carriers(soup, n, [g]), 4);
   },
   'la sembra: les posicions, el sham i les comprovacions': () => {
     // les posicions de la prova de viabilitat (una per món, la llavor del món + 700.000)
@@ -141,6 +154,17 @@ const tests = {
     assert.deepStrictEqual(b[0].inertCensus, { sample: 64, seed: 20261116, conditions: { seed: 3000000000, count: 3 } });
     assert.ok(!('inertCensus' in a[0]) && !('plant' in a[0]) && !('lineage' in a[0]), 'sense les opcions, la línia d\'inici és la de sempre');
     assert.ok(!('extinction' in a.at(-1)));
+    // el seguiment sense sembra (--track, AU2-156): tampoc no canvia la història
+    const tr = join(tmp, 't.json');
+    writeFileSync(tr, JSON.stringify({ type: 'track', genotypes: ['G1'], programs: [G1], lineageSeed: 5 }));
+    const c = sim(...base, '--track', tr, '--lineage-every', '50', '--inert-census', '64', '--json', join(tmp, 'c.jsonl'));
+    assert.strictEqual(c.status, 0, c.stderr);
+    const C = readJsonl(join(tmp, 'c.jsonl'));
+    assert.strictEqual(census(C), census(a));
+    assert.strictEqual(C.at(-1).fingerprint, a.at(-1).fingerprint);
+    assert.strictEqual(C[0].track.programs[0], G1); assert.ok(Number.isInteger(C[0].track.preCarriers));
+    assert.strictEqual(C.filter((l) => l.type === 'lineage').length, 7);
+    assert.ok(C.filter((l) => l.type === 'inert').every((l) => 'lineage' in l));
   }),
   'sim.mjs --plant: planta, segueix el llinatge i s\'atura a l\'extinció': () => withTmp((tmp) => {
     const cap = capture(tmp);
@@ -169,6 +193,7 @@ const tests = {
       assert.ok(l.lineage >= g1, 'el llinatge no compta les cel·les amb el genotip mateix');
     }
     assert.strictEqual(L[0].plant.outputSha256, rec.outputSha256);
+    assert.strictEqual(L[0].plant.preCarriers, 0, 'el món de partida no porta cap finestra de G1');
     assert.deepStrictEqual(L[0].lineage, { every: 25, seed: 1, sample: 256, conditions: { seed: 3000000000, count: 3 }, stopOnExtinction: null });
     const lin = L.filter((l) => l.type === 'lineage');
     assert.strictEqual(lin[0].epoch, 100); assert.strictEqual(lin[0].F, 1);
@@ -196,6 +221,9 @@ const tests = {
       ['--world', '64x64', '--from', 'x.bin', '--start', '1', '--epochs', '5', '--plant', 'x.json', '--stop-on-extinction', '0'],
       ['--world', '64x64', '--census-version', 'v2', '--inert-census', '10'],
       ['--inert-census', '10'],
+      ['--world', '64x64', '--from', 'x.bin', '--start', '1', '--epochs', '5', '--plant', 'x.json', '--track', 't.json', '--lineage-every', '10'],
+      ['--world', '64x64', '--track', 't.json'],
+      ['--world', '64x64', '--track', 't.json', '--lineage-every', '10', '--stop-on-extinction', '0'],
     ]) {
       const r = sim(...args);
       assert.strictEqual(r.status, 2, args.join(' '));
@@ -217,7 +245,23 @@ const tests = {
     assert.deepStrictEqual(checkInvariants(soup, pl.out, pl.info), []);
     assert.strictEqual(starts(pl.out), starts(soup));
     assert.strictEqual(b0.info.byte0.programs, pl.info.byte0.programs);
-    assert.strictEqual(b0.info.byte0.unchanged, 1); assert.strictEqual(pl.info.byte0.unchanged, 2);
+    assert.strictEqual(b0.info.byte0.unchanged, 1);
+    // el placebo no canvia els programes sense cap instrucció de l'1 al 63, o amb les posicions 1 a 63 iguals
+    const isOp = (v) => [60, 62, 123, 125, 45, 43, 46, 44, 91, 93].includes(v);
+    let still = 0;
+    for (let k = 0; k < n; k++) {
+      const o = k * PROGRAM_SIZE;
+      if (soup[o] !== LT) continue;
+      const tail = soup.subarray(o + 1, o + PROGRAM_SIZE);
+      if (!tail.some(isOp) || tail.every((v) => v === tail[0])) still++;
+    }
+    assert.strictEqual(pl.info.byte0.unchanged, still);
+    // i cada intercanvi del placebo mou una instrucció, com byte0
+    for (let k = 0; k < n; k++) {
+      const o = k * PROGRAM_SIZE, diff = [];
+      for (let i = 0; i < PROGRAM_SIZE; i++) if (pl.out[o + i] !== soup[o + i]) diff.push(i);
+      if (diff.length) assert.ok(isOp(soup[o + diff[0]]) || isOp(soup[o + diff[1]]), `el placebo no mou cap instrucció a la cel·la ${k}`);
+    }
     assert.strictEqual(b0.info.changed, 2 * b0.info.byte0.swapped);
     // el comprovador detecta una transformació espatllada
     const bad = Uint8Array.from(b0.out);
@@ -252,16 +296,38 @@ const tests = {
     ];
     const fams = families(recs);
     assert.deepStrictEqual(fams.map((f) => f.first), [8250, 8250, 8500], 'G1 i X a la primera; Y, quan és hereditària');
-    assert.strictEqual(dominantFamily(fams, recs[1]), fams[0]);
+    const dm = dominantFamily(fams, recs[1]);
+    assert.strictEqual(dm.family, fams[0]); assert.strictEqual(dm.dominant, true);
+    // una pluralitat (2 de 5) no és dominant, com a la part A (AU2-158)
+    const Z = rnd(3);
+    const plural = { type: 'inert', epoch: 8750, cells: [cell(G1), cell(G1), cell(X), cell(Y), cell(Z)] };
+    const fp = families([...recs, plural]);
+    const dp = dominantFamily(fp, plural);
+    assert.strictEqual(dp.family, fp[0]); assert.strictEqual(dp.dominant, false); assert.strictEqual(dp.share, 0.4);
+    // el criteri estricte (la cota inferior de F) i la causa de la censura
+    const Ls = (epoch, M, tested, functional) => ({ type: 'lineage', epoch, M, tested, copying: functional, functional, F: Math.round((M * functional) / tested), windows: 1 });
+    r = partA([{ type: 'start' }, Ls(8000, 1, 1, 1), Ls(8100, 3000, 256, 120), Ls(8350, 3000, 256, 120), end(8350)], { start: 8000, horizon: 1500 });
+    assert.strictEqual(r.rootedAt, 8100); assert.strictEqual(r.rootedStrictAt, 8100);
+    r = partA([{ type: 'start' }, Ls(8000, 1, 1, 1), Ls(8100, 3000, 256, 115), Ls(8350, 3000, 256, 115), end(8350)], { start: 8000, horizon: 1500 });
+    assert.strictEqual(r.rootedAt, 8100); assert.strictEqual(r.rootedStrictAt, null, 'F = 1.348, però la cota inferior és per sota de 1.311');
+    r = partA([{ type: 'start' }, L(8000, 1), L(8050, 40), { type: 'end', epoch: 8750, reason: 'establiment' }], { start: 8000, horizon: 1500 });
+    assert.strictEqual(r.outcome, 'censurada'); assert.strictEqual(r.censor, 'establiment');
     // Mantel i Haenszel, el bootstrap i la lectura
     assert.strictEqual(mh([{ a: 2, n1: 4, b: 1, n0: 4 }, { a: 1, n1: 4, b: 1, n0: 4 }]), 1.5);
     assert.strictEqual(mh([{ a: 2, n1: 4, b: 0, n0: 4 }]), null);
     const worlds = [[1], [2], [3], [4]];
     assert.deepStrictEqual(bootstrap(worlds, (s) => s.flat().reduce((a, b) => a + b, 0), { count: 500 }), bootstrap(worlds, (s) => s.flat().reduce((a, b) => a + b, 0), { count: 500 }));
-    assert.match(reading([1.2, 2.0], 1.6), /sobre l'arrelament/);
-    assert.match(reading([0.5, 0.9], 1.6), /més difícil/);
-    assert.match(reading([0.8, 1.3], 1.6), /no hi canvia gaire/);
-    assert.match(reading([0.8, 2.0], 1.6), /no ho pot dir/);
+    // la lectura, amb els sis casos i la regla de la precisió (AUD-190, AU2-164)
+    assert.match(reading([1.3, 1.9], 1.6), /compatible amb el de l'establiment \(1.6\) i no amb 1/);
+    assert.match(reading([1.1, 1.4], 1.6), /entre 1 i el de l'establiment \(1.6\)/);
+    assert.match(reading([1.2, 1.9], 2.05), /entre 1 i el de l'establiment \(2.05\)/);
+    assert.match(reading([1.7, 2.6], 1.6), /per sobre del de l'establiment/);
+    assert.match(reading([0.6, 0.9], 1.6), /per sota d'1/);
+    assert.match(reading([0.85, 1.3], 1.6), /compatible amb 1 i no amb el de l'establiment.*No és cap prova/);
+    assert.match(reading([0.9, 1.7], 1.6), /no discrimina/);
+    assert.match(reading([0.8, 2.0], 1.6), /inconcloent: l'interval és massa ample/);
+    assert.match(reading([1.1, 1.4], 1.6, { quantity: 'λ' }), /el ritme de les aparicions detectades explica una part.*de l'arrelament/);
+    assert.doesNotMatch(reading([0.85, 1.3], 1.6, { quantity: 'λ' }), /l'aparició.*l'aparició/);
   },
   'eines/arrelament.mjs: l\'envelliment, la preparació, el manifest, les comprovacions i les dues parts, amb un disseny petit': async () => {
     // Un disseny petit, dins del repositori (la preparació demana un commit net i el simulador de l'envelliment), en una carpeta
@@ -332,6 +398,15 @@ const tests = {
       const again = [];
       analyse(d, { root, out: (l) => again.push(l), count: 200 });
       assert.strictEqual(again.join('\n'), t);
+      // un registre d'un altre commit que el del manifest (AU2-162)
+      const one = join(abs, 'part-a', `${lines[0].split(' ')[0]}.jsonl`);
+      const saved = readFileSync(one, 'utf8');
+      const ls = saved.trim().split('\n'); const st = JSON.parse(ls[0]); st.code = 'cafefee'; ls[0] = JSON.stringify(st);
+      writeFileSync(one, ls.join('\n') + '\n');
+      text = [];
+      assert.strictEqual(analyse(d, { root, out: (l) => text.push(l), count: 50 }).ok, false);
+      assert.match(text.join('\n'), /és de cafefee, i el manifest, de/);
+      writeFileSync(one, saved);
       // una sembra o una llista tocades són un problema
       const plant = join(root, m.branches.find((b) => b.part === 'A').plant);
       const pj = JSON.parse(readFileSync(plant, 'utf8')); pj.lineageSeed++; writeFileSync(plant, JSON.stringify(pj, null, 2) + '\n');

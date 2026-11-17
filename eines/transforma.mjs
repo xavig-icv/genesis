@@ -32,9 +32,10 @@
 //                     §4.3): a cada programa que comença amb '<', el primer byte s'intercanvia amb un byte del mateix
 //                     programa que no sigui '<', triat a l'atzar. Conserva la composició de cada cel·la i l'histograma, i
 //                     cap programa no hi comença amb '<' (llevat dels que són tots '<', que no canvien)
-//   byte0-placebo     el seu placebo: als mateixos programes, s'intercanvien dos bytes diferents de les posicions 1 a 63,
-//                     triats a l'atzar. Conserva el mateix, i el primer byte no canvia (si les posicions 1 a 63 són totes
-//                     iguals, el programa no canvia)
+//   byte0-placebo     el seu placebo: als mateixos programes, una instrucció de les posicions 1 a 63, triada a l'atzar,
+//                     s'intercanvia amb un altre byte diferent de les mateixes posicions. Com byte0, mou una instrucció, però
+//                     el primer byte no canvia (AUD-195). Si de l'1 al 63 no hi ha cap instrucció, o són totes iguals, el
+//                     programa no canvia
 //
 // Els replicadors detectats són les cel·les que passen la prova de replicació (fase2/replication.js, sola o en
 // context), provades totes una per una (uns 95 s en un món de 512 × 256). És una prova finita, no una garantia que
@@ -133,8 +134,13 @@ export function transform(soup, kind, seed, { width = 0, radius = 2 } = {}) {
         if (!k) continue;
         a = 0; b = cand[(rng() * k) | 0];
       } else {
-        a = 1 + ((rng() * (PROGRAM_SIZE - 1)) | 0);
+        // el placebo també mou una instrucció, com byte0, però lluny del primer byte (AUD-195): una instrucció de les posicions 1 a 63,
+        // triada a l'atzar, amb un altre byte diferent de les mateixes posicions
         let k = 0;
+        for (let i = 1; i < PROGRAM_SIZE; i++) if (KIND[soup[o + i]]) cand[k++] = i;
+        if (!k) continue;
+        a = cand[(rng() * k) | 0];
+        k = 0;
         for (let i = 1; i < PROGRAM_SIZE; i++) if (soup[o + i] !== soup[o + a]) cand[k++] = i;
         if (!k) continue;
         b = cand[(rng() * k) | 0];
@@ -268,7 +274,8 @@ export function checkInvariants(input, output, info) {
         if (a[0] !== LT) { if (diff.length) { p.push(`${info.kind} ha canviat la cel·la ${c}, que no comença amb '<'`); return p; } continue; }
         programs++;
         if (!diff.length) {
-          const constant = info.kind === 'byte0' ? a.every((v) => v === LT) : a.subarray(1).every((v) => v === a[1]);
+          const tail = a.subarray(1);
+          const constant = info.kind === 'byte0' ? a.every((v) => v === LT) : (!tail.some((v) => KIND[v]) || tail.every((v) => v === a[1]));
           if (!constant) { p.push(`${info.kind} no ha canviat la cel·la ${c}, i podia`); return p; }
           continue;
         }
@@ -276,6 +283,7 @@ export function checkInvariants(input, output, info) {
         if (diff.length !== 2 || a[diff[0]] !== b[diff[1]] || a[diff[1]] !== b[diff[0]]) { p.push(`${info.kind}: la cel·la ${c} no és un intercanvi de dos bytes`); return p; }
         if (info.kind === 'byte0' && (diff[0] !== 0 || b[0] === LT)) { p.push(`byte0: la cel·la ${c} encara comença amb '<'`); return p; }
         if (info.kind === 'byte0-placebo' && diff[0] === 0) { p.push(`byte0-placebo ha tocat el primer byte de la cel·la ${c}`); return p; }
+        if (info.kind === 'byte0-placebo' && !KIND[a[diff[0]]] && !KIND[a[diff[1]]]) { p.push(`byte0-placebo no ha mogut cap instrucció a la cel·la ${c}`); return p; }
       }
       if (programs !== info.byte0.programs || swapped !== info.byte0.swapped) p.push(`${info.kind}: el registre diu ${info.byte0.programs} programes i ${info.byte0.swapped} intercanvis, i n'hi ha ${programs} i ${swapped}`);
       break;

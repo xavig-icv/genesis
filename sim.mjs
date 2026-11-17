@@ -47,10 +47,13 @@
 //                    no plantar res (docs/pla-aparicio-arrelament.md, §2): planta el programa del fitxer (fet amb
 //                    eines/sembra.mjs) a les cel·les que diu, abans de la primera època. Només amb --from, i si
 //                    la SHA-256 del món de partida és la del fitxer
+//   --track fitxer   el control de les col·lisions (AU2-156): segueix el llinatge dels programes del fitxer (fet amb
+//                    eines/arrelament.mjs) sense plantar-ne cap. Excloent amb --plant
 //   --lineage-every N
-//                    amb --plant: cada N èpoques, el llinatge del programa plantat (fase2/llinatge.js)
+//                    amb --plant o --track: cada N èpoques, el llinatge del programa plantat, o dels seguits
+//                    (fase2/llinatge.js)
 //   --stop-on-extinction N
-//                    amb --lineage-every: atura l'experiment N èpoques després de l'extinció del llinatge
+//                    amb --plant i --lineage-every: atura l'experiment N èpoques després de l'extinció del llinatge
 //                    (F = 0 en dos punts seguits)
 //   --help           mostra aquesta ajuda
 //
@@ -70,7 +73,7 @@ import { topMotifs, DATA } from './fase1/motifs.js';
 import { pairNeighbors, applyCurrents, applyFlow, DEFAULT_RADIUS } from './fase2/world.js';
 import { createCensus, CENSUS_VERSIONS, CENSUS_SAMPLE, CENSUS_SEED, EVENT_SHARE, EVENT_CENSUSES, establishment } from './fase2/census.js';
 import { createInertCensus, fromHex, heritable } from './fase2/inert.js';
-import { createLineage } from './fase2/llinatge.js';
+import { createLineage, carriers } from './fase2/llinatge.js';
 
 // Quina versió del codi fa aquest experiment (per a la traçabilitat dels resultats):
 // el commit de git, amb "+canvis" si el codi té canvis sense desar; o, si no hi ha git
@@ -116,6 +119,7 @@ const OPTIONS = {
   json: { type: 'str' },
   'inert-census': { type: 'int', min: 1, worldOnly: true },
   plant: { type: 'str', worldOnly: true },
+  track: { type: 'str', worldOnly: true },
   'lineage-every': { type: 'int', min: 1, worldOnly: true },
   'stop-on-extinction': { type: 'int', min: 0, worldOnly: true },
 };
@@ -174,8 +178,11 @@ function parseArgs(argv) {
   if ('stop-after-event' in out && 'after' in out) fail("--stop-after-event i --after són excloents: amb --stop-after-event, l'HOE no atura res");
   if ('inert-census' in out && out['census-version'] === 'v2') fail('--inert-census necessita el cens v3');
   if ('plant' in out && out.from === undefined) fail('--plant només té sentit amb --from (es planta en un món desat)');
-  if ('lineage-every' in out && !('plant' in out)) fail('--lineage-every necessita --plant (és el llinatge del programa plantat)');
+  if ('track' in out && 'plant' in out) fail('--track i --plant són excloents (--track és el control sense res plantat)');
+  if ('track' in out && !('lineage-every' in out)) fail('--track necessita --lineage-every');
+  if ('lineage-every' in out && !('plant' in out) && !('track' in out)) fail('--lineage-every necessita --plant o --track');
   if ('stop-on-extinction' in out && !('lineage-every' in out)) fail('--stop-on-extinction necessita --lineage-every');
+  if ('stop-on-extinction' in out && !('plant' in out)) fail('--stop-on-extinction només té sentit amb --plant');
   if ('stop-on-extinction' in out && 'after' in out) fail('--stop-on-extinction i --after són excloents');
   // Les llistes de branca antigues porten --after 99999: no es rebutja, però s'avisa (residu d'AUD-03)
   if (out.from !== undefined) {
@@ -213,6 +220,7 @@ const stopAfterEvent = args['stop-after-event'] ?? null;
 const jsonFile = args.json ?? null;
 const inertSample = args['inert-census'] ?? null;
 const plantFile = args.plant ?? null;
+const trackFile = args.track ?? null;
 const lineageEvery = args['lineage-every'] ?? null;
 const stopOnExtinction = args['stop-on-extinction'] ?? null;
 // En una branca el món de partida ja pot tenir vida: la "transició" saltaria a la primera mesura
@@ -249,13 +257,26 @@ if (plantFile) {
   if (bytes.length !== PROGRAM_SIZE) fail(`${plantFile}: el programa no té ${PROGRAM_SIZE} bytes`);
   for (const c of p.cells) if (!Number.isInteger(c) || c < 0 || c >= nPrograms) fail(`${plantFile}: la cel·la ${c} no és del món`);
   if (new Set(p.cells).size !== p.cells.length) fail(`${plantFile}: hi ha una cel·la repetida`);
+  // les cel·les que ja portaven alguna finestra del programa abans de plantar-lo (el control de les col·lisions, AU2-156)
+  const preCarriers = carriers(soup, nPrograms, [bytes]);
   for (const c of p.cells) soup.set(bytes, c * PROGRAM_SIZE);
   if (p.outputSha256 && sha(soup) !== p.outputSha256) fail(`${plantFile}: el món sembrat no té la SHA-256 de la sembra`);
   if (lineageEvery && !Number.isInteger(p.lineageSeed)) fail(`${plantFile} no diu la llavor del llinatge (lineageSeed)`);
   plant = { file: plantFile, fileSha256: sha(raw), genotype: p.genotype ?? null, sham: p.sham ?? null, hex: p.hex, cells: p.cells,
-    sourceSha256: p.sourceSha256, outputSha256: sha(soup), lineageSeed: p.lineageSeed ?? null };
+    sourceSha256: p.sourceSha256, outputSha256: sha(soup), lineageSeed: p.lineageSeed ?? null, preCarriers };
 }
-const lineage = lineageEvery ? createLineage({ program: fromHex(plant.hex), seed: plant.lineageSeed }) : null;
+// El control de les col·lisions (--track): el llinatge d'uns programes que no s'hi planten, al bessó natural (AU2-156)
+let track = null;
+if (trackFile) {
+  const raw = readFileSync(trackFile);
+  let t;
+  try { t = JSON.parse(raw.toString('utf8')); } catch { fail(`${trackFile} no és JSON`); }
+  if (t.type !== 'track' || !Array.isArray(t.programs) || !t.programs.length || !Number.isInteger(t.lineageSeed)) fail(`${trackFile} no és el fitxer d'un seguiment (eines/arrelament.mjs)`);
+  for (const h of t.programs) if (typeof h !== 'string' || fromHex(h).length !== PROGRAM_SIZE) fail(`${trackFile}: un programa no té ${PROGRAM_SIZE} bytes`);
+  track = { file: trackFile, fileSha256: createHash('sha256').update(raw).digest('hex'), genotypes: t.genotypes ?? null, programs: t.programs, lineageSeed: t.lineageSeed,
+    preCarriers: carriers(soup, nPrograms, t.programs.map(fromHex)) };
+}
+const lineage = lineageEvery ? createLineage(plant ? { program: fromHex(plant.hex), seed: plant.lineageSeed } : { program: track.programs.map(fromHex), seed: track.lineageSeed }) : null;
 const inertCensus = inertSample ? createInertCensus({ sample: inertSample }) : null;
 const lineageLine = (r) => `llinatge ${r.epoch}  cel·les=${r.M}  provades=${r.tested}  hereditàries=${r.functional}  F=${r.F}  finestres=${r.windows}`;
 const flowState = { carry: 0 };
@@ -326,9 +347,11 @@ json({
   // les opcions del pilot de l'aparició i l'arrelament, només si es fan servir: sense, la línia és la de sempre
   ...(inertCensus ? { inertCensus: inertCensus.description } : {}),
   ...(plant ? { plant } : {}),
+  ...(track ? { track } : {}),
   ...(lineage ? { lineage: { every: lineageEvery, ...lineage.description, stopOnExtinction } } : {}),
 });
 if (plant) console.log(`sembra (l'assaig d'invasió): ${plant.sham ? 'sham' : `el genotip ${plant.genotype ?? '?'}`} a ${plant.cells.length} cel·la${plant.cells.length > 1 ? 'es' : ''} (${plant.cells.join(', ')}), de ${plant.file}`);
+if (track) console.log(`seguiment sense sembra (el control de les col·lisions): ${track.programs.length} programes, de ${track.file}; ${track.preCarriers} cel·les ja en porten alguna finestra`);
 const t0 = Date.now();
 if (lineage) {
   const r = lineage.step(soup, nPrograms, start);
@@ -386,7 +409,7 @@ for (let epoch = start + 1; epoch <= maxEpochs; epoch++) {
     }
   }
 
-  // El llinatge del programa plantat (--plant i --lineage-every)
+  // El llinatge del programa plantat (--plant i --lineage-every), o dels seguits sense plantar-los (--track)
   if (lineage && epoch % lineageEvery === 0) {
     const lr = lineage.step(soup, nPrograms, epoch);
     console.log(lineageLine(lr));

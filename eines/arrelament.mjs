@@ -23,7 +23,7 @@ import { spawn, execFileSync } from 'child_process';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { PROGRAM_SIZE } from '../fase1/bff.js';
 import { censusProblem, structureProblems } from '../fase2/b2-serie.mjs';
-import { conditions, testInert, copies, heritable, INERT_CONDITIONS, INERT_CONDITIONS_SEED } from '../fase2/inert.js';
+import { conditions, testInert, copies, heritable, toHex, INERT_CONDITIONS, INERT_CONDITIONS_SEED } from '../fase2/inert.js';
 import { positions, makePlant, writePlant } from './sembra.mjs';
 import { COMMON } from './pilot.mjs';
 
@@ -55,6 +55,8 @@ export const DESIGN = Object.freeze({
   horizonA: 1500, stopAfterEventA: 500, lineageEvery: 50, horizonB: 8000, inertCensus: 4096,
   genotypes: { file: 'fase2/resultats/arrelament/viabilitat/genotips.json', sha256: '8d16656ed261f87c84ebad34e0a78b925463969e84eb268cbb7a8e26559a39aa' },
   split: [['pc', 3], ['vm', 2]],
+  // el control de les col·lisions (AU2-156): les branques naturals de la part B segueixen, sense plantar-los, els quatre genotips
+  trackGenotypes: ['G1', 'G2', 'G3', 'G4'],
 });
 export const designFor = (overrides) => ({ ...DESIGN, ...overrides });
 // Els fitxers del simulador: l'envelliment i el pilot han de tenir els mateixos
@@ -66,6 +68,7 @@ const armPath = (d, w, arm) => `${d.folder}/alicuotes/${w}/${arm}.bin`;
 const scanPath = (d, w, arm = null) => `${d.folder}/alicuotes/${w}/${arm ? `${arm}-` : ''}escaneig.json`;
 const inertScanPath = (d, w, arm) => `${d.folder}/alicuotes/${w}/${arm}-escaneig-inert.json`;
 const plantPath = (d, id) => `${d.folder}/sembres/${id}.json`;
+const trackPath = (d, w) => `${d.folder}/seguiments/${w}.json`;
 export const seedOf = (d, world, k) => Number(world) + d.continuation + d.positionStep * (k - 1);
 
 // L'ordre de l'envelliment d'un món
@@ -90,9 +93,9 @@ export function branchesOf(d, world, index) {
   if (index < d.sham.worlds) for (const soup of d.arms) a(`${world}-${soup}-sham-p1`, soup, 'sham', 1, true);
   for (const soup of d.arms) {
     const id = `${world}-${soup}-natural`;
-    out.push({ id, part: 'B', world, soup, variant: null, position: 1, seed: seedOf(d, world, 1), plant: null,
+    out.push({ id, part: 'B', world, soup, variant: null, position: 1, seed: seedOf(d, world, 1), plant: null, track: trackPath(d, world),
       line: `${id} --world ${dims(d)} --seed ${seedOf(d, world, 1)} --mixing 0 --from ${armPath(d, world, soup)} --start ${d.age} --epochs ${d.age + d.horizonB} ${CENSUS}` +
-        ` --stop-after-event 0 --inert-census ${d.inertCensus} --json ${d.folder}/part-b/${id}.jsonl` });
+        ` --stop-after-event 0 --track ${trackPath(d, world)} --lineage-every ${d.lineageEvery} --inert-census ${d.inertCensus} --json ${d.folder}/part-b/${id}.jsonl` });
   }
   return out;
 }
@@ -157,17 +160,22 @@ function codeVersion(root) {
   try { return run('rev-parse', '--short', 'HEAD') + (run('status', '--porcelain', '--', '*.js', '*.mjs') ? '+canvis' : ''); } catch { return 'desconeguda'; }
 }
 
-// L'escaneig de totes les cel·les amb companys inerts, en 3 condicions
+// L'escaneig de totes les cel·les amb companys inerts, en 3 condicions. Desa les que es copien, amb el programa i les cadenes, com el cens
+// inert: l'anàlisi en separa les famílies que ja hi eren a l'època 8.000 (AUD-193)
 export function inertScan(soup) {
   const conds = conditions(INERT_CONDITIONS_SEED, INERT_CONDITIONS), n = soup.length / PROGRAM_SIZE;
   let copying = 0, heritables = 0, heritableSolo = 0;
+  const cells = [];
   for (let c = 0; c < n; c++) {
-    const s = testInert(soup.subarray(c * PROGRAM_SIZE, (c + 1) * PROGRAM_SIZE), conds);
-    if (copies(s)) copying++;
+    const bytes = soup.subarray(c * PROGRAM_SIZE, (c + 1) * PROGRAM_SIZE);
+    const s = testInert(bytes, conds);
+    if (!copies(s)) continue;
+    copying++;
     if (heritable(s)) heritables++;
     if (s.heritableSolo.includes('1')) heritableSolo++;
+    cells.push({ cell: c, program: toHex(bytes), ...s });
   }
-  return { cells: n, copying, heritable: heritables, heritableSolo, conditions: { seed: INERT_CONDITIONS_SEED, count: INERT_CONDITIONS } };
+  return { cells: n, copying, heritable: heritables, heritableSolo, conditions: { seed: INERT_CONDITIONS_SEED, count: INERT_CONDITIONS }, copiers: cells };
 }
 
 // Les feines a part (eines/transforma.mjs i l'escaneig inert), N alhora
@@ -292,6 +300,13 @@ export async function prepare(d = DESIGN, { root = ROOT, parallel = 6, log = con
     branches.push(...bs);
   });
   log(`Les sembres: ${branches.filter((b) => b.part === 'A').length}`);
+  // 4b. Els seguiments de la part B: els genotips del control de les col·lisions, sense plantar-los (AU2-156)
+  mkdirSync(join(root, d.folder, 'seguiments'), { recursive: true });
+  for (const w of cohort) {
+    const f = trackPath(d, w.world);
+    writeFileSync(join(root, f), JSON.stringify({ type: 'track', genotypes: d.trackGenotypes, programs: d.trackGenotypes.map((g) => genotypes[g]), lineageSeed: Number(w.world) + d.lineageOffset }, null, 2) + String.fromCharCode(10), { flag: 'wx' });
+    for (const b of branches.filter((x) => x.part === 'B' && x.world === w.world)) b.trackSha256 = shaFile(root, f);
+  }
   // 5. Les llistes, per part i per màquina, i el manifest
   const lists = {};
   for (const part of ['A', 'B']) {
@@ -354,7 +369,12 @@ export function checkManifest(d = DESIGN, { root = ROOT, machine = null } = {}) 
   for (const b of m.branches) {
     const exp = want.find((x) => x.id === b.id);
     if (exp && b.command !== `node sim.mjs ${exp.line.split(' ').slice(1).join(' ')}`) { q(`${b.id}: l'ordre no és la del disseny`); continue; }
-    if (b.part !== 'A') continue;
+    if (b.part === 'B') {
+      if (!existsSync(join(root, b.track)) || shaFile(root, b.track) !== b.trackSha256) { q(`${b.id}: el seguiment no és el del manifest`); continue; }
+      const tr = JSON.parse(readFileSync(join(root, b.track), 'utf8'));
+      if (!genotypes || !same(tr.programs, d.trackGenotypes.map((g) => genotypes[g])) || tr.lineageSeed !== Number(b.world) + d.lineageOffset) q(`${b.id}: el seguiment no és el del disseny`);
+      continue;
+    }
     if (!existsSync(join(root, b.plant)) || shaFile(root, b.plant) !== b.plantSha256) { q(`${b.id}: la sembra no és la del manifest`); continue; }
     const pl = JSON.parse(readFileSync(join(root, b.plant), 'utf8'));
     const w = cohort.find((x) => x.world === b.world);
