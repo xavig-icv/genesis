@@ -1,10 +1,24 @@
 # El pilot de l'aparició i l'arrelament · on actua la maduració
 
-**Versió: v0.3 (17-11-2026), amb les correccions de l'auditoria 32, per a la revisió de tancament (l'auditoria 33).** Del pilot, no s'ha
-calculat res. La prova de viabilitat (§9) sí, pel carril d'explorar, en uns altres mons: és a `fase2/resultats/arrelament/viabilitat/`. Les
-eines són en aquesta PR (§7), i res no es calcula fins després de la revisió de tancament i del merge.
+**Versió: v0.4 (17-11-2026), amb les correccions de l'auditoria 33, per a una comprovació curta de tancament (l'auditoria 34).** Del
+pilot, no s'ha calculat res. La prova de viabilitat (§9) sí, pel carril d'explorar, en uns altres mons: és a
+`fase2/resultats/arrelament/viabilitat/`. Les eines són en aquesta PR (§7), i res no es calcula fins després de la comprovació i del merge.
 - **La decisió que el fa possible:** el 16-11-2026, el responsable tria l'opció 2 de la T-64, l'assaig d'invasió, com una excepció escrita
-  a la regla del projecte (§2, i `docs/disseny.md`).
+  a la regla del projecte (§2, i `docs/disseny.md`). El 17-11-2026 confirma que la prova de viabilitat hi entrava (T-68).
+- **De la v0.3 a la v0.4** (l'auditoria 33: l'auditor 1, GO amb quatre troballes baixes que recomana corregir abans del merge; l'auditor 2,
+  NO-GO fins a corregir-ne tres d'altes, amb una comprovació curta). Només l'anàlisi i les seves proves; els mons, les variants, *N*, *K*,
+  *H*, els braços i les llavors no canvien:
+  - **el manifest, contra el disseny:** l'anàlisi es nega si en falta, en sobra o se'n repeteix cap branca, o si una no té l'ordre del
+    disseny (AU2-170);
+  - **els escanejos inerts del punt de partida,** obligatoris, amb la SHA-256 del manifest (AU2-171 = AUD-202);
+  - **la consistència, amb la mateixa finestra i la mateixa regla de seguiment a les dues parts:** 1.250 èpoques des de la primera detecció,
+    i quatre classes (arrela, competidor, no arrela, censurada); les censurades no entren al denominador (§6.4; AUD-199 = AU2-172). Les
+    famílies unides en cadena hi compten (AUD-200);
+  - **«de partida»,** més estret: els programes de la primera detecció contra les cel·les **hereditàries** del punt de partida; la regla
+    d'abans es queda com a «emparentades» (§5; AUD-201);
+  - **els dos llindars amb i sense les de partida, i la calibració del detector,** amb la part A (§5 i §6.3; AU2-175);
+  - **s'extingeix dins de *H*** només si el primer zero hi és (§4.5; AU2-173);
+  - **la lectura de *λ*det:** una classificació numèrica, que no atribueix cap mecanisme (§1; AU2-174).
 - **De la v0.2 a la v0.3** (l'auditoria 32: l'auditor 1, GO amb quatre condicions; l'auditor 2, NO-GO fins a una revisió de tancament):
   - **la lectura** (§1 i §6.5): sis casos i una regla de la precisió. Un interval entre 1 i el quocient de l'establiment es llegia «més gran
     que el de l'establiment», i un interval que conté 1 semblava una prova d'equivalència (AUD-190, AU2-164);
@@ -68,9 +82,12 @@ del bootstrap per món:
 
 - **Amb les dues mesures de *p*R** («arrela» i «s'estableix amb el llinatge dominant», §4.5): si no diuen el mateix, es diu, sense triar-ne
   cap (la pregunta 2 de l'auditor 1).
-- ***λ*det** té la mateixa taula, amb «el ritme de les aparicions detectades» en lloc de «l'arrelament», i és un **descriptiu**: no és el
-  ritme de formació (§5).
-- **La regla de la precisió** és la de la v0.1: una semiamplada més gran vol dir que el pilot no té prou mons per a aquesta pregunta.
+- ***λ*det** és un **descriptiu**: no és el ritme de formació (§5). La seva lectura només diu on cau l'interval (els mateixos casos i la
+  mateixa regla de la precisió), sense cap «explica» ni «hauria de venir de»: una comparació numèrica de les aparicions detectades, que no
+  identifica ni atribueix cap mecanisme (AU2-174).
+- **La regla de la precisió** és la de la v0.1: una semiamplada més gran vol dir que el pilot no té prou mons per a aquesta pregunta. Amb
+  aquesta regla, la fila «no discrimina» només surt amb l'interval [1; el de l'establiment] exacte: un interval que conté tots dos té una
+  semiamplada de log(1,6)/2 o més (l'auditor 1, auditoria 33).
 
 **És exploratori.** Si en surt res, es confirma amb mons nous, protocol, auditoria i segell (el carril de confirmar).
 
@@ -260,6 +277,10 @@ també qualsevol seqüència de la sopa que hi comparteixi una finestra, n'hagi 
 - **Censurat:** ni una cosa ni l'altra, per una de dues causes: **l'horitzó** (la branca arriba a l'època 9.750) o **l'establiment** (la
   branca s'atura 500 èpoques després, abans que el criteri es pugui complir).
 
+**«Dins de *H*», per a tots dos desenllaços** (AU2-173): arrela si el primer punt del criteri és dins de *H*, i s'extingeix dins de *H* si
+el primer dels dos zeros hi és. Una extinció que comença després de *H* (els dos zeros entre les èpoques 9.550 i 9.750) és una censura a
+*H*; el seu temps es dona només com a descriptiu.
+
 ***p*R** és la part de les sembres que arrelen dins de *H*: una censurada compta com «no arrela dins de *H*». No és la probabilitat d'arrelar
 algun dia. Per això:
 - **els desenllaços es donen per causa,** a cada sopa;
@@ -309,8 +330,12 @@ algun dia. Per això:
     perquè és hereditari en alguna d'aquestes 3. La prova amb companys inerts només depèn dels bytes del programa: no cal cap captura.
   - **Dos llindars:** «en alguna» (hereditària en 1 de 100 o més) i **«robusta»** (en 50 de 100 o més), comparable amb els genotips
     plantats (95 de 100 o més).
-  - **Les que ja hi eren** (AUD-193): una família que comparteix alguna finestra amb les cel·les que es copien a l'escaneig inert del punt
-    de partida (§3). *λ*det es dona amb aquestes i sense.
+  - **Les que ja hi eren, «de partida»** (AUD-193; v0.4, AUD-201): algun programa de la **primera detecció** de la família comparteix una
+    finestra amb una cel·la **hereditària** de l'escaneig inert del punt de partida (§3).
+  - **Les «emparentades»:** algun programa de la família, de qualsevol cens, en comparteix una amb **qualsevol** cel·la que s'hi copiava. És
+    la regla de la v0.3, que comptava més famílies de les que ja hi eren: a les quatre sopes que l'auditor 1 va escanejar, cap cel·la no hi
+    era hereditària, i la barrejada en tenia 127 que es copiaven.
+  - ***λ*det es dona amb tots dos llindars, i cadascun amb totes les famílies, sense les de partida i sense les emparentades** (AU2-175).
   - **El temps:** és el de la detecció, no el de la formació (l'auditor 2).
 - **L'arrelament natural** (AU2-158): la família detectada és **dominant** a l'establiment, és a dir, té la meitat o més de les cel·les
   hereditàries del cens inert del cens que el confirma. La mateixa regla que a la part A. La més nombrosa sense arribar a la meitat no és
@@ -321,9 +346,13 @@ algun dia. Per això:
     viabilitat), i quantes en veu pot dependre de la sopa. Amb els dos llindars, i amb les de partida i sense;
   - ***P*(arrela | detectada):** la part de les famílies detectades robustes que arrelen (§6.4);
   - **el ritme d'establiment.**
-- **La sensibilitat del detector** (l'auditor 2): a la part A també corre el cens inert, i el llinatge en dona la mida real. D'aquí surt la
-  probabilitat de detectar un llinatge, segons la mida i la durada, a cada sopa. És la calibració que es pot fer; no arriba a les famílies
-  que el cens no veu mai.
+- **La sensibilitat del detector** (l'auditor 2; v0.4, AU2-175): a la part A també corre el cens inert, i el llinatge en dona la mida real.
+  L'anàlisi en dona una taula per sopa, sense els `sham`:
+  - **per cens:** de cada cens inert, si ha vist el llinatge, segons la *F* del llinatge a la mateixa època (1; de 2 a 10; d'11 a 100; de
+    101 a 1.310; 1.311 o més);
+  - **per llinatge:** si el cens l'ha vist alguna vegada, segons la *F* màxima.
+
+  És descriptiva: no serveix per corregir les aparicions que el cens no veu, i no arriba a les famílies que no veu mai.
 
 ## 6. L'anàlisi (fixada aquí; l'script, a la PR, abans de calcular)
 
@@ -338,19 +367,36 @@ algun dia. Per això:
      al bessó (AU2-156).
    - **El secundari:** `byte0` contra `byte0-placebo`, amb G1 × 9 i G4 (només veu efectes grossos, §4.3).
    - **Les col·lisions:** quants mons i sopes en tenen, i la mediana de `preCarriers`.
-3. ***λ*det de cada sopa** (la part B), amb els tres recomptes («en alguna», «robustes» i «sense les de partida»), els intervals i els
-   quocients contra `reinit`. Descriptiu (AU2-160).
-4. **La consistència** (l'auditor 1; AU2-158, AUD-197): a cada sopa, *P*(arrela | detectada) de les famílies naturals robustes, contra la
-   dels llinatges plantats que el cens inert ha detectat, **amb la mateixa definició a totes dues:** dominant (la meitat o més de les
-   hereditàries del cens inert) en un establiment de la llei 2 que arriba dins de les 1.500 èpoques després de la primera detecció.
-   - **Per la mida a la primera detecció** (1 cel·la, de 2 a 4, 5 o més): la comparació pot sortir diferent només per la mida.
-   - **Els temps comencen a la detecció,** a totes dues parts. A la part A, la sembra és abans: la diferència es diu.
+3. ***λ*det de cada sopa** (la part B), amb els sis recomptes (els dos llindars, «en alguna» i «robustes», cadascun amb totes les famílies,
+   sense les de partida i sense les emparentades), els intervals i els quocients contra `reinit`; i la calibració del detector (§5).
+   Descriptiu (AU2-160, AU2-175).
+4. **La consistència** (l'auditor 1; AU2-158, AUD-197; v0.4, AUD-199 = AU2-172): a cada sopa, *P*(arrela | detectada) de les famílies
+   naturals robustes, contra la dels llinatges plantats que el cens inert ha detectat, **amb la mateixa definició, la mateixa finestra i la
+   mateixa regla de seguiment a totes dues:**
+   - **la finestra:** 1.250 èpoques des de la primera detecció. És el que la part A pot veure d'un llinatge detectat al primer cens inert
+     (l'època 8.250): l'últim establiment que s'hi pot confirmar és el de l'època 9.500. La v0.3 deia 1.500 a les dues parts, i el codi
+     donava 1.250 com a molt al plantat (AUD-199);
+   - **les quatre classes** (`followUpClass`), de cada família o llinatge detectat:
+     - **arrela:** un establiment de la llei 2 dins de la finestra, i n'és dominant (la meitat o més de les hereditàries del cens inert; les
+       famílies que s'hi han unit, també en cadena, AUD-200);
+     - **competidor:** un establiment dins de la finestra, i no n'és dominant;
+     - **no arrela:** cap establiment dins de la finestra, i la branca s'ha pogut seguir tota la finestra (fins a l'últim establiment que
+       pot confirmar: a la part A, el de l'època 9.500; a la part B, el de 250 èpoques abans del final);
+     - **censurada:** cap establiment, i la branca no s'ha pogut seguir tota la finestra. **No entra al denominador**, ni a la A ni a la B
+       (la v0.3 les treia als naturals i les comptava com a fracassos als plantats; AU2-172);
+   - ***P*** = arrela / (arrela + competidor + no arrela), amb els recomptes de les quatre classes a totes dues parts, i una sensibilitat
+     sense els competidors;
+   - **per la mida a la primera detecció** (1 cel·la, de 2 a 4, 5 o més): la comparació pot sortir diferent només per la mida.
+   - **Els temps comencen a la detecció,** a totes dues parts. A la part A, la sembra és abans: la diferència es diu. Els que es detecten
+     tard (a la part A, després de l'època 8.250, sense establiment) queden censurats: la consistència parla sobretot dels que es detecten
+     d'hora.
    - **Si coincideixen,** els plantats representen els naturals detectats robustos. **Si no,** es diu, i la part A només parla d'aquestes
      variants.
    - **El producte *λ*det × *P*(arrela | detectada)** (AU2-161), contra el ritme d'establiment observat: **només una aproximació
      exploratòria.** Suposa que totes les aparicions que arrelen es detecten i que la detecció no depèn de la sopa. No és cap
      descomposició identificada del ritme d'establiment, i no se'n diu cap.
-5. **La lectura** (§1): els quocients de *p*R (amb les dues mesures) i de *λ*det (descriptiu), amb els sis casos i la regla de la precisió.
+5. **La lectura** (§1): els quocients de *p*R (amb les dues mesures), amb els sis casos i la regla de la precisió; i el de *λ*det (els
+   robustos), com una classificació numèrica, sense cap mecanisme (AU2-174).
 6. **Els descriptius:** G2 i G3; «arrela» i «s'estableix amb el llinatge dominant», l'una al costat de l'altra; les durades; quantes
    branques canvien amb el criteri estricte; els `sham` contra els bessons (§4.3); i el punt de partida de cada braç.
 
@@ -394,9 +440,15 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
       parts, per màquina, i el manifest;
   - **`--comprova [--maquina pc|vm]`:** el manifest contra el disseny, les captures, les sembres, els seguiments i les llistes contra el
     manifest, i que cap branca no hagi començat.
-- **`eines/arrelament-analisi.mjs`:** l'anàlisi de la §6. Només amb el pilot sencer: totes les branques del manifest, cadascuna amb
-  l'ordre i la sembra (o el seguiment) del manifest, i **del commit del manifest** (AU2-162): un registre d'un altre commit, encara que net,
-  fa que no se n'analitzi res.
+- **`eines/arrelament-analisi.mjs`:** l'anàlisi de la §6. Només amb el pilot sencer:
+  - **el manifest, contra el disseny** (`designProblems` d'`eines/arrelament.mjs`; v0.4, AU2-170): els paràmetres, la cohort, i cada branca
+    del disseny exactament una vegada i en ordre, amb la seva ordre, el món, la sopa, la variant, la posició, la llavor i la sembra (o el
+    seguiment);
+  - **els escanejos inerts del punt de partida** de les sopes de la part B, amb la SHA-256 del manifest i la llista de les cel·les que es
+    copien (v0.4, AU2-171 = AUD-202);
+  - **cada registre,** sencer, amb l'ordre i la sembra (o el seguiment) del manifest, i **del commit del manifest** (AU2-162).
+
+  Si en falta res, no se n'analitza res.
 - **Les proves** (`test/arrelament.mjs`), entre d'altres:
   - un pilot sencer amb un disseny petit (mons de 32 × 16), de l'envelliment a l'anàlisi;
   - l'anàlisi, determinista;
@@ -404,7 +456,11 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
   - **els contraexemples de l'auditoria 32:** l'extinció exacta amb més de 256 cel·les (una funcional entre 300, amb 8 llavors); el
     seguiment de diversos programes; `--track` sense canviar la història; `preCarriers`; les combinacions d'opcions rebutjades; el placebo,
     que mou una instrucció; una pluralitat de 2 de 5 que no és dominant; el criteri estricte; la causa de la censura; i els sis casos de la
-    lectura, amb la regla de la precisió.
+    lectura, amb la regla de la precisió;
+  - **els de l'auditoria 33** (v0.4): un manifest amb una branca de menys, una de repetida, una de més i una amb una altra llavor; un escaneig
+    inert de partida que no hi és, que no té la SHA-256 del manifest i que no porta la llista de les que es copien; les quatre classes del
+    seguiment, amb els dos contraexemples de l'auditor 2 (un natural i un plantat detectats tard: tots dos censurats); una cadena de famílies;
+    «de partida» i «emparentada»; una extinció que comença després de *H*; i la lectura de *λ*det, sense cap mecanisme.
 - **El que no hi és:** la PR petita de l'auditoria 31 (el punt 5, `windowsOf` amb un `Buffer`). No afecta el pilot, que només hi passa
   `Uint8Array`, i va a part.
 
@@ -427,7 +483,10 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
 
 - **Les correccions de l'auditoria 32 hi afegeixen poc:** el seguiment, unes 2,5 h a la part B (0,3 s per punt); la prova sencera a
   l'extinció, uns segons, i només als punts on *M* passa de 256 i cap de la mostra no és funcional (a la prova de viabilitat, 5 de 90
-  branques).
+  branques; l'auditor 1 hi va mesurar d'1,4 a 9,8 s per punt, amb la màquina carregada).
+- **Una cota que la v0.3 no deia** (l'auditor 1, auditoria 33): a la part B no hi ha aturada a l'extinció. Si un món tingués una col·lisió i
+  el seguiment s'hi quedés amb moltes cel·les sense cap de funcional a la mostra, es provarien totes a cada punt: uns 4 ms per cel·la, uns
+  40 s per punt amb 10.000 cel·les. Als dos bessons que va fer l'auditor 1, el seguiment no hi troba cap cel·la.
 - **El temps real:** amb 8 processos al PC, uns dos dies; amb la màquina virtual també, un dia i mig.
 - **La precisió del contrast principal** (la regla de la v0.1: *N* i *K* han de distingir 1 de 1,6, una semiamplada de log(1,6)/2 = 0,235
   com a molt; si no, la lectura diu «inconcloent», §1).
@@ -489,13 +548,17 @@ barrejada i en 15 a la nova. Les diferències, si n'hi ha, poden anar en qualsev
 - ***p*R és dins de *H*:** una sembra censurada compta com que no arrela dins de *H*, i es dona la sensibilitat (§4.5).
 - **Una aparició es veu quan es detecta.** *λ*det no és el ritme de formació, el seu temps és el de la detecció, i el detector no veu
   gairebé cap de les que s'apaguen de seguida. El producte amb *P*(arrela | detectada) és una aproximació, no una descomposició.
+- **La consistència parla sobretot dels que es detecten d'hora:** amb la mateixa finestra a les dues parts (1.250 èpoques), els que es
+  detecten tard i sense establiment queden censurats, i es compten.
 - **Exploratori.** Cap afirmació causal general fins a una confirmació amb mons nous (el criteri de l'auditor 2 per passar del pilot a
   una confirmació). Una confirmació que torni a plantar necessita una decisió nova del responsable (§2).
 
 ## 11. El que ve
 
-1. **La PR** (la branca `arrelament-eines`), amb les correccions de l'auditoria 32, prova-neta i les proves de GitHub.
-2. **La revisió de tancament** (l'auditoria 33, curta): les correccions, els contraexemples i aquest pla, abans de cap dada del pilot.
+1. **La PR** (la branca `arrelament-eines`), amb les correccions de les auditories 32 i 33, prova-neta i les proves de GitHub.
+2. **La comprovació de tancament** (l'auditoria 34, curta, amb tots dos auditors): les correccions de l'auditoria 33, els seus
+   contraexemples i aquest pla, abans de cap dada del pilot. L'auditor 1 deia que n'hi havia prou amb les SHA-256 noves i la prova; l'auditor
+   2 la demana: amb tots dos, els tres hi estem d'acord.
 3. **El merge,** i el pilot des d'una còpia neta:
    - l'envelliment;
    - els escanejos i les transformacions;

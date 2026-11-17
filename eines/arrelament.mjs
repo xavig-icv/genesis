@@ -1,4 +1,4 @@
-// El pilot de l'aparició i l'arrelament (docs/pla-aparicio-arrelament.md, v0.2): les llistes, el manifest i les comprovacions. Cap
+// El pilot de l'aparició i l'arrelament (docs/pla-aparicio-arrelament.md, v0.4): les llistes, el manifest i les comprovacions. Cap
 // resultat no es llegeix: només els registres de l'envelliment, per saber quins mons hi entren, i les captures, per transformar-les,
 // escanejar-les i fer-ne les sembres.
 //
