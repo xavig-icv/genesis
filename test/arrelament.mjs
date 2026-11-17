@@ -306,7 +306,7 @@ const tests = {
     assert.strictEqual(dp.family, fp[0]); assert.strictEqual(dp.dominant, false); assert.strictEqual(dp.share, 0.4);
     // el criteri estricte (la cota inferior de F) i la causa de la censura
     const Ls = (epoch, M, tested, functional) => ({ type: 'lineage', epoch, M, tested, copying: functional, functional, F: Math.round((M * functional) / tested), windows: 1 });
-    r = partA([{ type: 'start' }, Ls(8000, 1, 1, 1), Ls(8100, 3000, 256, 120), Ls(8350, 3000, 256, 120), end(8350)], { start: 8000, horizon: 1500 });
+    r = partA([{ type: 'start' }, Ls(8000, 1, 1, 1), Ls(8100, 3000, 256, 140), Ls(8350, 3000, 256, 140), end(8350)], { start: 8000, horizon: 1500 });
     assert.strictEqual(r.rootedAt, 8100); assert.strictEqual(r.rootedStrictAt, 8100);
     r = partA([{ type: 'start' }, Ls(8000, 1, 1, 1), Ls(8100, 3000, 256, 115), Ls(8350, 3000, 256, 115), end(8350)], { start: 8000, horizon: 1500 });
     assert.strictEqual(r.rootedAt, 8100); assert.strictEqual(r.rootedStrictAt, null, 'F = 1.348, però la cota inferior és per sota de 1.311');
@@ -392,7 +392,7 @@ const tests = {
       const res = analyse(d, { root, out: (l) => text.push(l), count: 200 });
       const t = text.join('\n');
       assert.ok(res.ok, t.slice(0, 2000));
-      for (const s of ['1. pR', '2. El contrast principal', '3. λA', '4. La consistència', '5. La lectura', '6. Els descriptius']) assert.ok(t.includes(s), `falta la secció ${s}`);
+      for (const s of ['1. pR', '2. El contrast principal', '3. λdet', '4. La consistència', '5. La lectura', '6. Els descriptius']) assert.ok(t.includes(s), `falta la secció ${s}`);
       assert.ok(Object.keys(res.main).includes('continue') && Object.keys(res.main).includes('λ shuffle-all'));
       // l'anàlisi és determinista
       const again = [];
