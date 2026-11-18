@@ -313,12 +313,11 @@ Llegeix-los abans de proposar canvis.
   - **Les fonts de la matriu de novetat** (la revisió de les fonts, 16-11-2026): una font llegida pel resum o amb una eina que en
     resumeix el text no serveix per dir què no hi és. Abans d'una afirmació de novetat, s'ha de llegir directament (FON-01). Les
     troballes FON-xx són a `docs/auditories.md`.
-  - **El pilot de l'aparició i l'arrelament** (`docs/pla-aparicio-arrelament.md`, v0.4 del 17-11-2026): la part A (l'assaig d'invasió) i la
+  - **El pilot de l'aparició i l'arrelament** (`docs/pla-aparicio-arrelament.md`, v0.5 del 18-11-2026): la part A (l'assaig d'invasió) i la
     part B (les aparicions naturals, amb un cens de companys inerts), als mateixos mons nous (7001 a 7100). La prova de viabilitat
-    (exploratòria) és a `fase2/resultats/arrelament/viabilitat/`, i entrava a l'excepció de la T-64 (T-68). L'auditoria 32 va portar a la
-    v0.3, i la 33 (GO de l'auditor 1 amb quatre troballes baixes, NO-GO de l'auditor 2 amb tres d'altes, totes a l'anàlisi), a la v0.4.
-    Abans de calcular: una comprovació curta de tancament amb tots dos (l'auditoria 34) i el merge. L'entrada del quadern de la prova de
-    viabilitat, amb la del pilot (T-69).
+    (exploratòria) és a `fase2/resultats/arrelament/viabilitat/`, i entrava a l'excepció de la T-64 (T-68). Les auditories 32, 33 i 34 van
+    portar a la v0.3, la v0.4 i la v0.5. Abans de calcular: l'auditoria 35 (curta, amb l'acord dels tres sobre l'estimand de la
+    consistència) i el merge. L'entrada del quadern de la prova de viabilitat, amb la del pilot (T-69).
     - **Les eines** (§7 del pla; `test/arrelament.mjs`):
       - **`sim.mjs`:** `--plant FITXER --lineage-every N --stop-on-extinction N` (l'assaig d'invasió; el llinatge, a `fase2/llinatge.js`),
         `--track FITXER --lineage-every N` (seguir uns programes sense plantar-los: el control de les col·lisions de la part B) i
@@ -334,8 +333,9 @@ Llegeix-los abans de proposar canvis.
         manifest i les comprovacions abans de llançar, com `eines/pilot.mjs` a la sèrie de la maduració. A `fase2/resultats/arrelament/pilot/`.
       - **`node eines/arrelament-analisi.mjs`:** l'anàlisi de la §6 del pla, només amb el pilot sencer. **`node eines/potencia-arrelament.mjs`:**
         la precisió del contrast principal, simulada per món.
-    - **L'anàlisi es nega** si el manifest no té exactament les branques del disseny o si hi falta un escaneig inert de partida, amb la seva
-      SHA-256 (AU2-170, AU2-171). La consistència fa servir la mateixa finestra i la mateixa regla de seguiment a les dues parts (AU2-172).
+    - **L'anàlisi es nega** si el manifest no té la cohort i exactament les branques del disseny, o si hi falta un escaneig inert de partida,
+      amb la seva SHA-256 (AU2-170, AU2-171, AU2-178). A la consistència, qui hi entra depèn només de l'època de la detecció, amb la mateixa
+      regla a les dues parts (AU2-172, AUD-203).
     - **El llinatge és de finestres, no de descendència:** el control de les col·lisions (`--track`, sense plantar res) als bessons de la
       part B, i `preCarriers` a cada sembra (AU2-156). *F* = 0 sempre és exacte: amb més de 256 cel·les i cap de funcional a la mostra, es
       proven totes (AUD-192).
