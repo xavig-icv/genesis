@@ -499,10 +499,65 @@ const tests = {
       // la cohort (AU2-178): un món inclòs amb una hereditària a l'escaneig, i el registre de l'envelliment d'un altre
       const scan0 = join(root, w0.scan.file), scan0saved = readFileSync(scan0, 'utf8');
       const sc = JSON.parse(scan0saved); sc.heritable = 1; writeFileSync(scan0, JSON.stringify(sc) + '\n');
-      refuse((mj) => { mj.worlds.find((w) => w.world === w0.world).scan.sha256 = createHash('sha256').update(readFileSync(scan0)).digest('hex'); }, /no hi pot entrar, i el manifest l'inclou/);
+      refuse((mj) => { const s = mj.worlds.find((w) => w.world === w0.world).scan; s.sha256 = createHash('sha256').update(readFileSync(scan0)).digest('hex'); s.heritable = 1; },
+        /no hi pot entrar, i el manifest l'inclou/);
       writeFileSync(scan0, scan0saved);
       refuse((mj) => { mj.worlds.find((w) => w.world === w0.world).aging.sha256 = w1.aging.sha256; }, /el registre de l'envelliment no és el del manifest/);
       refuse((mj) => { mj.worlds.find((w) => w.world === w0.world).included = false; }, /hi pot entrar, i el manifest no l'inclou/);
+      // l'escaneig de la cohort (AU2-179 = l'observació O-1 de l'auditor 1, auditoria 35): el del camí del disseny, de la captura envellida
+      // del mateix món, amb la llavor, l'amplada, el radi i el codi de la preparació, i els recomptes del manifest. Cada mutació, rebutjada
+      // abans de llançar (checkManifest) i a l'anàlisi (designProblems), també amb la SHA-256 del fitxer nou al manifest
+      const shaOf = (f) => createHash('sha256').update(readFileSync(f)).digest('hex');
+      const both = (label, { scan: editScan, raw, manifest: editManifest }, re) => {
+        const mj = JSON.parse(msaved), w = mj.worlds.find((x) => x.world === w0.world);
+        try {
+          if (editScan || raw !== undefined) {
+            writeFileSync(scan0, raw !== undefined ? raw : JSON.stringify(editScan(JSON.parse(scan0saved)), null, 1) + '\n');
+            w.scan.sha256 = shaOf(scan0);
+          }
+          if (editManifest) editManifest(w, mj);
+          writeFileSync(mfile, JSON.stringify(mj, null, 1) + '\n');
+          const out = [], rr = analyse(d, { root, out: (l) => out.push(l), count: 20 });
+          assert.strictEqual(rr.ok, false, `${label}: s'analitza`);
+          assert.match(out.join('\n'), re, `${label}: l'anàlisi`);
+          const pre = checkManifest(d, { root });
+          assert.ok(pre.some((x) => re.test(x)), `${label}: la comprovació d'abans de llançar no ho veu (${pre.slice(0, 3).join('; ')})`);
+        } finally {
+          writeFileSync(mfile, msaved); writeFileSync(scan0, scan0saved);
+        }
+      };
+      const other = JSON.parse(readFileSync(join(root, w1.scan.file), 'utf8'));
+      both("l'escaneig d'un altre món, amb la seva SHA-256", { manifest: (w) => { w.scan = { ...w1.scan }; } }, /l'escaneig de l'època \d+ no és el del disseny/);
+      both("el d'un altre món, al camí del disseny", { raw: readFileSync(join(root, w1.scan.file), 'utf8'),
+        manifest: (w) => { for (const k of ['replicating', 'heritable', 'heritableSolo', 'cells']) w.scan[k] = other[k]; } }, /«seed» és/);
+      both("una altra captura d'origen (fromSha256)", { scan: (s) => ({ ...s, fromSha256: 'a'.repeat(64) }) }, /no és de la captura envellida del manifest/);
+      both("una altra captura d'origen (from)", { scan: (s) => ({ ...s, from: 'un-altre-mon.bin' }) }, /«from» és "un-altre-mon.bin"/);
+      both('una altra llavor', { scan: (s) => ({ ...s, seed: s.seed + 1 }) }, /«seed» és/);
+      both('un altre radi', { scan: (s) => ({ ...s, radius: s.radius + 1 }) }, /«radius» és/);
+      both('un altre codi', { scan: (s) => ({ ...s, code: 'cafefee' }) }, /no és del codi de la preparació/);
+      both('les hereditàries, diferents al manifest', { manifest: (w) => { w.scan.heritable = 1; } }, /«heritable» és 0, i el manifest diu 1/);
+      both('un recompte que no ho és', { scan: (s) => ({ ...s, heritable: -1 }), manifest: (w) => { w.scan.heritable = -1; } }, /«heritable» no és un recompte/);
+      both('un format malmès', { raw: '{no és json\n' }, /no es pot llegir/);
+      both("el cas de l'auditor 2 (A35-01)", { raw: JSON.stringify({ heritable: 0, fromSha256: 'origen-fals', from: 'un-altre-mon.bin', seed: -1, code: 'xxxxxxx' }) },
+        /«from» és "un-altre-mon.bin"/);
+      both('la captura del manifest, una altra', { manifest: (w) => { w.captureSha256 = 'b'.repeat(64); } }, /no és de la captura envellida del manifest/);
+      both('el camí de la captura, un altre', { manifest: (w) => { w.capture = w1.capture; } }, /la captura envellida del manifest no és la del disseny/);
+      // una altra captura envellida, amb totes les SHA-256 posades al dia: l'anàlisi no llegeix les captures, i ho veu la comprovació d'abans
+      // de llançar, per l'empremta final del registre de l'envelliment
+      {
+        const capFile = join(root, w0.capture), capSaved = readFileSync(capFile);
+        try {
+          const changed = Buffer.from(capSaved); changed[0] ^= 1; writeFileSync(capFile, changed);
+          const mj = JSON.parse(msaved), w = mj.worlds.find((x) => x.world === w0.world);
+          w.captureSha256 = shaOf(capFile);
+          writeFileSync(scan0, JSON.stringify({ ...JSON.parse(scan0saved), fromSha256: w.captureSha256 }, null, 1) + '\n'); w.scan.sha256 = shaOf(scan0);
+          writeFileSync(mfile, JSON.stringify(mj, null, 1) + '\n');
+          assert.ok(checkManifest(d, { root }).some((x) => /no és la del registre \(l'empremta final\)/.test(x)), 'una captura envellida que no és la del registre');
+        } finally {
+          writeFileSync(capFile, capSaved); writeFileSync(mfile, msaved); writeFileSync(scan0, scan0saved);
+        }
+      }
+      assert.deepStrictEqual(checkManifest(d, { root }), [], 'amb tot restaurat, la comprovació d\'abans de llançar');
       assert.ok(analyse(d, { root, out: () => {}, count: 20 }).ok, 'amb tot restaurat, s\'analitza');
       // una sembra o una llista tocades són un problema
       const plant = join(root, m.branches.find((b) => b.part === 'A').plant);

@@ -1,4 +1,4 @@
-// El pilot de l'aparició i l'arrelament (docs/pla-aparicio-arrelament.md, v0.5): les llistes, el manifest i les comprovacions. Cap
+// El pilot de l'aparició i l'arrelament (docs/pla-aparicio-arrelament.md, v0.6): les llistes, el manifest i les comprovacions. Cap
 // resultat no es llegeix: només els registres de l'envelliment, per saber quins mons hi entren, i les captures, per transformar-les,
 // escanejar-les i fer-ne les sembres.
 //
@@ -31,6 +31,8 @@ export const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const sha256 = (b) => createHash('sha256').update(b).digest('hex');
 const shaFile = (root, f) => sha256(readFileSync(join(root, f)));
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+// L'empremta del món de sim.mjs (FNV-1a de 32 bits, la de la línia final del registre)
+const fingerprintOf = (b) => { let h = 0x811c9dc5; for (let i = 0; i < b.length; i++) h = Math.imul(h ^ b[i], 0x01000193); return (h >>> 0).toString(16); };
 const readJsonl = (root, f) => readFileSync(join(root, f), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
 const CENSUS = '--every 100 --census 250 --census-version v3 --rng v2';
 
@@ -138,7 +140,11 @@ export function validateAging(d, world, { root = ROOT, needCapture = true } = {}
   if (end.epoch === d.age && end.reason === 'horitzó' && end.event === null && !ev) status = { included: true };
   else if (end.reason === 'establiment' && ev && end.epoch === ev.confirmed && end.epoch <= d.age) status = { included: false, reason: `establiment abans de l'època ${d.age} (a l'època ${ev.epoch})` };
   else q(`acaba a l'època ${end.epoch} per "${end.reason}", que no és ni l'horitzó sense vida ni un establiment`);
-  if (needCapture && status?.included && !existsSync(join(root, agedCapture(d, world)))) q(`no hi ha la captura final ${agedCapture(d, world)}`);
+  // la captura final, la de l'envelliment: la seva empremta, la de la línia final del registre (AU2-179)
+  if (needCapture && status?.included) {
+    if (!existsSync(join(root, agedCapture(d, world)))) q(`no hi ha la captura final ${agedCapture(d, world)}`);
+    else if (fingerprintOf(readFileSync(join(root, agedCapture(d, world)))) !== end.fingerprint) q(`la captura final ${agedCapture(d, world)} no és la del registre (l'empremta final)`);
+  }
   return { problems, status, file: f, sha256: shaFile(root, f), code: s.code };
 }
 
@@ -246,6 +252,8 @@ export async function prepare(d = DESIGN, { root = ROOT, parallel = 6, log = con
     log(`L'escaneig de ${batch.length} mons envellits:`);
     await runPool(batch.map((w) => ({ label: `escaneig de ${w.world}`, args: [TRANSFORM, '--scan', '--from', w.capture, '--seed', String(Number(w.world) + d.transformOffset), '--width', String(d.world[0]), '--radius', String(d.radius), '--out', scanPath(d, w.world)] })), parallel, root, log);
     for (const w of batch) {
+      // la SHA-256 de la captura envellida, de tots els mons escanejats (també dels exclosos): l'escaneig hi queda lligat (AU2-179)
+      w.captureSha256 = shaFile(root, w.capture);
       w.scan = scanRecord(root, scanPath(d, w.world));
       if (w.scan.heritable > 0) { w.included = false; w.reason = `${w.scan.heritable} cel·les hereditàries a l'escaneig de l'època ${d.age}`; } else included++;
     }
@@ -253,7 +261,6 @@ export async function prepare(d = DESIGN, { root = ROOT, parallel = 6, log = con
   if (included < d.cohort) throw new Error(`hi ha ${included} mons inclosos, i en calen ${d.cohort}: cal envellir els següents de la llista (node eines/arrelament.mjs --envelliment --mons N)`);
   worlds.splice(i);
   const cohort = worlds.filter((w) => w.included);
-  for (const w of cohort) w.captureSha256 = shaFile(root, w.capture);
   // 3. Les cinc sopes de cada món, i el punt de partida de cadascuna
   const soups = [...d.arms, ...d.byte0Arms];
   log(`Les ${cohort.length * soups.length} transformacions:`);
@@ -328,6 +335,61 @@ export async function prepare(d = DESIGN, { root = ROOT, parallel = 6, log = con
   return manifest;
 }
 
+// L'escaneig que decideix si un món entra a la cohort (AU2-179 = l'observació O-1 de l'auditor 1, auditoria 35): el del camí del disseny,
+// amb la SHA-256 del manifest, i, a dins, el de la captura envellida del mateix món (la del manifest, per la seva SHA-256), amb la llavor,
+// l'amplada i el radi del disseny, fet a la preparació (el codi del manifest), i amb els recomptes del manifest. L'elegibilitat surt del
+// fitxer comprovat, no del manifest. Retorna { problems, heritable } (heritable és null si hi ha cap problema)
+export function cohortScan(d, w, { root = ROOT, code } = {}) {
+  const fail = (x) => ({ problems: [`${w.world}: ${x}`], heritable: null });
+  const s = w.scan;
+  if (!s?.file) return fail(`el manifest no diu l'escaneig de l'època ${d.age}`);
+  if (s.file !== scanPath(d, w.world)) return fail(`l'escaneig de l'època ${d.age} no és el del disseny (${s.file})`);
+  if (!existsSync(join(root, s.file))) return fail(`no hi ha l'escaneig de l'època ${d.age}`);
+  if (shaFile(root, s.file) !== s.sha256) return fail(`l'escaneig no és el del manifest`);
+  let j;
+  try { j = JSON.parse(readFileSync(join(root, s.file), 'utf8')); } catch { return fail(`l'escaneig de l'època ${d.age} no es pot llegir`); }
+  if (!j || typeof j !== 'object' || Array.isArray(j)) return fail(`l'escaneig de l'època ${d.age} no té el format de l'eina`);
+  const p = [], q = (x) => p.push(`${w.world}: l'escaneig de l'època ${d.age}: ${x}`);
+  const expect = { tool: TRANSFORM, scan: true, from: agedCapture(d, w.world), seed: Number(w.world) + d.transformOffset, width: d.world[0],
+    radius: d.radius, cells: d.world[0] * d.world[1] };
+  for (const [k, v] of Object.entries(expect)) if (j[k] !== v) q(`«${k}» és ${JSON.stringify(j[k])}, i el disseny diu ${JSON.stringify(v)}`);
+  if (typeof w.captureSha256 !== 'string' || j.fromSha256 !== w.captureSha256) q('no és de la captura envellida del manifest (la seva SHA-256)');
+  if (!(typeof j.code === 'string' && j.code.length >= 7 && !j.code.includes('+')) || (code !== undefined && j.code !== code)) q(`no és del codi de la preparació (${JSON.stringify(j.code)})`);
+  for (const k of ['replicating', 'heritable', 'heritableSolo']) {
+    if (!Number.isInteger(j[k]) || j[k] < 0 || j[k] > expect.cells) q(`«${k}» no és un recompte (${JSON.stringify(j[k])})`);
+    else if (j[k] !== s[k]) q(`«${k}» és ${j[k]}, i el manifest diu ${JSON.stringify(s[k])}`);
+  }
+  if (s.cells !== j.cells) q(`«cells» és ${JSON.stringify(j.cells)}, i el manifest diu ${JSON.stringify(s.cells)}`);
+  return { problems: p, heritable: p.length ? null : j.heritable };
+}
+
+// La cohort, refeta (AU2-178, AU2-179); la fan servir la comprovació d'abans de llançar (checkManifest) i l'anàlisi (designProblems). De
+// cada món de la llista: l'envelliment validat, amb el registre del manifest; si arriba sense vida a l'època d.age, la seva captura
+// envellida (el camí del disseny) i el seu escaneig (cohortScan). Hi entren exactament els que no hi tenen cap hereditària, i la llista
+// s'acaba al món que completa la cohort, com a la preparació. Dels mons de `captures`, es llegeix la captura envellida: la SHA-256 del
+// manifest i l'empremta final del registre de l'envelliment
+function cohortProblems(d, m, { root, captures = () => false }) {
+  const p = [], q = (x) => p.push(x);
+  const worlds = Array.isArray(m.worlds) ? m.worlds : [];
+  for (const w of worlds) {
+    const read = captures(w);
+    const a = validateAging(d, w.world, { root, needCapture: read });
+    if (a.problems.length) { a.problems.slice(0, 3).forEach(q); continue; }
+    if (w.aging?.sha256 !== a.sha256) q(`${w.world}: el registre de l'envelliment no és el del manifest`);
+    let eligible = !!a.status?.included;
+    if (eligible) {
+      if (w.capture !== agedCapture(d, w.world)) q(`${w.world}: la captura envellida del manifest no és la del disseny (${w.capture})`);
+      else if (read && shaFile(root, w.capture) !== w.captureSha256) q(`${w.world}: la captura envellida no és la del manifest`);
+      const s = cohortScan(d, w, { root, code: m.code });
+      if (s.problems.length) { s.problems.forEach(q); continue; }
+      eligible = s.heritable === 0;
+    }
+    if (!!w.included !== eligible) q(`${w.world}: ${eligible ? "hi pot entrar, i el manifest no l'inclou" : "no hi pot entrar, i el manifest l'inclou"}`);
+  }
+  if (worlds.length && !worlds.at(-1).included) q('la llista de mons del manifest no s\'acaba al món que completa la cohort');
+  return p;
+}
+
 // El manifest contra el disseny, i les captures, els escanejos, les sembres i les llistes contra el manifest. Amb una màquina, només
 // les captures dels mons de la seva llista. Retorna la llista de problemes
 export function checkManifest(d = DESIGN, { root = ROOT, machine = null } = {}) {
@@ -343,13 +405,11 @@ export function checkManifest(d = DESIGN, { root = ROOT, machine = null } = {}) 
   if (cohort.length !== d.cohort) q(`el manifest té ${cohort.length} mons inclosos, i el disseny en diu ${d.cohort}`);
   if (!same(m.worlds.map((w) => w.world), d.candidates.slice(0, m.worlds.length))) q('els mons del manifest no són els primers de la llista, en ordre');
   const mine = new Set(cohort.filter((_, i) => !machine || machineOf(d, i) === machine).map((w) => w.world));
+  // la cohort, refeta com a l'anàlisi (AU2-178, AU2-179), i, de les captures envellides d'aquesta màquina (sense --maquina, de totes), la
+  // SHA-256 del manifest i l'empremta final de l'envelliment
+  cohortProblems(d, m, { root, captures: (w) => !machine || mine.has(w.world) }).forEach(q);
   for (const w of m.worlds) {
-    const a = validateAging(d, w.world, { root, needCapture: w.included && mine.has(w.world) });
-    a.problems.forEach(q);
-    if (!a.problems.length && w.aging?.sha256 !== a.sha256) q(`${w.world}: el registre de l'envelliment no és el del manifest`);
-    if (w.scan && w.scan.sha256 !== shaFile(root, w.scan.file)) q(`${w.world}: l'escaneig no és el del manifest`);
     if (!w.included) continue;
-    if (mine.has(w.world) && shaFile(root, w.capture) !== w.captureSha256) q(`${w.world}: la captura envellida no és la del manifest`);
     for (const [arm, info] of Object.entries(w.arms ?? {})) {
       if (mine.has(w.world)) {
         if (!existsSync(join(root, info.file))) q(`${w.world} ${arm}: no hi ha la captura`);
@@ -403,22 +463,8 @@ export function designProblems(d, m, { root = ROOT } = {}) {
   const cohort = worlds.filter((w) => w.included);
   if (cohort.length !== d.cohort) q(`el manifest té ${cohort.length} mons inclosos, i el disseny en diu ${d.cohort}`);
   if (!same(worlds.map((w) => w.world), d.candidates.slice(0, worlds.length))) q('els mons del manifest no són els primers de la llista, en ordre');
-  // la cohort, refeta (AU2-178): de cada món de la llista, l'envelliment validat (el seu registre, el del manifest) i, si arriba sense vida a
-  // l'època d.age, l'escaneig amb la SHA-256 del manifest. Hi entren exactament els que no hi tenen cap hereditària, i la llista s'acaba al
-  // món que completa la cohort, com a la preparació
-  for (const w of worlds) {
-    const a = validateAging(d, w.world, { root, needCapture: false });
-    if (a.problems.length) { a.problems.slice(0, 3).forEach(q); continue; }
-    if (w.aging?.sha256 !== a.sha256) q(`${w.world}: el registre de l'envelliment no és el del manifest`);
-    let eligible = !!a.status?.included;
-    if (eligible) {
-      if (!w.scan?.file || !existsSync(join(root, w.scan.file))) { q(`${w.world}: no hi ha l'escaneig de l'època ${d.age}`); continue; }
-      if (shaFile(root, w.scan.file) !== w.scan.sha256) { q(`${w.world}: l'escaneig no és el del manifest`); continue; }
-      eligible = JSON.parse(readFileSync(join(root, w.scan.file), 'utf8')).heritable === 0;
-    }
-    if (!!w.included !== eligible) q(`${w.world}: ${eligible ? "hi pot entrar, i el manifest no l'inclou" : "no hi pot entrar, i el manifest l'inclou"}`);
-  }
-  if (worlds.length && !worlds.at(-1).included) q('la llista de mons del manifest no s\'acaba al món que completa la cohort');
+  // la cohort, refeta (AU2-178, AU2-179), com abans de llançar; sense les captures: l'anàlisi no les fa servir
+  cohortProblems(d, m, { root }).forEach(q);
   const want = cohort.flatMap((w, idx) => branchesOf(d, w.world, idx));
   const got = Array.isArray(m.branches) ? m.branches : [];
   const ids = got.map((b) => b.id), wantIds = new Set(want.map((b) => b.id)), gotIds = new Set(ids);
