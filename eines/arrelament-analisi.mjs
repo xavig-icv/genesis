@@ -2,10 +2,10 @@
 //
 //   node eines/arrelament-analisi.mjs > fase2/resultats/arrelament/pilot/analisi-sortida.txt
 //
-// Només amb el pilot sencer: el manifest ha de tenir exactament les branques del disseny i els escanejos inerts del punt de partida, amb
-// la seva SHA-256 (AU2-170, AU2-171 = AUD-202), i cada branca, el registre complet, l'ordre i la sembra (o el seguiment) del manifest, i
-// del commit del manifest (AU2-162); si en falta cap, no en llegeix cap. Les xifres (la v0.4 del pla, amb les correccions de les
-// auditories 32 i 33):
+// Només amb el pilot sencer: el manifest ha de tenir la cohort del disseny (els primers mons que hi poden entrar, AU2-178), exactament les
+// branques del disseny i els escanejos inerts del punt de partida, amb la seva SHA-256 (AU2-170, AU2-171 = AUD-202), i cada branca, el
+// registre complet, l'ordre i la sembra (o el seguiment) del manifest, i del commit del manifest (AU2-162); si en falta cap, no en llegeix
+// cap. Les xifres (la v0.5 del pla, amb les correccions de les auditories 32, 33 i 34):
 //  1. pR de cada sopa i variant (la part A): la part de les sembres que arrelen dins de H, amb l'interval del bootstrap per món, i els
 //     desenllaços per causa (arrela, s'extingeix dins de H, censurada a H o per l'establiment; AU2-159, AU2-173);
 //  2. el contrast principal: el quocient de pR entre continue i reinit, i entre shuffle-all i reinit, estratificat per variant (Mantel i
@@ -19,8 +19,9 @@
 //     cel·la que s'hi copiava; AU2-175); i la calibració del detector, amb la part A (AU2-175);
 //  4. la consistència: P(arrela | detectada) de les famílies naturals i dels llinatges plantats, amb la mateixa definició (dominant, la
 //     meitat o més de les hereditàries del cens inert; AU2-158) i la mateixa finestra i la mateixa regla de seguiment a totes dues parts
-//     (1.250 èpoques des de la primera detecció; AUD-199 = AU2-172), per la mida a la primera detecció, amb les famílies unides en cadena
-//     (AUD-200), i el producte λdet × P, només com una aproximació exploratòria (AU2-161);
+//     (1.250 èpoques des de la primera detecció; AUD-199 = AU2-172); qui hi entra, només per l'època de la detecció (AUD-203), sense cap
+//     establiment previ a la detecció (AU2-177), i l'extinció a la part A com un fracàs observat (AU2-176); per la mida a la primera
+//     detecció, amb les famílies unides en cadena (AUD-200), i el producte λdet × P, només com una aproximació exploratòria (AU2-161);
 //  5. la lectura, amb la regla de la §1: sis casos, la regla de la precisió (més de log(1,6)/2 de semiamplada: inconcloent) i, per a
 //     λdet, una classificació numèrica que no atribueix cap mecanisme (AUD-190, AU2-164, AU2-174);
 //  6. els descriptius: G2, G3, els sham contra els bessons (sense demanar la mateixa època; AU2-166), les durades i el punt de partida.
@@ -98,19 +99,37 @@ export function partA(lines, { start, horizon, rooted = ANALYSIS.rooted, interva
     preCarriers: lines[0].plant?.preCarriers ?? null };
 }
 
-// El seguiment d'una família o d'un llinatge detectat, per a la consistència (AUD-199 = AU2-172). La mateixa regla a totes dues parts, des
-// de la primera detecció (detected) i durant `window` èpoques:
-//  - 'arrela': un establiment a l'època T ≤ detected + window, i n'és dominant;
-//  - 'competidor': un establiment a T ≤ detected + window, i no n'és dominant. Un altre s'hi estableix i interromp el seguiment: es compta a
-//    part, i no és un fracàs per defecte (l'auditor 2, AU2-172);
-//  - 'no arrela': cap establiment fins a detected + window, i la branca s'ha pogut seguir fins aquí (detected + window ≤ lastObservable,
-//    l'últim establiment que la branca pot confirmar);
-//  - 'censurada': cap establiment, i la branca no s'ha pogut seguir tota la finestra. No entra al denominador.
-// event és l'època de l'establiment (null si no n'hi ha cap que es pugui confirmar)
-export function followUpClass({ detected, event, dominant, lastObservable, window = ANALYSIS.followUp }) {
-  if (event !== null && event !== undefined && event - detected <= window) return dominant ? 'arrela' : 'competidor';
-  if (detected + window <= lastObservable) return 'no arrela';
-  return 'censurada';
+// El seguiment d'una família o d'un llinatge detectat, per a la consistència (AUD-199 = AU2-172; v0.5, AUD-203 i AU2-176 a AU2-177). La
+// mateixa regla a totes dues parts, des de la primera detecció (detected) i durant `window` èpoques. Qui hi entra depèn NOMÉS de l'època de
+// la detecció, amb una cota fixa a cada part (eligibleUntil: l'últim establiment que el disseny de la part pot confirmar), passi el que passi
+// després (AUD-203):
+//  - 'previ': l'establiment és anterior a la detecció (AU2-177). No hi entra, i es compta;
+//  - 'tardana': detected + window > eligibleUntil: la part no la podria seguir tota la finestra. No hi entra, i es compta;
+//  - 'arrela': un establiment a l'època T, detected ≤ T ≤ detected + window, i n'és dominant;
+//  - 'competidor': un establiment dins de la finestra, i no n'és dominant;
+//  - 'no arrela': cap establiment dins de la finestra. A la part A, també quan el llinatge s'extingeix i la branca s'atura: l'extinció és un
+//    fracàs observat (un llinatge extingit ja no pot ser dominant), definit així abans del pilot (AU2-176).
+// event és l'època de l'establiment (null si no n'hi ha cap)
+export function followUpClass({ detected, event, dominant, eligibleUntil, window = ANALYSIS.followUp }) {
+  const has = event !== null && event !== undefined;
+  if (has && event < detected) return 'previ';
+  if (detected + window > eligibleUntil) return 'tardana';
+  if (has && event - detected <= window) return dominant ? 'arrela' : 'competidor';
+  return 'no arrela';
+}
+// La classe d'un llinatge plantat (la part A), a partir de partA(): l'establiment, si és dins de H, i la detecció del cens inert
+export const plantedClass = (r, { start, horizon }) =>
+  followUpClass({ detected: r.detectedAt, event: r.law2 ? r.law2.epoch : null, dominant: !!r.law2?.dominant, eligibleUntil: start + horizon });
+// La d'una família natural (la part B): l'establiment de la branca, si n'hi ha, i si n'és dominant (rootedFamilies). La part B dura horizonB
+// èpoques: l'últim establiment que pot confirmar és el de 250 èpoques abans del final
+export const naturalClass = (f, { ev, rootedIds }, { start, horizonB, interval = ANALYSIS.interval }) =>
+  followUpClass({ detected: f.first, event: ev ? ev.epoch : null, dominant: rootedIds.has(f.id), eligibleUntil: start + horizonB - interval });
+// Els recomptes i les dues P: la principal compta els competidors com a fracassos (la probabilitat d'arrelar dins de la finestra, la que fa
+// servir el producte λdet × P); la sensibilitat els deixa fora (la proposta de l'auditor 2 a la 33), amb l'asimetria de l'extinció (AUD-203)
+export function consistencyTally(classes) {
+  const t = { arrela: 0, competidor: 0, 'no arrela': 0, tardana: 0, previ: 0 };
+  for (const c of classes) t[c]++;
+  return { ...t, main: { k: t.arrela, n: t.arrela + t.competidor + t['no arrela'] }, sansCompetitors: { k: t.arrela, n: t.arrela + t['no arrela'] } };
 }
 
 // Les famílies del cens inert d'una branca natural (la part B). Dues cel·les hereditàries són de la mateixa família si comparteixen una
@@ -218,7 +237,8 @@ export function reading(ci, reference, { quantity = 'pR', precision = ANALYSIS.p
 
 export function loadPilot(d = DESIGN, { root = ROOT } = {}) {
   const m = JSON.parse(readFileSync(join(root, d.folder, 'manifest.json'), 'utf8'));
-  // el manifest, contra el disseny: totes les branques, cap de més ni de repetida, i els escanejos inerts de partida (AU2-170, AU2-171)
+  // el manifest, contra el disseny: la cohort, totes les branques, cap de més ni de repetida, i els escanejos inerts de partida (AU2-170,
+  // AU2-171, AU2-178)
   const problems = designProblems(d, m, { root }), recs = new Map();
   for (const b of Array.isArray(m.branches) ? m.branches : []) {
     const file = join(root, d.folder, b.part === 'A' ? 'part-a' : 'part-b', `${b.id}.jsonl`);
@@ -293,9 +313,7 @@ export function analyse(d = DESIGN, { root = ROOT, out = console.log, count = AN
     }
     const track = lines.filter((l) => l.type === 'lineage' && l.epoch <= start + d.horizonA + ANALYSIS.interval);
     const collisionF = track.length ? Math.max(...track.map((l) => l.F)) : 0;
-    // l'últim establiment que la branca pot confirmar: el seu, si n'hi ha; si no, el de 250 èpoques abans del final (AUD-199)
-    const lastObservable = ev ? ev.epoch : end.epoch - ANALYSIS.interval;
-    return { ...b, ev, exposure: exposureEnd - start, apps, dom, rootedIds, end, lastObservable, collisionF, preCarriers: lines[0].track?.preCarriers ?? null };
+    return { ...b, ev, exposure: exposureEnd - start, apps, dom, rootedIds, end, collisionF, preCarriers: lines[0].track?.preCarriers ?? null };
   });
   const collided = new Set(B.filter((b) => b.collisionF >= ANALYSIS.collision).map((b) => `${b.world}|${b.soup}`));
 
@@ -397,32 +415,27 @@ export function analyse(d = DESIGN, { root = ROOT, out = console.log, count = AN
     out(`   ${''.padEnd(12)} per llinatge: ${ever.map(([k, n], i) => `${binName(i)}, ${k} de ${n}`).join('; ')}`);
   }
 
-  // la consistència: la mateixa definició (AU2-158), i la mateixa finestra i la mateixa regla de seguiment a les dues parts (AUD-199 =
-  // AU2-172). P = arrela / (arrela + no arrela): les competidores i les censurades no hi entren, i es compten; amb les competidores com a
-  // fracassos, una sensibilitat
-  out(`\n4. La consistència: P(arrela | detectada), dominant (la meitat o més) a un establiment en ${ANALYSIS.followUp} èpoques des de la primera detecció, amb la mateixa regla de seguiment a les dues parts`);
+  // la consistència (v0.5): la mateixa definició (AU2-158), la mateixa finestra i la mateixa regla a les dues parts, i qui hi entra només per
+  // l'època de la detecció (AUD-199 = AU2-172, AUD-203, AU2-176, AU2-177). P = arrela / (arrela + competidor + no arrela); sense els
+  // competidors, una sensibilitat. Les tardanes i les prèvies no hi entren, i es compten
+  out(`\n4. La consistència: P(arrela | detectada), dominant (la meitat o més) a un establiment en ${ANALYSIS.followUp} èpoques des de la primera detecció; qui hi entra, només per l'època de la detecció, i la mateixa regla a les dues parts`);
   const sizeClass = (n) => (n <= 1 ? '1' : n <= 4 ? '2 a 4' : '5 o més');
-  const natClass = ({ f, b }) => followUpClass({ detected: f.first, event: b.ev ? b.ev.epoch : null, dominant: b.rootedIds.has(f.id), lastObservable: b.lastObservable });
-  // a la part A, l'últim establiment que es pot confirmar és el de start + H: la branca arriba a start + H + 250 (o s'atura abans perquè el
-  // llinatge s'extingeix, i llavors ja no pot ser dominant)
-  const plClass = (b) => followUpClass({ detected: b.r.detectedAt, event: b.r.law2 ? b.r.law2.epoch : null, dominant: !!b.r.law2?.dominant, lastObservable: start + d.horizonA });
-  const tally = (xs, cls) => { const t = { arrela: 0, competidor: 0, 'no arrela': 0, censurada: 0 }; for (const x of xs) t[cls(x)]++; return t; };
-  const pOf = (t) => ({ k: t.arrela, n: t.arrela + t['no arrela'] });
+  const natClassOf = ({ f, b }) => naturalClass(f, b, { start, horizonB: d.horizonB });
+  const plClassOf = (b) => plantedClass(b.r, { start, horizon: d.horizonA });
   const fr = ({ k, n }) => `${k} de ${n} (${fmt(n ? k / n : null, 2)})`;
-  const counts = (t) => `arrela ${t.arrela}, competidor ${t.competidor}, no arrela ${t['no arrela']}, censurades ${t.censurada}`;
-  const withComp = (t) => ({ k: t.arrela, n: t.arrela + t.competidor + t['no arrela'] });
+  const counts = (t) => `arrela ${t.arrela}, competidor ${t.competidor}, no arrela ${t['no arrela']}; no hi entren: tardanes ${t.tardana}, prèvies ${t.previ}`;
   for (const soup of d.arms) {
     const nat = B.filter((b) => b.soup === soup).flatMap((b) => b.apps.filter(robust).map((x) => ({ f: x.f, b })));
     const pl = A.filter((b) => b.soup === soup && b.variant !== 'sham' && b.r.detectedAt !== null);
-    const tn = tally(nat, natClass), tp = tally(pl, plClass);
-    out(`   ${soup.padEnd(12)} naturals robustes ${fr(pOf(tn))}; plantats ${fr(pOf(tp))}`);
-    out(`     naturals: ${counts(tn)}; plantats: ${counts(tp)}; amb els competidors com a fracassos: naturals ${fr(withComp(tn))}, plantats ${fr(withComp(tp))}`);
+    const tn = consistencyTally(nat.map(natClassOf)), tp = consistencyTally(pl.map(plClassOf));
+    out(`   ${soup.padEnd(12)} naturals robustes ${fr(tn.main)}; plantats ${fr(tp.main)}`);
+    out(`     naturals: ${counts(tn)}; plantats: ${counts(tp)}; sense els competidors (sensibilitat): naturals ${fr(tn.sansCompetitors)}, plantats ${fr(tp.sansCompetitors)}`);
     for (const cls of ['1', '2 a 4', '5 o més']) {
-      const n1 = tally(nat.filter(({ f }) => sizeClass(f.size) === cls), natClass), p1 = tally(pl.filter((b) => sizeClass(b.r.detectedSize) === cls), plClass);
-      out(`     la mida a la primera detecció, ${cls}: naturals ${fr(pOf(n1))}; plantats ${fr(pOf(p1))}`);
+      const n1 = consistencyTally(nat.filter(({ f }) => sizeClass(f.size) === cls).map(natClassOf)), p1 = consistencyTally(pl.filter((b) => sizeClass(b.r.detectedSize) === cls).map(plClassOf));
+      out(`     la mida a la primera detecció, ${cls}: naturals ${fr(n1.main)}; plantats ${fr(p1.main)}`);
     }
     const lamR = lam(B.filter((b) => b.soup === soup), robust);
-    const pn = pOf(tn), p = pn.n ? pn.k / pn.n : null;
+    const pn = tn.main, p = pn.n ? pn.k / pn.n : null;
     const est = B.filter((b) => b.soup === soup), rate = est.reduce((s, b) => s + b.exposure, 0) ? (1000 * est.filter((b) => b.ev).length) / est.reduce((s, b) => s + b.exposure, 0) : null;
     out(`     aproximació exploratòria (AU2-161): λdet robustes × P = ${fmt(lamR !== null && p !== null ? lamR * p : null, 3)}, contra el ritme d'establiment observat, ${fmt(rate, 3)} per 1.000 mon-èpoques. Suposa que totes les aparicions que arrelen es detecten, i que la detecció no depèn de la sopa`);
   }

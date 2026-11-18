@@ -18,7 +18,7 @@ import { conditions as conditionsB1, testCondition as testConditionB1, inertProg
 import { positions, makeSham, plantCells } from '../eines/sembra.mjs';
 import { transform, checkInvariants } from '../eines/transforma.mjs';
 import { designFor, agingLine, branchesOf, prepare, preflight, checkManifest } from '../eines/arrelament.mjs';
-import { partA, families, dominantFamily, mh, bootstrap, reading, analyse, followUpClass, rootedFamilies, startingFlags } from '../eines/arrelament-analisi.mjs';
+import { partA, families, dominantFamily, mh, bootstrap, reading, analyse, followUpClass, plantedClass, consistencyTally, rootedFamilies, startingFlags } from '../eines/arrelament-analisi.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const sim = (...args) => spawnSync(process.execPath, ['sim.mjs', ...args], { cwd: root, encoding: 'utf8' });
@@ -341,16 +341,37 @@ const tests = {
     assert.strictEqual(r.extinctAt, 9550); assert.strictEqual(r.outcome, 'censurada'); assert.strictEqual(r.censor, 'horitzó');
     r = partA([{ type: 'start' }, L(8000, 1), L(9500, 0), L(9550, 0), { type: 'end', epoch: 9550, reason: 'extinció' }], { start: 8000, horizon: 1500 });
     assert.strictEqual(r.outcome, "s'extingeix");
-    // el seguiment de la consistència: la mateixa regla a les dues parts (AUD-199 = AU2-172)
-    const fu = (detected, event, dominant, lastObservable) => followUpClass({ detected, event, dominant, lastObservable });
+    // el seguiment de la consistència (v0.5): la mateixa regla a les dues parts, i qui hi entra només per l'època de la detecció (AUD-199 =
+    // AU2-172, AUD-203, AU2-176, AU2-177)
+    const fu = (detected, event, dominant, eligibleUntil) => followUpClass({ detected, event, dominant, eligibleUntil });
     assert.strictEqual(fu(8250, 9500, true, 9500), 'arrela', 'detectat a la primera, establert a la 9.500: dins de les 1.250');
     assert.strictEqual(fu(8250, 9500, false, 9500), 'competidor');
     assert.strictEqual(fu(8250, null, false, 9500), 'no arrela', 'seguit tota la finestra');
-    assert.strictEqual(fu(8500, null, false, 9500), 'censurada', 'detectat tard i sense establiment: no entra, ni a la A ni a la B');
-    assert.strictEqual(fu(15350, null, false, 15750), 'censurada', 'el contraexemple de l\'auditor 2, a la part B');
-    assert.strictEqual(fu(9350, null, false, 9500), 'censurada', 'el contraexemple de l\'auditor 2, a la part A');
-    assert.strictEqual(fu(8500, 9400, true, 9500), 'arrela');
-    assert.strictEqual(fu(8250, 9750, true, 9750), 'no arrela', 'establert després de la finestra');
+    assert.strictEqual(fu(8500, null, false, 9500), 'tardana', 'detectat tard: no entra, passi el que passi');
+    assert.strictEqual(fu(8500, 9000, true, 9500), 'tardana', 'detectat tard, i arrela: tampoc no entra (AUD-203, a)');
+    assert.strictEqual(fu(15350, null, false, 15750), 'tardana', 'el contraexemple de l\'auditor 2 de la 33, a la part B');
+    assert.strictEqual(fu(9350, null, false, 9500), 'tardana', 'el contraexemple de l\'auditor 2 de la 33, a la part A');
+    assert.strictEqual(fu(8500, 8250, true, 9500), 'previ', 'l\'establiment, abans de la detecció (AU2-177)');
+    assert.strictEqual(fu(14000, 15000, true, 15750), 'arrela');
+    assert.strictEqual(fu(8250, 9750, true, 15750), 'no arrela', 'establert després de la finestra');
+    // amb partA(): branques de la part A de debò, pel camí de l'anàlisi (plantedClass)
+    const I = (epoch, lineage, heritableN = lineage) => ({ type: 'inert', epoch, sample: 4096, copying: heritableN, heritable: heritableN, lineage, cells: [] });
+    const pc = (lines) => plantedClass(partA(lines, { start: 8000, horizon: 1500 }), { start: 8000, horizon: 1500 });
+    // l'AU2-176: detectat a 8.250, els zeros a 8.300 i 8.350, i la branca s'atura a 8.350: l'extinció és un fracàs observat
+    const ext = [{ type: 'start' }, L(8000, 1), L(8050, 30), L(8100, 30), L(8150, 30), L(8200, 30), L(8250, 30), I(8250, 2), L(8300, 0), L(8350, 0), { type: 'end', epoch: 8350, reason: 'extinció' }];
+    assert.strictEqual(partA(ext, { start: 8000, horizon: 1500 }).outcome, "s'extingeix");
+    assert.strictEqual(pc(ext), 'no arrela');
+    // l'AU2-177: l'establiment a 8.250, confirmat a 8.500, i el llinatge, vist per primer cop a 8.500 (dominant): previ, no arrela
+    const prev = [{ type: 'start' }, L(8000, 1), L(8250, 2000), I(8250, 0, 30), { type: 'event', epoch: 8250, confirmed: 8500 }, L(8500, 2000), I(8500, 40, 50), { type: 'end', epoch: 8750, reason: 'establiment' }];
+    assert.strictEqual(pc(prev), 'previ');
+    // l'AUD-203: detectat a 8.500, s'estableix a 9.000 i n'és dominant (a); detectat a 8.500 i extingit (b); detectat a 8.250 i extingit (c)
+    const late = (tail) => [{ type: 'start' }, L(8000, 1), L(8250, 20), I(8250, 0), L(8500, 20), I(8500, 3), ...tail];
+    assert.strictEqual(pc(late([L(9000, 2000), { type: 'event', epoch: 9000, confirmed: 9250 }, I(9250, 90, 100), L(9250, 2000), { type: 'end', epoch: 9750, reason: 'establiment' }])), 'tardana');
+    assert.strictEqual(pc(late([L(8650, 0), L(8700, 0), { type: 'end', epoch: 8700, reason: 'extinció' }])), 'tardana');
+    assert.strictEqual(pc([{ type: 'start' }, L(8000, 1), L(8250, 40), I(8250, 1), L(8350, 0), L(8400, 0), { type: 'end', epoch: 8400, reason: 'extinció' }]), 'no arrela');
+    // les dues P: la principal amb els competidors com a fracassos, i la sensibilitat sense
+    const tl = consistencyTally(['arrela', 'competidor', 'no arrela', 'no arrela', 'tardana', 'previ']);
+    assert.deepStrictEqual([tl.main, tl.sansCompetitors, tl.tardana, tl.previ], [{ k: 1, n: 4 }, { k: 1, n: 3 }, 1, 1]);
     // les famílies unides en cadena (AUD-200): C s'uneix a B, i B a A; A és la dominant, i totes tres hi compten
     const chain = [{ id: 'A' }, { id: 'B', mergedInto: 'A' }, { id: 'C', mergedInto: 'B' }, { id: 'D' }];
     assert.deepStrictEqual([...rootedFamilies(chain, { family: chain[0], dominant: true })].sort(), ['A', 'B', 'C']);
@@ -429,7 +450,7 @@ const tests = {
       assert.ok(res.ok, t.slice(0, 2000));
       for (const s of ['1. pR', '2. El contrast principal', '3. λdet', '4. La consistència', '5. La lectura', '6. Els descriptius']) assert.ok(t.includes(s), `falta la secció ${s}`);
       // els dos llindars amb i sense les de partida i les emparentades, i la calibració del detector (AU2-175); els competidors (AU2-172)
-      for (const s of ['robustes, sense les de partida', 'en alguna, sense les emparentades', 'La calibració del detector', 'per llinatge:', 'competidor ', 'censurades ', 'amb els competidors com a fracassos']) assert.ok(t.includes(s), `falta «${s}»`);
+      for (const s of ['robustes, sense les de partida', 'en alguna, sense les emparentades', 'La calibració del detector', 'per llinatge:', 'competidor ', 'no hi entren: tardanes', 'sense els competidors (sensibilitat)']) assert.ok(t.includes(s), `falta «${s}»`);
       assert.ok(Object.keys(res.main).includes('continue') && Object.keys(res.main).includes('λ shuffle-all robustes'), 'falten els quocients de λdet');
       // l'anàlisi és determinista
       const again = [];
@@ -472,6 +493,16 @@ const tests = {
       refuse((mj) => { mj.worlds.find((w) => w.world === w0.world).arms.continue.inertScan.sha256 = createHash('sha256').update(readFileSync(scanFile)).digest('hex'); },
         /no porta la llista de les cel·les que es copien/);
       writeFileSync(scanFile, ssaved);
+      // l'escaneig d'un altre món, amb la seva SHA-256 (l'observació O-1 de l'auditor 1)
+      const w1 = JSON.parse(msaved).worlds.filter((w) => w.included)[1];
+      refuse((mj) => { mj.worlds.find((w) => w.world === w0.world).arms.continue.inertScan = { ...w1.arms.continue.inertScan }; }, /no és el del disseny/);
+      // la cohort (AU2-178): un món inclòs amb una hereditària a l'escaneig, i el registre de l'envelliment d'un altre
+      const scan0 = join(root, w0.scan.file), scan0saved = readFileSync(scan0, 'utf8');
+      const sc = JSON.parse(scan0saved); sc.heritable = 1; writeFileSync(scan0, JSON.stringify(sc) + '\n');
+      refuse((mj) => { mj.worlds.find((w) => w.world === w0.world).scan.sha256 = createHash('sha256').update(readFileSync(scan0)).digest('hex'); }, /no hi pot entrar, i el manifest l'inclou/);
+      writeFileSync(scan0, scan0saved);
+      refuse((mj) => { mj.worlds.find((w) => w.world === w0.world).aging.sha256 = w1.aging.sha256; }, /el registre de l'envelliment no és el del manifest/);
+      refuse((mj) => { mj.worlds.find((w) => w.world === w0.world).included = false; }, /hi pot entrar, i el manifest no l'inclou/);
       assert.ok(analyse(d, { root, out: () => {}, count: 20 }).ok, 'amb tot restaurat, s\'analitza');
       // una sembra o una llista tocades són un problema
       const plant = join(root, m.branches.find((b) => b.part === 'A').plant);

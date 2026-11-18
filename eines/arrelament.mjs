@@ -1,4 +1,4 @@
-// El pilot de l'aparició i l'arrelament (docs/pla-aparicio-arrelament.md, v0.4): les llistes, el manifest i les comprovacions. Cap
+// El pilot de l'aparició i l'arrelament (docs/pla-aparicio-arrelament.md, v0.5): les llistes, el manifest i les comprovacions. Cap
 // resultat no es llegeix: només els registres de l'envelliment, per saber quins mons hi entren, i les captures, per transformar-les,
 // escanejar-les i fer-ne les sembres.
 //
@@ -403,6 +403,22 @@ export function designProblems(d, m, { root = ROOT } = {}) {
   const cohort = worlds.filter((w) => w.included);
   if (cohort.length !== d.cohort) q(`el manifest té ${cohort.length} mons inclosos, i el disseny en diu ${d.cohort}`);
   if (!same(worlds.map((w) => w.world), d.candidates.slice(0, worlds.length))) q('els mons del manifest no són els primers de la llista, en ordre');
+  // la cohort, refeta (AU2-178): de cada món de la llista, l'envelliment validat (el seu registre, el del manifest) i, si arriba sense vida a
+  // l'època d.age, l'escaneig amb la SHA-256 del manifest. Hi entren exactament els que no hi tenen cap hereditària, i la llista s'acaba al
+  // món que completa la cohort, com a la preparació
+  for (const w of worlds) {
+    const a = validateAging(d, w.world, { root, needCapture: false });
+    if (a.problems.length) { a.problems.slice(0, 3).forEach(q); continue; }
+    if (w.aging?.sha256 !== a.sha256) q(`${w.world}: el registre de l'envelliment no és el del manifest`);
+    let eligible = !!a.status?.included;
+    if (eligible) {
+      if (!w.scan?.file || !existsSync(join(root, w.scan.file))) { q(`${w.world}: no hi ha l'escaneig de l'època ${d.age}`); continue; }
+      if (shaFile(root, w.scan.file) !== w.scan.sha256) { q(`${w.world}: l'escaneig no és el del manifest`); continue; }
+      eligible = JSON.parse(readFileSync(join(root, w.scan.file), 'utf8')).heritable === 0;
+    }
+    if (!!w.included !== eligible) q(`${w.world}: ${eligible ? "hi pot entrar, i el manifest no l'inclou" : "no hi pot entrar, i el manifest l'inclou"}`);
+  }
+  if (worlds.length && !worlds.at(-1).included) q('la llista de mons del manifest no s\'acaba al món que completa la cohort');
   const want = cohort.flatMap((w, idx) => branchesOf(d, w.world, idx));
   const got = Array.isArray(m.branches) ? m.branches : [];
   const ids = got.map((b) => b.id), wantIds = new Set(want.map((b) => b.id)), gotIds = new Set(ids);
@@ -424,11 +440,14 @@ export function designProblems(d, m, { root = ROOT } = {}) {
     for (const soup of d.arms) {
       const s = w.arms?.[soup]?.inertScan;
       if (!s?.file) { q(`${w.world} ${soup}: el manifest no diu l'escaneig inert del punt de partida`); continue; }
+      // el camí del disseny, i l'escaneig de la captura de la seva sopa (l'observació O-1 de l'auditor 1, auditoria 34)
+      if (s.file !== inertScanPath(d, w.world, soup)) { q(`${w.world} ${soup}: l'escaneig inert del punt de partida no és el del disseny (${s.file})`); continue; }
       if (!existsSync(join(root, s.file))) { q(`${w.world} ${soup}: no hi ha l'escaneig inert del punt de partida (${s.file})`); continue; }
       if (shaFile(root, s.file) !== s.sha256) { q(`${w.world} ${soup}: l'escaneig inert del punt de partida no té la SHA-256 del manifest`); continue; }
       let j = null;
       try { j = JSON.parse(readFileSync(join(root, s.file), 'utf8')); } catch { q(`${w.world} ${soup}: l'escaneig inert del punt de partida no es pot llegir`); continue; }
       if (!Array.isArray(j.copiers) || j.copiers.length !== j.copying) q(`${w.world} ${soup}: l'escaneig inert del punt de partida no porta la llista de les cel·les que es copien`);
+      if (j.captureSha256 !== w.arms[soup].sha256) q(`${w.world} ${soup}: l'escaneig inert del punt de partida no és de la captura de la seva sopa`);
     }
   }
   return p;
