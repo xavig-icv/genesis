@@ -484,8 +484,9 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
     llista, l'envelliment validat amb el registre del manifest i, si arriba sense vida, l'escaneig de l'època 8.000. L'escaneig ha de ser
     el del camí del disseny, amb la SHA-256 del manifest, de la captura envellida del mateix món (la SHA-256 de la captura del manifest,
     que la comprovació d'abans de llançar contrasta amb la captura i amb l'empremta final de l'envelliment), amb la llavor, l'amplada, el
-    radi i el codi de la preparació, i amb els recomptes del manifest. L'elegibilitat surt del fitxer comprovat. Hi entren exactament els
-    que no hi tenen cap hereditària, i la llista s'acaba al món que completa la cohort, com a la preparació;
+    radi i el codi de la preparació, i amb els recomptes del manifest. L'elegibilitat surt del fitxer comprovat: un escaneig que no es pot
+    comprovar no fa elegible el món. Hi entren exactament els que no hi tenen cap hereditària, i la llista s'acaba al món que completa la
+    cohort, com a la preparació;
   - **els escanejos inerts del punt de partida** de les sopes de la part B, amb la SHA-256 del manifest i la llista de les cel·les que es
     copien (v0.4, AU2-171 = AUD-202);
   - **cada registre,** sencer, amb l'ordre i la sembra (o el seguiment) del manifest, i **del commit del manifest** (AU2-162).
@@ -507,10 +508,11 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
     detectada a 8.250 (no arrela), un establiment previ a la detecció (prèvia), i els casos a, b i c de l'AUD-203 (detectats tard: tardanes,
     també si arrelen); les dues *P*; i, al pilot petit, un món inclòs amb una hereditària a l'escaneig, un de bo que no hi és, el registre de
     l'envelliment d'un altre món i l'escaneig inert d'un altre món;
-  - **els de l'auditoria 35** (v0.6): l'escaneig de la cohort, mutat de tretze maneres i rebutjat abans de llançar i a l'anàlisi, també
+  - **els de l'auditoria 35** (v0.6): l'escaneig de la cohort, mutat de catorze maneres i rebutjat abans de llançar i a l'anàlisi, també
     amb la SHA-256 del fitxer nou al manifest: l'escaneig d'un altre món (al seu camí, o copiat al del disseny), la captura d'origen, el seu
     camí, la llavor, el radi, el codi, les hereditàries diferents de les del manifest, un recompte que no ho és, un format malmès, el cas de
-    l'auditor 2, una altra captura al manifest i un altre camí de captura; i una captura envellida tocada, amb totes les SHA-256 posades al
+    l'auditor 2 (també: un escaneig que no es pot comprovar no fa elegible el món), una altra captura al manifest i un altre camí de captura;
+    i una captura envellida tocada, amb totes les SHA-256 posades al
     dia, que la comprovació d'abans de llançar veu per l'empremta final.
 - **El que no hi és:** la PR petita de l'auditoria 31 (el punt 5, `windowsOf` amb un `Buffer`). No afecta el pilot, que només hi passa
   `Uint8Array`, i va a part.

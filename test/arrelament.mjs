@@ -540,6 +540,8 @@ const tests = {
       both('un format malmès', { raw: '{no és json\n' }, /no es pot llegir/);
       both("el cas de l'auditor 2 (A35-01)", { raw: JSON.stringify({ heritable: 0, fromSha256: 'origen-fals', from: 'un-altre-mon.bin', seed: -1, code: 'xxxxxxx' }) },
         /«from» és "un-altre-mon.bin"/);
+      both("el cas de l'auditor 2: un escaneig que no es pot comprovar no fa elegible el món", { raw: JSON.stringify({ heritable: 0, from: 'un-altre-mon.bin' }) },
+        /no hi pot entrar, i el manifest l'inclou/);
       both('la captura del manifest, una altra', { manifest: (w) => { w.captureSha256 = 'b'.repeat(64); } }, /no és de la captura envellida del manifest/);
       both('el camí de la captura, un altre', { manifest: (w) => { w.capture = w1.capture; } }, /la captura envellida del manifest no és la del disseny/);
       // una altra captura envellida, amb totes les SHA-256 posades al dia: l'anàlisi no llegeix les captures, i ho veu la comprovació d'abans

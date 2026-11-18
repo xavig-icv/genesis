@@ -365,7 +365,8 @@ export function cohortScan(d, w, { root = ROOT, code } = {}) {
 
 // La cohort, refeta (AU2-178, AU2-179); la fan servir la comprovació d'abans de llançar (checkManifest) i l'anàlisi (designProblems). De
 // cada món de la llista: l'envelliment validat, amb el registre del manifest; si arriba sense vida a l'època d.age, la seva captura
-// envellida (el camí del disseny) i el seu escaneig (cohortScan). Hi entren exactament els que no hi tenen cap hereditària, i la llista
+// envellida (el camí del disseny) i el seu escaneig (cohortScan). Hi entren exactament els que no hi tenen cap hereditària en un escaneig
+// comprovat (un escaneig que no es pot comprovar no en fa entrar cap), i la llista
 // s'acaba al món que completa la cohort, com a la preparació. Dels mons de `captures`, es llegeix la captura envellida: la SHA-256 del
 // manifest i l'empremta final del registre de l'envelliment
 function cohortProblems(d, m, { root, captures = () => false }) {
@@ -380,8 +381,9 @@ function cohortProblems(d, m, { root, captures = () => false }) {
     if (eligible) {
       if (w.capture !== agedCapture(d, w.world)) q(`${w.world}: la captura envellida del manifest no és la del disseny (${w.capture})`);
       else if (read && shaFile(root, w.capture) !== w.captureSha256) q(`${w.world}: la captura envellida no és la del manifest`);
+      // un escaneig que no es pot comprovar no fa elegible el món: si el manifest l'inclou, també es diu
       const s = cohortScan(d, w, { root, code: m.code });
-      if (s.problems.length) { s.problems.forEach(q); continue; }
+      s.problems.forEach(q);
       eligible = s.heritable === 0;
     }
     if (!!w.included !== eligible) q(`${w.world}: ${eligible ? "hi pot entrar, i el manifest no l'inclou" : "no hi pot entrar, i el manifest l'inclou"}`);
