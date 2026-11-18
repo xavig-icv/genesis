@@ -316,8 +316,12 @@ Llegeix-los abans de proposar canvis.
   - **El pilot de l'aparició i l'arrelament** (`docs/pla-aparicio-arrelament.md`, v0.6 del 18-11-2026): la part A (l'assaig d'invasió) i la
     part B (les aparicions naturals, amb un cens de companys inerts), als mateixos mons nous (7001 a 7100). La prova de viabilitat
     (exploratòria) és a `fase2/resultats/arrelament/viabilitat/`, i entrava a l'excepció de la T-64 (T-68). Les auditories de la 32 a la 35
-    van portar de la v0.3 a la v0.6, i a la 35, l'acord dels tres sobre l'estimand de la consistència. Abans de calcular: l'auditoria 36
-    (curta: l'escaneig de la cohort, AU2-179) i el merge. L'entrada del quadern de la prova de viabilitat, amb la del pilot (T-69).
+    van portar de la v0.3 a la v0.6, i a la 35, l'acord dels tres sobre l'estimand de la consistència. L'auditoria 36 hi va donar el GO de
+    tots dos, i el merge de la PR #37 és `5ed5f83` (18-11-2026). L'entrada del quadern de la prova de viabilitat, amb la del pilot (T-69).
+    - **Abans de llançar les parts A i B** (el pla, §11; AU2-180, AU2-181): `node eines/arrelament.mjs --comprova` sense `--maquina`, a la
+      màquina que té totes les captures, amb el `code` del manifest, el commit net de la preparació; i el reescaneig de tots els mons
+      escanejats, amb l'script de l'auditor 2 de l'auditoria 36 (`verifica-reescanejos.mjs`), tal com és. Totes dues sortides es desen tal
+      com surten. Si alguna falla, no es llança res, i cap SHA-256 no es posa al dia per fer callar un error.
     - **Les eines** (§7 del pla; `test/arrelament.mjs`):
       - **`sim.mjs`:** `--plant FITXER --lineage-every N --stop-on-extinction N` (l'assaig d'invasió; el llinatge, a `fase2/llinatge.js`),
         `--track FITXER --lineage-every N` (seguir uns programes sense plantar-los: el control de les col·lisions de la part B) i

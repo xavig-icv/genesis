@@ -4,6 +4,9 @@
 comprovació curta (l'auditoria 36).** Del pilot, no s'ha calculat res. La prova de viabilitat (§9) sí, pel carril d'explorar, en uns altres
 mons: és a `fase2/resultats/arrelament/viabilitat/`. Les eines són en aquesta PR (§7), i res no es calcula fins després de la comprovació i
 del merge.
+- **Després del merge** (18-11-2026): l'auditoria 36 hi va donar el GO de tots dos, i el responsable va fer el merge de la PR #37
+  (`5ed5f83`, el codi auditat, `bde6faa`). Des d'aleshores, a `main`, només s'hi ha afegit el procediment d'abans de llançar que van
+  demanar els auditors (§11, el punt 4). L'anàlisi i el disseny no canvien.
 - **La decisió que el fa possible:** el 16-11-2026, el responsable tria l'opció 2 de la T-64, l'assaig d'invasió, com una excepció escrita
   a la regla del projecte (§2, i `docs/disseny.md`). El 17-11-2026 confirma que la prova de viabilitat hi entrava (T-68).
 - **De la v0.5 a la v0.6** (l'auditoria 35: tots dos auditors, d'acord amb l'estimand de la consistència; l'auditor 1, GO amb dues
@@ -613,8 +616,15 @@ barrejada i en 15 a la nova. Les diferències, si n'hi ha, poden anar en qualsev
    (§6.4).
 3. **La comprovació curta** (l'auditoria 36, amb tots dos auditors): la correcció de l'auditoria 35 (l'escaneig de la cohort, AU2-179),
    amb el contraexemple de l'auditor 2 (`--expect-fixed`), abans de cap dada del pilot.
-4. **El merge,** i el pilot des d'una còpia neta:
-   - l'envelliment;
-   - els escanejos i les transformacions;
-   - les parts A i B, uns dos dies de màquina.
+4. **El merge** (fet, `5ed5f83`), i el pilot des d'una còpia neta, amb el procediment de l'auditoria 36 (AU2-180, AU2-181):
+   - **l'envelliment;**
+   - **la preparació** (els escanejos, les transformacions i les sembres), i el manifest a git abans de res més;
+   - **la comprovació global,** `node eines/arrelament.mjs --comprova` sense `--maquina`, a la màquina que té totes les captures, també les
+     dels mons exclosos. Ha de sortir amb el codi 0, i la sortida es desa tal com surt. A més, el `code` del manifest ha de ser el commit
+     net de la preparació (la nota N-1 de l'auditor 1);
+   - **el reescaneig:** l'script de l'auditor 2 (`verifica-reescanejos.mjs`, de l'auditoria 36), tal com és, refà l'escaneig de cada món
+     escanejat i el compara amb el del manifest. Ha de sortir amb el codi 0, i la sortida es desa tal com surt;
+   - **les comprovacions per màquina,** si una part corre a la màquina virtual (`--comprova --maquina vm`, allà);
+   - **si alguna falla, no es llança res,** i cap SHA-256 no es posa al dia per fer callar un error;
+   - **les parts A i B,** uns dos dies de màquina.
 5. **La ronda d'auditoria dels resultats,** i l'entrada del quadern.
