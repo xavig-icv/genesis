@@ -1,10 +1,18 @@
 # El pilot de l'aparició i l'arrelament · on actua la maduració
 
-**Versió: v0.4 (17-11-2026), amb les correccions de l'auditoria 33, per a una comprovació curta de tancament (l'auditoria 34).** Del
-pilot, no s'ha calculat res. La prova de viabilitat (§9) sí, pel carril d'explorar, en uns altres mons: és a
-`fase2/resultats/arrelament/viabilitat/`. Les eines són en aquesta PR (§7), i res no es calcula fins després de la comprovació i del merge.
+**Versió: v0.5 (18-11-2026), amb les correccions de l'auditoria 34, per a una comprovació curta (l'auditoria 35) i l'acord dels tres
+sobre l'estimand de la consistència (§6.4).** Del pilot, no s'ha calculat res. La prova de viabilitat (§9) sí, pel carril d'explorar, en
+uns altres mons: és a `fase2/resultats/arrelament/viabilitat/`. Les eines són en aquesta PR (§7), i res no es calcula fins després de la
+comprovació, de l'acord i del merge.
 - **La decisió que el fa possible:** el 16-11-2026, el responsable tria l'opció 2 de la T-64, l'assaig d'invasió, com una excepció escrita
   a la regla del projecte (§2, i `docs/disseny.md`). El 17-11-2026 confirma que la prova de viabilitat hi entrava (T-68).
+- **De la v0.4 a la v0.5** (l'auditoria 34: l'auditor 1, GO amb una troballa baixa, l'AUD-203; l'auditor 2, NO-GO fins a corregir-ne tres).
+  Només l'anàlisi i les seves proves:
+  - **la consistència** (§6.4): qui hi entra, només per l'època de la detecció (AUD-203); cap establiment previ a la detecció (AU2-177);
+    l'extinció a la part A, un fracàs observat (AU2-176); i la *P* principal amb els competidors com a fracassos, i sense, com a
+    sensibilitat. **És un canvi de l'estimand: necessita l'acord dels dos auditors abans del merge;**
+  - **la cohort, refeta a l'anàlisi:** l'envelliment, l'escaneig i els mons que hi poden entrar (AU2-178); i l'escaneig inert de partida, del
+    camí del disseny i de la captura de la seva sopa (l'observació O-1 de l'auditor 1).
 - **De la v0.3 a la v0.4** (l'auditoria 33: l'auditor 1, GO amb quatre troballes baixes que recomana corregir abans del merge; l'auditor 2,
   NO-GO fins a corregir-ne tres d'altes, amb una comprovació curta). Només l'anàlisi i les seves proves; els mons, les variants, *N*, *K*,
   *H*, els braços i les llavors no canvien:
@@ -370,27 +378,35 @@ algun dia. Per això:
 3. ***λ*det de cada sopa** (la part B), amb els sis recomptes (els dos llindars, «en alguna» i «robustes», cadascun amb totes les famílies,
    sense les de partida i sense les emparentades), els intervals i els quocients contra `reinit`; i la calibració del detector (§5).
    Descriptiu (AU2-160, AU2-175).
-4. **La consistència** (l'auditor 1; AU2-158, AUD-197; v0.4, AUD-199 = AU2-172): a cada sopa, *P*(arrela | detectada) de les famílies
-   naturals robustes, contra la dels llinatges plantats que el cens inert ha detectat, **amb la mateixa definició, la mateixa finestra i la
-   mateixa regla de seguiment a totes dues:**
+4. **La consistència** (l'auditor 1; AU2-158, AUD-197; v0.4, AUD-199 = AU2-172; v0.5, AUD-203, AU2-176 i AU2-177): a cada sopa,
+   *P*(arrela | detectada) de les famílies naturals robustes, contra la dels llinatges plantats que el cens inert ha detectat, **amb la
+   mateixa definició, la mateixa finestra i la mateixa regla a totes dues.** **La v0.5 és una proposta de l'equip que necessita l'acord
+   dels dos auditors abans del merge** (la regla dels tres d'acord): canvia l'estimand.
    - **la finestra:** 1.250 èpoques des de la primera detecció. És el que la part A pot veure d'un llinatge detectat al primer cens inert
-     (l'època 8.250): l'últim establiment que s'hi pot confirmar és el de l'època 9.500. La v0.3 deia 1.500 a les dues parts, i el codi
-     donava 1.250 com a molt al plantat (AUD-199);
-   - **les quatre classes** (`followUpClass`), de cada família o llinatge detectat:
+     (l'època 8.250): l'últim establiment que s'hi pot confirmar és el de l'època 9.500 (AUD-199);
+   - **qui hi entra, només per l'època de la detecció** (AUD-203), amb una cota fixa a cada part, passi el que passi després: la detecció
+     més 1.250 ha de ser com a molt l'últim establiment que el disseny de la part pot confirmar (a la part A, el de l'època 9.500: només els
+     detectats al primer cens inert, l'època 8.250; a la part B, el de l'època 15.750). Els que no hi entren es compten (**tardanes**). A la
+     v0.4, entre els detectats tard només hi entraven els que s'establien: els èxits;
+   - **cap establiment previ a la detecció** (AU2-177): si l'establiment és anterior a la primera detecció, no hi entra, i es compta
+     (**prèvies**). A la part A, amb la cota d'abans, no hi pot passar; a la part B, l'exposició s'acaba a l'establiment;
+   - **les tres classes dels que hi entren** (`followUpClass`, `plantedClass` i `naturalClass`):
      - **arrela:** un establiment de la llei 2 dins de la finestra, i n'és dominant (la meitat o més de les hereditàries del cens inert; les
        famílies que s'hi han unit, també en cadena, AUD-200);
-     - **competidor:** un establiment dins de la finestra, i no n'és dominant. Un altre s'hi estableix i n'interromp el seguiment: no és un
-       fracàs per defecte (l'auditor 2);
-     - **no arrela:** cap establiment dins de la finestra, i la branca s'ha pogut seguir tota la finestra (fins a l'últim establiment que
-       pot confirmar: a la part A, el de l'època 9.500; a la part B, el de 250 èpoques abans del final);
-     - **censurada:** cap establiment, i la branca no s'ha pogut seguir tota la finestra. **No entra al denominador**, ni a la A ni a la B
-       (la v0.3 les treia als naturals i les comptava com a fracassos als plantats; AU2-172);
-   - ***P*** = arrela / (arrela + no arrela), amb els recomptes de les quatre classes a totes dues parts, i una sensibilitat amb els
-     competidors com a fracassos;
+     - **competidor:** un establiment dins de la finestra, i no n'és dominant;
+     - **no arrela:** cap establiment dins de la finestra. **A la part A, també quan el llinatge s'extingeix i la branca s'atura:**
+       l'extinció és un fracàs observat, perquè un llinatge extingit (*F* = 0 exacte en dos punts) ja no pot ser dominant (AU2-176). L'auditor
+       2 la volia censurada si no s'acordava això abans del pilot; l'auditor 1, un fracàs segur;
+   - ***P*** **= arrela / (arrela + competidor + no arrela):** la probabilitat d'arrelar dins de la finestra, la que fa servir el producte
+     amb *λ*det. Els competidors hi compten com a fracassos. **La sensibilitat,** sense els competidors (la proposta de l'auditor 2 a la 33,
+     que la v0.4 feia principal): amb els competidors fora, l'extinció pesa diferent a les dues parts, perquè a la part A un llinatge
+     extingit no pot ser mai competidor (la branca s'atura) i a la part B una família que ja no es veu sí (l'AUD-203, c). Amb els
+     competidors com a fracassos, aquesta asimetria no hi és;
+   - **els recomptes,** a totes dues parts: arrela, competidor, no arrela, tardanes i prèvies;
    - **per la mida a la primera detecció** (1 cel·la, de 2 a 4, 5 o més): la comparació pot sortir diferent només per la mida.
-   - **Els temps comencen a la detecció,** a totes dues parts. A la part A, la sembra és abans: la diferència es diu. Els que es detecten
-     tard (a la part A, després de l'època 8.250, sense establiment) queden censurats: la consistència parla sobretot dels que es detecten
-     d'hora.
+   - **Els temps comencen a la detecció,** a totes dues parts. A la part A, la sembra és abans: la diferència es diu. La consistència parla
+     dels que es detecten d'hora (a la part A, al primer cens): a la prova de viabilitat, 55,7 dels 55,9 llinatges que es detectarien
+     (l'auditor 1, auditoria 34).
    - **Si coincideixen,** els plantats representen els naturals detectats robustos. **Si no,** es diu, i la part A només parla d'aquestes
      variants.
    - **El producte *λ*det × *P*(arrela | detectada)** (AU2-161), contra el ritme d'establiment observat: **només una aproximació
@@ -445,6 +461,9 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
   - **el manifest, contra el disseny** (`designProblems` d'`eines/arrelament.mjs`; v0.4, AU2-170): els paràmetres, la cohort, i cada branca
     del disseny exactament una vegada i en ordre, amb la seva ordre, el món, la sopa, la variant, la posició, la llavor i la sembra (o el
     seguiment);
+  - **la cohort, refeta** (v0.5, AU2-178): de cada món de la llista, l'envelliment validat amb el registre del manifest i, si arriba sense
+    vida, l'escaneig de l'època 8.000 amb la SHA-256 del manifest. Hi entren exactament els que no hi tenen cap hereditària, i la llista
+    s'acaba al món que completa la cohort, com a la preparació;
   - **els escanejos inerts del punt de partida** de les sopes de la part B, amb la SHA-256 del manifest i la llista de les cel·les que es
     copien (v0.4, AU2-171 = AUD-202);
   - **cada registre,** sencer, amb l'ordre i la sembra (o el seguiment) del manifest, i **del commit del manifest** (AU2-162).
@@ -461,7 +480,11 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
   - **els de l'auditoria 33** (v0.4): un manifest amb una branca de menys, una de repetida, una de més i una amb una altra llavor; un escaneig
     inert de partida que no hi és, que no té la SHA-256 del manifest i que no porta la llista de les que es copien; les quatre classes del
     seguiment, amb els dos contraexemples de l'auditor 2 (un natural i un plantat detectats tard: tots dos censurats); una cadena de famílies;
-    «de partida» i «emparentada»; una extinció que comença després de *H*; i la lectura de *λ*det, sense cap mecanisme.
+    «de partida» i «emparentada»; una extinció que comença després de *H*; i la lectura de *λ*det, sense cap mecanisme;
+  - **els de l'auditoria 34** (v0.5): branques de la part A de debò, pel camí de l'anàlisi (`partA` i `plantedClass`): una extinció a 8.350
+    detectada a 8.250 (no arrela), un establiment previ a la detecció (prèvia), i els casos a, b i c de l'AUD-203 (detectats tard: tardanes,
+    també si arrelen); les dues *P*; i, al pilot petit, un món inclòs amb una hereditària a l'escaneig, un de bo que no hi és, el registre de
+    l'envelliment d'un altre món i l'escaneig inert d'un altre món.
 - **El que no hi és:** la PR petita de l'auditoria 31 (el punt 5, `windowsOf` amb un `Buffer`). No afecta el pilot, que només hi passa
   `Uint8Array`, i va a part.
 
@@ -549,17 +572,17 @@ barrejada i en 15 a la nova. Les diferències, si n'hi ha, poden anar en qualsev
 - ***p*R és dins de *H*:** una sembra censurada compta com que no arrela dins de *H*, i es dona la sensibilitat (§4.5).
 - **Una aparició es veu quan es detecta.** *λ*det no és el ritme de formació, el seu temps és el de la detecció, i el detector no veu
   gairebé cap de les que s'apaguen de seguida. El producte amb *P*(arrela | detectada) és una aproximació, no una descomposició.
-- **La consistència parla sobretot dels que es detecten d'hora:** amb la mateixa finestra a les dues parts (1.250 èpoques), els que es
-  detecten tard i sense establiment queden censurats, i es compten.
+- **La consistència parla dels que es detecten d'hora:** qui hi entra depèn només de l'època de la detecció (a la part A, el primer cens
+  inert). Els que es detecten tard no hi entren, passi el que passi, i es compten (§6.4).
 - **Exploratori.** Cap afirmació causal general fins a una confirmació amb mons nous (el criteri de l'auditor 2 per passar del pilot a
   una confirmació). Una confirmació que torni a plantar necessita una decisió nova del responsable (§2).
 
 ## 11. El que ve
 
 1. **La PR** (la branca `arrelament-eines`), amb les correccions de les auditories 32 i 33, prova-neta i les proves de GitHub.
-2. **La comprovació de tancament** (l'auditoria 34, curta, amb tots dos auditors): les correccions de l'auditoria 33, els seus
-   contraexemples i aquest pla, abans de cap dada del pilot. L'auditor 1 deia que n'hi havia prou amb les SHA-256 noves i la prova; l'auditor
-   2 la demana: amb tots dos, els tres hi estem d'acord.
+2. **La comprovació curta i l'acord dels tres** (l'auditoria 35, amb tots dos auditors): les correccions de l'auditoria 34, els seus
+   contraexemples i aquest pla, abans de cap dada del pilot; i, sobretot, si els dos auditors estan d'acord amb l'estimand de la
+   consistència de la v0.5 (§6.4). Si no hi estem tots tres d'acord, es torna a preguntar abans del merge.
 3. **El merge,** i el pilot des d'una còpia neta:
    - l'envelliment;
    - els escanejos i les transformacions;
