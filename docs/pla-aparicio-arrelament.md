@@ -1,11 +1,20 @@
 # El pilot de l'aparició i l'arrelament · on actua la maduració
 
-**Versió: v0.5 (18-11-2026), amb les correccions de l'auditoria 34, per a una comprovació curta (l'auditoria 35) i l'acord dels tres
-sobre l'estimand de la consistència (§6.4).** Del pilot, no s'ha calculat res. La prova de viabilitat (§9) sí, pel carril d'explorar, en
-uns altres mons: és a `fase2/resultats/arrelament/viabilitat/`. Les eines són en aquesta PR (§7), i res no es calcula fins després de la
-comprovació, de l'acord i del merge.
+**Versió: v0.6 (18-11-2026), amb l'acord dels tres sobre l'estimand de la consistència (§6.4) i la correcció de l'auditoria 35, per a una
+comprovació curta (l'auditoria 36).** Del pilot, no s'ha calculat res. La prova de viabilitat (§9) sí, pel carril d'explorar, en uns altres
+mons: és a `fase2/resultats/arrelament/viabilitat/`. Les eines són en aquesta PR (§7), i res no es calcula fins després de la comprovació i
+del merge.
 - **La decisió que el fa possible:** el 16-11-2026, el responsable tria l'opció 2 de la T-64, l'assaig d'invasió, com una excepció escrita
   a la regla del projecte (§2, i `docs/disseny.md`). El 17-11-2026 confirma que la prova de viabilitat hi entrava (T-68).
+- **De la v0.5 a la v0.6** (l'auditoria 35: tots dos auditors, d'acord amb l'estimand de la consistència; l'auditor 1, GO amb dues
+  observacions; l'auditor 2, NO-GO fins a lligar l'escaneig de la cohort amb la seva captura, l'AU2-179). L'estimand no canvia:
+  - **l'acord dels tres** (§6.4): l'estimand de la v0.5, tal com és, amb tres precisions de text: cap a on va l'asimetria de la
+    sensibilitat (l'auditor 1), les prèvies, que només es poden comptar a la part A (l'observació O-2 de l'auditor 1), i la lectura de la
+    *P*, descriptiva (l'auditor 2);
+  - **l'escaneig de la cohort, lligat a la seva captura** (AU2-179 = l'observació O-1 de l'auditor 1, §7): la comprovació d'abans de llançar
+    i l'anàlisi en comproven el camí, la captura d'origen, la llavor, l'amplada, el radi, el codi i els recomptes; la preparació desa la
+    SHA-256 de la captura de tots els mons escanejats; i, abans de llançar, cada captura envellida s'ha de correspondre amb l'empremta final
+    del registre del seu envelliment.
 - **De la v0.4 a la v0.5** (l'auditoria 34: l'auditor 1, GO amb una troballa baixa, l'AUD-203; l'auditor 2, NO-GO fins a corregir-ne tres).
   Només l'anàlisi i les seves proves:
   - **la consistència** (§6.4): qui hi entra, només per l'època de la detecció (AUD-203); cap establiment previ a la detecció (AU2-177);
@@ -380,8 +389,8 @@ algun dia. Per això:
    Descriptiu (AU2-160, AU2-175).
 4. **La consistència** (l'auditor 1; AU2-158, AUD-197; v0.4, AUD-199 = AU2-172; v0.5, AUD-203, AU2-176 i AU2-177): a cada sopa,
    *P*(arrela | detectada) de les famílies naturals robustes, contra la dels llinatges plantats que el cens inert ha detectat, **amb la
-   mateixa definició, la mateixa finestra i la mateixa regla a totes dues.** **La v0.5 és una proposta de l'equip que necessita l'acord
-   dels dos auditors abans del merge** (la regla dels tres d'acord): canvia l'estimand.
+   mateixa definició, la mateixa finestra i la mateixa regla a totes dues.** **L'estimand de la v0.5, amb l'acord dels tres** (l'auditoria
+   35: els dos auditors i l'equip, abans del merge, com demana la regla del responsable).
    - **la finestra:** 1.250 èpoques des de la primera detecció. És el que la part A pot veure d'un llinatge detectat al primer cens inert
      (l'època 8.250): l'últim establiment que s'hi pot confirmar és el de l'època 9.500 (AUD-199);
    - **qui hi entra, només per l'època de la detecció** (AUD-203), amb una cota fixa a cada part, passi el que passi després: la detecció
@@ -389,7 +398,10 @@ algun dia. Per això:
      detectats al primer cens inert, l'època 8.250; a la part B, el de l'època 15.750). Els que no hi entren es compten (**tardanes**). A la
      v0.4, entre els detectats tard només hi entraven els que s'establien: els èxits;
    - **cap establiment previ a la detecció** (AU2-177): si l'establiment és anterior a la primera detecció, no hi entra, i es compta
-     (**prèvies**). A la part A, amb la cota d'abans, no hi pot passar; a la part B, l'exposició s'acaba a l'establiment;
+     (**prèvies**). **Només es poden comptar a la part A** (l'observació O-2 de l'auditor 1, auditoria 35): un llinatge plantat vist per
+     primer cop al cens que confirma l'establiment n'és una; a la part B, la família equivalent és fora de l'exposició, que s'acaba a
+     l'establiment, i no es compta enlloc. Entre els que hi entren a la part A (els detectats a l'època 8.250) no n'hi pot haver cap. La
+     *P* no en depèn, perquè les prèvies no entren al denominador a cap de les dues parts: només el seu recompte no es pot comparar;
    - **les tres classes dels que hi entren** (`followUpClass`, `plantedClass` i `naturalClass`):
      - **arrela:** un establiment de la llei 2 dins de la finestra, i n'és dominant (la meitat o més de les hereditàries del cens inert; les
        famílies que s'hi han unit, també en cadena, AUD-200);
@@ -401,9 +413,15 @@ algun dia. Per això:
      amb *λ*det. Els competidors hi compten com a fracassos. **La sensibilitat,** sense els competidors (la proposta de l'auditor 2 a la 33,
      que la v0.4 feia principal): amb els competidors fora, l'extinció pesa diferent a les dues parts, perquè a la part A un llinatge
      extingit no pot ser mai competidor (la branca s'atura) i a la part B una família que ja no es veu sí (l'AUD-203, c). Amb els
-     competidors com a fracassos, aquesta asimetria no hi és;
+     competidors com a fracassos, aquesta asimetria no hi és. **La direcció de la sensibilitat** (l'auditor 1, auditoria 35): afavoreix
+     els naturals, perquè una família natural que s'apaga abans que una altra s'estableixi en surt (competidora), i un llinatge plantat
+     extingit s'hi queda com a fracàs. Una diferència en aquesta direcció que només surti a la sensibilitat no diu res de si els plantats
+     representen els naturals;
    - **els recomptes,** a totes dues parts: arrela, competidor, no arrela, tardanes i prèvies;
    - **per la mida a la primera detecció** (1 cel·la, de 2 a 4, 5 o més): la comparació pot sortir diferent només per la mida.
+   - **La lectura de la *P*** (l'auditor 2, auditoria 35): una probabilitat descriptiva, condicionada a la detecció i a l'elegibilitat, i no
+     l'efecte causal de sembrar. Les dues parts tenen mecanismes de detecció i d'aturada diferents: la *P* s'hi compara com un criteri
+     operacional, no com si les dues cohorts fossin intercanviables. Amb la principal, sempre la sensibilitat i la mida a la primera detecció.
    - **Els temps comencen a la detecció,** a totes dues parts. A la part A, la sembra és abans: la diferència es diu. La consistència parla
      dels que es detecten d'hora (a la part A, al primer cens): a la prova de viabilitat, 55,7 dels 55,9 llinatges que es detectarien
      (l'auditor 1, auditoria 34).
@@ -419,7 +437,7 @@ algun dia. Per això:
 
 L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pas 3, i va a la PR.
 
-## 7. Les eines (una PR, amb les auditories 32 i 33)
+## 7. Les eines (una PR, amb les auditories de la 32 a la 35)
 
 **Ja fetes** (la branca `arrelament-eines`; `test/arrelament.mjs`, a `npm test`):
 - **`sim.mjs`**, amb dos mòduls nous (`fase2/inert.js` i `fase2/llinatge.js`), cinc opcions:
@@ -456,14 +474,18 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
     - fa les sembres i els seguiments de la part B (`seguiments/MON.json`, amb la SHA-256 al manifest), i escriu les llistes de les dues
       parts, per màquina, i el manifest;
   - **`--comprova [--maquina pc|vm]`:** el manifest contra el disseny, les captures, les sembres, els seguiments i les llistes contra el
-    manifest, i que cap branca no hagi començat.
+    manifest, i que cap branca no hagi començat. La cohort, refeta com a l'anàlisi, i, de cada captura envellida (amb `--maquina`, de les de
+    la seva cohort), la SHA-256 del manifest i l'empremta final del registre de l'envelliment (v0.6, AU2-179).
 - **`eines/arrelament-analisi.mjs`:** l'anàlisi de la §6. Només amb el pilot sencer:
   - **el manifest, contra el disseny** (`designProblems` d'`eines/arrelament.mjs`; v0.4, AU2-170): els paràmetres, la cohort, i cada branca
     del disseny exactament una vegada i en ordre, amb la seva ordre, el món, la sopa, la variant, la posició, la llavor i la sembra (o el
     seguiment);
-  - **la cohort, refeta** (v0.5, AU2-178): de cada món de la llista, l'envelliment validat amb el registre del manifest i, si arriba sense
-    vida, l'escaneig de l'època 8.000 amb la SHA-256 del manifest. Hi entren exactament els que no hi tenen cap hereditària, i la llista
-    s'acaba al món que completa la cohort, com a la preparació;
+  - **la cohort, refeta** (v0.5, AU2-178; v0.6, AU2-179), amb la mateixa funció que la comprovació d'abans de llançar: de cada món de la
+    llista, l'envelliment validat amb el registre del manifest i, si arriba sense vida, l'escaneig de l'època 8.000. L'escaneig ha de ser
+    el del camí del disseny, amb la SHA-256 del manifest, de la captura envellida del mateix món (la SHA-256 de la captura del manifest,
+    que la comprovació d'abans de llançar contrasta amb la captura i amb l'empremta final de l'envelliment), amb la llavor, l'amplada, el
+    radi i el codi de la preparació, i amb els recomptes del manifest. L'elegibilitat surt del fitxer comprovat. Hi entren exactament els
+    que no hi tenen cap hereditària, i la llista s'acaba al món que completa la cohort, com a la preparació;
   - **els escanejos inerts del punt de partida** de les sopes de la part B, amb la SHA-256 del manifest i la llista de les cel·les que es
     copien (v0.4, AU2-171 = AUD-202);
   - **cada registre,** sencer, amb l'ordre i la sembra (o el seguiment) del manifest, i **del commit del manifest** (AU2-162).
@@ -484,7 +506,12 @@ L'script s'escriu i es prova amb dades sintètiques abans de calcular, com al pa
   - **els de l'auditoria 34** (v0.5): branques de la part A de debò, pel camí de l'anàlisi (`partA` i `plantedClass`): una extinció a 8.350
     detectada a 8.250 (no arrela), un establiment previ a la detecció (prèvia), i els casos a, b i c de l'AUD-203 (detectats tard: tardanes,
     també si arrelen); les dues *P*; i, al pilot petit, un món inclòs amb una hereditària a l'escaneig, un de bo que no hi és, el registre de
-    l'envelliment d'un altre món i l'escaneig inert d'un altre món.
+    l'envelliment d'un altre món i l'escaneig inert d'un altre món;
+  - **els de l'auditoria 35** (v0.6): l'escaneig de la cohort, mutat de tretze maneres i rebutjat abans de llançar i a l'anàlisi, també
+    amb la SHA-256 del fitxer nou al manifest: l'escaneig d'un altre món (al seu camí, o copiat al del disseny), la captura d'origen, el seu
+    camí, la llavor, el radi, el codi, les hereditàries diferents de les del manifest, un recompte que no ho és, un format malmès, el cas de
+    l'auditor 2, una altra captura al manifest i un altre camí de captura; i una captura envellida tocada, amb totes les SHA-256 posades al
+    dia, que la comprovació d'abans de llançar veu per l'empremta final.
 - **El que no hi és:** la PR petita de l'auditoria 31 (el punt 5, `windowsOf` amb un `Buffer`). No afecta el pilot, que només hi passa
   `Uint8Array`, i va a part.
 
@@ -579,12 +606,13 @@ barrejada i en 15 a la nova. Les diferències, si n'hi ha, poden anar en qualsev
 
 ## 11. El que ve
 
-1. **La PR** (la branca `arrelament-eines`), amb les correccions de les auditories 32 i 33, prova-neta i les proves de GitHub.
-2. **La comprovació curta i l'acord dels tres** (l'auditoria 35, amb tots dos auditors): les correccions de l'auditoria 34, els seus
-   contraexemples i aquest pla, abans de cap dada del pilot; i, sobretot, si els dos auditors estan d'acord amb l'estimand de la
-   consistència de la v0.5 (§6.4). Si no hi estem tots tres d'acord, es torna a preguntar abans del merge.
-3. **El merge,** i el pilot des d'una còpia neta:
+1. **La PR** (la branca `arrelament-eines`), amb les correccions de les auditories de la 32 a la 35, prova-neta i les proves de GitHub.
+2. **L'acord dels tres** (l'auditoria 35): fet. Els dos auditors i l'equip estan d'acord amb l'estimand de la consistència de la v0.5
+   (§6.4).
+3. **La comprovació curta** (l'auditoria 36, amb tots dos auditors): la correcció de l'auditoria 35 (l'escaneig de la cohort, AU2-179),
+   amb el contraexemple de l'auditor 2 (`--expect-fixed`), abans de cap dada del pilot.
+4. **El merge,** i el pilot des d'una còpia neta:
    - l'envelliment;
    - els escanejos i les transformacions;
    - les parts A i B, uns dos dies de màquina.
-4. **La ronda d'auditoria dels resultats,** i l'entrada del quadern.
+5. **La ronda d'auditoria dels resultats,** i l'entrada del quadern.
