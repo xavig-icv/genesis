@@ -1,0 +1,542 @@
+// El pilot de l'aparició i l'arrelament (docs/pla-aparicio-arrelament.md, v0.6): les llistes, el manifest i les comprovacions. Cap
+// resultat no es llegeix: només els registres de l'envelliment, per saber quins mons hi entren, i les captures, per transformar-les,
+// escanejar-les i fer-ne les sembres.
+//
+//   node eines/arrelament.mjs --envelliment [--mons N]   la llista de l'envelliment dels N primers mons de la llista (per defecte 74)
+//   node eines/arrelament.mjs --prepara [--paral·lel N]  valida l'envelliment; escaneja els mons envellits per rondes fins a tenir-ne 60
+//                                                        d'inclosos; fa les cinc sopes de cada món (eines/transforma.mjs) i n'escaneja el
+//                                                        punt de partida; fa les sembres (eines/sembra.mjs); escriu les llistes de les
+//                                                        dues parts i el manifest
+//   node eines/arrelament.mjs --comprova [--maquina pc|vm]
+//                                                        el manifest contra el disseny, i les captures, els escanejos, les sembres i les
+//                                                        llistes contra el manifest; i que cap branca no hagi començat. Amb --maquina,
+//                                                        només les captures dels mons d'aquella màquina
+//   node eines/arrelament.mjs --escaneig-inert --from captura.bin --out fitxer.json
+//                                                        totes les cel·les d'una captura, amb companys inerts en 3 condicions (el
+//                                                        control de la sopa de partida); el fa servir --prepara, en processos a part
+//
+// --prepara no sobreescriu res: si el manifest ja existeix, s'atura. Els camins són relatius a la carpeta del repositori.
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, renameSync } from 'fs';
+import { createHash } from 'crypto';
+import { join } from 'path';
+import { spawn, execFileSync } from 'child_process';
+import { fileURLToPath, pathToFileURL } from 'url';
+import { PROGRAM_SIZE } from '../fase1/bff.js';
+import { censusProblem, structureProblems } from '../fase2/b2-serie.mjs';
+import { conditions, testInert, copies, heritable, toHex, INERT_CONDITIONS, INERT_CONDITIONS_SEED } from '../fase2/inert.js';
+import { positions, makePlant, writePlant } from './sembra.mjs';
+import { COMMON } from './pilot.mjs';
+
+export const ROOT = fileURLToPath(new URL('..', import.meta.url));
+const sha256 = (b) => createHash('sha256').update(b).digest('hex');
+const shaFile = (root, f) => sha256(readFileSync(join(root, f)));
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+// L'empremta del món de sim.mjs (FNV-1a de 32 bits, la de la línia final del registre)
+const fingerprintOf = (b) => { let h = 0x811c9dc5; for (let i = 0; i < b.length; i++) h = Math.imul(h ^ b[i], 0x01000193); return (h >>> 0).toString(16); };
+const readJsonl = (root, f) => readFileSync(join(root, f), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
+const CENSUS = '--every 100 --census 250 --census-version v3 --rng v2';
+
+// El disseny de la v0.2. Les proves en fan servir un de més petit (designFor)
+export const DESIGN = Object.freeze({
+  folder: 'fase2/resultats/arrelament/pilot',
+  candidates: Array.from({ length: 100 }, (_, i) => String(7001 + i)),
+  aging: 74, cohort: 60, age: 8000,
+  world: COMMON.world, radius: COMMON.radius, census: COMMON.census,
+  arms: ['continue', 'shuffle-all', 'reinit'], byte0Arms: ['byte0', 'byte0-placebo'],
+  transformOffset: 600000, byte0Offset: 650000, continuation: 400000, positionStep: 1000000, lineageOffset: 900000, shamOffset: 800000,
+  // les variants de la part A (§4.1 i §4.2): K posicions per a les informatives, 1 per a G2 i G3
+  variants: [
+    { id: 'G1', genotype: 'G1', square: false, positions: 4 },
+    { id: 'G1x9', genotype: 'G1', square: true, positions: 4 },
+    { id: 'G4', genotype: 'G4', square: false, positions: 4 },
+    { id: 'G2', genotype: 'G2', square: false, positions: 1 },
+    { id: 'G3', genotype: 'G3', square: false, positions: 1 },
+  ],
+  byte0Variants: [{ id: 'G1x9', positions: 2 }, { id: 'G4', positions: 2 }],
+  sham: { genotype: 'G4', worlds: 20 },
+  horizonA: 1500, stopAfterEventA: 500, lineageEvery: 50, horizonB: 8000, inertCensus: 4096,
+  genotypes: { file: 'fase2/resultats/arrelament/viabilitat/genotips.json', sha256: '8d16656ed261f87c84ebad34e0a78b925463969e84eb268cbb7a8e26559a39aa' },
+  split: [['pc', 3], ['vm', 2]],
+  // el control de les col·lisions (AU2-156): les branques naturals de la part B segueixen, sense plantar-los, els quatre genotips
+  trackGenotypes: ['G1', 'G2', 'G3', 'G4'],
+});
+export const designFor = (overrides) => ({ ...DESIGN, ...overrides });
+// Els fitxers del simulador: l'envelliment i el pilot han de tenir els mateixos
+export const SIM_FILES = ['sim.mjs', 'fase1/bff.js', 'fase1/soup.js', 'fase1/motifs.js', 'fase2/world.js', 'fase2/census.js', 'fase2/replication.js', 'fase2/families.js', 'fase2/inert.js', 'fase2/llinatge.js'];
+
+const dims = (d) => `${d.world[0]}x${d.world[1]}`;
+const agedCapture = (d, w) => `${d.folder}/envelliment/captures/llavor${w}-mon${dims(d)}-r${d.radius}-final.bin`;
+const armPath = (d, w, arm) => `${d.folder}/alicuotes/${w}/${arm}.bin`;
+const scanPath = (d, w, arm = null) => `${d.folder}/alicuotes/${w}/${arm ? `${arm}-` : ''}escaneig.json`;
+const inertScanPath = (d, w, arm) => `${d.folder}/alicuotes/${w}/${arm}-escaneig-inert.json`;
+const plantPath = (d, id) => `${d.folder}/sembres/${id}.json`;
+const trackPath = (d, w) => `${d.folder}/seguiments/${w}.json`;
+export const seedOf = (d, world, k) => Number(world) + d.continuation + d.positionStep * (k - 1);
+
+// L'ordre de l'envelliment d'un món
+export function agingLine(d, world) {
+  const f = `${d.folder}/envelliment`;
+  return `e${world} --world ${dims(d)} --seed ${world} --mixing 0 --epochs ${d.age} ${CENSUS} --stop-after-event 0 --json ${f}/e${world}.jsonl --save ${f}/captures`;
+}
+
+// Les branques d'un món inclòs: { id, part, world, soup, variant, position, seed, plant, line }. La part A, amb la sembra de cada
+// variant a cada posició (i els sham, als primers mons), i la part B, una branca natural per sopa (la llavor de la posició 1)
+export function branchesOf(d, world, index) {
+  const out = [];
+  const a = (id, soup, variant, k, sham = false) => {
+    const plant = plantPath(d, id);
+    const line = `${id} --world ${dims(d)} --seed ${seedOf(d, world, k)} --mixing 0 --from ${armPath(d, world, soup)} --start ${d.age} --epochs ${d.age + d.horizonA + 250} ${CENSUS}` +
+      ` --stop-after-event ${d.stopAfterEventA} --plant ${plant}` + (sham ? '' : ` --lineage-every ${d.lineageEvery} --stop-on-extinction 0`) +
+      ` --inert-census ${d.inertCensus} --json ${d.folder}/part-a/${id}.jsonl`;
+    out.push({ id, part: 'A', world, soup, variant, position: k, seed: seedOf(d, world, k), plant, line });
+  };
+  for (const soup of d.arms) for (const v of d.variants) for (let k = 1; k <= v.positions; k++) a(`${world}-${soup}-${v.id}-p${k}`, soup, v.id, k);
+  for (const soup of d.byte0Arms) for (const v of d.byte0Variants) for (let k = 1; k <= v.positions; k++) a(`${world}-${soup}-${v.id}-p${k}`, soup, v.id, k);
+  if (index < d.sham.worlds) for (const soup of d.arms) a(`${world}-${soup}-sham-p1`, soup, 'sham', 1, true);
+  for (const soup of d.arms) {
+    const id = `${world}-${soup}-natural`;
+    out.push({ id, part: 'B', world, soup, variant: null, position: 1, seed: seedOf(d, world, 1), plant: null, track: trackPath(d, world),
+      line: `${id} --world ${dims(d)} --seed ${seedOf(d, world, 1)} --mixing 0 --from ${armPath(d, world, soup)} --start ${d.age} --epochs ${d.age + d.horizonB} ${CENSUS}` +
+        ` --stop-after-event 0 --track ${trackPath(d, world)} --lineage-every ${d.lineageEvery} --inert-census ${d.inertCensus} --json ${d.folder}/part-b/${id}.jsonl` });
+  }
+  return out;
+}
+
+// La màquina de cada món inclòs, per la seva posició: 3 de cada 5 al PC i 2 a la màquina virtual
+export function machineOf(d, i) {
+  const total = d.split.reduce((s, [, k]) => s + k, 0);
+  let r = i % total;
+  for (const [m, k] of d.split) { if (r < k) return m; r -= k; }
+  return null;
+}
+
+// L'envelliment d'un món. { problems, status }: problems, si el registre no és el que toca (un error de la preparació); status, si hi
+// entra o no i per què
+const START_KEYS = 'census,code,command,diffusion,epochs,event,every,flow,from,mixing,mutation,node,programs,radius,renewal,rng,seed,start,type,world,zlib';
+export function validateAging(d, world, { root = ROOT, needCapture = true } = {}) {
+  const f = `${d.folder}/envelliment/e${world}.jsonl`, problems = [], q = (m) => problems.push(`e${world}: ${m}`);
+  if (!existsSync(join(root, f))) return { problems: [`e${world}: no hi ha el registre de l'envelliment`] };
+  let r;
+  try { r = readJsonl(root, f); } catch { return { problems: [`e${world}: el registre de l'envelliment no es pot llegir`] }; }
+  const s = r[0], end = r[r.length - 1];
+  if (!s || s.type !== 'start') return { problems: [`e${world}: no comença amb la línia d'inici`] };
+  if (Object.keys(s).sort().join(',') !== START_KEYS) q("la línia d'inici no té els camps esperats");
+  const expect = {
+    seed: Number(world), programs: d.world[0] * d.world[1], world: d.world, radius: d.radius, mixing: 0, diffusion: 0, flow: 0, renewal: 0,
+    mutation: COMMON.mutation, from: null, start: 0, epochs: d.age, every: COMMON.every, rng: COMMON.rng, census: d.census,
+    event: { share: 0.01, censuses: 2, stopAfter: 0 }, command: `node sim.mjs ${agingLine(d, world).split(' ').slice(1).join(' ')}`,
+  };
+  for (const [k, v] of Object.entries(expect)) if (!same(s[k], v)) q(`${k} és ${JSON.stringify(s[k])}, i el disseny diu ${JSON.stringify(v)}`);
+  if (!(typeof s.code === 'string' && s.code.length >= 7 && !s.code.includes('+'))) q(`el codi del registre no és un commit net (${s.code})`);
+  if (!end || end.type !== 'end') return { problems: [...problems, `e${world}: no acaba amb la línia final (incomplet)`] };
+  const cs = r.filter((x) => x.type === 'census'), want = [];
+  for (let e = d.census.every; e <= end.epoch; e += d.census.every) want.push(e);
+  if (!same(cs.map((c) => c.epoch), want)) q(`els censos no són exactament els de cada ${d.census.every} èpoques fins a l'època ${end.epoch}`);
+  for (const c of cs) { const bad = censusProblem(c, { ...d.census, sample: Math.min(d.census.sample, d.world[0] * d.world[1]) }); if (bad) { q(`el cens de l'època ${c.epoch} no és vàlid: ${bad}`); break; } }
+  structureProblems(r, 0, end.epoch, COMMON).forEach(q);
+  if (r.filter((x) => x.type === 'start').length !== 1 || r.filter((x) => x.type === 'end').length !== 1) q("té més d'una línia d'inici o de final");
+  const ev = r.find((x) => x.type === 'event');
+  let status;
+  if (end.epoch === d.age && end.reason === 'horitzó' && end.event === null && !ev) status = { included: true };
+  else if (end.reason === 'establiment' && ev && end.epoch === ev.confirmed && end.epoch <= d.age) status = { included: false, reason: `establiment abans de l'època ${d.age} (a l'època ${ev.epoch})` };
+  else q(`acaba a l'època ${end.epoch} per "${end.reason}", que no és ni l'horitzó sense vida ni un establiment`);
+  // la captura final, la de l'envelliment: la seva empremta, la de la línia final del registre (AU2-179)
+  if (needCapture && status?.included) {
+    if (!existsSync(join(root, agedCapture(d, world)))) q(`no hi ha la captura final ${agedCapture(d, world)}`);
+    else if (fingerprintOf(readFileSync(join(root, agedCapture(d, world)))) !== end.fingerprint) q(`la captura final ${agedCapture(d, world)} no és la del registre (l'empremta final)`);
+  }
+  return { problems, status, file: f, sha256: shaFile(root, f), code: s.code };
+}
+
+// Que el simulador del commit de l'envelliment sigui el d'ara (els blobs de git)
+export function simulatorProblems(code, { root = ROOT } = {}) {
+  const git = (...a) => execFileSync('git', a, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  const out = [];
+  for (const f of SIM_FILES) {
+    let then, now;
+    try { then = git('rev-parse', `${code}:${f}`); } catch { out.push(`el commit de l'envelliment (${code}) no té ${f}`); continue; }
+    try { now = git('hash-object', '--no-filters', join(root, f)); } catch { out.push(`no es pot llegir ${f}`); continue; }
+    if (then !== now) out.push(`${f} és diferent del del commit de l'envelliment (${code})`);
+  }
+  return out;
+}
+
+function codeVersion(root) {
+  const run = (...a) => execFileSync('git', a, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  try { return run('rev-parse', '--short', 'HEAD') + (run('status', '--porcelain', '--', '*.js', '*.mjs') ? '+canvis' : ''); } catch { return 'desconeguda'; }
+}
+
+// L'escaneig de totes les cel·les amb companys inerts, en 3 condicions. Desa les que es copien, amb el programa i les cadenes, com el cens
+// inert: l'anàlisi en separa les famílies que ja hi eren a l'època 8.000 (AUD-193)
+export function inertScan(soup) {
+  const conds = conditions(INERT_CONDITIONS_SEED, INERT_CONDITIONS), n = soup.length / PROGRAM_SIZE;
+  let copying = 0, heritables = 0, heritableSolo = 0;
+  const cells = [];
+  for (let c = 0; c < n; c++) {
+    const bytes = soup.subarray(c * PROGRAM_SIZE, (c + 1) * PROGRAM_SIZE);
+    const s = testInert(bytes, conds);
+    if (!copies(s)) continue;
+    copying++;
+    if (heritable(s)) heritables++;
+    if (s.heritableSolo.includes('1')) heritableSolo++;
+    cells.push({ cell: c, program: toHex(bytes), ...s });
+  }
+  return { cells: n, copying, heritable: heritables, heritableSolo, conditions: { seed: INERT_CONDITIONS_SEED, count: INERT_CONDITIONS }, copiers: cells };
+}
+
+// Les feines a part (eines/transforma.mjs i l'escaneig inert), N alhora
+function runPool(jobs, parallel, root, log = console.log) {
+  return new Promise((resolve, reject) => {
+    let next = 0, running = 0, done = 0, failed = false;
+    const launch = () => {
+      if (done === jobs.length) { resolve(); return; }
+      while (!failed && running < parallel && next < jobs.length) {
+        const job = jobs[next++];
+        running++;
+        const child = spawn(process.execPath, job.args, { cwd: root, stdio: ['ignore', 'pipe', 'pipe'] });
+        let err = '';
+        child.stderr.on('data', (x) => { err += x; });
+        child.on('close', (code) => {
+          running--; done++;
+          if (code) { failed = true; reject(new Error(`${job.label}: ${err.trim()}`)); return; }
+          if (done % 25 === 0 || done === jobs.length) log(`  ${done} de ${jobs.length}`);
+          launch();
+        });
+      }
+    };
+    launch();
+  });
+}
+const TRANSFORM = 'eines/transforma.mjs';
+const scanRecord = (root, file) => {
+  const s = JSON.parse(readFileSync(join(root, file), 'utf8'));
+  return { file, sha256: shaFile(root, file), replicating: s.replicating, heritable: s.heritable, heritableSolo: s.heritableSolo, cells: s.cells };
+};
+const inertRecord = (root, file) => {
+  const s = JSON.parse(readFileSync(join(root, file), 'utf8'));
+  return { file, sha256: shaFile(root, file), captureSha256: s.captureSha256, copying: s.copying, heritable: s.heritable, heritableSolo: s.heritableSolo, cells: s.cells };
+};
+
+// Els genotips de la prova de viabilitat, amb la SHA-256 del disseny
+export function genotypesOf(d, { root = ROOT } = {}) {
+  const sha = shaFile(root, d.genotypes.file);
+  if (sha !== d.genotypes.sha256) throw new Error(`${d.genotypes.file} no té la SHA-256 del disseny`);
+  return Object.fromEntries(JSON.parse(readFileSync(join(root, d.genotypes.file), 'utf8')).genotypes.map((g) => [g.id, g.hex]));
+}
+
+export async function prepare(d = DESIGN, { root = ROOT, parallel = 6, log = console.log } = {}) {
+  const manifestPath = `${d.folder}/manifest.json`;
+  if (existsSync(join(root, manifestPath))) throw new Error(`${manifestPath} ja existeix: no es torna a preparar`);
+  const code = codeVersion(root);
+  if (code.includes('+') || code === 'desconeguda') throw new Error(`el codi té canvis sense desar (${code}): la preparació ha de ser d'un commit net`);
+  const genotypes = genotypesOf(d, { root });
+  // 1. L'envelliment: els candidats que en tenen el registre, en ordre, sense forats; validat sencer i amb el simulador d'ara
+  const has = d.candidates.map((w) => existsSync(join(root, `${d.folder}/envelliment/e${w}.jsonl`)));
+  const upTo = has.indexOf(false) < 0 ? has.length : has.indexOf(false);
+  if (has.slice(upTo).some(Boolean)) throw new Error(`falta el registre de l'envelliment de ${d.candidates[upTo]}, i n'hi ha de mons posteriors`);
+  const worlds = d.candidates.slice(0, upTo).map((world) => ({ world, start: d.age, capture: agedCapture(d, world) }));
+  const problems = [], codes = new Set();
+  for (const w of worlds) {
+    const a = validateAging(d, w.world, { root });
+    problems.push(...a.problems);
+    if (!a.problems.length) { Object.assign(w, a.status); w.aging = { file: a.file, sha256: a.sha256, code: a.code }; codes.add(a.code); }
+  }
+  for (const c of codes) problems.push(...simulatorProblems(c, { root }));
+  if (problems.length) throw new Error(`l'envelliment no és el que toca (${problems.length} problemes):\n- ${problems.slice(0, 20).join('\n- ')}`);
+  // 2. L'escaneig de cada món envellit, per rondes, fins a tenir-ne d.cohort d'inclosos: s'exclou el món si hi ha alguna hereditària
+  let i = 0, included = 0;
+  while (included < d.cohort && i < worlds.length) {
+    const batch = [];
+    while (batch.length < d.cohort - included && i < worlds.length) { const w = worlds[i++]; if (w.included) batch.push(w); }
+    for (const w of batch) mkdirSync(join(root, d.folder, 'alicuotes', w.world), { recursive: true });
+    log(`L'escaneig de ${batch.length} mons envellits:`);
+    await runPool(batch.map((w) => ({ label: `escaneig de ${w.world}`, args: [TRANSFORM, '--scan', '--from', w.capture, '--seed', String(Number(w.world) + d.transformOffset), '--width', String(d.world[0]), '--radius', String(d.radius), '--out', scanPath(d, w.world)] })), parallel, root, log);
+    for (const w of batch) {
+      // la SHA-256 de la captura envellida, de tots els mons escanejats (també dels exclosos): l'escaneig hi queda lligat (AU2-179)
+      w.captureSha256 = shaFile(root, w.capture);
+      w.scan = scanRecord(root, scanPath(d, w.world));
+      if (w.scan.heritable > 0) { w.included = false; w.reason = `${w.scan.heritable} cel·les hereditàries a l'escaneig de l'època ${d.age}`; } else included++;
+    }
+  }
+  if (included < d.cohort) throw new Error(`hi ha ${included} mons inclosos, i en calen ${d.cohort}: cal envellir els següents de la llista (node eines/arrelament.mjs --envelliment --mons N)`);
+  worlds.splice(i);
+  const cohort = worlds.filter((w) => w.included);
+  // 3. Les cinc sopes de cada món, i el punt de partida de cadascuna
+  const soups = [...d.arms, ...d.byte0Arms];
+  log(`Les ${cohort.length * soups.length} transformacions:`);
+  await runPool(cohort.flatMap((w) => soups.map((arm) => ({ label: `${w.world} ${arm}`,
+    args: [TRANSFORM, '--from', w.capture, '--kind', arm, '--seed', String(Number(w.world) + (d.byte0Arms.includes(arm) ? d.byte0Offset : d.transformOffset)), '--width', String(d.world[0]), '--out', armPath(d, w.world, arm)] }))), parallel, root, log);
+  log(`Els ${cohort.length * soups.length} escanejos amb la prova del cens:`);
+  await runPool(cohort.flatMap((w) => soups.map((arm) => ({ label: `escaneig de ${w.world} ${arm}`,
+    args: [TRANSFORM, '--scan', '--from', armPath(d, w.world, arm), '--seed', String(Number(w.world) + d.transformOffset), '--width', String(d.world[0]), '--radius', String(d.radius), '--out', scanPath(d, w.world, arm)] }))), parallel, root, log);
+  log(`Els ${cohort.length * d.arms.length} escanejos amb companys inerts:`);
+  await runPool(cohort.flatMap((w) => d.arms.map((arm) => ({ label: `escaneig inert de ${w.world} ${arm}`,
+    args: ['eines/arrelament.mjs', '--escaneig-inert', '--from', armPath(d, w.world, arm), '--out', inertScanPath(d, w.world, arm)] }))), parallel, root, log);
+  for (const w of cohort) {
+    w.arms = {};
+    for (const arm of soups) {
+      const file = armPath(d, w.world, arm), recFile = file.replace(/\.bin$/, '.json');
+      const rec = JSON.parse(readFileSync(join(root, recFile), 'utf8'));
+      w.arms[arm] = { file, sha256: rec.outSha256, record: { file: recFile, sha256: shaFile(root, recFile) }, changed: rec.changed, byte0: rec.byte0 ?? null,
+        scan: scanRecord(root, scanPath(d, w.world, arm)), ...(d.arms.includes(arm) ? { inertScan: inertRecord(root, inertScanPath(d, w.world, arm)) } : {}) };
+    }
+  }
+  // 4. Les sembres: les posicions de cada món, i el fitxer de cada branca de la part A
+  mkdirSync(join(root, d.folder, 'sembres'), { recursive: true });
+  const cache = new Map(), soupCache = new Map();
+  const soupOf = (file) => { if (!soupCache.has(file)) { soupCache.clear(); soupCache.set(file, new Uint8Array(readFileSync(join(root, file)))); } return soupCache.get(file); };
+  const branches = [];
+  cohort.forEach((w, idx) => {
+    const K = Math.max(...d.variants.map((v) => v.positions), ...d.byte0Variants.map((v) => v.positions), 1);
+    w.positions = positions(Number(w.world), K, d.world[0], d.world[1]);
+    const bs = branchesOf(d, w.world, idx);
+    for (const b of bs.filter((x) => x.part === 'A').sort((x, y) => (x.soup < y.soup ? -1 : x.soup > y.soup ? 1 : 0))) {
+      const p = w.positions[b.position - 1];
+      const variant = d.variants.find((v) => v.id === b.variant) ?? d.byte0Variants.find((v) => v.id === b.variant);
+      const square = b.variant === 'sham' ? false : (d.variants.find((v) => v.id === b.variant)?.square ?? false);
+      const cells = square ? [-1, 0, 1].flatMap((dy) => [-1, 0, 1].map((dx) => (p.y + dy) * d.world[0] + (p.x + dx))) : [p.cell];
+      const genotype = b.variant === 'sham' ? d.sham.genotype : (d.variants.find((v) => v.id === b.variant)?.genotype);
+      if (!genotype || (!variant && b.variant !== 'sham')) throw new Error(`${b.id}: variant desconeguda`);
+      const record = makePlant({ from: armPath(d, w.world, b.soup), soup: soupOf(armPath(d, w.world, b.soup)), width: d.world[0], cells, program: genotypes[genotype],
+        genotype: b.variant === 'sham' ? `${genotype} (sham)` : genotype, sham: b.variant === 'sham' ? Number(w.world) + d.shamOffset : null,
+        lineageSeed: Number(w.world) + d.lineageOffset, cache });
+      if (record.sourceSha256 !== w.arms[b.soup].sha256) throw new Error(`${b.id}: la captura de la sopa no és la del registre de la transformació`);
+      writePlant(join(root, b.plant), record);
+      b.plantSha256 = shaFile(root, b.plant);
+    }
+    branches.push(...bs);
+  });
+  log(`Les sembres: ${branches.filter((b) => b.part === 'A').length}`);
+  // 4b. Els seguiments de la part B: els genotips del control de les col·lisions, sense plantar-los (AU2-156)
+  mkdirSync(join(root, d.folder, 'seguiments'), { recursive: true });
+  for (const w of cohort) {
+    const f = trackPath(d, w.world);
+    writeFileSync(join(root, f), JSON.stringify({ type: 'track', genotypes: d.trackGenotypes, programs: d.trackGenotypes.map((g) => genotypes[g]), lineageSeed: Number(w.world) + d.lineageOffset }, null, 2) + String.fromCharCode(10), { flag: 'wx' });
+    for (const b of branches.filter((x) => x.part === 'B' && x.world === w.world)) b.trackSha256 = shaFile(root, f);
+  }
+  // 5. Les llistes, per part i per màquina, i el manifest
+  const lists = {};
+  for (const part of ['A', 'B']) {
+    for (const [machine] of d.split) {
+      const lines = cohort.flatMap((w, idx) => (machineOf(d, idx) === machine ? branches.filter((b) => b.world === w.world && b.part === part).map((b) => b.line) : []));
+      const file = `${d.folder}/llista-${part.toLowerCase()}-${machine}.txt`;
+      writeFileSync(join(root, file), lines.join('\n') + '\n', { flag: 'wx' });
+      lists[`${part}-${machine}`] = { file, sha256: shaFile(root, file), branches: lines.length };
+    }
+  }
+  const manifest = {
+    pilot: 'arrelament', design: 'docs/pla-aparicio-arrelament.md', code, node: process.version, date: new Date().toISOString(),
+    params: { ...d, candidates: [d.candidates[0], d.candidates.at(-1)] }, genotypes,
+    worlds: worlds.map(({ included: inc, ...w }) => ({ ...w, included: !!inc })),
+    branches: branches.map(({ line, ...b }) => ({ ...b, command: `node sim.mjs ${line.split(' ').slice(1).join(' ')}` })), lists,
+  };
+  writeFileSync(join(root, manifestPath), JSON.stringify(manifest, null, 1) + '\n', { flag: 'wx' });
+  log(`manifest: ${manifestPath}; ${cohort.length} mons inclosos de ${worlds.length}, ${branches.length} branques (${branches.filter((b) => b.part === 'A').length} de la part A)`);
+  return manifest;
+}
+
+// L'escaneig que decideix si un món entra a la cohort (AU2-179 = l'observació O-1 de l'auditor 1, auditoria 35): el del camí del disseny,
+// amb la SHA-256 del manifest, i, a dins, el de la captura envellida del mateix món (la del manifest, per la seva SHA-256), amb la llavor,
+// l'amplada i el radi del disseny, fet a la preparació (el codi del manifest), i amb els recomptes del manifest. L'elegibilitat surt del
+// fitxer comprovat, no del manifest. Retorna { problems, heritable } (heritable és null si hi ha cap problema)
+export function cohortScan(d, w, { root = ROOT, code } = {}) {
+  const fail = (x) => ({ problems: [`${w.world}: ${x}`], heritable: null });
+  const s = w.scan;
+  if (!s?.file) return fail(`el manifest no diu l'escaneig de l'època ${d.age}`);
+  if (s.file !== scanPath(d, w.world)) return fail(`l'escaneig de l'època ${d.age} no és el del disseny (${s.file})`);
+  if (!existsSync(join(root, s.file))) return fail(`no hi ha l'escaneig de l'època ${d.age}`);
+  if (shaFile(root, s.file) !== s.sha256) return fail(`l'escaneig no és el del manifest`);
+  let j;
+  try { j = JSON.parse(readFileSync(join(root, s.file), 'utf8')); } catch { return fail(`l'escaneig de l'època ${d.age} no es pot llegir`); }
+  if (!j || typeof j !== 'object' || Array.isArray(j)) return fail(`l'escaneig de l'època ${d.age} no té el format de l'eina`);
+  const p = [], q = (x) => p.push(`${w.world}: l'escaneig de l'època ${d.age}: ${x}`);
+  const expect = { tool: TRANSFORM, scan: true, from: agedCapture(d, w.world), seed: Number(w.world) + d.transformOffset, width: d.world[0],
+    radius: d.radius, cells: d.world[0] * d.world[1] };
+  for (const [k, v] of Object.entries(expect)) if (j[k] !== v) q(`«${k}» és ${JSON.stringify(j[k])}, i el disseny diu ${JSON.stringify(v)}`);
+  if (typeof w.captureSha256 !== 'string' || j.fromSha256 !== w.captureSha256) q('no és de la captura envellida del manifest (la seva SHA-256)');
+  if (!(typeof j.code === 'string' && j.code.length >= 7 && !j.code.includes('+')) || (code !== undefined && j.code !== code)) q(`no és del codi de la preparació (${JSON.stringify(j.code)})`);
+  for (const k of ['replicating', 'heritable', 'heritableSolo']) {
+    if (!Number.isInteger(j[k]) || j[k] < 0 || j[k] > expect.cells) q(`«${k}» no és un recompte (${JSON.stringify(j[k])})`);
+    else if (j[k] !== s[k]) q(`«${k}» és ${j[k]}, i el manifest diu ${JSON.stringify(s[k])}`);
+  }
+  if (s.cells !== j.cells) q(`«cells» és ${JSON.stringify(j.cells)}, i el manifest diu ${JSON.stringify(s.cells)}`);
+  return { problems: p, heritable: p.length ? null : j.heritable };
+}
+
+// La cohort, refeta (AU2-178, AU2-179); la fan servir la comprovació d'abans de llançar (checkManifest) i l'anàlisi (designProblems). De
+// cada món de la llista: l'envelliment validat, amb el registre del manifest; si arriba sense vida a l'època d.age, la seva captura
+// envellida (el camí del disseny) i el seu escaneig (cohortScan). Hi entren exactament els que no hi tenen cap hereditària en un escaneig
+// comprovat (un escaneig que no es pot comprovar no en fa entrar cap), i la llista
+// s'acaba al món que completa la cohort, com a la preparació. Dels mons de `captures`, es llegeix la captura envellida: la SHA-256 del
+// manifest i l'empremta final del registre de l'envelliment
+function cohortProblems(d, m, { root, captures = () => false }) {
+  const p = [], q = (x) => p.push(x);
+  const worlds = Array.isArray(m.worlds) ? m.worlds : [];
+  for (const w of worlds) {
+    const read = captures(w);
+    const a = validateAging(d, w.world, { root, needCapture: read });
+    if (a.problems.length) { a.problems.slice(0, 3).forEach(q); continue; }
+    if (w.aging?.sha256 !== a.sha256) q(`${w.world}: el registre de l'envelliment no és el del manifest`);
+    let eligible = !!a.status?.included;
+    if (eligible) {
+      if (w.capture !== agedCapture(d, w.world)) q(`${w.world}: la captura envellida del manifest no és la del disseny (${w.capture})`);
+      else if (read && shaFile(root, w.capture) !== w.captureSha256) q(`${w.world}: la captura envellida no és la del manifest`);
+      // un escaneig que no es pot comprovar no fa elegible el món: si el manifest l'inclou, també es diu
+      const s = cohortScan(d, w, { root, code: m.code });
+      s.problems.forEach(q);
+      eligible = s.heritable === 0;
+    }
+    if (!!w.included !== eligible) q(`${w.world}: ${eligible ? "hi pot entrar, i el manifest no l'inclou" : "no hi pot entrar, i el manifest l'inclou"}`);
+  }
+  if (worlds.length && !worlds.at(-1).included) q('la llista de mons del manifest no s\'acaba al món que completa la cohort');
+  return p;
+}
+
+// El manifest contra el disseny, i les captures, els escanejos, les sembres i les llistes contra el manifest. Amb una màquina, només
+// les captures dels mons de la seva llista. Retorna la llista de problemes
+export function checkManifest(d = DESIGN, { root = ROOT, machine = null } = {}) {
+  const p = [], q = (m) => p.push(m);
+  const mf = `${d.folder}/manifest.json`;
+  if (!existsSync(join(root, mf))) return [`no hi ha ${mf}`];
+  const m = JSON.parse(readFileSync(join(root, mf), 'utf8'));
+  if (!same(m.params, { ...d, candidates: [d.candidates[0], d.candidates.at(-1)] })) q('els paràmetres del manifest no són els del disseny');
+  let genotypes;
+  try { genotypes = genotypesOf(d, { root }); } catch (e) { q(e.message); }
+  if (genotypes && !same(m.genotypes, genotypes)) q('els genotips del manifest no són els del fitxer del disseny');
+  const cohort = m.worlds.filter((w) => w.included);
+  if (cohort.length !== d.cohort) q(`el manifest té ${cohort.length} mons inclosos, i el disseny en diu ${d.cohort}`);
+  if (!same(m.worlds.map((w) => w.world), d.candidates.slice(0, m.worlds.length))) q('els mons del manifest no són els primers de la llista, en ordre');
+  const mine = new Set(cohort.filter((_, i) => !machine || machineOf(d, i) === machine).map((w) => w.world));
+  // la cohort, refeta com a l'anàlisi (AU2-178, AU2-179), i, de les captures envellides d'aquesta màquina (sense --maquina, de totes), la
+  // SHA-256 del manifest i l'empremta final de l'envelliment
+  cohortProblems(d, m, { root, captures: (w) => !machine || mine.has(w.world) }).forEach(q);
+  for (const w of m.worlds) {
+    if (!w.included) continue;
+    for (const [arm, info] of Object.entries(w.arms ?? {})) {
+      if (mine.has(w.world)) {
+        if (!existsSync(join(root, info.file))) q(`${w.world} ${arm}: no hi ha la captura`);
+        else if (shaFile(root, info.file) !== info.sha256) q(`${w.world} ${arm}: la captura no té la SHA-256 del manifest`);
+      }
+      if (shaFile(root, info.record.file) !== info.record.sha256) q(`${w.world} ${arm}: el registre de la transformació no és el del manifest`);
+      const rec = JSON.parse(readFileSync(join(root, info.record.file), 'utf8'));
+      if (rec.fromSha256 !== w.captureSha256) q(`${w.world} ${arm}: no és de la captura envellida`);
+      if (rec.kind !== arm || rec.seed !== Number(w.world) + (d.byte0Arms.includes(arm) ? d.byte0Offset : d.transformOffset)) q(`${w.world} ${arm}: la transformació o la seva llavor no són les del disseny`);
+      if (shaFile(root, info.scan.file) !== info.scan.sha256) q(`${w.world} ${arm}: l'escaneig no és el del manifest`);
+      if (info.inertScan && shaFile(root, info.inertScan.file) !== info.inertScan.sha256) q(`${w.world} ${arm}: l'escaneig inert no és el del manifest`);
+    }
+  }
+  // les branques: les del disseny, i les sembres, cadascuna amb la seva SHA-256 i de la captura de la seva sopa
+  const want = cohort.flatMap((w, idx) => branchesOf(d, w.world, idx));
+  if (!same(m.branches.map((b) => b.id), want.map((b) => b.id))) q('les branques del manifest no són les del disseny');
+  for (const b of m.branches) {
+    const exp = want.find((x) => x.id === b.id);
+    if (exp && b.command !== `node sim.mjs ${exp.line.split(' ').slice(1).join(' ')}`) { q(`${b.id}: l'ordre no és la del disseny`); continue; }
+    if (b.part === 'B') {
+      if (!existsSync(join(root, b.track)) || shaFile(root, b.track) !== b.trackSha256) { q(`${b.id}: el seguiment no és el del manifest`); continue; }
+      const tr = JSON.parse(readFileSync(join(root, b.track), 'utf8'));
+      if (!genotypes || !same(tr.programs, d.trackGenotypes.map((g) => genotypes[g])) || tr.lineageSeed !== Number(b.world) + d.lineageOffset) q(`${b.id}: el seguiment no és el del disseny`);
+      continue;
+    }
+    if (!existsSync(join(root, b.plant)) || shaFile(root, b.plant) !== b.plantSha256) { q(`${b.id}: la sembra no és la del manifest`); continue; }
+    const pl = JSON.parse(readFileSync(join(root, b.plant), 'utf8'));
+    const w = cohort.find((x) => x.world === b.world);
+    if (pl.sourceSha256 !== w.arms[b.soup].sha256) q(`${b.id}: la sembra no és de la captura de la seva sopa`);
+    if (b.variant !== 'sham' && genotypes && pl.hex !== genotypes[d.variants.find((v) => v.id === b.variant)?.genotype]) q(`${b.id}: el programa plantat no és el del genotip`);
+    if (b.variant === 'sham' && (pl.plantedTest.solo + pl.plantedTest.context !== 0 || !pl.sham)) q(`${b.id}: el sham es copia`);
+    if (pl.lineageSeed !== Number(b.world) + d.lineageOffset) q(`${b.id}: la llavor del llinatge no és la del disseny`);
+  }
+  for (const [key, l] of Object.entries(m.lists)) {
+    const [part, mach] = key.split('-');
+    const lines = cohort.flatMap((w, idx) => (machineOf(d, idx) === mach ? want.filter((b) => b.world === w.world && b.part === part).map((b) => b.line) : []));
+    if (!existsSync(join(root, l.file)) || readFileSync(join(root, l.file), 'utf8') !== lines.join('\n') + '\n') q(`la llista ${key} no és exactament la del disseny`);
+    else if (shaFile(root, l.file) !== l.sha256) q(`la llista ${key} no té la SHA-256 del manifest`);
+  }
+  return p;
+}
+
+// El manifest contra el disseny, per a l'anàlisi (AU2-170; AU2-171 = AUD-202): els paràmetres, la cohort, cada branca del disseny
+// exactament una vegada i en ordre (cap de menys, cap de més, cap de repetida), amb la seva ordre, i l'escaneig inert del punt de partida
+// de cada sopa de la part B, amb la SHA-256 del manifest i la llista de les cel·les que es copien. No mira les captures: l'anàlisi no les
+// fa servir. Retorna la llista de problemes
+export function designProblems(d, m, { root = ROOT } = {}) {
+  const p = [], q = (x) => p.push(x);
+  if (!same(m.params, { ...d, candidates: [d.candidates[0], d.candidates.at(-1)] })) q('els paràmetres del manifest no són els del disseny');
+  const worlds = Array.isArray(m.worlds) ? m.worlds : [];
+  const cohort = worlds.filter((w) => w.included);
+  if (cohort.length !== d.cohort) q(`el manifest té ${cohort.length} mons inclosos, i el disseny en diu ${d.cohort}`);
+  if (!same(worlds.map((w) => w.world), d.candidates.slice(0, worlds.length))) q('els mons del manifest no són els primers de la llista, en ordre');
+  // la cohort, refeta (AU2-178, AU2-179), com abans de llançar; sense les captures: l'anàlisi no les fa servir
+  cohortProblems(d, m, { root }).forEach(q);
+  const want = cohort.flatMap((w, idx) => branchesOf(d, w.world, idx));
+  const got = Array.isArray(m.branches) ? m.branches : [];
+  const ids = got.map((b) => b.id), wantIds = new Set(want.map((b) => b.id)), gotIds = new Set(ids);
+  const dup = [...new Set(ids.filter((id, i) => ids.indexOf(id) !== i))];
+  const missing = want.filter((b) => !gotIds.has(b.id)).map((b) => b.id), extra = ids.filter((id) => !wantIds.has(id));
+  if (missing.length) q(`al manifest hi falten ${missing.length} branques del disseny (${missing.slice(0, 5).join(', ')})`);
+  if (extra.length) q(`el manifest té ${extra.length} branques que no són del disseny (${extra.slice(0, 5).join(', ')})`);
+  if (dup.length) q(`el manifest té branques repetides (${dup.slice(0, 5).join(', ')})`);
+  if (!missing.length && !extra.length && !dup.length && !same(ids, want.map((b) => b.id))) q("les branques del manifest no són en l'ordre del disseny");
+  for (const b of got) {
+    const exp = want.find((x) => x.id === b.id);
+    if (!exp) continue;
+    if (b.command !== `node sim.mjs ${exp.line.split(' ').slice(1).join(' ')}`) q(`${b.id}: l'ordre no és la del disseny`);
+    for (const k of ['part', 'world', 'soup', 'variant', 'position', 'seed']) if (b[k] !== exp[k]) q(`${b.id}: «${k}» no és el del disseny`);
+    if (b.part === 'A' && b.plant !== exp.plant) q(`${b.id}: la sembra no és la del disseny`);
+    if (b.part === 'B' && b.track !== exp.track) q(`${b.id}: el seguiment no és el del disseny`);
+  }
+  for (const w of cohort) {
+    for (const soup of d.arms) {
+      const s = w.arms?.[soup]?.inertScan;
+      if (!s?.file) { q(`${w.world} ${soup}: el manifest no diu l'escaneig inert del punt de partida`); continue; }
+      // el camí del disseny, i l'escaneig de la captura de la seva sopa (l'observació O-1 de l'auditor 1, auditoria 34)
+      if (s.file !== inertScanPath(d, w.world, soup)) { q(`${w.world} ${soup}: l'escaneig inert del punt de partida no és el del disseny (${s.file})`); continue; }
+      if (!existsSync(join(root, s.file))) { q(`${w.world} ${soup}: no hi ha l'escaneig inert del punt de partida (${s.file})`); continue; }
+      if (shaFile(root, s.file) !== s.sha256) { q(`${w.world} ${soup}: l'escaneig inert del punt de partida no té la SHA-256 del manifest`); continue; }
+      let j = null;
+      try { j = JSON.parse(readFileSync(join(root, s.file), 'utf8')); } catch { q(`${w.world} ${soup}: l'escaneig inert del punt de partida no es pot llegir`); continue; }
+      if (!Array.isArray(j.copiers) || j.copiers.length !== j.copying) q(`${w.world} ${soup}: l'escaneig inert del punt de partida no porta la llista de les cel·les que es copien`);
+      if (j.captureSha256 !== w.arms[soup].sha256) q(`${w.world} ${soup}: l'escaneig inert del punt de partida no és de la captura de la seva sopa`);
+    }
+  }
+  return p;
+}
+
+// Abans de llançar: el manifest, i que cap branca no hagi començat
+export function preflight(d = DESIGN, { root = ROOT, machine = null } = {}) {
+  const p = checkManifest(d, { root, machine });
+  for (const part of ['part-a', 'part-b']) {
+    const dir = join(root, d.folder, part);
+    if (existsSync(dir) && readdirSync(dir).some((f) => f.endsWith('.jsonl'))) p.push(`la ${part} ja ha començat: hi ha registres a ${d.folder}/${part}`);
+  }
+  return p;
+}
+
+function fail(message, code = 1) { console.error(`Error: ${message}`); process.exit(code); }
+
+async function main(argv) {
+  const opt = (name) => { const i = argv.indexOf(name); return i < 0 ? undefined : argv[i + 1]; };
+  if (argv[0] === '--envelliment') {
+    const n = opt('--mons') === undefined ? DESIGN.aging : Number(opt('--mons'));
+    if (!Number.isInteger(n) || n < 1 || n > DESIGN.candidates.length) fail(`--mons ha de ser d'1 a ${DESIGN.candidates.length}`, 2);
+    for (const w of DESIGN.candidates.slice(0, n)) console.log(agingLine(DESIGN, w));
+  } else if (argv[0] === '--prepara') {
+    const par = opt('--paral·lel') === undefined ? 6 : Number(opt('--paral·lel'));
+    try { await prepare(DESIGN, { parallel: par }); } catch (e) { fail(e.message); }
+  } else if (argv[0] === '--comprova') {
+    const machine = opt('--maquina') ?? null;
+    if (machine && !DESIGN.split.some(([m]) => m === machine)) fail('--maquina ha de ser pc o vm', 2);
+    const p = preflight(DESIGN, { machine });
+    if (p.length) { console.log(`${p.length} problemes:\n- ${p.slice(0, 50).join('\n- ')}`); process.exit(1); }
+    console.log('tot correcte');
+  } else if (argv[0] === '--escaneig-inert') {
+    const from = opt('--from'), out = opt('--out');
+    if (!from || !out) fail('--escaneig-inert necessita --from i --out', 2);
+    if (existsSync(out) || existsSync(`${out}.part`)) fail(`${out} ja hi és: no el sobreescric`);
+    const buf = readFileSync(from);
+    const r = { type: 'inert-scan', from, captureSha256: sha256(buf), ...inertScan(new Uint8Array(buf.buffer, buf.byteOffset, buf.length)), code: codeVersion(ROOT), node: process.version };
+    writeFileSync(`${out}.part`, JSON.stringify(r, null, 2) + '\n', { flag: 'wx' });
+    renameSync(`${out}.part`, out);
+  } else fail('Ús: node eines/arrelament.mjs --envelliment [--mons N] | --prepara [--paral·lel N] | --comprova [--maquina pc|vm] | --escaneig-inert --from captura.bin --out fitxer.json', 2);
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main(process.argv.slice(2));

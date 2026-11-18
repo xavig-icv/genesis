@@ -313,11 +313,26 @@ Llegeix-los abans de proposar canvis.
   - **Les fonts de la matriu de novetat** (la revisió de les fonts, 16-11-2026): una font llegida pel resum o amb una eina que en
     resumeix el text no serveix per dir què no hi és. Abans d'una afirmació de novetat, s'ha de llegir directament (FON-01). Les
     troballes FON-xx són a `docs/auditories.md`.
-  - **El pilot de l'aparició i l'arrelament** (`docs/pla-aparicio-arrelament.md`; a `main`, la v0.1 del 16-11-2026, i a la PR #37, la v0.6
-    del 18-11-2026): la part A (l'assaig d'invasió) i la part B (les aparicions naturals, amb un cens de companys inerts), als mateixos mons
-    nous. La prova de viabilitat (§9, exploratòria) és feta, i entrava a l'excepció de la T-64 (T-68). Les auditories de la 32 a la 35 van portar
-    de la v0.3 a la v0.6, i a la 35, l'acord dels tres sobre l'estimand de la consistència. Abans de calcular: l'auditoria 36 (curta:
-    l'escaneig de la cohort, AU2-179) i el merge. L'entrada del quadern de la prova de viabilitat, amb la del pilot (T-69).
+  - **El pilot de l'aparició i l'arrelament** (`docs/pla-aparicio-arrelament.md`, v0.6 del 18-11-2026): la part A (l'assaig d'invasió) i la
+    part B (les aparicions naturals, amb un cens de companys inerts), als mateixos mons nous (7001 a 7100). La prova de viabilitat
+    (exploratòria) és a `fase2/resultats/arrelament/viabilitat/`, i entrava a l'excepció de la T-64 (T-68). Les auditories de la 32 a la 35
+    van portar de la v0.3 a la v0.6, i a la 35, l'acord dels tres sobre l'estimand de la consistència. Abans de calcular: l'auditoria 36
+    (curta: l'escaneig de la cohort, AU2-179) i el merge. L'entrada del quadern de la prova de viabilitat, amb la del pilot (T-69).
+    - **Les eines** (§7 del pla; `test/arrelament.mjs`):
+      - **`sim.mjs`:** `--plant FITXER --lineage-every N --stop-on-extinction N` (l'assaig d'invasió; el llinatge, a `fase2/llinatge.js`),
+        `--track FITXER --lineage-every N` (seguir uns programes sense plantar-los: el control de les col·lisions de la part B) i
+        `--inert-census N` (el cens inert; `fase2/inert.js`). Sense aquestes opcions, fa el mateix que abans, línia a línia. El cens inert i
+        el llinatge tenen un atzar propi: no canvien la història del món.
+      - **`fase2/inert.js`:** còpies de les funcions de la prova d'autonomia de B1 (`eines/autonomia.mjs`), perquè el simulador no depengui
+        d'una eina de B1. La prova comprova que fan el mateix.
+      - **`node eines/sembra.mjs --from captura.bin --program HEX --cell X,Y [--square] [--sham LLAVOR] --lineage-seed N --out
+        fitxer.json`:** el fitxer de la sembra, mai la captura (sim.mjs planta a la memòria, si la SHA-256 del món de partida hi coincideix).
+        El genotip, 95 de 100 o més; el sham, 0 de 100. Les posicions: `--positions MON K`.
+      - **`eines/transforma.mjs`:** els tipus `byte0` i `byte0-placebo` (la regla del primer byte, amb un placebo que també mou una instrucció).
+      - **`node eines/arrelament.mjs --envelliment [--mons N] | --prepara [--paral·lel N] | --comprova [--maquina pc|vm]`:** les llistes, el
+        manifest i les comprovacions abans de llançar, com `eines/pilot.mjs` a la sèrie de la maduració. A `fase2/resultats/arrelament/pilot/`.
+      - **`node eines/arrelament-analisi.mjs`:** l'anàlisi de la §6 del pla, només amb el pilot sencer. **`node eines/potencia-arrelament.mjs`:**
+        la precisió del contrast principal, simulada per món.
     - **L'anàlisi es nega** si el manifest no té la cohort i exactament les branques del disseny, o si hi falta un escaneig inert de partida,
       amb la seva SHA-256, o si l'escaneig que decideix la cohort no és el de la captura envellida del seu món (AU2-170, AU2-171, AU2-178,
       AU2-179). A la consistència, qui hi entra depèn només de l'època de la detecció, amb la mateixa
