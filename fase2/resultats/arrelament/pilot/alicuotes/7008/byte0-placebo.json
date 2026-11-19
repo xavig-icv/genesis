@@ -1,0 +1,25 @@
+{
+ "tool": "eines/transforma.mjs",
+ "code": "92b8f4f",
+ "node": "v16.15.1",
+ "from": "fase2/resultats/arrelament/pilot/envelliment/captures/llavor7008-mon512x256-r2-final.bin",
+ "fromSha256": "a3493f47aa510a6c99a9815a7763b3b20c10d4ef18cdb7cc1b87979946065372",
+ "kind": "byte0-placebo",
+ "seed": 657008,
+ "width": 512,
+ "radius": 2,
+ "out": "fase2/resultats/arrelament/pilot/alicuotes/7008/byte0-placebo.bin",
+ "outSha256": "4587e2ef0d3da38e61c0207725611f630414b938b33d520992e9a31b603bc93d",
+ "changed": 19162,
+ "scope": null,
+ "byte0": {
+  "programs": 9674,
+  "swapped": 9581,
+  "unchanged": 93
+ },
+ "zeros": {
+  "before": 46805,
+  "after": 46805
+ },
+ "invariants": "correctes"
+}

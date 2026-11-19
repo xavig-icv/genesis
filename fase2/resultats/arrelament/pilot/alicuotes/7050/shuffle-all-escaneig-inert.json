@@ -1,0 +1,921 @@
+{
+  "type": "inert-scan",
+  "from": "fase2/resultats/arrelament/pilot/alicuotes/7050/shuffle-all.bin",
+  "captureSha256": "4870861277b041306f182e091cd209e638d4890757fd834ebb5760aaea250628",
+  "cells": 131072,
+  "copying": 113,
+  "heritable": 0,
+  "heritableSolo": 0,
+  "conditions": {
+    "seed": 3000000000,
+    "count": 3
+  },
+  "copiers": [
+    {
+      "cell": 609,
+      "program": "35b8333b11eb2a2e1b714b72783caee23cd3653fa23e3c3aa4a0d3ddf85bced2ab6d119fb23c872c78a53e4cd62e7dd9913c1fdb49e29fed91344be3445d3f41",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 4727,
+      "program": "b6293f534f412d12133b206d7caa4c7d3d5b2b1fee303d922c66e4a841dff70f7092d2976aa63c7ce11939e9157d3bd8bd5dec4f46d27c04406a073e77512eea",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 5379,
+      "program": "763638553e5b2ab0bb1901745f42408b1f273ae76d06cc443bd5eaaeff2866b21d3e7bd02e263d5dd198467a6fd8623c2c481a1deb9cef51d6023c39460703d6",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 6998,
+      "program": "f442f6299fae37a33cb507419af3ea19275b5f45ce7e867b8b73b0d69ecc3e2e039b94fb528deb8b027976ed5d7a732e8091c28a3c8ae23e3c056bd2b1278908",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 8440,
+      "program": "9d2ad15b896dc5892c8d660b3e141d7b90895d031bb06c73e783edf03de0da1ef5c95da3b3d1dbecc2b93c3ca25b178a117cdecf524f3c02152c14d47bc2affe",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 9143,
+      "program": "488c3ce84ec101028cfeed3b0d2e2c12fd72e27947f63a2c3c5b47b5f23d3f2cc87d0a3cbb705d2c5b346c181afae99d7074a6fa7c3fff5b024fc28da707e9bc",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 10736,
+      "program": "ebeb122456553b8acaa1ffe9c39b7ea3c1db05f8f19ed448d22a13c56d7c3ffd45ff5b0b953a7218020ecaf33c23e6222f2e7db342b3c37b7da85d38e50444d3",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 10837,
+      "program": "9438e36cb05b4adf39089aec5073dcc96c643c9d238eb61b7d2f405272dff910c2886445ccced143d52e49853a5d3626f86530214b70eb0d192c673c5fd4ad3c",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 11875,
+      "program": "1eb14ea29db35be16a692ea9c6153898223505063c3e7dc028d53adb4bd71447cf7b41f53c1a3d701f779ccb7d9130b4d096e036625d9a3ae5ad7544385e3cab",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 15263,
+      "program": "64c83a5b8529a97ddb897a2dcf4b34110c7f2c2858e3323cb5a3b7ac679d323e5489d7453da4e94dd631f52c545c4a24a2ba5cd73c05c15d8b49a42c1398ce38",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 17711,
+      "program": "321e8782776c423c69ab5b58579948dc38145542fdf5a32c31b84763953c3b7d3d4da13e193a77b9da3c415d3d8a3ccf5838d02a35f1403b2199284dd01c5bbc",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 19105,
+      "program": "02017939af45d72c06ff734c3dacef9f37668a43b1caa33c059d49717b6d0c6ef98b3cae8c5bbbc12e998cb316df1df93d3d78387bfee83e3a0f8681c03d925d",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 19395,
+      "program": "9217d79c413c76011c4d3b9d1b421d405bb6d3e8cdbb2ab1992c6583194fa613bf147b3e7cad215f973de05c535f073f6c5d573a3c03106f2f6b768e3fa80998",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 21459,
+      "program": "09f22fa23c973dea3c1d7ae9de3a0f7f979b49fe02684604d8bb5bbb415a113cf2dc1be63bee76bc2c04717f023bf66ec17d5dce5f98f97c29664281f0265dac",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 22884,
+      "program": "f2f8fc54cd4c98976c20687fdd3ae50024f08bac3e4196637de25be4ff0f1661f2592e3c2990ab861d7de8a65d29172f8d3d6512ca3b283d3aa7025d3d393ca7",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 22991,
+      "program": "bf8d6e3e8fb62e273dd2cf243fe68e1dbd8d026c2c80162d32ce3279005b14e974c57d6822e9e4d3c6208280971d006b5e702e7e3b9588d4ee3cc9045d3f3cc9",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 22997,
+      "program": "090253f4a83dae655bee3d58892ebc9a006cf674a60f7b08f2f626523f7154f382cbc037322a1a39403e64735d810325ba1eae0a37f15315ee96d5552fcae9e1",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 23138,
+      "program": "9abbf0373d38e93c70679b1e3c3daba23d7d743f5bf64e3c85eebc92abccfc9ba1c02ec7ff544f0230bc11fe32808e4ea2377d115d7381f53b7b463c5d407c27",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 23207,
+      "program": "7dd6090da8583d5a8d3bd698dc6b5bba155a40368f478a5b1fb267989c3c3f3eafe5cd96729c34dc2c62c73c5f3329877b3d60391b7cadcf3b2e3cd6bb5d8e7b",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 24587,
+      "program": "129a4207001b0be01d7ad336015a963c86d080e7a0b19e203c7e78128c7c9bb26f5b83eefe92bf34a9ea3f853df02c7dcf352a3cb0744beb0e011fe43f2a5dc8",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 27792,
+      "program": "3b8e955bb202038b59084a3e3e393dcccbdb9b2e7e6c75ff862fc63d1a3d7bc7604b3e72bb38cc3c3c475f5d3694aeb6029e9e45c0eb5d6ce2e37adda63d4898",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 29073,
+      "program": "178c4651ab1434596a3e2e15850aa967b68a923c989e831b5bb452aa0f8df1b426be8e823c2c3031c7a33baa7ded820fb7df8b610c85615dfd0675a5cc3c6b34",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 29807,
+      "program": "0a3aaf56bc78f9df8870275aed44fb617a4752d2f4343f7470671c73ffcd94f1b317b96bae5b3cad7c493b3b96487d4274bdf723fd2e495daf7bbbf6eae1e73a",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 29990,
+      "program": "e2292e0a6ee14a3c3114cd87268157f6585bd9a43c21e37d84fe7d4284212c7b5f4e74ef3a5ec50a03f2cb666365245354e25d3b5c3894331376ca8f0a30bc51",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 31659,
+      "program": "397e695b2ec3504a50295e4d7563a3a1887155517dd83c0761bde5fcb0e85d61356af43d074a0f6d3fc97e04c9832e26e7d83fcc27fe5b086191df3c633c3dca",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 34110,
+      "program": "24b73f2cbf3a4bcf79997a3d9e5c3c7e5b47453b650859c897ee37bf2a18fc9ea7356d94dc53b7c5d92c91fb7b229e7a343e945dfcac2d3b6418f83c3cd93e23",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 35296,
+      "program": "2449903c0901915b7fe6f8c1070cb3d90e6243e17dec46cc9668dee35ffe0147952cc43c003c1325ec718e035122ef3eb30a62101d5dce172a75825ed2233298",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 40270,
+      "program": "6a72e929e4be8c34e75b71f5460c3de06722ea6a3cc72f31a236f839fb7dca663403d53302de1cda2c6a4c374a5d739c3ff57e9578ebb74d6086e223c2ea9882",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 43474,
+      "program": "788b3fa2fa4ea5d1cb1041402c90e139ff3d0261272c2ccdbfb1e9978110bc5b8b2e2db692ae603e2ea49310e6c3970cd0817b79e98a695d8a7be5003a643d29",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 46001,
+      "program": "3c3c1bf3de8f4e8499f44939d9e510bc26b2983c5b7cd2e4c700bc3cc8a38bb6dc5b18c81ec17dff2f6971a1ea40b6293c965ebf593be7f71fdb2c9a912ce15d",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 47568,
+      "program": "5971412ce52cd1fef76a233e8971a9a79a402f3d5b3c3dbd39ac685129bebac72a023545e751402ca89b640e9a4c7df82564b55d292c3eb2e154245fa73c450a",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 47594,
+      "program": "baf93c54ffcd39933e7c7dca8a8f5bb3cc18e11df89032644453694d42a29237401d41383d7b3ef72c9dbff961b54084d0235d5c923a0a2f46d1f478e7ff3d4b",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 47929,
+      "program": "50ab5b70a6335ac5686191473d5a04914502693c9fe5089d66d257932c75014e8f2c66f07d26b76285095d33e0293cecaa507a17694bb13e52fc019d19aef8f2",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 48219,
+      "program": "9c3c7901b4155b9286363db15b407d3420d9d86f1f3f53959f3c6197a54488fe3be0032019516739d7e613fbbc2c5d3ce35ddc70a63a10774131b99cb56c552e",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 48843,
+      "program": "a3873b0f5627405b5c3cadb78eb8eafaea2865e35af8951976e34e3b46a2ef8e2c237d796fdae2813ca35a11fe473e315de00b259adc2515af38583cd3706f9e",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 49143,
+      "program": "ccce3d665b3a6b0ec791665b0ea81f7bf33efdc5383901c839a962fe2a872c69535a382e5d0b96e14d8e703dbe222c8daec781583bcf3c3e2c36666d848c7c35",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 49651,
+      "program": "a45ba7ab5a14b2f1ca6c46ffa741b0318dc156d17005764fc6d53c19743aef7dff517c92dbff2eaf4f3b5e5dee81399338d1bdab0bae559160b44f93045d6301",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 49655,
+      "program": "5b08357cceb34b4c369a5bbddd2adb7e7e3c3ec6faa96df170dbeee2e42c3eff7483ed9b7bbaa649aa5d2c95da11e6166de7809465b0310442f93e881ab002e8",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 51117,
+      "program": "3cdd4328f95e3eff3cda5ba4f52cc57b3e2c3a052446a3f47445670057d0efe3fd5db4dfbb5fc39b22dcba96b227252a393d6bf554fd3dbbc0024a484c6a3bed",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 51180,
+      "program": "dd04235b7dfd2c7cc923f2b00dee2a3c3d1f1c650a59ddcb3bbef4ccbe396c9c5d87d7fe80f0a174a8fa896251310a6678437b121b0f5b641a3b2c73a5277f30",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 51689,
+      "program": "7b3d6a9cdf010ab2118832335b7d139d6d3c882e0ba9205211ce9b5df92e107c3c2696393d302e42117bc6a87e358c30d42cecee964313dba646a869996aafd1",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 52340,
+      "program": "6edb34d91bf3f1273df0b78751da77f8f9005c7d3bb8065b913e21e03c55c83d6bc916b186833d4ed76b714a7d8522072e0a0e293cde845da577cd3c894a5a43",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 53382,
+      "program": "7cddb9dd77677b7b5b3c66ac77b97de92ff9b2a4f138eaf6fc295f5fe4460dc00435e52efa623f591d0e44cb5da3373a6ff916e3205b5b5b762c382cf65e32a3",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 53635,
+      "program": "982e4e3fa5272a2c293ec83f2c6d7bfdf3440cc0b70c5b3cd7da82ff5b7e85010723b1fc89f93e2ca7fdaed7d3f93577074d8293f07b8bf804f5e887b090025d",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 54401,
+      "program": "3cf1a0aa3c2831b2051868213cf4935b55b2d805ab8b7f86e165657f083ca6fd5a7d5639ad104a8cfc49bd2c2abe15e11fb9eb4c5dcdb6647da06065d00270ef",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 55921,
+      "program": "de0e30c82841b53bffa6555b2c41c3d6ce3c3f0ea3e14461c87d35e3d55da03fed94443f28aff857943db41c1130d792dc5ed561f807da46773cca07af3d390e",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 56147,
+      "program": "6c06478414b5d5cc2ef8cc65867fb2f16c6c91946c7e9ef9c8f83c5b13402ed2dc7eb1c3ddd707a73e7ba2d07e5d3d6fb3ac690dea3d3c57e1792cbbb0fe2cc5",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 56284,
+      "program": "cb783c4d8ab2f86ccc5616fce93cdd6240a70a9c5b2caf937993f00feb3ad02c7a418704683c7a6a50869e14e71cb031858f2c799b9b6ebcdc44d37d4e5dbf84",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 57788,
+      "program": "20fad67c04d83924852caeeefc92a9067bf6b116fe2cc93b9f150b6f865ba9e23c8d648ef24394eaffed2e7d28fe67f2656a3b5dac2c15c3f02e1c87be331425",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 60823,
+      "program": "dc5c5b3cf0667e01e37d2c3c0b08b1f7bd6376b0b4c08f9b4acda2d03691494a669216d53ea6d78b670a903e4e9f07d43c6b841827fbbdd17fd92af940b95d4d",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 60844,
+      "program": "f0d73c684b8939a28511cc6c94346039254be65cbda7020b8e1fdaa9c4353e2e3b3ccd3a132d5b7822e32c55d0f2133380807d221c4b713c33c35db93f2eff71",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 60947,
+      "program": "8c3ccb56ffdb3768b22c232f20012cb83eea135b99c9349e2c3e9bddafa8f87b9a63d2beeff0319d28374c37d5b9a0bac839d2ca6af4045dc33cc80f7b12d141",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 61070,
+      "program": "e4cfab073c3c2cb5e8c15b2f3c14b831df3bc859829dddf87d33c9fa7894ea0db6b137a85f003fed55efda571442f429e73fb2928fa92c995da9bdb94ca029cf",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 64210,
+      "program": "3f923c5365b37ea954e63b89403cb4228d5b062f7b85dfe3af62877e51e9a8403e43aefeacfefeeb2c5debb86b52e0fcb610dd8f96b7ecf7f6c6384e5b8e3f27",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 67173,
+      "program": "ed40e55b9e493db8311ee324a6fcee03683588fb7d2c3c02bfbc039b3f5d4528180329f6555a588d4b80578ce4da5d295f168a3d4112ed7746ff24070901a62d",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 67323,
+      "program": "ddb4cf76cf3c4a505b413d4a507d08450e87a32e3cc25db2413a5b79aaac71cf7d423c2a56f0a63e024efa7df1e690617c2c4b3836e919b13cb2529cf0acf63c",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 68665,
+      "program": "02bf123d5cba5b13d4affc59188724b089a6a12c86338e3ccb4490ebdf20b4411e29b7bf03de7d6b4a1e555df9939e45542c695a243cf1793f2c3a3e479bfd28",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 68941,
+      "program": "553a5b257d274d6d3c4da7bf80e942e4475ce6373a13629ff22e5d3a11ef409d6a5d5d0b6a267a7b3c2c0aff3c3c456519e04dc2d23bb1b47e3ecccd2aa4ff6b",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 69323,
+      "program": "9d26777b781f3db15bdf413c7d94ad38c83c01252cd58a3c46f43afeb782e73e1a315e3dcc020ff9793e5db8ce163000c2b90482073d5bfe3ace03413c1ad8fd",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 70121,
+      "program": "ba1af620882557f3e720b03c9da9ab556aa472ebe762035699dc494c5bbdfd55707dc32c6cff743c3d0b07063975405d6aa82c3ba9a400645c5b3cb4560b10e6",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 74798,
+      "program": "f7b43c3e59fbea7e5bf1757d702c2c06a06eb0755131c708914a286144441db838eec9773d8a4ebbc6b32cb00aa87a2929e4ed8dfaad5171f858593c294a5d17",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 75082,
+      "program": "3d5b7d20cb3af96542356d803cfe1174b0d4fc812e5d06e2b9943bfe3c5bd33256505a0a60e498390ccee47b9cc3fcbf3e93d38919353ecb1d56e9a4d69733bb",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 75301,
+      "program": "79f9fd723b3e78623c2c5bb6f90a5a773d2cfbd6d02e858e3d4740d6b5a21c15d67c1cebe3413c002f3d581175903fa4a87dce5d61b8b528973c3f0212fc6a5b",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 76046,
+      "program": "606a41ba01654186ff7bbb5b6b150bf291056531eaa319adc83f2c7d05bf3c048a5d3cfc79bca73b117bf95d3da1454c13f12c4b248a1428308f415f06a5df43",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 76882,
+      "program": "d218492c5e3052ec7a4e8db788d01740d5ed09d34ff6653d303cb51e7eec2c991f2f5b25376a1140f2483b7b3f74b3882e8337651397bd1e3b3e5dc082b536f5",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 79168,
+      "program": "8169f9f6df58996ed8b1a05bc5303b2c758291d7fedb47297113415c6cbc8f8f1aeeabfce9e0064990004a3c8d7d3c3ea943d25d1317d23f36f983b5fad4061a",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 80321,
+      "program": "3cb1a8c1c8806804d43e1b24b1a4065b9a32842cab6f70af7b9c4a3e5d62fff55536864db9a5ed097ddb49af75bcf99cedd624c53c9562a641f27c4d0b17f25b",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 80577,
+      "program": "f02e5b9274b63e1c516b7f3c3abe5a4b8001adb9c43ae22239e27e1d564f3edf28da73871bfd94de2c9672aae3f2b8bbfc8709cb02dfb486747b745d1fc6e813",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 81014,
+      "program": "013fd4f45b74dfc13c32409df2232c0a9c8991ca9cff07e651326c9df7e244266c24049a38069ad48fda8622778b907d535d3c302f3614bb222c4b98f5c18ba9",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 81675,
+      "program": "76c36f8a62979bda81b55b3c2cc31e5e0e09a02685ba239033f494d9143837a9ae913a412b3ab175d4be3464b1e42cb941a1bb7d01d02fc55d8d9f74c3ed849e",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 81945,
+      "program": "38d3fb5a2c5b122c072b08288eac093a962c2cec9320992e656ca67dac488832ad2b413bbf669f39902434642c3c7e726cd1f7c28a2ca6816b18385da65236a5",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 81946,
+      "program": "563dbaf1fa5c8e01218629a7c9733c61d6e67ca03cef6e1079757ad7585a313e077d4d546fc9ed37ef47375b2c7768d40dfa433c7dc6282948d371ba595d3c3b",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 83067,
+      "program": "e5482a42c35b457c916c3e0ca50e8e09e28a5b1938144d47b6b33ad158b23ad5ad97317d873cc772eb2e5c5dfc10be0710aed118023c88d5a030e42fb14d2c78",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 83496,
+      "program": "35291ee763840a03a975c73b63ac955b6f19f6b39f522cd2b50369b656f63cd8797c92927de75d4b3a0f99c76b883b21f34a3792a4627e89913fc87acc3d2569",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 83894,
+      "program": "0a2a5bbdbf104be26e3d7393a1bf113f3f60017c3c2c71867de65896b5753afe05eee59c4d5d18adb328553cad562c50d6755f3c3f3c45beaf711fe901a66692",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 84951,
+      "program": "3f5b8111dee7f4237efc4cff73efb0f7035ab43c8c518670b93cd374bddaefb8dc363f3c5b2c5a89037f2c67de06e93a7d3ccafd38a27a0f0df7160f5d4da94b",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 85636,
+      "program": "12fc69bfe4df045bb71bebee4609dbaa7d14f457ff3d3e6ff6ee6ee148c93c5ec17a3e4f3cafd02f6f323cccfaa966ac162c00f4e9434167415dd8368441675c",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 87168,
+      "program": "48bd3e0803425b8eb330783eb05b9da8a73894de02593e11a337b58864d69b3afa5bcf34844e5a70b23c7d2e221c835dd7f80e8b476dd439653cbd4c6ca747d3",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 88313,
+      "program": "eb3ceedfb63acbe03c7281a77b988b985b7ea39dc1ceab35019a3d02fe7134d06d39ed0cc1477a39102d26b0a9d2a2372ce5e43cba85cf7d5dcc5667c7ce1b6d",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 88399,
+      "program": "e2217242a0840cba0bc021695b34cc35db197a7a8ad6243c7d7affabf427ad2a0f0e49350a56417c6cbf2ca7f85d30951b440ec4ea5f7b4ee2b33df36730862c",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 89699,
+      "program": "924c98557b11f6223e883bca6cdd5c5bc5673880d7943c7d86a1006c80adcd162a9ac13d2c768385ffc3d14ff03d22f8c45d4d5d6dc0340152ff40b932dd3034",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 91180,
+      "program": "e6b1e44c47805172ba02dfa2993b882b6f5f524084114ac25520c7655bb1373c2cbb7d0601c861cdc25d43463ebb3a873c173d4953cf8b127875276bc2acc16b",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 91564,
+      "program": "4f6568a30c048b7e531b3b3c972ceead8c915b3c164bf36ce7838c2a89d63273c7b14d333ab12c95ae7d120d5d02df31a3693c0beb7536ebdd42338040913360",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 92137,
+      "program": "47373aa857285b34f8e5f4b519f1393184eea02e3cc07f039b2f7d757d8a87cd2016133b2fbb864176525c3a299e320777540d1c504038befc1f903b3d7b5d7e",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 95652,
+      "program": "639372ee01f45bff6dbd15ca5bbf3bd82c706549b071ca00cd8e38e8ee7190e06d0841097119377d2a8f6c024e0dab3c8d33d56df73e244e3cdcefc3ecc9f85d",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 97436,
+      "program": "e01a3dde285be793b31fb51e4042e5df36fb9bad7d594498b62ca5f8323f21af6f94905e2afd3f34ea3c70ad317259a2953d5d3c850d8ca1c53c3b04911d55a4",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 98382,
+      "program": "ad5b953ba1e63c015b3b3f7e3201292c8c277d2c68708e45f5f128cb88e9793a74cb2192943c3b4dca21505deabe685b83be813caf6d04a5009fb7e7e9bc5ea6",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 99050,
+      "program": "3279637d0573cd3c3bf018203cdda84bc876e83c5bfb20c0e098d69782f15170b73cfd1271412c80770975beb1fb7dc27964c5e95d1d017b5a6ce61c3c52ff3e",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 99891,
+      "program": "45e74ae4c732a1fc785b01b9b2c2531d0d9589baeae80b3c667d2003cc3a0448b039d3055b75d2103c07b77dab2c4e1716feeab6555a5d7b0552805cb5496500",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 100909,
+      "program": "8b70bbb94d5be5dad52cd4da46bb3ca64d3e42ccbe97b96e5eb13c76cdd133e9bc4b3f54633b6889cf8c0a83c01c50b67dd4915d8b7bd5ea4e852b70b4b25b43",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 103410,
+      "program": "3cef371c8bf93f5489634e92313e5abdfc6bb8003f9d7e33839bac6155b12a31f8c4045b2e3b7dd2f21814cf524868e93dd53c84c83985fab469de5dca7c5120",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 104153,
+      "program": "f3d717b672603c4aef98335bd46b120b7a1f7b20374a9da3f42e3d8edf1a3ef5d2a9c7335d053d3ab250c43c6cdb4f1b15923eea02fac7fe30715b63f8f99a05",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 106994,
+      "program": "4b90e39ad118b53f1379bf3760102703670e396bad2034333bb54310125bc0eed35c5ff32c507d383ba1e6ef3cc706325d7be84b100f2c6271c539f40db04061",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 107886,
+      "program": "ec5b0d2c3e7b2ab199003dab2ccee48a3dd003b10b063eb7ae013dba14c1dfc08a3e7b3cfa3d39385dce3f3dca3c5d8fccf8dffb3f575bc7ae997ec5f31ea1d9",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 108525,
+      "program": "5ba15b85df28ffe82fd71ad83cf3ff1fe200f1c04f0f309102a42e341726007d2ed8bcdda01c99b54f00759f394c6e3dbdbb9d8bbaa5ad24493bf78187cd5d15",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 109323,
+      "program": "96be47d8ce307d65fb2c523c68671b665f5e5b1dc0951b1fe02958b15022490a1d152c477d2c3ca9452396a11e4bb231cd311ee82e844ab527375dd81863a83a",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 113728,
+      "program": "3d7a898769403c5c645b865c1291593f350841139f0a2ca461e42e4ae47e5426d62501d62305963940412e53fc0f3cdc31537dc44009a9056966b45d011e5b20",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 114901,
+      "program": "e52d7b94993d53329ecf3a3d7fb695395b92c59a3544965b07feb9d76e003a3f3c2ec7ab44fac8952f7d925f21e70dc7f340dcf0ee783dee535db48923d08755",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 115111,
+      "program": "8e8ee36d316a52567989d8f5902fa33cb07d2e112c5bde8a57117894370d3273398c57b58d065b2c7d5419a33c37676078465ae6495d4a81bb5b05ce743c9361",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 117282,
+      "program": "17cf003a05108ef54c5a183b158ea333b15b3a28ea211202a800385210048a8f594f513c653f642ecbc360777d30b2895d8d764f544fc1101935b2080e7a0212",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 118883,
+      "program": "c2ff0d61142f3f42cdc64ec670d68b5145d7543c05615b3c89209320bace6b4978be7df23c3e50d22a2f1a9b3a1540d50c18e031572eefec675d5bca09d8464c",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 119132,
+      "program": "8e62a777bd91070eb23c7abebbfb3351543bbbab94402f5b5c416fd13c2c7d37edb56b898f41b1b0a5ec329ee03d4e4320bda65df811d0cbb2270ef944918b6f",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 119347,
+      "program": "fe97ed7a1f62cca83f785b55f08e088b3913b7a87b6479c9f82cc09119ef67ad3c60ea9dbb622833ca818e0b7dca59b10ad2bc7c7d5d8aeefbc87e42022e5184",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 120795,
+      "program": "4b3cf34eb2865b5e533e6063940d0c7d24b272976140e84323cc3a8ebd3c6aafd0973c19f02c62afc05dd83c87eacc91fc45423076413c7db83e2c2eec0d174f",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 121905,
+      "program": "00afdff8001422ce4c8b3ca85ba67d4da239c42cb0e32c32de1ef7cf34b63c9439e75d076db6a86fbd5b97e7275c25fd171bd9e93df5bad96ae83a3cb41a3aab",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 123403,
+      "program": "22a09299901eed044a01edb277913f239c413e66db0c6bbd7b775bd44dc5e3fae5c9f27dafa1c33d622e704e3c9a5d72253cdae03839a93e3c977de6e551fb85",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 123962,
+      "program": "685b952cb1cd94379cc62dceb32c3c3da8233ad940f62a3767327d5d2b3c98bc439c05becf8ad79e5c8634adfe143f19815df166994687b022223256612c4f97",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 126716,
+      "program": "300c32b37a52e02f5b2df35a373e94bc0c4592e539deb166f83c1d8a8a82aeb13fb73eb58e218b7f5d6ed303eb013ddd212c8c045b853d368b3c3b6b58abb160",
+      "solo": "000",
+      "context": "100",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 127020,
+      "program": "1b3d781d8c5b57635cd238bd3d8195df6c31f765513a657b11844a2cf73d41a53c3d513ed43b60e748e37fc717400cc32e2661621cc0bf033bae593e5d3ba43d",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 127072,
+      "program": "ec7a291f535607ebbff797923c0144c50da1d2ff8d7c6c07e6ec5bfc96acc53df8d9dc4d2e9ac1d57d79ce1f563c95d93974ce2abeef6e9374c478a22cc15d54",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 127331,
+      "program": "7d3ecd274c8ec5762d84893701df822a490828c8a549c0f25b9d058452f686077d3a2cc3ab75e43f284b3de22c35816fe55c912ca4973c8bb5775c7f48325d69",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 127495,
+      "program": "0497f4aa5b3ca47dbd533ef504fd823c923fef3b36d7f25c2a262e255dafe12c26870c9ec5ed3dbd611e495b75f9046b4265d58a6dafeb265efc2b046e8803c6",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 128216,
+      "program": "42a7baa495aae72ce575dee2d9d95b563c3fe055c97d3abcad8a284b1a982c9e3d5d158421922ef3ef601e4b115787a969f3f821363c6df37f603c998a2deced",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    }
+  ],
+  "code": "92b8f4f",
+  "node": "v16.15.1"
+}

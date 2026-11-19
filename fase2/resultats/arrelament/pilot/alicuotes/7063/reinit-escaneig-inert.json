@@ -1,0 +1,41 @@
+{
+  "type": "inert-scan",
+  "from": "fase2/resultats/arrelament/pilot/alicuotes/7063/reinit.bin",
+  "captureSha256": "db073d308ee38923030c3dad046cb4a7b387281bd7b85150c93512f6aa2820a6",
+  "cells": 131072,
+  "copying": 3,
+  "heritable": 0,
+  "heritableSolo": 0,
+  "conditions": {
+    "seed": 3000000000,
+    "count": 3
+  },
+  "copiers": [
+    {
+      "cell": 56057,
+      "program": "e84a5b09be2eddbb70218e8534ddbe24a3867191377d1aa562f357a13ddcd9778c4dbcbb73d60373b8c6c6c23cb5d2597132c23a31751c83fbe4c425548b5d86",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 61783,
+      "program": "7b78d3273630de45e2cd0a5788aba660492b40a3b31f9f6aee7061c09ee44e10055b2eb47de6aa663cce6dda49b13a79e3115de2f2300628a438b10ab38487e0",
+      "solo": "000",
+      "context": "111",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    },
+    {
+      "cell": 127755,
+      "program": "f51e0f80a71e4f48e35b970bd5b13abd81c8811ebe352f914373594200f93c7dc0ec8a967af42c3bbb33565af1215dfd70aa4b421fa691e100b66ab27bc8c3d4",
+      "solo": "111",
+      "context": "000",
+      "heritableSolo": "000",
+      "heritableContext": "000"
+    }
+  ],
+  "code": "92b8f4f",
+  "node": "v16.15.1"
+}
