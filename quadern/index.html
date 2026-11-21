@@ -30,6 +30,7 @@
     <a href="#entrada-17">Entrada 17</a>
     <a href="#entrada-18">Entrada 18</a>
     <a href="#entrada-19">Entrada 19</a>
+    <a href="#entrada-20">Entrada 20</a>
   </nav>
 
   <article id="entrada-1">
@@ -2073,6 +2074,98 @@
         <li><strong>Per a la inoculació</strong> (FON-16). L'article de 2024 ja ho fa a BFF: sembren un replicador, sorgit d'una de les seves tirades i netejat, en 1.000 sopes noves, i en el 22 % hi ha la transició en 128 èpoques. Segons els autors, un de cada cinc replicadors arriba a prendre la sopa. És la mesura publicada més propera de l'arrelament; el que no s'ha fet és la mateixa mesura en sopes de diferent edat.</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-20">
+    <header>
+      <p class="date">Entrada 20 · 21 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, quarta part: la sopa vella no ajuda a arrelar</h1>
+      <p class="lede">La maduració de la sopa fa que la vida s'hi estableixi més sovint (<a href="#entrada-14">entrada 14</a>), però no sabíem si és perquè hi apareixen més replicadors o perquè hi arrelen més. Ho hem mesurat per separat a 60 mons nous. Hi hem plantat replicadors nascuts als nostres mons, 3.060 vegades, en tres sopes de cada món: la vella, la seva barrejada i una de nova. A la vella hi arrelen menys, no més: G1, de quatre a set vegades menys que a la nova, i G4, igual. I tanmateix, sense plantar res, la vida s'hi estableix més (15 mons de 60, contra 7), i el cens hi veu unes cinc vegades més famílies que apareixen i creixen, amb un interval massa ample per dir-ho amb la regla. Amb la regla de lectura fixada abans de calcular, l'efecte hauria de venir de l'aparició. Però els replicadors plantats no representen els que hi apareixen sols, i la frase només val per a aquests. És exploratori.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>El ritme d'establiment és el producte de dues coses: quants replicadors hereditaris hi apareixen i quina part d'aquests hi arrela. Fins que no es mesuressin per separat, no en podíem dir res (AUD-184 = AU2-151). L'arrelament no es pot mesurar sense plantar un replicador, i plantar-ne és contra la primera regla del projecte. El responsable en va fer una excepció escrita, només per a aquest pilot (la T-64, 16-11-2026): plantar un replicador nascut als mons del projecte, en branques a part, per mesurar si hi arrela. Mai en cap experiment que mesuri si la vida hi apareix: es diu «arrela un replicador plantat», mai «la vida hi neix». El pla (<code>docs/pla-aparicio-arrelament.md</code>, v0.6) va passar cinc auditories, de la 32 a la 36, abans de calcular, amb l'acord dels dos auditors i l'equip sobre com es comparen les dues parts.</p>
+
+    <h2>La prova de viabilitat (16-11-2026)</h2>
+    <p>Abans del pilot, 90 branques a 6 mons d'una sèrie ja decidida, amb quatre genotips nascuts als nostres mons: G1 (el brot del 1034, <a href="#entrada-19">entrada 19</a>), G2, G3 i G4 (d'establiments del pilot de la maduració). En sortien dues menes de genotips: G2 i G3 arrelaven gairebé sempre (17 i 15 de 18), i G1 i G4 s'extingien gairebé sempre (2 i 4 de 18 arrelaven), la majoria en menys de 100 èpoques. G1 només arrelava a la sopa nova (2 de 6), i amb 6 mons ja dèiem que la diferència entre sopes, si n'hi havia, podia anar al revés del que es veia a l'establiment. El pla en va treure els canvis de la v0.2: els quatre genotips a cada món, G1 també en un quadrat de 3 × 3 cel·les, i el llinatge dominant mesurat amb el cens de companys inerts. Els registres, l'anàlisi i les correccions són a <code>fase2/resultats/arrelament/viabilitat/</code>.</p>
+
+    <h2>El pilot</h2>
+    <ul>
+      <li><strong>Els mons:</strong> 60 mons nous (de la 7001 a la 7076), envellits fins a l'època 8.000 sense cap establiment i sense cap cel·la hereditària a l'escaneig. De cadascun, les tres sopes de la sèrie de la maduració: la vella (<code>continue</code>), el seu histograma barrejat (<code>shuffle-all</code>) i una de nova (<code>reinit</code>).</li>
+      <li><strong>La part A, l'assaig d'invasió:</strong> els genotips plantats en les mateixes cel·les de les tres sopes de cada món, 3.060 branques, i el llinatge de cada sembra seguit fins que arrela, s'extingeix o arriba a 1.500 èpoques. «Arrela»: el llinatge omple prou el món, comptat amb companys inerts; «s'estableix amb el llinatge dominant»: un establiment de la llei 2 on el llinatge és la meitat o més de les hereditàries.</li>
+      <li><strong>La part B, les aparicions naturals:</strong> els mateixos mons i sopes, sense plantar res, 180 branques, amb un cens de companys inerts que compta les famílies hereditàries que hi apareixen.</li>
+      <li><strong>El càlcul:</strong> del 19-11-2026 a les 20.57 al 21-11-2026 a les 12.53, cap branca fallada. Els registres, a git abans de mirar-los, i l'anàlisi, escrita i auditada abans de calcular, tal com surt (<code>fase2/resultats/arrelament/pilot/</code>).</li>
+    </ul>
+
+    <h2>El que surt: on arrelen els replicadors plantats</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Genotip</th><th style="text-align:left">La sopa vella</th><th style="text-align:left">La barrejada</th><th style="text-align:left">La nova</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">G1, una cel·la</td><td style="text-align:left">0,03 [0,01; 0,05]</td><td style="text-align:left">0,06 [0,03; 0,09]</td><td style="text-align:left">0,12 [0,07; 0,17]</td></tr>
+          <tr><td style="text-align:left">G1, 3 × 3 cel·les</td><td style="text-align:left">0,10 [0,06; 0,14]</td><td style="text-align:left">0,32 [0,26; 0,38]</td><td style="text-align:left">0,65 [0,60; 0,70]</td></tr>
+          <tr><td style="text-align:left">G4</td><td style="text-align:left">0,21 [0,16; 0,26]</td><td style="text-align:left">0,18 [0,13; 0,23]</td><td style="text-align:left">0,19 [0,14; 0,25]</td></tr>
+          <tr><td style="text-align:left">G2 i G3 (al sostre)</td><td style="text-align:left">0,98 i 0,90</td><td style="text-align:left">0,92 i 0,93</td><td style="text-align:left">0,98 i 0,95</td></tr>
+          <tr><td style="text-align:left">Sense genotip (sham)</td><td style="text-align:left">0 de 20</td><td style="text-align:left">0 de 20</td><td style="text-align:left">0 de 20</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">La part de les sembres que arrelen en 1.500 èpoques, amb l'interval del 95 % del bootstrap per món (60 mons). Cada cel·la de la taula, 240 sembres (G2 i G3, 60).</p>
+    <ul>
+      <li><strong>El contrast principal</strong> (G1, G1 en 3 × 3 i G4 junts, estratificat per genotip): la sopa vella, 0,35 vegades la nova [0,28; 0,43]; la barrejada, 0,58 [0,48; 0,69]. Amb la segona mesura (s'estableix amb el llinatge dominant), 0,36 i 0,57; i amb les tres sensibilitats del pla, de 0,35 a 0,39 i de 0,55 a 0,75.</li>
+      <li><strong>Depèn del genotip:</strong> G1 hi perd molt (0,24 i 0,15 a la vella, d'una cel·la i en 3 × 3), i G4 no hi canvia (1,11 [0,82; 1,52]). G1 ve d'un món vell, i és a la sopa vella on arrela pitjor.</li>
+      <li><strong>A la sopa vella, els plantats s'extingeixen més:</strong> 633 de 840, contra 485 a la nova. Els que s'extingeixen ho fan en 50 èpoques (la mediana).</li>
+      <li><strong>Els controls:</strong> cap sembra sense genotip no arrela, cap col·lisió amb un programa que ja hi fos, i la regla del primer byte no hi fa cap efecte gros (1,03 [0,82; 1,30]).</li>
+    </ul>
+
+    <h2>El que surt: les aparicions naturals</h2>
+    <ul>
+      <li><strong>La vida s'hi estableix com a la sèrie:</strong> 15 mons de 60 a la vella, 15 a la barrejada i 7 a la nova (a la sèrie de la maduració, 64, 82 i 40 de 300).</li>
+      <li><strong>El cens inert hi veu més famílies hereditàries noves:</strong> 0,24, 0,16 i 0,05 per cada 1.000 mon-èpoques abans de l'establiment. La vella, 5,0 vegades la nova [1,8; 16,1]; la barrejada, 3,3 [1,3; 9,6]. Cap no ve de les cel·les que ja hi eren.</li>
+      <li><strong>No és el ritme d'aparició:</strong> el cens no ha vist mai cap llinatge plantat que no passés de 10 cel·les (0 de més de 1.400), i en veu gairebé tots els que en passen de 100. Compta les famílies que apareixen i creixen.</li>
+    </ul>
+
+    <h2>Els plantats no representen els naturals</h2>
+    <p>De les famílies que el cens veu, quina part arrela en les 1.250 èpoques següents, amb la mateixa definició i la mateixa regla per a les naturals i per als llinatges plantats:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Sopa</th><th style="text-align:left">Famílies naturals</th><th style="text-align:left">Llinatges plantats</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">La vella</td><td style="text-align:left">15 de 87 (0,17)</td><td style="text-align:left">195 de 244 (0,80)</td></tr>
+          <tr><td style="text-align:left">La barrejada</td><td style="text-align:left">12 de 46 (0,26)</td><td style="text-align:left">239 de 319 (0,75)</td></tr>
+          <tr><td style="text-align:left">La nova</td><td style="text-align:left">5 de 14 (0,36)</td><td style="text-align:left">340 de 354 (0,96)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>No coincideixen, tampoc amb la mateixa mida a la primera detecció. La majoria de les famílies naturals són «competidores»: dins de la finestra hi ha un establiment, però no n'són dominants (59 de 87 a la vella). Sense comptar-les, la diferència s'escurça (0,54, 0,75 i 0,63 contra 0,80, 0,77 i 0,97), però el pla ja deia que aquesta sensibilitat afavoreix les naturals.</p>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>La lectura fixada abans de calcular</strong> (el pla, §1): els dos quocients de l'arrelament queden per sota d'1 i són prou estrets. Es diu: <em>l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment hauria de venir de l'aparició</em>. El de les aparicions detectades és <em>inconcloent</em>: l'interval és sencer per sobre d'1, però massa ample per a la regla.</li>
+      <li><strong>Com que els plantats no representen els naturals,</strong> la part A només parla d'aquests genotips. Que la sopa vella afavoreixi l'aparició és el que deixa la regla, no una mesura.</li>
+      <li><strong>Gira el que pensàvem:</strong> a l'<a href="#entrada-16">entrada 16</a> havíem escrit que el que canvia amb la maduració no deu ser quants replicadors hi apareixen, sinó quants n'hi arrelen, i els auditors ens ho van fer corregir per «encara no ho sabem» (AUD-184, AU2-151). Per a aquests plantats, és al revés: hi arrelen menys.</li>
+      <li><strong>El que queda obert:</strong> per què la sopa vella destrueix tan de pressa els replicadors plantats; per què tantes famílies naturals són competidores (si són trossos d'un mateix llinatge que el cens no ha unit, o famílies de debò que perden); i si les que apareixen a la sopa vella són d'una altra mena que els plantats.</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>Exploratori:</strong> cap afirmació causal general fins a una confirmació amb mons nous, i una confirmació que torni a plantar necessita una decisió nova del responsable.</li>
+      <li><strong>Quatre genotips,</strong> i dos al sostre: l'arrelament depèn molt del genotip, i a G4 la sopa no hi canvia res.</li>
+      <li><strong>Les aparicions detectades no són el ritme de formació,</strong> i el seu interval és massa ample. La consistència, amb poques famílies naturals a la sopa nova (14).</li>
+    </ul>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>Amb el rigor del carril de confirmar, sense ser una confirmació:</strong> el pla i les eines, amb cinc auditories abans de calcular; el manifest, a git abans de llançar; la comprovació global i el reescaneig de l'auditor 2, abans de cap branca; els registres, a git abans de l'anàlisi.</li>
+      <li><strong>L'excepció de la T-64:</strong> els replicadors plantats són nascuts als mons del projecte, en branques a part que comencen d'una còpia de la captura. La part B, la que compta aparicions, no planta res.</li>
+      <li><strong>El que no va anar bé del primer cop:</strong> la preparació es va llançar dues vegades seguides, i aquell intent no val; i va caldre una segona ronda d'envelliment, perquè hi faltaven dos mons (el README del pilot).</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>La ronda d'auditoria dels resultats,</strong> amb els dos auditors.</li>
+      <li><strong>Les preguntes obertes,</strong> pel carril d'explorar: què destrueix els plantats a la sopa vella, i què són les famílies competidores.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

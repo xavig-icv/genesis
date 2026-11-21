@@ -251,3 +251,26 @@ from epoch 100 to 1,100. One world and one outbreak: exploratory.
 replicators that appear and die out before taking over the soup. And the 2024 paper already measures taking root by seeding: one
 replicator, extracted from one of their runs and cleaned, seeded in 1,000 fresh soups, leads to a transition in 22% of them within 128
 epochs. No one has made the same measurement in soups of different ages.
+
+<a id="entry-20"></a>
+## Entry 20 · 21 November 2026 · The soup before life, part four: the aged soup does not help replicators take root (exploratory)
+
+Maturation makes life become established more often (entry 14), but we did not know whether more replicators appear or more of them
+take root. The pilot measured both separately in 60 new worlds (7001 to 7076, aged to epoch 8,000 with no establishment and no heritable
+cell), with three soups from each: the aged one (`continue`), its shuffled histogram (`shuffle-all`) and a fresh one (`reinit`). In part A,
+under the only written exception to the rule of planting nothing (T-64), replicators born in the project's worlds were planted in the same
+cells of the three soups, 3,060 branches, and each lineage was followed for up to 1,500 epochs; in part B, nothing was planted, and a census
+with inert partners counted the heritable families that appear. A feasibility test on 6 worlds (16 November) came first: two genotypes
+(G2, G3) take root almost always, two (G1, G4) almost never, and G1 took root only in the fresh soup. In the pilot, the share of plantings
+that take root is lower in the aged soup, not higher: 0.35 times the fresh soup [0.28, 0.43] (Mantel-Haenszel over G1, G1 in a 3 × 3
+square and G4), and 0.58 [0.48, 0.69] in the shuffled one; the second measure and the three sensitivities agree. G1 loses a lot (0.24 and
+0.15), G4 does not change (1.11 [0.82, 1.52]); shams never take root, there are no collisions, and the first-byte rule has no large effect.
+Yet in part B life becomes established in 15 worlds of 60 in the aged and shuffled soups and 7 in the fresh one, the direction of the
+series, and the inert census sees 0.24, 0.16 and 0.05 new heritable families per 1,000 world-epochs before establishment (5.0 [1.8, 16.1]
+and 3.3 [1.3, 9.6] times the fresh soup); the census only sees families that grow past about 100 cells. By the reading rule fixed before
+computing, the taking-root ratios are below 1 and precise enough: taking root of these variants goes against the effect, which would have
+to come from appearance; the detected-appearance ratio is inconclusive (too wide). The consistency check fails: of the families the
+census sees, 0.17, 0.26 and 0.36 of the natural ones take root within 1,250 epochs, against 0.80, 0.75 and 0.96 of the planted lineages,
+also at equal size; most natural families are competitors (another family becomes established). So part A speaks only about these
+genotypes. Open questions: what destroys planted replicators in the aged soup (median extinction, 50 epochs), and what the competitor
+families are. Exploratory: no general causal claim before a confirmation in new worlds.

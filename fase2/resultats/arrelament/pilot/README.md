@@ -110,3 +110,101 @@ Es van llançar el 19-11-2026 a les 20.57, una sola vegada, des d'una finestra d
   resultat.
 - **El temps:** uns 40 h. La part B va trigar menys del que deia el pla (unes 0,73 h de CPU per branca, i no 0,9), i la part A, més (unes
   190 h de CPU, i no 125).
+
+## El que surt (21-11-2026, exploratori)
+
+`node eines/arrelament-analisi.mjs`, des de la còpia del càlcul (`92b8f4f`), amb Node 16.15.1, de les 12.59 a les 13.13: codi 0, res a la
+sortida d'errors. La sortida, a `analisi-sortida.txt`, tal com va sortir (`a50ed48`). El món és la unitat: els intervals són del
+bootstrap per món (60 mons, 10.000 vegades).
+
+### Part A: on arrelen els replicadors plantats
+
+*p*R, la part de les sembres que arrelen dins de *H* (1.500 èpoques):
+
+| Variant | `continue` (l'envellida) | `shuffle-all` (la barrejada) | `reinit` (la nova) |
+|---|---|---|---|
+| G1 (una cel·la) | 0,03 [0,01; 0,05] | 0,06 [0,03; 0,09] | 0,12 [0,07; 0,17] |
+| G1 × 9 (3 × 3 cel·les) | 0,10 [0,06; 0,14] | 0,32 [0,26; 0,38] | 0,65 [0,60; 0,70] |
+| G4 | 0,21 [0,16; 0,26] | 0,18 [0,13; 0,23] | 0,19 [0,14; 0,25] |
+| G2 (descriptiu, al sostre) | 0,98 | 0,92 | 0,98 |
+| G3 (descriptiu, al sostre) | 0,90 | 0,93 | 0,95 |
+| sham (cap genotip) | 0 de 20 | 0 de 20 | 0 de 20 |
+
+**El contrast principal** (el quocient de *p*R contra la sopa nova, Mantel i Haenszel amb G1, G1 × 9 i G4):
+
+| | El quocient | G1 | G1 × 9 | G4 |
+|---|---|---|---|---|
+| `continue` contra `reinit` | **0,35 [0,28; 0,43]** | 0,24 [0,08; 0,48] | 0,15 [0,10; 0,22] | 1,11 [0,82; 1,52] |
+| `shuffle-all` contra `reinit` | **0,58 [0,48; 0,69]** | 0,48 [0,24; 0,87] | 0,49 [0,41; 0,59] | 0,93 [0,67; 1,29] |
+
+- **Les dues mesures diuen el mateix:** amb «s'estableix amb el llinatge dominant», 0,36 [0,29; 0,45] i 0,57 [0,48; 0,68].
+- **Les sensibilitats, també:** les censurades com si arrelessin (0,39 i 0,75), el criteri estricte de *F* (0,36 i 0,55) i sense les
+  col·lisions (no n'hi ha cap: 0 de 180, i cap cel·la amb una finestra dels genotips abans de plantar-los).
+- **Per variant:** G1 i G1 × 9 arrelen molt menys a les sopes envellides; G4, igual a totes tres. G1 ve d'un món envellit (el 1034), i G4
+  d'un establiment a una sopa nova: G1 arrela pitjor a la mena de sopa d'on ve.
+- **El secundari,** `byte0` contra `byte0-placebo`: 1,03 [0,82; 1,30]. Cap efecte gros de la regla del primer byte.
+- **Els desenllaços:** de 840 sembres per sopa, s'extingeixen 633 a l'envellida, 549 a la barrejada i 485 a la nova. Les que s'extingeixen,
+  en 50 èpoques (la mediana); les que arrelen, en 300.
+
+**La lectura, la de la §1** (fixada abans de calcular): els dos intervals queden per sota d'1, amb una semiamplada de 0,21 i 0,18 en
+logaritme (la regla en demana menys de 0,235). Es diu: **l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment
+hauria de venir de l'aparició.**
+
+### Part B: les aparicions naturals
+
+- **L'establiment:** 15 mons de 60 a l'envellida, 15 a la barrejada i 7 a la nova. És la direcció de la sèrie de la maduració (64, 82 i 40
+  de 300).
+- ***λ*det, les aparicions detectades** pel cens inert per cada 1.000 mon-èpoques abans de l'establiment: 0,238 [0,103; 0,439] a l'envellida,
+  0,159 [0,071; 0,280] a la barrejada i 0,048 [0,017; 0,086] a la nova (les robustes). Els quocients contra la nova, 5,01 [1,81; 16,09] i
+  3,34 [1,26; 9,64]. Els sis recomptes donen el mateix: cap de les famílies detectades no ve de les cel·les hereditàries de partida, ni
+  n'és emparentada.
+- **La lectura:** *inconcloent* per totes dues, perquè l'interval és massa ample (una semiamplada d'1,09 i 1,02 en logaritme). És un
+  descriptiu: no és el ritme de formació, i no se n'atribueix cap mecanisme.
+- **El detector:** cap llinatge plantat que no hagi passat de 10 cel·les no ha estat vist mai pel cens inert (0 de més de 1.400), i gairebé
+  tots els que n'han passat de 100, sí. *λ*det compta les famílies que creixen.
+
+### La consistència: els plantats no representen els naturals
+
+*P*(arrela | detectada), amb la mateixa definició, la mateixa finestra (1.250 èpoques des de la primera detecció) i la mateixa regla a les
+dues parts:
+
+| Sopa | Les famílies naturals robustes | Els llinatges plantats | Sense els competidors (sensibilitat) |
+|---|---|---|---|
+| `continue` | 15 de 87 (0,17) | 195 de 244 (0,80) | 0,54 i 0,80 |
+| `shuffle-all` | 12 de 46 (0,26) | 239 de 319 (0,75) | 0,75 i 0,77 |
+| `reinit` | 5 de 14 (0,36) | 340 de 354 (0,96) | 0,63 i 0,97 |
+
+- **No coincideixen.** Els plantats que el cens veu arrelen molt més que les famílies naturals que veu. Amb la mateixa mida a la primera
+  detecció (5 cel·les o més), també: 0,67 contra 0,90, 0,56 contra 0,82 i 0,75 contra 0,98.
+- **La majoria de les naturals són «competidores»:** hi ha un establiment dins de la finestra, però no n'són dominants (59 de 87, 30 de 46 i
+  6 de 14). Sense els competidors, la diferència s'escurça; el pla ja diu que aquesta sensibilitat afavoreix les naturals.
+- **Per la regla del pla:** com que no coincideixen, la part A només parla d'aquestes variants.
+- **L'aproximació exploratòria** (*λ*det × *P*): 0,041, 0,041 i 0,017 per 1.000 mon-èpoques, contra un ritme d'establiment observat de
+  0,035, 0,035 i 0,015. No és cap descomposició.
+
+### Els descriptius
+
+- **Els sham** (una cel·la escrita sense cap genotip): cap llinatge, i la part hereditària dels censos, igual que la dels bessons (la
+  diferència mitjana, entre −0,0021 i 0,0001).
+- **El punt de partida** (la mediana dels mons): l'envellida, 23 cel·les que es repliquen amb la prova del cens i cap d'hereditària, i 0 que
+  es copien amb companys inerts; la barrejada, 712 i 7, i 115 i 0; la nova, 118 i 0, i 7 i 0.
+
+### Què en traiem
+
+- **Als mons d'aquest pilot, la sopa envellida no ajuda a arrelar els replicadors plantats:** els en treu. G1 i G1 × 9 hi arrelen de quatre a
+  set vegades menys que a la sopa nova, i a la barrejada, la meitat; G4, igual a totes tres. Cap dels quatre genotips no hi arrela més.
+- **I tanmateix, la vida s'hi estableix més** (15 de 60 contra 7), i el cens inert hi veu més famílies que apareixen i creixen (unes cinc
+  vegades, amb un interval massa ample per a la regla).
+- **Amb la regla fixada,** l'efecte de la maduració hauria de venir de l'aparició, no de l'arrelament. Però els plantats no representen els
+  naturals: la frase només val per a aquestes variants.
+- **Les preguntes que queden:** per què la sopa envellida destrueix els plantats (la mediana de l'extinció, 50 èpoques); per què tantes
+  famílies naturals són competidores (si són trossos d'un mateix llinatge que el cens no ha unit, o famílies de debò que perden); i si
+  les aparicions de la sopa envellida, que el cens veu, són d'una altra mena que els plantats.
+
+### Els límits
+
+- **Exploratori.** Cap afirmació causal general fins a una confirmació amb mons nous, i una confirmació que torni a plantar necessita una
+  decisió nova del responsable.
+- **Quatre genotips,** dos al sostre: l'arrelament depèn molt del genotip, i G4 no hi canvia.
+- ***λ*det no és el ritme de formació,** i el detector només veu les famílies que creixen.
+- **La consistència,** amb pocs naturals a la sopa nova (14).
