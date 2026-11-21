@@ -1,0 +1,157 @@
+El pilot de l'aparició i l'arrelament: l'anàlisi de la §6 (exploratori). Manifest: 92b8f4f; 3240 branques.
+
+1. pR, la part de les sembres que arrelen dins de H (interval del bootstrap per món)
+   variant  continue                  shuffle-all               reinit                    byte0                     byte0-placebo             
+   G1       0.03 [0.01, 0.05] n=240   0.06 [0.03, 0.09] n=240   0.12 [0.07, 0.17] n=240                                                       
+   G1x9     0.10 [0.06, 0.14] n=240   0.32 [0.26, 0.38] n=240   0.65 [0.60, 0.70] n=240   0.08 [0.04, 0.13] n=120   0.07 [0.03, 0.13] n=120   
+   G4       0.21 [0.16, 0.26] n=240   0.18 [0.13, 0.23] n=240   0.19 [0.14, 0.25] n=240   0.18 [0.12, 0.26] n=120   0.18 [0.12, 0.26] n=120   
+   G2       0.98 [0.95, 1.00] n=60    0.92 [0.83, 0.98] n=60    0.98 [0.95, 1.00] n=60                                                        
+   G3       0.90 [0.82, 0.97] n=60    0.93 [0.87, 0.98] n=60    0.95 [0.88, 1.00] n=60                                                        
+   sham     0.00 [0.00, 0.00] n=20    0.00 [0.00, 0.00] n=20    0.00 [0.00, 0.00] n=20                                                        
+   Els desenllaços (arrela / s'extingeix / censurada a H / censurada per l'establiment), per sopa:
+   continue       195 / 633 / 12 / 0 (de 840)
+   shuffle-all    245 / 549 / 39 / 7 (de 840)
+   reinit         347 / 485 / 8 / 0 (de 840)
+   byte0          32 / 199 / 8 / 1 (de 240)
+   byte0-placebo  31 / 205 / 3 / 1 (de 240)
+
+2. El contrast principal: el quocient de pR, estratificat per variant (Mantel i Haenszel), amb G1, G1x9 i G4
+   continue contra reinit: 0.35 [0.28, 0.43]
+     G1: 0.24 [0.08, 0.48]
+     G1x9: 0.15 [0.10, 0.22]
+     G4: 1.11 [0.82, 1.52]
+     amb «s'estableix amb el llinatge dominant»: 0.36 [0.29, 0.45]
+     sensibilitats: les censurades com si arrelessin 0.39 [0.32, 0.47]; el criteri estricte de F 0.36 [0.29, 0.45]; sense les col·lisions 0.35 [0.28, 0.43]
+   shuffle-all contra reinit: 0.58 [0.48, 0.69]
+     G1: 0.48 [0.24, 0.87]
+     G1x9: 0.49 [0.41, 0.59]
+     G4: 0.93 [0.67, 1.29]
+     amb «s'estableix amb el llinatge dominant»: 0.57 [0.48, 0.68]
+     sensibilitats: les censurades com si arrelessin 0.75 [0.64, 0.88]; el criteri estricte de F 0.55 [0.46, 0.65]; sense les col·lisions 0.58 [0.48, 0.69]
+   byte0 contra byte0-placebo (G1x9 i G4, secundari, amb 2 posicions: només veu efectes grossos): 1.03 [0.82, 1.30]
+   Les col·lisions: mons i sopes amb F de 131 o més al seguiment del bessó, 0 de 180; cel·les amb alguna finestra dels genotips abans de plantar-los (la mediana), 0
+
+3. λdet, les aparicions DETECTADES pel cens inert per cada 1.000 mon-èpoques abans de l'establiment (la part B). No és el ritme de formació
+   «de partida»: algun programa de la primera detecció comparteix una finestra amb una cel·la hereditària de l'escaneig inert de l'època 8.000; «emparentada»: algun programa de la família en comparteix una amb qualsevol cel·la que s'hi copiava
+   continue     en alguna 0.238 [0.103, 0.439]; en alguna, sense les de partida 0.238 [0.103, 0.439]; en alguna, sense les emparentades 0.238 [0.103, 0.439]; robustes 0.238 [0.103, 0.439]; robustes, sense les de partida 0.238 [0.103, 0.439]; robustes, sense les emparentades 0.238 [0.103, 0.439]; 15 establiments de 60
+   shuffle-all  en alguna 0.159 [0.071, 0.280]; en alguna, sense les de partida 0.159 [0.071, 0.280]; en alguna, sense les emparentades 0.159 [0.071, 0.280]; robustes 0.159 [0.071, 0.280]; robustes, sense les de partida 0.159 [0.071, 0.280]; robustes, sense les emparentades 0.159 [0.071, 0.280]; 15 establiments de 60
+   reinit       en alguna 0.050 [0.019, 0.088]; en alguna, sense les de partida 0.050 [0.019, 0.088]; en alguna, sense les emparentades 0.050 [0.019, 0.088]; robustes 0.048 [0.017, 0.086]; robustes, sense les de partida 0.048 [0.017, 0.086]; robustes, sense les emparentades 0.048 [0.017, 0.086]; 7 establiments de 60
+   continue contra reinit (en alguna): 4.79 [1.75, 14.64]
+   continue contra reinit (en alguna, sense les de partida): 4.79 [1.75, 14.64]
+   continue contra reinit (en alguna, sense les emparentades): 4.79 [1.75, 14.64]
+   continue contra reinit (robustes): 5.01 [1.81, 16.09]
+   continue contra reinit (robustes, sense les de partida): 5.01 [1.81, 16.09]
+   continue contra reinit (robustes, sense les emparentades): 5.01 [1.81, 16.09]
+   shuffle-all contra reinit (en alguna): 3.19 [1.21, 8.67]
+   shuffle-all contra reinit (en alguna, sense les de partida): 3.19 [1.21, 8.67]
+   shuffle-all contra reinit (en alguna, sense les emparentades): 3.19 [1.21, 8.67]
+   shuffle-all contra reinit (robustes): 3.34 [1.26, 9.64]
+   shuffle-all contra reinit (robustes, sense les de partida): 3.34 [1.26, 9.64]
+   shuffle-all contra reinit (robustes, sense les emparentades): 3.34 [1.26, 9.64]
+   La calibració del detector (la part A, sense els sham): els censos inerts que veuen el llinatge, per la F del llinatge a la mateixa època; i els llinatges que el cens veu alguna vegada, per la F màxima
+   continue     per cens: F = 1, 0 de 0; F de 2 a 10, 4 de 6; F de 11 a 100, 43 de 56; F de 101 a 1310, 231 de 231; F de 1311 o més, 586 de 586
+                per llinatge: F = 1, 0 de 395; F de 2 a 10, 0 de 114; F de 11 a 100, 8 de 91; F de 101 a 1310, 36 de 39; F de 1311 o més, 201 de 201
+   shuffle-all  per cens: F = 1, 0 de 0; F de 2 a 10, 2 de 6; F de 11 a 100, 72 de 86; F de 101 a 1310, 600 de 601; F de 1311 o més, 727 de 727
+                per llinatge: F = 1, 0 de 395; F de 2 a 10, 0 de 66; F de 11 a 100, 8 de 59; F de 101 a 1310, 50 de 55; F de 1311 o més, 265 de 265
+   reinit       per cens: F = 1, 0 de 0; F de 2 a 10, 1 de 3; F de 11 a 100, 19 de 25; F de 101 a 1310, 434 de 435; F de 1311 o més, 1038 de 1038
+                per llinatge: F = 1, 0 de 388; F de 2 a 10, 0 de 70; F de 11 a 100, 1 de 22; F de 101 a 1310, 10 de 10; F de 1311 o més, 350 de 350
+
+4. La consistència: P(arrela | detectada), dominant (la meitat o més) a un establiment en 1250 èpoques des de la primera detecció; qui hi entra, només per l'època de la detecció, i la mateixa regla a les dues parts
+   continue     naturals robustes 15 de 87 (0.17); plantats 195 de 244 (0.80)
+     naturals: arrela 15, competidor 59, no arrela 13; no hi entren: tardanes 16, prèvies 0; plantats: arrela 195, competidor 0, no arrela 49; no hi entren: tardanes 1, prèvies 0; sense els competidors (sensibilitat): naturals 15 de 28 (0.54), plantats 195 de 244 (0.80)
+     la mida a la primera detecció, 1: naturals 3 de 56 (0.05); plantats 2 de 15 (0.13)
+     la mida a la primera detecció, 2 a 4: naturals 2 de 16 (0.13); plantats 12 de 28 (0.43)
+     la mida a la primera detecció, 5 o més: naturals 10 de 15 (0.67); plantats 181 de 201 (0.90)
+     aproximació exploratòria (AU2-161): λdet robustes × P = 0.041, contra el ritme d'establiment observat, 0.035 per 1.000 mon-èpoques. Suposa que totes les aparicions que arrelen es detecten, i que la detecció no depèn de la sopa
+   shuffle-all  naturals robustes 12 de 46 (0.26); plantats 239 de 319 (0.75)
+     naturals: arrela 12, competidor 30, no arrela 4; no hi entren: tardanes 22, prèvies 0; plantats: arrela 239, competidor 9, no arrela 71; no hi entren: tardanes 4, prèvies 0; sense els competidors (sensibilitat): naturals 12 de 16 (0.75), plantats 239 de 310 (0.77)
+     la mida a la primera detecció, 1: naturals 1 de 23 (0.04); plantats 4 de 17 (0.24)
+     la mida a la primera detecció, 2 a 4: naturals 1 de 5 (0.20); plantats 17 de 35 (0.49)
+     la mida a la primera detecció, 5 o més: naturals 10 de 18 (0.56); plantats 218 de 267 (0.82)
+     aproximació exploratòria (AU2-161): λdet robustes × P = 0.041, contra el ritme d'establiment observat, 0.035 per 1.000 mon-èpoques. Suposa que totes les aparicions que arrelen es detecten, i que la detecció no depèn de la sopa
+   reinit       naturals robustes 5 de 14 (0.36); plantats 340 de 354 (0.96)
+     naturals: arrela 5, competidor 6, no arrela 3; no hi entren: tardanes 8, prèvies 0; plantats: arrela 340, competidor 3, no arrela 11; no hi entren: tardanes 7, prèvies 0; sense els competidors (sensibilitat): naturals 5 de 8 (0.63), plantats 340 de 351 (0.97)
+     la mida a la primera detecció, 1: naturals 1 de 7 (0.14); plantats 5 de 8 (0.63)
+     la mida a la primera detecció, 2 a 4: naturals 1 de 3 (0.33); plantats 14 de 18 (0.78)
+     la mida a la primera detecció, 5 o més: naturals 3 de 4 (0.75); plantats 321 de 328 (0.98)
+     aproximació exploratòria (AU2-161): λdet robustes × P = 0.017, contra el ritme d'establiment observat, 0.015 per 1.000 mon-èpoques. Suposa que totes les aparicions que arrelen es detecten, i que la detecció no depèn de la sopa
+
+5. La lectura (§1)
+   continue, pR (arrela): per sota d'1: l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment hauria de venir de l'aparició
+   continue, pR (s'estableix amb el llinatge dominant): per sota d'1: l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment hauria de venir de l'aparició
+   continue, λdet (robustes, descriptiu): inconcloent: l'interval és massa ample (semiamplada 1.093 en logaritme, més de 0.235)
+   shuffle-all, pR (arrela): per sota d'1: l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment hauria de venir de l'aparició
+   shuffle-all, pR (s'estableix amb el llinatge dominant): per sota d'1: l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment hauria de venir de l'aparició
+   shuffle-all, λdet (robustes, descriptiu): inconcloent: l'interval és massa ample (semiamplada 1.019 en logaritme, més de 0.235)
+
+6. Els descriptius
+   «arrela» i «s'estableix amb el llinatge dominant»: totes dues 837, només arrela 13, només s'estableix 7, cap 2143
+   s'extingeixen 2075 (la mediana, 50 èpoques); arrelen 850 (la mediana, 300 èpoques); el criteri estricte de F hi canvia 23
+   Els sham contra els bessons (descriptiu: escriure una cel·la canvia la història del món, AUD-194; només veuria un efecte molt gros, AUD-196):
+   7001-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7001-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7001-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7002-continue-sham-p1: establiment cap, el bessó 13500; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7002-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7002-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7004-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7004-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7004-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7007-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7007-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, -0.0001 (7 censos)
+   7007-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7008-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7008-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7008-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7010-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7010-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7010-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7011-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7011-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7011-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7012-continue-sham-p1: establiment cap, el bessó 14750; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7012-shuffle-all-sham-p1: establiment cap, el bessó 14000; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7012-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7013-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7013-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7013-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7014-continue-sham-p1: establiment 9000, el bessó 9000; la diferència mitjana de la part hereditària dels censos comuns, -0.0021 (5 censos)
+   7014-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0001 (7 censos)
+   7014-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7015-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7015-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7015-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7016-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7016-shuffle-all-sham-p1: establiment cap, el bessó 12000; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7016-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7017-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7017-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7017-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7018-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7018-shuffle-all-sham-p1: establiment cap, el bessó 15250; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7018-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7019-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7019-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7019-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7020-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7020-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7020-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7021-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7021-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7021-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7022-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7022-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7022-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7023-continue-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7023-shuffle-all-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7023-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7024-continue-sham-p1: establiment cap, el bessó 15750; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+   7024-shuffle-all-sham-p1: establiment 8750, el bessó 8750; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (4 censos)
+   7024-reinit-sham-p1: establiment cap, el bessó cap; la diferència mitjana de la part hereditària dels censos comuns, 0.0000 (7 censos)
+
+   El punt de partida de cada sopa (la mediana dels mons): les que es repliquen i les hereditàries, amb la prova del cens; amb companys inerts, les que es copien i les hereditàries
+   continue       23 / 0; 0 / 0
+   shuffle-all    712 / 7; 115 / 0
+   reinit         118 / 0; 7 / 0
+   byte0          24 / 0
+   byte0-placebo  24 / 0
