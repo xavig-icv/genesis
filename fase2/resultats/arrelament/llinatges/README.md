@@ -63,10 +63,11 @@ les finestres dels mutants que es copien. Tres preguntes:
 
 Per a cada sembra de G1 (una cel·la) i de G4: els 24 veïns de la cel·la sembrada dins del quadrat de radi 2 (els que `pairNeighbors` hi pot
 aparellar), a la captura de partida de la seva sopa. Amb cada veí, la cinta de les dues parelles (el genotip primer, i el veí primer),
-executada una vegada amb `evaluate()` de `fase1/bff.js` (la química de sempre, el màxim de passos del món), sense mutacions. De cada trobada:
-- **es copia:** la meitat del veí acaba igual que el genotip, i la del genotip queda intacta;
-- **intacte:** la meitat del genotip queda igual, i no es copia;
-- **malmès:** la meitat del genotip canvia.
+executada una vegada amb `evaluate()` de `fase1/bff.js` (la química de sempre, el màxim de passos del món), sense mutacions. De cada trobada,
+tres coses que no s'exclouen (canviades després de la prova curta: vegeu «La prova curta»):
+- **es copia:** la meitat del veí porta alguna finestra del genotip o del seu mirall (la regla de la prova de replicació);
+- **tocat:** algun byte de la meitat del genotip ha canviat;
+- **malmès:** la meitat del genotip ja no és hereditària amb companys inerts, amb la prova del llinatge (les 3 condicions de `fase2/inert.js`).
 
 De cada sembra, la part de les 48 trobades en què el genotip queda malmès. I, com a descriptiu, la composició dels 24 veïns: la part dels
 bytes que són instruccions, i la de `<` i `,`.
@@ -106,6 +107,14 @@ Node. El món és la unitat: el bootstrap remostra mons sencers (10.000 vegades,
 
 La primera branca de les 52, en l'ordre del manifest: la simulació, la comprovació i el seguiment, de punta a punta. I la pregunta 3 amb un sol
 món, el primer de la cohort. Si la comprovació falla o cap pas no surt bé, s'atura tot i es diu aquí.
+
+**El que ha canviat a la prova curta** (21-11-2026, abans del càlcul llarg i abans de mirar cap resultat de les preguntes):
+- **La pregunta 3, amb un sol món** (el 7001, `57b0ded`): amb les definicions d'abans, G1 no sortia mai com a «es copia», perquè demanava la
+  meitat del veí igual que el genotip, byte a byte, i un replicador pot deixar una còpia girada o parcial. La prova del projecte compta una
+  finestra de 16 bytes. I «malmès» comptava qualsevol byte canviat, encara que el genotip continués sent hereditari. Ara: «es copia», amb la
+  regla de la prova de replicació; «tocat», algun byte canviat; i «malmès», que ja no és hereditari amb companys inerts (la prova del
+  llinatge). L'anàlisi fa servir «malmès». La sortida d'aquesta prova (amb les definicions d'abans), a `prova/veins-7001.jsonl`; el canvi del
+  codi, a `b2eb906`, i el del README i de l'anàlisi, al commit següent.
 
 ## El pressupost
 

@@ -35,6 +35,7 @@ for (const id of llista) {
 const veinsFile = join(ROOT, AQUI, 'veins.jsonl');
 const V = existsSync(veinsFile) ? readJsonl(veinsFile) : null;
 if (!V || V[0].type !== 'start' || V.at(-1).type !== 'end' || V[0].only) problems.push('veins.jsonl no hi és, no és sencer o és de la prova curta');
+else if (V.filter((l) => l.type === 'sembra').some((l) => !l.genotypeFunctional)) problems.push('a veins.jsonl, un genotip no és hereditari a la prova del llinatge');
 const codes = new Set([...seg.values()].map((L) => `${L[0].code} ${L[0].node}`));
 if (V) codes.add(`${V[0].code} ${V[0].node}`);
 if (codes.size !== 1) problems.push(`no tots tenen el mateix commit i la mateixa versió de Node: ${[...codes].join('; ')}`);
@@ -161,14 +162,14 @@ for (const s of S) {
   const l = rec.find((x) => x.type === 'lineage' && x.epoch === start + 50);
   firstZero.set(s.branch, l ? l.F === 0 : null);
 }
-out('\n4. Els veïns de la sembra, en una sola trobada: la part de les trobades en què el genotip queda malmès (la mitjana de les sembres)');
+out('\n4. Els veïns de la sembra, en una sola trobada: la part de les trobades en què el genotip queda malmès (ja no és hereditari amb companys inerts; la mitjana de les sembres)');
 const meanFrac = (ss) => (ss.length ? ss.reduce((t, s) => t + s.frac, 0) / ss.length : null);
 const wv = cohort.map((w) => S.filter((s) => s.world === w));
 for (const g of ['G1', 'G4']) {
   for (const soup of ARMS) {
     const ss = S.filter((s) => s.genotype === g && s.soup === soup);
-    const c = ss.reduce((t, s) => ({ copia: t.copia + s.copia, intacte: t.intacte + s.intacte, malmes: t.malmes + s.malmes }), { copia: 0, intacte: 0, malmes: 0 });
-    out(`   ${g} ${soup.padEnd(12)} ${ss.length} sembres; malmès ${f2(meanFrac(ss), 3)}; les trobades: es copia ${c.copia}, intacte ${c.intacte}, malmès ${c.malmes}`);
+    const c = ss.reduce((t, s) => ({ copia: t.copia + s.copia, tocat: t.tocat + s.tocat, malmes: t.malmes + s.malmes, n: t.n + 2 * s.veins }), { copia: 0, tocat: 0, malmes: 0, n: 0 });
+    out(`   ${g} ${soup.padEnd(12)} ${ss.length} sembres; malmès ${f2(meanFrac(ss), 3)}; de ${c.n} trobades: es copia ${c.copia}, tocat ${c.tocat}, malmès ${c.malmes}`);
   }
   for (const soup of ['continue', 'shuffle-all']) {
     const rq = (ws) => { const a = meanFrac(ws.flat().filter((s) => s.genotype === g && s.soup === soup)), r = meanFrac(ws.flat().filter((s) => s.genotype === g && s.soup === 'reinit')); return a !== null && r ? a / r : null; };
