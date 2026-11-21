@@ -284,3 +284,24 @@ it does not show that planted replicators do not represent natural ones: the gap
 which always take root (AUD-205). G4 is inconclusive, not unchanged (AUD-206). The title now says "planted replicators" (AUD-207). Natural
 taking root is also observed, in part B, with incomplete detection, and "no family comes from the starting cells" is a window rule, not a
 genealogy. With the pilot alone, 15 against 7 establishments is not significant (Fisher p = 0.10).
+
+## Entry 21 · 22 November 2026 · The soup before life, part five: natural families, followed like the planted replicators (exploratory)
+
+In entry 20, the natural families counted by the inert census could not separate appearance from taking root: at the census snapshot they
+break into pieces (AUD-204). Following the exploration-lane note agreed by both auditors and the team in audit 37, the 52 part-B branches
+where the inert census sees some heritable cell (21 aged, 19 shuffled, 12 fresh) were run again with the pilot's simulator, nothing planted,
+saving a capture every 50 epochs; all 52 reproduce the pilot records line by line. Natural lineages were followed with the same lineage
+module as the planted ones: a new lineage starts when the census sees a heritable cell that carries no window of any lineage already
+followed, and lineages that share a cell are joined. With the rules fixed in the note before computing: (1) the tracking joins 29% of the
+pilot's robust families in the aged soup (30 of 103), between the two thresholds, so it neither confirms nor contradicts AUD-204, and the
+ratio of all lineage appearances stays where it was (5.03 [1.84, 15.51]); the dominant group of each establishment still gathers several
+lineages. (2) Appearances that do not become established: 33, 14 and 8; the aged soup has 4.41 times the fresh-soup rate [1.44, 15.49], so
+by the note's criterion more appearances are detected there besides those that become established (shuffled, 1.89 [0.79, 5.71], cannot
+say). A count added after seeing the output: of the 33, 15 are in branches that never become established and 18 in branches that do, almost
+all just before the establishment, which may be pieces of the establishing lineage; 25 of the 33 were still alive, small, when the branch
+stopped. (3) Consistency with lineages: natural 0.64, 0.71 and 0.50 (6 of 12) against planted G1, G1 × 9 and G4 0.63, 0.62 and 0.94; it holds
+in the aged and shuffled soups and fails in the fresh one, which is the reference, so the plan's reading still cannot be made. (4) In a
+single encounter with the 24 neighbours of the planted cell, G1 is left no longer heritable 38% of the time in the aged soup and 39% in the
+fresh one (0.97 [0.96, 0.99]); the immediate encounter does not explain why planted replicators die out more in the aged soup. The first
+analysis run had an error (all planted lineages entered the consistency check, also those the census never detects); it is kept as it came
+out, and the corrected one gives the pilot's planted values. Exploratory: it does not say where maturation acts.

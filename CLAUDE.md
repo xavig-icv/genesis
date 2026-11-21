@@ -350,5 +350,9 @@ Llegeix-los abans de proposar canvis.
       cens (AUD-204). «La consistència no es compleix», mai «els plantats no representen els naturals» (AUD-205). La lectura de la §1, sempre
       amb la seva condició i com a lectura formal (AU2-184), mai que la maduració actua sobre l'aparició; als titulars, «els replicadors
       plantats» (AUD-207). El pas següent, una nota pel carril d'explorar; tornar a plantar, només amb una decisió nova i l'acord dels tres.
+    - **Les famílies naturals, seguides com els plantats** (22-11-2026, l'entrada 21, exploratori; `fase2/resultats/arrelament/llinatges/`, la
+      sortida `analisi-sortida.txt`, `e42ee6b`): la consistència es compleix a l'envellida i a la barrejada, i no a la nova; a l'envellida, més
+      aparicions que no s'estableixen (4,41 [1,44; 15,49]), «una part poden ser trossos», mai una mesura neta de l'aparició. El primer intent de
+      l'anàlisi, amb un error (tots els plantats a la consistència), a `intent-1/`. La ronda d'auditoria, després.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

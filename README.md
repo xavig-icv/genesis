@@ -341,11 +341,23 @@ plantar res, decidida pel responsable per a aquest pilot); a la part B, cap.
 
 Vegeu l'[entrada 20](quadern/index.html#entrada-20).
 
+### Les famílies naturals, seguides com els replicadors plantats (exploratori)
+
+Les 52 branques de la part B on el cens veu alguna cel·la hereditària, tornades a fer córrer sense plantar res (totes
+reprodueixen el pilot línia a línia), amb les famílies naturals seguides amb el mateix mòdul que els plantats.
+- **Seguides així, la consistència es compleix a la sopa vella i a la barrejada:** quan el cens les detecta, hi arrelen
+  tant com els plantats (0,64 contra 0,63, i 0,71 contra 0,62). A la nova, menys (6 de 12, contra 0,94): la lectura del
+  pilot, que compara amb la nova, continua sense poder-se fer.
+- **A la sopa vella s'hi detecten més aparicions que no s'estableixen** (4,4 vegades les de la nova [1,4; 15,5]), però
+  una part poden ser trossos del llinatge que s'estableix. No diu on actua la maduració.
+- **Els veïns de la sopa vella no fan més mal als plantats** en una trobada: no expliquen per què s'hi apaguen.
+
+Vegeu l'[entrada 21](quadern/index.html#entrada-21).
+
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** una nota pel carril d'explorar, amb dues preguntes que el pilot deixa obertes: com
-  delimitar les famílies naturals perquè es puguin seguir com els replicadors plantats, i per què els plantats s'apaguen
-  tan de pressa a la sopa vella.
+- **La sopa abans de la vida:** la ronda d'auditoria de les famílies naturals seguides com els plantats (l'entrada 21).
+  Queda obert per què els plantats s'apaguen tan de pressa a la sopa vella.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 
