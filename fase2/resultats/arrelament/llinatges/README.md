@@ -123,3 +123,12 @@ món, el primer de la cohort. Si la comprovació falla o cap pas no surt bé, s'
 - **El cens inert és una foto de 4.096 cel·les cada 250 èpoques:** les aparicions que no hi surten no es veuen.
 - **La pregunta 3 és una sola trobada,** amb els veïns de partida i sense mutacions: no és la dinàmica del món.
 - **Les branques de la part B s'aturen a l'establiment:** els llinatges naturals no se segueixen després.
+
+## Les ordres (abans de calcular)
+
+- **`prepara.mjs`:** comprova que el codi de la simulació sigui el del pilot (`92b8f4f`), tria les 52 branques, copia les captures de partida
+  (amb la SHA-256 del manifest) i escriu `llista.txt` (SHA-256 `50750f61e40da2bac5a5acc8b82ff5118a5cd9d3ab59ed493381de67dfa73242`).
+- **`llanca.sh COMMIT`:** les guardes (un pany, la còpia neta al commit, cap fitxer de codi sense seguir) i les 52 branques, 8 alhora, amb
+  `branca.sh`: la simulació, la comprovació (`compara.mjs`), el seguiment (`segueix.mjs`) i esborrar les captures. El que passa, a
+  `llanca.log`.
+- **`veins.mjs`:** la pregunta 3, amb les captures de partida de la còpia del càlcul del pilot. **`analisi.mjs`:** l'anàlisi.
