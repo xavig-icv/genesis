@@ -1,0 +1,57 @@
+Les famílies naturals seguides com els plantats: l'anàlisi de la nota (exploratori). L'anàlisi: 194de005, v16.15.1.
+Els seguiments i els veïns: 2f0585d7 v16.15.1. 52 branques de 52.
+
+1. La fragmentació: les aparicions robustes de l'anàlisi del pilot (famílies de 16 bytes) que cauen dins d'un llinatge que ja se seguia
+   continue     famílies robustes 103; dins d'un llinatge que ja se seguia 30 (0.29); llinatges robustos 80; famílies per grup de llinatges: la mediana 1, el màxim 25
+   shuffle-all  famílies robustes 68; dins d'un llinatge que ja se seguia 20 (0.29); llinatges robustos 56; famílies per grup de llinatges: la mediana 1, el màxim 14
+   reinit       famílies robustes 22; dins d'un llinatge que ja se seguia 5 (0.23); llinatges robustos 17; famílies per grup de llinatges: la mediana 1, el màxim 4
+
+2. λlin: les aparicions robustes dels llinatges naturals, per cada 1.000 mon-èpoques d'exposició (exploratori)
+   totes:
+     continue     80 aparicions; λlin 0.185
+     shuffle-all  56 aparicions; λlin 0.131
+     reinit       17 aparicions; λlin 0.037
+     continue contra reinit: 5.03 [1.84, 15.51]
+     shuffle-all contra reinit: 3.56 [1.38, 9.43]
+   no s'estableixen:
+     continue     33 aparicions; λlin 0.076
+     shuffle-all  14 aparicions; λlin 0.033
+     reinit       8 aparicions; λlin 0.017
+     continue contra reinit: 4.41 [1.44, 15.49]
+     shuffle-all contra reinit: 1.89 [0.79, 5.71]
+   el ritme d'establiment, continue contra reinit: 2.29 [1.05, 6.63]
+   el ritme d'establiment, shuffle-all contra reinit: 2.31 [1.02, 6.90]
+
+3. La consistència: P(arrela | detectada) dels llinatges naturals robustos contra els plantats informatius (G1, G1x9 i G4)
+   continue     naturals 43 de 67 (0.64); plantats 82 de 719 (0.11); la diferència 0.53, p de Fisher 0.000: no coincideixen
+     naturals: arrela 43, competidor 16, no arrela 8; no hi entren: tardanes 13, prèvies 78; plantats: arrela 82, competidor 0, no arrela 637; tardanes 1, prèvies 0
+     sense els competidors (sensibilitat): naturals 43 de 51 (0.84), plantats 82 de 719 (0.11)
+   shuffle-all  naturals 25 de 35 (0.71); plantats 128 de 716 (0.18); la diferència 0.54, p de Fisher 0.000: no coincideixen
+     naturals: arrela 25, competidor 6, no arrela 4; no hi entren: tardanes 21, prèvies 118; plantats: arrela 128, competidor 9, no arrela 579; tardanes 4, prèvies 0
+     sense els competidors (sensibilitat): naturals 25 de 29 (0.86), plantats 128 de 707 (0.18)
+   reinit       naturals 6 de 12 (0.50); plantats 224 de 713 (0.31); la diferència 0.19, p de Fisher 0.211: no coincideixen
+     naturals: arrela 6, competidor 3, no arrela 3; no hi entren: tardanes 5, prèvies 16; plantats: arrela 224, competidor 3, no arrela 486; tardanes 7, prèvies 0
+     sense els competidors (sensibilitat): naturals 6 de 9 (0.67), plantats 224 de 710 (0.32)
+
+4. Els veïns de la sembra, en una sola trobada: la part de les trobades en què el genotip queda malmès (ja no és hereditari amb companys inerts; la mitjana de les sembres)
+   G1 continue     240 sembres; malmès 0.380; de 11520 trobades: es copia 5760, tocat 4402, malmès 4381
+   G1 shuffle-all  240 sembres; malmès 0.375; de 11520 trobades: es copia 5762, tocat 4534, malmès 4320
+   G1 reinit       240 sembres; malmès 0.390; de 11520 trobades: es copia 5761, tocat 4530, malmès 4494
+   G1 continue contra reinit: 0.97 [0.96, 0.99]
+   G1 shuffle-all contra reinit: 0.96 [0.94, 0.98]
+   G4 continue     240 sembres; malmès 0.375; de 11520 trobades: es copia 5760, tocat 4395, malmès 4316
+   G4 shuffle-all  240 sembres; malmès 0.370; de 11520 trobades: es copia 5760, tocat 4518, malmès 4268
+   G4 reinit       240 sembres; malmès 0.387; de 11520 trobades: es copia 5760, tocat 4523, malmès 4456
+   G4 continue contra reinit: 0.97 [0.95, 0.99]
+   G4 shuffle-all contra reinit: 0.96 [0.94, 0.98]
+   Dins de cada sopa: la part de les sembres que s'apaguen al primer pas del llinatge (F = 0 a l'època 8.050), per terços de la part malmesa
+   G1 continue     terç 1 (malmès 0.313): 64 de 80; terç 2 (malmès 0.383): 69 de 80; terç 3 (malmès 0.445): 73 de 80
+   G1 shuffle-all  terç 1 (malmès 0.324): 61 de 80; terç 2 (malmès 0.378): 68 de 80; terç 3 (malmès 0.423): 68 de 80
+   G1 reinit       terç 1 (malmès 0.348): 60 de 80; terç 2 (malmès 0.391): 60 de 80; terç 3 (malmès 0.432): 73 de 80
+   G4 continue     terç 1 (malmès 0.304): 55 de 80; terç 2 (malmès 0.379): 58 de 80; terç 3 (malmès 0.441): 69 de 80
+   G4 shuffle-all  terç 1 (malmès 0.318): 58 de 80; terç 2 (malmès 0.372): 63 de 80; terç 3 (malmès 0.421): 68 de 80
+   G4 reinit       terç 1 (malmès 0.345): 56 de 80; terç 2 (malmès 0.388): 62 de 80; terç 3 (malmès 0.428): 70 de 80
+   La composició dels 24 veïns (descriptiu, la mitjana de les sembres de G1): la part d'instruccions, de < i de ,
+   continue     instruccions 0.115; < 0.0430; , 0.0162
+   shuffle-all  instruccions 0.113; < 0.0403; , 0.0155
+   reinit       instruccions 0.039; < 0.0038; , 0.0040
