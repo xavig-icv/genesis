@@ -344,9 +344,11 @@ Llegeix-los abans de proposar canvis.
     - **El llinatge és de finestres, no de descendència:** el control de les col·lisions (`--track`, sense plantar res) als bessons de la
       part B, i `preCarriers` a cada sembra (AU2-156). *F* = 0 sempre és exacte: amb més de 256 cel·les i cap de funcional a la mostra, es
       proven totes (AUD-192).
-    - **Els resultats** (21-11-2026, l'entrada 20, exploratori; la sortida, `fase2/resultats/arrelament/pilot/analisi-sortida.txt`, `a50ed48`):
-      els plantats arrelen menys a la sopa envellida (0,35 [0,28; 0,43]); les aparicions detectades, inconcloents; la consistència no hi és.
-      Es diu «l'efecte hauria de venir de l'aparició» només per a aquests genotips, mai que la maduració actua sobre l'aparició. Falta la ronda
-      d'auditoria dels resultats.
+    - **Els resultats** (21-11-2026, l'entrada 20, exploratori; la sortida, `fase2/resultats/arrelament/pilot/analisi-sortida.txt`, `a50ed48`;
+      l'auditoria 37, acceptats com a exploratoris per tots dos): els plantats arrelen menys a la sopa envellida (0,35 [0,28; 0,43]); a G4,
+      inconcloent, mai «igual» (AUD-206). *λ*det no mesura l'aparició per separat: les famílies naturals es trenquen en trossos a la foto del
+      cens (AUD-204). «La consistència no es compleix», mai «els plantats no representen els naturals» (AUD-205). La lectura de la §1, sempre
+      amb la seva condició i com a lectura formal (AU2-184), mai que la maduració actua sobre l'aparició; als titulars, «els replicadors
+      plantats» (AUD-207). El pas següent, una nota pel carril d'explorar; tornar a plantar, només amb una decisió nova i l'acord dels tres.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

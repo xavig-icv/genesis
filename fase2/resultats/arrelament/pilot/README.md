@@ -140,30 +140,42 @@ bootstrap per món (60 mons, 10.000 vegades).
 - **Les dues mesures diuen el mateix:** amb «s'estableix amb el llinatge dominant», 0,36 [0,29; 0,45] i 0,57 [0,48; 0,68].
 - **Les sensibilitats, també:** les censurades com si arrelessin (0,39 i 0,75), el criteri estricte de *F* (0,36 i 0,55) i sense les
   col·lisions (no n'hi ha cap: 0 de 180, i cap cel·la amb una finestra dels genotips abans de plantar-los).
-- **Per variant:** G1 i G1 × 9 arrelen molt menys a les sopes envellides; G4, igual a totes tres. G1 ve d'un món envellit (el 1034), i G4
-  d'un establiment a una sopa nova: G1 arrela pitjor a la mena de sopa d'on ve.
+- **Per variant:** G1 i G1 × 9 arrelen molt menys a les sopes envellides. G1 ve d'un món envellit (el 1034), i G4 d'un establiment a una
+  sopa nova: G1 arrela pitjor a la mena de sopa d'on ve.
+- **G4, inconcloent:** 1,11 [0,82; 1,52] a l'envellida i 0,93 [0,67; 1,29] a la barrejada, amb una semiamplada de 0,31 i 0,33 en logaritme.
+  És compatible amb cap diferència, però també amb un 50 % més o un 20 % menys: no és cap prova que no hi canviï (AUD-206 = AU2-183).
 - **El secundari,** `byte0` contra `byte0-placebo`: 1,03 [0,82; 1,30]. Cap efecte gros de la regla del primer byte.
-- **Els desenllaços:** de 840 sembres per sopa, s'extingeixen 633 a l'envellida, 549 a la barrejada i 485 a la nova. Les que s'extingeixen,
-  en 50 èpoques (la mediana); les que arrelen, en 300.
+- **Els desenllaços:** de 840 sembres per sopa, s'extingeixen 633 a l'envellida, 549 a la barrejada i 485 a la nova. La mediana de totes les
+  extincions és de 50 èpoques (a l'envellida, la de G1 × 9 és de 100), i la de les que arrelen, de 300. Quan un llinatge s'extingeix, en
+  queden trossos, però cap cel·la que es copiï sola amb companys inerts (l'auditor 1, auditoria 37).
 
 **La lectura, la de la §1** (fixada abans de calcular): els dos intervals queden per sota d'1, amb una semiamplada de 0,21 i 0,18 en
 logaritme (la regla en demana menys de 0,235). Es diu: **l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment
-hauria de venir de l'aparició.**
+hauria de venir de l'aparició.** És la lectura formal del contrast dels replicadors plantats, amb una condició: que les aparicions naturals
+arrelin com aquests genotips. La consistència no ho confirma (a sota), i no és cap demostració que la maduració actuï sobre l'aparició dels
+replicadors naturals (AUD-205, AU2-184).
 
 ### Part B: les aparicions naturals
 
 - **L'establiment:** 15 mons de 60 a l'envellida, 15 a la barrejada i 7 a la nova. És la direcció de la sèrie de la maduració (64, 82 i 40
-  de 300).
+  de 300). Al pilot sol, la diferència no és significativa (una p de Fisher bilateral de 0,10; aparellada per món, una p de McNemar de 0,077 i
+  0,096: diagnòstics dels auditors, a posteriori).
 - ***λ*det, les aparicions detectades** pel cens inert per cada 1.000 mon-èpoques abans de l'establiment: 0,238 [0,103; 0,439] a l'envellida,
   0,159 [0,071; 0,280] a la barrejada i 0,048 [0,017; 0,086] a la nova (les robustes). Els quocients contra la nova, 5,01 [1,81; 16,09] i
-  3,34 [1,26; 9,64]. Els sis recomptes donen el mateix: cap de les famílies detectades no ve de les cel·les hereditàries de partida, ni
-  n'és emparentada.
+  3,34 [1,26; 9,64]. Els sis recomptes donen el mateix: cap de les famílies detectades no comparteix cap finestra de 16 bytes amb les cel·les
+  de partida, ni amb les hereditàries ni amb les que només es copien. És la regla de finestres, no una genealogia: no descarta una ascendència
+  amb mutacions, i a la sopa envellida gairebé no hi havia cel·les de partida (10 que es copien, en 60 mons, i cap d'hereditària; AU2-186).
 - **La lectura:** *inconcloent* per totes dues, perquè l'interval és massa ample (una semiamplada d'1,09 i 1,02 en logaritme). És un
   descriptiu: no és el ritme de formació, i no se n'atribueix cap mecanisme.
+- **Què compta *λ*det** (AUD-204): a l'envellida, 81 de les 103 aparicions robustes (el 79 %) són en les 1.250 èpoques d'abans d'un
+  establiment, i moltes són trossos de la família que s'estableix: comparteixen trossos de 9 a 15 bytes amb la seva dominant, i cap amb les dels
+  altres mons. Com que la finestra en té 16, cada tros compta com una família nova. Amb finestres de 8 bytes, el quocient baixa a 2,30 [1,08;
+  6,03], el mateix que el de l'establiment (2,29). Per tant, *λ*det **no mesura l'aparició per separat**: depèn de com es delimiten les
+  famílies (l'auditor 1, una sensibilitat a posteriori que no canvia l'anàlisi fixada).
 - **El detector:** cap llinatge plantat que no hagi passat de 10 cel·les no ha estat vist mai pel cens inert (0 de més de 1.400), i gairebé
-  tots els que n'han passat de 100, sí. *λ*det compta les famílies que creixen.
+  tots els que n'han passat de 100, sí. El cens veu sobretot les famílies que creixen.
 
-### La consistència: els plantats no representen els naturals
+### La consistència no es compleix
 
 *P*(arrela | detectada), amb la mateixa definició, la mateixa finestra (1.250 èpoques des de la primera detecció) i la mateixa regla a les
 dues parts:
@@ -175,12 +187,18 @@ dues parts:
 | `reinit` | 5 de 14 (0,36) | 340 de 354 (0,96) | 0,63 i 0,97 |
 
 - **No coincideixen.** Els plantats que el cens veu arrelen molt més que les famílies naturals que veu. Amb la mateixa mida a la primera
-  detecció (5 cel·les o més), també: 0,67 contra 0,90, 0,56 contra 0,82 i 0,75 contra 0,98.
-- **La majoria de les naturals són «competidores»:** hi ha un establiment dins de la finestra, però no n'són dominants (59 de 87, 30 de 46 i
-  6 de 14). Sense els competidors, la diferència s'escurça; el pla ja diu que aquesta sensibilitat afavoreix les naturals.
+  detecció (5 cel·les o més), també a l'envellida i a la barrejada: 0,67 contra 0,90 i 0,56 contra 0,82 (una p de Fisher de 0,02 i 0,01). A
+  la nova, amb 4 naturals de 5 cel·les o més, no es pot dir (0,75 contra 0,98).
+- **A l'envellida i a la barrejada, la majoria de les naturals són «competidores»:** hi ha un establiment dins de la finestra, però no en són
+  dominants (59 de 87 i 30 de 46; a la nova, 6 de 14). Són, sobretot, trossos de la família que s'estableix (AUD-204). Sense els
+  competidors, la diferència s'escurça; el pla ja diu que aquesta sensibilitat afavoreix les naturals.
+- **Dues coses que no són de l'arrelament** fan la distància (AUD-205, a posteriori): la delimitació de les famílies naturals (amb finestres
+  de 8 bytes, la seva *P* és 0,52, 0,69 i 0,60) i G2 i G3, que arrelen sempre (sense ells, la *P* dels plantats és 0,63, 0,62 i 0,94). La
+  consistència no confirma que els plantats representin els naturals, però tampoc no mostra que no els representin.
 - **Per la regla del pla:** com que no coincideixen, la part A només parla d'aquestes variants.
 - **L'aproximació exploratòria** (*λ*det × *P*): 0,041, 0,041 i 0,017 per 1.000 mon-èpoques, contra un ritme d'establiment observat de
-  0,035, 0,035 i 0,015. No és cap descomposició.
+  0,035, 0,035 i 0,015. No és cap descomposició, i que s'hi acosti no diu res: per construcció, és el ritme dels que arrelen per la part
+  de famílies que entren a la consistència, i a cada establiment n'arrela una (l'auditor 1, N-2).
 
 ### Els descriptius
 
@@ -192,19 +210,37 @@ dues parts:
 ### Què en traiem
 
 - **Als mons d'aquest pilot, la sopa envellida no ajuda a arrelar els replicadors plantats:** els en treu. G1 i G1 × 9 hi arrelen de quatre a
-  set vegades menys que a la sopa nova, i a la barrejada, la meitat; G4, igual a totes tres. Cap dels quatre genotips no hi arrela més.
-- **I tanmateix, la vida s'hi estableix més** (15 de 60 contra 7), i el cens inert hi veu més famílies que apareixen i creixen (unes cinc
-  vegades, amb un interval massa ample per a la regla).
-- **Amb la regla fixada,** l'efecte de la maduració hauria de venir de l'aparició, no de l'arrelament. Però els plantats no representen els
-  naturals: la frase només val per a aquestes variants.
-- **Les preguntes que queden:** per què la sopa envellida destrueix els plantats (la mediana de l'extinció, 50 èpoques); per què tantes
-  famílies naturals són competidores (si són trossos d'un mateix llinatge que el cens no ha unit, o famílies de debò que perden); i si
-  les aparicions de la sopa envellida, que el cens veu, són d'una altra mena que els plantats.
+  set vegades menys que a la sopa nova, i a la barrejada, la meitat. A G4, inconcloent.
+- **I tanmateix, sense plantar res, la vida s'hi estableix més,** com a la sèrie (15 de 60 contra 7). El cens hi veu més famílies, però
+  gairebé totes just abans d'un establiment, i moltes són trossos de la família que s'estableix: el quocient depèn de com es delimiten les
+  famílies (5,0 amb les finestres del pla, 2,3 amb finestres de 8 bytes, el mateix que l'establiment), i no mesura l'aparició per separat.
+- **La lectura fixada, amb la seva condició:** si les aparicions naturals arrelessin com aquests genotips, l'efecte de la maduració hauria de
+  venir de l'aparició. La consistència no ho confirma, i la part B no separa l'aparició de l'arrelament. És una lectura formal, no una
+  demostració.
+- **Les preguntes que queden:** per què els plantats s'hi apaguen tan de pressa (en queden trossos, però cap cel·la que es copiï sola); com
+  delimitar les famílies naturals perquè es puguin seguir com els plantats; i si les aparicions de la sopa envellida són d'una altra mena que
+  els plantats.
 
 ### Els límits
 
 - **Exploratori.** Cap afirmació causal general fins a una confirmació amb mons nous, i una confirmació que torni a plantar necessita una
   decisió nova del responsable.
-- **Quatre genotips,** dos al sostre: l'arrelament depèn molt del genotip, i G4 no hi canvia.
-- ***λ*det no és el ritme de formació,** i el detector només veu les famílies que creixen.
+- **Quatre genotips,** dos al sostre: l'arrelament depèn molt del genotip, i a G4 és inconcloent.
+- ***λ*det no és el ritme de formació:** depèn de com es delimiten les famílies, i el cens veu sobretot les que creixen.
 - **La consistència,** amb pocs naturals a la sopa nova (14).
+
+## Les correccions de l'auditoria 37 (21-11-2026)
+
+Tots dos auditors van acceptar els resultats com a exploratoris: els registres, sencers; l'anàlisi, refeta byte a byte; la part A i les
+famílies de la part B, refetes sense el codi de l'equip. Cap no demana repetir res. Les correccions són de text, i l'anàlisi fixada i la seva
+sortida no es toquen:
+- **AUD-204:** deia que el cens veia «unes cinc vegades més famílies que apareixen i creixen», i que *λ*det «compta les famílies que creixen».
+  Ara diu què compta *λ*det, i que no mesura l'aparició per separat.
+- **AUD-205 i AU2-184:** el títol de la consistència deia «els plantats no representen els naturals», i «Què en traiem», que la frase de la
+  regla «només val per a aquestes variants». Ara: «la consistència no es compleix», i la frase de la regla, amb la seva condició.
+- **AUD-206 = AU2-183:** deia «G4, igual a totes tres», «G4 no hi canvia» i «cap dels quatre genotips no hi arrela més». Ara, inconcloent.
+- **AU2-186:** deia que «cap de les famílies detectades no ve de les cel·les hereditàries de partida». Ara, que no en comparteix cap
+  finestra, i que és una regla, no una genealogia.
+- **Les notes de l'auditor 1:** «destrueix» per «s'hi apaguen», la mediana de l'extinció (la de totes), la p del pilot sol, la mida a la
+  primera detecció a la nova, «no n'són» per «no en són», i l'aproximació, per construcció.
+- **AU2-187:** la sortida de l'anàlisi té espais al final de set línies de la taula. No es toca: la sortida es desa tal com surt.

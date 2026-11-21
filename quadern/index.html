@@ -2079,12 +2079,12 @@
   <article id="entrada-20">
     <header>
       <p class="date">Entrada 20 · 21 de novembre de 2026 · exploratori</p>
-      <h1>La sopa abans de la vida, quarta part: la sopa vella no ajuda a arrelar</h1>
-      <p class="lede">La maduració de la sopa fa que la vida s'hi estableixi més sovint (<a href="#entrada-14">entrada 14</a>), però no sabíem si és perquè hi apareixen més replicadors o perquè hi arrelen més. Ho hem mesurat per separat a 60 mons nous. Hi hem plantat replicadors nascuts als nostres mons, 3.060 vegades, en tres sopes de cada món: la vella, la seva barrejada i una de nova. A la vella hi arrelen menys, no més: G1, de quatre a set vegades menys que a la nova, i G4, igual. I tanmateix, sense plantar res, la vida s'hi estableix més (15 mons de 60, contra 7), i el cens hi veu unes cinc vegades més famílies que apareixen i creixen, amb un interval massa ample per dir-ho amb la regla. Amb la regla de lectura fixada abans de calcular, l'efecte hauria de venir de l'aparició. Però els replicadors plantats no representen els que hi apareixen sols, i la frase només val per a aquests. És exploratori.</p>
+      <h1>La sopa abans de la vida, quarta part: la sopa vella no ajuda a arrelar els replicadors plantats</h1>
+      <p class="lede">La maduració de la sopa fa que la vida s'hi estableixi més sovint (<a href="#entrada-14">entrada 14</a>), però no sabíem si és perquè hi apareixen més replicadors o perquè hi arrelen més. Ho hem mesurat per separat a 60 mons nous. Hi hem plantat replicadors nascuts als nostres mons, 3.060 vegades, en tres sopes de cada món: la vella, la seva barrejada i una de nova. A la vella hi arrelen menys, no més: G1, de quatre a set vegades menys que a la nova; a G4, inconcloent. I tanmateix, sense plantar res, la vida s'hi estableix més, com a la sèrie (15 mons de 60, contra 7). Amb la regla de lectura fixada abans de calcular, si les aparicions naturals arrelessin com aquests genotips, l'efecte hauria de venir de l'aparició. La consistència no ho confirma, i les famílies naturals que compta el cens no separen l'aparició de l'arrelament: depenen de com es delimiten. És exploratori.</p>
     </header>
 
     <h2>D'on surt</h2>
-    <p>El ritme d'establiment és el producte de dues coses: quants replicadors hereditaris hi apareixen i quina part d'aquests hi arrela. Fins que no es mesuressin per separat, no en podíem dir res (AUD-184 = AU2-151). L'arrelament no es pot mesurar sense plantar un replicador, i plantar-ne és contra la primera regla del projecte. El responsable en va fer una excepció escrita, només per a aquest pilot (la T-64, 16-11-2026): plantar un replicador nascut als mons del projecte, en branques a part, per mesurar si hi arrela. Mai en cap experiment que mesuri si la vida hi apareix: es diu «arrela un replicador plantat», mai «la vida hi neix». El pla (<code>docs/pla-aparicio-arrelament.md</code>, v0.6) va passar cinc auditories, de la 32 a la 36, abans de calcular, amb l'acord dels dos auditors i l'equip sobre com es comparen les dues parts.</p>
+    <p>El ritme d'establiment és el producte de dues coses: quants replicadors hereditaris hi apareixen i quina part d'aquests hi arrela. Fins que no es mesuressin per separat, no en podíem dir res (AUD-184 = AU2-151). Per comparar l'arrelament dels mateixos genotips a les tres sopes cal plantar-los (l'arrelament natural també s'observa, però amb una detecció incompleta), i plantar-ne és contra la primera regla del projecte. El responsable en va fer una excepció escrita, només per a aquest pilot (la T-64, 16-11-2026): plantar un replicador nascut als mons del projecte, en branques a part, per mesurar si hi arrela. Mai en cap experiment que mesuri si la vida hi apareix: es diu «arrela un replicador plantat», mai «la vida hi neix». El pla (<code>docs/pla-aparicio-arrelament.md</code>, v0.6) va passar cinc auditories, de la 32 a la 36, abans de calcular, amb l'acord dels dos auditors i l'equip sobre com es comparen les dues parts.</p>
 
     <h2>La prova de viabilitat (16-11-2026)</h2>
     <p>Abans del pilot, 90 branques a 6 mons d'una sèrie ja decidida, amb quatre genotips nascuts als nostres mons: G1 (el brot del 1034, <a href="#entrada-19">entrada 19</a>), G2, G3 i G4 (d'establiments del pilot de la maduració). En sortien dues menes de genotips: G2 i G3 arrelaven gairebé sempre (17 i 15 de 18), i G1 i G4 s'extingien gairebé sempre (2 i 4 de 18 arrelaven), la majoria en menys de 100 èpoques. G1 només arrelava a la sopa nova (2 de 6), i amb 6 mons ja dèiem que la diferència entre sopes, si n'hi havia, podia anar al revés del que es veia a l'establiment. El pla en va treure els canvis de la v0.2: els quatre genotips a cada món, G1 també en un quadrat de 3 × 3 cel·les, i el llinatge dominant mesurat amb el cens de companys inerts. Els registres, l'anàlisi i les correccions són a <code>fase2/resultats/arrelament/viabilitat/</code>.</p>
@@ -2113,19 +2113,20 @@
     <p class="sub">La part de les sembres que arrelen en 1.500 èpoques, amb l'interval del 95 % del bootstrap per món (60 mons). Cada cel·la de la taula, 240 sembres (G2 i G3, 60).</p>
     <ul>
       <li><strong>El contrast principal</strong> (G1, G1 en 3 × 3 i G4 junts, estratificat per genotip): la sopa vella, 0,35 vegades la nova [0,28; 0,43]; la barrejada, 0,58 [0,48; 0,69]. Amb la segona mesura (s'estableix amb el llinatge dominant), 0,36 i 0,57; i amb les tres sensibilitats del pla, de 0,35 a 0,39 i de 0,55 a 0,75.</li>
-      <li><strong>Depèn del genotip:</strong> G1 hi perd molt (0,24 i 0,15 a la vella, d'una cel·la i en 3 × 3), i G4 no hi canvia (1,11 [0,82; 1,52]). G1 ve d'un món vell, i és a la sopa vella on arrela pitjor.</li>
-      <li><strong>A la sopa vella, els plantats s'extingeixen més:</strong> 633 de 840, contra 485 a la nova. Els que s'extingeixen ho fan en 50 èpoques (la mediana).</li>
+      <li><strong>Depèn del genotip:</strong> G1 hi perd molt (0,24 i 0,15 a la vella, d'una cel·la i en 3 × 3). G1 ve d'un món vell, i és a la sopa vella on arrela pitjor. A G4, 1,11 [0,82; 1,52], inconcloent: compatible amb cap diferència, però també amb un 50 % més o un 20 % menys.</li>
+      <li><strong>A la sopa vella, els plantats s'hi apaguen més:</strong> 633 de 840, contra 485 a la nova. La mediana de totes les extincions és de 50 èpoques (a la vella, la de G1 en 3 × 3, de 100). En queden trossos, però cap cel·la que es copiï sola amb companys inerts.</li>
       <li><strong>Els controls:</strong> cap sembra sense genotip no arrela, cap col·lisió amb un programa que ja hi fos, i la regla del primer byte no hi fa cap efecte gros (1,03 [0,82; 1,30]).</li>
     </ul>
 
     <h2>El que surt: les aparicions naturals</h2>
     <ul>
-      <li><strong>La vida s'hi estableix com a la sèrie:</strong> 15 mons de 60 a la vella, 15 a la barrejada i 7 a la nova (a la sèrie de la maduració, 64, 82 i 40 de 300).</li>
-      <li><strong>El cens inert hi veu més famílies hereditàries noves:</strong> 0,24, 0,16 i 0,05 per cada 1.000 mon-èpoques abans de l'establiment. La vella, 5,0 vegades la nova [1,8; 16,1]; la barrejada, 3,3 [1,3; 9,6]. Cap no ve de les cel·les que ja hi eren.</li>
-      <li><strong>No és el ritme d'aparició:</strong> el cens no ha vist mai cap llinatge plantat que no passés de 10 cel·les (0 de més de 1.400), i en veu gairebé tots els que en passen de 100. Compta les famílies que apareixen i creixen.</li>
+      <li><strong>La vida s'hi estableix com a la sèrie:</strong> 15 mons de 60 a la vella, 15 a la barrejada i 7 a la nova (a la sèrie de la maduració, 64, 82 i 40 de 300). Al pilot sol, la diferència no és significativa (una p de Fisher de 0,10).</li>
+      <li><strong>El cens inert hi veu més famílies hereditàries:</strong> 0,24, 0,16 i 0,05 per cada 1.000 mon-èpoques abans de l'establiment. La vella, 5,0 vegades la nova [1,8; 16,1]; la barrejada, 3,3 [1,3; 9,6]. Però a la vella, el 79 % són en les 1.250 èpoques d'abans d'un establiment, i moltes són trossos de la família que s'estableix, que no en comparteixen cap finestra sencera de 16 bytes. Amb finestres de 8 bytes, el quocient baixa a 2,3, el mateix que el de l'establiment. No mesura l'aparició per separat.</li>
+      <li><strong>Cap no comparteix cap finestra amb les cel·les de partida.</strong> És la regla de finestres, no una genealogia: no descarta una ascendència amb mutacions, i a la sopa vella gairebé no hi havia cel·les de partida.</li>
+      <li><strong>No és el ritme d'aparició:</strong> el cens no ha vist mai cap llinatge plantat que no passés de 10 cel·les (0 de més de 1.400), i en veu gairebé tots els que en passen de 100. Veu sobretot les famílies que creixen.</li>
     </ul>
 
-    <h2>Els plantats no representen els naturals</h2>
+    <h2>La consistència no es compleix</h2>
     <p>De les famílies que el cens veu, quina part arrela en les 1.250 èpoques següents, amb la mateixa definició i la mateixa regla per a les naturals i per als llinatges plantats:</p>
     <div class="table-wrap">
       <table>
@@ -2137,21 +2138,21 @@
         </tbody>
       </table>
     </div>
-    <p>No coincideixen, tampoc amb la mateixa mida a la primera detecció. La majoria de les famílies naturals són «competidores»: dins de la finestra hi ha un establiment, però no n'són dominants (59 de 87 a la vella). Sense comptar-les, la diferència s'escurça (0,54, 0,75 i 0,63 contra 0,80, 0,77 i 0,97), però el pla ja deia que aquesta sensibilitat afavoreix les naturals.</p>
+    <p>No coincideixen, i a la vella i a la barrejada, tampoc amb la mateixa mida a la primera detecció. En aquestes dues sopes, la majoria de les famílies naturals són «competidores»: dins de la finestra hi ha un establiment, però no en són dominants (59 de 87 a la vella). Són, sobretot, trossos de la família que s'estableix. Sense comptar-les, la diferència s'escurça (0,54, 0,75 i 0,63 contra 0,80, 0,77 i 0,97), però el pla ja deia que aquesta sensibilitat afavoreix les naturals. La distància també depèn de G2 i G3, que arrelen sempre: sense ells, la dels plantats és 0,63, 0,62 i 0,94. La consistència no confirma que els plantats representin els naturals, però tampoc no mostra que no els representin.</p>
 
     <h2>Què en traiem</h2>
     <ul>
-      <li><strong>La lectura fixada abans de calcular</strong> (el pla, §1): els dos quocients de l'arrelament queden per sota d'1 i són prou estrets. Es diu: <em>l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment hauria de venir de l'aparició</em>. El de les aparicions detectades és <em>inconcloent</em>: l'interval és sencer per sobre d'1, però massa ample per a la regla.</li>
-      <li><strong>Com que els plantats no representen els naturals,</strong> la part A només parla d'aquests genotips. Que la sopa vella afavoreixi l'aparició és el que deixa la regla, no una mesura.</li>
+      <li><strong>La lectura fixada abans de calcular</strong> (el pla, §1): els dos quocients de l'arrelament queden per sota d'1 i són prou estrets. Es diu: <em>l'arrelament d'aquestes variants hi va en contra, i l'efecte de l'establiment hauria de venir de l'aparició</em>. És la lectura formal del contrast dels plantats, amb una condició: que les aparicions naturals arrelin com aquests genotips. El de les aparicions detectades és <em>inconcloent</em>: l'interval és sencer per sobre d'1, però massa ample per a la regla.</li>
+      <li><strong>Com que la consistència no es compleix,</strong> la part A només parla d'aquests genotips, i no és cap demostració que la maduració actuï sobre l'aparició dels replicadors naturals. La part B tampoc no ho mesura: les famílies que compta depenen de com es delimiten. Que la sopa vella afavoreixi l'aparició és el que deixa la regla, no una mesura.</li>
       <li><strong>Gira el que pensàvem:</strong> a l'<a href="#entrada-16">entrada 16</a> havíem escrit que el que canvia amb la maduració no deu ser quants replicadors hi apareixen, sinó quants n'hi arrelen, i els auditors ens ho van fer corregir per «encara no ho sabem» (AUD-184, AU2-151). Per a aquests plantats, és al revés: hi arrelen menys.</li>
-      <li><strong>El que queda obert:</strong> per què la sopa vella destrueix tan de pressa els replicadors plantats; per què tantes famílies naturals són competidores (si són trossos d'un mateix llinatge que el cens no ha unit, o famílies de debò que perden); i si les que apareixen a la sopa vella són d'una altra mena que els plantats.</li>
+      <li><strong>El que queda obert:</strong> per què els replicadors plantats s'apaguen tan de pressa a la sopa vella; com delimitar les famílies naturals perquè es puguin seguir com els plantats; i si les que apareixen a la sopa vella són d'una altra mena que els plantats.</li>
     </ul>
 
     <h2>Els límits</h2>
     <ul>
       <li><strong>Exploratori:</strong> cap afirmació causal general fins a una confirmació amb mons nous, i una confirmació que torni a plantar necessita una decisió nova del responsable.</li>
-      <li><strong>Quatre genotips,</strong> i dos al sostre: l'arrelament depèn molt del genotip, i a G4 la sopa no hi canvia res.</li>
-      <li><strong>Les aparicions detectades no són el ritme de formació,</strong> i el seu interval és massa ample. La consistència, amb poques famílies naturals a la sopa nova (14).</li>
+      <li><strong>Quatre genotips,</strong> i dos al sostre: l'arrelament depèn molt del genotip, i a G4 és inconcloent.</li>
+      <li><strong>Les aparicions detectades no són el ritme de formació:</strong> depenen de com es delimiten les famílies, i el seu interval és massa ample. La consistència, amb poques famílies naturals a la sopa nova (14).</li>
     </ul>
 
     <h2>Com ho hem fet</h2>
@@ -2163,9 +2164,21 @@
 
     <h2>El que ve</h2>
     <ul>
-      <li><strong>La ronda d'auditoria dels resultats,</strong> amb els dos auditors.</li>
-      <li><strong>Les preguntes obertes,</strong> pel carril d'explorar: què destrueix els plantats a la sopa vella, i què són les famílies competidores.</li>
+      <li><strong>La ronda d'auditoria dels resultats,</strong> amb els dos auditors: feta (el requadre de sota).</li>
+      <li><strong>Una nota pel carril d'explorar,</strong> abans de calcular: seguir les famílies naturals com els plantats, tornant a córrer la part B sense plantar res; la consistència sense G2 i G3; i com s'apaguen els plantats, amb els registres que ja tenim.</li>
     </ul>
+    <div class="pending">
+      <p><strong>Correccions de l'auditoria 37 (21-11-2026).</strong> Tots dos auditors van acceptar els resultats com a exploratoris: els registres, sencers; l'anàlisi, refeta byte a byte; la part A i les famílies de la part B, refetes sense el codi de l'equip. Cap no demana repetir res. Van trobar coses de text, i el text de dalt ja és el corregit:</p>
+      <ul>
+        <li><strong>El títol</strong> deia «la sopa vella no ajuda a arrelar», sense «els replicadors plantats» (AUD-207, AU2-184).</li>
+        <li><strong>«Unes cinc vegades més famílies que apareixen i creixen»</strong> (el resum) no mesura l'aparició (AUD-204). Les famílies que compta el cens són, sobretot, trossos de la que s'estableix, vistos just abans de l'establiment, i el quocient depèn de com es delimiten. També deia «Compta les famílies que apareixen i creixen».</li>
+        <li><strong>«Els plantats no representen els naturals»</strong> (un títol) deia més del que mostra la consistència, i «la frase només val per a aquests» (el resum) no deia la condició de la regla (AUD-205, AU2-184). La lectura de la regla és formal, no una demostració.</li>
+        <li><strong>«G4, igual»</strong> (el resum), «G4 no hi canvia» i «a G4 la sopa no hi canvia res»: és inconcloent, no una equivalència (AUD-206 = AU2-183).</li>
+        <li><strong>«L'arrelament no es pot mesurar sense plantar un replicador»:</strong> el natural també s'observa, a la part B, amb una detecció incompleta (AU2-185).</li>
+        <li><strong>«Cap no ve de les cel·les que ja hi eren»:</strong> és la regla de finestres, no una genealogia (AU2-186).</li>
+        <li><strong>Les notes de l'auditor 1:</strong> «s'extingeixen» i «destrueix» per «s'hi apaguen» (en queden trossos que no es copien sols); la mediana de 50 èpoques és la de totes les extincions; la diferència d'establiments del pilot sol no és significativa; la mida a la primera detecció, només a la vella i a la barrejada; «no n'són», «no en són».</li>
+      </ul>
+    </div>
   </article>
 
   <script type="module" src="quadern.js"></script>

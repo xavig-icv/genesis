@@ -325,24 +325,27 @@ seva vida, provades amb companys sense cap instrucció.
 
 Vegeu l'[entrada 19](quadern/index.html#entrada-19).
 
-### La sopa vella no ajuda a arrelar (exploratori)
+### La sopa vella no ajuda a arrelar els replicadors plantats (exploratori)
 
 El pilot de l'aparició i l'arrelament, a 60 mons nous, amb tres sopes de cada món: la vella, la seva barrejada i una de
 nova. A la part A, hi hem plantat replicadors nascuts als nostres mons, 3.060 vegades (l'única excepció de la regla de no
 plantar res, decidida pel responsable per a aquest pilot); a la part B, cap.
 - **Els replicadors plantats hi arrelen menys, no més:** a la sopa vella, 0,35 vegades la part que arrela a la nova
-  [0,28; 0,43]; a la barrejada, 0,58 [0,48; 0,69]. Depèn del genotip: G1 hi perd molt, G4 no hi canvia.
-- **I tanmateix, sense plantar res, la vida s'hi estableix més** (15 mons de 60 a la vella, contra 7 a la nova), i el cens
-  de companys inerts hi veu unes cinc vegades més famílies que apareixen i creixen, amb un interval massa ample per dir-ho.
-- **Amb la regla fixada abans de calcular,** l'efecte de la maduració hauria de venir de l'aparició, no de l'arrelament.
-  Però els plantats no representen les famílies que hi apareixen soles: la frase només val per a aquests genotips.
+  [0,28; 0,43]; a la barrejada, 0,58 [0,48; 0,69]. Depèn del genotip: G1 hi perd molt; a G4, inconcloent.
+- **I tanmateix, sense plantar res, la vida s'hi estableix més,** com a la sèrie (15 mons de 60 a la vella, contra 7 a la
+  nova). El cens de companys inerts hi veu més famílies, però gairebé totes just abans d'un establiment, i moltes són
+  trossos de la família que s'estableix: no mesura l'aparició per separat.
+- **Amb la regla fixada abans de calcular:** si les aparicions naturals arrelessin com aquests genotips, l'efecte de la
+  maduració hauria de venir de l'aparició. La consistència no ho confirma: és una lectura formal, no una demostració.
+- **Els dos auditors** hi han fet una ronda: acceptats com a exploratoris, amb correccions de text.
 
 Vegeu l'[entrada 20](quadern/index.html#entrada-20).
 
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** la ronda d'auditoria dels resultats del pilot, i dues preguntes que en queden obertes: què
-  destrueix els replicadors plantats a la sopa vella, i què són les famílies naturals que no arriben a dominar.
+- **La sopa abans de la vida:** una nota pel carril d'explorar, amb dues preguntes que el pilot deixa obertes: com
+  delimitar les famílies naturals perquè es puguin seguir com els replicadors plantats, i per què els plantats s'apaguen
+  tan de pressa a la sopa vella.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 

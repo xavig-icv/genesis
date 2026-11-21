@@ -237,24 +237,26 @@ cell of 33 snapshots, at three moments of its life, tested with partners that ha
 
 See notebook entry 19, in Catalan, or its [English summary](quadern/resum.en.md#entry-19).
 
-**The aged soup does not help replicators take root (exploratory).** The pilot of appearance and taking root, in 60 new
-worlds, with three soups from each world: the aged one, the same bytes shuffled, and a fresh one. In part A we planted
-replicators born in our own worlds, 3,060 times (the only exception to the rule of planting nothing, decided by the project
-owner for this pilot); in part B, none.
+**The aged soup does not help planted replicators take root (exploratory).** The pilot of appearance and taking root, in
+60 new worlds, with three soups from each world: the aged one, the same bytes shuffled, and a fresh one. In part A we
+planted replicators born in our own worlds, 3,060 times (the only exception to the rule of planting nothing, decided by the
+project owner for this pilot); in part B, none.
 - **Planted replicators take root less, not more:** in the aged soup, 0.35 times the share that takes root in the fresh one
-  [0.28, 0.43]; in the shuffled one, 0.58 [0.48, 0.69]. It depends on the genotype: G1 loses a lot, G4 does not change.
-- **And yet, with nothing planted, life becomes established more often** (15 worlds of 60 in the aged soup, against 7 in the
-  fresh one), and the census with inert partners sees about five times as many families that appear and grow, with an
-  interval too wide to say so.
-- **By the reading rule fixed before computing,** the effect of maturation would have to come from appearance, not from
-  taking root. But the planted replicators do not represent the families that appear on their own: the statement holds
-  only for these genotypes.
+  [0.28, 0.43]; in the shuffled one, 0.58 [0.48, 0.69]. It depends on the genotype: G1 loses a lot; for G4, inconclusive.
+- **And yet, with nothing planted, life becomes established more often,** as in the series (15 worlds of 60 in the aged
+  soup, against 7 in the fresh one). The census with inert partners sees more families, but almost all of them just before
+  an establishment, and many are pieces of the family that becomes established: it does not measure appearance on its own.
+- **By the reading rule fixed before computing:** if natural appearances took root like these genotypes, the effect of
+  maturation would have to come from appearance. The consistency check does not confirm it: it is a formal reading, not a
+  demonstration.
+- **Both auditors** have reviewed it: accepted as exploratory, with corrections to the text.
 
 See notebook entry 20, in Catalan, or its [English summary](quadern/resum.en.md#entry-20).
 
 **What we study now:**
-- **The soup before life:** the audit round of the pilot's results, and two questions it leaves open: what destroys
-  planted replicators in the aged soup, and what the natural families that never come to dominate are.
+- **The soup before life:** a note for the exploration lane, with two questions the pilot leaves open: how to delimit
+  natural families so that they can be followed like the planted replicators, and why planted replicators die out so fast
+  in the aged soup.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 
