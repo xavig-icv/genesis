@@ -1,0 +1,17 @@
+codi=92b8f4f  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 3407013 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7013/shuffle-all.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7013-shuffle-all-G1x9-p4.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7013-shuffle-all-G1x9-p4.jsonl
+llavor=3407013 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/pilot/alicuotes/7013/shuffle-all.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+500
+sembra (l'assaig d'invasió): el genotip G1 a 9 cel·laes (15375, 15376, 15377, 15887, 15888, 15889, 16399, 16400, 16401), de fase2/resultats/arrelament/pilot/sembres/7013-shuffle-all-G1x9-p4.json
+llinatge 8000  cel·les=9  provades=9  hereditàries=9  F=9  finestres=55
+llinatge 8050  cel·les=191  provades=191  hereditàries=26  F=26  finestres=193
+llinatge 8100  cel·les=269  provades=269  hereditàries=0  F=0  finestres=193
+època 8100  H0=7.833  HOE=0.365  ops/execució=280.3  parelles=75%  bytes <:3.8% #61:1.5% ,:1.5%  fragments [[[[[[[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  >>>>>>>>>>>> (0.2%)  62s
+llinatge 8150  cel·les=250  provades=250  hereditàries=0  F=0  finestres=193
+
+empremta del món: c1ff12b7
+
+programes diferents: 131032 de 131072
+      6  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      6  | [<        ,   } ]     .        ]        .     ] }   ,        <[|
+      6  | [<        ,   } ]     .        ]        .     ] }   ,        <[|
+      6  |[<        ,   } ]     .        ]        .     ] }   ,        <[ |
+      5  |[<        ,   } ]     .        ]        .     ] }   ,        <[ |

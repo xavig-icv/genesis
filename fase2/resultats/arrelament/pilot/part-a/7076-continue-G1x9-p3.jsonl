@@ -1,0 +1,22 @@
+{"type":"start","code":"92b8f4f","rng":"v2","node":"v16.15.1","zlib":"1.2.11","command":"node sim.mjs --world 512x256 --seed 2407076 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7076/continue.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7076-continue-G1x9-p3.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7076-continue-G1x9-p3.jsonl","seed":2407076,"programs":131072,"world":[512,256],"radius":2,"mixing":0,"diffusion":0,"flow":0,"renewal":0,"mutation":0.00024,"from":"fase2/resultats/arrelament/pilot/alicuotes/7076/continue.bin","start":8000,"epochs":9750,"every":100,"census":{"version":"v3","every":250,"sample":2048,"seed":20261016},"event":{"share":0.01,"censuses":2,"stopAfter":500},"inertCensus":{"sample":4096,"seed":20261116,"conditions":{"seed":3000000000,"count":3}},"plant":{"file":"fase2/resultats/arrelament/pilot/sembres/7076-continue-G1x9-p3.json","fileSha256":"dcd0bbba287b076eea930c67b6ebd421d06379eb5c76ff76aa0163f63e056877","genotype":"G1","sham":null,"hex":"1f1414191faf5b5b66335b5b9a3cf0887dbf3bf03bcff4ff393939ff17f45ccf2c3b5d5d3b2ccf5cf417ff393939fff4cf3bf03bbf7d88f03c9a5b5b33665b5b","cells":[52089,52090,52091,52601,52602,52603,53113,53114,53115],"sourceSha256":"e729d3b12796a15fca616adfb63cea338ed7852535580b46569339ed992c1c85","outputSha256":"a9b4e4bfc83030bb6d0044ccc689c4022ca7ed947482f02b7d79581a4437aa6e","lineageSeed":907076,"preCarriers":0},"lineage":{"every":50,"seed":907076,"sample":256,"conditions":{"seed":3000000000,"count":3},"stopOnExtinction":0}}
+{"type":"lineage","epoch":8000,"M":9,"tested":9,"copying":9,"functional":9,"F":9,"windows":55}
+{"type":"lineage","epoch":8050,"M":256,"tested":256,"copying":94,"functional":89,"F":89,"windows":485}
+{"type":"lineage","epoch":8100,"M":623,"tested":256,"copying":50,"functional":45,"F":110,"windows":737}
+{"type":"measure","epoch":8100,"h0":7.834209782307692,"hoe":0.32789168996150053,"ops":816221228,"runs":4928169,"epochs":100,"seconds":27}
+{"type":"lineage","epoch":8150,"M":752,"tested":256,"copying":12,"functional":10,"F":29,"windows":879}
+{"type":"lineage","epoch":8200,"M":761,"tested":256,"copying":12,"functional":12,"F":36,"windows":919}
+{"type":"measure","epoch":8200,"h0":7.832536852304974,"hoe":0.33187118763212275,"ops":822364143,"runs":4929327,"epochs":100,"seconds":53}
+{"type":"census","version":"v3","epoch":8250,"families":[],"extinct":[],"untracked":[],"familySample":0,"sample":2048,"replicating":1,"solo":1,"context":0,"heritable":1,"heritableSolo":1,"heritableContext":0}
+{"type":"inert","epoch":8250,"sample":4096,"copying":1,"heritable":1,"cells":[{"cell":43915,"program":"5b6c325b5b9a3cf0887dbf3bf03bcff4ff393939ff17f45ccf2c3b5d5d3b2ccf5cf417ff393939ff10cf82f03bbf7d88f03c9a5b5b33665b5baf1f8714145b3f","solo":"111","context":"000","heritableSolo":"111","heritableContext":"000"}],"lineage":1}
+{"type":"lineage","epoch":8250,"M":872,"tested":256,"copying":18,"functional":18,"F":61,"windows":1071}
+{"type":"lineage","epoch":8300,"M":882,"tested":256,"copying":8,"functional":8,"F":28,"windows":1165}
+{"type":"measure","epoch":8300,"h0":7.830926536025696,"hoe":0.3356968149563597,"ops":826252618,"runs":4929101,"epochs":100,"seconds":99}
+{"type":"lineage","epoch":8350,"M":842,"tested":256,"copying":6,"functional":6,"F":20,"windows":1203}
+{"type":"lineage","epoch":8400,"M":828,"tested":256,"copying":1,"functional":1,"F":3,"windows":1237}
+{"type":"measure","epoch":8400,"h0":7.830214867326402,"hoe":0.3318303916183938,"ops":833274700,"runs":4928960,"epochs":100,"seconds":126}
+{"type":"lineage","epoch":8450,"M":780,"tested":780,"copying":0,"functional":0,"F":0,"windows":1237,"exhaustive":true}
+{"type":"census","version":"v3","epoch":8500,"families":[],"extinct":[],"untracked":[],"familySample":0,"sample":2048,"replicating":0,"solo":0,"context":0,"heritable":0,"heritableSolo":0,"heritableContext":0}
+{"type":"inert","epoch":8500,"sample":4096,"copying":0,"heritable":0,"cells":[],"lineage":0}
+{"type":"lineage","epoch":8500,"M":718,"tested":718,"copying":0,"functional":0,"F":0,"windows":1237,"exhaustive":true}
+{"type":"measure","epoch":8500,"h0":7.830030986816455,"hoe":0.32964760974125973,"ops":837688533,"runs":4929388,"epochs":100,"seconds":177}
+{"type":"end","epoch":8500,"reason":"extinció","fingerprint":"95718ec7","hoeTransition":null,"event":null,"seconds":176.883,"extinction":8450}

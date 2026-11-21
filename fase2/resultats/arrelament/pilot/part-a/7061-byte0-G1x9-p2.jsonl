@@ -1,0 +1,22 @@
+{"type":"start","code":"92b8f4f","rng":"v2","node":"v16.15.1","zlib":"1.2.11","command":"node sim.mjs --world 512x256 --seed 1407061 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7061/byte0.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7061-byte0-G1x9-p2.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7061-byte0-G1x9-p2.jsonl","seed":1407061,"programs":131072,"world":[512,256],"radius":2,"mixing":0,"diffusion":0,"flow":0,"renewal":0,"mutation":0.00024,"from":"fase2/resultats/arrelament/pilot/alicuotes/7061/byte0.bin","start":8000,"epochs":9750,"every":100,"census":{"version":"v3","every":250,"sample":2048,"seed":20261016},"event":{"share":0.01,"censuses":2,"stopAfter":500},"inertCensus":{"sample":4096,"seed":20261116,"conditions":{"seed":3000000000,"count":3}},"plant":{"file":"fase2/resultats/arrelament/pilot/sembres/7061-byte0-G1x9-p2.json","fileSha256":"0e7a76a0a530fe17ec2cd09c4d71ac2cea8a448c0f8f625f3937909d45109d00","genotype":"G1","sham":null,"hex":"1f1414191faf5b5b66335b5b9a3cf0887dbf3bf03bcff4ff393939ff17f45ccf2c3b5d5d3b2ccf5cf417ff393939fff4cf3bf03bbf7d88f03c9a5b5b33665b5b","cells":[100741,100742,100743,101253,101254,101255,101765,101766,101767],"sourceSha256":"cc33b04c50a18fa1f0f68ee600739a1cb19ebda23a3bc9f40f4d8e56c2997545","outputSha256":"8b353c148c08cc49f8d219ff86d32eab8ee64146d1b243848becbf289ebfa641","lineageSeed":907061,"preCarriers":0},"lineage":{"every":50,"seed":907061,"sample":256,"conditions":{"seed":3000000000,"count":3},"stopOnExtinction":0}}
+{"type":"lineage","epoch":8000,"M":9,"tested":9,"copying":9,"functional":9,"F":9,"windows":55}
+{"type":"lineage","epoch":8050,"M":154,"tested":154,"copying":38,"functional":33,"F":33,"windows":221}
+{"type":"lineage","epoch":8100,"M":385,"tested":256,"copying":28,"functional":26,"F":39,"windows":305}
+{"type":"measure","epoch":8100,"h0":7.847859222436802,"hoe":0.32120593264188013,"ops":788863457,"runs":4927516,"epochs":100,"seconds":26}
+{"type":"lineage","epoch":8150,"M":431,"tested":256,"copying":26,"functional":25,"F":42,"windows":361}
+{"type":"lineage","epoch":8200,"M":444,"tested":256,"copying":12,"functional":12,"F":21,"windows":461}
+{"type":"measure","epoch":8200,"h0":7.848081545694602,"hoe":0.32310195432497313,"ops":793872186,"runs":4927717,"epochs":100,"seconds":52}
+{"type":"census","version":"v3","epoch":8250,"families":[],"extinct":[],"untracked":[],"familySample":0.00390625,"sample":2048,"replicating":2,"solo":2,"context":0,"heritable":2,"heritableSolo":2,"heritableContext":0}
+{"type":"inert","epoch":8250,"sample":4096,"copying":0,"heritable":0,"cells":[],"lineage":0}
+{"type":"lineage","epoch":8250,"M":496,"tested":256,"copying":25,"functional":22,"F":43,"windows":527}
+{"type":"lineage","epoch":8300,"M":588,"tested":256,"copying":23,"functional":23,"F":53,"windows":789}
+{"type":"measure","epoch":8300,"h0":7.847829222213397,"hoe":0.3279966111294126,"ops":799607789,"runs":4929035,"epochs":100,"seconds":97}
+{"type":"lineage","epoch":8350,"M":1025,"tested":256,"copying":33,"functional":31,"F":124,"windows":971}
+{"type":"lineage","epoch":8400,"M":1123,"tested":256,"copying":10,"functional":8,"F":35,"windows":1029}
+{"type":"measure","epoch":8400,"h0":7.845026325100873,"hoe":0.345246623867963,"ops":799932506,"runs":4929431,"epochs":100,"seconds":122}
+{"type":"lineage","epoch":8450,"M":1058,"tested":1058,"copying":0,"functional":0,"F":0,"windows":1029,"exhaustive":true}
+{"type":"census","version":"v3","epoch":8500,"families":[],"extinct":[],"untracked":[],"familySample":0,"sample":2048,"replicating":1,"solo":1,"context":0,"heritable":0,"heritableSolo":0,"heritableContext":0}
+{"type":"inert","epoch":8500,"sample":4096,"copying":0,"heritable":0,"cells":[],"lineage":0}
+{"type":"lineage","epoch":8500,"M":938,"tested":938,"copying":0,"functional":0,"F":0,"windows":1029,"exhaustive":true}
+{"type":"measure","epoch":8500,"h0":7.844434578978096,"hoe":0.33457740124372126,"ops":799534540,"runs":4928418,"epochs":100,"seconds":174}
+{"type":"end","epoch":8500,"reason":"extinció","fingerprint":"8e7f932e","hoeTransition":null,"event":null,"seconds":174.305,"extinction":8450}

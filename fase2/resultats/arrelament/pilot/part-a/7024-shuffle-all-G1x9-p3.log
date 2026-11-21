@@ -1,0 +1,25 @@
+codi=92b8f4f  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 2407024 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7024/shuffle-all.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7024-shuffle-all-G1x9-p3.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7024-shuffle-all-G1x9-p3.jsonl
+llavor=2407024 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/pilot/alicuotes/7024/shuffle-all.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+500
+sembra (l'assaig d'invasió): el genotip G1 a 9 cel·laes (15191, 15192, 15193, 15703, 15704, 15705, 16215, 16216, 16217), de fase2/resultats/arrelament/pilot/sembres/7024-shuffle-all-G1x9-p3.json
+llinatge 8000  cel·les=9  provades=9  hereditàries=9  F=9  finestres=55
+llinatge 8050  cel·les=103  provades=103  hereditàries=16  F=16  finestres=157
+llinatge 8100  cel·les=224  provades=224  hereditàries=33  F=33  finestres=299
+època 8100  H0=7.831  HOE=0.381  ops/execució=269.2  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments <<<<<<<<<<<< (0.3%)  [[[[[[[[[[[[ (0.3%)  >>>>>>>>>>>> (0.2%)  59s
+llinatge 8150  cel·les=396  provades=256  hereditàries=12  F=19  finestres=375
+llinatge 8200  cel·les=415  provades=256  hereditàries=11  F=18  finestres=397
+època 8200  H0=7.827  HOE=0.455  ops/execució=280.3  parelles=75%  bytes <:4.0% ,:1.6% #61:1.6%  fragments <<<<<<<<<<<< (0.3%)  [[[[[[[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  115s
+cens 8250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.1% (sols 0.1%, en context 0.0%)  famílies=0
+cens inert 8250  mostra=4096  es copien=0  hereditàries=0  del llinatge=0
+llinatge 8250  cel·les=503  provades=256  hereditàries=1  F=2  finestres=405
+llinatge 8300  cel·les=458  provades=458  hereditàries=0  F=0  finestres=405
+època 8300  H0=7.824  HOE=0.485  ops/execució=281.8  parelles=75%  bytes <:4.0% ,:1.6% #61:1.6%  fragments [[[[[[[[[[[[ (0.4%)  <<<<<<<<<<<< (0.3%)  ,,,,,,,,,,,, (0.3%)  189s
+llinatge 8350  cel·les=418  provades=418  hereditàries=0  F=0  finestres=405
+
+empremta del món: 8d304a7
+
+programes diferents: 131062 de 131072
+      4  |                                                                |
+      2  |                                                                |
+      2  |                                                                |
+      2  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      2  |                                                                |

@@ -1,0 +1,22 @@
+codi=92b8f4f  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 407061 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7061/byte0-placebo.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7061-byte0-placebo-G1x9-p1.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7061-byte0-placebo-G1x9-p1.jsonl
+llavor=407061 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/pilot/alicuotes/7061/byte0-placebo.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+500
+sembra (l'assaig d'invasió): el genotip G1 a 9 cel·laes (110085, 110086, 110087, 110597, 110598, 110599, 111109, 111110, 111111), de fase2/resultats/arrelament/pilot/sembres/7061-byte0-placebo-G1x9-p1.json
+llinatge 8000  cel·les=9  provades=9  hereditàries=9  F=9  finestres=55
+llinatge 8050  cel·les=238  provades=238  hereditàries=71  F=71  finestres=443
+llinatge 8100  cel·les=387  provades=256  hereditàries=34  F=51  finestres=647
+època 8100  H0=7.836  HOE=0.312  ops/execució=160.1  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments [[[[[[[[[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  <<<<<<<<<<<< (0.3%)  26s
+llinatge 8150  cel·les=475  provades=256  hereditàries=22  F=41  finestres=799
+llinatge 8200  cel·les=595  provades=595  hereditàries=0  F=0  finestres=799
+època 8200  H0=7.834  HOE=0.317  ops/execució=162.1  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments [[[[[[[[[[[[ (0.4%)  <<<<<<<·<<<< (0.4%)  <<<<<<<<<<<< (0.3%)  53s
+cens 8250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+cens inert 8250  mostra=4096  es copien=0  hereditàries=0  del llinatge=0
+llinatge 8250  cel·les=516  provades=516  hereditàries=0  F=0  finestres=799
+
+empremta del món: f482b129
+
+programes diferents: 131066 de 131072
+      4  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      2  |                                                                |
+      2  |    } }     {    .                     .             >  0  <    |
+      2  |,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|
+      1  |      <     <   }                         }              -    , |

@@ -1,0 +1,19 @@
+codi=92b8f4f  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 3407039 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7039/reinit.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7039-reinit-G1-p4.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7039-reinit-G1-p4.jsonl
+llavor=3407039 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/pilot/alicuotes/7039/reinit.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+500
+sembra (l'assaig d'invasió): el genotip G1 a 1 cel·la (91292), de fase2/resultats/arrelament/pilot/sembres/7039-reinit-G1-p4.json
+llinatge 8000  cel·les=1  provades=1  hereditàries=1  F=1  finestres=55
+llinatge 8050  cel·les=109  provades=109  hereditàries=14  F=14  finestres=141
+llinatge 8100  cel·les=211  provades=211  hereditàries=16  F=16  finestres=169
+època 8100  H0=8.000  HOE=0.102  ops/execució=69.5  parelles=75%  bytes 0:0.5% ,:0.5% <:0.5%  fragments >>>>>>>>>>>> (0.1%)  [[[[[[[[[[[[ (0.1%)  ,,,,,,,,,,,, (0.0%)  24s
+llinatge 8150  cel·les=263  provades=263  hereditàries=0  F=0  finestres=169
+llinatge 8200  cel·les=249  provades=249  hereditàries=0  F=0  finestres=169
+època 8200  H0=7.999  HOE=0.138  ops/execució=74.9  parelles=75%  bytes <:0.5% ,:0.5% >:0.5%  fragments >>>>>>>>>>>> (0.1%)  [[[[[[[[[[[[ (0.1%)  ]]]]]]]]]]]] (0.0%)  47s
+
+empremta del món: 3b1a1161
+
+programes diferents: 131067 de 131072
+      2  |00     >                     .                      {    [      |
+      2  |                                                                |
+      2  |]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]|
+      2  |                   -   >   {             <                      |
+      2  |0       -         [                     .                       |

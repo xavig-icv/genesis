@@ -1,0 +1,18 @@
+{"type":"start","code":"92b8f4f","rng":"v2","node":"v16.15.1","zlib":"1.2.11","command":"node sim.mjs --world 512x256 --seed 1407067 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7067/byte0.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7067-byte0-G1x9-p2.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7067-byte0-G1x9-p2.jsonl","seed":1407067,"programs":131072,"world":[512,256],"radius":2,"mixing":0,"diffusion":0,"flow":0,"renewal":0,"mutation":0.00024,"from":"fase2/resultats/arrelament/pilot/alicuotes/7067/byte0.bin","start":8000,"epochs":9750,"every":100,"census":{"version":"v3","every":250,"sample":2048,"seed":20261016},"event":{"share":0.01,"censuses":2,"stopAfter":500},"inertCensus":{"sample":4096,"seed":20261116,"conditions":{"seed":3000000000,"count":3}},"plant":{"file":"fase2/resultats/arrelament/pilot/sembres/7067-byte0-G1x9-p2.json","fileSha256":"191d147586e1f2fd0c70a513a85d5816c9698d43a3abfd5f78fd32e4e42ff8b9","genotype":"G1","sham":null,"hex":"1f1414191faf5b5b66335b5b9a3cf0887dbf3bf03bcff4ff393939ff17f45ccf2c3b5d5d3b2ccf5cf417ff393939fff4cf3bf03bbf7d88f03c9a5b5b33665b5b","cells":[40924,40925,40926,41436,41437,41438,41948,41949,41950],"sourceSha256":"c4d0c364f71e8a2e45732dd4754294864c7406794fd6764538bc61def55f7403","outputSha256":"2e99107d39f383af349e5374fe68d2a9185a75dd030c4665504d5cc617356dbe","lineageSeed":907067,"preCarriers":0},"lineage":{"every":50,"seed":907067,"sample":256,"conditions":{"seed":3000000000,"count":3},"stopOnExtinction":0}}
+{"type":"lineage","epoch":8000,"M":9,"tested":9,"copying":9,"functional":9,"F":9,"windows":55}
+{"type":"lineage","epoch":8050,"M":181,"tested":181,"copying":37,"functional":33,"F":33,"windows":215}
+{"type":"lineage","epoch":8100,"M":600,"tested":256,"copying":69,"functional":66,"F":155,"windows":701}
+{"type":"measure","epoch":8100,"h0":7.8348729244309565,"hoe":0.338118278129687,"ops":833720832,"runs":4928475,"epochs":100,"seconds":27}
+{"type":"lineage","epoch":8150,"M":879,"tested":256,"copying":22,"functional":15,"F":52,"windows":1007}
+{"type":"lineage","epoch":8200,"M":913,"tested":256,"copying":13,"functional":13,"F":46,"windows":1135}
+{"type":"measure","epoch":8200,"h0":7.8339855103495735,"hoe":0.3433257966044563,"ops":839772736,"runs":4929512,"epochs":100,"seconds":53}
+{"type":"census","version":"v3","epoch":8250,"families":[],"extinct":[],"untracked":[],"familySample":0,"sample":2048,"replicating":1,"solo":1,"context":0,"heritable":1,"heritableSolo":1,"heritableContext":0}
+{"type":"inert","epoch":8250,"sample":4096,"copying":0,"heritable":0,"cells":[],"lineage":0}
+{"type":"lineage","epoch":8250,"M":871,"tested":256,"copying":4,"functional":4,"F":14,"windows":1203}
+{"type":"lineage","epoch":8300,"M":842,"tested":256,"copying":4,"functional":4,"F":13,"windows":1251}
+{"type":"measure","epoch":8300,"h0":7.834023804435339,"hoe":0.3398078391643429,"ops":837666810,"runs":4928747,"epochs":100,"seconds":99}
+{"type":"lineage","epoch":8350,"M":799,"tested":256,"copying":3,"functional":2,"F":6,"windows":1331}
+{"type":"lineage","epoch":8400,"M":713,"tested":713,"copying":0,"functional":0,"F":0,"windows":1331,"exhaustive":true}
+{"type":"measure","epoch":8400,"h0":7.833246100088724,"hoe":0.33733927025473953,"ops":838018232,"runs":4928671,"epochs":100,"seconds":128}
+{"type":"lineage","epoch":8450,"M":620,"tested":620,"copying":0,"functional":0,"F":0,"windows":1331,"exhaustive":true}
+{"type":"end","epoch":8450,"reason":"extinció","fingerprint":"d83d7601","hoeTransition":null,"event":null,"seconds":142.41,"extinction":8400}

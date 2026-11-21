@@ -1,0 +1,19 @@
+codi=92b8f4f  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 407046 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7046/continue.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7046-continue-G1x9-p1.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7046-continue-G1x9-p1.jsonl
+llavor=407046 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/pilot/alicuotes/7046/continue.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+500
+sembra (l'assaig d'invasió): el genotip G1 a 9 cel·laes (104598, 104599, 104600, 105110, 105111, 105112, 105622, 105623, 105624), de fase2/resultats/arrelament/pilot/sembres/7046-continue-G1x9-p1.json
+llinatge 8000  cel·les=9  provades=9  hereditàries=9  F=9  finestres=55
+llinatge 8050  cel·les=98  provades=98  hereditàries=23  F=23  finestres=121
+llinatge 8100  cel·les=204  provades=204  hereditàries=4  F=4  finestres=137
+època 8100  H0=7.831  HOE=0.319  ops/execució=176.6  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments [[[[[[[[[[[[ (0.5%)  [[[[[[[·[[[[ (0.4%)  >>>>>>>>>>>> (0.3%)  27s
+llinatge 8150  cel·les=177  provades=177  hereditàries=0  F=0  finestres=137
+llinatge 8200  cel·les=161  provades=161  hereditàries=0  F=0  finestres=137
+època 8200  H0=7.830  HOE=0.315  ops/execució=175.6  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments [·[[[[[[[[[[ (0.4%)  [[[[[[[·[[[[ (0.4%)  ,,,,,,,,,,,, (0.2%)  52s
+
+empremta del món: a58c8130
+
+programes diferents: 131057 de 131072
+      4  |>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>|
+      4  |                                                                |
+      3  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      2  |                                                                |
+      2  | }                                                           {  |

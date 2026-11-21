@@ -1,0 +1,38 @@
+codi=92b8f4f  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 407076 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7076/continue.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7076-continue-G1x9-p1.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7076-continue-G1x9-p1.jsonl
+llavor=407076 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/pilot/alicuotes/7076/continue.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+500
+sembra (l'assaig d'invasió): el genotip G1 a 9 cel·laes (36513, 36514, 36515, 37025, 37026, 37027, 37537, 37538, 37539), de fase2/resultats/arrelament/pilot/sembres/7076-continue-G1x9-p1.json
+llinatge 8000  cel·les=9  provades=9  hereditàries=9  F=9  finestres=55
+llinatge 8050  cel·les=211  provades=211  hereditàries=65  F=65  finestres=219
+llinatge 8100  cel·les=453  provades=256  hereditàries=71  F=126  finestres=691
+època 8100  H0=7.834  HOE=0.325  ops/execució=166.9  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments >>>>>>>>>>>> (0.3%)  [[[[[[[[[·[[ (0.2%)  ,,,,,,,,,,,, (0.2%)  26s
+llinatge 8150  cel·les=746  provades=256  hereditàries=34  F=99  finestres=1131
+llinatge 8200  cel·les=932  provades=256  hereditàries=39  F=142  finestres=1413
+època 8200  H0=7.832  HOE=0.342  ops/execució=170.6  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments >>>>>>>>>>>> (0.3%)  [[[[[[[[[·[[ (0.2%)  ,,,·,,,,,,,, (0.2%)  53s
+cens 8250  mostra=2048  hereditaris=0.1% (sols 0.1%, només en context 0.0%)  es repliquen=0.1% (sols 0.1%, en context 0.0%)  famílies=0
+cens inert 8250  mostra=4096  es copien=3  hereditàries=3  del llinatge=3
+llinatge 8250  cel·les=1090  provades=256  hereditàries=27  F=115  finestres=1803
+llinatge 8300  cel·les=1456  provades=256  hereditàries=41  F=233  finestres=2157
+època 8300  H0=7.829  HOE=0.364  ops/execució=172.1  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments ,,,,,,,,,,,, (0.3%)  >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.2%)  100s
+llinatge 8350  cel·les=1788  provades=256  hereditàries=23  F=161  finestres=2481
+llinatge 8400  cel·les=1921  provades=256  hereditàries=15  F=113  finestres=2627
+època 8400  H0=7.825  HOE=0.378  ops/execució=172.6  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  127s
+llinatge 8450  cel·les=1938  provades=256  hereditàries=10  F=76  finestres=2703
+cens 8500  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.1% (sols 0.1%, en context 0.0%)  famílies=0
+cens inert 8500  mostra=4096  es copien=4  hereditàries=4  del llinatge=4
+llinatge 8500  cel·les=1998  provades=256  hereditàries=10  F=78  finestres=2899
+època 8500  H0=7.823  HOE=0.379  ops/execució=172.5  parelles=75%  bytes <:4.0% ,:1.5% #61:1.5%  fragments >>>>>>>>>>>> (0.3%)  [[[[[·[[[[[[ (0.3%)  ,,,,,,,,,,,, (0.2%)  174s
+llinatge 8550  cel·les=2151  provades=256  hereditàries=14  F=118  finestres=3127
+llinatge 8600  cel·les=2115  provades=256  hereditàries=3  F=25  finestres=3135
+època 8600  H0=7.821  HOE=0.381  ops/execució=173.5  parelles=75%  bytes <:4.0% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.3%)  ,,,,,,,,,,,, (0.3%)  [[[[[[[[[[[[ (0.3%)  201s
+llinatge 8650  cel·les=1966  provades=1966  hereditàries=0  F=0  finestres=3135
+llinatge 8700  cel·les=1773  provades=1773  hereditàries=0  F=0  finestres=3135
+època 8700  H0=7.820  HOE=0.372  ops/execució=173.4  parelles=75%  bytes <:4.1% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.4%)  ,,,,,,,,,,,, (0.3%)  [[[[[[[[[[[[ (0.3%)  240s
+
+empremta del món: d2e1161a
+
+programes diferents: 131066 de 131072
+      5  |,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|
+      2  |                                                                |
+      2  |                                                                |
+      1  |   0                                                            |
+      1  |                       +                                 < - ,  |

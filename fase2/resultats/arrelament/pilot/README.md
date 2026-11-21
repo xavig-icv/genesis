@@ -67,6 +67,8 @@ s'atura al primer pas que falla. No llança cap branca de les parts A i B.
 | `manifest.json` | El manifest, amb la SHA-256 de cada captura, escaneig, sembra i llista, i l'ordre de cada branca |
 | `llista-a-pc.txt`, `llista-a-vm.txt`, `llista-b-pc.txt`, `llista-b-vm.txt` | Les llistes de les parts A (1.836 i 1.224 branques) i B (108 i 72) |
 | `preparacio/` | Les sortides de la segona ronda, tal com van sortir: la preparació, la comprovació global i el reescaneig |
+| `comprova-abans-parts-sortida.txt` | La comprovació global que el llançador de les parts A i B va passar abans de començar, tal com va sortir |
+| `part-a/`, `part-b/` | Els registres de les 3.060 branques de la part A i les 180 de la part B (`NNNN-….jsonl`), la consola de cadascuna (`.log`) i els fitxers dels quatre lots (`lot-llista-*.out`) |
 
 **Les SHA-256:**
 
@@ -87,3 +89,24 @@ s'atura al primer pas que falla. No llança cap branca de les parts A i B.
   sencer.
 - **Durant el càlcul:** només el registre del llançador i els dels lots. Res de mirar els registres de les branques.
 - **El cost** (el pla, §8): unes 290 hores de CPU, un dia i mig o dos amb 8 processos.
+
+### Com van anar (del 19 al 21-11-2026)
+
+Es van llançar el 19-11-2026 a les 20.57, una sola vegada, des d'una finestra de PowerShell del responsable, a prioritat baixa.
+
+| Pas | Quan | Què va dir |
+|---|---|---|
+| Les guardes i la comprovació global | 19-11, 20.57 a 20.58 | «tot correcte», amb la SHA-256 de la de la preparació (`comprova-abans-parts-sortida.txt`) |
+| B-pc (108 branques) | 19-11, 20.58 a 20-11, 06.49 | 108 acabades, 0 fallades |
+| B-vm (72) | 20-11, 06.49 a 13.07 | 72 acabades, 0 fallades |
+| A-pc (1.836) | 20-11, 13.08 a 21-11, 03.08 | 1.836 acabades, 0 fallades |
+| A-vm (1.224) | 21-11, 03.09 a 12.53 | 1.224 acabades, 0 fallades |
+
+- **Cada registre, sencer:** després de cada llista, el llançador va comprovar que tots tinguessin la línia d'inici i la final. Abans de
+  pujar-los, ho he tornat a comprovar: les 3.240 branques de les quatre llistes tenen el registre, amb la línia d'inici, la final i el
+  `code` `92b8f4f`, sense `+canvis`.
+- **Copiats tal com són** des de la còpia del càlcul (`part-a/` i `part-b/`: els registres, la consola de cada branca i els fitxers dels
+  lots), amb la SHA-256 de cada fitxer comparada amb l'original (6.484 de 6.484). A git abans de cap anàlisi: fins aquí, no s'ha mirat cap
+  resultat.
+- **El temps:** uns 40 h. La part B va trigar menys del que deia el pla (unes 0,73 h de CPU per branca, i no 0,9), i la part A, més (unes
+  190 h de CPU, i no 125).

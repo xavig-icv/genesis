@@ -1,0 +1,24 @@
+codi=92b8f4f  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 1407052 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7052/byte0.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7052-byte0-G1x9-p2.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7052-byte0-G1x9-p2.jsonl
+llavor=1407052 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/pilot/alicuotes/7052/byte0.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+500
+sembra (l'assaig d'invasió): el genotip G1 a 9 cel·laes (89590, 89591, 89592, 90102, 90103, 90104, 90614, 90615, 90616), de fase2/resultats/arrelament/pilot/sembres/7052-byte0-G1x9-p2.json
+llinatge 8000  cel·les=9  provades=9  hereditàries=9  F=9  finestres=55
+llinatge 8050  cel·les=187  provades=187  hereditàries=42  F=42  finestres=291
+llinatge 8100  cel·les=493  provades=256  hereditàries=23  F=44  finestres=567
+època 8100  H0=7.838  HOE=0.335  ops/execució=167.0  parelles=75%  bytes <:3.8% ,:1.6% #61:1.5%  fragments >>>>>>>>>>>> (0.3%)  [[[[[[[[[[[[ (0.3%)  <<<<<<<<<<<< (0.3%)  26s
+llinatge 8150  cel·les=529  provades=256  hereditàries=7  F=14  finestres=593
+llinatge 8200  cel·les=566  provades=256  hereditàries=1  F=2  finestres=637
+època 8200  H0=7.838  HOE=0.337  ops/execució=166.8  parelles=75%  bytes <:3.8% ,:1.6% #61:1.5%  fragments <<<<<<<·<<<< (0.3%)  >>>>>>>>>>>> (0.3%)  <<<<<<<<<<<< (0.3%)  51s
+cens 8250  mostra=2048  hereditaris=0.0% (sols 0.0%, només en context 0.0%)  es repliquen=0.0% (sols 0.0%, en context 0.0%)  famílies=0
+cens inert 8250  mostra=4096  es copien=0  hereditàries=0  del llinatge=0
+llinatge 8250  cel·les=521  provades=521  hereditàries=0  F=0  finestres=637
+llinatge 8300  cel·les=472  provades=472  hereditàries=0  F=0  finestres=637
+època 8300  H0=7.838  HOE=0.335  ops/execució=169.7  parelles=75%  bytes <:3.8% ,:1.6% #61:1.5%  fragments <<<<<<<·<<<< (0.3%)  >>>>>>>>>>>> (0.3%)  <<<<<<<<<<<< (0.2%)  98s
+
+empremta del món: 4ea6d0f9
+
+programes diferents: 131061 de 131072
+      4  |                                                                |
+      3  |,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|
+      3  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
+      2  |<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<|
+      2  |                                                                |

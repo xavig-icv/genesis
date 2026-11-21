@@ -1,0 +1,43 @@
+codi=92b8f4f  rng=v2  node=v16.15.1  zlib=1.2.11  ordre=node sim.mjs --world 512x256 --seed 407017 --mixing 0 --from fase2/resultats/arrelament/pilot/alicuotes/7017/shuffle-all.bin --start 8000 --epochs 9750 --every 100 --census 250 --census-version v3 --rng v2 --stop-after-event 500 --plant fase2/resultats/arrelament/pilot/sembres/7017-shuffle-all-G3-p1.json --lineage-every 50 --stop-on-extinction 0 --inert-census 4096 --json fase2/resultats/arrelament/pilot/part-a/7017-shuffle-all-G3-p1.jsonl
+llavor=407017 món=512x256 radi=2 barreja=0 difusió=0 riu=0 renovació=0 mutació=0.00024 des de=fase2/resultats/arrelament/pilot/alicuotes/7017/shuffle-all.bin (època 8000; branca: atzar nou amb la llavor, sense detecció de transició)  cens=v3 mostra=2048  aturada=establiment+500
+sembra (l'assaig d'invasió): el genotip G3 a 1 cel·la (9826), de fase2/resultats/arrelament/pilot/sembres/7017-shuffle-all-G3-p1.json
+llinatge 8000  cel·les=1  provades=1  hereditàries=1  F=1  finestres=98
+llinatge 8050  cel·les=110  provades=110  hereditàries=40  F=40  finestres=1256
+llinatge 8100  cel·les=814  provades=256  hereditàries=117  F=372  finestres=4998
+època 8100  H0=7.830  HOE=0.391  ops/execució=278.8  parelles=75%  bytes <:3.9% ,:1.6% #61:1.5%  fragments [[[[[[[[[[[[ (0.3%)  <<<<<<<<<<<< (0.3%)  ,,,,,,,,,,,, (0.2%)  62s
+llinatge 8150  cel·les=2231  provades=256  hereditàries=137  F=1194  finestres=9714
+llinatge 8200  cel·les=4304  provades=256  hereditàries=109  F=1833  finestres=13622
+època 8200  H0=7.810  HOE=0.568  ops/execució=285.7  parelles=75%  bytes <:3.9% ,:1.7% 0:1.5%  fragments ]}<0·0···,,, (0.6%)  ,,,···0·0<}] (0.4%)  ,·[[0·0···,[ (0.4%)  121s
+*** PRIMERA FAMÍLIA a l'època 8250 ***
+cens 8250  mostra=2048  hereditaris=2.5% (sols 2.5%, només en context 0.0%)  es repliquen=3.6% (sols 3.6%, en context 0.0%)  famílies=1  #1:3.99%([,<}]})
+cens inert 8250  mostra=4096  es copien=124  hereditàries=75  del llinatge=75
+llinatge 8250  cel·les=7000  provades=256  hereditàries=107  F=2926  finestres=18048
+llinatge 8300  cel·les=10410  provades=256  hereditàries=107  F=4351  finestres=22686
+època 8300  H0=7.754  HOE=0.775  ops/execució=273.6  parelles=75%  bytes <:4.0% 0:2.8% ,:2.0%  fragments ,,,···0·0<}] (0.7%)  ]}<0·0···,,, (0.7%)  ,·[[0·0···,[ (0.5%)  197s
+llinatge 8350  cel·les=13983  provades=256  hereditàries=114  F=6227  finestres=28222
+llinatge 8400  cel·les=17374  provades=256  hereditàries=95  F=6447  finestres=33166
+època 8400  H0=7.667  HOE=0.965  ops/execució=257.4  parelles=75%  bytes 0:4.6% <:4.0% ,:2.3%  fragments ]}<0·0···,,, (0.8%)  ,,,···0·0<}] (0.7%)  ,·[[0·0···,[ (0.6%)  251s
+llinatge 8450  cel·les=20573  provades=256  hereditàries=88  F=7072  finestres=37646
+cens 8500  mostra=2048  hereditaris=6.7% (sols 6.7%, només en context 0.0%)  es repliquen=10.6% (sols 10.6%, en context 0.0%)  famílies=1  #1:14.49%(,<}]}<)
+cens inert 8500  mostra=4096  es copien=459  hereditàries=264  del llinatge=251
+*** ESTABLIMENT DE LA VIDA a l'època 8250 (confirmat al cens 8500) ***
+llinatge 8500  cel·les=23901  provades=256  hereditàries=98  F=9150  finestres=42846
+època 8500  H0=7.557  HOE=1.133  ops/execució=241.8  parelles=75%  bytes 0:6.3% <:4.0% ,:2.7%  fragments ]}<0·0···,,, (0.9%)  ,,,···0·0<}] (0.7%)  [,···0·0[[·, (0.6%)  322s
+llinatge 8550  cel·les=27097  provades=256  hereditàries=81  F=8574  finestres=47062
+llinatge 8600  cel·les=30259  provades=256  hereditàries=97  F=11465  finestres=52520
+època 8600  H0=7.413  HOE=1.276  ops/execució=225.3  parelles=75%  bytes 0:8.4% <:4.0% ,:3.0%  fragments ]}<0·0···,,, (0.7%)  ,·,···0·0<}] (0.6%)  [,···0·0[[·, (0.5%)  371s
+llinatge 8650  cel·les=33191  provades=256  hereditàries=84  F=10891  finestres=57070
+llinatge 8700  cel·les=35287  provades=256  hereditàries=62  F=8546  finestres=61002
+època 8700  H0=7.259  HOE=1.364  ops/execució=210.4  parelles=75%  bytes 0:10.5% <:4.0% ,:3.2%  fragments ]}<0·0···,,, (0.6%)  ,·,···0·0<}] (0.5%)  [,···0·0[[·, (0.3%)  421s
+cens 8750  mostra=2048  hereditaris=7.6% (sols 7.6%, només en context 0.0%)  es repliquen=16.0% (sols 16.0%, en context 0.0%)  famílies=1  #1:23.77%(,<}]}<)
+cens inert 8750  mostra=4096  es copien=727  hereditàries=364  del llinatge=324
+llinatge 8750  cel·les=36347  provades=256  hereditàries=76  F=10791  finestres=65464
+
+empremta del món: bdcdedd2
+
+programes diferents: 131061 de 131072
+      4  |<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<|
+      2  |<0000<<00 0 [ , 0   0 00   ]}<0         ,  ,0 0   0 , [  0,000<0|
+      2  |                                                                |
+      2  | 0000 0 [ [,          <} 0   ]}<          ,, ,0 0   0 00[ 0<0   |
+      2  |[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[|
