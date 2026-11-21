@@ -143,7 +143,9 @@ out('\n3. La consistència: P(arrela | detectada) dels llinatges naturals robust
 for (const soup of ARMS) {
   const nat = consistencyTally(bySoup(soup).flatMap((b) => b.lineages.filter((x) => x.robust).map((x) =>
     followUpClass({ detected: x.first, event: b.ev ? b.ev.epoch : null, dominant: x.rooted, eligibleUntil: start + d.horizonB - ANALYSIS.interval }))));
-  const pla = consistencyTally(A.filter((b) => b.soup === soup).map((b) => plantedClass(partA(readJsonl(join(ROOT, PILOT, 'part-a', `${b.id}.jsonl`)), { start, horizon: d.horizonA }), { start, horizon: d.horizonA })));
+  // els plantats que el cens inert ha detectat, com a l'anàlisi del pilot (detectedAt no nul); el primer intent els hi posava tots (intent-1/)
+  const pla = consistencyTally(A.filter((b) => b.soup === soup).map((b) => partA(readJsonl(join(ROOT, PILOT, 'part-a', `${b.id}.jsonl`)), { start, horizon: d.horizonA }))
+    .filter((r) => r.detectedAt !== null).map((r) => plantedClass(r, { start, horizon: d.horizonA })));
   const P = (t) => (t.n ? t.k / t.n : null);
   const pN = P(nat.main), pP = P(pla.main);
   const p = fisher(nat.main.k, nat.main.n - nat.main.k, pla.main.k, pla.main.n - pla.main.k);
