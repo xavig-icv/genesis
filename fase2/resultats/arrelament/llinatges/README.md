@@ -147,3 +147,115 @@ món, el primer de la cohort. Si la comprovació falla o cap pas no surt bé, s'
   `branca.sh`: la simulació, la comprovació (`compara.mjs`), el seguiment (`segueix.mjs`) i esborrar les captures. El que passa, a
   `llanca.log`.
 - **`veins.mjs`:** la pregunta 3, amb les captures de partida de la còpia del càlcul del pilot. **`analisi.mjs`:** l'anàlisi.
+
+## Com va anar
+
+- **El càlcul** (T-80): el va llançar el responsable des d'una finestra seva de PowerShell, el 21-11-2026 a les 20.05.50, des de `2f0585d`,
+  amb 8 processos a prioritat baixa i Node 16.15.1. Va acabar el 22-11-2026 a les 00.16.18: 52 de 52 branques, totes comprovades i seguides
+  (`llanca.log`). **Les 52 reprodueixen el registre del pilot línia a línia** (`comparacio/`), i la `7002-continue-natural` hi surt igual que
+  a la prova curta. Les captures de cada 50 èpoques s'han esborrat després de cada seguiment.
+- **La pregunta 3** (`veins.jsonl`), des del mateix commit, el 22-11-2026: 1.440 sembres (60 mons, 2 genotips, 3 sopes, 4 posicions), 100 s.
+  Els dos genotips, hereditaris a la prova del llinatge.
+- **Els registres, a git abans de l'anàlisi** (`194de00`).
+- **L'anàlisi, el primer intent, amb un error meu** (`194de00`; la sortida, a `intent-1/analisi-sortida.txt`, tal com va sortir, `1e14256`): a
+  la consistència (secció 3) hi entraven tots els plantats informatius, també els que el cens inert no detecta mai, i aquests sortien com a
+  «no arrela» (els plantats, 0,11, 0,18 i 0,31). La nota diu la regla de la consistència del pilot, que només hi compta els plantats
+  detectats (`detectedAt` no nul). Ho vaig veure perquè les xifres no eren les del pilot (0,63, 0,62 i 0,94; l'AUD-205).
+- **L'anàlisi, corregida** (`d314b80`, només aquesta línia; la sortida, `analisi-sortida.txt`, `e42ee6b`): els plantats hi donen 0,63, 0,62 i
+  0,94, les xifres de l'AUD-205. La resta de la sortida és igual a la del primer intent.
+- **Un descriptiu afegit després de veure la sortida** (`descriptiu-fracassos.mjs`, `b5c3d1c`; la sortida, `descriptiu-fracassos.txt`): la
+  nota no el fixava. Recomptes, sense cap quocient ni cap interval: on són les aparicions que no s'estableixen, i si encara eren vives.
+
+## El que surt (exploratori)
+
+**En poques paraules:** seguides com els plantats, les famílies naturals de la sopa envellida i de la barrejada arrelen tant com els
+plantats informatius quan el cens les detecta, i a la nova, menys. A la sopa envellida hi ha més aparicions que no s'estableixen que a la
+nova, però una part poden ser trossos del llinatge que s'estableix. Els veïns de la sopa envellida no fan més mal als plantats en una
+trobada. Tot és exploratori, de 52 branques, amb els criteris fixats a la nota abans de calcular.
+
+### 1. La fragmentació (AUD-204)
+
+| sopa | famílies robustes de l'anàlisi del pilot | dins d'un llinatge que ja se seguia | llinatges robustos |
+|---|---|---|---|
+| envellida | 103 | 30 (0,29) | 80 |
+| barrejada | 68 | 20 (0,29) | 56 |
+| nova | 22 | 5 (0,23) | 17 |
+
+- **Entre els dos llindars de la nota** (la meitat o més, es confirma; menys d'una de cada cinc, el seguiment no veu el que veia la
+  sensibilitat de les finestres): **el seguiment ni confirma ni contradiu l'AUD-204.** N'uneix una part, no tant com les finestres de 8 bytes.
+- **El quocient de les aparicions, gairebé igual que al pilot:** *λ*lin, 5,03 [1,84; 15,51] entre l'envellida i la nova (al pilot, *λ*det,
+  5,01 [1,81; 16,09]; amb les finestres de 8 bytes, 2,30 [1,08; 6,03], l'AUD-204), i 3,56 [1,38; 9,43] entre la barrejada i la nova. El ritme
+  d'establiment, 2,29 [1,05; 6,63] i 2,31 [1,02; 6,90].
+- **Però el grup dominant de cada establiment encara aplega uns quants llinatges** (el descriptiu): 47 llinatges robustos als 15
+  establiments de la sopa envellida, 42 als 15 de la barrejada i 9 als 7 de la nova. La nota compta cada llinatge com una aparició, també si
+  després s'uneix a un altre: *λ*lin de totes les aparicions encara porta una part de la fragmentació.
+
+### 2. Les aparicions que no s'estableixen
+
+| sopa | aparicions robustes | no s'estableixen | *λ*lin de les que no s'estableixen (per 1.000 mon-èpoques) |
+|---|---|---|---|
+| envellida | 80 | 33 | 0,076 |
+| barrejada | 56 | 14 | 0,033 |
+| nova | 17 | 8 | 0,017 |
+
+- **L'envellida contra la nova: 4,41 [1,44; 15,49].** L'interval queda per sobre d'1: pel criteri de la nota, **a la sopa envellida s'hi
+  detecten més aparicions, a més de les que s'estableixen.** La barrejada contra la nova, 1,89 [0,79; 5,71]: no ho podem dir.
+- **El descriptiu, afegit després:** de les 33 de la sopa envellida, **15 són a branques que no s'estableixen**, i 18 a branques que sí
+  (16 d'aquestes, en les 1.250 èpoques d'abans de l'establiment). **Aquestes 18 poden ser trossos del llinatge que s'estableix** que el
+  seguiment no ha unit: no ho sabem. Només amb les branques que no s'estableixen, 15, 5 i 3: la direcció es manté, però no en faig cap quocient
+  (és un recompte afegit després, amb molt poques).
+- **«No s'estableix» no vol dir «s'extingeix»:** 25 de les 33 encara eren vives al final de l'exposició (a l'establiment de la branca, o al
+  final), amb una *F* màxima de 3 de mediana. A la nova, 4 de 8, amb una mediana de 176.
+
+### 3. La consistència, amb els llinatges
+
+| sopa | naturals robustos | plantats informatius detectats | la diferència, p de Fisher | |
+|---|---|---|---|---|
+| envellida | 43 de 67 (0,64) | 82 de 131 (0,63) | 0,02, p = 0,88 | coincideixen |
+| barrejada | 25 de 35 (0,71) | 128 de 208 (0,62) | 0,10, p = 0,35 | coincideixen |
+| nova | 6 de 12 (0,50) | 224 de 238 (0,94) | −0,44, p < 0,001 | no coincideixen |
+
+- **Amb la regla de la nota** (com a molt 0,15 de diferència i p ≥ 0,05), la consistència **es compleix a la sopa envellida i a la barrejada,
+  i no a la nova.** Al pilot, amb les famílies de 16 bytes, els naturals eren 0,17, 0,26 i 0,36. Els plantats són els mateixos: la diferència
+  ve només de com es delimiten les famílies naturals, i és coherent amb l'AUD-204.
+- **Sense els competidors** (la sensibilitat): naturals 0,84, 0,86 i 0,67; plantats 0,63, 0,64 i 0,95.
+- **Molts llinatges no hi entren:** les prèvies (78, 118 i 16: el llinatge comença al cens de la confirmació, després de l'establiment, i
+  segurament és la fragmentació del que s'estableix) i les tardanes (13, 21 i 5).
+- **La lectura de la §1 del pla demana la consistència a les sopes que es comparen,** i la nova és la de referència: **continua sense poder-se
+  fer.** A la nova, la *P* dels naturals es mesura amb 12 llinatges.
+
+### 4. Els veïns de la sembra, en una sola trobada
+
+| genotip | envellida | barrejada | nova | l'envellida contra la nova | la barrejada contra la nova |
+|---|---|---|---|---|---|
+| G1 | 0,380 | 0,375 | 0,390 | 0,97 [0,96; 0,99] | 0,96 [0,94; 0,98] |
+| G4 | 0,375 | 0,370 | 0,387 | 0,97 [0,95; 0,99] | 0,96 [0,94; 0,98] |
+
+(la part de les trobades en què el genotip queda malmès, és a dir, que ja no és hereditari amb companys inerts; la mitjana de les 240
+sembres)
+
+- **El quocient de G1 no queda per sobre d'1, sinó una mica per sota:** pel criteri de la nota, **la trobada immediata amb els veïns no
+  explica per què G1 s'apaga més a la sopa envellida.** Els veïns de la sopa envellida el fan malbé gairebé igual que els de la nova, una mica
+  menys.
+- **Dins de cada sopa, més mal va amb més sembres apagades al primer pas** (*F* = 0 a l'època 8.050): G1 a l'envellida, 64, 69 i 73 de 80 per
+  terços; a la nova, 60, 60 i 73. Una associació, descriptiva.
+- **«Es copia» surt a la meitat de les trobades, o gairebé** (de 5.760 a 5.762 d'11.520), a les tres sopes i amb tots dos genotips. No ho
+  vaig separar per l'ordre de la parella.
+- **La composició dels veïns** (descriptiu): a l'envellida, un 11,5 % d'instruccions, un 4,3 % de `<` i un 1,6 % de `,`; a la nova, un 3,9 %,
+  un 0,38 % i un 0,40 %.
+
+### El que no diu
+
+- **No diu on actua la maduració.** L'excés d'aparicions que no s'estableixen a la sopa envellida és una indicació exploratòria, amb una
+  part que poden ser trossos, i la consistència no es compleix a la sopa nova. La regla del projecte es manté: cap afirmació de si la
+  maduració actua sobre l'aparició o sobre l'arrelament (AUD-184 = AU2-151). Per dir-ho, el carril de confirmar.
+- **El llinatge és de finestres, no de descendència** (AU2-156), i el cens inert, una foto cada 250 èpoques.
+- **Per què s'apaguen els plantats a la sopa envellida, encara no ho sabem:** la trobada immediata no ho explica. Pot ser el que passa
+  després (les còpies dels veïns a sobre, la competència per l'espai), que aquesta nota no mesura.
+
+## Tot el que s'ha provat
+
+- La prova curta (`prova/`): la pregunta 3 amb les definicions d'abans i amb les noves, i la primera branca de punta a punta.
+- El càlcul de les 52 branques i la pregunta 3 sencera, una vegada cadascun.
+- L'anàlisi, dues vegades: el primer intent amb l'error de la consistència (`intent-1/`), i la corregida.
+- El descriptiu de les aparicions que no s'estableixen, afegit després de veure la sortida.
