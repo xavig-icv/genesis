@@ -115,6 +115,12 @@ món, el primer de la cohort. Si la comprovació falla o cap pas no surt bé, s'
   regla de la prova de replicació; «tocat», algun byte canviat; i «malmès», que ja no és hereditari amb companys inerts (la prova del
   llinatge). L'anàlisi fa servir «malmès». La sortida d'aquesta prova (amb les definicions d'abans), a `prova/veins-7001.jsonl`; el canvi del
   codi, a `b2eb906`, i el del README i de l'anàlisi, al commit següent.
+- **La pregunta 3, amb les definicions noves** (el 7001, `e2dbfca`): les 24 sembres, en 1,5 s; els dos genotips, hereditaris a la prova del
+  llinatge. La sortida, a `prova/veins-7001-2.jsonl`.
+- **La primera branca, de punta a punta** (`7002-continue-natural`, de les 19.09 a les 19.28): la simulació, des de `57b0ded`, reprodueix el
+  registre de git línia a línia (222 línies; l'empremta, `210e654c`); el seguiment (que es va fer amb `e2dbfca`, perquè el commit de la
+  pregunta 3 va arribar mentre la simulació corria), 2 llinatges, 115 captures, 17 s; i les captures, esborrades. Tot, a `prova/`. El càlcul
+  llarg la torna a fer, i ha de sortir igual.
 
 ## El pressupost
 
