@@ -7,8 +7,15 @@ Llegeix-los abans de proposar canvis.
 
 ## Convencions
 
-- Parla amb l'usuari en català. La interfície, la documentació i els comentaris del codi són en català;
-  els identificadors del codi, en anglès.
+- **La llengua** (el responsable, 22-11-2026; `docs/disseny.md`): l'anglès és la llengua principal del projecte, i el català, la segona.
+  - **Amb l'usuari,** en català.
+  - **La cara pública** (el README, el lloc web, el quadern i els documents per a qui arriba de fora), en anglès primer i en català. Els
+    documents nous i els missatges dels commits, en anglès; els fitxers de codi nous, amb els comentaris en anglès. Els identificadors del
+    codi, en anglès, com sempre.
+  - **El registre es queda com és:** els originals del quadern (amb les seves dates), els protocols segellats, el codi de les etiquetes, les
+    sortides desades (les eines continuen escrivint el que escrivien), la història de les auditories i els comentaris del codi que ja hi ha.
+  - **Les frases fixades a les auditories** tenen la seva versió anglesa: «becomes established», mai «is born»; «a planted replicator takes
+    root», mai «life is born there»; «meets the consistency criterion», mai «takes root as often as»; «exploratory».
 - JavaScript amb mòduls ES, sense dependències ni pas de compilació. Node 16 a Windows: els scripts
   per a Node s'anomenen `.mjs` o depenen del `"type": "module"` del `package.json`.
 - Proves: `npm test` (intèrpret, món i cens, línia d'ordres, lots d'experiments, servidor, estadística,
@@ -243,7 +250,7 @@ Llegeix-los abans de proposar canvis.
   auditories (`../auditories/`) tampoc no es publiquen. Abans de cada commit que toqui documentació o eines,
   comproveu-ho amb `git grep` de l'adreça de la VM.
 - Un commit per cada canvi amb sentit (una llei, una correcció, una entrada del quadern), amb missatges
-  en català que expliquin el perquè.
+  que expliquin el perquè (en anglès des del 22-11-2026; abans, en català).
 - Els canvis al simulador (`sim.mjs`, `fase1/bff.js`, `fase1/soup.js`, `fase2/world.js`) i a les eines
   d'anàlisi van en una branca i es revisen en una *pull request* abans d'entrar a `main`. El quadern, la
   documentació i els registres poden anar directament a `main`.
