@@ -1,0 +1,62 @@
+How the planted replicators die out in the aged soup: the note's analysis (exploratory). The analysis: 0b56a919, v16.15.1.
+The part-A records: 2160 of 2160 (of 92b8f4f); primer-byte.jsonl: fcec8bd9 v16.15.1, 60 worlds, 1440 seeds; the natural-lineage trackings: 52 of 52.
+
+1. The anatomy: how the planted lineages die out (part A, the informative variants)
+   G1   continue     240 plantings; at 8050: lost 21, present but not heritable 185, heritable 34; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 34, 23, 13, 12, 10, 9; the first F = 0, median epoch 8050 (9 never)
+                     the members in the first five steps (8050 to 8250): tested 33954; copying 3602 (10.6% of tested); functional 3328 (92.4% of copying; 9.8% of tested)
+   G1   shuffle-all  240 plantings; at 8050: lost 28, present but not heritable 169, heritable 43; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 43, 38, 29, 26, 24, 23; the first F = 0, median epoch 8050 (22 never)
+                     the members in the first five steps (8050 to 8250): tested 50123; copying 6920 (13.8% of tested); functional 6526 (94.3% of copying; 13.0% of tested)
+   G1   reinit       240 plantings; at 8050: lost 14, present but not heritable 179, heritable 47; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 47, 38, 31, 31, 31, 31; the first F = 0, median epoch 8050 (31 never)
+                     the members in the first five steps (8050 to 8250): tested 49451; copying 7889 (16.0% of tested); functional 7570 (96.0% of copying; 15.3% of tested)
+   G1   aged minus fresh, at 8050: lost 7, present but not heritable 6
+   G1x9 continue     240 plantings; at 8050: lost 0, present but not heritable 83, heritable 157; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 157, 107, 71, 55, 37, 34; the first F = 0, median epoch 8100 (31 never)
+                     the members in the first five steps (8050 to 8250): tested 158693; copying 17377 (11.0% of tested); functional 16113 (92.7% of copying; 10.2% of tested)
+   G1x9 shuffle-all  240 plantings; at 8050: lost 0, present but not heritable 53, heritable 187; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 187, 169, 145, 133, 123, 114; the first F = 0, median epoch 8100 (114 never)
+                     the members in the first five steps (8050 to 8250): tested 222573; copying 36364 (16.3% of tested); functional 34556 (95.0% of copying; 15.5% of tested)
+   G1x9 reinit       240 plantings; at 8050: lost 0, present but not heritable 51, heritable 189; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 189, 179, 168, 166, 164, 162; the first F = 0, median epoch 8050 (161 never)
+                     the members in the first five steps (8050 to 8250): tested 228110; copying 42623 (18.7% of tested); functional 40807 (95.7% of copying; 17.9% of tested)
+   G1x9 aged minus fresh, at 8050: lost 0, present but not heritable 32
+   G4   continue     240 plantings; at 8050: lost 21, present but not heritable 161, heritable 58; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 58, 53, 51, 51, 51, 51; the first F = 0, median epoch 8050 (51 never)
+                     the members in the first five steps (8050 to 8250): tested 67072; copying 16632 (24.8% of tested); functional 16386 (98.5% of copying; 24.4% of tested)
+   G4   shuffle-all  240 plantings; at 8050: lost 20, present but not heritable 169, heritable 51; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 51, 45, 43, 43, 43, 43; the first F = 0, median epoch 8050 (43 never)
+                     the members in the first five steps (8050 to 8250): tested 57529; copying 11676 (20.3% of tested); functional 11485 (98.4% of copying; 20.0% of tested)
+   G4   reinit       240 plantings; at 8050: lost 15, present but not heritable 173, heritable 52; still alive at 8050, 8100, 8250, 8500, 9000, 9500: 52, 47, 46, 46, 46, 46; the first F = 0, median epoch 8050 (46 never)
+                     the members in the first five steps (8050 to 8250): tested 59986; copying 14563 (24.3% of tested); functional 14321 (98.3% of copying; 23.9% of tested)
+   G4   aged minus fresh, at 8050: lost 6, present but not heritable -12
+
+2. The first-byte lead at the lineage level: functional/tested of the members in the first five steps, the ratio against the fresh soup
+   G1   continue     9.8% against 15.3%: 0.64 [0.47, 0.88] (below 1)
+   G1   shuffle-all  13.0% against 15.3%: 0.85 [0.71, 1.03] (contains 1)
+   G1x9 continue     10.2% against 17.9%: 0.57 [0.51, 0.63] (below 1)
+   G1x9 shuffle-all  15.5% against 17.9%: 0.87 [0.81, 0.93] (below 1)
+   G4   continue     24.4% against 23.9%: 1.02 [0.92, 1.15] (contains 1)
+   G4   shuffle-all  20.0% against 23.9%: 0.84 [0.76, 0.92] (below 1)
+   The note's reading (G1 and G4, aged against fresh): G1 below 1 and G4 contains 1: the lineage records agree with the first-byte lead
+
+3. The first-byte lead between worlds (the aged soup)
+   the share of cells that start with ] or 0, over the 60 worlds: min 13.3%, median 13.9%, max 14.3% (the shuffled soup, median 1.1%; the fresh, 0.8%)
+   G1 and G1 × 9, plantings that take root (of 8): Spearman -0.28 [-0.50, -0.03] (worlds with a value: 60)
+   G1, functional/tested in the first five steps: Spearman -0.12 [-0.37, 0.14] (worlds with a value: 60)
+   G4, plantings that take root (of 4): Spearman -0.05 [-0.32, 0.22] (worlds with a value: 60)
+   G4, functional/tested in the first five steps: Spearman -0.10 [-0.36, 0.15] (worlds with a value: 60)
+   The note's reading (taking root): G1 below 0 and G4 contains 0: the between-world pattern agrees with the lead
+   Descriptive: the one-cell G1 seeds of the aged soup, functional/tested in the first five steps, by the number of the 24 neighbours that start with ] or 0
+   none       26 seeds; functional 60 of 1368 tested (4.4%); take root 0
+   1 or 2     78 seeds; functional 1271 of 12692 tested (10.0%); take root 2
+   3 or more  136 seeds; functional 1997 of 19894 tested (10.0%); take root 5
+
+4. The natural families counted both ways (descriptive; auditor 1 computed parts of it post hoc in audit 38)
+   4a. The consistency counted by group (a group: the robust lineages with the same root at the end; the note's rule, an operational criterion, not a test of equivalence; Fisher's p does not account for the world)
+   continue     groups 12 of 36 (0.33); planted 82 of 131 (0.63); the difference -0.29, Fisher p 0.002: does not meet the criterion; groups: take root 12, competitor 16, do not take root 8, late 12, previous 78
+   shuffle-all  groups 11 of 21 (0.52); planted 128 of 208 (0.62); the difference -0.09, Fisher p 0.484: meets the criterion; groups: take root 11, competitor 6, do not take root 4, late 8, previous 118
+   reinit       groups 5 of 11 (0.45); planted 224 of 238 (0.94); the difference -0.49, Fisher p 0.000: does not meet the criterion; groups: take root 5, competitor 3, do not take root 3, late 4, previous 16
+   4b. The failed appearances of establishing branches: the longest common substring (also reversed) with the initial programs of the branch's dominant group, and, as a control, with those of the other worlds of the same soup
+   continue     18 failed appearances in establishing branches; with their dominant group, the median 9 bytes, 10 or more: 9; with the best of the other worlds, the median 4, 10 or more: 0
+   shuffle-all  9 failed appearances in establishing branches; with their dominant group, the median 8 bytes, 10 or more: 4; with the best of the other worlds, the median 4, 10 or more: 0
+   reinit       5 failed appearances in establishing branches; with their dominant group, the median 3 bytes, 10 or more: 2; with the best of the other worlds, the median 2, 10 or more: 0
+   4c. The failed appearances without the probable fragments (10 bytes or more in common with their branch's dominant group), per 1,000 world-epochs
+   continue     24 (of 33); 0.055
+   shuffle-all  10 (of 14); 0.023
+   reinit       6 (of 8); 0.013
+   continue against reinit: 4.28 [1.24, 15.61]
+   shuffle-all against reinit: 1.80 [0.60, 6.48]
