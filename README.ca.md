@@ -348,10 +348,22 @@ reprodueixen el pilot línia a línia), amb les famílies naturals seguides amb 
 
 Vegeu l'[entrada 21](quadern/index.html#entrada-21).
 
+### Com s'apaguen els replicadors plantats a la sopa vella (exploratori)
+
+Amb els registres i les captures de partida del pilot, sense plantar ni simular res.
+- **La majoria moren al primer pas, a totes les sopes; la diferència ve després.** Dels llinatges de G1 que passen el primer
+  pas, a la sopa vella en queden de vius 9 de 34 1.500 èpoques després de plantar-los, i a la nova, 31 de 47: a la vella s'apaguen a poc a poc
+  durant el primer miler d'èpoques. G4 no hi mostra cap diferència.
+- **Els seus membres hi són hereditaris menys sovint** (0,64 [0,47; 0,88] vegades la sopa nova, en el cas de G1; 1,02, en el de
+  G4), sobretot perquè n'hi ha menys que es copiïn. Encaixa amb la pista del primer byte, però els registres no diuen el primer byte
+  de cap membre, entre mons gairebé no varia, i dins de la sopa vella els veïns no hi encaixen. Una pista, no un mecanisme demostrat.
+
+Vegeu l'[entrada 22](quadern/index.html#entrada-22).
+
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** per què els replicadors plantats s'apaguen tan de pressa a la sopa vella, amb els
-  registres del pilot i sense plantar res (la pista del primer byte, de l'auditoria 38).
+- **La sopa abans de la vida:** la ronda d'auditoria de com s'apaguen els replicadors plantats (l'entrada 22). Per dir si el primer
+  byte n'és la causa caldria una intervenció, i tornar a plantar demana una decisió nova.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 

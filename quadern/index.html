@@ -32,6 +32,7 @@
     <a href="#entrada-19">Entrada 19</a>
     <a href="#entrada-20">Entrada 20</a>
     <a href="#entrada-21">Entrada 21</a>
+    <a href="#entrada-22">Entrada 22</a>
   </nav>
 
   <article id="entrada-1">
@@ -2253,6 +2254,64 @@
         <li><strong>«Ja no es copia amb companys inerts»</strong> (la definició de «malmès») i «la sortida d'aquell intent és al README de la nota» (AUD-211).</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-22">
+    <header>
+      <p class="date">Entrada 22 · 22 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, sisena part: com s'apaguen els replicadors plantats a la sopa vella</h1>
+      <p class="lede">Els replicadors plantats arrelen menys a la sopa vella que a la nova (<a href="#entrada-20">entrada 20</a>). Amb els registres del pilot, sense plantar ni simular res, hem mirat com s'apaguen. La majoria moren al primer pas, a totes les sopes. La diferència ve després: a la sopa vella, els llinatges de G1 que passen el primer pas s'apaguen a poc a poc durant el primer miler d'èpoques, i a la nova gairebé tots s'hi queden. G4 no hi mostra cap diferència. A la sopa vella, els membres dels llinatges de G1 són hereditaris menys sovint, sobretot perquè n'hi ha menys que es copiïn. Amb les regles fixades abans de calcular, és compatible amb la pista del primer byte de l'auditor 1, però no la demostra: els registres no diuen el primer byte de cap membre, entre mons la proporció de <code>]</code> gairebé no varia, i dins de la sopa vella els veïns no hi encaixen. És exploratori.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>És el pas en què vam coincidir els dos auditors i l'equip a l'auditoria 38, pel carril d'explorar, amb el sí del responsable. Dues pistes: l'anatomia de les extincions, amb els registres que el pilot ja té (l'auditor 2), i la del primer byte (l'auditor 1): quan G1 s'executa primer, la seva còpia deixa el primer byte del company tal com era, i si és <code>]</code> o 0, no és hereditària; a la sopa vella, l'11 % de les cel·les comencen amb <code>]</code>. La nota es va escriure abans de calcular, amb el que ja sabíem i el que ens faria canviar d'opinió (<code>fase2/resultats/arrelament/extincions/README.md</code>). És la primera nota escrita en anglès.</p>
+
+    <h2>Com ho hem fet</h2>
+    <ul>
+      <li><strong>Els registres de la part A del pilot:</strong> les 2.160 sembres de G1, G1 × 9 i G4, amb el llinatge cada 50 èpoques: quantes cel·les en porten les finestres, quantes se'n proven amb companys inerts, quantes es copien i quantes són hereditàries.</li>
+      <li><strong>Les captures de partida del pilot,</strong> comprovades amb el manifest: quantes cel·les comencen amb <code>]</code> o 0 a cada món, i quants veïns de cada sembra.</li>
+      <li><strong>Res de nou al món:</strong> cap sembra ni cap simulació. L'anàlisi, a git tal com va sortir.</li>
+    </ul>
+
+    <h2>El que surt</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Genotip</th><th style="text-align:left">La sopa vella</th><th style="text-align:left">La barrejada</th><th style="text-align:left">La nova</th></tr></thead>
+        <tbody>
+          <tr><td style="text-align:left">G1, una cel·la</td><td style="text-align:left">9 de 34</td><td style="text-align:left">23 de 43</td><td style="text-align:left">31 de 47</td></tr>
+          <tr><td style="text-align:left">G1, 3 × 3 cel·les</td><td style="text-align:left">34 de 157</td><td style="text-align:left">114 de 187</td><td style="text-align:left">162 de 189</td></tr>
+          <tr><td style="text-align:left">G4</td><td style="text-align:left">51 de 58</td><td style="text-align:left">43 de 51</td><td style="text-align:left">46 de 52</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sub">Dels llinatges encara hereditaris al primer pas (l'època 8.050), quants en queden de vius a la 9.500. De 240 sembres a cada casella.</p>
+    <ul>
+      <li><strong>La majoria moren al primer pas, a totes les sopes</strong> (G1: 206, 197 i 193 de 240). A la sopa vella, n'hi moren unes poques més al primer pas, i la diferència gran ve després: s'hi apaguen a poc a poc durant el primer miler d'èpoques.</li>
+      <li><strong>Els membres, menys hereditaris a la sopa vella:</strong> dels membres provats als cinc primers passos, n'hi ha d'hereditaris el 9,8 % a la vella i el 15,3 % a la nova, en el cas de G1 (0,64 [0,47; 0,88]); en el de G1 × 9, 0,57 [0,51; 0,63]; en el de G4, 1,02 [0,92; 1,15]. Sobretot perquè n'hi ha menys que es copiïn. Per la regla fixada, els registres hi encaixen amb la pista del primer byte.</li>
+      <li><strong>A la barrejada, una altra cosa:</strong> també hi perd G4, amb gairebé cap cel·la que comenci amb <code>]</code>.</li>
+      <li><strong>Entre mons:</strong> la proporció de cel·les que comencen amb <code>]</code> o 0 a la sopa vella va del 13,3 % al 14,3 %. Als mons que en tenen més, G1 hi arrela una mica menys (Spearman −0,28 [−0,50; −0,03]; G4, −0,05). Per la regla fixada, hi encaixa, però la diferència entre mons és d'un punt, és una correlació de quatre, i la part hereditària de G1 no ho mostra.</li>
+      <li><strong>Dins de la sopa vella, els veïns no hi encaixen:</strong> les 26 sembres de G1 sense cap veí que comenci amb <code>]</code> o 0 ho van fer pitjor, no millor.</li>
+      <li><strong>Les famílies naturals, de totes dues maneres:</strong> comptant grups, el criteri de consistència només es compleix a la barrejada; i sense els trossos probables (10 bytes o més en comú amb el grup dominant), l'excés d'aparicions que no s'estableixen dona 4,28 [1,24; 15,61], quan la regla de l'auditor 1 donava un interval que conté 1. Segons la regla, sí o no: encara no se separa de la fragmentació.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>A la sopa vella, els llinatges de G1 no moren de cop: s'apaguen a poc a poc,</strong> com si cada generació en perdés una part. És el que faria una pèrdua per còpia, com la del primer byte, però també ho podria fer una altra cosa.</li>
+      <li><strong>La pista del primer byte encaixa a escala de sopa, i no encaixa a escala de veïnat.</strong> Per dir si n'és la causa, cal una intervenció: canviar els primers bytes <code>]</code> i 0 de la sopa vella, contra un placebo. Els braços <code>byte0</code> del pilot treien el <code>&lt;</code> del primer byte, no són aquesta prova. I tornar a plantar demana una decisió nova del responsable i l'acord dels tres.</li>
+      <li><strong>On actua la maduració,</strong> encara no ho podem dir (AUD-184 = AU2-151).</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>Exploratori,</strong> amb tres genotips i 60 mons.</li>
+      <li><strong>Els registres no tenen el primer byte de cap membre</strong> ni l'ordre de les trobades: només veuen la part hereditària.</li>
+      <li><strong>El llinatge és de finestres, no de descendència</strong> (AU2-156).</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>La ronda d'auditoria,</strong> amb els dos auditors, com diu el carril d'explorar.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

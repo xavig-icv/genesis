@@ -365,5 +365,10 @@ Llegeix-los abans de proposar canvis.
       és del grup dominant quan s'atura la branca». La pregunta 3 no mesura el mal dels veïns («es copia» és l'ordre de la parella; «malmès»,
       el genotip quan va segon; AUD-210, AU2-189); separada per ordre, la pista del primer byte (`]`), a posteriori i per confirmar. El primer
       intent de l'anàlisi, amb un error (tots els plantats a la consistència), a `intent-1/`.
+    - **Com s'apaguen els plantats a la sopa envellida** (22-11-2026, l'entrada 22, exploratori; `fase2/resultats/arrelament/extincions/`, la
+      primera nota en anglès): la majoria moren al primer pas a totes les sopes; a l'envellida, els llinatges de G1 que el passen s'apaguen a poc
+      a poc, amb menys membres hereditaris (0,64 [0,47; 0,88]; G4, 1,02). «Encaixa amb la pista del primer byte a escala de sopa», mai «el
+      primer byte n'és la causa»: dins de l'envellida els veïns no hi encaixen, i els registres no diuen cap primer byte. Una intervenció amb
+      plantats tornaria a plantar (decisió nova i acord dels tres).
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

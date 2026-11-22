@@ -349,10 +349,22 @@ pilot line by line), with the natural families followed by the same lineage modu
 
 See notebook [entry 21](quadern/index.html#entrada-21), in Catalan, or its [English summary](quadern/resum.en.md#entry-21).
 
+### How the planted replicators die out in the aged soup (exploratory)
+
+From the pilot's records and starting snapshots, with no planting and no simulation.
+- **Most die at the first step, in every soup; the difference comes afterwards.** Of the G1 lineages that get through the first
+  step, 9 of 34 are still alive 1,500 epochs after planting in the aged soup, against 31 of 47 in the fresh one: in the aged soup they fade
+  over the first thousand epochs. G4 shows no such difference.
+- **Their members are heritable less often in the aged soup** (0.64 [0.47, 0.88] times the fresh soup for G1; 1.02 for G4), mostly
+  because fewer of them copy at all. This fits the first-byte lead, but the records do not show any member's first byte, the spread
+  between worlds is tiny, and within the aged soup the neighbours do not fit. A lead, not a mechanism shown.
+
+See notebook [entry 22](quadern/index.html#entrada-22), in Catalan, or its [English text](quadern/resum.en.md#entry-22).
+
 ### What we study now
 
-- **The soup before life:** why planted replicators die out so fast in the aged soup, with the pilot's records and
-  nothing planted (the first-byte lead from audit 38).
+- **The soup before life:** the audit round of how the planted replicators die out (entry 22). To show whether the first byte is
+  the cause would need an intervention, and planting again needs a new decision.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 

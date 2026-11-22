@@ -320,3 +320,27 @@ pair: "copies" is exactly the order, and "damaged" is G1 damaging itself when it
 Split by order, it gives a lead: when G1 runs first, its copy is not heritable 12.9% of the time in the aged soup and 0.6% in the fresh one,
 because the copy keeps the partner's first byte and 11.3% of aged-soup cells start with `]`; G4 is not affected. It is post hoc, from a single
 encounter, and does not explain everything (no association within the aged soup, and the shuffled soup also loses without it).
+
+<a id="entry-22"></a>
+## Entry 22 · 22 November 2026 · The soup before life, part six: how the planted replicators die out in the aged soup (exploratory)
+
+The planted replicators take root less in the aged soup than in the fresh one (entry 20). From the pilot's records and starting
+snapshots, with no planting and no simulation, we looked at how they die out. This is the step both auditors and the team agreed on at
+audit 38, through the exploration lane, with the note written before computing (`fase2/resultats/arrelament/extincions/README.md`, the first
+note written in English). Most one-cell plantings die at the first step in every soup (G1: 206, 197 and 193 of 240 with F = 0 at epoch
+8,050). The difference comes afterwards: of the G1 lineages still heritable at the first step, 9 of 34 are alive at 9,500 in the aged soup,
+23 of 43 in the shuffled one and 31 of 47 in the fresh one; for G1 in a 3 × 3 square, 34 of 157, 114 of 187 and 162 of 189; for G4, 51 of 58,
+43 of 51 and 46 of 52. In the aged soup, G1's lineages fade over the first thousand epochs; in the fresh soup almost none does after 8,250.
+Their members are heritable less often in the aged soup (G1: 9.8% of the members tested in the first five steps, against 15.3%; 0.64 [0.47,
+0.88]; G1 × 9, 0.57 [0.51, 0.63]; G4, 1.02 [0.92, 1.15]), mostly because fewer of them copy at all. By the rule fixed in the note, the lineage
+records agree with auditor 1's first-byte lead (G1's copy keeps the partner's first byte, and a copy that starts with `]` or 0 is not
+heritable; 11.3% of aged-soup cells start with `]`). In the shuffled soup G4 also loses (0.84 [0.76, 0.92]), with hardly any cell starting
+with `]`: something else is at work there. Between worlds, the share of aged-soup cells starting with `]` or 0 only ranges from 13.3% to
+14.3%; G1's taking root correlates with it at −0.28 [−0.50, −0.03] (G4, −0.05), which meets the fixed rule but is one of four correlations,
+over a spread of one percentage point, and G1's heritable share does not show it. Within the aged soup, the 26 G1 seeds with no neighbour
+starting with `]` or 0 did worse, not better. So the lead fits at the level of the soup and not at the level of the neighbourhood: showing it
+would need an intervention on the aged soup's first bytes, against a placebo (the pilot's `byte0` arms removed `<`, not `]`), and planting
+again needs a new decision of the owner and the agreement of the three. Counting natural families by group, the consistency criterion is met
+only in the shuffled soup; without the probable fragments (10 bytes or more shared with the branch's dominant group), the aged/fresh ratio of
+failed appearances is 4.28 [1.24, 15.61], while auditor 1's time-based rule gave an interval containing 1. Exploratory: it does not say where
+maturation acts.
