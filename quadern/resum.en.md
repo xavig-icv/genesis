@@ -305,3 +305,17 @@ single encounter with the 24 neighbours of the planted cell, G1 is left no longe
 fresh one (0.97 [0.96, 0.99]); the immediate encounter does not explain why planted replicators die out more in the aged soup. The first
 analysis run had an error (all planted lineages entered the consistency check, also those the census never detects); it is kept as it came
 out, and the corrected one gives the pilot's planted values. Exploratory: it does not say where maturation acts.
+
+*Corrected after audit 38 (22 November 2026).* Both auditors accepted the computation and the analysis as exploratory: the records are
+complete and equal to the pilot's (auditor 1 re-ran four branches), the analysis re-runs, and the first analysis error is well declared and
+correctly fixed. The corrections are to the reading. The consistency result is the note's operational criterion, counted by lineage, not a
+test of equivalence: Fisher's test treats lineages as independent although they cluster by world (one aged-soup establishment contributes 16
+lineages that take root), and counting each group of joined lineages once, the criterion fails in the aged soup (0.33 against 0.63); it holds
+in the shuffled soup both ways and fails in the fresh soup both ways (AUD-209, AU2-188). The excess of appearances that do not become
+established depends on those that may be pieces of the establishing lineage: without those within 1,250 epochs before an establishment the
+ratio is 4.55 [0.89, 23.22], and with only branches that never become established, 5.35 [0.77, 25.04] (auditor 1, post hoc); "not
+established" means "not in the dominant group when the branch stops" (AUD-208, AU2-190). The neighbour test mixed the two orders of the
+pair: "copies" is exactly the order, and "damaged" is G1 damaging itself when it runs second, also with inert partners (AUD-210, AU2-189).
+Split by order, it gives a lead: when G1 runs first, its copy is not heritable 12.9% of the time in the aged soup and 0.6% in the fresh one,
+because the copy keeps the partner's first byte and 11.3% of aged-soup cells start with `]`; G4 is not affected. It is post hoc, from a single
+encounter, and does not explain everything (no association within the aged soup, and the shuffled soup also loses without it).

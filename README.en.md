@@ -256,19 +256,21 @@ See notebook entry 20, in Catalan, or its [English summary](quadern/resum.en.md#
 **Natural families, followed like the planted replicators (exploratory).** The 52 part-B branches where the census sees
 some heritable cell, run again with nothing planted (all 52 reproduce the pilot line by line), with the natural families
 followed by the same lineage module as the planted ones.
-- **Followed this way, the consistency check holds in the aged and shuffled soups:** once the census detects them, they
-  take root as often as the planted replicators (0.64 against 0.63, and 0.71 against 0.62). In the fresh soup, less often
-  (6 of 12, against 0.94), so the pilot's reading, which compares each soup with the fresh one, still cannot be made.
-- **More appearances that do not become established are detected in the aged soup** (4.4 times the fresh soup [1.4,
-  15.5]), but part of them may be pieces of the lineage that becomes established. It does not say where maturation acts.
-- **Neighbours in the aged soup do not damage planted replicators more often** in one encounter: they do not explain why
-  the planted replicators die out there.
+- **Counted by lineage, they meet the consistency criterion in the aged and shuffled soups** (0.64 against 0.63, and
+  0.71 against 0.62), and not in the fresh one (6 of 12, against 0.94). It does not show that they take root equally:
+  counting each group once, they do not meet it in the aged soup. The pilot's reading, which compares each soup with the
+  fresh one, still cannot be made.
+- **More appearances that do not become established are counted in the aged soup** (4.4 times the fresh soup [1.4,
+  15.5]), but the excess depends on those that may be pieces of the lineage that becomes established. It does not say
+  where maturation acts.
+- **The neighbour test did not measure what we wanted:** split by order, it gives a first-byte lead, still to be confirmed.
+- **Both auditors** have reviewed it: accepted as exploratory, with corrections to the reading.
 
 See notebook entry 21, in Catalan, or its [English summary](quadern/resum.en.md#entry-21).
 
 **What we study now:**
-- **The soup before life:** the audit round of the natural families followed like the planted replicators (entry 21).
-  Why planted replicators die out so fast in the aged soup is still open.
+- **The soup before life:** why planted replicators die out so fast in the aged soup, with the pilot's records and
+  nothing planted (the first-byte lead from audit 38).
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 

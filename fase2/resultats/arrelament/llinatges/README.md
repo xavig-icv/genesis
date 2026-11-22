@@ -108,7 +108,8 @@ Node. El món és la unitat: el bootstrap remostra mons sencers (10.000 vegades,
 La primera branca de les 52, en l'ordre del manifest: la simulació, la comprovació i el seguiment, de punta a punta. I la pregunta 3 amb un sol
 món, el primer de la cohort. Si la comprovació falla o cap pas no surt bé, s'atura tot i es diu aquí.
 
-**El que ha canviat a la prova curta** (21-11-2026, abans del càlcul llarg i abans de mirar cap resultat de les preguntes):
+**El que ha canviat a la prova curta** (21-11-2026, abans del càlcul llarg; la pregunta 3, després de veure la sortida d'un món, el 7001, que
+és dins de l'anàlisi: la nota N-1 de l'auditoria 38):
 - **La pregunta 3, amb un sol món** (el 7001, `57b0ded`): amb les definicions d'abans, G1 no sortia mai com a «es copia», perquè demanava la
   meitat del veí igual que el genotip, byte a byte, i un replicador pot deixar una còpia girada o parcial. La prova del projecte compta una
   finestra de 16 bytes. I «malmès» comptava qualsevol byte canviat, encara que el genotip continués sent hereditari. Ara: «es copia», amb la
@@ -168,10 +169,12 @@ món, el primer de la cohort. Si la comprovació falla o cap pas no surt bé, s'
 
 ## El que surt (exploratori)
 
-**En poques paraules:** seguides com els plantats, les famílies naturals de la sopa envellida i de la barrejada arrelen tant com els
-plantats informatius quan el cens les detecta, i a la nova, menys. A la sopa envellida hi ha més aparicions que no s'estableixen que a la
-nova, però una part poden ser trossos del llinatge que s'estableix. Els veïns de la sopa envellida no fan més mal als plantats en una
-trobada. Tot és exploratori, de 52 branques, amb els criteris fixats a la nota abans de calcular.
+**En poques paraules:** seguides com els plantats i comptades per llinatges, les famílies naturals de la sopa envellida i de la barrejada
+compleixen el criteri de consistència fixat a la nota, i les de la nova no. No és cap prova que arrelin igual que els plantats: comptant cada
+grup una vegada, a l'envellida no el compleixen (AUD-209, AU2-188). El seguiment compta més aparicions que no s'estableixen a la sopa
+envellida que a la nova, però l'excés depèn de les que poden ser trossos del llinatge que s'estableix (AUD-208, AU2-190). I la pregunta 3
+no mesura el mal que fan els veïns; separada per ordre, dona una pista del primer byte, per confirmar (AUD-210, AU2-189). Tot és
+exploratori, de 52 branques, amb els criteris fixats a la nota abans de calcular. Les correccions de l'auditoria 38 són al final.
 
 ### 1. La fragmentació (AUD-204)
 
@@ -198,25 +201,36 @@ trobada. Tot és exploratori, de 52 branques, amb els criteris fixats a la nota 
 | barrejada | 56 | 14 | 0,033 |
 | nova | 17 | 8 | 0,017 |
 
-- **L'envellida contra la nova: 4,41 [1,44; 15,49].** L'interval queda per sobre d'1: pel criteri de la nota, **a la sopa envellida s'hi
-  detecten més aparicions, a més de les que s'estableixen.** La barrejada contra la nova, 1,89 [0,79; 5,71]: no ho podem dir.
+- **L'envellida contra la nova: 4,41 [1,44; 15,49].** L'interval queda per sobre d'1, i pel criteri de la nota el seguiment hi compta més
+  aparicions que no s'estableixen. **Però l'excés depèn de les que poden ser trossos del llinatge que s'estableix** (AUD-208, AU2-190; l'auditor
+  1, a posteriori): sense les 16 de les 1.250 èpoques d'abans d'un establiment, 4,55 [0,89; 23,22]; només amb les de branques sense
+  establiment, 5,35 [0,77; 25,04]. Tots dos intervals contenen 1. La barrejada contra la nova, 1,89 [0,79; 5,71]: no ho podem dir.
+- **«No s'estableix» vol dir «no és del grup dominant quan s'atura la branca»** (AU2-190): no és un fracàs independent, ni una extinció.
 - **El descriptiu, afegit després:** de les 33 de la sopa envellida, **15 són a branques que no s'estableixen**, i 18 a branques que sí
   (16 d'aquestes, en les 1.250 èpoques d'abans de l'establiment). **Aquestes 18 poden ser trossos del llinatge que s'estableix** que el
-  seguiment no ha unit: no ho sabem. Només amb les branques que no s'estableixen, 15, 5 i 3: la direcció es manté, però no en faig cap quocient
-  (és un recompte afegit després, amb molt poques).
+  seguiment no ha unit: no ho sabem. Només amb les branques que no s'estableixen, 15, 5 i 3, que són recomptes sense l'exposició (amb
+  l'exposició, el quocient de dalt, que conté 1). De les 15 de l'envellida, 8 són d'un sol món, el 7046, i set d'aquestes són llinatges petits
+  al costat d'una família gran (l'auditor 1).
 - **«No s'estableix» no vol dir «s'extingeix»:** 25 de les 33 encara eren vives al final de l'exposició (a l'establiment de la branca, o al
   final), amb una *F* màxima de 3 de mediana. A la nova, 4 de 8, amb una mediana de 176.
 
 ### 3. La consistència, amb els llinatges
 
-| sopa | naturals robustos | plantats informatius detectats | la diferència, p de Fisher | |
+| sopa | naturals robustos (llinatges) | plantats informatius detectats | la diferència, p de Fisher | el criteri de la nota |
 |---|---|---|---|---|
 | envellida | 43 de 67 (0,64) | 82 de 131 (0,63) | 0,02, p = 0,88 | coincideixen |
 | barrejada | 25 de 35 (0,71) | 128 de 208 (0,62) | 0,10, p = 0,35 | coincideixen |
 | nova | 6 de 12 (0,50) | 224 de 238 (0,94) | −0,44, p < 0,001 | no coincideixen |
 
-- **Amb la regla de la nota** (com a molt 0,15 de diferència i p ≥ 0,05), la consistència **es compleix a la sopa envellida i a la barrejada,
-  i no a la nova.** Al pilot, amb les famílies de 16 bytes, els naturals eren 0,17, 0,26 i 0,36. Els plantats són els mateixos: la diferència
+- **Amb la regla de la nota** (com a molt 0,15 de diferència i p ≥ 0,05), el criteri de consistència **es compleix a la sopa envellida i a la
+  barrejada, i no a la nova,** comptant llinatges. **És un criteri operatiu, no cap prova d'equivalència** (AU2-188): la p de Fisher tracta
+  cada llinatge com si fos independent, i no ho són (la unitat és el món, i un sol establiment de l'envellida hi posa 16 llinatges que arrelen);
+  i l'interval de Newcombe de la diferència arriba a 0,15 a l'envellida ([−0,127; 0,151]) i la passa a la barrejada ([−0,078; 0,239]).
+- **Comptant cada grup de llinatges una vegada** (AUD-209; l'auditor 1, a posteriori): 12 de 36 a l'envellida (0,33; no es compleix), 11 de 21
+  a la barrejada (0,52; es compleix) i 5 d'11 a la nova (0,45; no). A la barrejada i a la nova, el veredicte no depèn de la unitat; a
+  l'envellida, sí. Cap de les dues unitats no és neta: comptant llinatges, un establiment fragmentat compta moltes vegades com a «arrela»;
+  comptant grups, els trossos del dominant que no s'hi han unit queden fora del grup que arrela.
+- **Al pilot,** amb les famílies de 16 bytes, els naturals eren 0,17, 0,26 i 0,36. Els plantats són els mateixos: la diferència
   ve només de com es delimiten les famílies naturals, i és coherent amb l'AUD-204.
 - **Sense els competidors** (la sensibilitat): naturals 0,84, 0,86 i 0,67; plantats 0,63, 0,64 i 0,95.
 - **Molts llinatges no hi entren:** les prèvies (78, 118 i 16: el llinatge comença al cens de la confirmació, després de l'establiment, i
@@ -234,24 +248,33 @@ trobada. Tot és exploratori, de 52 branques, amb els criteris fixats a la nota 
 (la part de les trobades en què el genotip queda malmès, és a dir, que ja no és hereditari amb companys inerts; la mitjana de les 240
 sembres)
 
-- **El quocient de G1 no queda per sobre d'1, sinó una mica per sota:** pel criteri de la nota, **la trobada immediata amb els veïns no
-  explica per què G1 s'apaga més a la sopa envellida.** Els veïns de la sopa envellida el fan malbé gairebé igual que els de la nova, una mica
-  menys.
-- **Dins de cada sopa, més mal va amb més sembres apagades al primer pas** (*F* = 0 a l'època 8.050): G1 a l'envellida, 64, 69 i 73 de 80 per
-  terços; a la nova, 60, 60 i 73. Una associació, descriptiva.
-- **«Es copia» surt a la meitat de les trobades, o gairebé** (de 5.760 a 5.762 d'11.520), a les tres sopes i amb tots dos genotips. No ho
-  vaig separar per l'ordre de la parella.
+- **La mesura no és el mal que fan els veïns** (AUD-210, AU2-189; l'auditor 1 la va separar per ordre, a posteriori). Barreja els dos ordres
+  de la parella: quan el genotip va primer, mai no queda malmès; quan va segon, queda malmès de 0,74 a 0,78 de les vegades, i és el genotip
+  mateix qui es fa malbé: els dos caps comencen a la meitat del company, i el seu bucle de còpia escriu sobre la seva pròpia meitat. Amb
+  companys inerts, sense cap instrucció, G1 queda malmès el 95,8 % de les vegades quan va segon. Pel criteri fixat, el quocient de G1 no queda
+  per sobre d'1, però la mesura no podia dir si els veïns el fan malbé.
+- **Separada per ordre, la mateixa trobada dona una pista** (a posteriori): quan G1 va primer, la seva còpia al veí no és hereditària un
+  12,9 % de les vegades a l'envellida, un 1,1 % a la barrejada i un 0,6 % a la nova (0,876 [0,865; 0,887]). La còpia de G1 deixa el primer
+  byte del company tal com era, i si és `]` o 0, no és hereditària; a l'envellida, l'11,3 % de les cel·les comencen amb `]` (a la barrejada,
+  un 0,5 %; a la nova, un 0,4 %). G4 sobreescriu el primer byte, i totes les seves còpies són hereditàries. És d'una sola trobada, i no ho
+  explica tot: dins de l'envellida, les sembres sense cap veí que comenci amb `]` o 0 s'apaguen al primer pas igual que les altres, i la
+  barrejada també hi perd sense aquest efecte. S'ha de confirmar.
+- **Dins de cada sopa, més «malmès» va amb més sembres apagades al primer pas** (*F* = 0 a l'època 8.050): G1 a l'envellida, 64, 69 i 73 de 80
+  per terços; a la nova, 60, 60 i 73. Una associació, descriptiva, d'una mesura que és la conducta del genotip quan va segon.
+- **«Es copia» és l'ordre de la parella** (de 5.760 a 5.762 d'11.520): 1 quan el genotip va primer, 0 quan va segon (AUD-210, AU2-189). No és
+  cap taxa de còpia, i no mira si la finestra ja hi era abans de la trobada (com a l'AUD-185).
 - **La composició dels veïns** (descriptiu): a l'envellida, un 11,5 % d'instruccions, un 4,3 % de `<` i un 1,6 % de `,`; a la nova, un 3,9 %,
   un 0,38 % i un 0,40 %.
 
 ### El que no diu
 
-- **No diu on actua la maduració.** L'excés d'aparicions que no s'estableixen a la sopa envellida és una indicació exploratòria, amb una
-  part que poden ser trossos, i la consistència no es compleix a la sopa nova. La regla del projecte es manté: cap afirmació de si la
+- **No diu on actua la maduració.** L'excés d'aparicions que no s'estableixen a la sopa envellida depèn de les que poden ser trossos; la
+  consistència, a l'envellida, depèn de la unitat, i a la nova no es compleix. La regla del projecte es manté: cap afirmació de si la
   maduració actua sobre l'aparició o sobre l'arrelament (AUD-184 = AU2-151). Per dir-ho, el carril de confirmar.
 - **El llinatge és de finestres, no de descendència** (AU2-156), i el cens inert, una foto cada 250 èpoques.
-- **Per què s'apaguen els plantats a la sopa envellida, encara no ho sabem:** la trobada immediata no ho explica. Pot ser el que passa
-  després (les còpies dels veïns a sobre, la competència per l'espai), que aquesta nota no mesura.
+- **Per què s'apaguen els plantats a la sopa envellida, encara no ho sabem:** la pregunta 3, tal com era, no ho podia dir, i la pista del
+  primer byte s'ha de confirmar. Pot ser també el que passa després (les còpies dels veïns a sobre, la competència per l'espai), que aquesta
+  nota no mesura.
 
 ## Tot el que s'ha provat
 
@@ -259,3 +282,29 @@ sembres)
 - El càlcul de les 52 branques i la pregunta 3 sencera, una vegada cadascun.
 - L'anàlisi, dues vegades: el primer intent amb l'error de la consistència (`intent-1/`), i la corregida.
 - El descriptiu de les aparicions que no s'estableixen, afegit després de veure la sortida.
+
+## Les correccions de l'auditoria 38 (22-11-2026)
+
+Tots dos auditors accepten el càlcul i l'anàlisi com a exploratoris: els registres, sencers i iguals als del pilot; l'anàlisi, refeta; l'error
+del primer intent, ben declarat i ben corregit. Cap no demana repetir res. Les troballes són de lectura, i el text de dalt ja és el corregit.
+**La sortida fixada (`analisi-sortida.txt`), el primer intent (`intent-1/`), el descriptiu i els registres no es toquen.** Les xifres noves
+són de les sensibilitats dels auditors, a posteriori, i es diuen així.
+
+- **Les aparicions que no s'estableixen** (AUD-208, AU2-190). Deia: «pel criteri de la nota, a la sopa envellida s'hi detecten més aparicions,
+  a més de les que s'estableixen», i «una part poden ser trossos», i del descriptiu, «la direcció es manté». L'excés depèn de les que poden
+  ser trossos: sense les de just abans d'un establiment, l'interval conté 1 (l'auditor 1). I «no s'estableix» vol dir «no és del grup dominant
+  quan s'atura la branca» (l'auditor 2).
+- **La consistència** (AUD-209, AU2-188). Deia: «les famílies naturals de la sopa envellida i de la barrejada arrelen tant com els plantats
+  informatius quan el cens les detecta», i que la consistència «es compleix a la sopa envellida i a la barrejada». És el criteri operatiu de
+  la nota, comptant llinatges, i no cap prova d'equivalència: la prova de Fisher no té en compte que els llinatges d'un món no són
+  independents (l'auditor 2). Comptant cada grup una vegada, a l'envellida no es compleix (l'auditor 1).
+- **Els veïns** (AUD-210, AU2-189). Deia: «els veïns de la sopa envellida no fan més mal als plantats en una trobada», «la trobada immediata
+  amb els veïns no explica per què G1 s'apaga més a la sopa envellida», i de «es copia», «no ho vaig separar per l'ordre de la parella». La
+  mesura barrejava els dos ordres: «es copia» és l'ordre, i «malmès» és el genotip que es fa malbé ell mateix quan va segon. Separada per
+  ordre (l'auditor 1), dona la pista del primer byte, per confirmar.
+- **El que no es pot refer sense les captures** (AU2-191). Els seguiments no es poden tornar a derivar només amb els JSONL. L'auditor 1 va
+  tornar a fer quatre branques amb les ordres de `llista.txt` des de `2f0585d` (també la de 54 llinatges i l'única amb un rebrot), i el
+  registre i el seguiment van sortir iguals.
+- **La prova curta** (la nota N-1 de l'auditor 1). Deia que les definicions de la pregunta 3 van canviar «abans de mirar cap resultat de les
+  preguntes». Van canviar després de veure la sortida d'un món, el 7001, que és dins de l'anàlisi. El canvi era necessari i és declarat.
+

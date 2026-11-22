@@ -351,8 +351,12 @@ Llegeix-los abans de proposar canvis.
       amb la seva condició i com a lectura formal (AU2-184), mai que la maduració actua sobre l'aparició; als titulars, «els replicadors
       plantats» (AUD-207). El pas següent, una nota pel carril d'explorar; tornar a plantar, només amb una decisió nova i l'acord dels tres.
     - **Les famílies naturals, seguides com els plantats** (22-11-2026, l'entrada 21, exploratori; `fase2/resultats/arrelament/llinatges/`, la
-      sortida `analisi-sortida.txt`, `e42ee6b`): la consistència es compleix a l'envellida i a la barrejada, i no a la nova; a l'envellida, més
-      aparicions que no s'estableixen (4,41 [1,44; 15,49]), «una part poden ser trossos», mai una mesura neta de l'aparició. El primer intent de
-      l'anàlisi, amb un error (tots els plantats a la consistència), a `intent-1/`. La ronda d'auditoria, després.
+      sortida `analisi-sortida.txt`, `e42ee6b`; l'auditoria 38, acceptats com a exploratoris per tots dos): «compleixen el criteri de
+      consistència» (comptant llinatges, a l'envellida i a la barrejada; no a la nova), mai «arrelen tant com els plantats», i amb la unitat:
+      comptant grups, a l'envellida no (AUD-209, AU2-188). L'excés d'aparicions que no s'estableixen a l'envellida (4,41 [1,44; 15,49]) depèn
+      de les que poden ser trossos: sense les de just abans d'un establiment, l'interval conté 1 (AUD-208, AU2-190); «no s'estableix» és «no
+      és del grup dominant quan s'atura la branca». La pregunta 3 no mesura el mal dels veïns («es copia» és l'ordre de la parella; «malmès»,
+      el genotip quan va segon; AUD-210, AU2-189); separada per ordre, la pista del primer byte (`]`), a posteriori i per confirmar. El primer
+      intent de l'anàlisi, amb un error (tots els plantats a la consistència), a `intent-1/`.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

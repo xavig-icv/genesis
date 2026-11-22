@@ -2186,7 +2186,7 @@
     <header>
       <p class="date">Entrada 21 · 22 de novembre de 2026 · exploratori</p>
       <h1>La sopa abans de la vida, cinquena part: les famílies naturals, seguides com els replicadors plantats</h1>
-      <p class="lede">A l'<a href="#entrada-20">entrada 20</a>, les famílies naturals que comptava el cens no deixaven separar l'aparició de l'arrelament: a la foto del cens es trencaven en trossos. Ara les hem seguides com els replicadors plantats, amb el mateix mòdul del llinatge, tornant a córrer les 52 branques de la part B que en tenien, sense plantar res. Totes reprodueixen el pilot línia a línia. Seguides així, quan el cens les detecta, a la sopa vella i a la barrejada arrelen tant com els plantats (0,64 contra 0,63, i 0,71 contra 0,62), i a la nova, menys (6 de 12, contra 0,94). A la sopa vella s'hi detecten unes quatre vegades més aparicions que no s'estableixen que a la nova, però una part poden ser trossos del llinatge que s'estableix. I els veïns de la sopa vella no fan més mal als plantats en una trobada. És exploratori, i encara no diu on actua la maduració.</p>
+      <p class="lede">A l'<a href="#entrada-20">entrada 20</a>, les famílies naturals que comptava el cens no deixaven separar l'aparició de l'arrelament: a la foto del cens es trencaven en trossos. Ara les hem seguides com els replicadors plantats, amb el mateix mòdul del llinatge, tornant a córrer les 52 branques de la part B que en tenien, sense plantar res. Totes reprodueixen el pilot línia a línia. Seguides així i comptades per llinatges, les de la sopa vella i les de la barrejada compleixen el criteri de consistència fixat abans de calcular (0,64 contra 0,63, i 0,71 contra 0,62), i les de la nova no (6 de 12, contra 0,94). No és cap prova que arrelin igual: comptant cada grup una vegada, a la sopa vella no el compleixen. A la sopa vella s'hi compten unes quatre vegades més aparicions que no s'estableixen que a la nova, però l'excés depèn de les que poden ser trossos del llinatge que s'estableix. I la prova dels veïns no mesurava el que volíem: separada per ordre, dona una pista del primer byte, per confirmar. És exploratori, i encara no diu on actua la maduració.</p>
     </header>
 
     <h2>D'on surt</h2>
@@ -2197,7 +2197,7 @@
       <li><strong>Les 52 branques de la part B on el cens inert troba alguna cel·la hereditària</strong> (21 a la sopa vella, 19 a la barrejada i 12 a la nova), tornades a fer córrer amb el simulador del pilot tal com és, desant una captura cada 50 èpoques. A les altres 128, el cens no en troba cap, i el resultat hi és zero sense calcular res.</li>
       <li><strong>De punta a punta, igual que el pilot:</strong> cada registre nou ha de tenir els mateixos censos, el mateix llinatge, el mateix establiment i la mateixa empremta final que el de git. Les 52, línia a línia.</li>
       <li><strong>El seguiment:</strong> quan el cens inert hi veu una cel·la hereditària que no porta cap finestra de cap llinatge que ja se segueix, comença un llinatge nou, que se segueix com un plantat (afegint-hi les finestres dels mutants que es copien). Dos llinatges que comparteixen una cel·la s'uneixen.</li>
-      <li><strong>Els veïns:</strong> per a cada sembra de G1 i de G4 de la part A, els 24 veïns de la cel·la sembrada a la sopa de partida, cadascun en una trobada amb el genotip (en tots dos ordres), fora del món. «Malmès»: després de la trobada, el genotip ja no es copia amb companys inerts.</li>
+      <li><strong>Els veïns:</strong> per a cada sembra de G1 i de G4 de la part A, els 24 veïns de la cel·la sembrada a la sopa de partida, cadascun en una trobada amb el genotip (en tots dos ordres), fora del món. «Malmès»: després de la trobada, el genotip ja no és hereditari amb companys inerts.</li>
       <li><strong>El càlcul:</strong> del 21-11-2026 a les 20.05 al 22-11-2026 a les 00.16, cap branca fallada. Els registres, a git abans de l'anàlisi.</li>
     </ul>
 
@@ -2212,21 +2212,21 @@
         </tbody>
       </table>
     </div>
-    <p class="sub">De les famílies que el cens veu, quina part arrela en les 1.250 èpoques següents, amb la regla de la consistència del pilot. «Coincideixen»: com a molt 0,15 de diferència, i la prova exacta de Fisher no la rebutja (la regla de la nota).</p>
+    <p class="sub">De les famílies que el cens veu, quina part arrela en les 1.250 èpoques següents, amb la regla de la consistència del pilot. «Coincideixen»: com a molt 0,15 de diferència, i la prova exacta de Fisher no la rebutja (la regla de la nota). És un criteri operatiu, comptant llinatges, i no cap prova d'equivalència.</p>
     <ul>
-      <li><strong>La consistència, amb els llinatges, es compleix a la sopa vella i a la barrejada, i no a la nova.</strong> Al pilot, amb les famílies de 16 bytes, les naturals eren 0,17, 0,26 i 0,36. Els plantats són els mateixos: la diferència ve només de com es delimiten les naturals. A la nova, la xifra de les naturals és de 12 llinatges.</li>
-      <li><strong>Les aparicions que no s'estableixen:</strong> 33 a la sopa vella, 14 a la barrejada i 8 a la nova. Per mon-època, la vella en té 4,4 vegades les de la nova [1,4; 15,5]: pel criteri de la nota, a la sopa vella s'hi detecten més aparicions, a més de les que s'estableixen. La barrejada, 1,9 [0,8; 5,7]: no ho podem dir.</li>
-      <li><strong>Però una part poden ser trossos</strong> (un recompte afegit després de veure la sortida): de les 33 de la vella, 15 són a branques que no s'estableixen, i 18 a branques que sí, gairebé totes just abans de l'establiment. Aquestes 18 poden ser trossos del llinatge que s'estableix que el seguiment no ha unit. I «no s'estableix» no vol dir «s'extingeix»: 25 de les 33 encara eren vives, petites, quan la branca es va aturar.</li>
+      <li><strong>Comptant llinatges, el criteri de consistència es compleix a la sopa vella i a la barrejada, i no a la nova.</strong> No és cap prova d'equivalència: la prova de Fisher tracta cada llinatge com si fos independent, i no ho són (un sol establiment de la sopa vella hi posa 16 llinatges que arrelen). Comptant cada grup una vegada, a la sopa vella no es compleix (0,33 contra 0,63); a la barrejada, sí (0,52); a la nova, no (0,45). Al pilot, amb les famílies de 16 bytes, les naturals eren 0,17, 0,26 i 0,36. Els plantats són els mateixos: la diferència ve només de com es delimiten les naturals. A la nova, la xifra de les naturals és de 12 llinatges.</li>
+      <li><strong>Les aparicions que no s'estableixen:</strong> 33 a la sopa vella, 14 a la barrejada i 8 a la nova. Per mon-època, la vella en té 4,4 vegades les de la nova [1,4; 15,5]: pel criteri de la nota, el seguiment hi compta més aparicions que no s'estableixen. La barrejada, 1,9 [0,8; 5,7]: no ho podem dir.</li>
+      <li><strong>Però l'excés depèn de les que poden ser trossos:</strong> de les 33 de la vella, 18 són a branques que s'estableixen, gairebé totes just abans de l'establiment, i la meitat comparteixen de 10 a 15 bytes amb el llinatge dominant del seu món (amb els dels altres mons, mai). Sense les de just abans d'un establiment, el quocient és de 4,6 [0,9; 23,2], i només amb les de branques que no s'estableixen, de 5,4 [0,8; 25,0]: tots dos intervals contenen 1 (l'auditor 1, a posteriori). I «no s'estableix» vol dir «no és del grup dominant quan s'atura la branca»: 25 de les 33 encara eren vives, petites.</li>
       <li><strong>La fragmentació:</strong> el seguiment uneix el 29 % de les famílies robustes del pilot a la sopa vella, entre els dos llindars de la nota (la meitat o més la confirmaria; menys d'un 20 % la contradiria): ni la confirma ni la contradiu. El grup que s'estableix encara aplega uns quants llinatges (47 als 15 establiments de la vella), i el quocient de totes les aparicions es queda on era (5,0 [1,8; 15,5]).</li>
-      <li><strong>Els veïns no expliquen per què G1 s'apaga més a la sopa vella:</strong> en una trobada, el deixen malmès un 38 % de les vegades a la vella i un 39 % a la nova (0,97 [0,96; 0,99]). Dins de cada sopa, les sembres amb més veïns que les fan malbé s'apaguen més sovint al primer pas, a totes tres sopes.</li>
+      <li><strong>La prova dels veïns no mesurava el que volíem:</strong> barrejava els dos ordres de la parella, i el mal el feia el genotip mateix quan anava segon, també amb companys inerts, sense cap instrucció. Separada per ordre (l'auditor 1, a posteriori), dona una pista: quan G1 va primer, la seva còpia no és hereditària un 13 % de les vegades a la sopa vella i un 0,6 % a la nova, perquè deixa el primer byte del company tal com era, i a la sopa vella l'11 % de les cel·les comencen amb <code>]</code>. G4 no en pateix. És d'una sola trobada i no ho explica tot: s'ha de confirmar.</li>
     </ul>
 
     <h2>Què en traiem</h2>
     <ul>
-      <li><strong>La consistència depenia de com es delimiten les famílies:</strong> seguides com els plantats, les naturals de la sopa vella i de la barrejada arrelen com els plantats quan el cens les veu. La consistència que no es complia a l'entrada 20 ara es compleix en dues de les tres sopes.</li>
+      <li><strong>La consistència depèn de com es delimiten i es compten les famílies:</strong> amb les famílies de 16 bytes de l'entrada 20 no es complia enlloc; seguides com els plantats i comptades per llinatges, el criteri es compleix a la sopa vella i a la barrejada; comptant grups, només a la barrejada. A la barrejada es compleix de totes dues maneres.</li>
       <li><strong>Però no a la nova,</strong> que és la de referència: la lectura del pla, que compara cada sopa amb la nova, continua sense poder-se fer.</li>
-      <li><strong>L'excés d'aparicions a la sopa vella</strong> és una indicació, no una mesura neta: una part pot ser la mateixa fragmentació. Que la maduració actuï sobre l'aparició, encara no ho podem dir, i la regla del projecte es manté (AUD-184 = AU2-151).</li>
-      <li><strong>Per què els plantats s'apaguen a la sopa vella</strong> continua obert: la trobada immediata amb els veïns no ho explica. Pot ser el que passa després, que aquesta nota no mesura.</li>
+      <li><strong>L'excés d'aparicions a la sopa vella</strong> no se separa de la fragmentació: depèn de les que poden ser trossos. Que la maduració actuï sobre l'aparició, encara no ho podem dir, i la regla del projecte es manté (AUD-184 = AU2-151).</li>
+      <li><strong>Per què els plantats s'apaguen a la sopa vella</strong> continua obert. La prova dels veïns, tal com era, no ho podia dir; separada per ordre, dona la pista del primer byte, que s'ha de confirmar.</li>
     </ul>
 
     <h2>Els límits</h2>
@@ -2237,12 +2237,22 @@
     </ul>
 
     <h2>El que no va anar bé del primer cop</h2>
-    <p>La primera anàlisi tenia un error meu: a la consistència hi entraven tots els plantats, també els que el cens no detecta mai, comptats com a «no arrela» (0,11, 0,18 i 0,31). La nota deia la regla del pilot, que només hi compta els detectats. Ho vaig veure perquè les xifres no eren les del pilot. La sortida d'aquell intent és al README de la nota, tal com va sortir, i la corregida, al costat.</p>
+    <p>La primera anàlisi tenia un error meu: a la consistència hi entraven tots els plantats, també els que el cens no detecta mai, comptats com a «no arrela» (0,11, 0,18 i 0,31). La nota deia la regla del pilot, que només hi compta els detectats. Ho vaig veure perquè les xifres no eren les del pilot. La sortida d'aquell intent és a <code>intent-1/</code>, tal com va sortir, i la corregida, al costat.</p>
 
     <h2>El que ve</h2>
     <ul>
-      <li><strong>La ronda d'auditoria,</strong> amb els dos auditors, com diu el carril d'explorar.</li>
+      <li><strong>La ronda d'auditoria,</strong> amb els dos auditors: feta (el requadre de sota).</li>
+      <li><strong>El pas següent, en què coincidim tots tres:</strong> pel carril d'explorar i sense plantar res, mirar amb els registres que ja tenim per què s'apaguen els plantats a la sopa vella, amb la pista del primer byte, i comptar les famílies naturals de totes dues maneres.</li>
     </ul>
+    <div class="pending">
+      <p><strong>Correccions de l'auditoria 38 (22-11-2026).</strong> Tots dos auditors van acceptar el càlcul i l'anàlisi com a exploratoris: els registres, iguals als del pilot (l'auditor 1 en va tornar a fer quatre branques); l'anàlisi, refeta; l'error del primer intent, ben declarat i ben corregit. Cap no demana repetir res. Van trobar coses de lectura, i el text de dalt ja és el corregit:</p>
+      <ul>
+        <li><strong>«A la sopa vella i a la barrejada arrelen tant com els plantats»</strong> (el resum) i «la consistència es compleix»: és el criteri operatiu de la nota, comptant llinatges, no cap prova d'equivalència, i comptant grups, a la sopa vella no es compleix (AUD-209, AU2-188).</li>
+        <li><strong>«S'hi detecten més aparicions, a més de les que s'estableixen»</strong> i «una part poden ser trossos»: l'excés depèn de les que poden ser trossos, i sense les de just abans d'un establiment l'interval conté 1 (AUD-208, AU2-190).</li>
+        <li><strong>«Els veïns de la sopa vella no fan més mal als plantats en una trobada»</strong> i «els veïns no expliquen per què G1 s'apaga més»: la prova barrejava els dos ordres de la parella, i «malmès» era el genotip que es fa malbé ell mateix quan va segon (AUD-210, AU2-189).</li>
+        <li><strong>«Ja no es copia amb companys inerts»</strong> (la definició de «malmès») i «la sortida d'aquell intent és al README de la nota» (AUD-211).</li>
+      </ul>
+    </div>
   </article>
 
   <script type="module" src="quadern.js"></script>
