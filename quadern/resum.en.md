@@ -285,6 +285,7 @@ which always take root (AUD-205). G4 is inconclusive, not unchanged (AUD-206). T
 taking root is also observed, in part B, with incomplete detection, and "no family comes from the starting cells" is a window rule, not a
 genealogy. With the pilot alone, 15 against 7 establishments is not significant (Fisher p = 0.10).
 
+<a id="entry-21"></a>
 ## Entry 21 · 22 November 2026 · The soup before life, part five: natural families, followed like the planted replicators (exploratory)
 
 In entry 20, the natural families counted by the inert census could not separate appearance from taking root: at the census snapshot they
