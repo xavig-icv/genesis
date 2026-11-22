@@ -121,3 +121,96 @@ nothing else runs, and it is written here.
 - **`primer-byte.mjs PILOT-FOLDER [--world NNNN]`:** the per-world and per-seed first-byte counts, from the pilot's starting snapshots
   (checked against the manifest's SHA-256), to `primer-byte.jsonl`.
 - **`analisi.mjs [--check]`:** the analysis above, to `analisi-sortida.txt`, with the commit and the Node version in its first line.
+
+## How it went
+
+- **The scripts,** in git before running anything (`fcec8bd`).
+- **The short test** (22-11-2026): `primer-byte.mjs` on world 7001 (`prova/primer-byte-7001.jsonl`): the three soups, the 24 seeds with 24
+  neighbours each, 1.2 s. Only its structure was looked at.
+- **The full scan** (from `fcec8bd`, Node 16.15.1): the 60 worlds, all snapshots with the manifest's SHA-256, 1,440 seeds, 33 s
+  (`primer-byte.jsonl`). Then `analisi.mjs --check`: the 2,160 part-A records, the scan and the 52 trackings, all valid, no result printed.
+  Both in git before the analysis (`0b56a91`).
+- **The analysis** (from `0b56a91`, Node 16.15.1, exit code 0): `analisi-sortida.txt`, in git as it came out (`f81327a`), before writing
+  anything.
+
+## What came out (exploratory)
+
+**In short:** in the aged soup, the G1 lineages that get through the first step still die out over the following hundreds of epochs,
+while in the fresh soup most of them stay; G4 shows no such difference. Their members are heritable less often in the aged soup, mostly
+because fewer of them copy at all. By the rules fixed in the note, both the lineage records and the between-world pattern agree with the
+first-byte lead. But the records have no first bytes, the spread between worlds is tiny, and within the aged soup the seeds with no
+neighbour starting with `]` or 0 did no better. A lead that fits, not a mechanism shown.
+
+### 1. The anatomy
+
+| variant | soup | at 8,050: lost / present but not heritable / heritable | still alive at 8,250 / 9,000 / 9,500 |
+|---|---|---|---|
+| G1 | aged | 21 / 185 / 34 | 13 / 10 / 9 |
+| G1 | shuffled | 28 / 169 / 43 | 29 / 24 / 23 |
+| G1 | fresh | 14 / 179 / 47 | 31 / 31 / 31 |
+| G1 × 9 | aged | 0 / 83 / 157 | 71 / 37 / 34 |
+| G1 × 9 | shuffled | 0 / 53 / 187 | 145 / 123 / 114 |
+| G1 × 9 | fresh | 0 / 51 / 189 | 168 / 164 / 162 |
+| G4 | aged | 21 / 161 / 58 | 51 / 51 / 51 |
+| G4 | shuffled | 20 / 169 / 51 | 43 / 43 / 43 |
+| G4 | fresh | 15 / 173 / 52 | 46 / 46 / 46 |
+
+(240 plantings in each row. «Lost»: no cell carries any window of the lineage; «present but not heritable»: some do, none is heritable with
+inert partners.)
+
+- **Most one-cell plantings die at the first step, in every soup** (G1: 206, 197 and 193 of 240 with F = 0 at 8,050). The aged soup's
+  excess at the first step is small, and split: for G1, 7 more lost and 6 more present but not heritable; for G1 × 9, 32 more present but
+  not heritable, and none lost.
+- **The main difference comes afterwards.** Of the G1 lineages still heritable at 8,050, 9 of 34 are alive at 9,500 in the aged soup,
+  against 31 of 47 in the fresh one; for G1 × 9, 34 of 157 against 162 of 189. In the aged soup they die out slowly over the first thousand
+  epochs; in the fresh soup almost none does after 8,250. G4: 51 of 58 against 46 of 52.
+- **The shuffled soup is in between** for G1 and G1 × 9 (23 and 114 alive at 9,500).
+
+### 2. The lead at the lineage level
+
+- **The heritable share of the members in the first five steps** (`functional`/`tested`): G1, 9.8% in the aged soup against 15.3% in the
+  fresh one, 0.64 [0.47, 0.88]; G1 × 9, 0.57 [0.51, 0.63]; G4, 1.02 [0.92, 1.15]. By the note's rule (G1 below 1 and G4 contains 1):
+  **the lineage records agree with the first-byte lead.**
+- **It is mostly members that do not copy at all:** for G1, `copying`/`tested` is 10.6% against 16.0%, and `functional`/`copying` 92.4%
+  against 96.0%. A copy that starts with `]` may not run at all, which would fit; but the records have no member's first byte, and cannot
+  tell.
+- **In the shuffled soup, something else:** G4 also loses there (0.84 [0.76, 0.92]), and so does G1 × 9 (0.87 [0.81, 0.93]), with only
+  about 1% of the cells starting with `]` or 0. The shuffled soup's deficit is not the first byte.
+
+### 3. The lead between worlds
+
+- **The share of the aged soup's cells that start with `]` or 0 hardly varies between worlds:** from 13.3% to 14.3% (median 13.9%; the
+  shuffled soup, 1.1%; the fresh one, 0.8%).
+- **Taking root:** G1 and G1 × 9, Spearman −0.28 [−0.50, −0.03]; G4, −0.05 [−0.32, 0.22]. By the note's rule, **the between-world
+  pattern agrees with the lead.** But the spread is one percentage point, too small for the mechanism itself to make much difference; it is
+  one of four correlations; and G1's heritable share does not show it (−0.12 [−0.37, 0.14]). The share may stand for something else in how
+  each soup aged.
+- **Within the aged soup, the neighbours do not fit:** the 26 G1 seeds with no neighbour starting with `]` or 0 did worse (4.4% of the
+  tested members heritable, none took root) than those with 1 or 2 (10.0%; 2 took root) or 3 or more (10.0%; 5). Few seeds, descriptive,
+  and in the opposite direction; auditor 1 had seen no association with the first-step deaths either.
+
+### 4. The natural families counted both ways
+
+- **The consistency by group** (an operational criterion, not a test of equivalence): 12 of 36 (0.33) in the aged soup, 11 of 21 (0.52)
+  in the shuffled one and 5 of 11 (0.45) in the fresh one, against 0.63, 0.62 and 0.94: met only in the shuffled soup. These are auditor 1's
+  figures (audit 38), now from the project's code.
+- **The longest common substring:** of the 18 failed appearances in aged-soup establishing branches, 9 share 10 bytes or more with their
+  branch's dominant group (median 9), and none with the other worlds' dominant groups (median 4); in the shuffled soup, 4 of 9; in the
+  fresh one, 2 of 5. Also auditor 1's figures.
+- **Without these probable fragments:** 24, 10 and 6 failed appearances; aged against fresh, 4.28 [1.24, 15.61]. Auditor 1's rule (without
+  all those within 1,250 epochs before an establishment) gave 4.55 [0.89, 23.22]. The two post hoc rules disagree on whether the interval
+  stays above 1, so the excess still cannot be separated from fragmentation with confidence. And the 24 include the 8 of world 7046, which may
+  be fragments of a large family that did not become established.
+
+### What it does not say
+
+- **Not that the first byte explains the extinctions of the planted replicators.** The records agree with it at the level of the soup, but
+  they have no first bytes, the spread between worlds is tiny, and the local test points the other way. Showing it would need an
+  intervention (changing the aged soup's `]` and 0 first bytes, against a placebo). The pilot's `byte0` arms, which removed `<` from the
+  first byte, are not that test. Planting again for it needs a new decision of the owner and the agreement of the three.
+- **Not where maturation acts:** the rule stays (AUD-184 = AU2-151).
+- **The lineage is of windows, not of descent** (AU2-156).
+
+## Everything tried
+
+- The short test of the scan (one world), the full scan, `--check` and the analysis, once each. Nothing else was computed.
