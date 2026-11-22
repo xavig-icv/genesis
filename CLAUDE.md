@@ -215,7 +215,7 @@ Llegeix-los abans de proposar canvis.
   - **Les animacions del planeta,** per al README i per compartir el lloc: `node eines/web-animacio.mjs --chrome CAMI-DE-CHROME
     --sortida fitxer.png`, amb el servidor engegat. Una captura per època a l'explorador 3D, amb l'època a la cantonada, i un
     PNG animat amb una paleta comuna. El temps de la pàgina es fixa a cada fotograma: dues execucions donen el mateix fitxer.
-- Documents per a qui arriba de fora: `README.en.md` (cal posar-lo al dia quan canviï el README), `docs/reproduir.md`
+- Documents per a qui arriba de fora: `README.md` (en anglès, el principal) i `README.ca.md` (el català: quan canviï l'un, cal posar al dia l'altre), `docs/reproduce.md` i `docs/reproduir.md`
   (receptes comprovades), `docs/glossari.md`, `CITATION.cff`, `CONTRIBUTING.md` i `LICENSE-data.md`. Al
   README, la revisió és "de dos auditors d'IA", mai "externa" sense dir-ho.
 - Captures clau: `docs/captures.sha256` i `docs/captures.md`; còpia amb `bash eines/arxiva-captures.sh`.

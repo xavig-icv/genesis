@@ -1,5 +1,7 @@
 # Com reproduir els resultats
 
+*English (la versió principal): [`reproduce.md`](reproduce.md).*
+
 Receptes per refer, des de fora, els resultats del projecte. Van de segons a hores. Totes les ordres
 s'executen des de l'arrel del repositori, i es poden copiar tal com són en una consola `bash` (a Windows, Git
 Bash).
