@@ -379,5 +379,11 @@ Llegeix-los abans de proposar canvis.
       hereditaris en el 93–100 % de les condicions, contra un arrelament del 3 al 98 %), i la resta no es llegeix: la hipòtesi que els
       fundadors s'adapten a la seva sopa queda sense provar, mai «no s'hi adapten». **La prova del cens diu si un programa es pot copiar, no
       quantes vegades:** no serveix per mesurar l'arrelament. Una mesura per trobada seria una altra nota, calibrada contra el pilot abans de res.
+    - **Dues proves sense plantar** (24-11-2026, l'entrada 24, exploratori): la de l'auditor 1 (`fase2/resultats/arrelament/vulnerables/`: el
+      calibratge passa, i els fundadors dels establiments són vulnerables al primer byte 5 de 15, 5 de 15 i 3 de 7: «no es veu cap filtre», mai «el
+      primer byte no fa res»; la pista es queda en els plantats) i la de l'auditor 2 (`fase2/resultats/arrelament/sensibilitats/`: els veïns dins de
+      cada món i contra G4 a la mateixa cel·la, *RR* = 1,59 [0,97; 2,90], «no ho pot dir», però no deixa lloc a la direcció de la pista; les tres
+      menes d'enllaç candidat coincideixen en 15 de 16, i l'excés d'aparicions que no s'estableixen «no se separa de la fragmentació»; el lloc, sol,
+      és un indici feble). Un enllaç candidat no és descendència.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

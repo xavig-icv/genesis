@@ -390,3 +390,25 @@ does. By the rule fixed before computing, the other numbers are reported with no
 instrument: neither for nor against. Testing it again would need a measure of how often a program copies per encounter, calibrated against
 the pilot first, in another note. One result was seen before the full run (the first line of the short test), and nothing was changed after
 it. Exploratory.
+
+<a id="entry-24"></a>
+## Entry 24 · 24 November 2026 · The soup before life, part eight: two tests without planting anything (exploratory)
+
+At audit 39 the two auditors proposed two ways to go on without planting again, and both notes were written before computing. **Auditor 1's
+test** (`fase2/resultats/arrelament/vulnerables/README.md`): if the aged soup's `]` and 0 first bytes filtered the replicators, the natural
+ones that become established there should be vulnerable to them less often. Each robust natural lineage's program met, once, 20 real partners
+of its world's aged soup starting with `]`, 20 with 0 and 20 with another byte; "vulnerable" means it copies itself heritably into the others
+and never into the `]` ones. The calibration passed (G1 vulnerable in all 60 worlds, G4 in none). The founder of the dominant group is
+vulnerable in 5 of the 15 establishments of the aged soup, 5 of the 15 of the shuffled soup and 3 of the 7 of the fresh one (aged minus
+shuffled, 0.00 [−0.38, 0.38]): **no filter is seen**, and the first-byte lead loses strength as an explanation of taking root in the aged
+soup. More than half of the robust natural lineages are vulnerable, and they join the dominant group less often than the others in the aged
+soup and also in the shuffled one, where almost no cell starts with `]` or 0. **Auditor 2's sensitivities**
+(`fase2/resultats/arrelament/sensibilitats/README.md`): within each world, G1 does better, not worse, at the places with more neighbours
+starting with `]` or 0, and G4, planted at the same cells, about the same; their ratio, 1.59 [0.97, 2.90], cannot say by the note's rule but
+leaves no room for the lead's direction. For the failed appearances, three kinds of candidate link to the establishing lineage (time,
+sequence with a threshold of 8 bytes fixed by a control, and place within 8 cells) agree: 15 of the 16 aged-soup appearances that the time
+rule removes are also linked by sequence or place. By the note's rule the time rule's reading is the more defensible, and with it the excess
+of failed appearances in the aged soup cannot be separated from fragmentation (4.55 [0.91, 23.09]; counting candidate families, 2.35 [0.72,
+10.06]). Place on its own is weak evidence: a random cell would be as close one time in six. One check was added after reading the output
+(G1's 4.4% at the 26 places without such neighbours is a single seed). Exploratory: few establishments, a single encounter, and a candidate
+link is not descent. Where maturation acts is still not known.

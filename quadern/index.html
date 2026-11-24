@@ -34,6 +34,7 @@
     <a href="#entrada-21">Entrada 21</a>
     <a href="#entrada-22">Entrada 22</a>
     <a href="#entrada-23">Entrada 23</a>
+    <a href="#entrada-24">Entrada 24</a>
   </nav>
 
   <article id="entrada-1">
@@ -2374,6 +2375,53 @@
     <h2>El que ve</h2>
     <ul>
       <li><strong>La ronda d'auditoria,</strong> amb la nota següent, la de l'auditor 2.</li>
+    </ul>
+  </article>
+
+  <article id="entrada-24">
+    <header>
+      <p class="date">Entrada 24 · 24 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, vuitena part: dues proves sense plantar res</h1>
+      <p class="lede">Els dos auditors van proposar, a l'auditoria 39, dues maneres de continuar sense tornar a plantar. L'auditor 1: si els primers bytes <code>]</code> i 0 de la sopa vella filtressin els replicadors, els naturals que s'hi estableixen haurien de ser menys vulnerables a aquests bytes. L'auditor 2: tornar a mirar els veïns dins de cada món, i tractar els trossos de família com a candidats, amb un graf. Les dues notes es van escriure abans de calcular. No es veu cap filtre: els fundadors naturals són vulnerables tan sovint a la sopa vella com a la barrejada. Els veïns no mostren la pista del primer byte. I les tres menes d'indici dels trossos coincideixen: amb les regles que les fan servir, l'excés d'aparicions que no s'estableixen a la sopa vella no se separa de la fragmentació. És exploratori.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>L'entrada 22 va deixar una pista: quan G1 es copia, deixa el primer byte del company tal com era, i si és <code>]</code> o 0 la còpia no és hereditària. A la sopa vella, el 14 % de les cel·les comencen així. La pista encaixava amb els registres a escala de sopa, però no s'havia pogut provar al veïnat. El responsable va dir que sí a totes dues propostes. Les notes són a <code>fase2/resultats/arrelament/vulnerables/</code> i <code>fase2/resultats/arrelament/sensibilitats/</code>.</p>
+
+    <h2>La prova de l'auditor 1: són vulnerables els que s'hi estableixen?</h2>
+    <ul>
+      <li><strong>Com:</strong> el programa de cada llinatge natural robust dels 52 seguiments, en una sola trobada amb companys reals de la sopa vella del seu món, 20 que comencen amb <code>]</code>, 20 amb 0 i 20 amb un altre byte. «Vulnerable»: es copia de manera hereditària amb els altres, i mai amb els que comencen amb <code>]</code>.</li>
+      <li><strong>Primer, el calibratge:</strong> G1 havia de sortir vulnerable, i G4 no, en 54 mons de 60 o més. Surten tots dos en els 60: la prova mesura el que ha de mesurar.</li>
+      <li><strong>El que surt:</strong> el fundador del grup dominant és vulnerable en 5 dels 15 establiments de la sopa vella, en 5 dels 15 de la barrejada i en 3 dels 7 de la nova. La diferència entre la vella i la barrejada és 0,00 [−0,38; 0,38]. <strong>No es veu cap filtre</strong>, i, com va escriure l'auditor 1, la pista perd força com a explicació de l'arrelament a la sopa vella.</li>
+      <li><strong>Un descriptiu:</strong> més de la meitat dels llinatges naturals robustos són vulnerables, i entren menys al grup dominant que els altres, a la sopa vella i també a la barrejada, on gairebé cap cel·la no comença amb <code>]</code> o 0. No és cosa dels primers bytes de la sopa vella.</li>
+    </ul>
+
+    <h2>Les sensibilitats de l'auditor 2</h2>
+    <ul>
+      <li><strong>Els veïns, dins de cada món i contra G4 a la mateixa cel·la:</strong> G1 i G4 es van plantar a les mateixes cel·les. Dins de cada món, G1 hi va millor, no pitjor, als llocs amb més veïns que comencen amb <code>]</code> o 0, i G4, gairebé igual. El quocient de tots dos, 1,59 [0,97; 2,90]: per la regla, no ho pot dir, però no deixa lloc a la direcció de la pista.</li>
+      <li><strong>Els trossos, com a candidats:</strong> tres menes d'indici que una aparició que no s'estableix és un tros del llinatge que s'estableix: el temps (les 1.250 èpoques d'abans de l'establiment), la seqüència (8 bytes o més en comú, un llindar fixat amb un control: amb els altres mons, mai més de 7) i el lloc (a 8 cel·les o menys).</li>
+      <li><strong>Coincideixen:</strong> de les 16 aparicions de la sopa vella que treu la regla del temps, 15 també hi estan unides per la seqüència o pel lloc. Per la regla de la nota, la del temps és la lectura més defensable, i amb ella l'excés no se separa de la fragmentació (4,55 [0,91; 23,09]). Comptant famílies candidates, 2,35 [0,72; 10,06].</li>
+      <li><strong>El lloc, sol, és un indici feble:</strong> una cel·la a l'atzar seria tan a prop del grup dominant una vegada de cada sis.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>La pista del primer byte es queda en els plantats:</strong> explica bé que G1 perd les còpies que fa sobre un <code>]</code>, però els replicadors naturals que s'estableixen a la sopa vella no en surten seleccionats, i al veïnat no s'hi veu.</li>
+      <li><strong>L'excés d'aparicions que no s'estableixen no es pot separar de la fragmentació</strong> amb els indicis que tenim.</li>
+      <li><strong>On actua la maduració, encara no ho sabem.</strong></li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>Exploratori,</strong> amb pocs establiments (15, 15 i 7): només una diferència d'un terç es podia veure.</li>
+      <li><strong>Una sola trobada, amb el programa primer i els companys de l'inici.</strong> Els veïns, només els de la sembra.</li>
+      <li><strong>Un enllaç candidat no és descendència:</strong> el llinatge és de finestres, i el cens, una mostra cada 250 èpoques.</li>
+      <li><strong>Una comprovació afegida després de llegir la sortida:</strong> el 4,4 % de G1 als 26 llocs sense veïns dolents surt tot d'una sola sembra.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>Una sola ronda d'auditoria</strong> per a les tres notes: la proveta (l'entrada 23) i aquestes dues.</li>
     </ul>
   </article>
 

@@ -362,10 +362,32 @@ Amb els registres i les captures de partida del pilot, sense plantar ni simular 
 
 Vegeu l'[entrada 22](quadern/index.html#entrada-22).
 
+### Una proveta que no serveix (exploratori)
+
+Els fundadors naturals dels establiments del pilot i els quatre genotips plantats, a la prova de replicació del cens, amb companys de les
+sopes de partida del pilot, i sense plantar res a cap món.
+- **El calibratge no passa:** la prova havia d'ordenar els genotips plantats com el pilot, i satura (tots hereditaris en el 93 % al 100 %
+  de les condicions). La prova del cens diu si un programa es pot copiar, no quantes vegades. Per la regla fixada abans de calcular, la
+  resta no es llegeix, i la hipòtesi que els fundadors s'adapten a la seva sopa queda sense provar: ni a favor ni en contra.
+
+Vegeu l'[entrada 23](quadern/index.html#entrada-23).
+
+### Dues proves sense plantar (exploratori)
+
+Les propostes dels dos auditors després de l'auditoria 39, amb les notes escrites abans de calcular.
+- **No es veu cap filtre del primer byte:** amb una prova que passa el calibratge, els fundadors dels establiments naturals són vulnerables
+  al primer byte tan sovint a la sopa vella com a la barrejada (5 de 15 a totes dues; 3 de 7 a la nova). La pista explica el que li passa a
+  G1 plantat, no quins replicadors naturals s'hi estableixen.
+- **Dins de cada món, els veïns no mostren la pista,** i tres menes d'enllaç candidat (el temps, la seqüència i el lloc) coincideixen en
+  quines aparicions que no s'estableixen són probablement trossos del llinatge que s'estableix: l'excés d'aparicions que no s'estableixen a
+  la sopa vella no se separa de la fragmentació.
+
+Vegeu l'[entrada 24](quadern/index.html#entrada-24).
+
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** què fer ara sense plantar res (tots dos auditors desaconsellen tornar a plantar ara). Per dir si el
-  primer byte n'és la causa caldria una intervenció, i tornar a plantar demana una decisió nova.
+- **La sopa abans de la vida:** la ronda d'auditoria de les entrades 23 i 24, i després què fer sense plantar res (tots dos auditors
+  desaconsellen tornar a plantar ara). On actua la maduració, encara no ho sabem; tornar a plantar demana una decisió nova.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 
