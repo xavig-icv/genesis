@@ -140,3 +140,52 @@ validates the structure of what was written and prints no share. If anything fai
   `proveta-FIRST-LAST.jsonl`, with the commit and the Node version in its first line. Each snapshot must have the manifest's SHA-256.
 - **`analisi.mjs [--check]`:** the analysis above, to `analisi-sortida.txt`, with the commit and the Node version in its first line. It
   requires `programes.json` and the parts that cover the 60 worlds, each once.
+
+## How it went
+
+- **The timing,** before the note (above): only times were printed.
+- **The scripts,** in git before running anything (`5d04b45`). **The programs** (`programes.mjs`, from `5d04b45`, Node 16.15.1, exit code 0,
+  14 s): the 4 planted genotypes, the founders of the 37 part-B establishments (15 in aged soups, 15 in shuffled ones, 7 in fresh ones; 133
+  programs) and 40 robust natural lineages that did not become established, without 15 probable fragments (24, 10 and 6; 72 programs). In git
+  before any test (`f6d64e2`).
+- **The short test** (`proveta.mjs --worlds 1-1`, from `f6d64e2`, 12 s; `prova/proveta-1-1.jsonl`, in git, `f7ecdc8`): 685 lines and 13,700
+  tests, the structure as expected. **One result was seen before the full run:** to look at the structure, I printed the start of the file,
+  and with it the first test line, G1 with world 7001's aged soup, heritable in 20 of its 20 conditions. Nothing was changed after it.
+- **The full run** (`executa.sh`, from `bc1d0be`, 6 processes at low priority, from 20.13 to 20.16): 60 worlds, 41,172 lines, 823,440 tests,
+  no process failed. In git before any reading (`00d1b6a`). `analisi.mjs --check`: all valid.
+- **The analysis** (from `00d1b6a`, Node 16.15.1, exit code 0): `analisi-sortida.txt`, in git as it came out (`1d2fa38`), before writing this.
+
+## What came out (exploratory)
+
+**The test tube fails the calibration,** so by the rule fixed above questions 2 to 5 are reported as numbers, with no reading, and I drop
+this instrument: **the hypothesis stays untested by it.**
+
+- **It saturates.** With partners drawn from any soup, every planted genotype is heritable in nearly all conditions: G1 0.976, 1.000 and 1.000
+  (aged, shuffled, fresh), G4 1.000 in all three, G2 and G3 from 0.93 to 0.98, while the pilot's rooting shares go from 0.03 to 0.98. G2 and
+  G3 are not above G1 and G4 (C1 fails), and the Spearman correlation with the pilot's pR over the 12 points is −0.65. G1's aged soup is
+  slightly below the fresh one (0.976 [0.968, 0.983], C2 holds), but that is not enough.
+- **Why, as far as I can tell:** the census's test is built to say whether a program *can* replicate, not how often: in each condition it
+  tries the first role twice and the second four times, and a single success makes the condition heritable. A replicator that copies most of
+  the time scores near 1 whatever the soup. What decides taking root in the world is closer to the rate per encounter, which this measure
+  does not see. I should have seen it before fixing the measure; the short test only showed it in the one line I should not have looked at.
+- **The second role** is almost never heritable for any program (at most 0.001): after a partner of the soup has run first, the copies are
+  not heritable. Reported, not read.
+
+**The numbers of questions 2 to 5, not read:** the founders' heritable shares are between 0.97 and 0.995 with any kind of soup; the
+interaction of question 2 is −0.004 [−0.022, 0.015]; the own-soup differences of question 3 are 0.000, 0.000 and −0.002; with the fixed
+first bytes, G1 goes from 0.982 (placebo) to 1.000 (1.019 [1.010, 1.028]), G4 stays at 1.000, and the founders of the three soups go up by 0.8
+to 1.9%; question 5's founders and other lineages are both around 0.97 to 0.99.
+
+### What it does not say
+
+- **Not that the founders do not fit their own soup:** the instrument cannot tell. Nor that they do.
+- **Not that the first byte acts in the world:** the fixed pools raise G1's share in the test tube, as auditor 1's single-encounter finding
+  would lead one to expect, but the calibration failed, and the numbers are not read.
+- **If the question is taken up again,** it needs a measure of how often a program copies heritably per encounter (for example, one trial
+  per condition, many conditions), calibrated in the same way against the pilot before anything else. That is another note, with its own
+  rules fixed before computing.
+
+## Everything tried
+
+- The timing (G1 to G4, two soups of world 7001, 40 conditions each; only times), `programes.mjs`, the short test, the full run, `--check` and
+  the analysis, once each. Nothing else was computed.
