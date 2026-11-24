@@ -154,7 +154,7 @@ question of level 2.
 
 The first step of the line the project now focuses on (what happens in the soup before life), done without any new simulation, from the
 records and snapshots of already decided series. The lifeless soup matures along the same curve in every world (the byte distribution
-drifts away from uniform, faster with flow), and it piles up instructions, mainly `<` (ten times its random frequency), crowded into a
+drifts away from uniform, faster with a current), and it piles up instructions, mainly `<` (ten times its random frequency), crowded into a
 few programs. Yet an aged soup has fewer cells that copy themselves than a fresh one (23 against 118 of 131,072; shuffled, the same bytes
 give 706), and the few replicators that appear are lost at once: in one world scanned every 100 epochs, a single real outbreak reached
 76 cells and vanished. Isolated "heritable" cells in such scans turned out to be false positives of the replication test (none passed
@@ -257,7 +257,7 @@ epochs. No one has made the same measurement in soups of different ages.
 
 Maturation makes life become established more often (entry 14), but we did not know whether more replicators appear or more of them
 take root. The pilot measured both separately in 60 new worlds (7001 to 7076, aged to epoch 8,000 with no establishment and no heritable
-cell), with three soups from each: the aged one (`continue`), its shuffled histogram (`shuffle-all`) and a fresh one (`reinit`). In part A,
+cell in the scan), with three soups from each: the aged one (`continue`), its shuffled histogram (`shuffle-all`) and a fresh one (`reinit`). In part A,
 under the only written exception to the rule of planting nothing (T-64), replicators born in the project's worlds were planted in the same
 cells of the three soups, 3,060 branches, and each lineage was followed for up to 1,500 epochs; in part B, nothing was planted, and a census
 with inert partners counted the heritable families that appear. A feasibility test on 6 worlds (16 November) came first: two genotypes
@@ -267,7 +267,7 @@ square and G4), and 0.58 [0.48, 0.69] in the shuffled one; the second measure an
 0.15); for G4 it is inconclusive (1.11 [0.82, 1.52]); shams never take root, there are no collisions, and the first-byte rule has no large effect.
 Yet in part B life becomes established in 15 worlds of 60 in the aged and shuffled soups and 7 in the fresh one, the direction of the
 series, and the inert census sees 0.24, 0.16 and 0.05 new heritable families per 1,000 world-epochs before establishment (5.0 [1.8, 16.1]
-and 3.3 [1.3, 9.6] times the fresh soup); the census sees almost only families that grow past about 100 cells. By the reading rule fixed before
+and 3.3 [1.3, 9.6] times the fresh soup); the census never saw a planted lineage that stayed under 10 cells, and saw almost all of those that passed 100. By the reading rule fixed before
 computing, the taking-root ratios are below 1 and precise enough: taking root of these variants goes against the effect, which would have
 to come from appearance (a formal reading, conditional on natural appearances taking root like these genotypes); the detected-appearance ratio is inconclusive (too wide). The consistency check fails: of the families the
 census sees, 0.17, 0.26 and 0.36 of the natural ones take root within 1,250 epochs, against 0.80, 0.75 and 0.96 of the planted lineages,
@@ -283,7 +283,9 @@ establishment, and many are pieces of the family that becomes established, shari
 it does not show that planted replicators do not represent natural ones: the gap also depends on the family definition and on G2 and G3,
 which always take root (AUD-205). G4 is inconclusive, not unchanged (AUD-206). The title now says "planted replicators" (AUD-207). Natural
 taking root is also observed, in part B, with incomplete detection, and "no family comes from the starting cells" is a window rule, not a
-genealogy. With the pilot alone, 15 against 7 establishments is not significant (Fisher p = 0.10).
+genealogy. With the pilot alone, 15 against 7 establishments is not significant (Fisher p = 0.10). *Corrected after audit 39:* two phrases of
+this summary said more than the Catalan entry, about the scan (which misses some heritable cells, AUD-189) and about the census threshold
+(AUD-212).
 
 <a id="entry-21"></a>
 ## Entry 21 · 22 November 2026 · The soup before life, part five: natural families, followed like the planted replicators (exploratory)
@@ -296,14 +298,15 @@ module as the planted ones: a new lineage starts when the census sees a heritabl
 followed, and lineages that share a cell are joined. With the rules fixed in the note before computing: (1) the tracking joins 29% of the
 pilot's robust families in the aged soup (30 of 103), between the two thresholds, so it neither confirms nor contradicts AUD-204, and the
 ratio of all lineage appearances stays where it was (5.03 [1.84, 15.51]); the dominant group of each establishment still gathers several
-lineages. (2) Appearances that do not become established: 33, 14 and 8; the aged soup has 4.41 times the fresh-soup rate [1.44, 15.49], so
-by the note's criterion more appearances are detected there besides those that become established (shuffled, 1.89 [0.79, 5.71], cannot
-say). A count added after seeing the output: of the 33, 15 are in branches that never become established and 18 in branches that do, almost
+lineages. (2) Appearances that do not become established (not in the dominant group when the branch stops): 33, 14 and 8; the aged soup has 4.41
+times the fresh-soup rate [1.44, 15.49] (shuffled, 1.89 [0.79, 5.71]), but the excess depends on those that may be pieces of the
+establishing lineage (below). A count added after seeing the output: of the 33, 15 are in branches that never become established and 18 in branches that do, almost
 all just before the establishment, which may be pieces of the establishing lineage; 25 of the 33 were still alive, small, when the branch
-stopped. (3) Consistency with lineages: natural 0.64, 0.71 and 0.50 (6 of 12) against planted G1, G1 × 9 and G4 0.63, 0.62 and 0.94; it holds
-in the aged and shuffled soups and fails in the fresh one, which is the reference, so the plan's reading still cannot be made. (4) In a
+stopped. (3) Consistency counted by lineage: natural 0.64, 0.71 and 0.50 (6 of 12) against 0.63, 0.62 and 0.94 for the planted informative
+genotypes (G1, G1 × 9 and G4 together), in the aged, shuffled and fresh soups; it meets the note's operational criterion in the aged and
+shuffled soups and not in the fresh one, which is the reference, so the plan's reading still cannot be made (counted by group, below). (4) In a
 single encounter with the 24 neighbours of the planted cell, G1 is left no longer heritable 38% of the time in the aged soup and 39% in the
-fresh one (0.97 [0.96, 0.99]); the immediate encounter does not explain why planted replicators die out more in the aged soup. The first
+fresh one (0.97 [0.96, 0.99]); but the test mixed the two orders of the pair and did not measure neighbour damage (below). The first
 analysis run had an error (all planted lineages entered the consistency check, also those the census never detects); it is kept as it came
 out, and the corrected one gives the pilot's planted values. Exploratory: it does not say where maturation acts.
 
@@ -320,6 +323,8 @@ pair: "copies" is exactly the order, and "damaged" is G1 damaging itself when it
 Split by order, it gives a lead: when G1 runs first, its copy is not heritable 12.9% of the time in the aged soup and 0.6% in the fresh one,
 because the copy keeps the partner's first byte and 11.3% of aged-soup cells start with `]`; G4 is not affected. It is post hoc, from a single
 encounter, and does not explain everything (no association within the aged soup, and the shuffled soup also loses without it).
+*Corrected again after audit 39 (24 November 2026):* three phrases of the paragraph above still gave the reading from before audit 38, and
+the planted values were labelled with the genotypes instead of the soups (AUD-212).
 
 <a id="entry-22"></a>
 ## Entry 22 · 22 November 2026 · The soup before life, part six: how the planted replicators die out in the aged soup (exploratory)
@@ -327,20 +332,45 @@ encounter, and does not explain everything (no association within the aged soup,
 The planted replicators take root less in the aged soup than in the fresh one (entry 20). From the pilot's records and starting
 snapshots, with no planting and no simulation, we looked at how they die out. This is the step both auditors and the team agreed on at
 audit 38, through the exploration lane, with the note written before computing (`fase2/resultats/arrelament/extincions/README.md`, the first
-note written in English). Most one-cell plantings die at the first step in every soup (G1: 206, 197 and 193 of 240 with F = 0 at epoch
-8,050). The difference comes afterwards: of the G1 lineages still heritable at the first step, 9 of 34 are alive at 9,500 in the aged soup,
-23 of 43 in the shuffled one and 31 of 47 in the fresh one; for G1 in a 3 × 3 square, 34 of 157, 114 of 187 and 162 of 189; for G4, 51 of 58,
-43 of 51 and 46 of 52. In the aged soup, G1's lineages fade over the first thousand epochs; in the fresh soup almost none does after 8,250.
-Their members are heritable less often in the aged soup (G1: 9.8% of the members tested in the first five steps, against 15.3%; 0.64 [0.47,
-0.88]; G1 × 9, 0.57 [0.51, 0.63]; G4, 1.02 [0.92, 1.15]), mostly because fewer of them copy at all. By the rule fixed in the note, the lineage
-records agree with auditor 1's first-byte lead (G1's copy keeps the partner's first byte, and a copy that starts with `]` or 0 is not
-heritable; 11.3% of aged-soup cells start with `]`). In the shuffled soup G4 also loses (0.84 [0.76, 0.92]), with hardly any cell starting
-with `]`: something else is at work there. Between worlds, the share of aged-soup cells starting with `]` or 0 only ranges from 13.3% to
-14.3%; G1's taking root correlates with it at −0.28 [−0.50, −0.03] (G4, −0.05), which meets the fixed rule but is one of four correlations,
+note written in English). Most one-cell plantings lose their heritable cells at the first step in every soup (G1: 206, 197 and 193 of 240
+with F = 0 at epoch 8,050; most of them still have cells that carry the lineage's windows, but none is heritable). Of the G1 lineages still
+heritable at the first step, by epoch 9,500, in the aged soup 25 of 34 died out (21 of them by 8,250), 6 stopped after an establishment that the
+planted lineage dominated, and 3 were still followed; in the fresh soup, 16 of 47 died out (all by 8,250), 17 stopped after an
+establishment they dominated and 14 were still followed. By the pilot's criterion of taking root (the one of entry 20), 7 G1 plantings of
+240 take root in the aged soup and 29 in the fresh one, all of them among those heritable at the first step. For G1 in a 3 × 3 square, 123
+of 157 died out in the aged soup (86 by 8,250), against 27 of 189 in the fresh one (24 take root against 156); for G4, 7 of 58 against 6 of
+52 died out, and the rest stopped after an establishment they dominated: no conclusive aged-against-fresh difference. These are counts of
+outcomes, not survival probabilities: a branch stops 500 epochs after an establishment, and is not observed afterwards. Counted in deaths,
+G1's excess in the aged soup is 13 at the first step and 9 afterwards, mostly within 200 epochs; G1 × 9 fades more gradually. The members of
+the planted lineages in the first five steps are heritable less often in the aged soup (G1: 9.8% against 15.3%, 0.64 [0.47, 0.88]; G1 × 9,
+0.57 [0.51, 0.63]; G4, 1.02 [0.92, 1.15]), mostly because fewer of them copy at all. That measure also counts the steps of lineages already
+dying out; counting only the steps where the lineage is heritable, G1 gives 0.81 [0.68, 0.97] (post hoc, audit 39). By the rule fixed in
+the note, the lineage records agree with auditor 1's first-byte lead (G1's copy keeps the partner's first byte, and a copy that starts with
+`]` or 0 is not heritable; 11.3% of aged-soup cells start with `]`), but the records have no member's first byte and no order of the
+encounters. In the shuffled soup G4 also loses (0.84 [0.76, 0.92]), with hardly any cell starting with `]`: something else is at work there.
+Between worlds, the share of aged-soup cells starting with `]` or 0 only ranges from 13.3% to 14.3%; G1's taking root correlates with it at
+−0.28 [−0.50, −0.03] (G4, −0.05), which meets the fixed rule but is one of four correlations (with Holm's correction, p = 0.13; auditor 1),
 over a spread of one percentage point, and G1's heritable share does not show it. Within the aged soup, the 26 G1 seeds with no neighbour
-starting with `]` or 0 did worse, not better. So the lead fits at the level of the soup and not at the level of the neighbourhood: showing it
-would need an intervention on the aged soup's first bytes, against a placebo (the pilot's `byte0` arms removed `<`, not `]`), and planting
-again needs a new decision of the owner and the agreement of the three. Counting natural families by group, the consistency criterion is met
-only in the shuffled soup; without the probable fragments (10 bytes or more shared with the branch's dominant group), the aged/fresh ratio of
-failed appearances is 4.28 [1.24, 15.61], while auditor 1's time-based rule gave an interval containing 1. Exploratory: it does not say where
-maturation acts.
+starting with `]` or 0 did worse, not better; auditor 1 found them in unusual places, where G4 and G1 × 9 also take root less, and auditor 2 reads them
+as evidence against the simple local version of the lead; both agree that they do not corroborate it. So the lead
+fits at the level of the soup and not at the level of the neighbourhood: a lead, not a mechanism shown. Showing it would need an intervention
+on the aged soup's first bytes, against a placebo (the pilot's `byte0` arms removed `<`, not `]`), and planting again needs a new decision of
+the owner and the agreement of the three. Counting natural families by group, the consistency criterion is met only in the shuffled soup;
+without the probable fragments (10 bytes or more shared with the branch's dominant group), the aged/fresh ratio of failed appearances is
+4.28 [1.24, 15.61], while auditor 1's time-based rule gave 4.55 [0.89, 23.22]: depending on the rule, the excess still cannot be separated
+from fragmentation. The lineage is of windows, not of descent (AU2-156). Exploratory: it does not say where maturation acts (AUD-184 =
+AU2-151).
+
+*Corrected after audit 39 (24 November 2026).* The first version said that 9 of 34 G1 lineages were "alive at 9,500" in the aged soup and
+31 of 47 in the fresh one (and 51 of 58 and 46 of 52 for G4): those counts included the branches that had stopped at an establishment and
+were not observed afterwards, most of them successes (AU2-192). It also said that G1's lineages "fade over the first thousand epochs", which
+holds for G1 × 9 but not for G1 (AUD-214), and it left out the reservations on fragmentation and on the records (AUD-212). The heritable
+share of 0.64 also counts lineages already dying out (AUD-213). The first analysis output stays as it came out, next to the corrected one,
+and the data check now refuses impossible values (AU2-193).
+
+*Corrected after audit 40 (24 November 2026).* The corrected version said that 6 of 34 G1 lineages "took root and established the world" in
+the aged soup and 17 of 47 in the fresh one: those counted the branches stopped after an establishment that the planted lineage dominated,
+not the pilot's taking root, which also counts lineages still followed (7 and 29; AUD-215), and it gave only auditor 1's reading of the 26
+neighbourhoods. The data check now also refuses two seeds of
+the same cell with other counts, a scan header without its commit, and impossible lineage lines (AU2-196, AU2-197, AUD-216). The outputs do
+not change.

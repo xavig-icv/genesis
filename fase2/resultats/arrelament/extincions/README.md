@@ -132,39 +132,56 @@ nothing else runs, and it is written here.
   Both in git before the analysis (`0b56a91`).
 - **The analysis** (from `0b56a91`, Node 16.15.1, exit code 0): `analisi-sortida.txt`, in git as it came out (`f81327a`), before writing
   anything.
+- **After audit 39:** the corrected analysis and the negative tests of `--check`, from `52b49f6` (Node 16.15.1, exit code 0 both):
+  `analisi-sortida-2.txt` and `prova-check-sortida.txt`, in git as they came out (`1960ed3`).
+- **After audit 40:** a stricter `--check` and more negative tests (`61addec`); from that commit (Node 16.15.1, exit code 0),
+  `prova-check-sortida-2.txt`, in git as it came out. The analysis from the same commit gives `analisi-sortida-2.txt` again, identical
+  except the commit in its first line: its results do not change.
 
 ## What came out (exploratory)
 
-**In short:** in the aged soup, the G1 lineages that get through the first step still die out over the following hundreds of epochs,
-while in the fresh soup most of them stay; G4 shows no such difference. Their members are heritable less often in the aged soup, mostly
+**In short:** in the aged soup, more of the G1 lineages that get through the first step die out, and fewer take root (by the pilot's
+criterion), than in the fresh soup, most of the deaths soon after the first step; for G4, no conclusive aged-against-fresh difference was
+detected. Their members are heritable less often in the aged soup, mostly
 because fewer of them copy at all. By the rules fixed in the note, both the lineage records and the between-world pattern agree with the
 first-byte lead. But the records have no first bytes, the spread between worlds is tiny, and within the aged soup the seeds with no
 neighbour starting with `]` or 0 did no better. A lead that fits, not a mechanism shown.
 
 ### 1. The anatomy
 
-| variant | soup | at 8,050: lost / present but not heritable / heritable | still alive at 8,250 / 9,000 / 9,500 |
+| variant | soup | at 8,050: lost / present but not heritable / heritable | of those heritable at 8,050, by 9,500: died out / stopped after an establishment they dominated / still followed |
 |---|---|---|---|
-| G1 | aged | 21 / 185 / 34 | 13 / 10 / 9 |
-| G1 | shuffled | 28 / 169 / 43 | 29 / 24 / 23 |
-| G1 | fresh | 14 / 179 / 47 | 31 / 31 / 31 |
-| G1 × 9 | aged | 0 / 83 / 157 | 71 / 37 / 34 |
-| G1 × 9 | shuffled | 0 / 53 / 187 | 145 / 123 / 114 |
-| G1 × 9 | fresh | 0 / 51 / 189 | 168 / 164 / 162 |
-| G4 | aged | 21 / 161 / 58 | 51 / 51 / 51 |
-| G4 | shuffled | 20 / 169 / 51 | 43 / 43 / 43 |
-| G4 | fresh | 15 / 173 / 52 | 46 / 46 / 46 |
+| G1 | aged | 21 / 185 / 34 | 25 / 6 / 3 |
+| G1 | shuffled | 28 / 169 / 43 | 20 / 3 / 19 (and 1 stopped by another family's establishment) |
+| G1 | fresh | 14 / 179 / 47 | 16 / 17 / 14 |
+| G1 × 9 | aged | 0 / 83 / 157 | 123 / 10 / 24 |
+| G1 × 9 | shuffled | 0 / 53 / 187 | 73 / 37 / 70 (and 7) |
+| G1 × 9 | fresh | 0 / 51 / 189 | 27 / 112 / 47 (and 3) |
+| G4 | aged | 21 / 161 / 58 | 7 / 51 / 0 |
+| G4 | shuffled | 20 / 169 / 51 | 8 / 43 / 0 |
+| G4 | fresh | 15 / 173 / 52 | 6 / 46 / 0 |
 
 (240 plantings in each row. «Lost»: no cell carries any window of the lineage; «present but not heritable»: some do, none is heritable with
-inert partners.)
+inert partners. «Stopped after an establishment they dominated»: the branch stopped 500 epochs after an establishment in which the planted
+lineage was dominant, and is not observed afterwards. It is not the pilot's «taking root» (F ≥ 1,311 at two points 250 epochs apart, within
+the horizon), which also counts lineages still followed: see below. These are counts of outcomes, not survival probabilities. From
+`analisi-sortida-2.txt`, after audit 39; the first table gave «still alive» counts that included the branches stopped by an establishment,
+and until audit 40 the middle column was called «took root»: see the corrections at the end.)
 
-- **Most one-cell plantings die at the first step, in every soup** (G1: 206, 197 and 193 of 240 with F = 0 at 8,050). The aged soup's
+- **Most one-cell plantings lose heritability at the first step, in every soup** (G1: 206, 197 and 193 of 240 with F = 0 at 8,050). By
+  the pilot's rule, their extinction is dated there once the next step confirms it, but most of them still have cells with the lineage's
+  windows (G1: 185, 169 and 179); none of those cells is heritable. The aged soup's
   excess at the first step is small, and split: for G1, 7 more lost and 6 more present but not heritable; for G1 × 9, 32 more present but
   not heritable, and none lost.
-- **The main difference comes afterwards.** Of the G1 lineages still heritable at 8,050, 9 of 34 are alive at 9,500 in the aged soup,
-  against 31 of 47 in the fresh one; for G1 × 9, 34 of 157 against 162 of 189. In the aged soup they die out slowly over the first thousand
-  epochs; in the fresh soup almost none does after 8,250. G4: 51 of 58 against 46 of 52.
-- **The shuffled soup is in between** for G1 and G1 × 9 (23 and 114 alive at 9,500).
+- **Afterwards, more G1 lineages die out in the aged soup and fewer take root.** Of the G1 lineages still heritable at 8,050, by 9,500
+  25 of 34 died out in the aged soup and 6 stopped after an establishment they dominated, against 16 and 17 of 47 in the fresh one. By the
+  pilot's criterion of taking root (the one of entry 20's 0.35 and of this note's between-world correlation), 7 of the 34 take root in the
+  aged soup and 29 of the 47 in the fresh one, all the G1 plantings that take root (the pilot's pR, 0.03 and 0.12 of 240): in the fresh soup,
+  12 of the 14 still followed at 9,500 have already taken root (auditor 1's recount, audit 40). Counted in deaths, G1's excess is 13 at the
+  first step and 9 afterwards, and 21 of the 25 later deaths come by 8,250 (in the fresh soup, all 16): G1 does not fade slowly. G1 × 9 does
+  fade more gradually: 123 of 157 died out (86 by 8,250), against 27 of 189; 24 take root against 156 (pR 0.10 and 0.65). G4: 7 of 58
+  against 6 of 52 died out, and the rest stopped after an establishment they dominated; all of them take root (51 and 46).
+- **The shuffled soup is in between** for G1 and G1 × 9 (20 of 43 and 73 of 187 died out).
 
 ### 2. The lead at the lineage level
 
@@ -174,6 +191,9 @@ inert partners.)
 - **It is mostly members that do not copy at all:** for G1, `copying`/`tested` is 10.6% against 16.0%, and `functional`/`copying` 92.4%
   against 96.0%. A copy that starts with `]` may not run at all, which would fit; but the records have no member's first byte, and cannot
   tell.
+- **The measure also counts the lineages that are already dying out** (AUD-213): counting only the steps where the lineage is heritable
+  (F ≥ 1), G1 gives 0.81 [0.68, 0.97], G1 × 9 0.73 [0.68, 0.79] and G4 1.01 [0.92, 1.10] (post hoc, `analisi-sortida-2.txt`). The rule's
+  verdict does not change.
 - **In the shuffled soup, something else:** G4 also loses there (0.84 [0.76, 0.92]), and so does G1 × 9 (0.87 [0.81, 0.93]), with only
   about 1% of the cells starting with `]` or 0. The shuffled soup's deficit is not the first byte.
 
@@ -183,11 +203,14 @@ inert partners.)
   shuffled soup, 1.1%; the fresh one, 0.8%).
 - **Taking root:** G1 and G1 × 9, Spearman −0.28 [−0.50, −0.03]; G4, −0.05 [−0.32, 0.22]. By the note's rule, **the between-world
   pattern agrees with the lead.** But the spread is one percentage point, too small for the mechanism itself to make much difference; it is
-  one of four correlations; and G1's heritable share does not show it (−0.12 [−0.37, 0.14]). The share may stand for something else in how
-  each soup aged.
+  one of four correlations (with Holm's correction for the four, p = 0.13; auditor 1, audit 39); and G1's heritable share does not show it
+  (−0.12 [−0.37, 0.14]). The share may stand for something else in how each soup aged.
 - **Within the aged soup, the neighbours do not fit:** the 26 G1 seeds with no neighbour starting with `]` or 0 did worse (4.4% of the
   tested members heritable, none took root) than those with 1 or 2 (10.0%; 2 took root) or 3 or more (10.0%; 5). Few seeds, descriptive,
-  and in the opposite direction; auditor 1 had seen no association with the first-step deaths either.
+  and in the opposite direction. Auditor 1 (audit 39) found that these 26 places are not random (four times more than expected, with more
+  instructions around), and that G4 and G1 × 9 planted at the same places also take root less there: rather an effect of the place.
+  Auditor 2 (audit 39) read it as evidence against the simple local version of the lead: few seeds, clustered by world and position, but
+  not to be dismissed. Both agree that it does not corroborate the lead.
 
 ### 4. The natural families counted both ways
 
@@ -213,4 +236,47 @@ inert partners.)
 
 ## Everything tried
 
-- The short test of the scan (one world), the full scan, `--check` and the analysis, once each. Nothing else was computed.
+- The short test of the scan (one world), the full scan, `--check` and the analysis, once each.
+- After audit 39: the corrected analysis and its negative tests, once each. After audit 40: the stricter negative tests, once, and the
+  corrected analysis again from the same commit, to check that it gives the same output. Nothing else was computed.
+
+## Corrections after audit 39 (24 November 2026)
+
+Both auditors reproduced the analysis; auditor 2 gave a NO-GO to the temporal reading as written (AU2-192, high), and both asked for
+corrections to the reading. **The first output (`analisi-sortida.txt`) stays as it came out.** The corrected analysis (`analisi.mjs` at
+`52b49f6`) wrote `analisi-sortida-2.txt`; only the anatomy changes, and a post hoc line is added. The text above is the corrected one.
+
+- **«Still alive at 9,500»** (AU2-192). The table counted as alive the branches that had stopped at an establishment before 9,500, which are not
+  observed afterwards; most of them were successes, with the planted lineage dominant. It said: «9 of 34 are alive at 9,500 in the aged soup,
+  against 31 of 47», «G4: 51 of 58 against 46 of 52», and «the shuffled soup is in between (23 and 114 alive)». Now: died out, stopped by an
+  establishment (called «took root» until audit 40), and still followed, as counts of outcomes.
+- **«They die out slowly over the first thousand epochs»** (AUD-214). True of G1 × 9, not of G1, whose later deaths mostly come by 8,250.
+- **The heritable share of 0.64** (AUD-213) also counts the lineages already dying out; only the heritable steps give 0.81 [0.68, 0.97].
+- **`--check`** (AU2-193) accepted impossible counts. It now refuses them, and `prova-check.mjs` gives it 17 broken copies of the scan
+  (`prova-check-sortida.txt`, all refused, the real one accepted).
+- **The between-world correlation and the neighbours:** auditor 1's Holm correction and auditor 1's reading of the 26 places, added above
+  (and auditor 2's, after audit 40).
+- **Without the snapshots** (AU2-194), the first-byte scan cannot be redone from the package: it can from the pilot's computation copy, where
+  the snapshots are kept.
+
+## Corrections after audit 40 (24 November 2026)
+
+Both auditors reproduced the corrected analysis and its negative tests, and accepted the outcomes (AU2-192, closed). Auditor 1 gave a GO
+with a condition on the text, and auditor 2 a NO-GO to the merge until the data check was stronger; neither asked for anything to be
+computed again. **Neither output changes:** `analisi-sortida.txt` and `analisi-sortida-2.txt` stay as they came out. The text above is the
+corrected one.
+
+- **«Took root»** (AUD-215). The middle column of the table counted the branches stopped after an establishment that the planted lineage
+  dominated, not the pilot's taking root, which also counts lineages still followed: for G1, 6 and 17 against the pilot's 7 and 29; for
+  G1 × 9, 10 and 112 against 24 and 156. It now says what it counts, and where the text says «take root» it gives the pilot's figures. The
+  direction does not change.
+- **«Most one-cell plantings die at the first step»** (AU2-198). F = 0 at the first step is a loss of heritability, dated as the extinction
+  by the pilot's rule once the next step confirms it; most of those lineages still have cells. Now «lose heritability».
+- **«G4 shows no such difference»** (AU2-198). It is not shown to be equal: «no conclusive aged-against-fresh difference was detected».
+- **The neighbours:** auditor 2's reading of the 26 places, next to auditor 1's (auditor 1, N-4).
+- **`--check`** (AU2-196, AU2-197, AUD-216) still accepted two seeds of the same cell with other counts, a scan header without its commit
+  and Node, and lineage lines that the lineage module cannot write, or a missing one. It now checks the scan's commit (`fcec8bd9`) and
+  header, the seeds that share a cell, and every lineage line against `fase2/llinatge.js`; the two files of the negative tests are refused
+  without `--check` (auditor 1, N-5); and `prova-check.mjs` gives it 33 copies of the scan and 19 of a part-A record
+  (`prova-check-sortida-2.txt`: each broken one refused for the reason it names, the real ones accepted). The real data meet every check.
+- **A blank line at the end of this file** (AU2-199), removed.

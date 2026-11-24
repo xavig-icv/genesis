@@ -96,7 +96,7 @@ declarada. Cada imatge és del moment de l'establiment.*
   - *en els mons amb corrent, del 2,4 % al 85,5 %.*
 
 Al món 2D, cada programa només interactua amb els veïns. Les primeres observacions suggerien que l'espai frena
-la vida, i que un corrent feble la fa néixer més sovint.
+la vida, i que un corrent feble fa que s'hi estableixi més sovint.
 
 ![Animació: de prop i en relleu, la colònia del món 1006 s'escampa pel terreny](docs/imatges/terreny-1006.png)
 
@@ -351,19 +351,21 @@ Vegeu l'[entrada 21](quadern/index.html#entrada-21).
 ### Com s'apaguen els replicadors plantats a la sopa vella (exploratori)
 
 Amb els registres i les captures de partida del pilot, sense plantar ni simular res.
-- **La majoria moren al primer pas, a totes les sopes; la diferència ve després.** Dels llinatges de G1 que passen el primer
-  pas, a la sopa vella en queden de vius 9 de 34 1.500 èpoques després de plantar-los, i a la nova, 31 de 47: a la vella s'apaguen a poc a poc
-  durant el primer miler d'èpoques. G4 no hi mostra cap diferència.
+- **La majoria perden les cel·les hereditàries al primer pas, a totes les sopes.** Dels llinatges de G1 que el passen, a l'època
+  9.500, a la sopa vella se n'han extingit 25 de 34, i a la nova, 16 de 47, la majoria de morts poc després del primer pas, i n'hi
+  arrelen menys (pel criteri del pilot, 7 sembres de G1 de 240, contra 29). A G4 no s'hi ha vist cap diferència concloent.
 - **Els seus membres hi són hereditaris menys sovint** (0,64 [0,47; 0,88] vegades la sopa nova, en el cas de G1; 1,02, en el de
   G4), sobretot perquè n'hi ha menys que es copiïn. Encaixa amb la pista del primer byte, però els registres no diuen el primer byte
   de cap membre, entre mons gairebé no varia, i dins de la sopa vella els veïns no hi encaixen. Una pista, no un mecanisme demostrat.
+- **Els dos auditors** hi han fet una ronda (l'auditoria 39): els recomptes es reprodueixen, i s'ha corregit la lectura dels desenllaços i
+  del calendari.
 
 Vegeu l'[entrada 22](quadern/index.html#entrada-22).
 
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** la ronda d'auditoria de com s'apaguen els replicadors plantats (l'entrada 22). Per dir si el primer
-  byte n'és la causa caldria una intervenció, i tornar a plantar demana una decisió nova.
+- **La sopa abans de la vida:** què fer ara sense plantar res (tots dos auditors desaconsellen tornar a plantar ara). Per dir si el
+  primer byte n'és la causa caldria una intervenció, i tornar a plantar demana una decisió nova.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 

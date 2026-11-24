@@ -1,0 +1,20 @@
+The negative tests of analisi.mjs --check (audit 39, AU2-193). 52b49f63, v16.15.1.
+   ok   the real scan (must pass): exit 0 (expected 0); --check: all the data were read and are valid; no result is printed.
+   ok   more cells starting with ] than cells (auditor 2): exit 1 (expected 1); - primer-byte.jsonl: world 7001, continue: impossible counts
+   ok   25 bad neighbours of 24 (auditor 2): exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 has impossible neighbour counts
+   ok   a negative count: exit 1 (expected 1); - primer-byte.jsonl: world 7001, reinit: impossible counts
+   ok   a count that is not an integer: exit 1 (expected 1); - primer-byte.jsonl: world 7001, shuffle-all: impossible counts
+   ok   a world with the wrong number of cells: exit 1 (expected 1); - primer-byte.jsonl: world 7001, continue: impossible counts
+   ok   a seed with 23 neighbours where there are 24: exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 has impossible neighbour counts
+   ok   a seed of another cell: exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 does not match the manifest
+   ok   a seed of another soup: exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 does not match the manifest
+   ok   a seed twice: exit 1 (expected 1); - primer-byte.jsonl: seed 7001-continue-G1-p1 twice
+   ok   a world twice: exit 1 (expected 1); - primer-byte.jsonl: world 7001 twice
+   ok   a missing seed: exit 1 (expected 1); - primer-byte.jsonl: 1439 seeds, not 1440
+   ok   a missing world: exit 1 (expected 1); - primer-byte.jsonl: the worlds are not exactly the cohort
+   ok   another radius in the header: exit 1 (expected 1); - primer-byte.jsonl: the radius or the world size is not the manifest's
+   ok   other bad bytes in the header: exit 1 (expected 1); - primer-byte.jsonl: the bad first bytes are not ] and 0
+   ok   a scan of the short test: exit 1 (expected 1); - primer-byte.jsonl is missing, not complete, or of the short test
+   ok   an end line that counts other things: exit 1 (expected 1); - primer-byte.jsonl: the end line does not count what is there
+   ok   an unknown line type: exit 1 (expected 1); - primer-byte.jsonl: an unexpected line type
+All the cases behaved as expected.

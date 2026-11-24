@@ -249,7 +249,7 @@ What happens in the soup before life appears? Since 11 November 2026 the project
 evaluation of our own and of both auditors. The first step used the data we already had, with no new simulation, and
 everything in it is exploratory: a lead, not a result.
 - **The lifeless soup matures the same way in every world,** piling up instructions, mainly `<`, crowded into a few
-  programs. Flow speeds it up.
+  programs. A current speeds it up.
 - **Yet an aged soup has fewer self-copying programs than a fresh one,** by the census test, and the few replicators
   that appear are lost at once. Whether life becomes established there more often because more replicators appear,
   because more of them take root, or both, we do not know yet (consultation X-105).
@@ -352,19 +352,20 @@ See notebook [entry 21](quadern/index.html#entrada-21), in Catalan, or its [Engl
 ### How the planted replicators die out in the aged soup (exploratory)
 
 From the pilot's records and starting snapshots, with no planting and no simulation.
-- **Most die at the first step, in every soup; the difference comes afterwards.** Of the G1 lineages that get through the first
-  step, 9 of 34 are still alive 1,500 epochs after planting in the aged soup, against 31 of 47 in the fresh one: in the aged soup they fade
-  over the first thousand epochs. G4 shows no such difference.
+- **Most lose their heritable cells at the first step, in every soup.** Of the G1 lineages that get through it, by epoch 9,500,
+  25 of 34 died out in the aged soup, against 16 of 47 in the fresh one, most of the deaths soon after the first step, and fewer took
+  root (by the pilot's criterion, 7 G1 plantings of 240 against 29). For G4, no conclusive aged-against-fresh difference was detected.
 - **Their members are heritable less often in the aged soup** (0.64 [0.47, 0.88] times the fresh soup for G1; 1.02 for G4), mostly
   because fewer of them copy at all. This fits the first-byte lead, but the records do not show any member's first byte, the spread
   between worlds is tiny, and within the aged soup the neighbours do not fit. A lead, not a mechanism shown.
+- **Both auditors** have reviewed it (audit 39): the counts reproduce; the reading of the outcomes and of the timing was corrected.
 
 See notebook [entry 22](quadern/index.html#entrada-22), in Catalan, or its [English text](quadern/resum.en.md#entry-22).
 
 ### What we study now
 
-- **The soup before life:** the audit round of how the planted replicators die out (entry 22). To show whether the first byte is
-  the cause would need an intervention, and planting again needs a new decision.
+- **The soup before life:** what to do next without planting (both auditors advise against planting now). To show whether the
+  first byte is the cause would need an intervention, and planting again needs a new decision.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 
