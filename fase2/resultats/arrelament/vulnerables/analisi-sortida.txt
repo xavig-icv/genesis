@@ -1,0 +1,35 @@
+The first-byte vulnerability of the natural establishments: the note's analysis (exploratory). The analysis: 1ea6a5a4, v16.15.1.
+vulnerables.jsonl: 997aaa76 v16.15.1, 60 worlds, 180 partner sets, 240 calibration lines, 367 lineages, 572 tests; the trackings: 52 of 52; the part-B branches: 180.
+
+0. The calibration: the four genotypes against the aged partners of each world (20 of each first byte)
+   G1: works in 60 worlds, vulnerable in 60, vulnerable to 0 in 60; copies (heritable, keep the first byte) of 1200: ] 1200 (0, 1200); 0 1200 (0, 1200); other 1200 (1200, 1200)
+   G2: works in 60 worlds, vulnerable in 0, vulnerable to 0 in 0; copies (heritable, keep the first byte) of 1200: ] 1126 (1028, 96); 0 925 (811, 922); other 1104 (1021, 95)
+   G3: works in 60 worlds, vulnerable in 0, vulnerable to 0 in 0; copies (heritable, keep the first byte) of 1200: ] 1128 (1028, 99); 0 923 (778, 921); other 1104 (1009, 100)
+   G4: works in 60 worlds, vulnerable in 0, vulnerable to 0 in 0; copies (heritable, keep the first byte) of 1200: ] 1200 (1200, 0); 0 1200 (1200, 0); other 1200 (1200, 5)
+   The note's rule (G1 vulnerable, and G4 working and not vulnerable, in 54 of the 60 worlds or more): G1 60, G4 60: passed
+
+1. The founders of the establishments (the first robust lineage of the dominant group), with the aged partners of their world
+   continue     15 establishments; no robust lineage in the dominant group 0; the founder works 15; vulnerable 5 of 15 (0.33)
+   shuffle-all  15 establishments; no robust lineage in the dominant group 0; the founder works 15; vulnerable 5 of 15 (0.33)
+   reinit       7 establishments; no robust lineage in the dominant group 0; the founder works 7; vulnerable 3 of 7 (0.43)
+   aged minus shuffled: 0.00 [-0.38, 0.38]; aged minus fresh: -0.10 [-0.62, 0.41]
+   The note's reading: the aged share is equal to or above the shuffled share: no filter is seen
+
+2. Descriptive (fixed in the note)
+   a. Per establishment, the share of the dominant group's working robust lineages that are vulnerable (aged partners), averaged over the establishments
+   continue     15 establishments with a working robust lineage; the mean share 0.36
+   shuffle-all  15 establishments with a working robust lineage; the mean share 0.38
+   reinit       7 establishments with a working robust lineage; the mean share 0.36
+   b. All the working robust lineages (aged partners): in the dominant group, among the vulnerable ones and among the others (counts; the lineages of a branch are not independent)
+   continue     153 working robust lineages; vulnerable 85, of which in the dominant group 21 of 85 (0.25); the others 68, in the dominant group 25 of 68 (0.37)
+   shuffle-all  167 working robust lineages; vulnerable 89, of which in the dominant group 15 of 89 (0.17); the others 78, in the dominant group 27 of 78 (0.35)
+   reinit       31 working robust lineages; vulnerable 14, of which in the dominant group 4 of 14 (0.29); the others 17, in the dominant group 5 of 17 (0.29)
+   c. The main measure with the partners of the program's own soup (the aged soup's are the same)
+   continue     the founder works 15; vulnerable 5 of 15 (0.33)
+   shuffle-all  the founder works 15; vulnerable 5 of 15 (0.33)
+   reinit       the founder works 7; vulnerable 3 of 7 (0.43)
+   aged minus shuffled: 0.00; aged minus fresh: -0.10
+   d. The founders (aged partners): the share of their copies with the other partners that keep the first byte, and their heritable copies with the ] and the 0 partners (of 20)
+   continue     keep the first byte (% of copies): min 0, median 10, max 100; heritable with ]: min 0, median 20, max 20; with 0: min 0, median 20, max 20; vulnerable to 0: 4 of 15 working
+   shuffle-all  keep the first byte (% of copies): min 0, median 6, max 100; heritable with ]: min 0, median 19, max 20; with 0: min 0, median 20, max 20; vulnerable to 0: 2 of 15 working
+   reinit       keep the first byte (% of copies): min 0, median 5, max 100; heritable with ]: min 0, median 20, max 20; with 0: min 0, median 20, max 20; vulnerable to 0: 2 of 7 working

@@ -1,0 +1,38 @@
+The neighbours within worlds, and a graph of candidate fragments: the note's analysis (exploratory). The analysis: 1ea6a5a4, v16.15.1.
+The aged-soup part-A records: 720 of 720 (of 92b8f4f); primer-byte.jsonl: fcec8bd9 v16.15.1, 240 places; the trackings: 52 of 52; the part-B records: 180 of 180.
+
+1. The neighbours, within worlds and against G4 at the same cell (the aged soup; functional/tested of the members in the first five steps, pooled)
+   a. The extinction note's table, with intervals (the bootstrap over worlds)
+   none       26 places in 22 worlds; G1 4.4% [0.0, 5.2]; G4 23.8%; G1/G4 0.18 [0.00, 0.24]; G1 × 9 (descriptive) 9.2%; take root: G1 0, G4 3, G1 × 9 1
+   1 or 2     78 places in 49 worlds; G1 10.0% [6.1, 14.3]; G4 22.5%; G1/G4 0.45 [0.27, 0.69]; G1 × 9 (descriptive) 10.6%; take root: G1 2, G4 14, G1 × 9 12
+   3 or more  136 places in 58 worlds; G1 10.0% [6.8, 13.3]; G4 25.4%; G1/G4 0.40 [0.27, 0.53]; G1 × 9 (descriptive) 10.0%; take root: G1 5, G4 34, G1 × 9 11
+   b. Within worlds: 92 high places and 94 low places, in 60 worlds (0 worlds with the same b at their four places, left out)
+      G1: high 10.3%, low 6.1%, R 1.69 [1.04, 3.13]
+      G4: high 25.2%, low 23.6%, R 1.07 [0.92, 1.35]
+      RR = R(G1) / R(G4): 1.59 [0.97, 2.90]
+   The note's reading (RR): contains 1: the local test cannot see the lead either way (the interval runs from 0.97 to 2.90)
+   c. Descriptive: the seeds still heritable at the first step (F >= 1 at 8,050), each seed counted once
+      G1: high 13 of 92, low 8 of 94
+      G4: high 26 of 92, low 16 of 94
+
+2. The graph of candidate fragments (the natural lineages of part B)
+   The sequence threshold from the control: the longest substring with the other worlds' dominant groups is 7 bytes, so s* = 8
+   The failed appearances under each rule: the counts (aged, shuffled, fresh), and the ratios against the fresh soup per 1,000 world-epochs
+   R0 none (entry 21)                   33, 14, 8; aged 4.41 [1.46, 15.42] (above 1); shuffled 1.89 [0.76, 5.68]
+   R1 time (auditor 1)                  17, 5, 4; aged 4.55 [0.91, 23.09] (contains 1); shuffled 1.35 [0.18, 6.60]
+   R2 10 bytes or more (the extinction note) 24, 10, 6; aged 4.28 [1.24, 16.74] (above 1); shuffled 1.80 [0.59, 6.58]
+   R3 sequence, s* = 8                  19, 8, 7; aged 2.90 [0.69, 12.30] (contains 1); shuffled 1.23 [0.34, 4.88]
+   R4 place, 8 cells                    22, 10, 6; aged 3.92 [1.07, 19.50] (above 1); shuffled 1.80 [0.59, 8.01]
+   R5 any of T, S, P                    17, 5, 4; aged 4.55 [0.91, 23.09] (contains 1); shuffled 1.35 [0.18, 6.60]
+   R6 candidate families                11, 5, 5; aged 2.35 [0.72, 10.06] (contains 1); shuffled 1.08 [0.23, 4.99]
+   The range: the aged/fresh interval contains 1 under R1, R3, R5, R6, and lies above 1 under R0, R2, R4
+   The agreement: the failed appearances of establishing branches, by the kinds of evidence that link them to the dominant group
+   continue     18 failed appearances; the time rule removes 16, of which linked by sequence or place 15 (sequence 14, place 11); linked by sequence or place 15, of which the time rule removes 15; by combination (T, S, P): --- 2, T-- 1, T-P 1, TS- 4, TSP 10
+   shuffle-all  9 failed appearances; the time rule removes 9, of which linked by sequence or place 8 (sequence 6, place 4); linked by sequence or place 8, of which the time rule removes 8; by combination (T, S, P): T-- 1, T-P 2, TS- 4, TSP 2
+   reinit       5 failed appearances; the time rule removes 4, of which linked by sequence or place 2 (sequence 1, place 2); linked by sequence or place 2, of which the time rule removes 2; by combination (T, S, P): --- 1, T-- 2, T-P 1, TSP 1
+   The note's reading (the aged soup): 0.94 of those the time rule removes are also linked by sequence or place: the three kinds of evidence agree that they are probable fragments, and the time rule's reading is the more defensible
+   Place as evidence: the chance level of the place links to the dominant group (the share of the world's cells as close to the same cells)
+   continue     11 place links; the chance level: median 0.168, min 0.069, max 0.274
+   shuffle-all  4 place links; the chance level: median 0.158, min 0.038, max 0.196
+   reinit       2 place links; the chance level: median 0.018, min 0.011, max 0.025
+   The note's reading: the median chance level over the three soups is 0.160: place is weak evidence
