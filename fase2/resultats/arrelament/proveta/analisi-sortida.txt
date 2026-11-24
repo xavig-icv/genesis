@@ -1,0 +1,48 @@
+The test tube: do the natural founders fit their own soup? (exploratory). The analysis: 00d1b6ac, v16.15.1.
+programes.json: 5d04b459 v16.15.1, 4 planted, 37 founders, 40 natural lineages that did not become established; the parts: 6 (bc1d0be4), 41172 lines of 41172.
+
+1. Calibration: the planted genotypes, the mean heritable share over the 60 worlds (either role; the program first; second), against the pilot's pR
+   G1  continue     0.976 (0.976; 0.000); pR 0.03
+   G1  shuffle-all  1.000 (1.000; 0.000); pR 0.06
+   G1  reinit       1.000 (1.000; 0.000); pR 0.12
+   G2  continue     0.976 (0.976; 0.000); pR 0.98
+   G2  shuffle-all  0.935 (0.935; 0.001); pR 0.92
+   G2  reinit       0.968 (0.968; 0.000); pR 0.98
+   G3  continue     0.972 (0.972; 0.000); pR 0.90
+   G3  shuffle-all  0.927 (0.927; 0.000); pR 0.93
+   G3  reinit       0.963 (0.963; 0.000); pR 0.95
+   G4  continue     1.000 (1.000; 0.000); pR 0.21
+   G4  shuffle-all  1.000 (1.000; 0.000); pR 0.18
+   G4  reinit       1.000 (1.000; 0.000); pR 0.19
+   Spearman over the 12 points: -0.65
+   C1, G2 and G3 above G1 and G4 in each soup: no
+   C2, G1 aged against fresh: 0.976 [0.968, 0.983] (below 1)
+   reported: G4 aged against fresh 1.000 [1.000, 1.000]; shuffled against fresh, G1 1.000 [1.000, 1.000], G4 1.000 [1.000, 1.000]
+   The note's reading: the test tube fails the calibration: questions 2 to 5 are reported as numbers, with no reading
+
+2. To the kind of soup: each founder's mean heritable share with the aged and the fresh soups of the other worlds, and D, the first minus the second
+   born in continue     15 founders; with aged soups 0.969, with fresh soups 0.985; the mean D -0.016
+   born in shuffle-all  15 founders; with aged soups 0.985, with fresh soups 0.991; the mean D -0.006
+   born in reinit       7 founders; with aged soups 0.983, with fresh soups 0.995; the mean D -0.012
+   The interaction (the mean D of the founders born in aged soups minus that of those born in fresh soups): -0.004 [-0.022, 0.015] (contains 0; width 0.037)
+   The note's reading: not read (the calibration failed)
+
+3. To its own soup: each founder's heritable share with its own world's soup of its birth, minus the mean with the same soup of the other worlds
+   born in continue     15 founders; own 0.969, others 0.969; the mean difference -0.000 [-0.018, 0.017] (contains 0)
+   born in shuffle-all  15 founders; own 0.982, others 0.982; the mean difference -0.000 [-0.015, 0.015] (contains 0)
+   born in reinit       7 founders; own 0.993, others 0.995; the mean difference -0.002 [-0.006, 0.000] (contains 0)
+   The note's reading (the founders of the aged soups): not read (the calibration failed)
+
+4. The first byte: the mean heritable share with the fixed pools against the placebo pools (either role; the program first)
+   G1  fixed 1.000, placebo 0.982, aged 0.976, fresh 1.000: 1.019 [1.010, 1.028] (above 1); the program first 1.019 [1.010, 1.028]
+   G4  fixed 1.000, placebo 1.000, aged 1.000, fresh 1.000: 1.000 [1.000, 1.000] (contains 1); the program first 1.000 [1.000, 1.000]
+   G1, the share of its aged-against-fresh gap that the fixed pools close: 0.759 [0.375, 1.391]
+   the founders born in continue     1.019 [1.008, 1.031]; the program first 1.019 [1.008, 1.031]
+   the founders born in shuffle-all  1.008 [1.003, 1.014]; the program first 1.008 [1.003, 1.014]
+   the founders born in reinit       1.011 [1.000, 1.027]; the program first 1.011 [1.000, 1.027]
+   The note's reading: not read (the calibration failed)
+
+5. Descriptive: the heritable share with its own soup of its own world, the founders against the natural lineages that did not become established
+   continue     founders 15: mean 0.969, median 1.000; the others 24: mean 0.970, median 0.975
+   shuffle-all  founders 15: mean 0.982, median 1.000; the others 10: mean 0.980, median 1.000
+   reinit       founders 7: mean 0.993, median 1.000; the others 6: mean 0.973, median 1.000
