@@ -366,10 +366,12 @@ Llegeix-los abans de proposar canvis.
       el genotip quan va segon; AUD-210, AU2-189); separada per ordre, la pista del primer byte (`]`), a posteriori i per confirmar. El primer
       intent de l'anàlisi, amb un error (tots els plantats a la consistència), a `intent-1/`.
     - **Com s'apaguen els plantats a la sopa envellida** (22-11-2026, l'entrada 22, exploratori; `fase2/resultats/arrelament/extincions/`, la
-      primera nota en anglès; l'auditoria 39, amb la sortida corregida `analisi-sortida-2.txt`): la majoria perden les hereditàries al primer
-      pas; a l'envellida, dels llinatges de G1 que el passen se n'extingeixen més i n'arrelen menys (25 i 6 de 34, contra 16 i 17 de 47), amb
-      menys membres hereditaris (0,64 [0,47; 0,88]; 0,81 als passos hereditaris; G4, 1,02). Mai «vius a la 9.500» per a branques aturades per
-      un establiment (AU2-192): extingits, arrelats i encara seguits, com a desenllaços. Mai «s'apaguen a poc a poc» per a G1 (AUD-214). «Encaixa amb la pista del primer byte a escala de sopa», mai «el
+      primera nota en anglès; les auditories 39 i 40, amb la sortida corregida `analisi-sortida-2.txt` i un `--check` estricte, amb proves
+      negatives): la majoria perden les hereditàries al primer pas; a l'envellida, dels llinatges de G1 que el passen se n'extingeixen més (25
+      de 34, contra 16 de 47) i n'arrelen menys (pel criteri del pilot, 7 sembres de 240 contra 29), amb menys membres hereditaris (0,64 [0,47;
+      0,88]; 0,81 als passos hereditaris; G4, 1,02). Mai «vius a la 9.500» per a branques aturades per un establiment (AU2-192), ni «arrelats»
+      per a les aturades després d'un establiment que dominaven (AUD-215): extingits, aturats per un establiment i encara seguits, com a
+      desenllaços, i «arrelar», només el criteri del pilot. A G4, «cap diferència concloent», mai «cap diferència» (AU2-198). Mai «s'apaguen a poc a poc» per a G1 (AUD-214). «Encaixa amb la pista del primer byte a escala de sopa», mai «el
       primer byte n'és la causa»: dins de l'envellida els veïns no hi encaixen, i els registres no diuen cap primer byte. Una intervenció amb
       plantats tornaria a plantar (decisió nova i acord dels tres).
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una

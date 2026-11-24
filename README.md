@@ -353,8 +353,8 @@ See notebook [entry 21](quadern/index.html#entrada-21), in Catalan, or its [Engl
 
 From the pilot's records and starting snapshots, with no planting and no simulation.
 - **Most lose their heritable cells at the first step, in every soup.** Of the G1 lineages that get through it, by epoch 9,500,
-  25 of 34 died out in the aged soup and 6 took root, against 16 and 17 of 47 in the fresh one, most of the deaths soon after the
-  first step. G4 shows no such difference.
+  25 of 34 died out in the aged soup, against 16 of 47 in the fresh one, most of the deaths soon after the first step, and fewer took
+  root (by the pilot's criterion, 7 G1 plantings of 240 against 29). For G4, no conclusive aged-against-fresh difference was detected.
 - **Their members are heritable less often in the aged soup** (0.64 [0.47, 0.88] times the fresh soup for G1; 1.02 for G4), mostly
   because fewer of them copy at all. This fits the first-byte lead, but the records do not show any member's first byte, the spread
   between worlds is tiny, and within the aged soup the neighbours do not fit. A lead, not a mechanism shown.

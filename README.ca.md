@@ -352,8 +352,8 @@ Vegeu l'[entrada 21](quadern/index.html#entrada-21).
 
 Amb els registres i les captures de partida del pilot, sense plantar ni simular res.
 - **La majoria perden les cel·les hereditàries al primer pas, a totes les sopes.** Dels llinatges de G1 que el passen, a l'època
-  9.500, a la sopa vella se n'han extingit 25 de 34 i n'han arrelat 6, i a la nova, 16 i 17 de 47, la majoria de morts poc després del
-  primer pas. G4 no hi mostra cap diferència.
+  9.500, a la sopa vella se n'han extingit 25 de 34, i a la nova, 16 de 47, la majoria de morts poc després del primer pas, i n'hi
+  arrelen menys (pel criteri del pilot, 7 sembres de G1 de 240, contra 29). A G4 no s'hi ha vist cap diferència concloent.
 - **Els seus membres hi són hereditaris menys sovint** (0,64 [0,47; 0,88] vegades la sopa nova, en el cas de G1; 1,02, en el de
   G4), sobretot perquè n'hi ha menys que es copiïn. Encaixa amb la pista del primer byte, però els registres no diuen el primer byte
   de cap membre, entre mons gairebé no varia, i dins de la sopa vella els veïns no hi encaixen. Una pista, no un mecanisme demostrat.

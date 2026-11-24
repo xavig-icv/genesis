@@ -334,10 +334,13 @@ snapshots, with no planting and no simulation, we looked at how they die out. Th
 audit 38, through the exploration lane, with the note written before computing (`fase2/resultats/arrelament/extincions/README.md`, the first
 note written in English). Most one-cell plantings lose their heritable cells at the first step in every soup (G1: 206, 197 and 193 of 240
 with F = 0 at epoch 8,050; most of them still have cells that carry the lineage's windows, but none is heritable). Of the G1 lineages still
-heritable at the first step, by epoch 9,500, in the aged soup 25 of 34 died out (21 of them by 8,250), 6 took root and established the world,
-and 3 were still followed; in the fresh soup, 16 of 47 died out (all by 8,250), 17 took root and 14 were still followed. For G1 in a 3 × 3
-square, 123 of 157 died out in the aged soup (86 by 8,250), against 27 of 189 in the fresh one; for G4, 7 of 58 against 6 of 52, the rest
-taking root. These are counts of outcomes, not survival probabilities: a branch stops 500 epochs after an establishment. Counted in deaths,
+heritable at the first step, by epoch 9,500, in the aged soup 25 of 34 died out (21 of them by 8,250), 6 stopped after an establishment that the
+planted lineage dominated, and 3 were still followed; in the fresh soup, 16 of 47 died out (all by 8,250), 17 stopped after an
+establishment they dominated and 14 were still followed. By the pilot's criterion of taking root (the one of entry 20), 7 G1 plantings of
+240 take root in the aged soup and 29 in the fresh one, all of them among those heritable at the first step. For G1 in a 3 × 3 square, 123
+of 157 died out in the aged soup (86 by 8,250), against 27 of 189 in the fresh one (24 take root against 156); for G4, 7 of 58 against 6 of
+52 died out, and the rest stopped after an establishment they dominated: no conclusive aged-against-fresh difference. These are counts of
+outcomes, not survival probabilities: a branch stops 500 epochs after an establishment, and is not observed afterwards. Counted in deaths,
 G1's excess in the aged soup is 13 at the first step and 9 afterwards, mostly within 200 epochs; G1 × 9 fades more gradually. The members of
 the planted lineages in the first five steps are heritable less often in the aged soup (G1: 9.8% against 15.3%, 0.64 [0.47, 0.88]; G1 × 9,
 0.57 [0.51, 0.63]; G4, 1.02 [0.92, 1.15]), mostly because fewer of them copy at all. That measure also counts the steps of lineages already
@@ -348,7 +351,8 @@ encounters. In the shuffled soup G4 also loses (0.84 [0.76, 0.92]), with hardly 
 Between worlds, the share of aged-soup cells starting with `]` or 0 only ranges from 13.3% to 14.3%; G1's taking root correlates with it at
 −0.28 [−0.50, −0.03] (G4, −0.05), which meets the fixed rule but is one of four correlations (with Holm's correction, p = 0.13; auditor 1),
 over a spread of one percentage point, and G1's heritable share does not show it. Within the aged soup, the 26 G1 seeds with no neighbour
-starting with `]` or 0 did worse, not better; auditor 1 found them in unusual places, where G4 and G1 × 9 also take root less. So the lead
+starting with `]` or 0 did worse, not better; auditor 1 found them in unusual places, where G4 and G1 × 9 also take root less, and auditor 2 reads them
+as evidence against the simple local version of the lead; both agree that they do not corroborate it. So the lead
 fits at the level of the soup and not at the level of the neighbourhood: a lead, not a mechanism shown. Showing it would need an intervention
 on the aged soup's first bytes, against a placebo (the pilot's `byte0` arms removed `<`, not `]`), and planting again needs a new decision of
 the owner and the agreement of the three. Counting natural families by group, the consistency criterion is met only in the shuffled soup;
@@ -363,3 +367,10 @@ were not observed afterwards, most of them successes (AU2-192). It also said tha
 holds for G1 × 9 but not for G1 (AUD-214), and it left out the reservations on fragmentation and on the records (AUD-212). The heritable
 share of 0.64 also counts lineages already dying out (AUD-213). The first analysis output stays as it came out, next to the corrected one,
 and the data check now refuses impossible values (AU2-193).
+
+*Corrected after audit 40 (24 November 2026).* The corrected version said that 6 of 34 G1 lineages "took root and established the world" in
+the aged soup and 17 of 47 in the fresh one: those counted the branches stopped after an establishment that the planted lineage dominated,
+not the pilot's taking root, which also counts lineages still followed (7 and 29; AUD-215), and it gave only auditor 1's reading of the 26
+neighbourhoods. The data check now also refuses two seeds of
+the same cell with other counts, a scan header without its commit, and impossible lineage lines (AU2-196, AU2-197, AUD-216). The outputs do
+not change.
