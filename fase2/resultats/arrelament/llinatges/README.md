@@ -307,4 +307,3 @@ són de les sensibilitats dels auditors, a posteriori, i es diuen així.
   registre i el seguiment van sortir iguals.
 - **La prova curta** (la nota N-1 de l'auditor 1). Deia que les definicions de la pregunta 3 van canviar «abans de mirar cap resultat de les
   preguntes». Van canviar després de veure la sortida d'un món, el 7001, que és dins de l'anàlisi. El canvi era necessari i és declarat.
-
