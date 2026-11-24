@@ -1,17 +1,19 @@
 // How the planted replicators die out in the aged soup (exploratory): the analysis fixed in the note (README.md), before computing,
 // with the corrections of audit 39 (AU2-192, AU2-193, and AUD-213 as a post hoc line). The first output, as it came out, is
-// analisi-sortida.txt; this version writes analisi-sortida-2.txt.
+// analisi-sortida.txt; this version writes analisi-sortida-2.txt. Audit 40 made the data check stricter (AU2-196, AU2-197, AUD-216);
+// the analysis itself did not change.
 //
-//   node fase2/resultats/arrelament/extincions/analisi.mjs [--check] [--primer-byte FILE] > fase2/resultats/arrelament/extincions/analisi-sortida-2.txt
+//   node fase2/resultats/arrelament/extincions/analisi.mjs [--check [--primer-byte FILE] [--record FILE]] > fase2/resultats/arrelament/extincions/analisi-sortida-2.txt
 //
-// --primer-byte FILE reads another copy of the first-byte scan instead of primer-byte.jsonl: only for the negative tests of --check
-// (prova-check.mjs), which give it broken copies and expect it to refuse them.
+// Only with --check, and only for its negative tests (prova-check.mjs), which give it broken copies and expect it to refuse them:
+// --primer-byte FILE reads another copy of the first-byte scan instead of primer-byte.jsonl, and --record FILE reads the part-A record of
+// the branch named by the file (BRANCH.jsonl) from FILE instead of the pilot's (audit 40, N-5: never in an analysis).
 //
 // It reads the part-A records of the pilot (git), primer-byte.jsonl (git) and the natural-lineage trackings of the previous note (git).
 // It requires all of them, complete; if anything is missing, it reads nothing. With --check, it validates the data and prints only the
 // counts of what it read, no result (the short test). The world is the unit: the bootstrap resamples whole worlds.
 import { readFileSync, existsSync } from 'fs';
-import { join } from 'path';
+import { join, basename } from 'path';
 import { partA, plantedClass, followUpClass, consistencyTally, bootstrap, ANALYSIS } from '../../../../eines/arrelament-analisi.mjs';
 import { DESIGN } from '../../../../eines/arrelament.mjs';
 import { conditions, testInert, fromHex, INERT_CONDITIONS_SEED } from '../../../../fase2/inert.js';
@@ -20,9 +22,14 @@ import { ROOT, PILOT, LINEAGES, HERE, ARMS, VARIANTS, BOOTSTRAP, BAD_FIRST, sha2
 
 const args = process.argv.slice(2);
 const check = args.includes('--check');
-const pbAt = args.indexOf('--primer-byte');
-const pbArg = pbAt >= 0 ? args[pbAt + 1] : null;
-if (args.length !== (check ? 1 : 0) + (pbAt >= 0 ? 2 : 0) || (pbAt >= 0 && !pbArg)) { console.error('usage: node analisi.mjs [--check] [--primer-byte FILE]'); process.exit(2); }
+const pbAt = args.indexOf('--primer-byte'), recAt = args.indexOf('--record');
+const pbArg = pbAt >= 0 ? args[pbAt + 1] : null, recArg = recAt >= 0 ? args[recAt + 1] : null;
+const usage = args.length !== (check ? 1 : 0) + (pbAt >= 0 ? 2 : 0) + (recAt >= 0 ? 2 : 0) || (pbAt >= 0 && (!pbArg || pbArg.startsWith('--')))
+  || (recAt >= 0 && (!recArg || recArg.startsWith('--'))) || (!check && (pbAt >= 0 || recAt >= 0));
+if (usage) { console.error('usage: node analisi.mjs [--check [--primer-byte FILE] [--record FILE]] (the two files, only with --check)'); process.exit(2); }
+const recBranch = recArg ? basename(recArg, '.jsonl') : null;
+// the scan's provenance: the commit of primer-byte.mjs that wrote primer-byte.jsonl, as the note's README says (audit 40, AU2-197)
+const SCAN_CODE = 'fcec8bd9';
 const d = DESIGN, start = d.age;
 const out = (s = '') => console.log(s);
 const f = (x, k = 2) => (x === null || x === undefined || !Number.isFinite(x) ? '—' : x.toFixed(k));
@@ -35,17 +42,28 @@ const m = JSON.parse(readFileSync(join(ROOT, PILOT, 'manifest.json'), 'utf8'));
 const cohort = m.worlds.filter((w) => w.included).map((w) => w.world);
 const A = m.branches.filter((b) => b.part === 'A' && ARMS.includes(b.soup) && VARIANTS.includes(b.variant));
 if (A.length !== cohort.length * ARMS.length * VARIANTS.length * 4) problems.push(`the manifest has ${A.length} informative part-A branches`);
+if (recBranch !== null && !A.some((b) => b.id === recBranch)) problems.push(`--record: ${recBranch} is not an informative part-A branch`);
 const items = [];
 for (const b of A) {
-  const file = join(ROOT, PILOT, 'part-a', `${b.id}.jsonl`);
+  const file = b.id === recBranch ? recArg : join(ROOT, PILOT, 'part-a', `${b.id}.jsonl`);
   if (!existsSync(file)) { problems.push(`${b.id}: no record`); continue; }
-  const L = readJsonl(file);
-  if (L[0].type !== 'start' || L.at(-1).type !== 'end') { problems.push(`${b.id}: the record is not complete`); continue; }
+  let L;
+  try { L = readJsonl(file); } catch { problems.push(`${b.id}: the record is not valid JSONL`); continue; }
+  if (!L.length || L.some((l) => l === null || typeof l !== 'object' || Array.isArray(l)) || L[0].type !== 'start' || L.at(-1).type !== 'end') { problems.push(`${b.id}: the record is not complete`); continue; }
   if (String(L[0].code) !== String(m.code) || String(L[0].code).includes('+')) { problems.push(`${b.id}: the record is of ${L[0].code}, not of the manifest's ${m.code}`); continue; }
-  const lin = L.filter((l) => l.type === 'lineage').sort((x, y) => x.epoch - y.epoch);
-  if (!lin.length || lin[0].epoch !== start || !lin.find((l) => l.epoch === start + 50)) { problems.push(`${b.id}: the lineage does not start at ${start} with a step at ${start + 50}`); continue; }
+  // the lineage lines, as the lineage module writes them (fase2/llinatge.js; audit 40, AUD-216): one every 50 epochs from the start, in
+  // order, none missing, up to the end of the branch; at most `sample` members tested, or all of them (exhaustive, only when M > sample)
+  // when none of the sample was heritable; a heritable member is one that copies; and F = round(M × functional / tested)
+  const desc = L[0].lineage;
+  if (!desc || desc.every !== 50 || !Number.isSafeInteger(desc.sample) || desc.sample < 1) { problems.push(`${b.id}: the start line does not describe a lineage every 50 epochs`); continue; }
+  const lin = L.filter((l) => l.type === 'lineage');
+  if (!lin.length || lin.some((l, i) => l.epoch !== start + 50 * i) || !lin.find((l) => l.epoch === start + 50)) { problems.push(`${b.id}: the lineage lines are not one every 50 epochs from ${start}, in order`); continue; }
+  if (!Number.isSafeInteger(L.at(-1).epoch) || lin.at(-1).epoch > L.at(-1).epoch || lin.at(-1).epoch + 50 <= L.at(-1).epoch) { problems.push(`${b.id}: the lineage lines do not reach the end of the branch`); continue; }
   const isN = (x) => Number.isSafeInteger(x) && x >= 0;
-  const bad = lin.find((l) => !isN(l.M) || !isN(l.tested) || !isN(l.copying) || !isN(l.functional) || !isN(l.F) || l.tested > l.M || l.copying > l.tested || l.functional > l.tested || l.F > l.M);
+  const bad = lin.find((l) => !isN(l.M) || !isN(l.tested) || !isN(l.copying) || !isN(l.functional) || !isN(l.F) || l.tested > l.M || l.copying > l.tested
+    || l.functional > l.copying || l.F > l.M || (l.exhaustive !== undefined && l.exhaustive !== true)
+    || l.tested !== (l.exhaustive ? l.M : Math.min(desc.sample, l.M)) || (l.exhaustive && l.M <= desc.sample)
+    || l.F !== (l.tested ? Math.round((l.M * l.functional) / l.tested) : 0));
   if (bad) { problems.push(`${b.id}: an impossible lineage line at ${bad.epoch}`); continue; }
   const steps = lin.filter((l) => l.epoch >= start + 50 && l.epoch <= start + 250 && l.tested > 0);
   const stepsF = steps.filter((l) => l.F >= 1);
@@ -58,15 +76,20 @@ const pbFile = pbArg ?? join(ROOT, HERE, 'primer-byte.jsonl');
 let PB = null;
 try { PB = existsSync(pbFile) ? readJsonl(pbFile) : null; } catch { problems.push('primer-byte.jsonl is not valid JSONL'); }
 const pbWorlds = new Map(), pbSeeds = new Map();
+if (PB && PB.some((l) => l === null || typeof l !== 'object' || Array.isArray(l))) { problems.push('primer-byte.jsonl: a line that is not an object'); PB = null; }
 if (!PB || PB[0].type !== 'start' || PB.at(-1).type !== 'end' || PB[0].only) problems.push('primer-byte.jsonl is missing, not complete, or of the short test');
 else {
   // every field, against the manifest and the geometry; a broken copy must be refused (AU2-193)
   const [W, H] = m.params.world, R = m.params.radius;
   const isN = (x) => Number.isSafeInteger(x) && x >= 0;
   const head = PB[0];
-  if (String(head.code).includes('+')) problems.push(`primer-byte.jsonl says ${head.code}`);
+  // the header: the scan's commit and Node, and the full scan (only: null), with their types (audit 40, AU2-197)
+  if (head.code !== SCAN_CODE) problems.push(`primer-byte.jsonl is of ${JSON.stringify(head.code)}, not of the note's scan (${SCAN_CODE})`);
+  if (typeof head.node !== 'string' || !/^v\d+\.\d+\.\d+$/.test(head.node)) problems.push(`primer-byte.jsonl: the header does not say the Node version (${JSON.stringify(head.node)})`);
+  if (head.only !== null) problems.push(`primer-byte.jsonl: the header's "only" is ${JSON.stringify(head.only)}, not null (the full scan)`);
   if (head.radius !== R || JSON.stringify(head.world) !== JSON.stringify([W, H])) problems.push('primer-byte.jsonl: the radius or the world size is not the manifest\'s');
-  if (JSON.stringify([...(head.bad ?? [])].sort((p, q) => p - q)) !== JSON.stringify([...BAD_FIRST].sort((p, q) => p - q))) problems.push('primer-byte.jsonl: the bad first bytes are not ] and 0');
+  if (!Array.isArray(head.bad) || !head.bad.every((x) => Number.isSafeInteger(x))
+    || JSON.stringify([...head.bad].sort((p, q) => p - q)) !== JSON.stringify([...BAD_FIRST].sort((p, q) => p - q))) problems.push('primer-byte.jsonl: the bad first bytes are not ] and 0');
   if (PB.slice(1, -1).some((l) => l.type !== 'world' && l.type !== 'seed') || PB.filter((l) => l.type === 'start' || l.type === 'end').length !== 2) problems.push('primer-byte.jsonl: an unexpected line type');
   for (const l of PB) {
     if (l.type === 'world') {
@@ -95,6 +118,14 @@ else {
     if (l.world !== b.world || l.soup !== b.soup || l.variant !== b.variant || l.position !== b.position || l.cell !== cell) problems.push(`primer-byte.jsonl: the seed ${b.id} does not match the manifest`);
     if (l.neighbours !== expected || !isN(l.bad) || l.bad > l.neighbours) problems.push(`primer-byte.jsonl: the seed ${b.id} has impossible neighbour counts`);
   }
+  // the scan reads the starting snapshot, before any planting: the seeds of the same cell of the same soup of a world (G1 and G4 share
+  // their positions) must have the same counts (audit 40, AU2-196)
+  const sameCell = new Map();
+  for (const l of pbSeeds.values()) {
+    const k = `${l.world}|${l.soup}|${l.cell}`, prev = sameCell.get(k);
+    if (!prev) sameCell.set(k, l);
+    else if (prev.neighbours !== l.neighbours || prev.bad !== l.bad) problems.push(`primer-byte.jsonl: the seeds ${prev.branch} and ${l.branch} are of the same cell, with other counts`);
+  }
   const e = PB.at(-1);
   if (e.worlds !== cohort.length || e.seeds !== oneCell.length) problems.push('primer-byte.jsonl: the end line does not count what is there');
 }
@@ -111,6 +142,7 @@ for (const id of list) {
 }
 out(`How the planted replicators die out in the aged soup: the note's analysis, corrected after audit 39 (exploratory). The analysis: ${codeVersion()}, ${process.version}.`);
 out(`The part-A records: ${items.length} of ${A.length} (of ${m.code}); primer-byte.jsonl: ${PB ? `${PB[0].code} ${PB[0].node}` : '—'}, ${pbWorlds.size} worlds, ${pbSeeds.size} seeds; the natural-lineage trackings: ${seg.size} of ${list.length}.`);
+if (pbArg || recArg) out(`Read instead (only for the negative tests): ${[pbArg && `the scan from ${basename(pbArg)}`, recArg && `the record of ${recBranch} from ${basename(recArg)}`].filter(Boolean).join('; ')}.`);
 if (problems.length) { out(`\nNothing is analysed: ${problems.length} problems.\n- ${problems.slice(0, 30).join('\n- ')}`); process.exit(1); }
 if (check) { out('--check: all the data were read and are valid; no result is printed.'); process.exit(0); }
 
