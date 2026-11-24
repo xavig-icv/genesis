@@ -374,5 +374,10 @@ Llegeix-los abans de proposar canvis.
       desenllaços, i «arrelar», només el criteri del pilot. A G4, «cap diferència concloent», mai «cap diferència» (AU2-198). Mai «s'apaguen a poc a poc» per a G1 (AUD-214). «Encaixa amb la pista del primer byte a escala de sopa», mai «el
       primer byte n'és la causa»: dins de l'envellida els veïns no hi encaixen, i els registres no diuen cap primer byte. Una intervenció amb
       plantats tornaria a plantar (decisió nova i acord dels tres).
+    - **La proveta** (24-11-2026, l'entrada 23, exploratori; `fase2/resultats/arrelament/proveta/`): els fundadors de la part B i els genotips
+      plantats, a la prova de replicació del cens amb companys de les sopes del pilot. No passa el calibratge fixat (satura: G1 a G4,
+      hereditaris en el 93–100 % de les condicions, contra un arrelament del 3 al 98 %), i la resta no es llegeix: la hipòtesi que els
+      fundadors s'adapten a la seva sopa queda sense provar, mai «no s'hi adapten». **La prova del cens diu si un programa es pot copiar, no
+      quantes vegades:** no serveix per mesurar l'arrelament. Una mesura per trobada seria una altra nota, calibrada contra el pilot abans de res.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

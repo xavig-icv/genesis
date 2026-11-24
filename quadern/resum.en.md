@@ -374,3 +374,19 @@ not the pilot's taking root, which also counts lineages still followed (7 and 29
 neighbourhoods. The data check now also refuses two seeds of
 the same cell with other counts, a scan header without its commit, and impossible lineage lines (AU2-196, AU2-197, AUD-216). The outputs do
 not change.
+
+<a id="entry-23"></a>
+## Entry 23 · 24 November 2026 · The soup before life, part seven: a test tube that does not work (exploratory)
+
+The aged soup has more natural establishments, fewer cells that copy on their own, and planted replicators take root less in it. The
+hypothesis: the replicators born there fit it, and the planted genotypes are strangers. To test it without planting anything, we put the
+natural founders of the pilot's 37 part-B establishments and the four planted genotypes in a "test tube": the census's replication test,
+with partners drawn from the pilot's starting soups (and from the aged soup with its `]` and 0 first bytes replaced, against a placebo),
+823,440 tests, with the note written before computing (`fase2/resultats/arrelament/proveta/README.md`). Before reading anything else, the
+test tube had to order the planted genotypes as the pilot did. It does not: it saturates. G1 is heritable in 97.6% of the conditions with the
+aged soups and 100% with the fresh ones, G4 in 100% with all of them, G2 and G3 in 93% to 98%, while their rooting shares in the pilot go
+from 3% to 98% (Spearman −0.65). The census's test says whether a program can replicate, trying each role several times, not how often it
+does. By the rule fixed before computing, the other numbers are reported with no reading, and the hypothesis stays untested by this
+instrument: neither for nor against. Testing it again would need a measure of how often a program copies per encounter, calibrated against
+the pilot first, in another note. One result was seen before the full run (the first line of the short test), and nothing was changed after
+it. Exploratory.
