@@ -126,3 +126,74 @@ anything fails, nothing else runs, and it is written here.
 - **`vulnerables.mjs PILOT-FOLDER [--world NNNN]`:** the encounters, to `vulnerables.jsonl` (or `prova/` with `--world`), with the commit and
   the Node version in its first line. PILOT-FOLDER is the pilot folder of the pilot's computation copy, with the snapshots.
 - **`analisi.mjs [--check]`:** the analysis above, to `analisi-sortida.txt`, with the commit and the Node version in its first line.
+
+## How it went
+
+- **The scripts,** in git before running anything (`57f3a17`).
+- **The short test** (24-11-2026, from `57f3a17`): world 7001, the first of the cohort (`prova/vulnerables-7001.jsonl`). It has no tracked
+  branch, so the test did not reach the lineages; I also ran world 7002, the first branch of `llista.txt` (`prova/vulnerables-7002.jsonl`),
+  which does. Only the number of lines and their fields were looked at (`997aaa7`).
+- **The full run** (from `997aaa7`, Node 16.15.1, exit code 0, nothing on stderr, 3 min 17 s): the 60 worlds, every snapshot with the
+  manifest's SHA-256, the four genotypes against the aged partners of every world, and the 367 lineages of the 52 trackings, the robust ones
+  tested (`vulnerables.jsonl`). `analisi.mjs --check`: all valid, no result printed. In git before the analysis (`1ea6a5a`).
+- **The analysis** (from `1ea6a5a`, Node 16.15.1, exit code 0, nothing on stderr): `analisi-sortida.txt`, in git as it came out (`2b66fcf`),
+  before reading it.
+
+## What came out (exploratory)
+
+**In short:** the test measures what it should (G1 is vulnerable in all 60 worlds, G4 in none), and **no filter is seen:** the founders of
+the natural establishments are vulnerable as often in the aged soup as in the shuffled one (5 of 15 in both; 3 of 7 in the fresh one). By the
+rule fixed in the note, the first-byte lead loses strength as an explanation of taking root in the aged soup. It does not say that the first
+byte does nothing to the planted G1.
+
+### 0. The calibration
+
+| genotype | works | vulnerable | its copies with `]` partners: heritable / keep the first byte (of 1,200) |
+|---|---|---|---|
+| G1 | 60 | 60 | 0 / 1,200 (all 1,200 are copies) |
+| G2 | 60 | 0 | 1,028 / 96 (of 1,126 copies) |
+| G3 | 60 | 0 | 1,028 / 99 (of 1,128 copies) |
+| G4 | 60 | 0 | 1,200 / 0 |
+
+(Against the aged partners of each world, 20 of each first byte. With the partners of the other kind, G1's 1,200 copies are all heritable.)
+**Passed** (the rule: 54 worlds or more). With real partners, the four genotypes behave as in auditor 1's sketch with synthetic ones.
+
+### 1. The founders of the establishments
+
+| soup | establishments | the founder works | vulnerable |
+|---|---|---|---|
+| aged | 15 | 15 | 5 (0.33) |
+| shuffled | 15 | 15 | 5 (0.33) |
+| fresh | 7 | 7 | 3 (0.43) |
+
+- **Aged minus shuffled: 0.00 [−0.38, 0.38]; aged minus fresh: −0.10 [−0.62, 0.41].** By the note's rule (the aged share equal to or above
+  the shuffled one): **no filter is seen.** As said before computing, only a difference of about a third could have shown; the interval
+  allows one of up to 0.38 either way.
+- **The same counts as auditor 1's sketch** (5, 5 and 3), now with real partners from the starting snapshots: here the partners' other bytes
+  do not change who is vulnerable.
+- **With the partners of the program's own soup** (the sensitivity), the same: 5 of 15, 5 of 15 and 3 of 7.
+
+### 2. Descriptive
+
+- **Per establishment,** the share of the dominant group's working robust lineages that are vulnerable, averaged: 0.36, 0.38 and 0.36.
+- **All the working robust lineages** (counts; the lineages of a branch are not independent): more than half are vulnerable in the aged soup
+  (85 of 153) and in the shuffled one (89 of 167), 14 of 31 in the fresh one. The vulnerable ones are in the dominant group less often than
+  the others in the aged soup (21 of 85, 0.25, against 25 of 68, 0.37) and **also in the shuffled one** (15 of 89, 0.17, against 27 of 78,
+  0.35), where almost no cell starts with `]` or 0; in the fresh one, the same (0.29 and 0.29). Whatever this gap is, it is not specific to
+  the aged soup's first bytes.
+- **The founders keep the partner's first byte in few of their copies** (the median share, 10%, 6% and 5%; some keep it in all of them),
+  and at least half of them make heritable copies into 19 or 20 of the 20 `]` partners (the median, 20, 19 and 20). Vulnerable to 0: 4 of
+  15, 2 of 15 and 2 of 7.
+
+### What it does not say
+
+- **Not that the first byte does nothing.** G1 keeps the partner's first byte in every copy and loses all its copies into `]` partners; the
+  extinction note's records agree with the lead at the level of the soup. What this note says is that the natural replicators that become
+  established in the aged soup are not selected against that weakness: a third of their founders have it, as in the shuffled soup.
+- **Not where maturation acts:** the rule stays (AUD-184 = AU2-151).
+- **Few establishments:** 15, 15 and 7, and a single encounter with the program first, with partners from the start.
+
+## Everything tried
+
+- The short test on two worlds (7001 and 7002), structure only.
+- The full run, once; `--check` and the analysis, once each. Nothing else was computed.

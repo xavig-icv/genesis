@@ -145,3 +145,85 @@ written here.
 ## The commands (before computing)
 
 - **`analisi.mjs [--check]`:** the analysis above, to `analisi-sortida.txt`, with the commit and the Node version in its first line.
+
+## How it went
+
+- **The scripts,** in git before running anything (`57f3a17`).
+- **The short test** (24-11-2026, from `57f3a17`, Node 16.15.1): `analisi.mjs --check`, all the data valid (720 aged-soup part-A records,
+  240 places of the scan, the 52 trackings and the 180 part-B records), no result printed, 15 s.
+- **The analysis** (from `1ea6a5a`, Node 16.15.1, exit code 0, nothing on stderr): `analisi-sortida.txt`, in git as it came out (`2b66fcf`),
+  before reading it. Between the two commits only the other note's files changed.
+
+## What came out (exploratory)
+
+**In short:** within worlds and against G4 at the same cells, the neighbours do not show the first-byte lead: the fixed measure cannot say
+(its interval just contains 1), and it leaves no room for the lead's direction. For the fragments, the three kinds of evidence agree: 15 of
+the 16 aged-soup appearances that the time rule removes are also linked to the dominant group by sequence or by place, so by the note's rule
+the time rule's reading is the more defensible, and with it the excess of failed appearances in the aged soup cannot be separated from
+fragmentation. Place is weak evidence on its own.
+
+### 1. The neighbours, within worlds and against G4 at the same cell
+
+| neighbours starting with `]` or 0 | places (worlds) | G1, heritable share of the members | G4 | G1/G4 |
+|---|---|---|---|---|
+| none | 26 (22) | 4.4% [0.0, 5.2] | 23.8% | 0.18 [0.00, 0.24] |
+| 1 or 2 | 78 (49) | 10.0% [6.1, 14.3] | 22.5% | 0.45 [0.27, 0.69] |
+| 3 or more | 136 (58) | 10.0% [6.8, 13.3] | 25.4% | 0.40 [0.27, 0.53] |
+
+(The aged soup, the members of the first five steps pooled. The table is the extinction note's and auditor 1's; the intervals, from the
+bootstrap over worlds, are new. G1's 4.4% at the 26 places is a single seed: checked after reading the output, all 60 heritable members
+come from one seed in world 7026, which also has 992 of the 1,368 tested members; hence the lopsided interval.)
+
+- **Within worlds** (the main measure): 92 places above the median of their world and 94 below it, in all 60 worlds. G1: 10.3% at the high
+  places against 6.1% at the low ones, *R* = 1.69 [1.04, 3.13]; G4: 25.2% against 23.6%, *R* = 1.07 [0.92, 1.35]. **RR = 1.59 [0.97,
+  2.90].**
+- **By the note's rule, the interval contains 1: the local test cannot see the lead either way.** But it runs from 0.97 to 2.90: it leaves no
+  room for the lead's direction, which predicts *RR* below 1. Within its own world, G1 does better, not worse, at the places with more
+  neighbours starting with `]` or 0, and G4 about the same.
+- **Each seed counted once** (descriptive): still heritable at the first step, G1 13 of 92 high places against 8 of 94 low ones, and G4 26
+  against 16. Both genotypes do better at the same places, which fits auditor 1's reading of an effect of the place.
+
+### 2. The graph of candidate fragments
+
+**The sequence threshold, from the control:** no failed appearance shares more than 7 bytes with the dominant groups of the other worlds, so
+*s*\* = 8 (as auditor 1 found).
+
+| rule | failed appearances (aged, shuffled, fresh) | aged against fresh | shuffled against fresh |
+|---|---|---|---|
+| R0 none (entry 21) | 33, 14, 8 | 4.41 [1.46, 15.42] | 1.89 [0.76, 5.68] |
+| R1 time (auditor 1) | 17, 5, 4 | 4.55 [0.91, 23.09] | 1.35 [0.18, 6.60] |
+| R2 10 bytes or more (the extinction note) | 24, 10, 6 | 4.28 [1.24, 16.74] | 1.80 [0.59, 6.58] |
+| R3 sequence, *s*\* = 8 | 19, 8, 7 | 2.90 [0.69, 12.30] | 1.23 [0.34, 4.88] |
+| R4 place, 8 cells | 22, 10, 6 | 3.92 [1.07, 19.50] | 1.80 [0.59, 8.01] |
+| R5 any of time, sequence or place | 17, 5, 4 | 4.55 [0.91, 23.09] | 1.35 [0.18, 6.60] |
+| R6 candidate families | 11, 5, 5 | 2.35 [0.72, 10.06] | 1.08 [0.23, 4.99] |
+
+(Per 1,000 world-epochs; R0, R1 and R2 give the same counts as before, and intervals that differ only through the bootstrap's seed.)
+
+- **The range:** the aged/fresh interval contains 1 under R1, R3, R5 and R6, and lies above 1 under R0, R2 and R4. No rule is the true
+  count: the excess survives only the rules that remove the fewest probable fragments.
+- **The agreement** (the aged soup): of the 18 failed appearances in establishing branches, the time rule removes 16, and **15 of these are
+  also linked to the dominant group by sequence or by place** (14 by sequence, 11 by place; 10 by all three). Every appearance linked by
+  sequence or place is one the time rule removes, so R5 is R1. The two that the time rule keeps are linked by nothing. **0.94: by the note's
+  rule, the three kinds of evidence agree that they are probable fragments, and the time rule's reading is the more defensible.** In the
+  shuffled soup, 8 of 9; in the fresh one, 2 of 4 (descriptive).
+- **Place as evidence:** the median chance level of the place links is 0.160 (aged soup 0.168, from 0.069 to 0.274): a random sampled cell
+  would be as close to the dominant group's cells about one time in six. **By the note's rule, place is weak evidence:** it adds little
+  on its own, and the agreement rests mostly on the sequence.
+- **The candidate families** (R6): counting the connected components of the graph, the aged soup has 11 failed families, the shuffled 5 and
+  the fresh 5; 2.35 [0.72, 10.06].
+
+### What it does not say
+
+- **Not that the neighbours act against the lead.** The fixed measure cannot say; what it rules out is a strong local effect in the lead's
+  direction. The scan counts the neighbours at the start only, and G1's copies spread far beyond them.
+- **Not that the failed appearances are fragments.** A candidate link is not descent (AU2-156): it is a similarity of sequence at a
+  threshold above what unrelated lineages share, a closeness of place that a random cell would have one time in six, and a time window.
+  What the note says is that the three agree, and that with the rules that use them the excess cannot be separated from fragmentation.
+- **Not where maturation acts:** the rule stays (AUD-184 = AU2-151).
+
+## Everything tried
+
+- The short test (`--check`), once; the analysis, once.
+- After reading the output, one check that the note did not fix: where the 60 heritable G1 members of the 26 places without bad neighbours
+  come from (a single seed, world 7026). Nothing else was computed.
