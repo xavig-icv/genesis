@@ -1,0 +1,56 @@
+The negative tests of analisi.mjs --check (audit 39, AU2-193; audit 40, AU2-196, AU2-197, AUD-216). 61addecc, v16.15.1.
+1. The first-byte scan (--primer-byte): 33 cases
+   ok   the real scan (must pass): exit 0 (expected 0); --check: all the data were read and are valid; no result is printed.
+   ok   more cells starting with ] than cells (auditor 2, audit 39): exit 1 (expected 1); - primer-byte.jsonl: world 7001, continue: impossible counts
+   ok   25 bad neighbours of 24 (auditor 2, audit 39): exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 has impossible neighbour counts
+   ok   a negative count: exit 1 (expected 1); - primer-byte.jsonl: world 7001, reinit: impossible counts
+   ok   a count that is not an integer: exit 1 (expected 1); - primer-byte.jsonl: world 7001, shuffle-all: impossible counts
+   ok   a world with the wrong number of cells: exit 1 (expected 1); - primer-byte.jsonl: world 7001, continue: impossible counts
+   ok   a seed with 23 neighbours where there are 24: exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 has impossible neighbour counts
+   ok   a seed of another cell: exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 does not match the manifest
+   ok   a seed of another soup: exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 does not match the manifest
+   ok   a seed twice: exit 1 (expected 1); - primer-byte.jsonl: seed 7001-continue-G1-p1 twice
+   ok   a world twice: exit 1 (expected 1); - primer-byte.jsonl: world 7001 twice
+   ok   a missing seed: exit 1 (expected 1); - primer-byte.jsonl lacks the seed 7001-continue-G1-p1
+   ok   a missing world: exit 1 (expected 1); - primer-byte.jsonl: the worlds are not exactly the cohort
+   ok   another radius in the header: exit 1 (expected 1); - primer-byte.jsonl: the radius or the world size is not the manifest's
+   ok   other bad bytes in the header: exit 1 (expected 1); - primer-byte.jsonl: the bad first bytes are not ] and 0
+   ok   a scan of the short test: exit 1 (expected 1); - primer-byte.jsonl is missing, not complete, or of the short test
+   ok   an end line that counts other things: exit 1 (expected 1); - primer-byte.jsonl: the end line does not count what is there
+   ok   an unknown line type: exit 1 (expected 1); - primer-byte.jsonl: an unexpected line type
+   ok   two seeds of the same cell with other bad counts (auditor 2, audit 40): exit 1 (expected 1); - primer-byte.jsonl: the seeds 7001-continue-G1-p1 and 7001-continue-G4-p1 are of the same cell, with other counts
+   ok   a header without code and node (auditor 2, audit 40): exit 1 (expected 1); - primer-byte.jsonl is of undefined, not of the note's scan (fcec8bd9)
+   ok   a header whose bad bytes are a number (auditor 2, audit 40): exit 1 (expected 1); - primer-byte.jsonl: the bad first bytes are not ] and 0
+   ok   the scan of another commit: exit 1 (expected 1); - primer-byte.jsonl is of "abcdef12", not of the note's scan (fcec8bd9)
+   ok   a header without "only": exit 1 (expected 1); - primer-byte.jsonl: the header's "only" is undefined, not null (the full scan)
+   ok   a line that is null: exit 1 (expected 1); - primer-byte.jsonl: a line that is not an object
+   ok   an empty file (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl is not valid JSONL
+   ok   a line that is not JSON (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl is not valid JSONL
+   ok   the world's name a number, not a text (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl: the worlds are not exactly the cohort
+   ok   the bad neighbours a text (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 has impossible neighbour counts
+   ok   a seed of another genotype (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 does not match the manifest
+   ok   a seed of another position (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl: the seed 7001-continue-G1-p1 does not match the manifest
+   ok   a seed of a branch that is not there (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl lacks the seed 7001-continue-G1-p1
+   ok   a header of a code with changes (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl is of "fcec8bd9+canvis", not of the note's scan (fcec8bd9)
+   ok   a world without the shuffled soup (auditor 1, audit 40): exit 1 (expected 1); - primer-byte.jsonl: world 7001, shuffle-all: impossible counts
+2. The part-A record 7035-continue-G1-p3 (--record), the step at 8,500 unless said otherwise: 18 cases
+   ok   the record, unchanged (must pass): exit 0 (expected 0); --check: all the data were read and are valid; no result is printed.
+   ok   tested > M (auditor 1, audit 40): exit 1 (expected 1); - 7035-continue-G1-p3: an impossible lineage line at 8500
+   ok   copying > tested (auditor 1, audit 40): exit 1 (expected 1); - 7035-continue-G1-p3: an impossible lineage line at 8500
+   ok   F > M (auditor 1, audit 40): exit 1 (expected 1); - 7035-continue-G1-p3: an impossible lineage line at 8500
+   ok   M negative (auditor 1, audit 40): exit 1 (expected 1); - 7035-continue-G1-p3: an impossible lineage line at 8500
+   ok   functional > copying, with F that fits (auditor 1, audit 40): exit 1 (expected 1); - 7035-continue-G1-p3: an impossible lineage line at 8500
+   ok   F = 0 with functional > 0 (auditor 1, audit 40): exit 1 (expected 1); - 7035-continue-G1-p3: an impossible lineage line at 8500
+   ok   a lineage line missing in the middle (auditor 1, audit 40): exit 1 (expected 1); - 7035-continue-G1-p3: the lineage lines are not one every 50 epochs from 8000, in order
+   ok   200 tested of more than 256, not exhaustive, with F that fits (auditor 1, audit 40): exit 1 (expected 1); - 7035-continue-G1-p3: an impossible lineage line at 8500
+   ok   a lineage line twice: exit 1 (expected 1); - 7035-continue-G1-p3: the lineage lines are not one every 50 epochs from 8000, in order
+   ok   two lineage lines out of order: exit 1 (expected 1); - 7035-continue-G1-p3: the lineage lines are not one every 50 epochs from 8000, in order
+   ok   an exhaustive step with 256 members or fewer: exit 1 (expected 1); - 7035-continue-G1-p3: an impossible lineage line at 8000
+   ok   the lineage lines stop before the end of the branch: exit 1 (expected 1); - 7035-continue-G1-p3: the lineage lines do not reach the end of the branch
+   ok   a start line without the lineage description: exit 1 (expected 1); - 7035-continue-G1-p3: the start line does not describe a lineage every 50 epochs
+   ok   a record without its end line: exit 1 (expected 1); - 7035-continue-G1-p3: the record is not complete
+   ok   a record of another commit: exit 1 (expected 1); - 7035-continue-G1-p3: the record is of abcdef1, not of the manifest's 92b8f4f
+   ok   a line that is null: exit 1 (expected 1); - 7035-continue-G1-p3: the record is not complete
+   ok   a line that is not JSON: exit 1 (expected 1); - 7035-continue-G1-p3: the record is not valid JSONL
+   ok   a record for a branch that is not an informative part-A branch: exit 1 (expected 1); - --record: not-a-branch is not an informative part-A branch
+All the cases behaved as expected.
