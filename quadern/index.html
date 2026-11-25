@@ -35,6 +35,7 @@
     <a href="#entrada-22">Entrada 22</a>
     <a href="#entrada-23">Entrada 23</a>
     <a href="#entrada-24">Entrada 24</a>
+    <a href="#entrada-25">Entrada 25</a>
   </nav>
 
   <article id="entrada-1">
@@ -2447,6 +2448,71 @@
         <li><strong>Dues comprovacions de l'auditor 1, a posteriori:</strong> els vulnerables són exactament els llinatges que deixen el primer byte del company, i també fan menys còpies hereditàries amb els companys que no comencen amb <code>]</code> ni 0, a totes les sopes. I el llindar de 8 bytes de la seqüència no és indulgent: dins del mateix món, com a molt un 0,5 % de les cel·les de la sopa de partida comparteixen 8 bytes amb el grup dominant, com als altres mons.</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-25">
+    <header>
+      <p class="date">Entrada 25 · 25 de novembre de 2026 · síntesi</p>
+      <h1>La sopa abans de la vida: el que hem après, i el que no</h1>
+      <p class="lede">L'<a href="#entrada-14">entrada 14</a> va confirmar que en una sopa envellida la vida s'hi estableix més sovint que en una de nova. Des de llavors, vuit entrades han buscat per què: si és perquè hi apareixen més replicadors o perquè hi arrelen més. Aquesta entrada no calcula res. Recull el que ha quedat mostrat, el que no, i què ho podria respondre. La resposta curta: encara no sabem on actua la maduració. Hem après com és la sopa abans de la vida, que els replicadors plantats hi arrelen pitjor, i un mecanisme del primer byte que fa perdre còpies a G1 fora del món; i hem après fins on arriben les nostres mesures. Amb l'acord dels dos auditors, la línia dels replicadors plantats es tanca aquí.</p>
+    </header>
+
+    <h2>La pregunta</h2>
+    <p>En 150 mons quiets que arriben a l'època 8.000 sense vida, la vida s'hi estableix en les 8.000 èpoques següents en 64 branques de 300 si es conserva la sopa, en 40 amb una sopa nova i en 82 amb els bytes de la vella barrejats. Les dues proves preregistrades ho confirmen, però és un efecte total: no diu per quina via. L'11-11-2026 el responsable va concentrar el projecte en aquesta pregunta, amb dos carrils: explorar sense auditoria abans de calcular, i confirmar com sempre. Les entrades 16 i de la 18 a la 24 són d'aquesta línia, i totes són exploratòries.</p>
+
+    <h2>El que ha quedat mostrat</h2>
+    <ul>
+      <li><strong>La vida s'estableix més sovint en una sopa envellida que en una de nova (64 i 40 de 300), i encara més amb els seus bytes barrejats (82).</strong> Preregistrat i confirmat, en aquesta cohort de mons (l'<a href="#entrada-14">entrada 14</a>).</li>
+      <li><strong>La sopa sense vida madura igual a tots els mons i s'omple d'instruccions, sobretot <code>&lt;</code>, deu vegades més que l'atzar.</strong> Exploratori, amb cinc conjunts de mons (l'<a href="#entrada-16">entrada 16</a>).</li>
+      <li><strong>El <code>&lt;</code> s'escampa copiant-lo, sobretot des dels programes que ja comencen amb <code>&lt;</code>.</strong> Exploratori i descriptiu, sense cap intervenció (l'<a href="#entrada-18">entrada 18</a>).</li>
+      <li><strong>La sopa vella té els bytes d'una sopa rica i la disposició d'una de pobra: menys cel·les que es copien que una de nova, i amb els seus bytes barrejats, moltes més.</strong> Exploratori; els recomptes són dels positius de l'escaneig (les entrades <a href="#entrada-16">16</a> i <a href="#entrada-18">18</a>).</li>
+      <li><strong>Al món 1034, les aparicions hereditàries són brots: un en 16.000 èpoques, que viu de 300 a 500 èpoques i s'apaga sense establir-se.</strong> Exploratori, un sol món (l'<a href="#entrada-19">entrada 19</a>).</li>
+      <li><strong>Els replicadors plantats arrelen menys a la sopa vella: 0,35 vegades la nova [0,28; 0,43]; G1, de quatre a set vegades menys; a G4, inconcloent.</strong> Exploratori, 60 mons nous i 3.060 sembres (l'<a href="#entrada-20">entrada 20</a>).</li>
+      <li><strong>A la sopa vella, dels llinatges de G1 que passen el primer pas se n'extingeixen més (25 de 34, contra 16 de 47 a la nova) i n'arrelen menys (7 sembres de 240, contra 29).</strong> Exploratori (l'<a href="#entrada-22">entrada 22</a>).</li>
+      <li><strong>Fora del món, G1 deixa el primer byte del company tal com era, i les seves còpies en companys que comencen amb <code>]</code> o 0 no són mai hereditàries (0 de 1.200, contra 1.200 de 1.200 amb els altres).</strong> Exploratori, una sola trobada amb companys reals (les entrades <a href="#entrada-22">22</a> i <a href="#entrada-24">24</a>).</li>
+      <li><strong>Entre els replicadors naturals que s'estableixen, no es veu cap filtre del primer byte: 5 de 15 a la sopa vella, 5 de 15 a la barrejada, 3 de 7 a la nova.</strong> Exploratori; l'interval admet una diferència d'un terç (l'<a href="#entrada-24">entrada 24</a>).</li>
+    </ul>
+
+    <h2>El que no s'ha mostrat</h2>
+    <ul>
+      <li><strong>On actua la maduració:</strong> a l'aparició, a l'arrelament o a totes dues, encara no ho sabem (AUD-184 = AU2-151). La lectura formal del pilot (si les aparicions naturals arrelessin com aquests genotips, l'efecte hauria de venir de l'aparició) té una condició que no s'ha pogut comprovar: el criteri de consistència depèn de com es delimiten i es compten les famílies naturals.</li>
+      <li><strong>Que a la sopa vella hi apareguin més replicadors:</strong> el cens hi veu més famílies (5,0 vegades la nova [1,8; 16,1]) i més aparicions que no s'estableixen (4,41 [1,44; 15,49]), però l'excés no se separa de la fragmentació. El temps, la seqüència i el lloc coincideixen a dir que les de just abans d'un establiment poden ser trossos del llinatge que s'estableix.</li>
+      <li><strong>Que el primer byte sigui la causa de l'arrelament baix de G1:</strong> hi encaixa a escala de sopa, la prova dels veïns no en pot dir res, i per saber-ho caldria una intervenció.</li>
+      <li><strong>Que els replicadors naturals s'adaptin a la seva sopa:</strong> la proveta no passa el calibratge, i la hipòtesi queda sense provar, ni a favor ni en contra.</li>
+      <li><strong>El mecanisme de l'entrada 14:</strong> que la sopa vella tingui menys cel·les que es copien i que tot i així la vida s'hi estableixi més continua sense explicar.</li>
+    </ul>
+
+    <h2>El que hem après de les mesures</h2>
+    <ul>
+      <li><strong>La prova de replicació del cens compta el company</strong> quan el programa té poques instruccions. Un positiu s'ha de tornar a provar amb companys inerts abans de comptar-lo (entrades <a href="#entrada-16">16</a> a <a href="#entrada-18">18</a>).</li>
+      <li><strong>Un escaneig no és un recompte, i un recompte en un moment no és un ritme:</strong> l'escaneig es deixa replicadors fràgils, i els que es copien duren poc (entrades 16 a 19).</li>
+      <li><strong>La prova del cens diu si un programa es pot copiar, no quantes vegades:</strong> prova cada paper diverses vegades i n'hi ha prou amb un èxit, i per això no mesura l'arrelament (<a href="#entrada-23">entrada 23</a>).</li>
+      <li><strong>El llinatge és de finestres, no de descendència,</strong> i les famílies naturals es trenquen en trossos a la foto del cens: qualsevol recompte d'aparicions depèn de com es delimiten (entrades <a href="#entrada-20">20</a>, <a href="#entrada-21">21</a> i 24).</li>
+      <li><strong>Els genotips plantats van del gairebé sempre al gairebé mai:</strong> G2 i G3 arrelen gairebé sempre, i G1 gairebé mai a la sopa vella. El que se'n diu, es diu genotip per genotip.</li>
+    </ul>
+
+    <h2>Què pot ser nou</h2>
+    <p>La matriu de novetat (<code>docs/novetat-maduracio.md</code>) ho diu font per font. La idea general d'una fase prèvia a la vida no és nova: Greenbaum i Pargellis ja la descriuen a Amoeba, i Agüera y Arcas, a BFF. Tampoc no ho és la hipòtesi que l'activitat d'abans dels replicadors els fa més probables (Adami i LaBar, 2017). El que avui es pot defensar com a nou a BFF és el contrast preregistrat de l'entrada 14, amb els seus límits. Que la disposició de la sopa desfaci el que la composició faria, i el mecanisme del primer byte, poden ser-ho, però són descriptius. On actua la maduració, que era la pregunta de la línia, no es pot reivindicar. I abans de dir res, una persona del camp hauria de llegir la matriu.</p>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>Un sol món i una sola química:</strong> 512 × 256 cel·les, la química de BFF, i mons quiets que arriben a l'època 8.000 sense vida.</li>
+      <li><strong>Tot és exploratori,</strong> llevat de l'entrada 14: quatre genotips plantats, 60 mons al pilot i un món sencer escanejat.</li>
+    </ul>
+
+    <h2>El que ho podria respondre</h2>
+    <p>Cap d'aquests camins no s'ha decidit: els tria el responsable, i tornar a plantar demana una decisió nova i l'acord dels tres.</p>
+    <ul>
+      <li><strong>Comptar les aparicions sense la foto del cens:</strong> un registre de les còpies hereditàries durant la simulació, a les tres sopes, en mesuraria el ritme directament. És un canvi al simulador, en una PR amb auditoria.</li>
+      <li><strong>Una intervenció sobre els primers bytes de la sopa vella</strong> (canviar-ne els <code>]</code> i els 0, contra un placebo), per saber si el primer byte és la causa de l'arrelament baix de G1. Amb replicadors plantats, demana una decisió nova i l'acord dels tres.</li>
+      <li><strong>Una sèrie confirmatòria que separi l'aparició de l'arrelament,</strong> amb mons nous, la regla dels trossos fixada abans, i l'efecte mínim i la potència fixats abans de calcular.</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>Una ronda d'auditoria breu</strong> d'aquesta síntesi, amb tots dos auditors.</li>
+      <li><strong>El pas següent del projecte,</strong> que tria el responsable.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

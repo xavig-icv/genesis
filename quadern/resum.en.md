@@ -430,3 +430,52 @@ shown is the mechanism outside the world; whether it is why G1 takes root less h
 (lineages at the same census ordered by number, AU2-203; "one time in six" is the coverage of one random cell, not a rate of false links,
 AU2-204). The vulnerability test did not check whether a copied window was already in the partner (AU2-202); with the snapshots, none was,
 in any of the 48,720 encounters.
+
+<a id="entry-25"></a>
+## Entry 25 · 25 November 2026 · The soup before life: what we learned, and what we did not (synthesis)
+
+Entry 14 confirmed that life becomes established more often in an aged soup than in a fresh one. Since then, eight entries (16 and 18 to
+24, all exploratory) have looked for why: whether more replicators appear there, or more of them take root. This entry computes nothing; it
+gathers what has been shown, what has not, and what could answer it. **The short answer: where maturation acts is still not known.**
+
+**What has been shown.** Preregistered and confirmed in that cohort of worlds: in quiet worlds that reach epoch 8,000 without life, life
+becomes established in the next 8,000 epochs in 64 branches of 300 if the soup is kept, 40 with a fresh soup and 82 with the aged soup's bytes
+shuffled (entry 14; a total effect, with no mechanism). Exploratory: the soup without life matures the same way in every world and fills with
+instructions, above all `<`, ten times more than chance (entry 16); `<` spreads by being copied, mostly from programs that already start with
+`<` (entry 18, descriptive); the aged soup has the bytes of a rich soup and the arrangement of a poor one: fewer cells that copy than a fresh
+soup, and many more once its bytes are shuffled (entries 16 and 18, counts of the scan's positives); in world 1034 the heritable appearances
+are bursts, one in 16,000 epochs, that live 300 to 500 epochs and fade without becoming established (entry 19); planted replicators take
+root less in the aged soup, 0.35 times the fresh one [0.28, 0.43], G1 four to seven times less, G4 inconclusive (entry 20); in the aged soup,
+of the G1 lineages that pass the first step more die out (25 of 34, against 16 of 47 in the fresh soup) and fewer take root (7 plantings of
+240, against 29; entry 22); outside the world, G1 leaves the partner's first byte as it was, and its copies into partners that start with `]`
+or 0 are never heritable (0 of 1,200, against 1,200 of 1,200 with the others; entries 22 and 24); and among the natural replicators that
+become established no first-byte filter is seen (5 of 15, 5 of 15 and 3 of 7; the interval allows a difference of a third; entry 24).
+
+**What has not been shown.** Where maturation acts, on appearance, on taking root or on both (AUD-184 = AU2-151): the pilot's formal reading
+carries a condition, that natural appearances take root like these genotypes, which could not be checked, because the consistency criterion
+depends on how natural families are delimited and counted. That more replicators appear in the aged soup: the census sees more families (5.0
+times the fresh soup [1.8, 16.1]) and more failed appearances (4.41 [1.44, 15.49]), but the excess cannot be separated from fragmentation.
+That the first byte is why G1 takes root less: it fits at the level of the soup, the neighbours' test says nothing about it, and showing it
+would need an intervention. That natural replicators fit their own soup: the test tube failed its calibration, and the hypothesis stays
+untested. And the mechanism of entry 14.
+
+**What we learned about the measures.** The census's replication test counts the partner when the program has few instructions, so a positive
+must be retested with inert partners (entries 16 to 18). A scan is not a count, and a count at one moment is not a rate (entries 16 to 19). The
+census's test says whether a program can copy itself, not how often, so it does not measure taking root (entry 23). The lineage is of
+windows, not of descent, and natural families break into fragments in the census's snapshot, so any count of appearances depends on how they
+are delimited (entries 20, 21 and 24). The planted genotypes range from almost always taking root (G2, G3) to almost never (G1 in the aged
+soup): what is said of them is said genotype by genotype.
+
+**What may be new.** The novelty matrix (`docs/novetat-maduracio.md`) says it source by source: the general idea of a phase before life is
+not new (Greenbaum and Pargellis in Amoeba, Agüera y Arcas in BFF), nor the hypothesis that pre-replicator activity makes replicators more
+likely (Adami and LaBar, 2017). What can be defended as new in BFF today is entry 14's preregistered contrast, with its limits; that the
+soup's arrangement undoes what its composition would do, and the first-byte mechanism, may be, but they are descriptive. Where maturation
+acts, the line's question, cannot be claimed, and someone from the field should read the matrix before anything is said. Limits: one world
+size, one chemistry, quiet worlds that reach epoch 8,000 without life; everything but entry 14 is exploratory.
+
+**What could answer it** (none decided; the owner chooses, and planting again needs a new decision and the agreement of the three): counting
+appearances without the census's snapshot, with a record of heritable copies during the simulation, a change to the simulator in a reviewed
+pull request; an intervention on the aged soup's first bytes (`]` and 0, against a placebo), to know whether the first byte is why G1 takes
+root less, which with planted replicators needs a new decision; or a confirmatory series that separates appearance from taking root, on new
+worlds, with the fragment rule, the minimum effect and the power fixed before computing. With the agreement of both auditors, the line of
+planted replicators closes here.

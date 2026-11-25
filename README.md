@@ -364,8 +364,8 @@ See notebook [entry 22](quadern/index.html#entrada-22), in Catalan, or its [Engl
 
 ### A test tube that does not work (exploratory)
 
-The oldest lineage of each natural establishment's dominant group and the four planted genotypes in the census's replication test, with partners drawn
-from the pilot's starting soups, and nothing planted in any world.
+The oldest lineage of each natural establishment's dominant group and the four planted genotypes in the census's replication test,
+with partners drawn from the pilot's starting soups, and nothing planted in any world.
 - **The calibration fails:** the test had to order the planted genotypes as the pilot did, and it saturates (all of them heritable in 93%
   to 100% of the conditions). The census's test says whether a program can copy itself, not how often. By the rule fixed before computing,
   nothing else is read, and the hypothesis that the natural replicators fit their own soup stays untested: neither for nor against.
@@ -381,17 +381,32 @@ The two auditors' proposals after audit 39, with the notes written before comput
   partners that start with `]` or 0 are never heritable, and the extinction note's records agree at the level of the soup. Whether this is
   why G1 takes root less in the aged soup has not been shown (that would need an intervention). It does not decide which natural
   replicators become established.
-- **The neighbours' test cannot say anything about the lead** (within worlds, against G4 at the same cells), and three kinds of candidate link (time, sequence and place) agree on which
-  failed appearances are probable fragments of the lineage that becomes established: the excess of failed appearances in the aged soup
-  cannot be separated from fragmentation.
+- **The neighbours' test cannot say anything about the lead** (within worlds, against G4 at the same cells), and three kinds of candidate
+  link (time, sequence and place) agree on which failed appearances are probable fragments of the lineage that becomes established: the
+  excess of failed appearances in the aged soup cannot be separated from fragmentation.
 
 See notebook [entry 24](quadern/index.html#entrada-24), in Catalan, or its [English text](quadern/resum.en.md#entry-24).
 
+### The soup before life: what we learned, and what we did not (synthesis)
+
+Entry 14 confirmed that life becomes established more often in an aged soup; eight exploratory entries then looked for why. No new
+computation: a summary of what has been shown and what has not.
+- **Shown:** the soup without life matures the same way everywhere and fills with `<`, which spreads by being copied; it has the bytes of a
+  rich soup and the arrangement of a poor one; planted replicators take root less in it (0.35 times the fresh soup); and outside the world
+  G1 loses its copies into partners that start with `]` or 0.
+- **Not shown:** where maturation acts, on appearance or on taking root (the excess of appearances cannot be separated from fragmentation);
+  that the first byte is why G1 takes root less; that natural replicators fit their own soup.
+- **Learned about the measures:** the census's test counts the partner, says whether a program can copy and not how often, and natural
+  families break into fragments in its snapshot.
+- **The line of planted replicators closes here,** with the agreement of both auditors.
+
+See notebook [entry 25](quadern/index.html#entrada-25), in Catalan, or its [English text](quadern/resum.en.md#entry-25).
+
 ### What we study now
 
-- **The soup before life:** both auditors have reviewed entries 23 and 24 (audit 41) and accept them as exploratory; both advise
-  closing the line of planted replicators. What comes next is the owner's choice. Where maturation acts is still not known; to show whether
-  the first byte is the cause would need an intervention, and planting again needs a new decision.
+- **The soup before life:** the synthesis (entry 25) closes the line of planted replicators. Where maturation acts is still not known.
+  What could answer it (a record of heritable copies during the simulation, an intervention on the aged soup's first bytes, or a
+  confirmatory series) is the owner's choice; planting again needs a new decision.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 
