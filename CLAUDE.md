@@ -407,5 +407,11 @@ Llegeix-los abans de proposar canvis.
       casos coneguts (AU2-209). Els camins són cinc, cap de decidit: el nul dins del món dels trossos, amb els registres que ja hi ha; el
       registre de les còpies; la intervenció sobre els primers bytes; plantar els llinatges naturals (un trasplantament recíproc, la proposta de
       l'auditor 1: tornar a plantar, amb una decisió nova i l'acord dels tres); i una sèrie confirmatòria, després del registre.
+    - **El nul dins del món** (25-11-2026, l'entrada 26, exploratori; `fase2/resultats/arrelament/nul-dins-mon/`; la carpeta no es pot dir `nul`,
+      que Windows reserva): per les regles fixades, la seqüència i el lloc superen el nul dins del món (8 de 10 contra 5,65, *p* = 0,036, per
+      poc; 11 de 16 contra 3,10), i «no se separa de la fragmentació» es manté. Però **els 8 bytes no estan calibrats dins del món** (25 de 55
+      parelles de control, sobretot de dos mons), i el veredicte depèn de la regla: amb la del temps conté 1 (quatre mons sols el fan bascular);
+      amb la seqüència sola a 10 bytes o més, queda per sobre d'1. «Ni separat de la fragmentació ni mostrat que siguin trossos», mai «són
+      trossos» ni «l'excés és real».
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

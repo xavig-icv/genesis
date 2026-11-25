@@ -405,10 +405,24 @@ what has been shown and what has not.
 
 See notebook [entry 25](quadern/index.html#entrada-25), in Catalan, or its [English text](quadern/resum.en.md#entry-25).
 
+### The fragments against a within-world null (exploratory)
+
+Entry 24's evidence that the aged soup's failed appearances may be fragments of the establishing lineage had been calibrated outside the
+world. Compared now with what happens within each world, with the records already in git:
+- **Both kinds of evidence beat their within-world null:** the failed appearances share 8 bytes with the dominant group more often than
+  with the other groups of their branch (8 of 10 against 5.65 expected, p = 0.036, narrowly), and lie near it far more often than placed
+  at random (11 of 16 against 3.1).
+- **But 8 bytes is not a within-world threshold:** about half of the never-united groups of the same branch also share 8 bytes, mostly in
+  two worlds.
+- **So the excess is still not separated from fragmentation, and not shown to be fragments either:** with the time rule it is compatible
+  with no excess (and four single worlds tip it); with the sequence alone at 10 bytes or more, an excess remains.
+
+See notebook [entry 26](quadern/index.html#entrada-26), in Catalan, or its [English text](quadern/resum.en.md#entry-26).
+
 ### What we study now
 
-- **The soup before life:** the synthesis (entry 25) closes the line of planted replicators. Where maturation acts is still not known.
-  What could answer it is the owner's choice: a within-world null for the fragments, with the records we have; a record of heritable
+- **The soup before life:** the synthesis (entry 25) closes the line of planted replicators, and the within-world null (entry 26) leaves
+  the fragments undecided. Where maturation acts is still not known. What could answer it is the owner's choice: a record of heritable
   copies during the simulation, once what counts as a new appearance is fixed; an intervention on the aged soup's first bytes; planting the
   natural lineages themselves; or a confirmatory series, after the record. Planting again needs a new decision and the agreement of the
   three.

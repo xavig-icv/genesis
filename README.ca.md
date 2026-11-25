@@ -405,10 +405,24 @@ càlcul nou: un resum del que ha quedat mostrat i del que no.
 
 Vegeu l'[entrada 25](quadern/index.html#entrada-25).
 
+### Els trossos, contra un nul dins del món (exploratori)
+
+Els indicis de l'entrada 24 que les aparicions de la sopa vella que no s'estableixen poden ser trossos del llinatge que s'estableix s'havien
+calibrat fora del món. Comparats ara amb el que passa dins de cada món, amb els registres que ja tenim:
+- **Tots dos indicis superen el seu nul dins del món:** les aparicions comparteixen 8 bytes amb el grup dominant més sovint que amb els
+  altres grups de la seva branca (8 de 10, contra 5,65; *p* = 0,036, per poc), i hi són a prop molt més sovint que a l'atzar (11 de 16,
+  contra 3,1).
+- **Però els 8 bytes no són un llindar de dins del món:** gairebé la meitat dels grups de la mateixa branca que no s'hi han unit mai també
+  hi comparteixen 8 bytes, sobretot en dos mons.
+- **L'excés continua sense separar-se de la fragmentació, i tampoc no s'ha mostrat que siguin trossos:** amb la regla del temps és
+  compatible amb cap excés (i quatre mons sols el fan bascular); amb la seqüència sola, a 10 bytes o més, l'excés hi queda.
+
+Vegeu l'[entrada 26](quadern/index.html#entrada-26).
+
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats. On actua la maduració, encara no ho
-  sabem. El que ho podria respondre ho tria el responsable: un nul dins del món per als trossos, amb els registres que ja tenim; un registre
+- **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats, i el nul dins del món (l'entrada 26)
+  deixa els trossos sense decidir. On actua la maduració, encara no ho sabem. El que ho podria respondre ho tria el responsable: un registre
   de les còpies hereditàries durant la simulació, després de fixar què és una aparició nova; una intervenció sobre els primers bytes de la
   sopa vella; plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió
   nova i l'acord dels tres.

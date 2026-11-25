@@ -36,6 +36,7 @@
     <a href="#entrada-23">Entrada 23</a>
     <a href="#entrada-24">Entrada 24</a>
     <a href="#entrada-25">Entrada 25</a>
+    <a href="#entrada-26">Entrada 26</a>
   </nav>
 
   <article id="entrada-1">
@@ -2537,6 +2538,58 @@
         <li><strong>El que ho podria respondre:</strong> el registre de les còpies no dona el ritme d'aparició directament, i abans cal fixar què és una aparició nova (AU2-209); la sèrie confirmatòria, després del registre. I dos camins més: el nul dins del món dels trossos, que tots dos auditors esmenten, i plantar els llinatges naturals, la proposta de l'auditor 1.</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-26">
+    <header>
+      <p class="date">Entrada 26 · 25 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, novena part: els trossos, contra un nul dins del món</h1>
+      <p class="lede">A l'<a href="#entrada-24">entrada 24</a>, tres menes d'indici (el temps, la seqüència i el lloc) coincidien a dir que les aparicions de la sopa vella que no s'estableixen poden ser trossos del llinatge que s'estableix, i d'aquí veníem que l'excés d'aparicions «no se separa de la fragmentació». Però la seqüència i el lloc s'havien calibrat fora del món. Ara els hem comparat amb el que passa dins de cada món, només amb els registres que ja teníem, sense simular ni plantar res. Per les regles fixades abans de calcular, tots dos indicis superen el nul dins del món, i la lectura es manté. Però el llindar de 8 bytes no està calibrat dins del món: gairebé la meitat dels grups que no s'han unit mai a l'aparició també hi comparteixen 8 bytes, sobretot en dos mons. I el que en surt de l'excés depèn de la regla: amb la del temps, l'interval conté 1; amb la seqüència sola, a 10 bytes o més, queda per sobre d'1. L'excés no se separa de la fragmentació, però tampoc no s'ha mostrat que siguin trossos. És exploratori.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>És el camí més petit dels cinc de l'<a href="#entrada-25">entrada 25</a>, i la proposta de l'auditor 2 a les auditories 41 i 42; el responsable hi va dir que sí el 25-11-2026. La nota (<code>fase2/resultats/arrelament/nul-dins-mon/</code>) es va escriure abans de calcular, amb els controls, els llindars (8, 9, 10, 12 i 16 bytes), la prova principal i la manera de llegir-ho. Fa servir els seguiments dels llinatges naturals de l'<a href="#entrada-21">entrada 21</a> i els registres de la part B del pilot, amb una comprovació de les dades més estricta que les de les notes anteriors (AU2-205).</p>
+
+    <h2>La seqüència</h2>
+    <ul>
+      <li><strong>Entre branques del mateix món</strong> (que no poden ser descendents l'una de l'altra), cap parella no arriba a 8 bytes: com a molt, 6. El llindar hi aguanta.</li>
+      <li><strong>Dins de la branca, amb els grups que no s'han unit mai a l'aparició</strong> (els controls, que no són mai una veritat genealògica): a la sopa vella, 25 de les 55 parelles comparteixen 8 bytes, un 0,45; amb el grup dominant, 13 de 16. Per la regla, <strong>els 8 bytes no estan calibrats dins del món</strong>. Comprovat després de llegir la sortida: 49 de les 55 parelles de control són de dos mons (el 7046 i el 7052). A 12 bytes, els controls hi arriben en 4 de 55 (0,07).</li>
+      <li><strong>La prova principal</strong> (una permutació de l'etiqueta de dominant entre els grups que cada aparició té a l'abast): 8 de les 10 aparicions que s'hi poden fer servir comparteixen 8 bytes amb el grup dominant, contra 5,65 si l'etiqueta caigués a l'atzar; <em>p</em> = 0,036. Per la regla, <strong>la seqüència assenyala el grup dominant dins del món</strong>. Però per poc: a 9 i a 10 bytes ja no (<em>p</em> = 0,13 i 0,20); amb tots els llinatges de cada grup, sí (<em>p</em> = 0,012, 0,007 i 0,014).</li>
+    </ul>
+
+    <h2>El lloc</h2>
+    <ul>
+      <li><strong>Movent cada aparició a tots els llocs on cap dins del món,</strong> amb les cel·les del grup dominant quietes: a la sopa vella, 11 de 16 són a prop del grup dominant, i a l'atzar se n'esperarien 3,10 (<em>P</em> = 1,5·10⁻⁵); a la barrejada, 4 contra 0,98; a la nova, 2 contra 0,06. Per la regla, <strong>el lloc és un indici al conjunt</strong>, encara que cada enllaç sol es donaria una vegada de cada sis.</li>
+      <li><strong>La coincidència de 15 de 16</strong> amb la regla del temps es recolza en la seqüència: amb el lloc a l'atzar, se n'esperarien 14,3.</li>
+    </ul>
+
+    <h2>Tot el graf</h2>
+    <ul>
+      <li><strong>Amb la regla del temps,</strong> l'interval del quocient entre la sopa vella i la nova conté 1 a tots els llindars (4,55 [0,90; 22,91]). Però si es deixa fora un sol món, qualsevol de quatre (el 7027, el 7050, el 7062 o el 7065), queda per sobre d'1.</li>
+      <li><strong>Amb la seqüència sola, o amb la seqüència i el lloc alhora,</strong> queda per sobre d'1 a partir de 10 bytes (a 12, la seqüència sola, 3,74 [1,19; 12,93]). Les famílies candidates, per sobre d'1 a 10 i a 16 bytes, i no a 8, 9 i 12. Sense cap regla, 4,41 [1,45; 14,90].</li>
+      <li><strong>La coincidència amb la regla del temps</strong> es manté a tots els llindars (15, 13, 12, 12 i 11 de 16); a 16 bytes, només pel lloc.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>El que es manté:</strong> dins de cada branca, el grup dominant és el que comparteix seqüència amb les aparicions que no s'estableixen (per poc), i el que els és a prop, molt més del que donaria l'atzar. Els tres indicis apunten al grup dominant també dins del món.</li>
+      <li><strong>El que s'afebleix:</strong> un sol enllaç de seqüència de 8 bytes és un indici feble dins del món, i les regles que s'hi recolzen en treuen més del que en trauria un llindar calibrat dins del món.</li>
+      <li><strong>L'excés d'aparicions que no s'estableixen</strong> continua sense separar-se de la fragmentació, i tampoc no s'ha mostrat que siguin trossos: la regla del temps, que el lloc i la seqüència relativa sostenen, el fa compatible amb 1, i és fràgil; la seqüència amb un llindar de dins del món no el treu. Que a la sopa vella hi apareguin més replicadors, no s'ha mostrat; que siguin trossos, tampoc. Un registre de les còpies hereditàries ho podria separar.</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>Un enllaç no és descendència,</strong> i un grup de control és un negatiu operatiu: si també fos un tros del grup dominant, el nul seria més difícil de superar.</li>
+      <li><strong>Poques aparicions:</strong> 10 per a la prova principal, de quatre mons; la sopa barrejada i la nova en tenen gairebé cap, i les seves xifres són descriptives.</li>
+      <li><strong>El nul del lloc posa les aparicions a l'atzar:</strong> si les aparicions es fan on la sopa és activa, a prop del grup dominant, per una altra raó que no sigui la descendència, el lloc en compta més del que toca.</li>
+      <li><strong>On actua la maduració, encara no ho sabem</strong> (AUD-184 = AU2-151).</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>Una ronda d'auditoria</strong> d'aquesta nota, amb tots dos auditors.</li>
+      <li><strong>El pas següent</strong> el tria el responsable. El camí que ho podria separar és el registre de les còpies hereditàries (el segon de l'<a href="#entrada-25">entrada 25</a>), amb una definició d'aparició nova fixada abans.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

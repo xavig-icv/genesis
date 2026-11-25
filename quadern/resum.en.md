@@ -527,3 +527,40 @@ root are among the 34 and the 47 (auditor 1). Other precisions: one world size, 
 scan's lower bounds, the 1034 snapshots, consistency by lineage and by group, and two more lessons on the measures (AU2-211; auditor 1). The
 record of copies would not give the appearance rate directly (AU2-209), and two paths were added: the within-world null, which both auditors
 raise, and planting the natural lineages, auditor 1's proposal.
+
+<a id="entry-26"></a>
+## Entry 26 · 25 November 2026 · The soup before life, part nine: the fragments against a within-world null (exploratory)
+
+In entry 24, three kinds of evidence (time, sequence and place) agreed that the aged soup's failed appearances may be fragments of the
+establishing lineage, so the excess of failed appearances "cannot be separated from fragmentation". But sequence and place had been
+calibrated outside the world. This note (`fase2/resultats/arrelament/nul-dins-mon/`, written before computing; auditor 2's proposal at
+audits 41 and 42, the smallest of entry 25's five paths) compares them with what happens within each world, with the records already in git
+and no simulation or planting.
+
+**Sequence.** Between arms of the same world, which cannot descend from each other, no pair reaches 8 bytes (at most 6). Within the branch,
+with the groups never united with the appearance (operational negatives, not genealogical truth), 25 of 55 pairs in the aged soup share 8
+bytes (0.45; with the dominant group, 13 of 16): by the note's rule, **8 bytes is not calibrated within the world**; checked after reading
+the output, 49 of the 55 control pairs come from two worlds (7046 and 7052); at 12 bytes, 4 of 55 (0.07). The main test, a permutation of
+the dominant label among each appearance's available groups: 8 of 10 informative appearances share 8 bytes with the dominant group, against
+5.65 expected (p = 0.036): **the sequence link singles out the dominant group within the world**, narrowly (at 9 and 10 bytes, p = 0.13 and
+0.20; with all the lineages of each group, p = 0.012, 0.007 and 0.014).
+
+**Place.** Moving each appearance to every position it fits in the world, with the dominant group's cells fixed: in the aged soup 11 of 16
+lie near the dominant group, against 3.10 expected (P = 1.5·10⁻⁵); 4 against 0.98 in the shuffled soup, 2 against 0.06 in the fresh one.
+**Place is evidence at the level of the set,** though each link alone would happen about one time in six. The agreement of 15 of 16 with the
+time rule rests on the sequence (with place at chance, 14.3 expected).
+
+**The whole graph.** Under the time rule the aged/fresh interval contains 1 at every threshold (4.55 [0.90, 22.91]), but leaving out any one
+of four worlds (7027, 7050, 7062, 7065) puts it above 1. With the sequence alone, or with sequence and place together, it lies above 1 from
+10 bytes on (sequence alone at 12 bytes, 3.74 [1.19, 12.93]); the candidate families, above 1 at 10 and 16 bytes, not at 8, 9 or 12. With no
+rule, 4.41 [1.45, 14.90]. The agreement with the time rule holds at every threshold (15, 13, 12, 12 and 11 of 16; at 16 bytes, by place
+alone).
+
+**The reading.** By the rules fixed before computing, both within-world nulls are beaten, and "cannot be separated from fragmentation"
+stands: the three kinds of evidence point to the dominant group also within the world. But a single 8-byte sequence link is weak evidence
+within the world, and the rules that rest on it remove more than a within-world threshold would. **The excess is still not separated from
+fragmentation, and not shown to be fragments either:** the time rule, supported by place and by the relative sequence evidence, makes it
+compatible with 1, and it is fragile; the sequence at a within-world threshold does not remove it. Neither "more replicators appear in the
+aged soup" nor "the failed appearances are fragments" is shown; a record of heritable copies (entry 25's second path) could tell them apart.
+Exploratory: 10 informative appearances from four worlds, a link is not descent, and where maturation acts is still not known (AUD-184 =
+AU2-151).
