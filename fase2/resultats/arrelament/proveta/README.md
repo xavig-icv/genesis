@@ -145,9 +145,9 @@ validates the structure of what was written and prints no share. If anything fai
 
 - **The timing,** before the note (above): only times were printed.
 - **The scripts,** in git before running anything (`5d04b45`). **The programs** (`programes.mjs`, from `5d04b45`, Node 16.15.1, exit code 0,
-  14 s): the 4 planted genotypes, the founders of the 37 part-B establishments (15 in aged soups, 15 in shuffled ones, 7 in fresh ones; 133
-  programs) and 40 robust natural lineages that did not become established, without 15 probable fragments (24, 10 and 6; 72 programs). In git
-  before any test (`f6d64e2`).
+  14 s): the 4 planted genotypes, the dominant group's oldest lineages of the 37 part-B establishments (15 in aged soups, 15 in shuffled
+  ones, 7 in fresh ones; 133 programs) and 40 robust natural lineages that did not become established, without 15 probable fragments (24,
+  10 and 6; 72 programs). In git before any test (`f6d64e2`).
 - **The short test** (`proveta.mjs --worlds 1-1`, from `f6d64e2`, 12 s; `prova/proveta-1-1.jsonl`, in git, `f7ecdc8`): 685 lines and 13,700
   tests, the structure as expected. `analisi.mjs --check` could not validate it, as the note planned: it reads only the note's folder and
   asks for all 60 worlds, so the structure was looked at by hand. **One result was seen before the full run:** to look at the structure, I printed the start of the file,
@@ -185,7 +185,7 @@ to 1.9%; question 5's two groups are both around 0.97 to 0.99.
   would lead one to expect, but the calibration failed, and the numbers are not read.
 - **If the question is taken up again,** it needs a measure of how often a program copies heritably per encounter (for example, one trial
   per condition, many conditions), calibrated in the same way against the pilot before anything else. That is another note, with its own
-  rules fixed before computing.
+  rules fixed before computing. *(Withdrawn after audit 42: see the corrections at the end.)*
 
 ## Everything tried
 
@@ -215,3 +215,17 @@ does not change.** The text above is the corrected one.
   encounter with real partners of each world's aged soup. Weighting each kind of partner by its share, a heritable copy comes out in 0.861 of
   G1's encounters, 0.847 of G2's, 0.838 of G3's and 1.000 of G4's, against pilot rooting shares of 0.03, 0.98, 0.90 and 0.21: it would fail
   the same calibration.
+
+## Corrections after audit 42 (25 November 2026)
+
+Both auditors read the corrections of audit 41 and found them as they asked. **The output does not change.**
+- **The measure per encounter is withdrawn** (AU2-210; auditor 1, N-5). "What it does not say" recommended, if the question is taken up
+  again, a measure of how often a program copies heritably per encounter. Auditor 2 agrees (audit 42, the answer to X-131) that auditor 1's
+  numbers above are the failure that measure was meant to detect: per encounter the order is G4 > G1 > G2 > G3, against the pilot's
+  G2 > G3 > G4 > G1 (Spearman −0.60), and auditor 2's own recount gives the same four shares (0.861273, 0.847079, 0.837777 and 1.000000).
+  That note will not be made. The sentence stays as it was written, marked as withdrawn; it does not mean that no measure over several
+  encounters could ever serve, and it says nothing for or against adaptation.
+- **"Founders":** one was left in "How it went" (auditor 1, N-6). It now says "the dominant group's oldest lineages" (AUD-219); the code,
+  `programes.json` and the outputs keep their word.
+- **The data checks** (AU2-205) stay open: they are to be strengthened before any of the three notes' tools is used again, with auditor 2's
+  `proves-negatives.py --expect-fixed` as a necessary condition, not a sufficient one (audit 42).

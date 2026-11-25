@@ -390,12 +390,22 @@ Llegeix-los abans de proposar canvis.
     - **L'auditoria 41** (25-11-2026; tots dos accepten les tres notes com a exploratòries, i les correccions són de text): mai «la pista
       explica el que li passa a G1 plantat» (AUD-217; el mecanisme s'ha mostrat fora del món, la causa del seu arrelament baix no), ni «no deixa
       lloc a la direcció de la pista» (AUD-218, AU2-200), ni «fundador» als textos (AUD-219: «el llinatge més antic del grup dominant»; el codi i
-      les sortides en conserven el nom). Les comprovacions de les dades d'aquestes tres notes accepten alguns casos impossibles (AU2-205): s'han
-      de reforçar abans de tornar a fer servir les eines, amb `proves-negatives.py --expect-fixed` de l'auditor 2.
+      les sortides en conserven el nom). Les comprovacions de les dades d'aquestes tres notes accepten alguns casos impossibles (AU2-205, oberta):
+      s'han de reforçar abans de tornar a fer servir les eines. `proves-negatives.py --expect-fixed` de l'auditor 2 n'és una condició necessària,
+      no suficient (l'auditoria 42): també la procedència i el manifest, els conjunts disjunts, les disponibilitats, els recomptes i la robustesa
+      refets, els 52 seguiments, un graf amb resultat conegut i les finestres prèvies i noves (AU2-202). **La mesura per trobada no es fa**
+      (l'acord dels tres, a l'auditoria 42): seria el mateix fracàs del calibratge (AU2-210).
     - **La síntesi** (25-11-2026, l'entrada 25; sense cap càlcul nou): el que ha quedat mostrat, el que no i el que ho podria respondre. **La
       línia dels replicadors plantats es tanca** (l'acord dels tres, a l'auditoria 41). **On actua la maduració, encara no ho sabem** (AUD-184 =
       AU2-151); «l'excés d'aparicions no se separa de la fragmentació»; el primer byte, un mecanisme mostrat fora del món, no la causa de
-      l'arrelament baix de G1. Els camins (un registre de les còpies hereditàries durant la simulació, una intervenció sobre els primers bytes,
-      una sèrie confirmatòria) els tria el responsable.
+      l'arrelament baix de G1. Els camins els tria el responsable.
+    - **L'auditoria 42** (25-11-2026; tots dos accepten la síntesi i el tancament de la línia, amb correccions de text): les dues proves de l'entrada
+      14 són contra la sopa nova, i la vella contra la barrejada **no es va provar**: mai «encara més amb la barrejada» com a confirmat (AUD-220 =
+      AU2-207). El mecanisme del primer byte de G1 no és a la matriu de novetat: no s'ha contrastat amb cap font (AUD-221). Els plantats també
+      arrelen menys a la barrejada (0,58), on la pista del primer byte no hi arriba (AUD-222). «0 de 1.200», per a cada mena de company, `]` i 0
+      (AU2-208). **Un registre de les còpies no dona directament el ritme d'aparició:** abans, fixar què és una aparició nova i provar-ho amb
+      casos coneguts (AU2-209). Els camins són cinc, cap de decidit: el nul dins del món dels trossos, amb els registres que ja hi ha; el
+      registre de les còpies; la intervenció sobre els primers bytes; plantar els llinatges naturals (un trasplantament recíproc, la proposta de
+      l'auditor 1: tornar a plantar, amb una decisió nova i l'acord dels tres); i una sèrie confirmatòria, després del registre.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

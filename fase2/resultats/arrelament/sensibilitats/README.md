@@ -157,7 +157,7 @@ written here.
 ## What came out (exploratory)
 
 **In short:** within worlds and against G4 at the same cells, the neighbours' test says nothing about the first-byte lead: the fixed measure
-cannot say (its interval contains 1 and values a little below it), and counting each seed once both genotypes do about 1.6 times better at
+cannot say (its interval contains 1 and values a little below it), and counting each seed once both genotypes do about 1.7 times better at
 the same places. For the fragments, the three kinds of evidence agree: 15 of
 the 16 aged-soup appearances that the time rule removes are also linked to the dominant group by sequence or by place, so by the note's rule
 the time rule's reading is the more defensible, and with it the excess of failed appearances in the aged soup cannot be separated from
@@ -183,7 +183,7 @@ come from one seed in world 7026, which also has 992 of the 1,368 tested members
   whose lineages grew weigh more (at the low places, G1's three largest seeds carry half of the tested members; auditor 1), and it is not an
   effect standardised by world.
 - **Each seed counted once** (descriptive): still heritable at the first step, G1 13 of 92 high places against 8 of 94 low ones, and G4 26
-  against 16. Both genotypes do about 1.6 times better at the same places, and their ratio is 1.00 (auditor 1's bootstrap, post hoc: [0.52,
+  against 16. Both genotypes do about 1.7 times (1.66) better at the same places, and their ratio is 1.00 (auditor 1's bootstrap, post hoc: [0.52,
   2.30]): it fits an effect of the place shared by both, without showing it.
 
 ### 2. The graph of candidate fragments
@@ -261,3 +261,13 @@ anything to be computed again. **The output does not change.** The text above is
   8,000 that share 8 bytes or more with the dominant group's first programs is 0.00% at the median, at most 0.50% in the same world and 0.52%
   in the others, and in none of the 15 establishments does the same world exceed twice the others. Shared history before 8,000 does not
   make cells share 8 bytes with the dominant group; what is shared through later history this snapshot cannot see.
+
+## Corrections after audit 42 (25 November 2026)
+
+Both auditors read the corrections of audit 41 and found them as they asked; auditor 1 recomputed auditor 2's strict sensitivity
+(AU2-203) and it comes out as the text says, number by number. **The output does not change.**
+- **"About 1.6 times better"** (auditor 1, N-7): 13 of 92 against 8 of 94, and 26 of 92 against 16 of 94, are both 1.66, about 1.7 times.
+  The figure was auditor 1's at audit 41, rounded wrongly. The ratio, 1.00, does not change.
+- **The within-world null** for the graph (auditor 2's proposal at audit 41) is now listed in notebook entry 25 as a possible small step,
+  with the existing records, permutations within each world and census, the contrast and the thresholds fixed before computing. It would
+  sharpen "cannot be separated from fragmentation"; a coincidence above the null would not be descent. None is decided.

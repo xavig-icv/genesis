@@ -389,24 +389,29 @@ See notebook [entry 24](quadern/index.html#entrada-24), in Catalan, or its [Engl
 
 ### The soup before life: what we learned, and what we did not (synthesis)
 
-Entry 14 confirmed that life becomes established more often in an aged soup; eight exploratory entries then looked for why. No new
-computation: a summary of what has been shown and what has not.
-- **Shown:** the soup without life matures the same way everywhere and fills with `<`, which spreads by being copied; it has the bytes of a
-  rich soup and the arrangement of a poor one; planted replicators take root less in it (0.35 times the fresh soup); and outside the world
-  G1 loses its copies into partners that start with `]` or 0.
-- **Not shown:** where maturation acts, on appearance or on taking root (the excess of appearances cannot be separated from fragmentation);
-  that the first byte is why G1 takes root less; that natural replicators fit their own soup.
-- **Learned about the measures:** the census's test counts the partner, says whether a program can copy and not how often, and natural
-  families break into fragments in its snapshot.
-- **The line of planted replicators closes here,** with the agreement of both auditors.
+Entry 14 confirmed, with two preregistered tests against a fresh soup, that life becomes established more often in an aged soup and in
+its shuffled bytes; kept against shuffled was not tested. Eight exploratory entries then looked for why. No new computation: a summary of
+what has been shown and what has not.
+- **Shown:** the soup without life matures the same way in every world examined and fills with `<`, which spreads by being copied; it has
+  the bytes of a rich soup and the arrangement of a poor one; planted replicators take root less in it (0.35 times the fresh soup), and
+  also in the shuffled soup (0.58); and outside the world G1 loses its copies into partners that start with `]` or 0.
+- **Not shown:** where maturation acts, on appearance, on taking root or on both (the excess of appearances cannot be separated from
+  fragmentation); that the first byte is why G1 takes root less; why planted replicators also take root less in the shuffled soup, where
+  the first-byte lead cannot reach; that natural replicators fit their own soup.
+- **Learned about the measures:** the census's test can count the partner's help, says whether a program can copy and not how often, and
+  sees mostly the lineages that grow; natural families break into fragments in its snapshot.
+- **The line of planted replicators closes here,** with the agreement of both auditors. Both read the synthesis at audit 42, and its
+  corrections are in the entry.
 
 See notebook [entry 25](quadern/index.html#entrada-25), in Catalan, or its [English text](quadern/resum.en.md#entry-25).
 
 ### What we study now
 
 - **The soup before life:** the synthesis (entry 25) closes the line of planted replicators. Where maturation acts is still not known.
-  What could answer it (a record of heritable copies during the simulation, an intervention on the aged soup's first bytes, or a
-  confirmatory series) is the owner's choice; planting again needs a new decision.
+  What could answer it is the owner's choice: a within-world null for the fragments, with the records we have; a record of heritable
+  copies during the simulation, once what counts as a new appearance is fixed; an intervention on the aged soup's first bytes; planting the
+  natural lineages themselves; or a confirmatory series, after the record. Planting again needs a new decision and the agreement of the
+  three.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 

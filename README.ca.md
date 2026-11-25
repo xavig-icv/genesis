@@ -389,24 +389,29 @@ Vegeu l'[entrada 24](quadern/index.html#entrada-24).
 
 ### La sopa abans de la vida: el que hem après, i el que no (síntesi)
 
-L'entrada 14 va confirmar que la vida s'estableix més sovint en una sopa envellida; vuit entrades exploratòries n'han buscat el perquè. Sense
-cap càlcul nou: un resum del que ha quedat mostrat i del que no.
-- **Mostrat:** la sopa sense vida madura igual a tot arreu i s'omple de `<`, que s'escampa copiant-lo; té els bytes d'una sopa rica i la
-  disposició d'una de pobra; els replicadors plantats hi arrelen menys (0,35 vegades la nova); i fora del món G1 perd les còpies que fa en
-  companys que comencen amb `]` o 0.
-- **No mostrat:** on actua la maduració, a l'aparició o a l'arrelament (l'excés d'aparicions no se separa de la fragmentació); que el primer
-  byte sigui la causa de l'arrelament baix de G1; que els replicadors naturals s'adaptin a la seva sopa.
-- **Après de les mesures:** la prova del cens compta el company, diu si un programa es pot copiar i no quantes vegades, i les famílies
-  naturals es trenquen en trossos a la seva foto.
-- **La línia dels replicadors plantats es tanca aquí,** amb l'acord dels dos auditors.
+L'entrada 14 va confirmar, amb dues proves preregistrades contra una sopa nova, que la vida s'estableix més sovint en una sopa envellida i
+amb els seus bytes barrejats; la vella contra la barrejada no es va provar. Vuit entrades exploratòries n'han buscat el perquè. Sense cap
+càlcul nou: un resum del que ha quedat mostrat i del que no.
+- **Mostrat:** la sopa sense vida madura igual a tots els mons examinats i s'omple de `<`, que s'escampa copiant-lo; té els bytes d'una sopa
+  rica i la disposició d'una de pobra; els replicadors plantats hi arrelen menys (0,35 vegades la nova), i també a la barrejada (0,58); i
+  fora del món G1 perd les còpies que fa en companys que comencen amb `]` o 0.
+- **No mostrat:** on actua la maduració, a l'aparició, a l'arrelament o a totes dues (l'excés d'aparicions no se separa de la
+  fragmentació); que el primer byte sigui la causa de l'arrelament baix de G1; per què els plantats també arrelen menys a la barrejada, on
+  la pista del primer byte no hi arriba; que els replicadors naturals s'adaptin a la seva sopa.
+- **Après de les mesures:** la prova del cens pot comptar l'ajuda del company, diu si un programa es pot copiar i no quantes vegades, i veu
+  sobretot els llinatges que creixen; les famílies naturals es trenquen en trossos a la seva foto.
+- **La línia dels replicadors plantats es tanca aquí,** amb l'acord dels dos auditors. Tots dos van llegir la síntesi a l'auditoria 42, i
+  les correccions són a l'entrada.
 
 Vegeu l'[entrada 25](quadern/index.html#entrada-25).
 
 ### El que estudiem ara
 
 - **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats. On actua la maduració, encara no ho
-  sabem. El que ho podria respondre (un registre de les còpies hereditàries durant la simulació, una intervenció sobre els primers bytes de
-  la sopa vella, o una sèrie confirmatòria) ho tria el responsable; tornar a plantar demana una decisió nova.
+  sabem. El que ho podria respondre ho tria el responsable: un nul dins del món per als trossos, amb els registres que ja tenim; un registre
+  de les còpies hereditàries durant la simulació, després de fixar què és una aparició nova; una intervenció sobre els primers bytes de la
+  sopa vella; plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió
+  nova i l'acord dels tres.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 
