@@ -1,0 +1,126 @@
+A within-world null for the fragment links: the note's analysis (exploratory). The analysis: afa94d22, v16.15.1.
+The part-B records: 180 of 180 (of 92b8f4f); the trackings: 52 of 52 (the expected list: 52).
+The pairs of each control (no link computed): continue: 1a 12 pairs with other arms; 1b 16 pairs with the dominant group and 55 with control groups; 1c 10 informative appearances; 2 16 appearances with an earlier live dominant lineage; shuffle-all: 1a 5 pairs with other arms; 1b 8 pairs with the dominant group and 2 with control groups; 1c 1 informative appearances; 2 8 appearances with an earlier live dominant lineage; reinit: 1a 3 pairs with other arms; 1b 2 pairs with the dominant group and 1 with control groups; 1c 0 informative appearances; 2 2 appearances with an earlier live dominant lineage.
+
+1. Sequence: two within-world controls and a label permutation
+   1a. Other arms of the same world: the longest substring of each failed appearance of an establishing branch with the dominant group of each other establishing arm
+   continue     12 pairs; the longest 6 bytes; reaching 8: 0, 9: 0, 10: 0, 12: 0, 16: 0
+   shuffle-all  5 pairs; the longest 4 bytes; reaching 8: 0, 9: 0, 10: 0, 12: 0, 16: 0
+   reinit       3 pairs; the longest 2 bytes; reaching 8: 0, 9: 0, 10: 0, 12: 0, 16: 0
+   The note's reading (1a): no pair reaches 8 bytes (the longest is 6): the threshold holds within the world for pairs that cannot be descent
+   1b. Within the branch: every failed appearance of a tracked branch and each of its available groups (the representative: the oldest earlier live robust lineage)
+   continue: 16 pairs with the dominant group, 55 with control groups; the longest substring with a control group 13 bytes
+      t = 8   with the dominant group 13 of 16 (0.81 [0.54, 1.00]); with control groups, f_t = 25 of 55 (0.45 [0.00, 0.57])
+      t = 9   with the dominant group 9 of 16 (0.56 [0.25, 1.00]); with control groups, f_t = 19 of 55 (0.35 [0.00, 0.42])
+      t = 10  with the dominant group 5 of 16 (0.31 [0.14, 0.80]); with control groups, f_t = 10 of 55 (0.18 [0.00, 0.31])
+      t = 12  with the dominant group 3 of 16 (0.19 [0.00, 0.60]); with control groups, f_t = 4 of 55 (0.07 [0.00, 0.10])
+      t = 16  with the dominant group 0 of 16 (0.00 [0.00, 0.00]); with control groups, f_t = 0 of 55 (0.00 [0.00, 0.00])
+   shuffle-all: 8 pairs with the dominant group, 2 with control groups; the longest substring with a control group 12 bytes
+      t = 8   with the dominant group 5 of 8 (0.63 [0.17, 1.00]); with control groups, f_t = 1 of 2 (0.50 [—, —])
+      t = 9   with the dominant group 3 of 8 (0.38 [0.00, 0.75]); with control groups, f_t = 1 of 2 (0.50 [—, —])
+      t = 10  with the dominant group 3 of 8 (0.38 [0.00, 0.75]); with control groups, f_t = 1 of 2 (0.50 [—, —])
+      t = 12  with the dominant group 1 of 8 (0.13 [0.00, 0.50]); with control groups, f_t = 1 of 2 (0.50 [—, —])
+      t = 16  with the dominant group 0 of 8 (0.00 [0.00, 0.00]); with control groups, f_t = 0 of 2 (0.00 [—, —])
+   reinit: 2 pairs with the dominant group, 1 with control groups; the longest substring with a control group 2 bytes
+      t = 8   with the dominant group 1 of 2 (0.50 [—, —]); with control groups, f_t = 0 of 1 (0.00 [—, —])
+      t = 9   with the dominant group 1 of 2 (0.50 [—, —]); with control groups, f_t = 0 of 1 (0.00 [—, —])
+      t = 10  with the dominant group 1 of 2 (0.50 [—, —]); with control groups, f_t = 0 of 1 (0.00 [—, —])
+      t = 12  with the dominant group 0 of 2 (0.00 [—, —]); with control groups, f_t = 0 of 1 (0.00 [—, —])
+      t = 16  with the dominant group 0 of 2 (0.00 [—, —]); with control groups, f_t = 0 of 1 (0.00 [—, —])
+   The note's reading (1b, the aged soup): f_8 = 0.45: 8 bytes often links never-united groups of the same branch, and it is not calibrated within the world
+   1c. The label permutation: the informative appearances (with the dominant group and a control group available), and the dominant label drawn uniformly among the available groups
+   continue     the representative, t = 8 : 10 informative; T = 8 linked to the dominant group; under the null 5.65 expected; p = P(T* >= T) = 0.0357
+   continue     the representative, t = 9 : 10 informative; T = 5 linked to the dominant group; under the null 3.34 expected; p = P(T* >= T) = 0.1250
+   continue     the representative, t = 10: 10 informative; T = 2 linked to the dominant group; under the null 0.90 expected; p = P(T* >= T) = 0.2000
+   continue     the representative, t = 12: 10 informative; T = 1 linked to the dominant group; under the null 0.70 expected; p = P(T* >= T) = 0.6000
+   continue     the representative, t = 16: 10 informative; T = 0 linked to the dominant group; under the null 0.00 expected; p = P(T* >= T) = 1.0000
+   continue     the group link (all lineages), t = 8 : 10 informative; T = 9 linked to the dominant group; under the null 5.98 expected; p = P(T* >= T) = 0.0119
+   continue     the group link (all lineages), t = 9 : 10 informative; T = 7 linked to the dominant group; under the null 3.81 expected; p = P(T* >= T) = 0.0071
+   continue     the group link (all lineages), t = 10: 10 informative; T = 4 linked to the dominant group; under the null 1.54 expected; p = P(T* >= T) = 0.0143
+   continue     the group link (all lineages), t = 12: 10 informative; T = 3 linked to the dominant group; under the null 1.40 expected; p = P(T* >= T) = 0.1000
+   continue     the group link (all lineages), t = 16: 10 informative; T = 0 linked to the dominant group; under the null 0.00 expected; p = P(T* >= T) = 1.0000
+   shuffle-all  the representative, t = 8 : 1 informative; T = 1 linked to the dominant group; under the null 0.50 expected; p = P(T* >= T) = 0.5000
+   shuffle-all  the representative, t = 9 : 1 informative; T = 1 linked to the dominant group; under the null 0.50 expected; p = P(T* >= T) = 0.5000
+   shuffle-all  the representative, t = 10: 1 informative; T = 1 linked to the dominant group; under the null 0.50 expected; p = P(T* >= T) = 0.5000
+   shuffle-all  the representative, t = 12: 1 informative; T = 0 linked to the dominant group; under the null 0.00 expected; p = P(T* >= T) = 1.0000
+   shuffle-all  the representative, t = 16: 1 informative; T = 0 linked to the dominant group; under the null 0.00 expected; p = P(T* >= T) = 1.0000
+   shuffle-all  the group link (all lineages), t = 8 : 1 informative; T = 1 linked to the dominant group; under the null 0.50 expected; p = P(T* >= T) = 0.5000
+   shuffle-all  the group link (all lineages), t = 9 : 1 informative; T = 1 linked to the dominant group; under the null 0.50 expected; p = P(T* >= T) = 0.5000
+   shuffle-all  the group link (all lineages), t = 10: 1 informative; T = 1 linked to the dominant group; under the null 0.50 expected; p = P(T* >= T) = 0.5000
+   shuffle-all  the group link (all lineages), t = 12: 1 informative; T = 0 linked to the dominant group; under the null 0.00 expected; p = P(T* >= T) = 1.0000
+   shuffle-all  the group link (all lineages), t = 16: 1 informative; T = 0 linked to the dominant group; under the null 0.00 expected; p = P(T* >= T) = 1.0000
+   reinit       no informative appearance
+   The note's reading (1c, the main test): 10 informative appearances (available groups: 2, 2, 2, 3, 4, 5, 6, 7, 2, 3); p = 0.0357: the sequence link singles out the dominant group within the world
+
+2. Place: the failed appearances moved by every rigid translation that keeps them inside the world, with the dominant group's sources fixed
+   continue     16 appearances with sources; place links observed 11; expected under the null 3.10; P(count >= 11) = 1.50e-5; p_y: median 0.167, min 0.088, max 0.274
+   shuffle-all  8 appearances with sources; place links observed 4; expected under the null 0.98; P(count >= 4) = 0.0089; p_y: median 0.087, min 0.051, max 0.196
+   reinit       2 appearances with sources; place links observed 2; expected under the null 0.06; P(count >= 2) = 0.0006; p_y: median 0.014, min 0.014, max 0.044
+   The agreement under this null (the aged soup, descriptive): of the 16 the time rule removes, 15 are linked by sequence or place; with the sequence as observed and place from the null, 14.26 expected; P(>= 15) = 0.2445
+   The note's reading (2): P = 1.50e-5: the place links are more than the same appearances placed uniformly would give; place is evidence at the level of the set
+   The reading of "cannot be separated from fragmentation": both within-world nulls are beaten: the agreement stands against both
+
+3. The whole graph, at every threshold (the sensitivities note's definitions: all the dominant group's lineages earlier and alive)
+   R0 and R1 do not depend on the threshold (counts aged, shuffled, fresh; the aged/fresh ratio per 1,000 world-epochs):
+      R0 none                            33, 14, 8; aged/fresh 4.41 [1.45, 14.90] (above 1)
+      R1 time                            17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   t = 8
+      R3 sequence                        19, 8, 7; aged/fresh 2.90 [0.69, 11.71] (contains 1)
+      R5 time, sequence or place         17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+      R5∧ sequence and place             23, 12, 7; aged/fresh 3.52 [0.98, 13.80] (contains 1)
+      R6 candidate families              11, 5, 5; aged/fresh 2.35 [0.75, 10.13] (contains 1)
+      R6∧ (edges by sequence and place)  20, 11, 7; aged/fresh 3.06 [0.96, 11.73] (contains 1)
+      R6 without the bridges             16, 9, 8; aged/fresh 2.14 [0.78, 7.05] (contains 1)
+      the agreement (aged): of the 16 the time rule removes, 15 linked by sequence or place (sequence 14, place 11)
+      the graph, continue: 953 edges of 2349 possible pairs (density 0.406); 27 components; 14 bridges
+      the graph, shuffle-all: 1291 edges of 2754 possible pairs (density 0.469); 23 components; 11 bridges
+      the graph, reinit: 48 edges of 100 possible pairs (density 0.480); 12 components; 5 bridges
+   t = 9
+      R3 sequence                        21, 10, 7; aged/fresh 3.21 [0.84, 12.83] (contains 1)
+      R5 time, sequence or place         17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+      R5∧ sequence and place             23, 12, 7; aged/fresh 3.52 [0.98, 13.80] (contains 1)
+      R6 candidate families              13, 7, 5; aged/fresh 2.78 [0.92, 12.01] (contains 1)
+      R6∧ (edges by sequence and place)  20, 11, 7; aged/fresh 3.06 [0.96, 11.73] (contains 1)
+      R6 without the bridges             16, 10, 8; aged/fresh 2.14 [0.78, 7.05] (contains 1)
+      the agreement (aged): of the 16 the time rule removes, 13 linked by sequence or place (sequence 12, place 11)
+      the graph, continue: 690 edges of 2349 possible pairs (density 0.294); 34 components; 14 bridges
+      the graph, shuffle-all: 968 edges of 2754 possible pairs (density 0.351); 27 components; 13 bridges
+      the graph, reinit: 44 edges of 100 possible pairs (density 0.440); 12 components; 6 bridges
+   t = 10
+      R3 sequence                        25, 10, 7; aged/fresh 3.82 [1.12, 14.86] (above 1)
+      R5 time, sequence or place         17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+      R5∧ sequence and place             26, 12, 7; aged/fresh 3.97 [1.16, 15.47] (above 1)
+      R6 candidate families              14, 7, 5; aged/fresh 3.00 [1.04, 12.89] (above 1)
+      R6∧ (edges by sequence and place)  24, 11, 7; aged/fresh 3.67 [1.16, 14.02] (above 1)
+      R6 without the bridges             18, 11, 8; aged/fresh 2.41 [0.93, 7.84] (contains 1)
+      the agreement (aged): of the 16 the time rule removes, 12 linked by sequence or place (sequence 8, place 11)
+      the graph, continue: 507 edges of 2349 possible pairs (density 0.216); 38 components; 19 bridges
+      the graph, shuffle-all: 756 edges of 2754 possible pairs (density 0.275); 30 components; 17 bridges
+      the graph, reinit: 37 edges of 100 possible pairs (density 0.370); 12 components; 8 bridges
+   t = 12
+      R3 sequence                        28, 12, 8; aged/fresh 3.74 [1.19, 12.93] (above 1)
+      R5 time, sequence or place         17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+      R5∧ sequence and place             29, 13, 8; aged/fresh 3.88 [1.21, 13.35] (above 1)
+      R6 candidate families              14, 7, 6; aged/fresh 2.50 [0.85, 11.43] (contains 1)
+      R6∧ (edges by sequence and place)  28, 12, 8; aged/fresh 3.74 [1.20, 12.76] (above 1)
+      R6 without the bridges             24, 13, 8; aged/fresh 3.21 [1.04, 11.16] (above 1)
+      the agreement (aged): of the 16 the time rule removes, 12 linked by sequence or place (sequence 5, place 11)
+      the graph, continue: 386 edges of 2349 possible pairs (density 0.164); 47 components; 28 bridges
+      the graph, shuffle-all: 571 edges of 2754 possible pairs (density 0.207); 36 components; 28 bridges
+      the graph, reinit: 28 edges of 100 possible pairs (density 0.280); 13 components; 9 bridges
+   t = 16
+      R3 sequence                        33, 14, 8; aged/fresh 4.41 [1.45, 14.90] (above 1)
+      R5 time, sequence or place         17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+      R5∧ sequence and place             33, 14, 8; aged/fresh 4.41 [1.45, 14.90] (above 1)
+      R6 candidate families              17, 9, 6; aged/fresh 3.03 [1.02, 13.77] (above 1)
+      R6∧ (edges by sequence and place)  33, 14, 8; aged/fresh 4.41 [1.45, 14.90] (above 1)
+      R6 without the bridges             26, 13, 8; aged/fresh 3.48 [1.18, 11.82] (above 1)
+      the agreement (aged): of the 16 the time rule removes, 11 linked by sequence or place (sequence 0, place 11)
+      the graph, continue: 344 edges of 2349 possible pairs (density 0.146); 61 components; 22 bridges
+      the graph, shuffle-all: 519 edges of 2754 possible pairs (density 0.188); 52 components; 19 bridges
+      the graph, reinit: 21 edges of 100 possible pairs (density 0.210); 16 components; 11 bridges
+   Leave one world out (t = 8; the aged/fresh ratio; each with its own bootstrap):
+      R0: the full verdict above 1; the point estimate from 3.35 to 5.90; 0 of 60 leave-outs change the verdict
+      R1: the full verdict contains 1; the point estimate from 2.41 to 6.08; 4 of 60 leave-outs change the verdict: 7027 (above 1), 7050 (above 1), 7062 (above 1), 7065 (above 1)
+      R5: the full verdict contains 1; the point estimate from 2.41 to 6.08; 4 of 60 leave-outs change the verdict: 7027 (above 1), 7050 (above 1), 7062 (above 1), 7065 (above 1)
+      R6: the full verdict contains 1; the point estimate from 1.93 to 2.95; 0 of 60 leave-outs change the verdict
