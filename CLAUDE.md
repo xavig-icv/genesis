@@ -374,16 +374,23 @@ Llegeix-los abans de proposar canvis.
       desenllaços, i «arrelar», només el criteri del pilot. A G4, «cap diferència concloent», mai «cap diferència» (AU2-198). Mai «s'apaguen a poc a poc» per a G1 (AUD-214). «Encaixa amb la pista del primer byte a escala de sopa», mai «el
       primer byte n'és la causa»: dins de l'envellida els veïns no hi encaixen, i els registres no diuen cap primer byte. Una intervenció amb
       plantats tornaria a plantar (decisió nova i acord dels tres).
-    - **La proveta** (24-11-2026, l'entrada 23, exploratori; `fase2/resultats/arrelament/proveta/`): els fundadors de la part B i els genotips
-      plantats, a la prova de replicació del cens amb companys de les sopes del pilot. No passa el calibratge fixat (satura: G1 a G4,
-      hereditaris en el 93–100 % de les condicions, contra un arrelament del 3 al 98 %), i la resta no es llegeix: la hipòtesi que els
-      fundadors s'adapten a la seva sopa queda sense provar, mai «no s'hi adapten». **La prova del cens diu si un programa es pot copiar, no
-      quantes vegades:** no serveix per mesurar l'arrelament. Una mesura per trobada seria una altra nota, calibrada contra el pilot abans de res.
+    - **La proveta** (24-11-2026, l'entrada 23, exploratori; `fase2/resultats/arrelament/proveta/`): el llinatge més antic del grup dominant
+      de cada establiment de la part B i els genotips plantats, a la prova de replicació del cens amb companys de les sopes del pilot. No passa
+      el calibratge fixat (satura: G1 a G4, hereditaris en el 93–100 % de les condicions, contra un arrelament del 3 al 98 %), i la resta no es
+      llegeix: la hipòtesi que els replicadors naturals s'adapten a la seva sopa queda sense provar, mai «no s'hi adapten». **La prova del cens
+      diu si un programa es pot copiar, no quantes vegades:** no serveix per mesurar l'arrelament. Una mesura per trobada fallaria el mateix
+      calibratge: la de la vulnerabilitat ja ho és, i G4 s'hi copia en el 100 % de les trobades (l'auditor 1, auditoria 41).
     - **Dues proves sense plantar** (24-11-2026, l'entrada 24, exploratori): la de l'auditor 1 (`fase2/resultats/arrelament/vulnerables/`: el
-      calibratge passa, i els fundadors dels establiments són vulnerables al primer byte 5 de 15, 5 de 15 i 3 de 7: «no es veu cap filtre», mai «el
-      primer byte no fa res»; la pista es queda en els plantats) i la de l'auditor 2 (`fase2/resultats/arrelament/sensibilitats/`: els veïns dins de
-      cada món i contra G4 a la mateixa cel·la, *RR* = 1,59 [0,97; 2,90], «no ho pot dir», però no deixa lloc a la direcció de la pista; les tres
-      menes d'enllaç candidat coincideixen en 15 de 16, i l'excés d'aparicions que no s'estableixen «no se separa de la fragmentació»; el lloc, sol,
-      és un indici feble). Un enllaç candidat no és descendència.
+      calibratge passa, i el llinatge més antic del grup dominant és vulnerable al primer byte 5 de 15, 5 de 15 i 3 de 7: «no es veu cap filtre»,
+      mai «no en surten seleccionats» (l'interval admet un terç) ni «el primer byte no fa res»; la pista es queda, fora del món, en els plantats)
+      i la de l'auditor 2 (`fase2/resultats/arrelament/sensibilitats/`: els veïns dins de cada món i contra G4 a la mateixa cel·la, *RR* = 1,59
+      [0,97; 2,90], «no ho pot dir», i comptant cada sembra un cop, 1,00: la prova local no diu res de la pista; les tres menes d'enllaç
+      candidat coincideixen en 15 de 16, i l'excés d'aparicions que no s'estableixen «no se separa de la fragmentació»; el lloc, sol, és un
+      indici feble). Un enllaç candidat no és descendència.
+    - **L'auditoria 41** (25-11-2026; tots dos accepten les tres notes com a exploratòries, i les correccions són de text): mai «la pista
+      explica el que li passa a G1 plantat» (AUD-217; el mecanisme s'ha mostrat fora del món, la causa del seu arrelament baix no), ni «no deixa
+      lloc a la direcció de la pista» (AUD-218, AU2-200), ni «fundador» als textos (AUD-219: «el llinatge més antic del grup dominant»; el codi i
+      les sortides en conserven el nom). Les comprovacions de les dades d'aquestes tres notes accepten alguns casos impossibles (AU2-205): s'han
+      de reforçar abans de tornar a fer servir les eines, amb `proves-negatives.py --expect-fixed` de l'auditor 2.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

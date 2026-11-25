@@ -149,7 +149,8 @@ validates the structure of what was written and prints no share. If anything fai
   programs) and 40 robust natural lineages that did not become established, without 15 probable fragments (24, 10 and 6; 72 programs). In git
   before any test (`f6d64e2`).
 - **The short test** (`proveta.mjs --worlds 1-1`, from `f6d64e2`, 12 s; `prova/proveta-1-1.jsonl`, in git, `f7ecdc8`): 685 lines and 13,700
-  tests, the structure as expected. **One result was seen before the full run:** to look at the structure, I printed the start of the file,
+  tests, the structure as expected. `analisi.mjs --check` could not validate it, as the note planned: it reads only the note's folder and
+  asks for all 60 worlds, so the structure was looked at by hand. **One result was seen before the full run:** to look at the structure, I printed the start of the file,
   and with it the first test line, G1 with world 7001's aged soup, heritable in 20 of its 20 conditions. Nothing was changed after it.
 - **The full run** (`executa.sh`, from `bc1d0be`, 6 processes at low priority, from 20.13 to 20.16): 60 worlds, 41,172 lines, 823,440 tests,
   no process failed. In git before any reading (`00d1b6a`). `analisi.mjs --check`: all valid.
@@ -168,17 +169,18 @@ this instrument: **the hypothesis stays untested by it.**
   tries the first role twice and the second four times, and a single success makes the condition heritable. A replicator that copies most of
   the time scores near 1 whatever the soup. What decides taking root in the world is closer to the rate per encounter, which this measure
   does not see. I should have seen it before fixing the measure; the short test only showed it in the one line I should not have looked at.
-- **The second role** is almost never heritable for any program (at most 0.001): after a partner of the soup has run first, the copies are
-  not heritable. Reported, not read.
+- **The second role** is almost never heritable for the planted genotypes and the dominant groups' oldest lineages (at most 0.001): after a
+  partner of the soup has run first, the copies are not heritable. For 3 of the 40 lineages that did not become established it is
+  heritable in all 20 conditions (auditor 1, audit 41). Reported, not read.
 
-**The numbers of questions 2 to 5, not read:** the founders' heritable shares are between 0.97 and 0.995 with any kind of soup; the
+**The numbers of questions 2 to 5, not read:** the dominant groups' oldest lineages' heritable shares are between 0.97 and 0.995 with any kind of soup; the
 interaction of question 2 is −0.004 [−0.022, 0.015]; the own-soup differences of question 3 are 0.000, 0.000 and −0.002; with the fixed
-first bytes, G1 goes from 0.982 (placebo) to 1.000 (1.019 [1.010, 1.028]), G4 stays at 1.000, and the founders of the three soups go up by 0.8
-to 1.9%; question 5's founders and other lineages are both around 0.97 to 0.99.
+first bytes, G1 goes from 0.982 (placebo) to 1.000 (1.019 [1.010, 1.028]), G4 stays at 1.000, and those lineages of the three soups go up by 0.8
+to 1.9%; question 5's two groups are both around 0.97 to 0.99.
 
 ### What it does not say
 
-- **Not that the founders do not fit their own soup:** the instrument cannot tell. Nor that they do.
+- **Not that the natural replicators that become established do not fit their own soup:** the instrument cannot tell. Nor that they do.
 - **Not that the first byte acts in the world:** the fixed pools raise G1's share in the test tube, as auditor 1's single-encounter finding
   would lead one to expect, but the calibration failed, and the numbers are not read.
 - **If the question is taken up again,** it needs a measure of how often a program copies heritably per encounter (for example, one trial
@@ -189,3 +191,27 @@ to 1.9%; question 5's founders and other lineages are both around 0.97 to 0.99.
 
 - The timing (G1 to G4, two soups of world 7001, 40 conditions each; only times), `programes.mjs`, the short test, the full run, `--check` and
   the analysis, once each. Nothing else was computed.
+
+## Corrections after audit 41 (25 November 2026)
+
+Both auditors reproduced the analysis and the program choice (auditor 1 also redid two of the six parts from the snapshots, equal except the
+commit and the seconds), agreed that the calibration fails and that the rest is not read, and accepted the note as exploratory. **The output
+does not change.** The text above is the corrected one.
+
+- **"Founder"** (AUD-219, the AU2-147 rule): what the note tests is the root of the dominant group at the confirmation, its oldest lineage,
+  not who founded the establishment (the lineage is of windows, not of descent; AU2-156). Now "the dominant group's oldest lineage"; the code,
+  `programes.json` and the output keep their word. In the 37 establishments it is the same lineage as the vulnerability note's (auditor 1).
+- **The second role** (N-2): "almost never heritable for any program" holds for the planted genotypes and the dominant groups' oldest
+  lineages, not for 3 of the 40 others (110 heritable conditions of 1,440 in that group). Corrected.
+- **The short test** (N-1): `--check` could not validate it as the note planned; said now, next to the result seen before the full run.
+- **`--check`** (AU2-205): it accepts a header without `node`, `partners` or `seeds`, and does not compare the programs with `programes.json`
+  and the manifest. The data are complete; to be strengthened before any reuse, with auditor 2's negative tests.
+- **The reading of the question** (auditor 2): "what is different must be which replicators are born there", in the note written before
+  computing, is a premise of the hypothesis, not a deduction; it stays as written and is not repeated as a fact.
+- **Why it saturates, with a number** (auditor 1, post hoc): if G1 failed only when the first role's partner starts with `]` or 0 (a share
+  *f* of the soup), a condition would fail only when both attempts do, 1 − *f*²: 0.981 expected and 0.976 observed in the aged soup, 0.981 and
+  0.982 with the placebo, 1.000 and 1.000 in the others.
+- **A measure per encounter** (the open question; auditor 1, post hoc): the vulnerability note's calibration is already one, a single
+  encounter with real partners of each world's aged soup. Weighting each kind of partner by its share, a heritable copy comes out in 0.861 of
+  G1's encounters, 0.847 of G2's, 0.838 of G3's and 1.000 of G4's, against pilot rooting shares of 0.03, 0.98, 0.90 and 0.21: it would fail
+  the same calibration.

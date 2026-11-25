@@ -380,7 +380,7 @@ not change.
 
 The aged soup has more natural establishments, fewer cells that copy on their own, and planted replicators take root less in it. The
 hypothesis: the replicators born there fit it, and the planted genotypes are strangers. To test it without planting anything, we put the
-natural founders of the pilot's 37 part-B establishments and the four planted genotypes in a "test tube": the census's replication test,
+oldest lineage of the dominant group of each of the pilot's 37 part-B establishments and the four planted genotypes in a "test tube": the census's replication test,
 with partners drawn from the pilot's starting soups (and from the aged soup with its `]` and 0 first bytes replaced, against a placebo),
 823,440 tests, with the note written before computing (`fase2/resultats/arrelament/proveta/README.md`). Before reading anything else, the
 test tube had to order the planted genotypes as the pilot did. It does not: it saturates. G1 is heritable in 97.6% of the conditions with the
@@ -388,8 +388,16 @@ aged soups and 100% with the fresh ones, G4 in 100% with all of them, G2 and G3 
 from 3% to 98% (Spearman −0.65). The census's test says whether a program can replicate, trying each role several times, not how often it
 does. By the rule fixed before computing, the other numbers are reported with no reading, and the hypothesis stays untested by this
 instrument: neither for nor against. Testing it again would need a measure of how often a program copies per encounter, calibrated against
-the pilot first, in another note. One result was seen before the full run (the first line of the short test), and nothing was changed after
-it. Exploratory.
+the pilot first, in another note. One result was seen before the full run (the first line of the short test, looked at by hand because the
+data check could not validate a single world), and nothing was changed after it. Exploratory.
+
+*Corrected after audit 41 (25 November 2026).* Both auditors reproduced the analysis and agreed that the calibration fails and the rest is
+not read. The entry said "natural founders": what is tested is the dominant group's oldest lineage, not who founded the establishment
+(AUD-219, the AU2-147 rule). The note said the second role is "almost never heritable for any program"; it is heritable in all 20
+conditions for 3 of the 40 lineages that did not become established (N-2). Auditor 1 added two post hoc numbers: with two attempts per
+condition the lead predicts 1 − *f*² = 0.981 for G1 in the aged soup, and 0.976 came out; and the vulnerability note's calibration is
+already a measure per encounter, in which G4 copies heritably in every encounter while it takes root in 21% of the plantings, so such a
+measure would fail the same calibration.
 
 <a id="entry-24"></a>
 ## Entry 24 · 24 November 2026 · The soup before life, part eight: two tests without planting anything (exploratory)
@@ -398,17 +406,27 @@ At audit 39 the two auditors proposed two ways to go on without planting again, 
 test** (`fase2/resultats/arrelament/vulnerables/README.md`): if the aged soup's `]` and 0 first bytes filtered the replicators, the natural
 ones that become established there should be vulnerable to them less often. Each robust natural lineage's program met, once, 20 real partners
 of its world's aged soup starting with `]`, 20 with 0 and 20 with another byte; "vulnerable" means it copies itself heritably into the others
-and never into the `]` ones. The calibration passed (G1 vulnerable in all 60 worlds, G4 in none). The founder of the dominant group is
+and never into the `]` ones. The calibration passed (G1 vulnerable in all 60 worlds, G4 in none). The dominant group's oldest lineage is
 vulnerable in 5 of the 15 establishments of the aged soup, 5 of the 15 of the shuffled soup and 3 of the 7 of the fresh one (aged minus
-shuffled, 0.00 [−0.38, 0.38]): **no filter is seen**, and the first-byte lead loses strength as an explanation of taking root in the aged
-soup. More than half of the robust natural lineages are vulnerable, and they join the dominant group less often than the others in the aged
+shuffled, 0.00 [−0.38, 0.38], which allows a difference of a third either way): **no filter is seen**, and the first-byte lead loses
+strength as an explanation of taking root in the aged soup. More than half of the robust natural lineages are vulnerable, and they join the dominant group less often than the others in the aged
 soup and also in the shuffled one, where almost no cell starts with `]` or 0. **Auditor 2's sensitivities**
-(`fase2/resultats/arrelament/sensibilitats/README.md`): within each world, G1 does better, not worse, at the places with more neighbours
-starting with `]` or 0, and G4, planted at the same cells, about the same; their ratio, 1.59 [0.97, 2.90], cannot say by the note's rule but
-leaves no room for the lead's direction. For the failed appearances, three kinds of candidate link to the establishing lineage (time,
+(`fase2/resultats/arrelament/sensibilitats/README.md`): pooling the tested members of the places classified within each world, the ratio of
+G1's to G4's (planted at the same cells) is 1.59 [0.97, 2.90], which cannot say by the note's rule and includes values a little below 1;
+counting each seed once at the first step, both genotypes do about 1.6 times better at the places with more neighbours starting with `]` or
+0, a ratio of 1.00 that fits an effect of the place shared by both, without showing it. The local test says nothing about the lead. For the failed appearances, three kinds of candidate link to the establishing lineage (time,
 sequence with a threshold of 8 bytes fixed by a control, and place within 8 cells) agree: 15 of the 16 aged-soup appearances that the time
 rule removes are also linked by sequence or place. By the note's rule the time rule's reading is the more defensible, and with it the excess
 of failed appearances in the aged soup cannot be separated from fragmentation (4.55 [0.91, 23.09]; counting candidate families, 2.35 [0.72,
 10.06]). Place on its own is weak evidence: a random cell would be as close one time in six. One check was added after reading the output
 (G1's 4.4% at the 26 places without such neighbours is a single seed). Exploratory: few establishments, a single encounter, and a candidate
 link is not descent. Where maturation acts is still not known.
+
+*Corrected after audit 41 (25 November 2026).* Both auditors recounted both analyses without the notes' code and accepted them as
+exploratory. The entry said that the neighbours' ratio "leaves no room for the lead's direction" and that within each world "G1 does better,
+not worse … and G4 about the same": the interval includes values below 1, and the pooled members weigh the lineages that grew (AUD-218,
+AU2-200, AU2-201). It said "the founder" (AUD-219). The READMEs said that "the lead explains what happens to the planted G1": what has been
+shown is the mechanism outside the world; whether it is why G1 takes root less has not (AUD-217). The note now states two conventions
+(lineages at the same census ordered by number, AU2-203; "one time in six" is the coverage of one random cell, not a rate of false links,
+AU2-204). The vulnerability test did not check whether a copied window was already in the partner (AU2-202); with the snapshots, none was,
+in any of the 48,720 encounters.

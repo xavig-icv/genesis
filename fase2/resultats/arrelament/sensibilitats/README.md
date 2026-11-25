@@ -156,8 +156,9 @@ written here.
 
 ## What came out (exploratory)
 
-**In short:** within worlds and against G4 at the same cells, the neighbours do not show the first-byte lead: the fixed measure cannot say
-(its interval just contains 1), and it leaves no room for the lead's direction. For the fragments, the three kinds of evidence agree: 15 of
+**In short:** within worlds and against G4 at the same cells, the neighbours' test says nothing about the first-byte lead: the fixed measure
+cannot say (its interval contains 1 and values a little below it), and counting each seed once both genotypes do about 1.6 times better at
+the same places. For the fragments, the three kinds of evidence agree: 15 of
 the 16 aged-soup appearances that the time rule removes are also linked to the dominant group by sequence or by place, so by the note's rule
 the time rule's reading is the more defensible, and with it the excess of failed appearances in the aged soup cannot be separated from
 fragmentation. Place is weak evidence on its own.
@@ -177,11 +178,13 @@ come from one seed in world 7026, which also has 992 of the 1,368 tested members
 - **Within worlds** (the main measure): 92 places above the median of their world and 94 below it, in all 60 worlds. G1: 10.3% at the high
   places against 6.1% at the low ones, *R* = 1.69 [1.04, 3.13]; G4: 25.2% against 23.6%, *R* = 1.07 [0.92, 1.35]. **RR = 1.59 [0.97,
   2.90].**
-- **By the note's rule, the interval contains 1: the local test cannot see the lead either way.** But it runs from 0.97 to 2.90: it leaves no
-  room for the lead's direction, which predicts *RR* below 1. Within its own world, G1 does better, not worse, at the places with more
-  neighbours starting with `]` or 0, and G4 about the same.
+- **By the note's rule, the interval contains 1: the local test cannot see the lead either way.** It runs from 0.97 to 2.90, so it includes
+  values a little below 1, the lead's direction. The measure pools the tested members of the places classified within each world: the seeds
+  whose lineages grew weigh more (at the low places, G1's three largest seeds carry half of the tested members; auditor 1), and it is not an
+  effect standardised by world.
 - **Each seed counted once** (descriptive): still heritable at the first step, G1 13 of 92 high places against 8 of 94 low ones, and G4 26
-  against 16. Both genotypes do better at the same places, which fits auditor 1's reading of an effect of the place.
+  against 16. Both genotypes do about 1.6 times better at the same places, and their ratio is 1.00 (auditor 1's bootstrap, post hoc: [0.52,
+  2.30]): it fits an effect of the place shared by both, without showing it.
 
 ### 2. The graph of candidate fragments
 
@@ -204,19 +207,22 @@ come from one seed in world 7026, which also has 992 of the 1,368 tested members
   count: the excess survives only the rules that remove the fewest probable fragments.
 - **The agreement** (the aged soup): of the 18 failed appearances in establishing branches, the time rule removes 16, and **15 of these are
   also linked to the dominant group by sequence or by place** (14 by sequence, 11 by place; 10 by all three). Every appearance linked by
-  sequence or place is one the time rule removes, so R5 is R1. The two that the time rule keeps are linked by nothing. **0.94: by the note's
+  sequence or place is one the time rule removes, so R5 is R1. The two that the time rule keeps are linked by nothing. (That half is by
+  construction: the appearances the time rule keeps had no lineage of the dominant group detected before them and alive, so neither
+  sequence nor place could link them. The informative half is the 15 of 16, which rests mostly on the sequence.) **0.94: by the note's
   rule, the three kinds of evidence agree that they are probable fragments, and the time rule's reading is the more defensible.** In the
   shuffled soup, 8 of 9; in the fresh one, 2 of 4 (descriptive).
 - **Place as evidence:** the median chance level of the place links is 0.160 (aged soup 0.168, from 0.069 to 0.274): a random sampled cell
-  would be as close to the dominant group's cells about one time in six. **By the note's rule, place is weak evidence:** it adds little
+  would be as close to the dominant group's cells about one time in six (the coverage of one uniformly drawn cell; with each appearance's
+  detection cells, 0.167; it is not a rate of false links). **By the note's rule, place is weak evidence:** it adds little
   on its own, and the agreement rests mostly on the sequence.
 - **The candidate families** (R6): counting the connected components of the graph, the aged soup has 11 failed families, the shuffled 5 and
   the fresh 5; 2.35 [0.72, 10.06].
 
 ### What it does not say
 
-- **Not that the neighbours act against the lead.** The fixed measure cannot say; what it rules out is a strong local effect in the lead's
-  direction. The scan counts the neighbours at the start only, and G1's copies spread far beyond them.
+- **Not that the neighbours act for or against the lead.** The fixed measure cannot say, and counting each seed once the two genotypes do
+  equally better at the same places. The scan counts the neighbours at the start only, and G1's copies spread far beyond them.
 - **Not that the failed appearances are fragments.** A candidate link is not descent (AU2-156): it is a similarity of sequence at a
   threshold above what unrelated lineages share, a closeness of place that a random cell would have one time in six, and a time window.
   What the note says is that the three agree, and that with the rules that use them the excess cannot be separated from fragmentation.
@@ -227,3 +233,31 @@ come from one seed in world 7026, which also has 992 of the 1,368 tested members
 - The short test (`--check`), once; the analysis, once.
 - After reading the output, one check that the note did not fix: where the 60 heritable G1 members of the 26 places without bad neighbours
   come from (a single seed, world 7026). Nothing else was computed.
+
+## Corrections after audit 41 (25 November 2026)
+
+Both auditors reproduced the analysis and recounted it without the note's code, and accepted the note as exploratory; neither asked for
+anything to be computed again. **The output does not change.** The text above is the corrected one.
+
+- **"It leaves no room for the lead's direction"** (AUD-218, AU2-200): the interval, [0.97, 2.90], includes values below 1, and the note's
+  rule allows no reading but "cannot say". It also said "within its own world, G1 does better, not worse … and G4 about the same", which holds
+  only for the pooled members. Now "cannot say", with the per-seed count next to it.
+- **The pooled measure** (AU2-201): the median split is within each world, but the ratio pools the tested members, whose number depends on
+  how each lineage fared; the bootstrap over worlds is not a standardisation by world. Counting each seed once at the first step, G1 13 of 92
+  against 8 of 94 and G4 26 against 16: *RR* 1.00 (both auditors; [0.52, 2.30], auditor 1, post hoc).
+- **The agreement of the three links** (N-3): the two appearances that the time rule keeps could not be linked by sequence or place, by
+  construction; said now.
+- **Lineages detected at the same census** (AU2-203): the note allowed *x* "at or before" *y*'s census, and the code breaks ties at the same
+  census by the lineage's number (`k`), a convention the note did not state. With *x* strictly earlier (auditor 2, post hoc): the aged soup's
+  15 of 16 stays; the shuffled soup's 8 of 9 becomes 7 of 9 and the fresh soup's 2 of 4, 0 of 4; R6 goes from 11, 5, 5 to 11, 6, 7 (and R3
+  from 19, 8, 7 to 19, 9, 8, R4 from 22, 10, 6 to 22, 10, 8). The reading for the aged soup does not change.
+- **The chance level of place** (AU2-204): it is the coverage of one uniformly drawn cell, computed only over the place links found; with the
+  detection cells of each appearance it goes from 0.160 to 0.167 (both auditors). It is not a p-value or a rate of false links, and 0.1 and
+  0.5 are operational thresholds; a rate of false links would need a spatial permutation null.
+- **`--check`** (AU2-205): it validates that the data load, not the retest or the graph; auditor 2 suggests deriving the 52 trackings from
+  the part-B branches with a detection and using the strict scan validator of the extinction note. To be done before any reuse of these
+  tools, with auditor 2's negative tests.
+- **The sequence threshold within the same world** (auditor 1, post hoc, with the starting snapshots): the share of the aged soup's cells at
+  8,000 that share 8 bytes or more with the dominant group's first programs is 0.00% at the median, at most 0.50% in the same world and 0.52%
+  in the others, and in none of the 15 establishments does the same world exceed twice the others. Shared history before 8,000 does not
+  make cells share 8 bytes with the dominant group; what is shared through later history this snapshot cannot see.

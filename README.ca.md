@@ -364,21 +364,24 @@ Vegeu l'[entrada 22](quadern/index.html#entrada-22).
 
 ### Una proveta que no serveix (exploratori)
 
-Els fundadors naturals dels establiments del pilot i els quatre genotips plantats, a la prova de replicació del cens, amb companys de les
+El llinatge més antic del grup dominant de cada establiment natural i els quatre genotips plantats, a la prova de replicació del cens, amb companys de les
 sopes de partida del pilot, i sense plantar res a cap món.
 - **El calibratge no passa:** la prova havia d'ordenar els genotips plantats com el pilot, i satura (tots hereditaris en el 93 % al 100 %
   de les condicions). La prova del cens diu si un programa es pot copiar, no quantes vegades. Per la regla fixada abans de calcular, la
-  resta no es llegeix, i la hipòtesi que els fundadors s'adapten a la seva sopa queda sense provar: ni a favor ni en contra.
+  resta no es llegeix, i la hipòtesi que els replicadors naturals s'adapten a la seva sopa queda sense provar: ni a favor ni en contra.
 
 Vegeu l'[entrada 23](quadern/index.html#entrada-23).
 
 ### Dues proves sense plantar (exploratori)
 
 Les propostes dels dos auditors després de l'auditoria 39, amb les notes escrites abans de calcular.
-- **No es veu cap filtre del primer byte:** amb una prova que passa el calibratge, els fundadors dels establiments naturals són vulnerables
-  al primer byte tan sovint a la sopa vella com a la barrejada (5 de 15 a totes dues; 3 de 7 a la nova). La pista explica el que li passa a
-  G1 plantat, no quins replicadors naturals s'hi estableixen.
-- **Dins de cada món, els veïns no mostren la pista,** i tres menes d'enllaç candidat (el temps, la seqüència i el lloc) coincideixen en
+- **No es veu cap filtre del primer byte:** amb una prova que passa el calibratge, el llinatge més antic del grup dominant de cada
+  establiment natural és vulnerable al primer byte tan sovint a la sopa vella com a la barrejada (5 de 15 a totes dues; 3 de 7 a la nova),
+  i l'interval admet una diferència d'un terç en tots dos sentits. La pista encaixa amb el que li passa a G1 plantat: fora del món, les
+  seves còpies en companys que comencen amb `]` o 0 no són mai hereditàries, i els registres de la nota de les extincions hi encaixen a
+  escala de sopa. Que sigui per això que G1 arrela menys a la sopa vella no s'ha mostrat (caldria una intervenció). No decideix quins
+  replicadors naturals s'hi estableixen.
+- **La prova dels veïns no pot dir res de la pista** (dins de cada món, contra G4 a la mateixa cel·la), i tres menes d'enllaç candidat (el temps, la seqüència i el lloc) coincideixen en
   quines aparicions que no s'estableixen són probablement trossos del llinatge que s'estableix: l'excés d'aparicions que no s'estableixen a
   la sopa vella no se separa de la fragmentació.
 
@@ -386,8 +389,9 @@ Vegeu l'[entrada 24](quadern/index.html#entrada-24).
 
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** la ronda d'auditoria de les entrades 23 i 24, i després què fer sense plantar res (tots dos auditors
-  desaconsellen tornar a plantar ara). On actua la maduració, encara no ho sabem; tornar a plantar demana una decisió nova.
+- **La sopa abans de la vida:** tots dos auditors han revisat les entrades 23 i 24 (l'auditoria 41) i les accepten com a exploratòries;
+  tots dos aconsellen tancar la línia dels replicadors plantats. El que ve, ho tria el responsable. On actua la maduració, encara no ho
+  sabem; per dir si el primer byte n'és la causa caldria una intervenció, i tornar a plantar demana una decisió nova.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 

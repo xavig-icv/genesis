@@ -141,8 +141,9 @@ anything fails, nothing else runs, and it is written here.
 
 ## What came out (exploratory)
 
-**In short:** the test measures what it should (G1 is vulnerable in all 60 worlds, G4 in none), and **no filter is seen:** the founders of
-the natural establishments are vulnerable as often in the aged soup as in the shuffled one (5 of 15 in both; 3 of 7 in the fresh one). By the
+**In short:** the test measures what it should (G1 is vulnerable in all 60 worlds, G4 in none), and **no filter is seen:** the oldest
+lineage of each natural establishment's dominant group (called "the founder" in the code and the output) is vulnerable as often in the aged
+soup as in the shuffled one (5 of 15 in both; 3 of 7 in the fresh one), and the interval allows a difference of a third either way. By the
 rule fixed in the note, the first-byte lead loses strength as an explanation of taking root in the aged soup. It does not say that the first
 byte does nothing to the planted G1.
 
@@ -158,9 +159,9 @@ byte does nothing to the planted G1.
 (Against the aged partners of each world, 20 of each first byte. With the partners of the other kind, G1's 1,200 copies are all heritable.)
 **Passed** (the rule: 54 worlds or more). With real partners, the four genotypes behave as in auditor 1's sketch with synthetic ones.
 
-### 1. The founders of the establishments
+### 1. The dominant groups' oldest lineages
 
-| soup | establishments | the founder works | vulnerable |
+| soup | establishments | the oldest lineage works | vulnerable |
 |---|---|---|---|
 | aged | 15 | 15 | 5 (0.33) |
 | shuffled | 15 | 15 | 5 (0.33) |
@@ -181,15 +182,17 @@ byte does nothing to the planted G1.
   the others in the aged soup (21 of 85, 0.25, against 25 of 68, 0.37) and **also in the shuffled one** (15 of 89, 0.17, against 27 of 78,
   0.35), where almost no cell starts with `]` or 0; in the fresh one, the same (0.29 and 0.29). Whatever this gap is, it is not specific to
   the aged soup's first bytes.
-- **The founders keep the partner's first byte in few of their copies** (the median share, 10%, 6% and 5%; some keep it in all of them),
+- **These oldest lineages keep the partner's first byte in few of their copies** (the median share, 10%, 6% and 5%; some keep it in all of them),
   and at least half of them make heritable copies into 19 or 20 of the 20 `]` partners (the median, 20, 19 and 20). Vulnerable to 0: 4 of
   15, 2 of 15 and 2 of 7.
 
 ### What it does not say
 
-- **Not that the first byte does nothing.** G1 keeps the partner's first byte in every copy and loses all its copies into `]` partners; the
-  extinction note's records agree with the lead at the level of the soup. What this note says is that the natural replicators that become
-  established in the aged soup are not selected against that weakness: a third of their founders have it, as in the shuffled soup.
+- **Not that the first byte does nothing.** Outside the world, G1 keeps the partner's first byte in every copy and loses all its copies into
+  `]` partners; the extinction note's records agree with the lead at the level of the soup. Whether this is why G1 takes root less in the
+  aged soup has not been shown: that would need an intervention. What this note says is that no filter is seen among the natural
+  replicators that become established in the aged soup: a third of their dominant groups' oldest lineages have the weakness, as in the
+  shuffled soup, and the interval allows a difference of a third either way.
 - **Not where maturation acts:** the rule stays (AUD-184 = AU2-151).
 - **Few establishments:** 15, 15 and 7, and a single encounter with the program first, with partners from the start.
 
@@ -197,3 +200,28 @@ byte does nothing to the planted G1.
 
 - The short test on two worlds (7001 and 7002), structure only.
 - The full run, once; `--check` and the analysis, once each. Nothing else was computed.
+
+## Corrections after audit 41 (25 November 2026)
+
+Both auditors reproduced the analysis and recounted it without the note's code (auditor 1 also redid `vulnerables.jsonl` from the
+snapshots, equal except the commit and the seconds), and accepted the note as exploratory; neither asked for anything to be computed again.
+**The output does not change.** The text above is the corrected one.
+
+- **"Not selected against that weakness"** (AUD-218): with 15 and 15 establishments the interval, [−0.38, 0.38], allows a filter of a third.
+  Now "no filter is seen", with the interval.
+- **"Founder"** (AUD-219, the AU2-147 rule): what the note measures is the oldest robust lineage of the dominant group that the census saw,
+  not who founded the establishment (the lineage is of windows, not of descent; AU2-156). Now "the dominant group's oldest lineage"; the code
+  and the output keep their word. In the 37 establishments it is the same lineage as the test tube's "founder" (auditor 1).
+- **The lead and the planted G1** (AUD-217): the text now says that whether the first byte is why G1 takes root less in the aged soup has not
+  been shown.
+- **The copy counter** (AU2-202): `profile()` counts a copy when a window of the program is in the partner's half after the encounter,
+  without checking whether it was already there. In this cohort it changes nothing: recomputing the 48,720 encounters of the 812 lines with
+  the snapshots, no partner had any window of its program before the encounter, all 44,708 copies brought a new window, and no line's
+  classification changes (the team's check, audit 41). A reuse of the test should record it.
+- **`--check`** (AU2-205): it accepts the same cell in two first-byte kinds of a partner set, and a retest score changed without changing
+  robustness. The data have neither (auditor 2: the 180 sets are disjoint and their counts add up to 131,072), but "all the data were read and
+  are valid" says more than it checks. It is to be strengthened before any reuse of these tools, with auditor 2's negative tests.
+- **Two post hoc checks by auditor 1** (exploratory): the vulnerable lineages are exactly those that keep the partner's first byte in most of
+  their copies (85 of 85, 89 of 89 and 14 of 14; of the others, 3 of 68, 10 of 78 and 0 of 17); and with partners that start with neither `]`
+  nor 0 they also make fewer heritable copies (of 20, 15.5 against 18.2 in the aged soup, 16.2 against 17.6 in the shuffled one, 17.8 against
+  20.0 in the fresh one): a weakness in all soups, as a hypothesis.

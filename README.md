@@ -364,21 +364,24 @@ See notebook [entry 22](quadern/index.html#entrada-22), in Catalan, or its [Engl
 
 ### A test tube that does not work (exploratory)
 
-The natural founders of the pilot's establishments and the four planted genotypes in the census's replication test, with partners drawn
+The oldest lineage of each natural establishment's dominant group and the four planted genotypes in the census's replication test, with partners drawn
 from the pilot's starting soups, and nothing planted in any world.
 - **The calibration fails:** the test had to order the planted genotypes as the pilot did, and it saturates (all of them heritable in 93%
   to 100% of the conditions). The census's test says whether a program can copy itself, not how often. By the rule fixed before computing,
-  nothing else is read, and the hypothesis that the founders fit their own soup stays untested: neither for nor against.
+  nothing else is read, and the hypothesis that the natural replicators fit their own soup stays untested: neither for nor against.
 
 See notebook [entry 23](quadern/index.html#entrada-23), in Catalan, or its [English text](quadern/resum.en.md#entry-23).
 
 ### Two tests without planting (exploratory)
 
 The two auditors' proposals after audit 39, with the notes written before computing.
-- **No first-byte filter is seen:** with a test whose calibration passes, the founders of the natural establishments are vulnerable to
-  the first byte as often in the aged soup as in the shuffled one (5 of 15 in both; 3 of 7 in the fresh one). The lead explains what
-  happens to the planted G1, not which natural replicators become established.
-- **Within worlds, the neighbours do not show the lead,** and three kinds of candidate link (time, sequence and place) agree on which
+- **No first-byte filter is seen:** with a test whose calibration passes, the oldest lineage of each natural establishment's dominant
+  group is vulnerable to the first byte as often in the aged soup as in the shuffled one (5 of 15 in both; 3 of 7 in the fresh one), and
+  the interval allows a difference of a third either way. The lead fits what happens to the planted G1: outside the world, its copies into
+  partners that start with `]` or 0 are never heritable, and the extinction note's records agree at the level of the soup. Whether this is
+  why G1 takes root less in the aged soup has not been shown (that would need an intervention). It does not decide which natural
+  replicators become established.
+- **The neighbours' test cannot say anything about the lead** (within worlds, against G4 at the same cells), and three kinds of candidate link (time, sequence and place) agree on which
   failed appearances are probable fragments of the lineage that becomes established: the excess of failed appearances in the aged soup
   cannot be separated from fragmentation.
 
@@ -386,8 +389,9 @@ See notebook [entry 24](quadern/index.html#entrada-24), in Catalan, or its [Engl
 
 ### What we study now
 
-- **The soup before life:** the audit round of entries 23 and 24, then what to do next without planting (both auditors advise
-  against planting now). Where maturation acts is still not known; planting again needs a new decision.
+- **The soup before life:** both auditors have reviewed entries 23 and 24 (audit 41) and accept them as exploratory; both advise
+  closing the line of planted replicators. What comes next is the owner's choice. Where maturation acts is still not known; to show whether
+  the first byte is the cause would need an intervention, and planting again needs a new decision.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 
