@@ -177,3 +177,112 @@ lane (two days) is far.
   trackings, the list as expected), no result printed. The pairs of each control: in the aged soup, 12 with other arms (1a), 16 with the
   dominant group and 55 with control groups (1b), 10 informative appearances (1c) and 16 appearances with sources (2); in the shuffled soup,
   5, 8 and 2, 1 and 8; in the fresh soup, 3, 2 and 1, 0 and 2.
+- **The analysis** (from `afa94d2`, Node 16.15.1, exit code 0, nothing on stderr, 147 s): `analisi-sortida.txt`, in git as it came out
+  (`0f3e59f`), before reading it. It reproduces the sensitivities note: R0 to R6 at 8 bytes (33, 14, 8 … 11, 5, 5) and the agreement, 15 of
+  16 (14 by sequence, 11 by place).
+- **One check after reading the output** (`posthoc-mons.mjs`, from `aff1c5e`, exit code 0; `posthoc-mons-sortida.txt`, `d0a7743`): where
+  the control pairs of 1b come from. It is declared as post hoc below.
+
+## What came out (exploratory)
+
+**In short:** by the rules fixed before computing, both within-world nulls are beaten. The failed appearances share 8 bytes with the
+dominant group more often than with the other groups of their branch (8 of 10, against 5.65 expected; p = 0.036), and they lie near it far
+more often than the same appearances placed uniformly would (11 of 16, against 3.10; P = 1.5·10⁻⁵): **the agreement stands against both,
+and "cannot be separated from fragmentation" stands.** But **the 8-byte threshold is not calibrated within the world:** 25 of the 55 pairs
+with never-united groups of the same branch share 8 bytes, and 49 of those 55 pairs come from two worlds. And the verdict on the aged soup's
+excess depends on the rule: with the time rule the interval contains 1 at every threshold, while the sequence alone, at 10 bytes or more,
+leaves an excess above 1.
+
+### 1. Sequence
+
+- **Other arms of the same world (1a):** no pair reaches 8 bytes. The longest substring a failed appearance shares with the dominant group
+  of another arm of its world is 6 bytes in the aged soup (12 pairs), 4 in the shuffled (5) and 2 in the fresh (3). **By the note's rule,
+  the threshold holds within the world for pairs that cannot be descent.** (The arms share their starting snapshot, or only its bytes.)
+- **Within the branch (1b), the aged soup:** the representative of the dominant group shares 8 bytes with 13 of the 16 failed appearances
+  that have one; **the never-united control groups, with 25 of 55: *f*<sub>8</sub> = 0.45** (the bootstrap interval, [0.00, 0.57]). The longest
+  substring with a control group is 13 bytes. At the other thresholds:
+
+  | *t* | with the dominant group | with control groups (*f*<sub>*t*</sub>) |
+  |---|---|---|
+  | 8 | 13 of 16 (0.81) | 25 of 55 (0.45) |
+  | 9 | 9 of 16 (0.56) | 19 of 55 (0.35) |
+  | 10 | 5 of 16 (0.31) | 10 of 55 (0.18) |
+  | 12 | 3 of 16 (0.19) | 4 of 55 (0.07) |
+  | 16 | 0 of 16 | 0 of 55 |
+
+  **By the note's rule (0.33 or more), 8 bytes often links never-united groups of the same branch, and it is not calibrated within the
+  world.** *Checked after reading the output* (`posthoc-mons.mjs`): the 55 control pairs come from 6 worlds, and two carry 49 of them (world
+  7046, a branch that did not become established, 28 pairs and 12 links; world 7052, an establishing one, 21 and 12); in the other four, 1
+  link of 6 pairs. The rate is mostly two worlds', hence the interval down to 0.00. The shuffled and fresh soups have 2 and 1 control pairs.
+- **The label permutation (1c, the main test):** 10 informative appearances in the aged soup (with 2 to 7 available groups each). **8 of them
+  share 8 bytes with the dominant group's representative, against 5.65 expected if the dominant label fell on any of their available groups:
+  p = 0.036. By the note's rule, the sequence link singles out the dominant group within the world.** Descriptive: with the representative,
+  at 9 bytes p = 0.125 (5 against 3.34) and at 10, 0.20 (2 against 0.90); with the group link (all the lineages), p = 0.012, 0.007 and 0.014
+  at 8, 9 and 10 bytes. The pass at 8 bytes is narrow, and with the representative it does not hold at 9 or 10. The shuffled soup has one
+  informative appearance, and the fresh none.
+
+### 2. Place
+
+| soup | appearances with sources | place links | expected under the null | P(≥ observed) | *p*<sub>*y*</sub>, median (range) |
+|---|---|---|---|---|---|
+| aged | 16 | 11 | 3.10 | 1.5·10⁻⁵ | 0.167 (0.088 to 0.274) |
+| shuffled | 8 | 4 | 0.98 | 0.009 | 0.087 (0.051 to 0.196) |
+| fresh | 2 | 2 | 0.06 | 0.0006 | 0.014 (0.014 to 0.044) |
+
+**By the note's rule, the place links are more than the same appearances placed uniformly would give: place is evidence at the level of the
+set,** not of each link (each one would have happened about one time in six). The agreement, descriptive: with the sequence links as
+observed and place from the null, 14.26 of the 16 would be linked (P(≥ 15) = 0.24): the agreement of 15 of 16 at 8 bytes rests on the
+sequence.
+
+### 3. The whole graph
+
+| rule | 8 bytes | 9 | 10 | 12 | 16 |
+|---|---|---|---|---|---|
+| R1 time (any threshold) | 4.55 [0.90, 22.91] | = | = | = | = |
+| R3 sequence | 2.90 [0.69, 11.71] | 3.21 [0.84, 12.83] | 3.82 [1.12, 14.86] | 3.74 [1.19, 12.93] | 4.41 [1.45, 14.90] |
+| R5 time, sequence or place | 4.55 [0.90, 22.91] | = | = | = | = |
+| R5∧ sequence and place | 3.52 [0.98, 13.80] | 3.52 [0.98, 13.80] | 3.97 [1.16, 15.47] | 3.88 [1.21, 13.35] | 4.41 [1.45, 14.90] |
+| R6 candidate families | 2.35 [0.75, 10.13] | 2.78 [0.92, 12.01] | 3.00 [1.04, 12.89] | 2.50 [0.85, 11.43] | 3.03 [1.02, 13.77] |
+| R6∧ | 3.06 [0.96, 11.73] | 3.06 [0.96, 11.73] | 3.67 [1.16, 14.02] | 3.74 [1.20, 12.76] | 4.41 [1.45, 14.90] |
+| R6 without the bridges | 2.14 [0.78, 7.05] | 2.14 [0.78, 7.05] | 2.41 [0.93, 7.84] | 3.21 [1.04, 11.16] | 3.48 [1.18, 11.82] |
+
+(The aged/fresh ratio of the failed appearances per 1,000 world-epochs, with the interval of the bootstrap over worlds; R0, without any rule,
+4.41 [1.45, 14.90]. The counts per soup are in the output.)
+
+- **The agreement with the time rule** holds at every threshold by the sensitivities note's rule (two thirds or more): 15, 13, 12, 12 and 11
+  of the 16; at 16 bytes, by place alone (sequence 0, place 11).
+- **The verdict changes with the rule and the threshold:** under the time rule (R1, and R5, which equals it) the interval contains 1 at every
+  threshold; with the sequence alone (R3) or with sequence and place together (R5∧, R6∧), it lies above 1 from 10 bytes on; the candidate
+  families (R6), above 1 at 10 and 16 bytes and containing 1 at 8, 9 and 12; without the bridges, above 1 from 12 bytes on.
+- **The graph:** at 8 bytes the aged soup has 953 candidate edges of 2,349 possible pairs (density 0.41), 27 components and 14 bridges; at
+  16 bytes, 344 edges (0.15), 61 components and 22 bridges.
+- **Leaving one world out** (8 bytes): R0 stays above 1 in all 60 (from 3.35 to 5.90); R6 stays containing 1 in all 60 (from 1.93 to 2.95);
+  R1 and R5 contain 1, but **leaving out any one of four worlds (7027, 7050, 7062 or 7065) puts them above 1** (from 2.41 to 6.08).
+
+### The reading
+
+- **What holds:** relative to the other groups of its own branch, the dominant group is the one the failed appearances share sequence with
+  (narrowly, at 8 bytes), and it is near them far more often than chance. The agreement with the time rule holds at every threshold. That is
+  what the sensitivities note needed: the three kinds of evidence point to the dominant group, also within the world.
+- **What weakens:** a single sequence link at 8 bytes is weak evidence within the world (about half of the never-united groups also share 8
+  bytes, mostly in two worlds), and the rules that rest on it (R3, R5∧, R6) remove more than a within-world threshold would. With the
+  sequence calibrated within the world (12 bytes, *f* = 0.07), the sequence alone leaves an excess above 1.
+- **So the excess is still not separated from fragmentation, and not shown to be fragments either:** the time rule, supported by place and
+  by the relative sequence evidence, makes it compatible with 1, and it is fragile (four single worlds tip it); the sequence at a within-world
+  threshold does not remove it. Neither "more replicators appear in the aged soup" nor "the failed appearances are fragments" is shown. A
+  record of heritable copies (entry 25, the second path) is what could tell them apart.
+
+### What it does not say
+
+- **Not descent:** a candidate link, a control group and a uniform placement are operational, not genealogical (AU2-156).
+- **Not that the excess is real, or that it is fragments:** it depends on the rule, as above.
+- **Not about the shuffled and fresh soups:** they have almost no informative pairs; their numbers are descriptive.
+- **Not where maturation acts:** the rule stays (AUD-184 = AU2-151).
+
+## Everything tried
+
+- `factibilitat.mjs`, once before the note (from a scratch folder, with an absolute path) and once from the note's commit, with the same
+  counts.
+- The short test (`--check`), once; the analysis, once.
+- After reading the output, one check that the note did not fix: where the control pairs of 1b come from (`posthoc-mons.mjs`, which copies
+  the analysis's code up to the pair counts). Nothing else was computed.
