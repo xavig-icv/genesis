@@ -409,13 +409,15 @@ Vegeu l'[entrada 25](quadern/index.html#entrada-25).
 
 Els indicis de l'entrada 24 que les aparicions de la sopa vella que no s'estableixen poden ser trossos del llinatge que s'estableix s'havien
 calibrat fora del món. Comparats ara amb el que passa dins de cada món, amb els registres que ja tenim:
-- **Tots dos indicis superen el seu nul dins del món:** les aparicions comparteixen 8 bytes amb el grup dominant més sovint que amb els
-  altres grups de la seva branca (8 de 10, contra 5,65; *p* = 0,036, per poc), i hi són a prop molt més sovint que a l'atzar (11 de 16,
-  contra 3,1).
-- **Però els 8 bytes no són un llindar de dins del món:** gairebé la meitat dels grups de la mateixa branca que no s'hi han unit mai també
-  hi comparteixen 8 bytes, sobretot en dos mons.
-- **L'excés continua sense separar-se de la fragmentació, i tampoc no s'ha mostrat que siguin trossos:** amb la regla del temps és
-  compatible amb cap excés (i quatre mons sols el fan bascular); amb la seqüència sola, a 10 bytes o més, l'excés hi queda.
+- **El lloc supera el seu nul dins del món; la seqüència, només per la regla fixada abans de calcular:** les aparicions són a prop del
+  grup dominant molt més sovint que a l'atzar (11 de 16, contra 3,1; 6 de 6 amb una aparició per branca). Hi comparteixen 8 bytes més
+  sovint que amb els altres grups de la seva branca (8 de 10, contra 5,65; *p* = 0,036), però no amb la branca com a unitat (sis de les deu
+  són d'un sol món): dins del món, la seqüència queda sense decidir.
+- **Els 8 bytes no es poden calibrar dins del món amb aquests registres:** la majoria dels grups de la mateixa branca que no s'hi han unit
+  mai són llinatges nascuts al mateix cens, que poden ser trossos d'un mateix llinatge.
+- **L'excés continua sense separar-se de la fragmentació, i tampoc no s'ha mostrat que siguin trossos:** amb la regla del temps el quocient
+  es manté (4,55), però l'interval arriba a 1, perquè a la sopa nova només en queden 4; i el recompte depèn de com es compta una ràfega
+  d'aparicions d'un mateix cens. Tots dos auditors ho van llegir a l'auditoria 43, i les correccions són a l'entrada.
 
 Vegeu l'[entrada 26](quadern/index.html#entrada-26).
 

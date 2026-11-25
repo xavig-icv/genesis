@@ -537,30 +537,55 @@ calibrated outside the world. This note (`fase2/resultats/arrelament/nul-dins-mo
 audits 41 and 42, the smallest of entry 25's five paths) compares them with what happens within each world, with the records already in git
 and no simulation or planting.
 
-**Sequence.** Between arms of the same world, which cannot descend from each other, no pair reaches 8 bytes (at most 6). Within the branch,
-with the groups never united with the appearance (operational negatives, not genealogical truth), 25 of 55 pairs in the aged soup share 8
-bytes (0.45; with the dominant group, 13 of 16): by the note's rule, **8 bytes is not calibrated within the world**; checked after reading
-the output, 49 of the 55 control pairs come from two worlds (7046 and 7052); at 12 bytes, 4 of 55 (0.07). The main test, a permutation of
-the dominant label among each appearance's available groups: 8 of 10 informative appearances share 8 bytes with the dominant group, against
-5.65 expected (p = 0.036): **the sequence link singles out the dominant group within the world**, narrowly (at 9 and 10 bytes, p = 0.13 and
-0.20; with all the lineages of each group, p = 0.012, 0.007 and 0.014).
+**Sequence.** Between arms of the same world, which cannot descend from each other and share at most the soup's bytes, no pair reaches 8
+bytes (at most 6): with the world's bytes in disorder 8 bytes is not reached by chance, which says nothing of the history within the world.
+Within the branch, with the groups never united with the appearance (operational negatives, not genealogical truth), 25 of 55 pairs in the
+aged soup share 8 bytes (0.45; with the dominant group, 13 of 16); checked after reading the output, 49 of the 55 control pairs come from two
+worlds (7046 and 7052). But 47 of the 55 are lineages born at the same census as the appearance, mostly in two bursts, which may be fragments
+of one lineage, and the tracking already splits new lineages that share a 16-byte window: it is not a false-link rate, and **8 bytes cannot
+be calibrated within the world with these records**; at 12 bytes, 4 of 55 (0.07), a more restrictive threshold, not a calibrated one. The
+main test, a permutation of the dominant label among each appearance's available groups: 8 of 10 informative appearances share 8 bytes with
+the dominant group, against 5.65 expected (p = 0.036), which passes the rule fixed before computing. But the 10 come from four branches, six
+from one (world 7052), and the test treats them as independent; all their control groups are lineages detected at the same census as the
+appearance, "earlier" only by number, and the dominant group's representative carries up to 34 programs against 1 or 2. With one dominant
+label per branch, p = 0.125, the smallest these four branches allow; with a priority order of the groups shared within each world, 0.065;
+without world 7052, 0.17 (the auditors, post hoc). **Within the world, with these records, the sequence is undecided.** At 9 and 10 bytes,
+p = 0.13 and 0.20; with all the lineages of each group, which favours the dominant group by construction, 0.012, 0.007 and 0.014
+(descriptive).
 
 **Place.** Moving each appearance to every position it fits in the world, with the dominant group's cells fixed: in the aged soup 11 of 16
-lie near the dominant group, against 3.10 expected (P = 1.5·10⁻⁵); 4 against 0.98 in the shuffled soup, 2 against 0.06 in the fresh one.
-**Place is evidence at the level of the set,** though each link alone would happen about one time in six. The agreement of 15 of 16 with the
-time rule rests on the sequence (with place at chance, 14.3 expected).
+lie near the dominant group, against 3.10 expected (P = 1.5·10⁻⁵), and with one appearance per branch 6 of 6 against 0.88 (auditor 1, post
+hoc); 4 against 0.98 in the shuffled soup, 2 against 0.06 in the fresh one. **Place is evidence at the level of the set:** an excess over a
+uniform placement, not descent. Each appearance is moved independently and uniformly, not where the soup is active, and the chance of a
+link differs from one appearance to another. The agreement of 15 of 16 with the time rule rests on the sequence (with place at chance, 14.3
+expected), which within the world is undecided.
 
-**The whole graph.** Under the time rule the aged/fresh interval contains 1 at every threshold (4.55 [0.90, 22.91]), but leaving out any one
-of four worlds (7027, 7050, 7062, 7065) puts it above 1. With the sequence alone, or with sequence and place together, it lies above 1 from
+**The whole graph.** Under the time rule the aged/fresh interval contains 1 at every threshold (4.55 [0.90, 22.91]). But the rule removes
+about half of the failed appearances in both soups (16 of 33 and 4 of 8), and the ratio does not fall (4.41 with no rule): the interval
+reaches 1 because only 4 fresh-soup appearances remain. And leaving out any one of four worlds (7027, 7050, 7062, 7065) puts it above 1. With the sequence alone, or with sequence and place together, it lies above 1 from
 10 bytes on (sequence alone at 12 bytes, 3.74 [1.19, 12.93]); the candidate families, above 1 at 10 and 16 bytes, not at 8, 9 or 12. With no
 rule, 4.41 [1.45, 14.90]. The agreement with the time rule holds at every threshold (15, 13, 12, 12 and 11 of 16; at 16 bytes, by place
 alone).
 
-**The reading.** By the rules fixed before computing, both within-world nulls are beaten, and "cannot be separated from fragmentation"
-stands: the three kinds of evidence point to the dominant group also within the world. But a single 8-byte sequence link is weak evidence
-within the world, and the rules that rest on it remove more than a within-world threshold would. **The excess is still not separated from
-fragmentation, and not shown to be fragments either:** the time rule, supported by place and by the relative sequence evidence, makes it
-compatible with 1, and it is fragile; the sequence at a within-world threshold does not remove it. Neither "more replicators appear in the
-aged soup" nor "the failed appearances are fragments" is shown; a record of heritable copies (entry 25's second path) could tell them apart.
-Exploratory: 10 informative appearances from four worlds, a link is not descent, and where maturation acts is still not known (AUD-184 =
-AU2-151).
+**The reading.** By the rule fixed before computing both nulls are beaten, but the sequence's pass rests on one branch and on the order of
+lineages born at the same census: "cannot be separated from fragmentation" stands on place, which holds with one appearance per branch, and
+on time. 8 bytes cannot be calibrated within the world with these records, and the rules that rest on the sequence cannot be checked
+within it. **The excess is still not separated from fragmentation, and not shown to be fragments either.** The time rule does not lower the
+ratio (4.41 without any rule, 4.55 with it); and the count rests partly on bursts: 7 of the 33 come from one census of world 7046 (its last,
+in a branch that did not become established) and 7 from one census of 7052 (its establishment). Counting each census once, 2.27 [0.93,
+7.09] without any rule and 2.94 [0.82, 13.79] with the time rule (auditor 1, post hoc and descriptive: not a rule to choose). The answer
+depends on how an appearance is delimited. Neither "more replicators appear in the aged soup" nor "the failed appearances are fragments" is
+shown; a record of heritable copies (entry 25's second path) could tell them apart, once what counts as a new appearance is fixed.
+Exploratory: 10 informative appearances from four worlds, six from one, a link is not descent, and where maturation acts is still not known
+(AUD-184 = AU2-151).
+
+*Corrected after audit 43 (25 November 2026).* Both auditors reproduced the note (auditor 1 with their own code, auditor 2 running it and
+checking the records independently), accept it as exploratory and ask for no computation; the conclusion, neither separated from
+fragmentation nor shown to be fragments, stands. The text above is the corrected one. It said that the sequence link "singles out the
+dominant group within the world": the main test treats 10 appearances from four branches, six from one, as independent, against controls
+that are same-census lineages with fewer programs, and with the branch as the unit it does not pass (AUD-223 = AU2-212, AU2-213). "8 bytes
+is not calibrated within the world" was too strong, and "a within-world threshold" (12 bytes) was wrong: with these records the threshold
+cannot be calibrated (AUD-224 = AU2-215). The time rule's interval reaching 1 read as if fragmentation explained the excess, and the bursts
+were not said (AUD-225). Place is an excess over an independent uniform placement, and "each link alone would happen about one time in six"
+was not right (AU2-214, AU2-217). The data check does not require every census, the groups, the steps within the branch or the final line;
+the data pass, and it is strengthened before the code is used again (AUD-226 = AU2-216). And five details from auditor 1 (N-1 to N-5).

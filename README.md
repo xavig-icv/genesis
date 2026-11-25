@@ -409,13 +409,15 @@ See notebook [entry 25](quadern/index.html#entrada-25), in Catalan, or its [Engl
 
 Entry 24's evidence that the aged soup's failed appearances may be fragments of the establishing lineage had been calibrated outside the
 world. Compared now with what happens within each world, with the records already in git:
-- **Both kinds of evidence beat their within-world null:** the failed appearances share 8 bytes with the dominant group more often than
-  with the other groups of their branch (8 of 10 against 5.65 expected, p = 0.036, narrowly), and lie near it far more often than placed
-  at random (11 of 16 against 3.1).
-- **But 8 bytes is not a within-world threshold:** about half of the never-united groups of the same branch also share 8 bytes, mostly in
-  two worlds.
-- **So the excess is still not separated from fragmentation, and not shown to be fragments either:** with the time rule it is compatible
-  with no excess (and four single worlds tip it); with the sequence alone at 10 bytes or more, an excess remains.
+- **Place beats its within-world null; the sequence, only by the rule fixed before computing:** the failed appearances lie near the
+  dominant group far more often than placed at random (11 of 16 against 3.1; 6 of 6 with one appearance per branch). They share 8 bytes
+  with it more often than with the other groups of their branch (8 of 10 against 5.65, p = 0.036), but not with the branch as the unit (six
+  of the ten are from one world): within the world, the sequence is undecided.
+- **8 bytes cannot be calibrated within the world with these records:** most never-united groups of the same branch are lineages born at
+  the same census, which may be fragments of one lineage.
+- **So the excess is still not separated from fragmentation, and not shown to be fragments either:** with the time rule the ratio stays
+  (4.55), but its interval reaches 1, with only 4 fresh-soup appearances left; and the count depends on how a burst of same-census
+  appearances is counted. Both auditors read it at audit 43, and the corrections are in the entry.
 
 See notebook [entry 26](quadern/index.html#entrada-26), in Catalan, or its [English text](quadern/resum.en.md#entry-26).
 

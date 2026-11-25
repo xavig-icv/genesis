@@ -408,10 +408,14 @@ Llegeix-los abans de proposar canvis.
       registre de les còpies; la intervenció sobre els primers bytes; plantar els llinatges naturals (un trasplantament recíproc, la proposta de
       l'auditor 1: tornar a plantar, amb una decisió nova i l'acord dels tres); i una sèrie confirmatòria, després del registre.
     - **El nul dins del món** (25-11-2026, l'entrada 26, exploratori; `fase2/resultats/arrelament/nul-dins-mon/`; la carpeta no es pot dir `nul`,
-      que Windows reserva): per les regles fixades, la seqüència i el lloc superen el nul dins del món (8 de 10 contra 5,65, *p* = 0,036, per
-      poc; 11 de 16 contra 3,10), i «no se separa de la fragmentació» es manté. Però **els 8 bytes no estan calibrats dins del món** (25 de 55
-      parelles de control, sobretot de dos mons), i el veredicte depèn de la regla: amb la del temps conté 1 (quatre mons sols el fan bascular);
-      amb la seqüència sola a 10 bytes o més, queda per sobre d'1. «Ni separat de la fragmentació ni mostrat que siguin trossos», mai «són
-      trossos» ni «l'excés és real».
+      que Windows reserva; l'auditoria 43, acceptada com a exploratòria per tots dos, amb correccions de lectura): el lloc supera el nul dins
+      del món (11 de 16 contra 3,10; 6 de 6 amb una aparició per branca), i la seqüència, **només per la regla fixada** (8 de 10 contra 5,65,
+      *p* = 0,036): les 10 aparicions són de quatre branques, sis del 7052, i els controls, llinatges del mateix cens; amb una etiqueta per
+      branca, *p* = 0,125 (AUD-223 = AU2-212). **«La seqüència queda sense decidir dins del món»,** mai «assenyala el grup dominant dins del
+      món»; «no se separa de la fragmentació» es recolza en el lloc i en el temps. **«Els 8 bytes no es poden calibrar dins del món amb aquests
+      registres»,** mai «no estan calibrats» ni «el llindar de dins del món (12 bytes)» (AUD-224 = AU2-215). La regla del temps no fa baixar el
+      quocient (4,41 i 4,55), i el recompte depèn de les ràfegues (AUD-225). «Ni separat de la fragmentació ni mostrat que siguin trossos»,
+      mai «són trossos» ni «l'excés és real». La `--check` de la nota no exigeix tots els censos, els grups ni la línia final (AUD-226 =
+      AU2-216, oberta com l'AU2-205): es reforça abans de tornar a fer servir el codi.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).
