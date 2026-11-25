@@ -166,3 +166,14 @@ lane (two days) is far.
 
 - **`factibilitat.mjs`:** the counts above, to `factibilitat-sortida.txt`.
 - **`analisi.mjs [--check]`:** the analysis above, to `analisi-sortida.txt`, with the commit and the Node version in its first line.
+
+## How it went
+
+- **The scripts,** in git before running anything (`f35b47a`). The note's folder was first called `nul`, a name Windows reserves: git could
+  not add it, and it became `nul-dins-mon` before the commit.
+- **The feasibility counts** (`factibilitat.mjs`, from `f35b47a`, Node 16.15.1, exit code 0): `factibilitat-sortida.txt`, the same counts
+  as the scratch run before the note.
+- **The short test** (25-11-2026, from `f35b47a`, Node 16.15.1): `analisi.mjs --check`, all the data valid (the 180 part-B records, the 52
+  trackings, the list as expected), no result printed. The pairs of each control: in the aged soup, 12 with other arms (1a), 16 with the
+  dominant group and 55 with control groups (1b), 10 informative appearances (1c) and 16 appearances with sources (2); in the shuffled soup,
+  5, 8 and 2, 1 and 8; in the fresh soup, 3, 2 and 1, 0 and 2.
