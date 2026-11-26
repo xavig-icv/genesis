@@ -1,0 +1,232 @@
+A measure of continuity (exploratory). The analysis: 583e0a04, v16.15.1; the list, SHA-256 c0afb2c0f182f922…; the records' commit, d4edbb28.
+The records: 18 branches, of d4edbb28, run with v16.15.1; 36 appearances at 19 tracked censuses; every line the list asks for, once and in order; the seeds, the measures (923), the invariant checks and the final fingerprints, those of the pilot records.
+The same cells as the descent note's records: D's carriers, the halves, the far cells and the matched cells of every census and window.
+Entry 28's map thresholds and scores, recomputed from the saved origins: the descent note's, all 9246 (the appearances and their matched cells, both windows).
+
+0. The controls of each census (D; the main window and map, and the sensitivities' contexts)
+   soup        branch  census  window  map   half A (distinct)  thr  map pairs  half B ordered  far none     adversarial (ordered of cells: pieces1, pieces2, pieces4, far2x16, repeated, mutated4, pieces8, pieces16, mutated8, mutated16)  valid
+   continue    7014    9000    1250    0.01  6526 (6526)        66   274        999 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/84 395/395 2/500 464/500 395/395 338/395  yes
+   continue    7014    9000    250     0.01  6526 (6526)        66   543        782 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 302/302 0/500 361/500 302/302 268/302  no (half B ordered, 782 of 1000)
+   continue    7014    9000    1250    0.005 6526 (6526)        33   487        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 411/411 2/500 466/500 410/411 379/411  yes
+   continue    7014    9000    1250    0.05  6526 (6526)        327  62         988 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/16 340/340 1/500 437/500 339/340 270/340  yes
+   shuffle-all 7018    15250   1250    0.01  —  (no earlier dominant lineage)
+   shuffle-all 7018    15250   250     0.01  —  (no earlier dominant lineage)
+   shuffle-all 7018    15250   1250    0.005 —  (no earlier dominant lineage)
+   shuffle-all 7018    15250   1250    0.05  —  (no earlier dominant lineage)
+   shuffle-all 7027    10000   1250    0.01  4919 (4917)        50   277        992 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/81 334/334 0/500 440/500 332/334 266/334  yes
+   shuffle-all 7027    10000   250     0.01  4919 (4919)        50   451        839 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 280/281 0/500 376/500 280/281 210/281  no (half B ordered, 839 of 1000)
+   shuffle-all 7027    10000   1250    0.005 4919 (4917)        25   477        996 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 360/360 0/500 450/500 358/360 285/360  yes
+   shuffle-all 7027    10000   1250    0.05  4919 (4917)        246  57         964 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/13 247/247 1/500 396/500 243/247 144/247  yes
+   shuffle-all 7033    8500    1250    0.01  —  (no earlier dominant lineage)
+   shuffle-all 7033    8500    250     0.01  —  (no earlier dominant lineage)
+   shuffle-all 7033    8500    1250    0.005 —  (no earlier dominant lineage)
+   shuffle-all 7033    8500    1250    0.05  —  (no earlier dominant lineage)
+   shuffle-all 7037    11000   1250    0.01  1784 (1523)        18   333        996 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 267/267 1/500 450/500 267/267 266/267  yes
+   shuffle-all 7037    11000   250     0.01  1784 (1600)        18   1070       945 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 243/243 0/500 402/500 243/243 242/243  yes
+   shuffle-all 7037    11000   1250    0.005 1784 (1523)        9    486        996 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 272/272 1/500 453/500 272/272 271/272  yes
+   shuffle-all 7037    11000   1250    0.05  1784 (1523)        90   115        997 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/59 252/252 1/500 417/500 252/252 251/252  yes
+   continue    7046    16000   1250    0.01  —  (no dominant group)
+   continue    7046    16000   250     0.01  —  (no dominant group)
+   continue    7046    16000   1250    0.005 —  (no dominant group)
+   continue    7046    16000   1250    0.05  —  (no dominant group)
+   continue    7048    13500   1250    0.01  7483 (6937)        75   242        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 464/464 0/500 486/500 463/464 435/464  yes
+   continue    7048    13500   250     0.01  7483 (7133)        75   556        953 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 432/432 0/500 461/500 432/432 404/432  yes
+   continue    7048    13500   1250    0.005 7483 (6937)        38   440        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 478/478 0/500 491/500 478/478 453/478  yes
+   continue    7048    13500   1250    0.05  7483 (6937)        375  66         1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/31 442/442 0/500 476/500 442/442 408/442  yes
+   shuffle-all 7048    10000   1250    0.01  1884 (1259)        19   246        1000 of 1000    1000 of 1000 0/500 0/500 1/500 0/500 0/100 247/247 5/500 442/500 247/247 247/247  yes
+   shuffle-all 7048    10000   250     0.01  1884 (1260)        19   916        969 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 236/236 0/500 389/500 236/236 235/236  yes
+   shuffle-all 7048    10000   1250    0.005 1884 (1259)        10   386        1000 of 1000    1000 of 1000 0/500 0/500 1/500 0/500 0/100 251/251 5/500 443/500 251/251 251/251  yes
+   shuffle-all 7048    10000   1250    0.05  1884 (1259)        95   59         996 of 1000     1000 of 1000 0/500 0/500 1/500 0/500 0/19 237/237 4/500 409/500 237/237 233/237  yes
+   continue    7052    10000   1250    0.01  6822 (6820)        69   385        992 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 349/349 0/500 440/500 348/349 275/349  yes
+   continue    7052    10000   250     0.01  6822 (6820)        69   671        908 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 303/303 0/500 406/500 301/303 227/303  yes
+   continue    7052    10000   1250    0.005 6822 (6820)        35   693        998 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 371/371 0/500 449/500 370/371 304/371  yes
+   continue    7052    10000   1250    0.05  6822 (6820)        342  101        991 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/19 187/187 0/500 382/500 185/187 116/187  yes
+   shuffle-all 7052    14250   1250    0.01  5031 (5031)        51   211        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/94 403/403 0/500 462/500 402/403 348/403  yes
+   shuffle-all 7052    14250   250     0.01  5031 (5031)        51   482        847 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 356/356 0/500 394/500 356/356 298/356  no (half B ordered, 847 of 1000)
+   shuffle-all 7052    14250   1250    0.005 5031 (5031)        26   378        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 412/412 1/500 463/500 410/412 359/412  yes
+   shuffle-all 7052    14250   1250    0.05  5031 (5031)        252  71         997 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/37 383/383 1/500 445/500 383/383 316/383  yes
+   continue    7054    14000   1250    0.01  1844 (918)         19   206        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 390/390 10/500 499/500 390/390 390/390  yes
+   continue    7054    14000   250     0.01  1844 (927)         19   879        949 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 370/370 0/500 473/500 370/370 370/370  yes
+   continue    7054    14000   1250    0.005 1844 (918)         10   368        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 395/395 10/500 499/500 395/395 395/395  yes
+   continue    7054    14000   1250    0.05  1844 (918)         93   64         1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/38 355/355 9/500 498/500 355/355 355/355  yes
+   reinit      7054    13500   1250    0.01  —  (no earlier dominant lineage)
+   reinit      7054    13500   250     0.01  —  (no earlier dominant lineage)
+   reinit      7054    13500   1250    0.005 —  (no earlier dominant lineage)
+   reinit      7054    13500   1250    0.05  —  (no earlier dominant lineage)
+   reinit      7058    14250   1250    0.01  —  (no earlier dominant lineage)
+   reinit      7058    14250   250     0.01  —  (no earlier dominant lineage)
+   reinit      7058    14250   1250    0.005 —  (no earlier dominant lineage)
+   reinit      7058    14250   1250    0.05  —  (no earlier dominant lineage)
+   reinit      7058    14750   1250    0.01  —  (no earlier dominant lineage)
+   reinit      7058    14750   250     0.01  —  (no earlier dominant lineage)
+   reinit      7058    14750   1250    0.005 —  (no earlier dominant lineage)
+   reinit      7058    14750   1250    0.05  —  (no earlier dominant lineage)
+   continue    7059    13250   1250    0.01  4744 (4742)        48   278        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 459/459 0/500 482/500 458/459 428/459  yes
+   continue    7059    13250   250     0.01  4744 (4744)        48   727        878 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 403/403 0/500 428/500 402/403 367/403  no (half B ordered, 878 of 1000)
+   continue    7059    13250   1250    0.005 4744 (4742)        24   447        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 462/462 0/500 483/500 462/462 430/462  yes
+   continue    7059    13250   1250    0.05  4744 (4742)        238  84         1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/34 450/450 0/500 476/500 447/450 400/450  yes
+   shuffle-all 7066    15250   1250    0.01  1370 (1334)        14   305        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 415/415 11/500 468/500 414/415 400/415  yes
+   shuffle-all 7066    15250   250     0.01  1370 (1348)        14   709        975 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 365/365 0/500 420/500 364/365 355/365  yes
+   shuffle-all 7066    15250   1250    0.005 1370 (1334)        7    467        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 426/426 12/500 471/500 426/426 419/426  yes
+   shuffle-all 7066    15250   1250    0.05  1370 (1334)        69   95         999 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/45 360/360 6/500 449/500 360/360 350/360  yes
+   shuffle-all 7067    14750   1250    0.01  3874 (3874)        39   268        998 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/82 418/418 1/500 466/500 418/418 381/418  yes
+   shuffle-all 7067    14750   250     0.01  3874 (3874)        39   521        910 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 380/380 1/500 417/500 380/380 330/380  yes
+   shuffle-all 7067    14750   1250    0.005 3874 (3874)        20   482        998 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 422/422 1/500 469/500 421/422 378/422  yes
+   shuffle-all 7067    14750   1250    0.05  3874 (3874)        194  80         995 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/21 385/385 1/500 437/500 385/385 322/385  yes
+   reinit      7068    13750   1250    0.01  —  (no earlier dominant lineage)
+   reinit      7068    13750   250     0.01  —  (no earlier dominant lineage)
+   reinit      7068    13750   1250    0.005 —  (no earlier dominant lineage)
+   reinit      7068    13750   1250    0.05  —  (no earlier dominant lineage)
+   continue    7074    13250   1250    0.01  4901 (3814)        50   177        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 419/419 1/500 485/500 419/419 418/419  yes
+   continue    7074    13250   250     0.01  4901 (4099)        50   1059       977 of 1000     1000 of 1000 0/500 0/500 0/500 0/500 0/100 261/261 0/500 437/500 260/261 259/261  yes
+   continue    7074    13250   1250    0.005 4901 (3814)        25   267        1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/100 423/423 1/500 486/500 423/423 421/423  yes
+   continue    7074    13250   1250    0.05  4901 (3814)        246  58         1000 of 1000    1000 of 1000 0/500 0/500 0/500 0/500 0/16 419/419 0/500 471/500 419/419 414/419  yes
+
+1. Each appearance (the main measure), cell by cell: the ordered run (bytes) and where; auditor 1's measure (map pairs, no donor); the run in one donor with no map; distinct map pairs; entry 28's score; own mutations; flagged + or - in the run; the run's pairs adjacent at the window's start. The matched cells (descriptive): ordered / pieces / none, and the percentile of each cell's run among theirs.
+   continue    7014    9000    9000:2      ordered
+      cell 16761: run 43 (7–49), auditor 1's 54, one donor 43, distinct 26, score 46, own 4, flagged 6, at the start 0 of 34; class ordered; percentile among the matched 0.95
+      matched (distance 1): 200 cells, ordered 89, pieces 67, none 44  | sensitivities: w250 unclassifiable, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   continue    7014    9000    9000:7      pieces
+      cell 12707: run 11 (29–39), auditor 1's 39, one donor 11, distinct 31, score 41, own 6, flagged 0, at the start 0 of 8; class pieces; percentile among the matched 0.49
+      matched (distance 1): 200 cells, ordered 89, pieces 67, none 44  | sensitivities: w250 unclassifiable, map05 pieces, map5 ordered, any pieces, mapRun ordered, donorRun pieces
+   shuffle-all 7018    15250   15250:5     unclassifiable (no D)
+   shuffle-all 7027    10000   10000:3     ordered
+      cell 58121: run 34 (5–38), auditor 1's 41, one donor 34, distinct 22, score 43, own 4, flagged 5, at the start 0 of 25; class ordered; percentile among the matched 0.87
+      matched (distance 1): 200 cells, ordered 83, pieces 83, none 34  | sensitivities: w250 unclassifiable, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   shuffle-all 7027    10000   10000:8     ordered
+      cell 60157: run 20 (23–42), auditor 1's 20, one donor 20, distinct 19, score 30, own 6, flagged 2, at the start 0 of 14; class ordered; percentile among the matched 0.67
+      matched (distance 1): 200 cells, ordered 83, pieces 83, none 34  | sensitivities: w250 unclassifiable, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   shuffle-all 7033    8500    8500:0      unclassifiable (no D)
+   shuffle-all 7037    11000   11000:1     pieces
+      cell 83530: run 11 (41–51), auditor 1's 11, one donor 29, distinct 11, score 21, own 8, flagged 2, at the start 0 of 10; class pieces; percentile among the matched 0.07
+      matched (distance 1): 200 cells, ordered 177, pieces 17, none 6  | sensitivities: w250 pieces, map05 pieces, map5 pieces, any pieces, mapRun pieces, donorRun ordered
+   continue    7046    16000   16000:1     no dominant group (no D)
+   continue    7046    16000   16000:2     no dominant group (no D)
+   continue    7046    16000   16000:3     no dominant group (no D)
+   continue    7046    16000   16000:4     no dominant group (no D)
+   continue    7046    16000   16000:5     no dominant group (no D)
+   continue    7046    16000   16000:6     no dominant group (no D)
+   continue    7046    16000   16000:7     no dominant group (no D)
+   continue    7048    13500   13500:2     ordered
+      cell 2744: run 42 (2–43), auditor 1's 42, one donor 47, distinct 27, score 41, own 3, flagged 8, at the start 0 of 35; class ordered; percentile among the matched 0.83
+      matched (distance 1): 200 cells, ordered 65, pieces 81, none 54  | sensitivities: w250 pieces, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   continue    7048    13500   13500:4     ordered
+      cell 27938: run 50 (6–55), auditor 1's 51, one donor 50, distinct 30, score 45, own 5, flagged 0, at the start 0 of 43; class ordered; percentile among the matched 0.88
+      matched (distance 1): 200 cells, ordered 65, pieces 81, none 54  | sensitivities: w250 ordered, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   shuffle-all 7048    10000   10000:1     pieces
+      cell 44210: run 13 (12–24), auditor 1's 57, one donor 13, distinct 21, score 61, own 0, flagged 2, at the start 3 of 12; class pieces; percentile among the matched 0.43
+      matched (distance 1): 200 cells, ordered 82, pieces 95, none 23  | sensitivities: w250 pieces, map05 pieces, map5 pieces, any pieces, mapRun ordered, donorRun pieces
+   continue    7052    10000   10000:10    ordered
+      cell 62347: run 34 (13–46), auditor 1's 41, one donor 34, distinct 27, score 34, own 7, flagged 4, at the start 0 of 24; class ordered; percentile among the matched 0.89
+      matched (distance 1): 200 cells, ordered 74, pieces 97, none 29  | sensitivities: w250 none, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   continue    7052    10000   10000:11    pieces
+      cell 59807: run 14 (34–47), auditor 1's 14, one donor 14, distinct 16, score 20, own 7, flagged 1, at the start 0 of 11; class pieces; percentile among the matched 0.61
+      matched (distance 1): 200 cells, ordered 74, pieces 97, none 29  | sensitivities: w250 none, map05 pieces, map5 pieces, any pieces, mapRun pieces, donorRun pieces
+   continue    7052    10000   10000:12    ordered
+      cell 65480: run 44 (9–52), auditor 1's 50, one donor 44, distinct 27, score 38, own 8, flagged 1, at the start 0 of 31; class ordered; percentile among the matched 0.96
+      matched (distance 1): 200 cells, ordered 74, pieces 97, none 29  | sensitivities: w250 ordered, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   continue    7052    10000   10000:14    ordered
+      cell 51653: run 25 (18–42), auditor 1's 33, one donor 25, distinct 22, score 32, own 7, flagged 1, at the start 0 of 18; class ordered; percentile among the matched 0.78
+      matched (distance 1): 200 cells, ordered 74, pieces 97, none 29  | sensitivities: w250 ordered, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   continue    7052    10000   10000:15    ordered
+      cell 51551: run 40 (6–45), auditor 1's 42, one donor 40, distinct 29, score 39, own 6, flagged 3, at the start 0 of 32; class ordered; percentile among the matched 0.92
+      matched (distance 1): 200 cells, ordered 74, pieces 97, none 29  | sensitivities: w250 ordered, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   continue    7052    10000   10000:17    pieces
+      cell 84451: run 12 (10–21), auditor 1's 14, one donor 12, distinct 21, score 31, own 6, flagged 1, at the start 0 of 8; class pieces; percentile among the matched 0.65
+      matched (distance 2): 200 cells, ordered 54, pieces 105, none 41  | sensitivities: w250 pieces, map05 pieces, map5 pieces, any pieces, mapRun pieces, donorRun pieces
+   continue    7052    10000   10000:21    ordered
+      cell 26013: run 27 (24–50), auditor 1's 27, one donor 41, distinct 24, score 32, own 4, flagged 1, at the start 0 of 22; class ordered; percentile among the matched 0.80
+      matched (distance 1): 200 cells, ordered 74, pieces 97, none 29  | sensitivities: w250 ordered, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   shuffle-all 7052    14250   14250:3     ordered
+      cell 76637: run 39 (15–53), auditor 1's 39, one donor 41, distinct 25, score 30, own 13, flagged 0, at the start 0 of 29; class ordered; percentile among the matched 0.88
+      matched (distance 1): 200 cells, ordered 76, pieces 69, none 55  | sensitivities: w250 unclassifiable, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   continue    7054    14000   14000:2     ordered
+      cell 118009: run 21 (41–61), auditor 1's 31, one donor 21, distinct 25, score 54, own 2, flagged 3, at the start 0 of 18; class ordered; percentile among the matched 0.94
+      cell 105714: run 22 (2–23), auditor 1's 31, one donor 22, distinct 25, score 52, own 3, flagged 6, at the start 0 of 19; class ordered; percentile among the matched 0.95
+      cell 114931: run 21 (41–61), auditor 1's 31, one donor 21, distinct 25, score 55, own 2, flagged 3, at the start 0 of 18; class ordered; percentile among the matched 0.94
+      matched (distance 1): 200 cells, ordered 90, pieces 97, none 13  | sensitivities: w250 none, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+   reinit      7054    13500   13500:1     unclassifiable (no D)
+   reinit      7058    14250   14250:0     unclassifiable (no D)
+   reinit      7058    14750   14750:1     unclassifiable (no D)
+   continue    7059    13250   13250:3     pieces
+      cell 9574: run 11 (34–44), auditor 1's 11, one donor 11, distinct 13, score 21, own 10, flagged 0, at the start 0 of 4; class pieces; percentile among the matched 0.99
+      matched (distance 4): 200 cells, ordered 1, pieces 6, none 193  | sensitivities: w250 unclassifiable, map05 pieces, map5 pieces, any pieces, mapRun pieces, donorRun pieces
+   continue    7059    13250   13250:4     pieces
+      cell 38883: run 5 (38–42), auditor 1's 10, one donor 5, distinct 19, score 25, own 5, flagged 2, at the start 0 of 4; class pieces; percentile among the matched 0.38
+      cell 40402: run 6 (9–14), auditor 1's 6, one donor 6, distinct 17, score 26, own 1, flagged 0, at the start 0 of 3; class pieces; percentile among the matched 0.44
+      matched (distance 1): 200 cells, ordered 57, pieces 97, none 46  | sensitivities: w250 unclassifiable, map05 pieces, map5 pieces, any pieces, mapRun pieces, donorRun pieces
+   continue    7059    13250   13250:5     pieces
+      cell 34735: run 9 (19–27), auditor 1's 9, one donor 9, distinct 23, score 28, own 5, flagged 1, at the start 0 of 3; class pieces; percentile among the matched 0.56
+      matched (distance 1): 200 cells, ordered 57, pieces 97, none 46  | sensitivities: w250 unclassifiable, map05 pieces, map5 pieces, any pieces, mapRun pieces, donorRun pieces
+   shuffle-all 7066    15250   15250:1     pieces
+      cell 19372: run 12 (51–62), auditor 1's 12, one donor 26, distinct 13, score 28, own 4, flagged 3, at the start 0 of 9; class pieces; percentile among the matched 0.24
+      cell 19374: run 13 (1–13), auditor 1's 14, one donor 27, distinct 13, score 30, own 3, flagged 4, at the start 0 of 10; class pieces; percentile among the matched 0.25
+      cell 16825: run 12 (51–62), auditor 1's 12, one donor 26, distinct 14, score 28, own 4, flagged 3, at the start 0 of 9; class pieces; percentile among the matched 0.24
+      cell 23978: run 13 (51–63), auditor 1's 13, one donor 27, distinct 13, score 29, own 4, flagged 4, at the start 0 of 10; class pieces; percentile among the matched 0.25
+      matched (distance 1): 200 cells, ordered 148, pieces 28, none 24  | sensitivities: w250 pieces, map05 ordered, map5 pieces, any pieces, mapRun pieces, donorRun ordered
+   shuffle-all 7067    14750   14750:5     pieces
+      cell 43356: run 7 (26–32), auditor 1's 8, one donor 7, distinct 14, score 23, own 2, flagged 0, at the start 0 of 6; class pieces; percentile among the matched 0.40
+      matched (distance 1): 200 cells, ordered 91, pieces 68, none 41  | sensitivities: w250 none, map05 pieces, map5 pieces, any pieces, mapRun pieces, donorRun pieces
+   reinit      7068    13750   13750:1     unclassifiable (no D)
+   continue    7074    13250   13250:1     ordered
+      cell 117273: run 63 (1–63), auditor 1's 64, one donor 63, distinct 26, score 47, own 8, flagged 7, at the start 0 of 46; class ordered; percentile among the matched 0.93
+      cell 116238: run 63 (1–63), auditor 1's 64, one donor 63, distinct 26, score 47, own 8, flagged 7, at the start 0 of 46; class ordered; percentile among the matched 0.93
+      matched (distance 1): 200 cells, ordered 123, pieces 26, none 51  | sensitivities: w250 ordered, map05 ordered, map5 ordered, any ordered, mapRun ordered, donorRun ordered
+
+2. The classes of the appearances the time rule removes, by soup (the main measure; and the sensitivities)
+   continue     16: ordered 10, pieces 6, none 0, unclassifiable 0, no dominant group 0
+      w250      ordered 6, pieces 2, none 3, unclassifiable 5, no dominant group 0
+      map05     ordered 10, pieces 6, none 0, unclassifiable 0, no dominant group 0
+      map5      ordered 11, pieces 5, none 0, unclassifiable 0, no dominant group 0
+      any       ordered 10, pieces 6, none 0, unclassifiable 0, no dominant group 0
+      mapRun    ordered 11, pieces 5, none 0, unclassifiable 0, no dominant group 0
+      donorRun  ordered 10, pieces 6, none 0, unclassifiable 0, no dominant group 0
+   shuffle-all  9: ordered 3, pieces 4, none 0, unclassifiable 2, no dominant group 0
+      w250      ordered 0, pieces 3, none 1, unclassifiable 5, no dominant group 0
+      map05     ordered 4, pieces 3, none 0, unclassifiable 2, no dominant group 0
+      map5      ordered 3, pieces 4, none 0, unclassifiable 2, no dominant group 0
+      any       ordered 3, pieces 4, none 0, unclassifiable 2, no dominant group 0
+      mapRun    ordered 4, pieces 3, none 0, unclassifiable 2, no dominant group 0
+      donorRun  ordered 5, pieces 2, none 0, unclassifiable 2, no dominant group 0
+   reinit       4: ordered 0, pieces 0, none 0, unclassifiable 4, no dominant group 0
+      w250      ordered 0, pieces 0, none 0, unclassifiable 4, no dominant group 0
+      map05     ordered 0, pieces 0, none 0, unclassifiable 4, no dominant group 0
+      map5      ordered 0, pieces 0, none 0, unclassifiable 4, no dominant group 0
+      any       ordered 0, pieces 0, none 0, unclassifiable 4, no dominant group 0
+      mapRun    ordered 0, pieces 0, none 0, unclassifiable 4, no dominant group 0
+      donorRun  ordered 0, pieces 0, none 0, unclassifiable 4, no dominant group 0
+
+3. The appearances of one census (two or more): the longest common run between cells of two (bytes), and outside the dominant group's order (its pairs not map pairs); components by the latter at 16; the local null (pairs of ring cells at 16 outside the order). Descriptive: never counted as births or as one origin in the recount.
+   continue    7014    9000    2 appearances: common run, largest 6; outside the order, largest 1; 2 components at 16; the null, 0 of 35 ring pairs (0.000)
+   shuffle-all 7027    10000   2 appearances: common run, largest 6; outside the order, largest 1; 2 components at 16; the null, 0 of 35 ring pairs (0.000)
+   continue    7046    16000   7 appearances: common run, largest 12; no D: the common run with no map; 7 components at 16; the null, 102 of 1249 ring pairs (0.082)
+   continue    7048    13500   2 appearances: common run, largest 10; outside the order, largest 1; 2 components at 16; the null, 0 of 5 ring pairs (0.000)
+   continue    7052    10000   7 appearances: common run, largest 12; outside the order, largest 2; 7 components at 16; the null, 0 of 618 ring pairs (0.000)
+   continue    7059    13250   3 appearances: common run, largest 5; outside the order, largest 3; 3 components at 16; the null, 0 of 24 ring pairs (0.000)
+
+4. The recount (the failed appearances per 1,000 world-epochs; the aged/fresh ratio, with the bootstrap over worlds). Counts of observed appearances, never a ratio of births (AU2-227).
+   R0, no rule (as the within-world null note)                                    33, 14, 8; aged/fresh 4.41 [1.45, 14.90] (above 1)
+   R1, the time rule (as the within-world null note)                              17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   Rf, the pieces as fragments: only the time rule's "none" kept (main)           17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   Rb, the pieces as births: the time rule's "pieces" and "none" kept (main)      23, 9, 4; aged/fresh 6.15 [1.65, 29.51] (above 1)
+   Rb+, Rb with the unclassifiable ones kept (sensitivity)                        23, 11, 8; aged/fresh 3.08 [0.88, 11.04] (contains 1)
+   sensitivity w250: Rf                                                           20, 6, 4; aged/fresh 5.35 [1.31, 26.06] (above 1)
+   sensitivity w250: Rb                                                           22, 9, 4; aged/fresh 5.88 [1.54, 28.31] (above 1)
+   sensitivity map05: Rf                                                          17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   sensitivity map05: Rb                                                          23, 8, 4; aged/fresh 6.15 [1.65, 29.51] (above 1)
+   sensitivity map5: Rf                                                           17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   sensitivity map5: Rb                                                           22, 9, 4; aged/fresh 5.88 [1.48, 28.45] (above 1)
+   sensitivity any: Rf                                                            17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   sensitivity any: Rb                                                            23, 9, 4; aged/fresh 6.15 [1.65, 29.51] (above 1)
+   sensitivity mapRun: Rf                                                         17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   sensitivity mapRun: Rb                                                         22, 8, 4; aged/fresh 5.88 [1.48, 28.45] (above 1)
+   sensitivity donorRun: Rf                                                       17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   sensitivity donorRun: Rb                                                       23, 7, 4; aged/fresh 6.15 [1.65, 29.51] (above 1)
+
+5. The reading, by the rules fixed in the note
+   The aged soup: 16 appearances the time rule removes; classifiable 16: ordered 10, pieces 6, none 0.
+   No class reaches two thirds: mixed, by this measure.
+   The shuffled soup: 9 appearances the time rule removes; classifiable 7: ordered 3, pieces 4, none 0.
+   No class reaches two thirds: mixed, by this measure.
+   The excess: Rb lies above 1 and Rf does not: it depends on what the pieces are, which this measure does not decide.
+   For the aged soup this is not independent of auditor 1's post hoc numbers at audit 45 (the note, "What has already been seen"); the shuffled soup's are new.
