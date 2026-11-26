@@ -37,6 +37,7 @@
     <a href="#entrada-24">Entrada 24</a>
     <a href="#entrada-25">Entrada 25</a>
     <a href="#entrada-26">Entrada 26</a>
+    <a href="#entrada-27">Entrada 27</a>
   </nav>
 
   <article id="entrada-1">
@@ -2601,6 +2602,64 @@
         <li><strong>Detalls</strong> (l'auditor 1, N-1 a N-5): entre branques del mateix món, un control de la composició; tots els llinatges de cada grup afavoreixen el grup dominant per construcció; «dins de la branca, en conjunt», no «dins de cada branca»; «parelles», no «grups»; i d'on surten els quatre mons.</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-27">
+    <header>
+      <p class="date">Entrada 27 · 26 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, desena part: de quin material són les aparicions</h1>
+      <p class="lede">A l'<a href="#entrada-26">entrada 26</a>, l'excés d'aparicions que no s'estableixen a la sopa vella no se separava de la fragmentació, i tampoc no s'havia mostrat que fossin trossos. Ara hem tornat a fer córrer 18 branques del pilot amb una còpia del pas del món que apunta d'on ve cada byte i per quines cel·les ha passat, comprovada contra el simulador i contra cada registre del pilot, sense plantar res. Per la regla fixada abans de calcular, les 16 aparicions de la sopa vella que treu la regla del temps estan fetes del material del grup dominant, com suposava la regla: gairebé tots els seus bytes han passat, en les 1.250 èpoques d'abans, per cel·les que en portaven les finestres. Però el seu veïnat també ho està: el registre diu per on han passat els bytes, no que siguin còpies del programa del grup dominant. Sense aquestes aparicions, l'excés de la sopa vella no es mostra. I cadascuna de les dues ràfegues de set té sis orígens. És exploratori.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>És el segon camí de l'<a href="#entrada-25">entrada 25</a>, el registre de les còpies hereditàries, en la versió petita: les dues propostes de l'auditoria 43 juntes, els requisits de l'auditor 2 i, com a primera prova, la versió de l'auditor 1, només als censos en disputa. El responsable hi va dir que sí el 25-11-2026. La nota (<code>fase2/resultats/arrelament/registre-copies/</code>) es va escriure abans de calcular, amb les aparicions, les classes, els controls, el recompte i la manera de llegir-ho. Les dades es comproven amb la llista de l'auditor 2 de l'auditoria 43 (AU2-216). Les aparicions són 36: les 16, 9 i 4 que treu la regla del temps a la sopa vella, la barrejada i la nova, i la ràfega del 7046.</p>
+
+    <h2>L'instrument</h2>
+    <ul>
+      <li><strong>El món, una altra vegada:</strong> des de la captura de partida de cada branca (l'època 8.000) i la seva llavor, les èpoques exactament com les fa <code>sim.mjs</code>, amb una còpia de l'intèrpret que apunta cada escriptura. El simulador no es toca. Cada 100 èpoques, l'entropia, les operacions i les tirades han de ser les del registre del pilot, i al final, l'empremta del món: les 18 branques ho compleixen (923 mesures). Abans, 30 comprovacions amb resposta coneguda, totes bé.</li>
+      <li><strong>Les etiquetes de cada byte:</strong> de quin byte de l'inici de la finestra ve per còpies, si l'ha tocat una mutació o un <code>+</code> o un <code>-</code>, i per quins conjunts de programes seguits ha passat. Una cel·la que porta una finestra d'un conjunt (16 bytes seguits amb 6 valors diferents o més, la regla del seguiment) en dona la marca a tots els seus bytes quan interactua. El conjunt principal, <em>D</em>: els llinatges del grup dominant detectats en un cens d'abans, perquè un tros del grup dominant el necessita abans. Les finestres són de 1.250 èpoques (la de la regla del temps) i de 250 (la de l'auditor 1).</li>
+      <li><strong>Els controls</strong> passen a totes dues finestres: els 41 conjunts amb 10 portadors o més tenen tots els portadors amb una finestra sencera marcada, i les cel·les a 64 o més del grup dominant no en porten cap marca. El primer comprova la comptabilitat (una finestra que dura en conserva la marca, i només fallaria per finestres fetes de nou); el segon, que la marca es queda on ha estat el grup dominant. Cap dels dos no diu que una marca sigui descendència.</li>
+    </ul>
+
+    <h2>Les aparicions que treu la regla del temps, a la sopa vella</h2>
+    <ul>
+      <li><strong>Totes 16 són derivades de <em>D</em>:</strong> del 0,70 al 0,98 dels seus bytes en porten la marca, 15 per sobre del 0,84; també amb tots els llinatges del grup dominant fins a la confirmació. Per la regla fixada, estan fetes sobretot del material del grup dominant: «trossos, com suposava la regla del temps».</li>
+      <li><strong>Com el seu veïnat:</strong> 15 de les 16 són a una o dues cel·les d'un portador del grup dominant, on les cel·les a la mateixa distància en tenen de mitjana del 0,59 al 0,81, i el seu percentil entre aquestes cel·les va del 0,35 al 0,86. Només una se n'aparta: la del 7059 a l'època 13.250, a quatre cel·les, amb 0,70 contra 0,03. Les altres estan fetes del material del grup dominant gairebé com les cel·les que tenen al voltant.</li>
+      <li><strong>Arranjaments nous dins de la finestra:</strong> gairebé cap dels seus bytes no s'ha quedat al seu lloc sense canviar des de l'inici de la finestra. Del 10 al 40 % vénen d'un byte que hi havia sobreescrit una mutació, i del 6 al 28 % els ha canviat un <code>+</code> o un <code>-</code>.</li>
+      <li><strong>La llargada de la finestra:</strong> amb 250 èpoques, 11 són derivades de <em>D</em>, una és mixta i quatre són més antigues que la finestra (les seves finestres ja eren en d'1 a 38 cel·les 250 èpoques abans): es van formar entre 1.250 i 250 èpoques abans del cens.</li>
+    </ul>
+
+    <h2>La barrejada i la nova (descriptiu)</h2>
+    <p>A la barrejada, de 9, n'hi ha 6 de derivades de <em>D</em>, una de mixta i dues sense cap llinatge dominant d'abans. A la nova, totes quatre són de censos on el grup dominant encara no s'havia detectat, i la regla principal no les pot classificar; amb tots els llinatges del grup dominant, dues en són derivades, una no i una és més antiga que la finestra. Les tres aparicions de tota la llista sense cap marca del grup dominant són sobretot bytes canviats per un <code>+</code> o un <code>-</code> (del 67 al 97 %).</p>
+
+    <h2>Les ràfegues</h2>
+    <p>Les set aparicions del 7046 a l'època 16.000 (una branca que no s'estableix) tenen sis orígens, i les set del 7052 a la 10.000 (el seu establiment), totes derivades de <em>D</em>, també sis. Per la regla dels 16 bytes, una ràfega són unes quantes aparicions alhora, cadascuna feta del material que té al voltant, no una de sola trencada en set.</p>
+
+    <h2>El recompte</h2>
+    <ul>
+      <li><strong>Sense les derivades de <em>D</em></strong> (17, 8 i 8 aparicions), el quocient entre la sopa vella i la nova és de 2,27 [0,48; 8,64]: l'interval conté 1. Comptant els orígens, 2,14 [0,48; 7,99]; amb la finestra curta, 2,94 [0,89; 10,16]; amb tots els llinatges del grup dominant, 3,03 [0,62; 14,72]: tots contenen 1. Sense cap regla, 4,41 [1,45; 14,90], i amb la del temps, 4,55 [0,90; 22,91], com a l'entrada 26.</li>
+      <li>Aquest recompte treu les mateixes 16 aparicions de la sopa vella que la regla del temps, però es queda les quatre de la nova (no tenen cap llinatge dominant d'abans) i tres de les nou de la barrejada: per això queda per sota del de la regla del temps. El valor central continua per sobre d'1, amb 17 aparicions contra 8.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>La pregunta:</strong> les aparicions que treu la regla del temps a la sopa vella estan fetes de material que ha passat pels portadors del grup dominant, com suposava la regla, i el seu veïnat també. El registre no distingeix una còpia mutada del programa del grup dominant d'un arranjament nou de bytes que han passat per les seves cel·les. «Fetes del material del grup dominant, com el seu veïnat»; mai «són còpies del grup dominant», i «trossos» només com la lectura de la regla, amb la seva condició.</li>
+      <li><strong>L'excés:</strong> sense les derivades de <em>D</em>, no es mostra. A l'entrada 26 no se separava de la fragmentació ni s'havia mostrat que fossin trossos; ara la regla del temps té un suport directe a la sopa vella, pel material. «L'excés que queda sense les derivades de <em>D</em> no es mostra»; mai «no hi ha excés», ni «l'excés eren trossos». Les xifres són petites (17 contra 8), l'interval és ample, i les altres aparicions que no s'estableixen conserven el seu recompte.</li>
+      <li><strong>Les ràfegues:</strong> sis orígens cadascuna.</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>Material, no descendència:</strong> una marca diu que un byte ha passat per un portador, i tots els bytes d'un portador la prenen, també els que no són del programa.</li>
+      <li><strong>La versió petita:</strong> només les aparicions que treu la regla del temps i la ràfega del 7046; les 17 de la sopa vella que la regla es queda no s'han seguit.</li>
+      <li><strong>Exploratori,</strong> i on actua la maduració, encara no ho sabem (AUD-184 = AU2-151).</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>Una ronda d'auditoria</strong> d'aquesta nota, amb tots dos auditors (la 44).</li>
+      <li><strong>El pas següent</strong> el tria el responsable: per exemple, el registre sencer, amb totes les aparicions que no s'estableixen i una definició d'aparició nova fixada abans, que podria dir de quin material són les 17 que la regla del temps es queda; i després, si cal, una sèrie confirmatòria.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

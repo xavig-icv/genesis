@@ -589,3 +589,50 @@ cannot be calibrated (AUD-224 = AU2-215). The time rule's interval reaching 1 re
 were not said (AUD-225). Place is an excess over an independent uniform placement, and "each link alone would happen about one time in six"
 was not right (AU2-214, AU2-217). The data check does not require every census, the groups, the steps within the branch or the final line;
 the data pass, and it is strengthened before the code is used again (AUD-226 = AU2-216). And five details from auditor 1 (N-1 to N-5).
+
+<a id="entry-27"></a>
+## Entry 27 · 26 November 2026 · The soup before life, part ten: what the appearances are made of (exploratory)
+
+In entry 26, the aged soup's excess of failed appearances was neither separated from fragmentation nor shown to be fragments. This note
+(`fase2/resultats/arrelament/registre-copies/`, written before computing) is entry 25's second path, a record of heritable copies, in its
+small version: audit 43's two proposals together, auditor 2's requirements and, as a first test, auditor 1's version on the disputed
+censuses only. It plants nothing and changes no simulator: 18 pilot branches are run again with a separate copy of the world's epoch that
+tags where every byte comes from and which cells it has passed through. Every 100 epochs the measures, and at the end the world's
+fingerprint, must be those of the pilot record: all 18 branches reproduce them (923 measures), after 30 checks with a known answer. The
+appearances are 36: the 16, 9 and 4 that the time rule removes in the aged, shuffled and fresh soups, and the burst of world 7046.
+
+**The instrument.** A cell carrying a window of a tracked set of programs (16 bytes in a row with 6 different values or more) gives the set's
+bit to all its bytes when it interacts; a copy passes all the tags on, a mutation clears them. The main set, *D*, is the dominant group's
+lineages detected at an earlier census (a fragment of it needs it before); the windows are 1,250 epochs (the time rule's span) and 250
+(auditor 1's). The controls pass in both: in the 41 sets with 10 carriers or more, every carrier holds a full window with the set's bit, and
+cells 64 or more from the dominant group carry none of it. The first checks the bookkeeping (it could only fail for windows made anew); the
+second, that the bit stays where the dominant group has been. Neither says that a bit means descent.
+
+**The aged soup's 16 appearances that the time rule removes are all D-derived:** 0.70 to 0.98 of their bytes carry *D*'s bit, 15 of them
+above 0.84 (with all the dominant group's lineages up to the confirmation, the same). By the rule fixed in the note, they are made mostly of
+the dominant group's material: "fragments, as the time rule assumed". **But so is their neighbourhood:** 15 of the 16 are one or two cells
+from a carrier of the dominant group, where the cells at the same distance are 0.59 to 0.81 D on average, and their percentile among those
+cells is 0.35 to 0.86; only one stands out (world 7059 at epoch 13,250, four cells away, 0.70 against 0.03). Almost none of their bytes
+stayed unchanged in its place since the window's start: 10 to 40 % descend from a byte a mutation overwrote, 6 to 28 % were changed by `+`
+or `-`. With the 250-epoch window, 11 are D-derived, one mixed and four older than the window: they took shape between 1,250 and 250 epochs
+before the census.
+
+**The shuffled and fresh soups** (descriptive): of the shuffled soup's 9, 6 are D-derived, one mixed and two have no earlier dominant
+lineage; the fresh soup's four are all at censuses before the dominant group was detected, which the main rule cannot classify (with all
+its lineages, two D-derived, one not and one older than the window). **The bursts:** the seven appearances of world 7046 at epoch 16,000 (a
+branch that did not become established) have six origins, and the seven of world 7052 at 10,000 (its establishment), all D-derived, six as
+well: by the 16-byte rule, a burst is several appearances at once, each made of the material around it.
+
+**The recount.** Without the D-derived (17, 8 and 8 appearances), the aged/fresh ratio is 2.27 [0.48, 8.64]; counting origins, 2.14 [0.48,
+7.99]; with the short window, 2.94 [0.89, 10.16]; with all the dominant group's lineages, 3.03 [0.62, 14.72]: all contain 1 (with no rule,
+4.41 [1.45, 14.90], and with the time rule, 4.55 [0.90, 22.91], as in entry 26). It removes the same 16 aged appearances as the time rule
+but keeps the fresh soup's four and three of the shuffled soup's nine, so it falls below the time rule's; its point estimate is still above
+1, with 17 appearances against 8.
+
+**The reading.** The appearances the time rule removes in the aged soup are made of material that passed through the dominant group's
+carriers, as the rule assumed, and so is their neighbourhood: the record cannot tell a mutated copy of the dominant group's program from a
+new arrangement of bytes that passed through its cells. "Made of the dominant group's material, like their neighbourhood", never "copies of
+the dominant group", and "fragments" only as the rule's reading, with its condition. **The excess left without the D-derived is not shown**
+— never "there is no excess", nor "the excess was fragments": the counts are small, the interval wide, and the other failed appearances keep
+their count (the small version). Exploratory; material, not descent; where maturation acts is still not known (AUD-184 = AU2-151). Next, a
+round of audit (44); the next step, such as the full record with a definition of a new appearance fixed before, is the owner's choice.

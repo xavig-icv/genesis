@@ -421,11 +421,25 @@ calibrat fora del món. Comparats ara amb el que passa dins de cada món, amb el
 
 Vegeu l'[entrada 26](quadern/index.html#entrada-26).
 
+### De quin material són les aparicions (exploratori)
+
+Un registre de les còpies hereditàries, en la versió petita: 18 branques del pilot tornades a fer córrer amb una còpia del pas del món que
+apunta d'on ve cada byte i per quines cel·les ha passat, comprovada contra el simulador i contra cada registre del pilot (sense plantar res):
+- **Les 16 aparicions de la sopa vella que treu la regla del temps estan fetes del material del grup dominant,** com suposava la regla: del
+  0,70 al 0,98 dels seus bytes han passat, en 1.250 èpoques, per cel·les que en portaven les finestres. **Però el seu veïnat també** (15 de
+  16 a dues cel·les o menys, on les cel·les del voltant en tenen del 0,59 al 0,81): material, no descendència.
+- **Sense elles, l'excés d'aparicions de la sopa vella no es mostra** (2,27 [0,48; 8,64]; també comptant els orígens, amb una finestra més
+  curta i amb tots els llinatges del grup dominant), i això no vol dir que no n'hi hagi: 17 aparicions contra 8.
+- **Cada ràfega de set aparicions d'un mateix cens té sis orígens.**
+
+Vegeu l'[entrada 27](quadern/index.html#entrada-27).
+
 ### El que estudiem ara
 
-- **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats, i el nul dins del món (l'entrada 26)
-  deixa els trossos sense decidir. On actua la maduració, encara no ho sabem. El que ho podria respondre ho tria el responsable: un registre
-  de les còpies hereditàries durant la simulació, després de fixar què és una aparició nova; una intervenció sobre els primers bytes de la
+- **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats; el nul dins del món (l'entrada 26)
+  deixava els trossos sense decidir, i el registre petit de les còpies (l'entrada 27) troba que les aparicions que treu la regla del temps
+  estan fetes del material del grup dominant, com el seu veïnat. On actua la maduració, encara no ho sabem. El que ho podria respondre ho tria
+  el responsable: el registre sencer de les còpies, després de fixar què és una aparició nova; una intervenció sobre els primers bytes de la
   sopa vella; plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió
   nova i l'acord dels tres.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,

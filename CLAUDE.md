@@ -417,5 +417,13 @@ Llegeix-los abans de proposar canvis.
       quocient (4,41 i 4,55), i el recompte depèn de les ràfegues (AUD-225). «Ni separat de la fragmentació ni mostrat que siguin trossos»,
       mai «són trossos» ni «l'excés és real». La `--check` de la nota no exigeix tots els censos, els grups ni la línia final (AUD-226 =
       AU2-216, oberta com l'AU2-205): es reforça abans de tornar a fer servir el codi.
+    - **El registre de les còpies, la versió petita** (26-11-2026, l'entrada 27, exploratori; `fase2/resultats/arrelament/registre-copies/`): una
+      còpia instrumentada del pas del món (`traca.mjs`, `mon.mjs`, `registre.mjs`; el simulador no es toca) torna a fer 18 branques del pilot i
+      n'ha de reproduir cada mesura i l'empremta final; `dades.mjs` hi comprova les dades amb la llista de l'AU2-216. Les 36 aparicions en
+      disputa (les que treu la regla del temps i la ràfega del 7046). Per la regla fixada, les 16 de la sopa envellida que treu la regla del temps
+      estan fetes del material del grup dominant: **«fetes del material del grup dominant, com el seu veïnat»,** mai «són còpies del grup
+      dominant», i «trossos» només com la lectura de la regla, amb la seva condició (material, no descendència). **«L'excés que queda sense
+      les derivades de *D* no es mostra»** (2,27 [0,48; 8,64]), mai «no hi ha excés» ni «l'excés eren trossos». Cada ràfega de set, sis
+      orígens per la regla dels 16 bytes. El control positiu comprova la comptabilitat, no la descendència.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

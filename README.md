@@ -421,13 +421,26 @@ world. Compared now with what happens within each world, with the records alread
 
 See notebook [entry 26](quadern/index.html#entrada-26), in Catalan, or its [English text](quadern/resum.en.md#entry-26).
 
+### What the appearances are made of (exploratory)
+
+A record of heritable copies, in its small version: 18 pilot branches run again with a copy of the world's epoch that tags where every byte
+comes from and which cells it has passed through, checked against the simulator and every pilot record it uses (nothing planted):
+- **The aged soup's 16 failed appearances that the time rule removes are made of the dominant group's material,** as the rule assumed:
+  0.70 to 0.98 of their bytes passed, within 1,250 epochs, through cells carrying its windows. **But so is their neighbourhood** (15 of 16
+  within two cells of it, where the cells around are 0.59 to 0.81 made of it): material, not descent.
+- **Without them, the aged soup's excess of failed appearances is not shown** (2.27 [0.48, 8.64]; also counting origins, with a shorter
+  window and with all the dominant group's lineages), which is not to say there is none: 17 appearances against 8.
+- **Each burst of seven same-census appearances has six origins.**
+
+See notebook [entry 27](quadern/index.html#entrada-27), in Catalan, or its [English text](quadern/resum.en.md#entry-27).
+
 ### What we study now
 
-- **The soup before life:** the synthesis (entry 25) closes the line of planted replicators, and the within-world null (entry 26) leaves
-  the fragments undecided. Where maturation acts is still not known. What could answer it is the owner's choice: a record of heritable
-  copies during the simulation, once what counts as a new appearance is fixed; an intervention on the aged soup's first bytes; planting the
-  natural lineages themselves; or a confirmatory series, after the record. Planting again needs a new decision and the agreement of the
-  three.
+- **The soup before life:** the synthesis (entry 25) closes the line of planted replicators; the within-world null (entry 26) left the
+  fragments undecided, and the small record of copies (entry 27) finds the appearances the time rule removes made of the dominant group's
+  material, like their neighbourhood. Where maturation acts is still not known. What could answer it is the owner's choice: the full record
+  of copies, once what counts as a new appearance is fixed; an intervention on the aged soup's first bytes; planting the natural lineages
+  themselves; or a confirmatory series, after the record. Planting again needs a new decision and the agreement of the three.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 
