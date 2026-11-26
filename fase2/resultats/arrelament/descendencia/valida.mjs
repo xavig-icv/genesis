@@ -3,7 +3,8 @@
 // impossible is a problem, and the analysis reads nothing. prova.mjs checks that each impossible case is rejected.
 //
 // validate({ list, records, pilot }): `list` the parsed llista.json; `records` a Map id -> array of parsed lines (or `files`, the names of
-// the folder, to check that exactly the list's records are there); `pilot` a Map id -> { seed, start, end, fingerprint, measures, n }.
+// the folder, to check that exactly the list's records are there); `pilot` a Map id -> { seed, start, end, fingerprint, measures,
+// invariantChecks, n } (pilotFacts).
 import { PROGRAM_SIZE } from '../../../../fase1/bff.js';
 import { WINDOWS, VARIANTS, MAIN } from './traca.mjs';
 
@@ -53,7 +54,7 @@ export function validate({ list, records, files = null, pilot, n: nWorld = 512 *
     if (S.branch !== br.id || String(S.world) !== String(br.world) || S.soup !== br.soup || typeof S.code !== 'string' || !/^[0-9a-f]{7,40}$/.test(S.code) || typeof S.node !== 'string'
       || S.seed !== pr.seed || S.start !== pr.start || S.end !== pr.end || !sameJSON(S.windows, WINDOWS) || !sameJSON(S.censuses, br.observers.map((o) => o.epoch))) bad.push('the start line is not of this branch, of its pilot record or of one clean commit');
     if (typeof S.list !== 'string' || !/^[0-9a-f]{64}$/.test(S.list)) bad.push('the start line has no list SHA-256');
-    if (E.branch !== br.id || E.fingerprint !== pr.fingerprint || E.measuresChecked !== pr.measures || !isInt(E.invariantChecks, pr.measures) || typeof E.seconds !== 'number' || !Number.isFinite(E.seconds) || E.seconds < 0 || !isInt(E.rssMB)) bad.push('the end line is not of this branch or of its pilot record');
+    if (E.branch !== br.id || E.fingerprint !== pr.fingerprint || E.measuresChecked !== pr.measures || E.invariantChecks !== pr.invariantChecks || typeof E.seconds !== 'number' || !Number.isFinite(E.seconds) || E.seconds < 0 || !isInt(E.rssMB)) bad.push('the end line is not of this branch or of its pilot record');
     codes.add(S.code); codes.add(`list:${S.list}`);
     // exactly the lines the list asks for, once each
     const want = new Set();
@@ -108,11 +109,18 @@ export function validate({ list, records, files = null, pilot, n: nWorld = 512 *
 }
 
 // The pilot's facts a record must match: its seed, start, end, fingerprint and number of measures (from the pilot's record in git)
+// `invariantChecks`: the exact number of invariant checks the run makes. At each measure epoch (every `every`), each open tracer is checked
+// once; a tracer opens after the check of its start epoch, max(start, census − window), and is last checked at its census. (Until the
+// correction after the full run, this was a lower bound, at least one per measure, which is not what the run makes: README.md, "Everything
+// tried".)
 export function pilotFacts(list, readRecord) {
   const m = new Map();
   for (const br of list.branches) {
-    const rec = readRecord(br.record), S = rec[0], E = rec.at(-1);
-    m.set(br.id, { seed: S.seed, start: S.start, end: E.epoch, fingerprint: E.fingerprint, measures: rec.filter((l) => l.type === 'measure' && l.epoch > S.start && l.epoch <= E.epoch).length, n: S.world[0] * S.world[1] });
+    const rec = readRecord(br.record), S = rec[0], E = rec.at(-1), every = S.every;
+    if (!isInt(every, 1)) throw new Error(`${br.id}: the pilot record has no measure interval`);
+    let invariantChecks = 0;
+    for (const o of br.observers) for (const w of WINDOWS) invariantChecks += Math.floor(o.epoch / every) - Math.floor(Math.max(S.start, o.epoch - w) / every);
+    m.set(br.id, { seed: S.seed, start: S.start, end: E.epoch, fingerprint: E.fingerprint, measures: rec.filter((l) => l.type === 'measure' && l.epoch > S.start && l.epoch <= E.epoch).length, invariantChecks, n: S.world[0] * S.world[1] });
   }
   return m;
 }

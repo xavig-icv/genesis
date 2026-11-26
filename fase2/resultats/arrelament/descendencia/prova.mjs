@@ -271,7 +271,7 @@ function synthetic({ appScore, matched }) {
       }
       for (let i = 0; i < o.appearances.length; i++) for (let j = i + 1; j < o.appearances.length; j++) { const nh = new Array(65).fill(0); nh[0] = 50; L.push({ type: 'pair', epoch: o.epoch, window: w, a: o.appearances[i].id, b: o.appearances[j].id, shared: 0, same: 0, mirror: 0, aligned: 0, distance: 5, nullPairs: 50, nullHist: nh, nullHistAligned: nh.slice() }); }
     }
-    L.push({ type: 'end', branch: br.id, measuresChecked: pr.measures, invariantChecks: pr.measures, fingerprint: pr.fingerprint, seconds: 1, rssMB: 100 });
+    L.push({ type: 'end', branch: br.id, measuresChecked: pr.measures, invariantChecks: pr.invariantChecks, fingerprint: pr.fingerprint, seconds: 1, rssMB: 100 });
     recs.set(br.id, L);
   }
   return recs;
@@ -293,6 +293,8 @@ out('\n7. The validators fail closed (AU2-219) and the comparator says a differe
     'a false seed': (r) => { first(r, 'start').seed = -1; },
     'a false fingerprint': (r) => { first(r, 'end').fingerprint = 'false'; },
     'no measures': (r) => { first(r, 'end').measuresChecked = 0; },
+    'one invariant check fewer than the run makes': (r) => { first(r, 'end').invariantChecks -= 1; },
+    'one invariant check more than the run makes': (r) => { first(r, 'end').invariantChecks += 1; },
     'a score above the bytes (D = 2)': (r) => { const a = firstD(r, 'appearance'); a.descent[MAIN] = a.bytes + 1; },
     'a fractional score': (r) => { firstD(r, 'appearance').descent[MAIN] = 10.5; },
     'a cell outside the world': (r) => { first(r, 'appearance').origCells = { 999999999: first(r, 'appearance').bytes }; },
