@@ -452,16 +452,33 @@ the same program (the exposure bit does not); then the same 18 branches again (n
 
 See notebook [entry 28](quadern/index.html#entrada-28), in Catalan, or its [English text](quadern/resum.en.md#entry-28).
 
+### Sixteen bytes in order (exploratory)
+
+A measure of continuity fixed before computing: the longest run of a cell's consecutive bytes that sits, in the same order, in one carrier
+of the dominant group, over the cell's own mutations; three classes (ordered, 16 bytes or more; pieces; none). Every census is tested with
+adversarial controls made of its own material (pieces of 1, 2 and 4 bytes reordered, a repeated pair, copies with mutations), and on the same
+18 branches every census of the main window passes them: **the measure separates the dominant group's order from its material**, as far as
+those controls test it.
+- **Of the aged soup's 16 failed appearances that the time rule removes, 10 carry 16 bytes or more in the dominant group's order** (runs of
+  21 to 63 bytes in one of its carriers), **6 only pieces of its material and none nothing of it:** by the rule fixed in the note, **mixed**
+  (two thirds would have needed 11). Audit 45's lead (11 mutated copies, 5 pieces) is neither confirmed nor contradicted. "Ordered" is not
+  "a copy of the program": a piece of 16 bytes or more is ordered too.
+- **The excess depends on what the pieces are,** which this measure does not decide: counted as fragments, 4.55 [0.90, 22.91]; as births,
+  6.15 [1.65, 29.51], whose lower end rests on removing the fresh soup's four unclassifiable appearances (with them, 3.08 [0.88, 11.04]).
+
+See notebook [entry 29](quadern/index.html#entrada-29), in Catalan, or its [English text](quadern/resum.en.md#entry-29).
+
 ### What we study now
 
 - **The soup before life:** the synthesis (entry 25) closes the line of planted replicators; the within-world null (entry 26) left the
   fragments undecided; the small record of copies (entry 27) finds that the bytes of the appearances the time rule removes passed through
-  the dominant group's cells, like their neighbourhood's, which does not show fragments; and a measure of descent (entry 28) cannot tell
-  whether they are copies: it is specific to the dominant group's material, not to its order. Where maturation acts is still not known. What
-  could answer it is the owner's choice: first, all three agree (audit 45), a measure of continuity fixed before and tested with adversarial
-  known answers; then the full record of copies, with the appearances the time rule keeps and a definition of a new appearance fixed before;
-  an intervention on the aged soup's first bytes; planting the natural lineages themselves; or a
-  confirmatory series, after the record. Planting again needs a new decision and the agreement of the three.
+  the dominant group's cells, like their neighbourhood's, which does not show fragments; a measure of descent (entry 28) cannot tell
+  whether they are copies: it is specific to the dominant group's material, not to its order; and a measure of continuity (entry 29), which
+  does separate the order from the material, finds them mixed: 10 of 16 with 16 bytes or more in the dominant group's order, 6 with pieces
+  only. Where maturation acts is still not known. What could answer it is the owner's choice, after the audit of entry 29: the full record
+  of copies, with the appearances the time rule keeps and a definition of a new appearance fixed before; a way to tell a long piece from a
+  mutated copy; an intervention on the aged soup's first bytes; planting the natural lineages themselves; or a confirmatory series, after
+  the record. Planting again needs a new decision and the agreement of the three.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 

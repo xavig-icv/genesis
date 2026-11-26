@@ -39,6 +39,7 @@
     <a href="#entrada-26">Entrada 26</a>
     <a href="#entrada-27">Entrada 27</a>
     <a href="#entrada-28">Entrada 28</a>
+    <a href="#entrada-29">Entrada 29</a>
   </nav>
 
   <article id="entrada-1">
@@ -2758,6 +2759,126 @@
         <li><strong>Detalls</strong> (l'auditor 1): els tres scripts que, al commit de la nota, no tenien la SHA-256 de l'última passada de <code>previ/</code> no es van tocar: només en canvien els finals de línia (CRLF a la còpia de treball, LF a git). La sortida de la primera comprovació de les dades no es va desar (la nota ja ho deia). I «ho podria dir el registre sencer» es retira: amb la mateixa mesura i el mateix control, classificaria unes altres aparicions, no aquestes 16.</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-29">
+    <header>
+      <p class="date">Entrada 29 · 26 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, dotzena part: setze bytes en ordre</h1>
+      <p class="lede">A l'<a href="#entrada-28">entrada 28</a>, la mesura de descendència comptava parelles del material del grup dominant on fos de la cel·la, no trossos seguits. Ara hem fixat abans de calcular una mesura de la continuïtat: 16 bytes seguits en l'ordre del grup dominant, dins d'un mateix portador seu, passant per sobre de les mutacions pròpies de la cel·la. A cada cens la proven uns controls adversos fets del seu propi material (trossos barrejats, un parell repetit, còpies amb mutacions), i a les mateixes 18 branques tots els censos els passen: la mesura hi separa l'ordre del grup dominant del seu material. De les 16 aparicions de la sopa vella que treu la regla del temps, 10 porten 16 bytes o més en el seu ordre, 6 només trossos del seu material i cap no en porta res: per la regla fixada, mixt. L'excés depèn del que siguin els trossos, i aquesta mesura no ho decideix. És exploratori.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>A l'auditoria 45, tots tres vam coincidir que, abans de cap registre sencer, calia una mesura de la continuïtat fixada abans i provada amb casos adversos de resposta coneguda, amb les comprovacions de les dades corregides. L'auditor 1 hi va afegir tres classes en lloc de dues, el recompte com una forquilla i desar els orígens de les cel·les puntuades; l'auditor 2, que la tirada fos dins d'un portador concret i que es provés el costum del mapa d'unir parelles de portadors diferents. El responsable hi va dir que sí el 26-11-2026. La nota (<code>fase2/resultats/arrelament/continuitat/</code>) es va escriure abans de calcular res amb les branques del pilot. Tot el que es va fer córrer abans (només mons de prova) és a <code>previ/</code>, amb la sortida, l'stderr, el codi de sortida, les hores i les SHA-256 del codi, tal com és i tal com el desa git. No es planta res i el simulador no es toca. Els números a posteriori de l'auditor 1 a l'auditoria 45 (11 còpies mutades i 5 trossos a la sopa vella) ja els havíem vist: per a la sopa vella, la nota no n'és independent.</p>
+
+    <h2>La mesura</h2>
+    <ul>
+      <li><strong>Els orígens i el mapa</strong> són els de l'entrada 28: a l'inici de la finestra cada byte és el seu propi origen, una còpia el passa i una mutació en dona un de nou. El mapa són les parelles d'orígens veïns que porten l'1 % o més dels portadors de la meitat A.</li>
+      <li><strong>La tirada en ordre</strong> és la tirada més llarga de bytes seguits d'una cel·la que és, en el mateix ordre (endavant o enrere, a qualsevol desplaçament), dins d'un sol portador de la meitat A. Cada parella de la tirada ha de ser del mapa. La tirada pot passar per sobre de fins a 2 mutacions pròpies seguides de la cel·la, que es queden al seu lloc.</li>
+      <li><strong>Tres classes:</strong> «en ordre» si la tirada fa 16 bytes o més; «trossos» si és més curta però la cel·la porta alguna parella del mapa; «res» si no en porta cap. Una aparició és «en ordre» si ho són la meitat o més de les seves cel·les.</li>
+      <li><strong>Els controls de cada cens</strong> (si en falla un, les aparicions del cens no es classifiquen):
+        <ul>
+          <li>la meitat B, en ordre en un 90 % o més;</li>
+          <li>les cel·les lluny, «res» en un 95 % o més;</li>
+          <li>els adversos, fets del material del mateix cens:
+            <ul>
+              <li>les cel·les de la meitat B tallades a trossos d'1, 2 i 4 bytes i reordenades, i 16 trossos de 2 bytes posats en una cel·la lluny: cadascun, en ordre en un 5 % o menys;</li>
+              <li>un parell del mapa repetit per tota la cel·la: cap en ordre;</li>
+              <li>4 mutacions pròpies dins d'una tirada de 32 bytes: en ordre en un 90 % o més.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><strong>El recompte és una forquilla:</strong> Rf compta els trossos com a fragments (només es tornen a comptar les «res»); Rb, com a naixements (es tornen a comptar els «trossos» i les «res»); Rb+ hi torna les que no es poden classificar (una sensibilitat).</li>
+    </ul>
+
+    <h2>Les proves, abans de fer-la servir</h2>
+    <ul>
+      <li><strong>Els contraexemples dels dos auditors de l'auditoria 45 s'hi aturen:</strong>
+        <ul>
+          <li>blocs de 2 bytes reordenats: la puntuació de l'entrada 28 en dona 32, i la tirada, 2;</li>
+          <li>un parell repetit: 63 a l'entrada 28, i aquí, 2;</li>
+          <li>un mosaic de trossos de 8 bytes: 8;</li>
+          <li>una cadena de 8 programes units per orígens compartits, on totes les parelles són del mapa però cap portador no en té més de 9 bytes seguits: 9 (la mesura de l'auditor 1, sense portador, en dona 64).</li>
+        </ul>
+      </li>
+      <li><strong>Les còpies, i les mutacions pròpies:</strong> una còpia exacta dona 64, i una al revés i desplaçada, com es copia el replicador de la Fase 1, 63. Amb dues mutacions pròpies seguides, 64; amb tres, 31.</li>
+      <li><strong>En mons de prova:</strong>
+        <ul>
+          <li>no surten en ordre la variant del replicador, ni una còpia independent del mateix programa, ni les cel·les lluny;</li>
+          <li>un veí que rep el material en 16 trossos de 2 bytes surt «trossos», i un que en rep un tros de 16, en ordre.</li>
+        </ul>
+      </li>
+      <li><strong>Les comprovacions de les dades fallen tancades:</strong> de 32 registres impossibles, tots rebutjats.</li>
+      <li><strong>Dos falsos negatius que la mesura no pot evitar:</strong> una còpia d'abans de la finestra i una variant que porten massa pocs portadors.</li>
+    </ul>
+
+    <h2>Com va anar</h2>
+    <p>La prova curta (una branca) va sortir vàlida, i amb les mateixes cel·les que la nota de l'entrada 28. Les 18 branques van trigar 1 h 32 min, totes amb el codi 0, i els registres van anar a git abans de mirar res. La prova curta és igual que la seva branca del càlcul sencer. Després vam passar la comprovació de les dades (tot vàlid) i l'anàlisi, que es va desar tal com va sortir, abans de llegir-la. A partir dels orígens desats, l'anàlisi també torna a calcular els llindars i les puntuacions de l'entrada 28, i surten iguals, totes 9.246. Res no va fallar ni es va repetir. Hi ha una sola comprovació a posteriori, declarada (a sota, «Una columna estranya»).</p>
+
+    <h2>Els controls</h2>
+    <p>Dels 19 censos seguits, 12 tenen <em>D</em>, i a la finestra principal tots passen tots els controls:</p>
+    <ul>
+      <li>la meitat B surt en ordre en 992 a 1.000 de 1.000;</li>
+      <li>les cel·les lluny surten «res» en 1.000 de 1.000;</li>
+      <li>dels trossos d'1, 2 i 4 bytes reordenats, com a molt 1 de 500 surt en ordre;</li>
+      <li>dels 16 trossos de 2 bytes en una cel·la lluny, i del parell repetit, cap;</li>
+      <li>amb les 4 mutacions pròpies, totes surten en ordre.</li>
+    </ul>
+    <p><strong>En aquests mons, la mesura separa l'ordre del grup dominant del seu material,</strong> tant com aquests controls ho proven. Un tros de 16 bytes o més surt en ordre per construcció (de 440 a 499 de 500). Amb la finestra de 250 èpoques, 4 dels 12 censos fallen: la meitat B hi surt en ordre en 782 a 878 de 1.000.</p>
+
+    <h2>Les aparicions que treu la regla del temps</h2>
+    <ul>
+      <li><strong>La sopa vella, 16: 10 en ordre, 6 trossos i cap «res».</strong>
+        <ul>
+          <li>Les 10 en ordre hi porten tirades de 21 a 63 bytes dins d'un portador: la del 7074, 63 de 64 a les seves dues cel·les; les altres, de 21 a 50.</li>
+          <li>Les 6 de trossos, tirades de 5 a 14 bytes: la del 7014 a la finestra 7, dues del 7052 i les tres del 7059.</li>
+        </ul>
+      </li>
+      <li><strong>Amb la mesura de l'auditor 1 feta exacta</strong> (l'ordre del mapa, sense portador), 11 i 5, els números de l'auditoria 45. La condició del portador en mou una: la del 7014 a l'època 9.000 té 39 bytes en l'ordre del mapa, però com a molt 11 dins d'un portador.</li>
+      <li><strong>La barrejada, 9: 3 en ordre, 4 trossos, cap «res» i 2 sense cap llinatge dominant d'abans.</strong> És la primera vegada que algú hi mira la continuïtat. Les 4 de la nova, cap no es pot classificar.</li>
+      <li><strong>El veïnat</strong> (descriptiu): les cel·les aparellades també surten sovint en ordre, de 54 a 123 de 200. Les 10 en ordre són entre el percentil 0,78 i el 0,96 de les seves.</li>
+      <li><strong>Un origen</strong> (descriptiu): cap parella d'aparicions d'un mateix cens no comparteix 16 bytes seguits fora de l'ordre del grup dominant. Les set del 7052 no són còpies l'una de l'altra fora d'aquest ordre.</li>
+      <li><strong>Les sensibilitats</strong> (no es llegeixen):
+        <ul>
+          <li>a la sopa vella, de 10 a 11 en ordre;</li>
+          <li>amb el mapa al 5 % i amb la mesura de l'auditor 1, 11 de 16, que arriba als dos terços per una aparició;</li>
+          <li>amb la finestra de 250 èpoques, tres de la vella passen a «res»: el seu material en l'ordre del grup dominant és més antic que la finestra, o no hi és.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>Una columna estranya</h2>
+    <p>De cada tirada en ordre, la sortida diu quantes de les seves parelles eren dos bytes veïns d'una mateixa cel·la a l'inici de la finestra: cap, llevat de 3 de 12 en una tirada. Una comprovació a posteriori, declarada, mostra que el mateix passa amb l'ordre del grup dominant. De les 177 a 385 parelles del mapa, de 0 a 14 són d'aquesta mena; la resta porten l'origen d'una mutació, o dos orígens que a l'inici no eren veïns. <strong>L'ordre que busca la mesura es va arranjar dins de la finestra, i després es va escampar entre els portadors.</strong> Com (amb còpies recombinades, o desplaçades), aquesta nota no ho mesura.</p>
+
+    <h2>El recompte</h2>
+    <ul>
+      <li><strong>Rf</strong> (els trossos com a fragments): com que cap aparició no és «res», és el recompte de la regla del temps, 4,55 [0,90; 22,91]. Conté 1.</li>
+      <li><strong>Rb</strong> (els trossos com a naixements): 6,15 [1,65; 29,51], per sobre d'1. Però el seu extrem baix depèn de treure les quatre de la nova, que no es poden classificar: amb elles (Rb+), 3,08 [0,88; 11,04], que conté 1.</li>
+      <li><strong>Amb la finestra de 250 èpoques,</strong> l'Rf queda per sobre d'1 (5,35 [1,31; 26,06]). És una sensibilitat: aquesta finestra no veu les còpies d'abans seu, i falla els controls a quatre censos.</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>Per la regla fixada, mixt:</strong> 10 de 16 porten 16 bytes o més en l'ordre del grup dominant, dins d'un portador seu i per sobre de les seves mutacions pròpies, i 6 només en porten trossos del material. Cap classe no arriba als dos terços (en calien 11). La pista de l'auditoria 45 (11 còpies mutades, 5 trossos) ni es confirma ni es contradiu amb una regla fixada abans: amb la tirada dins d'un portador, surten 10 i 6.</li>
+      <li><strong>«En ordre» no vol dir «una còpia del programa»:</strong> un tros de 16 bytes o més també hi surt, i de les 10, només la del 7074 ocupa gairebé tot el programa. Mai «10 són còpies», ni «6 són naixements», ni «són arranjaments nous».</li>
+      <li><strong>L'instrument aguanta:</strong> tots els censos de la finestra principal passen els controls, també els adversos fets del seu propi material. És la primera mesura d'aquesta línia, fixada abans, que separa l'ordre del grup dominant del seu material, tant com aquests controls ho proven.</li>
+      <li><strong>L'excés depèn del que siguin els trossos,</strong> i aquesta mesura no ho decideix. Mai «hi ha excés» ni «no n'hi ha».</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>Una tirada en ordre diu que 16 bytes o més de la cel·la són en l'ordre dels portadors del grup dominant,</strong> fet dins de la finestra. No diu qui ha copiat qui, ni separa un descendent d'un germà que va copiar el mateix material.</li>
+      <li><strong>No veu una còpia d'abans de la finestra,</strong> ni una variant que porten massa pocs portadors.</li>
+      <li><strong>Les 17 aparicions de la sopa vella que la regla del temps es queda</strong> no s'han classificat.</li>
+      <li><strong>Exploratori,</strong> i on actua la maduració, encara no ho sabem (AUD-184 = AU2-151).</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>Una ronda d'auditoria</strong> d'aquesta nota, amb tots dos auditors (la 46).</li>
+      <li><strong>El pas següent</strong> el tria el responsable, després de l'auditoria. Ara hi ha una mesura de la continuïtat que aguanta els seus controls. Pot venir el registre sencer de les còpies (la proposta de l'auditor 2), amb les 17 que la regla del temps es queda i una definició d'aparició nova fixada abans i provada amb casos coneguts (AU2-209). O, abans, una manera de separar un tros llarg d'una còpia mutada.</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

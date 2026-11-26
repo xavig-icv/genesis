@@ -454,17 +454,35 @@ de les d'una còpia independent del mateix programa (la marca de pas no ho fa); 
 
 Vegeu l'[entrada 28](quadern/index.html#entrada-28).
 
+### Setze bytes en ordre (exploratori)
+
+Una mesura de la continuïtat fixada abans de calcular: la tirada més llarga de bytes seguits d'una cel·la que és, en el mateix ordre, dins
+d'un portador del grup dominant, per sobre de les mutacions pròpies de la cel·la; tres classes («en ordre», 16 bytes o més; «trossos»;
+«res»). Cada cens es prova amb controls adversos fets del seu propi material (trossos d'1, 2 i 4 bytes reordenats, un parell repetit, còpies
+amb mutacions), i a les mateixes 18 branques tots els censos de la finestra principal els passen: **la mesura separa l'ordre del grup
+dominant del seu material**, tant com aquests controls ho proven.
+- **De les 16 aparicions de la sopa vella que treu la regla del temps, 10 porten 16 bytes o més en l'ordre del grup dominant** (tirades de
+  21 a 63 bytes dins d'un portador seu), **6 només trossos del seu material i cap no en porta res:** per la regla fixada, **mixt** (per als
+  dos terços en calien 11). La pista de l'auditoria 45 (11 còpies mutades, 5 trossos) ni es confirma ni es contradiu. «En ordre» no vol dir
+  «una còpia del programa»: un tros de 16 bytes o més també hi surt.
+- **L'excés depèn del que siguin els trossos,** i aquesta mesura no ho decideix: comptats com a fragments, 4,55 [0,90; 22,91]; com a
+  naixements, 6,15 [1,65; 29,51], que té l'extrem baix per sobre d'1 només si es treuen les quatre de la sopa nova que no es poden classificar
+  (amb elles, 3,08 [0,88; 11,04]).
+
+Vegeu l'[entrada 29](quadern/index.html#entrada-29).
+
 ### El que estudiem ara
 
 - **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats; el nul dins del món (l'entrada 26)
   deixava els trossos sense decidir; el registre petit de les còpies (l'entrada 27) troba que els bytes de les aparicions que treu la regla
-  del temps han passat per les cel·les del grup dominant, com els del seu veïnat, i això no mostra que siguin trossos; i una mesura de
-  descendència (l'entrada 28) no pot dir si són còpies: és específica del material del grup dominant, no del seu ordre. On actua la
-  maduració, encara no ho sabem. El que ho podria respondre ho tria el responsable: primer, i hi coincidim tots tres (l'auditoria 45), una
-  mesura de la continuïtat fixada abans i provada amb casos de resposta coneguda adversos; després, el registre sencer de les còpies, amb
-  les aparicions que la regla del temps es queda i una definició d'aparició nova fixada abans; una intervenció sobre els primers bytes de la
-  sopa vella; plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió
-  nova i l'acord dels tres.
+  del temps han passat per les cel·les del grup dominant, com els del seu veïnat, i això no mostra que siguin trossos; una mesura de
+  descendència (l'entrada 28) no pot dir si són còpies: és específica del material del grup dominant, no del seu ordre; i una mesura de la
+  continuïtat (l'entrada 29), que sí que separa l'ordre del material, les troba mixtes: 10 de 16 amb 16 bytes o més en l'ordre del grup
+  dominant, i 6 només amb trossos. On actua la maduració, encara no ho sabem. El que ho podria respondre ho tria el responsable, després de
+  l'auditoria de l'entrada 29: el registre sencer de les còpies, amb les aparicions que la regla del temps es queda i una definició d'aparició
+  nova fixada abans; una manera de separar un tros llarg d'una còpia mutada; una intervenció sobre els primers bytes de la sopa vella;
+  plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió nova i
+  l'acord dels tres.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 

@@ -742,3 +742,80 @@ impossible records (an empty baseline, 64 pairs in a cell, a false threshold, di
 none of them in the real data: open, fixed before the code is used again (AUD-234, AU2-229). The name "by position" stays in the scripts'
 outputs (AU2-230). The three scripts whose hashes at the note's commit differ from the last run before the note were not touched: only
 their line ends (CRLF in the working copy, LF in git) differ. "The full record could say" is withdrawn (N-3).
+
+<a id="entry-29"></a>
+## Entry 29 · 26 November 2026 · The soup before life, part twelve: sixteen bytes in order (exploratory)
+
+In entry 28, the descent score counted pairs of the dominant group's material anywhere in a cell, not stretches in a row. At audit 45 all
+three of us agreed that, before any full record, a measure of continuity had to be fixed and tested with adversarial known answers, with the
+data checks corrected. Auditor 1 added three classes, the recount as a range and keeping the scored cells' origins; auditor 2, that the run
+sit in one concrete carrier and that the map's habit of joining pairs of different carriers be tested. The owner agreed on 26-11-2026. The
+note (`fase2/resultats/arrelament/continuitat/`) was written before anything was computed on the pilot's branches; everything run before it
+(test worlds only) is in `previ/`, with its output, stderr, exit code, times and the code's SHA-256 as it is and as git keeps it. Nothing is
+planted and no simulator is touched. Auditor 1's post hoc numbers at audit 45 (11 mutated copies and 5 pieces in the aged soup) had been
+seen: for the aged soup the note is not independent of them.
+
+**The measure.** The origins and the map are entry 28's. **The ordered run:** the longest run of a cell's consecutive bytes that sits, in the
+same order (forward or backward, at any offset), in one carrier of half A; every pair in it is a map pair, and it may pass over up to 2 of
+the cell's own mutations in a row, which keep their place. **Three classes:** ordered (a run of 16 bytes or more), pieces (shorter, but some
+map pair), none (no map pair); an appearance is ordered if half or more of its cells are. **The controls of each census** (fail one and its
+appearances are not classified): half B 90 % or more ordered; far cells 95 % or more none; and adversarial cases made of that census's own
+material: half B's cells cut into pieces of 1, 2 and 4 bytes and reordered, and 16 pieces of 2 bytes in a far cell, each 5 % or fewer
+ordered; a map pair repeated over the whole cell, none; 4 own mutations inside a 32-byte run, 90 % or more ordered. **The recount, a
+range:** Rf counts the pieces as fragments (only "none" is counted again), Rb as births ("pieces" and "none"), Rb+ adds back the
+unclassifiable (a sensitivity).
+
+**The checks, before use.** Both auditors' counterexamples of audit 45 stop there: 2-byte blocks reordered (entry 28's score 32; the run
+2), a repeated pair (63; here 2), a mosaic of 8-byte pieces (8), a chain of 8 programs joined by shared origins where every pair is a map
+pair but no carrier holds more than 9 bytes of it (9; auditor 1's measure with no carrier, 64). An exact copy 64; a backward shifted one,
+as the Phase 1 replicator copies itself, 63; two own mutations side by side 64, three 31. In test worlds, the replicator's variant, an
+independent planting of it and far cells are not ordered; a neighbour that receives the material in 16 pieces of 2 bytes is pieces, one
+that receives a 16-byte piece is ordered. The data checks fail closed (32 impossible records, all rejected). Two false negatives it cannot
+avoid: a copy made before the window, a variant held by too few carriers.
+
+**How it went.** The short test (one branch) was valid and had the same cells as entry 28's note. The 18 branches in 1 h 32 min, all with
+exit code 0, the records in git before anything was read; the short test equal to its branch in the full run. Then the data check (all
+valid) and the analysis, kept as it came out before it was read; from the saved origins it also recomputes entry 28's thresholds and scores,
+all 9,246 the same. Nothing failed or was repeated; one check after the fact, declared (below).
+
+**The controls.** Of 19 tracked censuses, 12 have a *D*, and at the main window every one passes every control: half B 992 to 1,000 of
+1,000 ordered; far cells none, 1,000 of 1,000; reordered pieces of 1, 2 and 4 bytes, at most 1 of 500 ordered; 2-byte pieces in a far
+cell and the repeated pair, none; 4 own mutations, all ordered. **On these worlds the measure separates the dominant group's order from its
+material,** as far as these controls test it. A piece of 16 bytes or more is ordered by construction (440 to 499 of 500). With the 250-epoch
+window, 4 of 12 censuses fail (half B 782 to 878 of 1,000 ordered).
+
+**The appearances the time rule removes. The aged soup, 16: 10 ordered, 6 pieces, none none.** The ten ordered hold runs of 21 to 63 bytes
+in one carrier (7074's 63 of 64 in both its cells; the others 21 to 50); the six pieces, runs of 5 to 14 bytes (7014 at window 7, two of
+7052, the three of 7059). Auditor 1's measure made exact (the map's order, no carrier) gives 11 and 5, audit 45's numbers; the carrier
+condition moves one, 7014 at 9,000: 39 bytes in the map's order, at most 11 in one carrier. **The shuffled soup, 9: 3 ordered, 4 pieces, 0
+none, 2 with no earlier dominant lineage** (no one had measured its continuity); the fresh soup's 4 cannot be classified. The matched cells
+are often ordered too (54 to 123 of 200); the ten ordered sit at percentiles 0.78 to 0.96 of theirs (descriptive). No two appearances of a
+census share 16 bytes in a row outside the dominant group's order: 7052's seven are not copies of one another outside it (descriptive). The
+sensitivities (not read): 10 or 11 ordered in the aged soup; the map at 5 % and auditor 1's measure reach two thirds by one appearance (11 of
+16); with the 250-epoch window three aged appearances become none (their material in the dominant group's order is older than the window,
+or not there).
+
+**An odd column.** For each ordered run, the output says how many of its pairs were two neighbouring bytes of one cell at the window's start:
+none, but for 3 of 12 in one run. A check after the fact, declared, shows the same for the dominant group's order itself: of the map's 177
+to 385 pairs, 0 to 14 are of that kind; the rest hold a mutation's origin or two origins that were not neighbours at the start. **The order
+the measure looks for was arranged within the window and then spread among the carriers.** How (recombined or shifted copies), this note
+does not measure.
+
+**The recount.** Rf (the pieces as fragments): no appearance is none, so it is the time rule's, 4.55 [0.90, 22.91], containing 1. Rb (the
+pieces as births): 6.15 [1.65, 29.51], above 1; but its lower end rests on removing the fresh soup's four unclassifiable appearances: with
+them (Rb+), 3.08 [0.88, 11.04], containing 1. With the 250-epoch window Rf lies above 1 (5.35 [1.31, 26.06]): a sensitivity, blind to
+copies older than itself and failing its controls at four censuses.
+
+**The reading.** By the rule fixed in the note, **mixed:** 10 of 16 carry 16 bytes or more in the dominant group's order, in one of its
+carriers, over their own mutations, and 6 only pieces of its material; neither class reaches two thirds (11 were needed). Audit 45's lead
+(11 mutated copies, 5 pieces) is **neither confirmed nor contradicted** by a rule fixed before: with the run in one carrier, 10 and 6.
+**"Ordered" is not "a copy of the program":** a piece of 16 bytes or more is ordered too, and of the ten only 7074's spans almost the whole
+program. Never "10 are copies", "6 are births" or "new arrangements". **The instrument holds:** every census of the main window passes its
+controls, the adversarial ones made of its own material included; it is the first measure in this line, fixed before, that separates the
+dominant group's order from its material, as far as these controls test it. **The excess depends on what the pieces are,** which this
+measure does not decide; never "there is an excess" or "there is none". An ordered run says that 16 bytes or more of a cell sit in the
+order of the dominant group's carriers, made within the window, not who copied whom; it cannot see a copy made before the window or a
+variant held by too few carriers; the 17 aged appearances the time rule keeps are not classified; exploratory, and where maturation acts is
+still not known (AUD-184 = AU2-151). Next: one audit round (46); then the owner's choice, with a measure of continuity that holds its
+controls: the full record of copies (auditor 2's proposal), with the 17 the time rule keeps and a definition of a new appearance fixed
+before and tested with known cases (AU2-209), or first a way to tell a long piece from a mutated copy.

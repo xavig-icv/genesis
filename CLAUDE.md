@@ -465,5 +465,21 @@ Llegeix-los abans de proposar canvis.
         sortida, l'stderr, el codi de sortida, l'hora i la SHA-256 del codi, i diu si ha mirat res del pilot o d'una sèrie. Si `previ/` ha
         d'acabar també amb la SHA-256 dels scripts tal com entren al commit de la nota, i si les SHA-256 han de ser les dels fitxers tal com
         els desa git, ho preguntem a l'auditor 2 (X-140) abans d'escriure-ho.
+    - **La mesura de la continuïtat** (26-11-2026, l'entrada 29, exploratori; `fase2/resultats/arrelament/continuitat/`, amb `previ/`, el que
+      es va fer córrer abans de la nota i, declarada, una comprovació a posteriori, amb les SHA-256 del codi tal com és i tal com el desa git):
+      la tirada més llarga de bytes seguits d'una cel·la que és, en el mateix ordre, **dins d'un sol portador** de la meitat A, cada parella
+      del mapa, passant per sobre de fins a 2 mutacions pròpies seguides; tres classes («en ordre», 16 bytes o més; «trossos»; «res»); controls
+      a cada cens, també adversos fets del seu propi material; el recompte, una forquilla (Rf, Rb, Rb+). **Els registres desen els orígens de
+      les cel·les puntuades:** `analisi.mjs --code d4edbb28` ho mesura tot sense tornar a fer córrer res. La `--check` i el comparador són
+      d'aquesta nota (els validadors de les notes d'abans, encara oberts).
+      - **Tots els censos de la finestra principal passen els controls:** separa l'ordre del grup dominant del seu material, **tant com
+        aquests controls ho proven**. Un tros de 16 bytes o més surt en ordre per construcció: **«en ordre» no és «una còpia del programa»**.
+      - **De les 16 de la sopa vella, 10 en ordre, 6 trossos i 0 «res»: per la regla fixada, «mixt»**, mai «10 són còpies», «6 són naixements»
+        ni «arranjaments nous». La pista de l'auditoria 45, «ni confirmada ni contradita» (amb el portador, 10 i 6; sense, 11 i 5). Dues
+        sensibilitats arriben als dos terços per una aparició: no es llegeixen.
+      - **L'excés «depèn del que siguin els trossos»** (Rf 4,55 [0,90; 22,91]; Rb 6,15 [1,65; 29,51]), i l'extrem baix de l'Rb depèn de treure
+        les quatre de la nova que no es poden classificar (Rb+ 3,08 [0,88; 11,04]); mai «hi ha excés» ni «no n'hi ha».
+      - **L'ordre del grup dominant es va arranjar dins de la finestra** (la comprovació a posteriori: de 0 a 14 de les 177 a 385 parelles del
+        mapa eren veïnes a l'inici); com, la nota no ho mesura.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).
