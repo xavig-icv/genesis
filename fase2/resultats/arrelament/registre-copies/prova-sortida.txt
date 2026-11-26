@@ -1,0 +1,47 @@
+The record of heritable copies: the instrument's checks (exploratory). The code: 4ce3550c, v16.15.1.
+
+1. The interpreter, against evaluate
+   ok   the same tape and operations as evaluate: 250000 of 250000 tapes (uniform, rich in instructions, real pairs)
+   ok   the writes, replayed, give the tape: 250000 of 250000 (40943141 writes)
+
+2. The mutations, against mutate
+   ok   p = 0.00024: the same buffer, count (243) and following random number; every overwritten byte is listed
+   ok   p = 0.01: the same buffer, count (10366) and following random number; every overwritten byte is listed
+
+3. The tags, in cases with a known answer
+   ok   the replicator's copy: 63 bytes of the partner come from it, all with its bit and its values
+   ok   the invariant holds after the interaction
+   ok   the carrier's own bytes take its bit when it interacts
+   ok   '+' and '-' keep the origin and set the flag
+   ok   a copy onto an equal value takes the source's tags; a chain of copies keeps the first origin and the bit; an untouched byte does not get it
+   ok   a mutation clears the origin and the bits and sets the flag
+
+4. A tiny test world (32 × 32), the replicator of Phase 1 in two cells
+   ok   mutation 0: the invariant holds at every one of 60 epochs
+   ok   the replicator spreads: 839 carriers at the end
+   ok   every carrier has a window whose 16 bytes carry its bit and descend from the two cells: 839 of 839
+   ok   both cells are origins: 471 carriers with bytes from A, 370 from B
+   ok   mutation 0.00024: the invariant holds at every one of 60 epochs
+   ok   with mutations, 811 of 811 carriers descend from the two cells by a full window
+
+5. A tiny world from a capture, run by sim.mjs and by mon.mjs with windows open
+   ok   the measures of sim.mjs: 6 of 6 equal (windows open from epoch 101)
+   ok   the final fingerprint: a38de6b9 against sim.mjs's a38de6b9
+
+6. The data's checks (dades.mjs): the real data pass, and impossible cases do not
+   ok   the real data: 0 problems
+   ok   a missing census: rejected (7002-continue-natural: impossible lines (the censuses are not those of the record))
+   ok   a false group at the confirmation: rejected (7002-continue-natural: impossible lines (census 13750: the groups field))
+   ok   a step after the end: rejected (7002-continue-natural: impossible lines (a line out of the branch (step 14000)))
+   ok   a false branch in the final line: rejected (7002-continue-natural: the tracking's start or end line does not match its branch)
+   ok   a changed line of the replayed record: rejected (7002-continue-natural: the replayed record is not the pilot's)
+   ok   a changed program of a new lineage: rejected (7002-continue-natural: impossible lines (new 13000:0: not the inert census's programs; census 13000; step 13000:0 13000; …))
+   ok   a lineage joined twice: rejected (7014-continue-natural: impossible lines (census 9000: the unions; census 9250: the groups field))
+   ok   a census cell that is not heritable: rejected (7002-continue-natural: impossible lines (census 13000))
+   ok   a repeated part-B branch in the manifest: rejected (the manifest has 181 part-B branches of the three soups)
+
+7. The analysis (analisi.mjs) on synthetic records with a known answer
+   ok   all D-derived: the reading ("Two thirds or more are D-derived…") and Rc's aged count (17)
+   ok   none from D: the reading ("A third or fewer are D-derived…") and Rc's aged count (33)
+
+All the checks pass.
