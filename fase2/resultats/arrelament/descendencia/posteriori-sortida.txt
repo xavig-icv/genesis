@@ -1,0 +1,30 @@
+A measure of descent (exploratory): a check after the fact, declared. The code: f04f6a03, v16.15.1.
+The time rule's appearances, window 1250, measure adj1: the appearance's score (per cell, of 63 pairs), and its 200 matched cells: the share at 15 pairs or more, the median.
+   soup        branch  appearance  score  matched ≥ 15  matched median
+   continue    7014    9000:2       46.0          0.54              20
+   continue    7014    9000:7       41.0          0.54              20
+   shuffle-all 7027    10000:3      43.0          0.56              19
+   shuffle-all 7027    10000:8      30.0          0.56              19
+   shuffle-all 7037    11000:1      21.0          0.94            49.5
+   continue    7048    13500:2      41.0          0.47              13
+   continue    7048    13500:4      45.0          0.47              13
+   shuffle-all 7048    10000:1      61.0          0.81            34.5
+   continue    7052    10000:10     34.0          0.63              20
+   continue    7052    10000:11     20.0          0.63              20
+   continue    7052    10000:12     38.0          0.63              20
+   continue    7052    10000:14     32.0          0.63              20
+   continue    7052    10000:15     39.0          0.63              20
+   continue    7052    10000:17     31.0          0.56              17
+   continue    7052    10000:21     32.0          0.63              20
+   shuffle-all 7052    14250:3      30.0          0.53              17
+   continue    7054    14000:2      53.7          0.89              30
+   continue    7059    13250:3      21.0          0.03               0
+   continue    7059    13250:4      25.5          0.49              14
+   continue    7059    13250:5      28.0          0.49              14
+   shuffle-all 7066    15250:1      28.8          0.81              48
+   shuffle-all 7067    14750:5      23.0          0.59              22
+   continue    7074    13250:1      47.0          0.65            33.5
+
+By soup: the appearances (with D), the median of their matched cells' share at the run, and how many appearances score at the run or above
+   continue    16: matched share at the run, median 0.59 (from 0.03 to 0.89); appearances at the run 16 of 16
+   shuffle-all 7: matched share at the run, median 0.59 (from 0.53 to 0.94); appearances at the run 7 of 7
