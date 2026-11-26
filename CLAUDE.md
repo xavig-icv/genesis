@@ -436,5 +436,19 @@ Llegeix-los abans de proposar canvis.
       - **La `--check` de la nota accepta registres impossibles, i `prova/compara.mjs` surt amb el codi 0 quan troba diferències** (AU2-219,
         AU2-223): obertes, com l'AU2-205 i l'AU2-216; es corregeixen abans de tornar a fer servir el codi. El control positiu comprova la
         comptabilitat, i cap control no mira l'especificitat.
+    - **La mesura de descendència** (26-11-2026, l'entrada 28, exploratori; `fase2/resultats/arrelament/descendencia/`, amb `previ/`, el que
+      es va fer córrer abans de la nota): l'ordre dels orígens, quantes de les 63 parelles de bytes veïns d'una cel·la tenen els dos orígens
+      veïns al mapa de la meitat A dels portadors de *D*; una mutació dona un origen nou; la tirada, 15 parelles; «una còpia de *D*», també el
+      percentil 0,90 entre les 200 aparellades. Reutilitza `mon.mjs`, `dades.mjs` i la llista del registre petit; la `--check` d'aquesta nota
+      falla tancada i el seu `compara.mjs` surt amb codi (les eines de les notes d'abans, encara no).
+      - **Específica** (als mons de prova, la variant i una còpia independent del mateix programa, 0 a la tirada; lluny del grup dominant, cap),
+        però **per la regla fixada no ho pot dir:** de les 16 de la sopa vella, 4 còpies, 0 que no ho siguin, 12 sense decidir; totes arriben a la
+        tirada, i a posteriori, una mediana del 59 % del seu veïnat també. **«No ho podem dir»,** mai «les 12 són còpies», ni «arranjaments
+        nous», ni «trossos»; la pista de l'auditor 1 (AUD-228), «ni confirmada ni contradita».
+      - **«L'excés que queda no es mostra amb aquesta regla»** (Rd = R1, 4,55 [0,90; 22,91]); treient només les còpies (Rd+, una sensibilitat),
+        3,88 [1,13; 13,41], per sobre d'1. La finestra de 250 no separa (una còpia d'abans de la finestra no s'hi veu).
+      - **La primera `--check` en va rebutjar 17 de 18** per un límit inferior meu equivocat al validador (comprovacions d'invariant per mesura);
+        corregit al nombre exacte (`924b18f`) abans de mirar cap puntuació. Els scripts i les sortides diuen «by position», el nom de la primera
+        versió: la mesura és per l'ordre.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

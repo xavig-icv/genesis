@@ -435,14 +435,29 @@ comes from and which cells it has passed through, checked against the simulator 
 
 See notebook [entry 27](quadern/index.html#entrada-27), in Catalan, or its [English text](quadern/resum.en.md#entry-27).
 
+### Copies or new arrangements (exploratory)
+
+A measure of descent fixed before computing, apart from the exposure bit: how many of a cell's pairs of adjacent bytes keep the order their
+origins have in the dominant group's carriers (a copy keeps it, forward or backward and shifted; a new arrangement breaks it). Tested with
+known answers on synthetic test worlds first, where it tells a replicator's copies from those of a variant and of an independent copy of the
+same program (the exposure bit does not); then the same 18 branches again (nothing planted):
+- **Of the aged soup's 16 failed appearances that the time rule removes, 4 are copies of the dominant group, none is not, and 12 are
+  undecided:** by the rule fixed in the note, **we cannot tell.** All 16 carry runs of 16 bytes in the dominant group's order, but so do more
+  than half of their neighbours (after the fact), and the rule asks an appearance to stand out from them.
+- **The excess left is not shown under this rule** (4.55 [0.90, 22.91]); removing only the appearances shown to be copies, its interval lies
+  above 1 (3.88 [1.13, 13.41], a sensitivity).
+
+See notebook [entry 28](quadern/index.html#entrada-28), in Catalan, or its [English text](quadern/resum.en.md#entry-28).
+
 ### What we study now
 
 - **The soup before life:** the synthesis (entry 25) closes the line of planted replicators; the within-world null (entry 26) left the
-  fragments undecided, and the small record of copies (entry 27) finds that the bytes of the appearances the time rule removes passed through
-  the dominant group's cells, like their neighbourhood's, which does not show fragments. Where maturation acts is still not known. What
-  could answer it is the owner's choice: the full record of copies, once a measure of descent, what counts as one origin and a symmetric
-  recount are fixed and tested with known answers; an intervention on the aged soup's first bytes; planting the natural lineages
-  themselves; or a confirmatory series, after the record. Planting again needs a new decision and the agreement of the three.
+  fragments undecided; the small record of copies (entry 27) finds that the bytes of the appearances the time rule removes passed through
+  the dominant group's cells, like their neighbourhood's, which does not show fragments; and a specific measure of descent (entry 28) cannot
+  tell whether they are copies, because near the dominant group its material in its order is everywhere. Where maturation acts is still not
+  known. What could answer it is the owner's choice: the full record of copies, with the appearances the time rule keeps and a definition of
+  a new appearance fixed before; an intervention on the aged soup's first bytes; planting the natural lineages themselves; or a
+  confirmatory series, after the record. Planting again needs a new decision and the agreement of the three.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 

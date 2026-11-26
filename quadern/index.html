@@ -38,6 +38,7 @@
     <a href="#entrada-25">Entrada 25</a>
     <a href="#entrada-26">Entrada 26</a>
     <a href="#entrada-27">Entrada 27</a>
+    <a href="#entrada-28">Entrada 28</a>
   </nav>
 
   <article id="entrada-1">
@@ -2674,6 +2675,79 @@
         <li><strong>Detalls</strong> (l'auditor 1): les quatre de la nova són de censos on el grup dominant es detecta per primer cop al mateix cens o després, no abans; «del 0,70 al 0,98 dels seus bytes», no «gairebé tots»; i l'aparició del 7037 a la barrejada, l'única amb menys marca que el seu veïnat (0,39 contra 0,89), la classe la diu mixta, no «no derivada».</li>
       </ul>
     </div>
+  </article>
+
+  <article id="entrada-28">
+    <header>
+      <p class="date">Entrada 28 · 26 de novembre de 2026 · exploratori</p>
+      <h1>La sopa abans de la vida, onzena part: còpies o arranjaments nous</h1>
+      <p class="lede">A l'<a href="#entrada-27">entrada 27</a>, la marca de pas deia per on havien estat els bytes de les aparicions, no de quin programa venien. Ara hem fixat abans de calcular una mesura de descendència, l'ordre dels orígens dels bytes, que una còpia conserva i un arranjament nou trenca. L'hem provada amb resposta coneguda en mons de prova sintètics abans de fer-la servir: hi separa les còpies d'un replicador de les d'una variant i de les d'una còpia independent del mateix programa, cosa que la marca no feia. A les mateixes 18 branques, de les 16 aparicions de la sopa vella que treu la regla del temps, 4 són còpies del grup dominant, cap no és un arranjament nou i 12 queden sense decidir: per la regla fixada, no ho podem dir. Totes 16 porten tirades de 16 bytes amb l'ordre del grup dominant, però més de la meitat del seu veïnat també. L'excés que queda no es mostra amb aquesta regla. És exploratori.</p>
+    </header>
+
+    <h2>D'on surt</h2>
+    <p>A l'auditoria 44, tots tres vam coincidir que, abans del registre sencer, calia fixar una mesura de descendència separada de la marca de pas, provar-la amb casos de resposta coneguda, definir què és un origen i fer un recompte que tracti igual totes les sopes; el primer pas petit, de l'auditor 1, era tornar a fer córrer aquestes 18 branques amb la mesura fixada abans. El responsable hi va dir que sí el 26-11-2026. La nota (<code>fase2/resultats/arrelament/descendencia/</code>) es va escriure abans de calcular res amb les branques del pilot. Tot el que es va fer córrer abans d'escriure-la (només mons de prova) és a <code>previ/</code>, amb la sortida i les SHA-256 del codi, com proposava l'auditor 2. No es planta res a cap experiment i el simulador no es toca.</p>
+
+    <h2>La mesura</h2>
+    <ul>
+      <li><strong>L'origen de cada byte:</strong> a l'inici de la finestra (1.250 èpoques abans del cens), cada byte és el seu propi origen; una còpia el passa, un <code>+</code> o un <code>-</code> el conserva, i una mutació en dona un de nou. Dues cel·les que vénen d'un mateix byte mutat en comparteixen l'origen (un requisit de l'auditor 2).</li>
+      <li><strong>El mapa:</strong> els portadors del grup dominant (<em>D</em>, com a l'entrada 27) es parteixen en dues meitats a l'atzar; de la meitat A, les parelles d'orígens que tenen dos bytes veïns en l'1 % dels portadors o més. <strong>La puntuació d'una cel·la</strong> és quantes de les seves 63 parelles de bytes veïns tenen els dos orígens al mapa. Una còpia conserva aquest ordre, en qualsevol sentit i a qualsevol desplaçament; un arranjament nou dels mateixos bytes el trenca. Una tirada de 16 bytes (15 parelles) compta com a descendència.</li>
+      <li><strong>Per què l'ordre i no la posició:</strong> la primera versió de la nota mirava l'origen a la seva posició, com la mesura a posteriori de l'auditor 1. En els mons de prova vam veure que el replicador de la Fase 1 es copia al revés i desplaçat (el byte <em>g</em> va a 62 − <em>g</em>), i una mesura per posició no en reconeix les còpies; l'ordre, sí (62 o 63 de les 63 parelles). La posició es queda com a sensibilitat.</li>
+      <li><strong>La regla:</strong> «una còpia de <em>D</em>» si arriba a la tirada i supera el 90 % de les seves 200 cel·les aparellades (les de l'entrada 27: a la mateixa distància del grup dominant, sense cap conjunt seguit); «no una còpia» si no hi arriba i no passa de la meitat; «sense decidir» si no és cap de les dues; i «no classificable» si no hi ha <em>D</em> o el cens no passa els controls (la meitat B ha d'arribar a la tirada en un 90 % o més, i les cel·les lluny, en un 5 % o menys).</li>
+    </ul>
+
+    <h2>Les proves, abans de fer-la servir</h2>
+    <ul>
+      <li><strong>Casos de resposta coneguda</strong> (la llista de l'auditor 2): una còpia exacta, un tros de 16 bytes, una recombinació, un arranjament nou dels bytes d'un portador (a prop de 0), una còpia desplaçada i una al revés, un fals portador fet per una mutació (la marca de pas pren els 64 bytes, i la descendència es queda a 0), i una desaparició i un renaixement.</li>
+      <li><strong>Un món de prova</strong> (128 × 32 i bytes a l'atzar, amb i sense mutacions): el replicador de la Fase 1 en tres cel·les, una variant seva al costat i el replicador mateix en tres cel·les lluny, posat a part. Amb el mapa d'una meitat dels portadors del replicador, tots els de l'altra meitat arriben a la tirada, i <strong>cap portador de la variant ni de la còpia independent</strong>; la marca de pas dona 0,99 a la còpia independent.</li>
+      <li><strong>Un segon traçador escrit d'una altra manera</strong> dona els mateixos orígens a cada època. Les comprovacions de les dades fallen tancades (21 registres impossibles, tots rebutjats; l'AU2-219), i el comparador surt amb error quan troba diferències (l'AU2-223).</li>
+    </ul>
+
+    <h2>Com va anar</h2>
+    <p>Les 18 branques, en 1 h 32 min, amb totes les mesures i l'empremta final del pilot. Amb els registres a git, la comprovació de les dades en va rebutjar 17 per un error meu del validador: exigia com a mínim una comprovació d'invariant per mesura, i el càlcul en fa una per finestra oberta, que no hi té res a veure. Ara n'exigeix el nombre exacte; els 18 registres el tenen, i abans de mirar cap puntuació totes les proves van tornar a passar. Després, l'anàlisi, desada tal com va sortir abans de llegir-la, i una sola comprovació a posteriori, declarada.</p>
+
+    <h2>Els controls</h2>
+    <p>A la finestra principal, els 12 censos amb <em>D</em> passen: la meitat B arriba a la tirada (el seu 10è percentil va de 29 a 53 parelles; en calen 15), i cap de les cel·les lluny (de 50.624 a 107.748 per cens) no hi arriba. Amb la finestra de 250 èpoques, 4 dels 12 fallen, com preveia la nota: el grup dominant ja hi tenia portadors a l'inici, i una còpia d'abans de la finestra no s'hi veu.</p>
+
+    <h2>Les aparicions que treu la regla del temps, a la sopa vella</h2>
+    <ul>
+      <li><strong>4 còpies de <em>D</em>, cap que no ho sigui, 12 sense decidir.</strong> Totes 16 arriben a la tirada (de 20 a 54 parelles de 63), i les 12 sense decidir són entre el percentil 51 i el 89 de les seves cel·les aparellades. Les quatre còpies: dues del 7014 a l'època 9.000, la del 7054 a la 14.000 i la del 7059 a la 13.250.</li>
+      <li><strong>Per què tantes sense decidir</strong> (a posteriori, declarat): les cel·les aparellades també arriben a la tirada, una mediana del 59 % per aparició (del 3 al 89 %). A prop del grup dominant, les tirades de 16 bytes amb el seu ordre són corrents; a 64 cel·les o més, no n'hi ha cap.</li>
+      <li><strong>Les sensibilitats:</strong> amb el mapa al 0,5 % o al 5 %, per posició o pel mirall, per posició sola (la de l'auditor 1) o a qualsevol posició, de 2 a 5 còpies i <strong>cap «no una còpia»</strong>. Amb la finestra de 250 èpoques, 4 «no una còpia», però una còpia més antiga que la finestra no s'hi veu: no les pot separar.</li>
+    </ul>
+
+    <h2>La barrejada i la nova (descriptiu)</h2>
+    <p>A la barrejada, de 9, 2 còpies de <em>D</em>, 5 sense decidir i 2 sense cap llinatge dominant d'abans. Les 4 de la nova no es poden classificar: el grup dominant no s'hi havia detectat abans.</p>
+
+    <h2>Un origen</h2>
+    <p>Dues aparicions d'un mateix cens comparteixen un origen si comparteixen 15 parelles d'orígens veïns o més, amb un nul de les cel·les que les toquen. Les set aparicions del 7052 a la 10.000 en fan sis (nul 0,003); les tres del 7059, tres; les dues del 7048 a la 13.500, una. La ràfega del 7046 i la parella del 7014 no es poden dir (el nul passa del 5 %). És descriptiu, com la nota fixava.</p>
+
+    <h2>El recompte</h2>
+    <ul>
+      <li><strong>Rd, el principal</strong> (de les que treu la regla del temps, només es tornen a comptar les que no són còpies, a totes les sopes): com que no n'hi ha cap, és el de la regla del temps, 4,55 [0,90; 22,91]. L'interval conté 1.</li>
+      <li><strong>Treient només les còpies</strong> (Rd+, una sensibilitat), 3,88 [1,13; 13,41]: l'interval queda per sobre d'1. Les variants del mapa i les mesures per posició, 4,55; la finestra de 250 èpoques, 5,62 [1,47; 27,28].</li>
+    </ul>
+
+    <h2>Què en traiem</h2>
+    <ul>
+      <li><strong>Per la regla fixada, no ho podem dir:</strong> ni dos terços són còpies del grup dominant (4 de 16) ni dos terços no ho són (cap). Cap no és un arranjament nou amb aquesta mesura: totes porten tirades de 16 bytes amb l'ordre del grup dominant. Però el seu veïnat també, i la regla demana que l'aparició en sobresurti; 12 queden entremig. Mai «són còpies» de les 12, ni «són arranjaments nous», ni «són trossos».</li>
+      <li><strong>La mesura, a diferència de la marca de pas, és específica:</strong> als mons de prova i lluny del grup dominant no dona cap tirada. El que fa que no decideixi és que, a prop del grup dominant, el seu material amb el seu ordre és a tot arreu.</li>
+      <li><strong>La pista de l'auditor 1</strong> (l'entrada 27) ni es confirma ni es contradiu: cap aparició no surt «no una còpia», que l'hauria contradit, i només 4 superen el control del veïnat. A la sopa vella no era una prova independent (la nota ho deia abans de calcular).</li>
+      <li><strong>L'excés que queda no es mostra amb aquesta regla</strong> (4,55 [0,90; 22,91]); mai «no hi ha excés». Treient només les que s'ha mostrat que són còpies, l'interval queda per sobre d'1 (3,88; una sensibilitat).</li>
+    </ul>
+
+    <h2>Els límits</h2>
+    <ul>
+      <li><strong>L'ordre dels orígens diu què s'ha copiat junt dins de la finestra,</strong> no qui ho ha copiat; una còpia d'abans de la finestra no s'hi veu.</li>
+      <li><strong>Una cel·la amb una tirada de 16 bytes</strong> amb l'ordre del grup dominant pot portar un altre material a la resta: el veïnat no és «fet de còpies del programa».</li>
+      <li><strong>Les 17 aparicions de la sopa vella que la regla del temps es queda</strong> no s'han classificat.</li>
+      <li><strong>Exploratori,</strong> i on actua la maduració, encara no ho sabem (AUD-184 = AU2-151).</li>
+    </ul>
+
+    <h2>El que ve</h2>
+    <ul>
+      <li><strong>Una ronda d'auditoria</strong> d'aquesta nota, amb tots dos auditors (la 45).</li>
+      <li><strong>El pas següent</strong> el tria el responsable, després de l'auditoria. Amb una mesura que sí que és específica, el que falta és saber si les aparicions se separen del seu veïnat; ho podria dir el registre sencer, amb les 17 que la regla del temps es queda i una definició d'aparició nova fixada abans (AU2-209).</li>
+    </ul>
   </article>
 
   <script type="module" src="quadern.js"></script>

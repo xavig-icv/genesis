@@ -436,13 +436,28 @@ apunta d'on ve cada byte i per quines cel·les ha passat, comprovada contra el s
 
 Vegeu l'[entrada 27](quadern/index.html#entrada-27).
 
+### Còpies o arranjaments nous (exploratori)
+
+Una mesura de descendència fixada abans de calcular, separada de la marca de pas: quantes parelles de bytes veïns d'una cel·la conserven
+l'ordre que tenen els seus orígens als portadors del grup dominant (una còpia el conserva, en qualsevol sentit i desplaçada; un arranjament
+nou el trenca). Provada primer amb resposta coneguda en mons de prova sintètics, on separa les còpies d'un replicador de les d'una variant i
+de les d'una còpia independent del mateix programa (la marca de pas no ho fa); després, les mateixes 18 branques (sense plantar res):
+- **De les 16 aparicions de la sopa vella que treu la regla del temps, 4 són còpies del grup dominant, cap no és un arranjament nou i 12
+  queden sense decidir:** per la regla fixada, **no ho podem dir.** Totes 16 porten tirades de 16 bytes amb l'ordre del grup dominant, però
+  més de la meitat del seu veïnat també (a posteriori), i la regla demana que l'aparició en sobresurti.
+- **L'excés que queda no es mostra amb aquesta regla** (4,55 [0,90; 22,91]); treient només les que s'ha mostrat que són còpies, l'interval
+  queda per sobre d'1 (3,88 [1,13; 13,41], una sensibilitat).
+
+Vegeu l'[entrada 28](quadern/index.html#entrada-28).
+
 ### El que estudiem ara
 
 - **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats; el nul dins del món (l'entrada 26)
-  deixava els trossos sense decidir, i el registre petit de les còpies (l'entrada 27) troba que els bytes de les aparicions que treu la regla
-  del temps han passat per les cel·les del grup dominant, com els del seu veïnat, i això no mostra que siguin trossos. On actua la maduració,
-  encara no ho sabem. El que ho podria respondre ho tria el responsable: el registre sencer de les còpies, després de fixar i provar amb
-  casos de resposta coneguda una mesura de descendència, què és un origen i un recompte simètric; una intervenció sobre els primers bytes de la
+  deixava els trossos sense decidir; el registre petit de les còpies (l'entrada 27) troba que els bytes de les aparicions que treu la regla
+  del temps han passat per les cel·les del grup dominant, com els del seu veïnat, i això no mostra que siguin trossos; i una mesura de
+  descendència específica (l'entrada 28) no pot dir si són còpies, perquè a prop del grup dominant el seu material amb el seu ordre és a tot
+  arreu. On actua la maduració, encara no ho sabem. El que ho podria respondre ho tria el responsable: el registre sencer de les còpies, amb
+  les aparicions que la regla del temps es queda i una definició d'aparició nova fixada abans; una intervenció sobre els primers bytes de la
   sopa vella; plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió
   nova i l'acord dels tres.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
