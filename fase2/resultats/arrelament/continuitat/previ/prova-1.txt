@@ -1,0 +1,110 @@
+A measure of continuity: the instrument's and the measure's checks (exploratory). The code: 9a5f69e2+canvis, v16.15.1.
+
+1. The descent note's tracer against its slow reference, and the world against sim.mjs with the tracer open
+   ok   the origins and flags equal to the reference's at 40 of 40 epochs with mutations (5268 new origins), the invariant at every epoch
+   ok   the measures of sim.mjs, 6 of 6 equal with the tracer open from epoch 101, and the final fingerprint (d5d54a46 against d5d54a46)
+
+2. The measures, one case at a time (the donors: 40 carriers of a program X, origins 1000 + j; 40 of a program Y, 2000 + j; others as each case says)
+   ok   the context: 171 donors, 12 distinct, the map wants 2 carriers, 693 pairs
+   ok   the map and entry 28's score, the descent note's exactly (39 and 63 of 63)
+   ok   an exact copy of X: the ordered run 64 (expected 64), ordered (expected ordered); auditor 1's measure 64, one donor 64, distinct 63, entry 28's score 63
+   ok   a backward copy off the mirror by one (as the replicator of Phase 1: byte g at 62 − g): the ordered run 63 (expected 63), ordered (expected ordered); auditor 1's measure 63, one donor 63, distinct 62, entry 28's score 62
+   ok   a copy of X moved by 5 bytes, the rest foreign: the ordered run 59 (expected 59), ordered (expected ordered); auditor 1's measure 59, one donor 59, distinct 58, entry 28's score 58
+   ok   one own mutation (byte 30): the ordered run 64 (expected 64), ordered (expected ordered); auditor 1's measure 64, one donor 64, distinct 61, entry 28's score 61
+   ok   two own mutations side by side (30, 31): the ordered run 64 (expected 64), ordered (expected ordered); auditor 1's measure 64, one donor 64, distinct 60, entry 28's score 60
+   ok   three side by side (30 to 32): the run stops there: the ordered run 31 (expected 31), ordered (expected ordered); auditor 1's measure 31, one donor 31, distinct 59, entry 28's score 59
+   ok   an own mutation on the last byte: the run does not end on it: the ordered run 63 (expected 63), ordered (expected ordered); auditor 1's measure 63, one donor 63, distinct 62, entry 28's score 62
+   ok   eight own mutations, scattered: the ordered run 64 (expected 64), ordered (expected ordered); auditor 1's measure 64, one donor 64, distinct 47, entry 28's score 47
+   ok   a mutation the donors share (frequent, in the map): not passed over, it matches: the ordered run 64 (expected 64), ordered (expected ordered); auditor 1's measure 64, one donor 64, distinct 63, entry 28's score 63
+   ok   auditor 2's counterexample: X in blocks of 2 bytes, reordered (0 1 4 5 … 60 61, then 2 3 6 7 … 62 63): the ordered run 2 (expected 2), pieces (expected pieces); auditor 1's measure 2, one donor 2, distinct 32, entry 28's score 32
+   ok   a pair of the map repeated over the cell: the ordered run 2 (expected 2), pieces (expected pieces); auditor 1's measure 64, one donor 2, distinct 1, entry 28's score 63
+   ok   a mosaic: X's first half, then Y's second half: the ordered run 32 (expected 32), ordered (expected ordered); auditor 1's measure 32, one donor 32, distinct 62, entry 28's score 62
+   ok   a mosaic of pieces of 8 bytes, X and Y in turn (each at its place): the ordered run 8 (expected 8), pieces (expected pieces); auditor 1's measure 8, one donor 8, distinct 56, entry 28's score 56
+   ok   a chain of 8 programs joined by shared origins: every pair is a map pair, no donor holds more than 9 bytes of it: the ordered run 9 (expected 9), pieces (expected pieces); auditor 1's measure 64, one donor 9, distinct 63, entry 28's score 63
+   ok   a fragment of 16 bytes of X in a foreign cell: the ordered run 16 (expected 16), ordered (expected ordered); auditor 1's measure 16, one donor 16, distinct 15, entry 28's score 15
+   ok   a fragment of 15 bytes: the ordered run 15 (expected 15), pieces (expected pieces); auditor 1's measure 15, one donor 15, distinct 14, entry 28's score 14
+   ok   a copy made before the window (the program's own origins, never copied in it): a false negative the measure cannot avoid: the ordered run 0 (expected 0), none (expected none); auditor 1's measure 0, one donor 0, distinct 0, entry 28's score 0
+   ok   a rare variant (one donor of 171): a false negative the measure cannot avoid: the ordered run 0 (expected 0), none (expected none); auditor 1's measure 0, one donor 64, distinct 0, entry 28's score 0
+   ok   where the run is: bytes 0 to 63
+   ok   the counterexamples that entry 28's score and auditor 1's measure do not stop: the blocks score 32 of 63 (auditor 2's 32); the repeated pair and the chain, auditor 1's measure 64 and 64
+   ok   16 pieces of 2 bytes of X in a foreign cell, 200 ways: the ordered run 2 to 2, all pieces
+   ok   X in pieces of 1 byte, separated, 200 ways: the ordered run 0 to 0 (no two pieces consecutive in X side by side: never more than a piece)
+   ok   X in pieces of 2 bytes, separated, 200 ways: the ordered run 2 to 2 (no two pieces consecutive in X side by side: never more than a piece)
+   ok   X in pieces of 4 bytes, separated, 200 ways: the ordered run 4 to 4 (no two pieces consecutive in X side by side: never more than a piece)
+   ok   X in pieces of 8 bytes, separated, 200 ways: the ordered run 8 to 8 (no two pieces consecutive in X side by side: never more than a piece)
+   ok   X in pieces of 16 bytes, separated, 200 ways: the ordered run 16 to 16 (no two pieces consecutive in X side by side: never more than a piece)
+      X with 1 own mutations at random places, 200 ways: the ordered run 64 to 64; ordered 200 of 200 (descriptive)
+      X with 4 own mutations at random places, 200 ways: the ordered run 59 to 64; ordered 200 of 200 (descriptive)
+      X with 8 own mutations at random places, 200 ways: the ordered run 31 to 64; ordered 200 of 200 (descriptive)
+   ok   the common run of two cells: 40 (a copy mutated at 40), 20 (20 bytes of it), 64 (backwards)
+   ok   outside the dominant group's order: two copies of X share 1 byte(s); two cells sharing 20 bytes of material outside the map, 20
+   ok   an origin beyond the keys' range fails, it is not folded into another
+   ok   the class of an appearance: ordered if half or more of its cells are; none if all are; else pieces
+
+3. The measures in test worlds: the replicator traced from its planting, its variant beside it, an independent planting far away
+   mutation 0: carriers of the replicator 305 (half A 153, half B 152), of the independent planting 342, of the variant 166; far cells 512
+   ok   the test world is usable: the plantings kept apart, enough carriers of each and far cells
+   ok   sensitivity, the replicator's half B: 1.000 ordered
+   ok   the variant beside it (not a descendant; a cell can hold both): 0.000 ordered, 0.687 none
+   ok   the independent planting (the same program, another ancestry): 1.000 none
+   ok   the far cells: 1.000 none
+   ok   the adversarial controls on its real copies, as each census will have them: pieces1 0/152, pieces2 0/152, pieces4 0/152, far2x16 0/152, repeated 0/100, mutated4 131/131, pieces8 0/152, pieces16 146/152, mutated8 131/131, mutated16 125/131
+   ok   the writes through the tracer keep its invariant
+   ok   a far cell given 16 pieces of 2 bytes of a carrier through the tracer: 20 of 20 pieces; given one piece of 16 bytes: 20 of 20 ordered
+   mutation 0.0005: carriers of the replicator 210 (half A 105, half B 105), of the independent planting 245, of the variant 117; far cells 512
+   ok   the test world is usable: the plantings kept apart, enough carriers of each and far cells
+   ok   sensitivity, the replicator's half B: 1.000 ordered
+   ok   the variant beside it (not a descendant; a cell can hold both): 0.000 ordered, 0.650 none
+   ok   the independent planting (the same program, another ancestry): 1.000 none
+   ok   the far cells: 1.000 none
+   ok   the adversarial controls on its real copies, as each census will have them: pieces1 0/105, pieces2 0/105, pieces4 0/105, far2x16 0/105, repeated 0/100, mutated4 94/94, pieces8 0/105, pieces16 101/105, mutated8 94/94, mutated16 93/94
+   ok   the writes through the tracer keep its invariant
+   FAIL a far cell given 16 pieces of 2 bytes of a carrier through the tracer: 20 of 20 pieces; given one piece of 16 bytes: 19 of 20 ordered
+
+4. The validators fail closed (also with a value impossible in the same way in every record), and the comparator's exit codes
+   ok   the synthetic records pass (no problem)
+   ok   a short form of the commit is the same commit
+   ok   rejected: the list's SHA-256 false in every record (7014-continue-natural: the list's SHA-256 is not the note's)
+   ok   rejected: the commit false in every record (7014-continue-natural: the commit is not the computation's (1234567))
+   ok   rejected: a commit with +canvis (7014-continue-natural: the commit is not the computation's (abcdef1234567+canvis))
+   ok   rejected: no Node version (7014-continue-natural: no Node version)
+   ok   rejected: two Node versions (the records were not run with one Node (v20.19.2, v16.15.1))
+   ok   rejected: the seed false (7014-continue-natural: the start line is not of this branch or of its pilot record)
+   ok   rejected: the final fingerprint false (7014-continue-natural: the end line is not of this branch or of its pilot record)
+   ok   rejected: the measures checked, one fewer (7014-continue-natural: the end line is not of this branch or of its pilot record)
+   ok   rejected: the invariant checks, one more (7014-continue-natural: the end line is not of this branch or of its pilot record)
+   ok   rejected: the window's start false (7014-continue-natural: census 9000/1250: the window's start)
+   ok   rejected: the next origin below the world's bytes (7014-continue-natural: census 9000/1250: the world's bytes or the next origin)
+   ok   rejected: an origin at or above the next one (7014-continue-natural: census 9000/1250: the pool is not whole cells of origins below the )
+   ok   rejected: a negative origin (7014-continue-natural: census 9000/1250: the pool is not whole cells of origins below the )
+   ok   rejected: an index outside the pool (7014-continue-natural: census 9000/1250: the samples are not of their sizes, or point outs)
+   ok   rejected: half A not of its size (7014-continue-natural: census 9000/1250: the samples are not of their sizes, or point outs)
+   ok   rejected: half B's sample not of its size (7014-continue-natural: census 9000/1250: the samples are not of their sizes, or point outs)
+   ok   rejected: the far sample larger than the far cells (7014-continue-natural: census 9000/1250: the samples are not of their sizes, or point outs)
+   ok   rejected: the carriers and the halves not adding up (7014-continue-natural: census 9000/1250: the carriers and the halves do not add up)
+   ok   rejected: a sequence twice in the pool (7014-continue-natural: census 9000/1250: the pool holds a sequence no sample uses; census )
+   ok   rejected: a sequence in the pool no sample uses (7014-continue-natural: census 9000/1250: the pool holds a sequence no sample uses)
+   ok   rejected: D where the list has none (7018-shuffle-all-natural: census 15250/1250: D, present or not, against the list)
+   ok   rejected: matched cells at distance 0 (7014-continue-natural: 9000:2 9000/1250: matched cells at distance 0, or none at a distanc)
+   ok   rejected: no matched cell at distance 1 (7014-continue-natural: 9000:2 9000/1250: matched cells at distance 0, or none at a distanc)
+   ok   rejected: a matched cell that is the appearance's (7014-continue-natural: 9000:2 9000/1250: impossible matched cells)
+   ok   rejected: more than 200 matched cells (7014-continue-natural: 9000:2 9000/1250: impossible matched cells)
+   ok   rejected: appearance origins of the wrong length (7014-continue-natural: 9000:2 9000/1250: impossible origins)
+   ok   rejected: an impossible flag (7014-continue-natural: 9000:2 9000/1250: impossible flags)
+   ok   rejected: a ring with the appearance's cell (7014-continue-natural: 9000:2 9000/1250: an impossible ring)
+   ok   rejected: a line missing (7014-continue-natural: not the lines the list asks for, once each and in order (5 lines, 6)
+   ok   rejected: a line twice (7014-continue-natural: not the lines the list asks for, once each and in order (7 lines, 6)
+   ok   rejected: two lines out of order (7014-continue-natural: not the lines the list asks for, once each and in order (6 lines, 6)
+   ok   rejected: a field more (7014-continue-natural: a line that is not of the note's types and fields)
+   ok   rejected: a file more in the folder
+   ok   rejected: records of another commit than the computation's
+   ok   rejected: no commit to check against
+   ok   the comparator: 0 if the same but for the commit and the seconds, 1 if a line differs, 2 if a file cannot be read
+
+5. The analysis on synthetic records with a known answer
+   ok   the analysis runs to the end on them (exit 0)
+   FAIL every appearance's class, the one its synthetic cells were made for (a census with half B too small, unclassifiable): 20 right; 7048-continue-natural 13500:2: ordered (expected none); 7048-continue-natural 13500:4: pieces (expected ordered); 7048-shuffle-all-natural 10000:1: ordered (expected pieces)
+   ok   the analysis reads nothing from records of another commit
+   ok   --check prints no class and no run
+
+2 checks fail.
