@@ -144,3 +144,101 @@ about 5 hours of CPU, about an hour with 6 processes at low priority. The limit 
 - **`registre.mjs ID`:** one branch, to `registres/ID.jsonl`; **`llanca.sh COMMIT`:** all of them, 6 at a time, from a clean copy at the
   commit, with the log in `llanca.log`.
 - **`analisi.mjs [--check]`:** the analysis, to `analisi-sortida.txt`, with the commit and the Node version in its first line.
+
+## How it went
+
+- **The short test** (26-11-2026, 00.02 to 00.14, from `4ce3550`, Node 16.15.1, both exit codes 0): `prova.mjs`, 30 checks of 30
+  (`prova-sortida.txt`); one branch (world 7014's aged soup) into `prova/`, of which only the checks and the line types were looked at (its
+  measures, the invariant, the appearances' programs and the final fingerprint, all reproduced). In git with the outputs (`fd6ab4c`).
+- **The full run** (from `fd6ab4c`, launched from the app on 26-11-2026 at 00.14.39, 6 at a time at low priority, Node 16.15.1): finished at
+  01.47.11, 1 h 33 min (the budget said about an hour): **18 branches of 18 complete, every check of every branch passed**, the consoles
+  empty (`llanca.log`, `consola/`). The records in git before any analysis (`38142ff`).
+- **The short test's branch against the full run's** (`prova/compara.mjs`, written after the run; `prova/comparacio.txt`): the same lines,
+  except for the seconds and the code (the short test ran from `4ce3550`, the full run from `fd6ab4c`, which only adds the short test's
+  outputs; the note said "except for the seconds").
+- **The analysis** (from `38142ff`, Node 16.15.1): `--check` first (exit code 0: the data valid, 18 branches of `fd6ab4c`, 36 appearances at
+  19 censuses, 923 measures and every final fingerprint of the pilot records reproduced), then `analisi.mjs`, exit code 0, nothing on
+  stderr: `analisi-sortida.txt`, in git as it came out (`c24e1cc`, SHA-256 `e9051dbf…5cf2`), before reading it.
+
+## What came out (exploratory)
+
+**In short:** the instrument passes its controls, and by the rule fixed in the note **the aged soup's 16 appearances that the time rule
+removes are made of the dominant group's material** (all 16 D-derived: 0.70 to 0.98 of their bytes passed, within 1,250 epochs, through
+cells that carried the dominant group's windows), **as the time rule assumed. But so is their neighbourhood:** 15 of the 16 are one or two
+cells from a carrier of the dominant group, where the cells at the same distance are 0.59 to 0.81 made of its material on average, and
+their percentile among those cells is 0.35 to 0.86. The record says which cells their bytes passed through, not that they are copies of the
+dominant group's program. **Without the D-derived, the excess of failed appearances in the aged soup is not shown** (Rc, 2.27 [0.48, 8.64];
+counting origins, with the short window and with *Dbroad*, the interval contains 1 too), which is not to say that there is no excess. And
+**the two bursts of seven are not one origin each:** six origins in each, by the note's rule.
+
+1. **The instrument** (section 0). It reproduces the 18 pilot branches it re-runs (923 measures and every final fingerprint), and passes the
+   controls fixed in the note, in both windows: 41 sets of 41 with 10 carriers or more have every carrier holding a full window with the
+   set's bit (the lowest share, 1.000), and the cells 64 or more from the dominant group carry none of its bit (the highest mean, 0.000, at
+   12 censuses). **What these controls check, and what not:** the positive one checks the bookkeeping (a carrier's bytes take the bit when it
+   interacts, and a window that persists keeps it: it could only fail for windows made anew, by mutations or by chance); the far one, that the
+   bit stays where the dominant group has been and does not spread through the soup. Neither says that a bit means descent from a program.
+
+2. **The aged soup's 16 appearances that the time rule removes** (sections 1 and 2):
+   - **All 16 are D-derived** in the main window, 15 of them at 0.84 or more (the lowest, 0.70, world 7059 at 13,250); with *Dbroad*, the
+     same. **By the rule fixed in the note: "made mostly of the dominant group's material: fragments, as the time rule assumed".**
+   - **Like their neighbourhood** (the baseline, descriptive): 14 are next to a carrier of the dominant group and one two cells away, where
+     the cells at the same distance are 0.59 to 0.81 D on average; their percentile among them, 0.35 to 0.86. Only one stands out from its
+     neighbourhood: world 7059's at 13,250 (appearance 3), four cells away, 0.70 against 0.03 (percentile 0.97). The other 15 are about as
+     made of the dominant group's material as the cells around them.
+   - **New arrangements within the window:** almost none of their bytes stayed unchanged in its own place since the window's start (the
+     `self` column, 0.00 to two decimals); 0.10 to 0.40 of them descend from a byte overwritten by a mutation within the window, and 0.06 to
+     0.28 were changed by `+` or `-`.
+   - **The window's length:** with 250 epochs, 11 are D-derived, one mixed (world 7052 at 10,000, appearance 11: 0.39), and four older than
+     the window: their own windows were already in 1 to 38 cells 250 epochs before the census (worlds 7014, 7052, 7054 and 7074). They took
+     shape between 1,250 and 250 epochs before it.
+
+3. **The shuffled and fresh soups** (descriptive). Shuffled, 9: 6 D-derived, one mixed (world 7037, 0.39), and two with no earlier dominant
+   lineage. Fresh, 4: all four with no earlier dominant lineage (the dominant group was first detected at the same census or later), so the
+   main rule cannot classify them; with *Dbroad*, two D-derived, one not from D and one older than the window. The three appearances of the
+   whole list with no bit of *Dbroad* (worlds 7033, 7058 twice) are mostly bytes changed by `+` or `-` (0.67 to 0.97).
+
+4. **The censuses with two or more appearances** (section 3): world 7046 at 16,000 (no dominant group: the branch did not become
+   established), 7 appearances and **6 origins**; world 7052 at 10,000 (its establishment), 7 appearances and **6 origins**, all seven
+   D-derived. The others: 7014, 2 and 1; 7048, 2 and 1; 7027, 2 and 2; 7059, 3 and 3. By the 16-byte rule, a burst is several appearances
+   at once, each made of the material around it, not one appearance broken into seven.
+
+5. **The recount** (section 4; the failed appearances per 1,000 world-epochs, aged against fresh, with the bootstrap over worlds of the
+   within-world null note, which gives R0 and R1 again exactly):
+
+   | | aged, shuffled, fresh | aged/fresh | |
+   |---|---|---|---|
+   | R0, no rule | 33, 14, 8 | 4.41 [1.45, 14.90] | above 1 |
+   | R1, the time rule | 17, 5, 4 | 4.55 [0.90, 22.91] | contains 1 |
+   | **Rc, without the D-derived** | 17, 8, 8 | **2.27 [0.48, 8.64]** | contains 1 |
+   | Rc′, counting origins | 16, 8, 8 | 2.14 [0.48, 7.99] | contains 1 |
+   | Rc, the short window | 22, 10, 8 | 2.94 [0.89, 10.16] | contains 1 |
+   | Rc, *Dbroad* | 17, 7, 6 | 3.03 [0.62, 14.72] | contains 1 |
+
+   Rc removes the same 16 aged appearances as the time rule, but keeps the fresh soup's four (they have no earlier dominant lineage) and
+   three of the shuffled soup's nine: so it falls below R1. Its point estimate is still above 1, with 17 appearances against 8.
+
+## The reading (by the rules fixed in the note)
+
+- **The question:** the appearances that the time rule removes in the aged soup are made of material that passed through the dominant
+  group's carriers, as the time rule assumed, **and so is their neighbourhood**. The record cannot tell a mutated copy of the dominant
+  group's program from a new arrangement of bytes that passed through its cells. **"Made of the dominant group's material, like their
+  neighbourhood"; never "they are copies of the dominant group", and "fragments" only as the rule's reading, with its condition.**
+- **The excess:** once the D-derived are removed, it is not shown (Rc, Rc′ and both sensitivities contain 1). With entry 26, where the excess
+  was "neither separated from fragmentation nor shown to be fragments": the time rule's removal now has direct support in the aged soup, by
+  material; **"the excess left without the D-derived is not shown"**, never "there is no excess" nor "the excess was fragments". The counts
+  are small (17 against 8), the interval wide, and the other failed appearances keep their count (the small version).
+- **The bursts:** six origins in each, by the 16-byte rule.
+
+### What it does not say
+
+- **Not descent** (the note's limit): a bit says that a byte passed through a carrier, and every byte of a carrier takes it.
+- **Not about the failed appearances outside the list:** the 17 aged ones that the time rule keeps were not traced (the small version).
+- **Not confirmatory, and not where maturation acts:** the rule stays (AUD-184 = AU2-151).
+
+## Everything tried
+
+- Before the note: `prepara.mjs` (the list), `prova.mjs` while writing it, and one branch run through the instrument (world 7014), whose
+  output was not kept.
+- From the note's commit: `prova.mjs` once and the short test once; from `fd6ab4c`, the full run once, with no failure and no relaunch.
+- After the run: the comparison of the short test's branch with the full run's (`prova/compara.mjs`), a check, not an analysis.
+- `analisi.mjs --check` once, and the analysis once. Nothing else was computed; the numbers in this section are read from the output.
