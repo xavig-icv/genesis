@@ -186,3 +186,124 @@ from a sibling that copied the same material at the window's start. Blind to a c
 and to a variant held by fewer carriers than the map wants. Not a definition of an independent birth: an appearance that is not ordered may
 still be a copy of something else, and one that is ordered is a copy of material of the dominant group's lineages detected before, not of one
 program in particular. Not the full record of copies, which auditor 2 proposes after this, with a genealogy of known answer.
+
+## How it went
+
+- **The note and its code** went into git at `4072981`; `prova-sortida.txt`, all the checks passing, and the short test at `d4edbb2`.
+- **The short test** (world 7014's aged soup, 19.23 to 19.32, 516 s, 313 MB): valid against the list, the pilot record and the commit, and the
+  same carriers, halves, far cells and matched cells as the descent note's record (`prova/curta-sortida.txt`).
+- **The full run,** from `d4edbb28`, launched from the app on 26-11-2026 at 19.33.01, 6 at a time at low priority: it finished at 21.05.37
+  (1 h 32 min, within the budget), 18 of 18 with exit code 0 and the final line, the consoles empty (`llanca.log`, `consola/`). The records
+  (13 MB) went into git before anything was read (`42c948f`).
+- **The short test against the full run's record of the same branch** (`compara.mjs`): the same but for the commit, the Node version, the
+  seconds and the memory, exit code 0 (`prova/comparacio.txt`).
+- **`analisi.mjs --code d4edbb28 --check`:** every record valid, exit code 0; no measure and no class printed (`check-sortida.txt`). Then
+  **`analisi.mjs --code d4edbb28`** (21.07.31 to 21.12.23, exit code 0, stderr empty), its output into git as it came out, before it was
+  read (`b41114a`, SHA-256 `f431aec3738e4a59…07a9`). On the way, the analysis found the same cells as the descent note's records, and entry
+  28's map thresholds and scores, recomputed from the saved origins, the descent note's, all 9,246.
+- **One check after the analysis, outside the planned steps,** run with `previ/executa.sh` and declared (`previ/inici-1`, below, "The column
+  'at the start'").
+
+## What came out (exploratory; `analisi-sortida.txt`)
+
+**The controls.** Twelve of the 19 tracked censuses have a dominant group with lineages detected before (D); the other seven (six branches)
+have none (no earlier dominant lineage in 7018, 7033, 7054's reinit, 7058 twice and 7068; no dominant group in 7046), as in entries 27 and 28.
+- **In the main context** (window of 1,250 epochs, map at 1 %) **every census passed every control:** half B's sample ordered, 992 to 1,000 of
+  1,000; the far sample none, 1,000 of 1,000 everywhere; half B's cells cut into pieces of 1, 2 and 4 bytes and reordered, at most 1 of 500
+  ordered (pieces of 4 bytes in 7048's shuffled soup); 16 pieces of 2 bytes in a far cell, 0 of 500; a pair repeated, 0 (of 81 to 100 usable
+  cells); 4 own mutations inside a run of 32, all ordered. **On these worlds the measure separates the dominant group's order from its
+  material,** as far as these controls test it.
+- **The descriptive families:** pieces of 8 bytes, 0 to 11 of 500 ordered; **pieces of 16 bytes, 440 to 499 of 500 ordered** (a fragment of
+  16 bytes or more is ordered by construction, as the note said); 8 own mutations, 99 to 100 %; 16, 79 to 100 %.
+- **The sensitivities' contexts:** the map at 0.5 % and at 5 %, every census valid; **the window of 250 epochs, 4 of 12 fail** (half B
+  ordered 782, 839, 847 and 878 of 1,000, below 900: worlds 7014, 7027, 7052's shuffled soup and 7059), their appearances unclassifiable in
+  that sensitivity only.
+
+**The classes of the appearances the time rule removes** (the main measure):
+
+| soup | appearances | ordered | pieces | none | unclassifiable |
+|---|---|---|---|---|---|
+| aged (continue) | 16 | 10 | 6 | 0 | 0 |
+| shuffled | 9 | 3 | 4 | 0 | 2 (no earlier dominant lineage) |
+| fresh (reinit) | 4 | 0 | 0 | 0 | 4 (no earlier dominant lineage) |
+
+(The seven of world 7046 have no dominant group and are not among the time rule's removals.)
+- **The aged soup's ten ordered** have runs of 21 to 63 bytes in one carrier of half A: one, world 7074 at 13,250, 63 of 64 bytes in both its
+  cells; the other nine, 21 to 50. **Its six pieces** have longest runs of 5 to 14 bytes: 7014 at 9,000 (11), two of 7052 (14 and 12) and the
+  three of 7059 (11; 5 and 6; 9). **None carries nothing of the dominant group's material**, as in entry 28.
+- **Auditor 1's measure, made exact** (`mapRun`: the map's order, no carrier) gives 11 ordered and 5 pieces in the aged soup, the numbers of
+  audit 45. **The carrier condition moves one:** 7014 at 9,000 (window 7) holds 39 bytes in the map's order, but at most 11 in one carrier.
+  In the shuffled soup it moves 7048 at 10,000 (57 in the map's order, 13 in one carrier): the map's habit of joining pairs of different
+  carriers, which the note's checks built on purpose (the chain of 8 programs).
+- **The sensitivities** (never read for the reading): the aged soup, 10 or 11 ordered of 16 with the map at 0.5 % and 5 %, an appearance
+  ordered if any of its cells is, `mapRun` and `donorRun`; **two of them, the map at 5 % and `mapRun`, reach two thirds by one appearance
+  (11 of 16)**. With the window of 250 epochs, 6 ordered, 2 pieces, 3 none and 5 unclassifiable: three appearances of the aged soup become
+  none (two of 7052 and world 7054's), whose material in the dominant group's order is older than 250 epochs or not there (a window is blind
+  to the copies made before it).
+- **The neighbourhood** (descriptive): the matched cells of the aged appearances are often ordered too, 54 to 123 of 200 (1 of 200 at
+  distance 4, world 7059's first). The ten ordered appearances' runs sit at percentiles 0.78 to 0.96 of their matched cells' runs; the six
+  pieces, 0.38 to 0.99.
+- **One origin** (descriptive): in no census do two appearances share a run of 16 bytes outside the dominant group's order: as many
+  components as appearances (2, 2, 2, 7 and 3), the longest such common run 1 to 3 bytes, the ring null 0. The seven of world 7052 are not
+  copies of one another outside D's order (as audit 44 found for its components). In 7046, with no D, the common run with no map is 12 bytes
+  at most: 7 components, the null 0.08.
+
+**The recount** (counts of observed appearances per 1,000 world-epochs, aged / shuffled / fresh, and the aged/fresh ratio; never a ratio of
+births):
+
+| | aged, shuffled, fresh | aged/fresh |
+|---|---|---|
+| R0, no rule | 33, 14, 8 | 4.41 [1.45; 14.90] |
+| R1, the time rule | 17, 5, 4 | 4.55 [0.90; 22.91] |
+| **Rf, the pieces as fragments** | 17, 5, 4 | **4.55 [0.90; 22.91]** (contains 1) |
+| **Rb, the pieces as births** | 23, 9, 4 | **6.15 [1.65; 29.51]** (above 1) |
+| Rb+, Rb with the unclassifiable kept (sensitivity) | 23, 11, 8 | 3.08 [0.88; 11.04] (contains 1) |
+
+R0 and R1 are the within-world null note's. Since no appearance is none, Rf = R1. With every map and measure of the sensitivities, Rf stays
+4.55 [0.90; 22.91] and Rb is 5.88 to 6.15, above 1. **With the window of 250 epochs, Rf lies above 1** (20, 6, 4; 5.35 [1.31; 26.06]): the
+three appearances that become none there are kept; that window is blind to the copies made before it, and fails its controls at four
+censuses.
+
+**The column "at the start"** (descriptive): of every ordered run's pairs, none were two bytes side by side of one cell at the window's start,
+but for 3 of 12 in 7048 at 10,000. Since that looked odd, **one check after the analysis, declared** (`previ/inici.mjs`, `previ/inici-1.txt`):
+the same holds for the dominant group's order itself. Of the map's 177 to 385 pairs, 0 to 14 are of that kind; the rest hold the origin of a
+mutation (94 to 199) or two origins that were not side by side in one cell at the start; of half B's pairs, 0.6 to 18 %. So the column says
+nothing particular about the appearances: **the order the measure looks for was itself arranged within the window and then spread among the
+carriers.** How (recombined copies, shifted copies), this note does not measure.
+
+## The reading (by the rules fixed in the note)
+
+- **The aged soup: mixed, by this measure.** Of the 16 classifiable appearances the time rule removes, 10 carry 16 bytes or more in the
+  dominant group's order, in one of its carriers, over their own mutations, and 6 carry only pieces of its material (runs of 5 to 14 bytes);
+  none carries nothing of it. Neither class reaches two thirds (10 of 16 is one short of the 11 needed).
+- **The shuffled soup: mixed, by this measure.** Of 7 classifiable, 3 ordered, 4 pieces, 0 none; 2 cannot be classified (no earlier dominant
+  lineage).
+- **The excess: it depends on what the pieces are, which this measure does not decide.** Rf (the pieces as fragments) contains 1; Rb (the
+  pieces as births) lies above 1. **And Rb's lower end rests on removing the fresh soup's four appearances, which cannot be classified:**
+  with them kept (Rb+, a sensitivity), the interval contains 1.
+- **What would have changed my mind:** neither the ordered nor the pieces threshold was reached, so the lead of audit 45 (11 mutated copies,
+  5 pieces) is **neither confirmed nor contradicted** by a rule fixed before: with the run in one carrier, 10 and 6. **The instrument did not
+  fail:** every census of the main context passed its controls, the adversarial ones on its own material included.
+
+### What it does not say
+
+- **"Ordered" is not "a copy of the program".** It says that 16 bytes or more of a cell sit in the order of the dominant group's carriers,
+  made within the window; **a fragment of 16 bytes or more is ordered too** (the descriptive control: 440 to 499 of 500), and of the ten only
+  one (7074, 63 bytes) spans almost the whole program. The note's phrase for two thirds ordered, "copies of its program, whole or mutated",
+  would have said more than the measure; it was not reached, and if it is used again it should say "16 bytes or more in its order".
+- **"Pieces" is not "a new arrangement" nor "fragments":** a run shorter than 16 bytes in one carrier, with some of the map's pairs. A copy
+  of a variant held by fewer carriers than the map wants, or of material copied before the window, also falls here or in none.
+- Never "10 are copies", "6 are births", "the excess is real" or "there is no excess". Not a genealogy (AU2-225), not where maturation acts
+  (AUD-184 = AU2-151).
+- **The sensitivities that go the other way are not read either:** the map at 5 % and `mapRun` reach two thirds ordered (11 of 16), and with
+  the window of 250 epochs Rf lies above 1. The reading is the main measure's; it is one appearance from the threshold, and the excess
+  moves with the window.
+
+## Everything tried
+
+- Before the note (`previ/`): `prova-1` (two errors in the checks' construction), `prova-2`, `temps-1` (the repeated pair, not well posed),
+  `temps-2` and `prova-3`, as listed in "The run". No branch of the pilot.
+- After the note, the planned steps, each once: the instrument's checks (`prova-sortida.txt`), the short test, the full run, the comparison,
+  `--check` and the analysis. Nothing failed, nothing was repeated, nothing was discarded.
+- After the analysis, outside the planned steps: `previ/inici-1`, the check of the column "at the start" (above), declared in
+  `previ/registre.txt` with the SHA-256 of the code as it is and as git keeps it.
