@@ -1,0 +1,81 @@
+The record of heritable copies, the small version (exploratory). The analysis: 38142fff, v16.15.1; llista.json, SHA-256 c0afb2c0f182f922….
+The records: 18 branches, of fd6ab4cb; 36 appearances at 19 tracked censuses; every measure and final fingerprint of the pilot records reproduced (923 measures).
+
+0. The instrument's controls (at each tracked census, the main window and the short one)
+   window 1250: sets with 10 carriers or more, 41; with 0.95 or more of their carriers holding a full window with the set's bit, 41 (the lowest share 1.000); far cells (≥64 from the dominant group), the highest mean share of D, 0.000 (12 censuses)
+   window 250: sets with 10 carriers or more, 41; with 0.95 or more of their carriers holding a full window with the set's bit, 41 (the lowest share 1.000); far cells (≥64 from the dominant group), the highest mean share of D, 0.000 (12 censuses)
+   By the note's rule, the instrument passes its controls.
+
+1. Each appearance (the main window: 1,250 epochs, or from the branch's start; the short one: 250)
+   soup        branch  census  appearance  cells  D (main)  class (main)                  D (250)  class (250)              Dbroad  baseline: distance, mean D, percentile  present at start (main/250)  mut  arith  self
+   continue    7014    9000    9000:2      1      0.97      D-derived                     0.97     older than the window    0.97    1, 0.60, 0.74  0/14  0.16 0.23 0.00
+   continue    7014    9000    9000:7      1      0.97      D-derived                     0.97     D-derived                0.97    1, 0.60, 0.74  0/0  0.22 0.13 0.00
+   shuffle-all 7018    15250   15250:5     1      —         no earlier dominant lineage   —        no earlier dominant lineage 0.95    —  0/0  0.20 0.06 0.00
+   shuffle-all 7027    10000   10000:3     1      0.97      D-derived                     0.91     D-derived                0.97    1, 0.64, 0.74  0/0  0.16 0.16 0.00
+   shuffle-all 7027    10000   10000:8     1      0.92      D-derived                     0.28     mixed                    0.92    1, 0.64, 0.54  0/0  0.22 0.16 0.00
+   shuffle-all 7033    8500    8500:0      2      —         no earlier dominant lineage   —        no earlier dominant lineage 0.00    —  0/0  0.01 0.67 0.00
+   shuffle-all 7037    11000   11000:1     1      0.39      mixed                         0.39     older than the window    0.39    1, 0.89, 0.06  0/1  0.19 0.30 0.00
+   continue    7046    16000   16000:1     1      —         no dominant group             —        no dominant group        —       —  0/0  0.22 0.22 0.00
+   continue    7046    16000   16000:2     1      —         no dominant group             —        no dominant group        —       —  0/3  0.17 0.17 0.00
+   continue    7046    16000   16000:3     1      —         no dominant group             —        no dominant group        —       —  0/0  0.16 0.33 0.00
+   continue    7046    16000   16000:4     1      —         no dominant group             —        no dominant group        —       —  0/0  0.19 0.20 0.02
+   continue    7046    16000   16000:5     1      —         no dominant group             —        no dominant group        —       —  0/0  0.17 0.28 0.00
+   continue    7046    16000   16000:6     1      —         no dominant group             —        no dominant group        —       —  0/0  0.23 0.28 0.00
+   continue    7046    16000   16000:7     1      —         no dominant group             —        no dominant group        —       —  0/1  0.22 0.14 0.00
+   continue    7048    13500   13500:2     1      0.98      D-derived                     0.98     D-derived                0.98    1, 0.60, 0.81  0/0  0.17 0.23 0.00
+   continue    7048    13500   13500:4     1      0.98      D-derived                     0.98     D-derived                0.98    1, 0.60, 0.81  0/0  0.22 0.06 0.00
+   shuffle-all 7048    10000   10000:1     1      1.00      D-derived                     1.00     D-derived                1.00    1, 0.68, 0.86  0/0  0.19 0.11 0.00
+   continue    7052    10000   10000:10    1      0.95      D-derived                     0.91     older than the window    0.95    1, 0.72, 0.62  0/1  0.28 0.13 0.00
+   continue    7052    10000   10000:11    1      0.92      D-derived                     0.39     mixed                    0.92    1, 0.72, 0.50  0/0  0.20 0.23 0.00
+   continue    7052    10000   10000:12    1      0.91      D-derived                     0.91     D-derived                0.91    1, 0.72, 0.46  0/0  0.25 0.14 0.00
+   continue    7052    10000   10000:14    1      0.95      D-derived                     0.95     D-derived                0.95    1, 0.72, 0.62  0/0  0.22 0.28 0.00
+   continue    7052    10000   10000:15    1      0.98      D-derived                     0.98     D-derived                0.98    1, 0.72, 0.86  0/0  0.25 0.19 0.00
+   continue    7052    10000   10000:17    1      0.88      D-derived                     0.88     D-derived                0.88    2, 0.65, 0.56  0/0  0.17 0.20 0.00
+   continue    7052    10000   10000:21    1      0.97      D-derived                     0.97     D-derived                0.97    1, 0.72, 0.72  0/0  0.33 0.23 0.00
+   shuffle-all 7052    14250   14250:3     1      0.95      D-derived                     0.95     D-derived                0.95    1, 0.60, 0.69  0/0  0.27 0.23 0.00
+   continue    7054    14000   14000:2     3      0.96      D-derived                     0.00     older than the window    0.96    1, 0.81, 0.35  0/38  0.10 0.18 0.00
+   reinit      7054    13500   13500:1     2      —         no earlier dominant lineage   —        no earlier dominant lineage 0.94    —  0/0  0.17 0.18 0.00
+   reinit      7058    14250   14250:0     1      —         no earlier dominant lineage   —        no earlier dominant lineage 0.00    —  13/12  0.16 0.97 0.00
+   reinit      7058    14750   14750:1     4      —         no earlier dominant lineage   —        no earlier dominant lineage 0.00    —  0/0  0.10 0.90 0.00
+   continue    7059    13250   13250:3     1      0.70      D-derived                     0.70     D-derived                0.70    4, 0.03, 0.97  0/0  0.38 0.11 0.00
+   continue    7059    13250   13250:4     2      0.84      D-derived                     0.84     D-derived                0.84    1, 0.59, 0.54  0/0  0.40 0.21 0.00
+   continue    7059    13250   13250:5     1      0.95      D-derived                     0.95     D-derived                0.95    1, 0.59, 0.72  0/0  0.36 0.13 0.00
+   shuffle-all 7066    15250   15250:1     4      0.97      D-derived                     0.97     D-derived                0.97    1, 0.80, 0.46  0/0  0.07 0.18 0.00
+   shuffle-all 7067    14750   14750:5     1      0.95      D-derived                     0.20     older than the window    0.95    1, 0.63, 0.69  0/5  0.28 0.33 0.00
+   reinit      7068    13750   13750:1     6      —         no earlier dominant lineage   —        no earlier dominant lineage 0.83    —  0/0  0.27 0.59 0.00
+   continue    7074    13250   13250:1     2      0.97      D-derived                     0.97     older than the window    0.97    1, 0.64, 0.54  0/7  0.28 0.11 0.00
+
+2. The classes of the appearances the time rule removes, by soup
+   main window:
+      continue     16: D-derived 16, mixed 0, not from D 0, older than the window 0, no earlier dominant lineage 0
+      shuffle-all  9: D-derived 6, mixed 1, not from D 0, older than the window 0, no earlier dominant lineage 2
+      reinit       4: D-derived 0, mixed 0, not from D 0, older than the window 0, no earlier dominant lineage 4
+   short window (250):
+      continue     16: D-derived 11, mixed 1, not from D 0, older than the window 4, no earlier dominant lineage 0
+      shuffle-all  9: D-derived 4, mixed 1, not from D 0, older than the window 2, no earlier dominant lineage 2
+      reinit       4: D-derived 0, mixed 0, not from D 0, older than the window 0, no earlier dominant lineage 4
+   Dbroad, main window:
+      continue     16: D-derived 16, mixed 0, not from D 0, older than the window 0, no earlier dominant lineage 0
+      shuffle-all  9: D-derived 7, mixed 1, not from D 1, older than the window 0, no earlier dominant lineage 0
+      reinit       4: D-derived 2, mixed 0, not from D 1, older than the window 1, no earlier dominant lineage 0
+
+3. The appearances detected at one census of one branch (two or more): how many origins, by the note's rule (main window)
+   continue    7014    9000    2 appearances: 1 origins
+   shuffle-all 7027    10000   2 appearances: 2 origins
+   continue    7046    16000   7 appearances: 6 origins
+   continue    7048    13500   2 appearances: 1 origins
+   continue    7052    10000   7 appearances: 6 origins
+   continue    7059    13250   3 appearances: 3 origins
+
+4. The recount (the failed appearances per 1,000 world-epochs; the aged/fresh ratio, with the bootstrap over worlds)
+   R0, no rule (as the within-world null note)                33, 14, 8; aged/fresh 4.41 [1.45, 14.90] (above 1)
+   R1, the time rule (as the within-world null note)          17, 5, 4; aged/fresh 4.55 [0.90, 22.91] (contains 1)
+   Rc, without the D-derived (main window)                    17, 8, 8; aged/fresh 2.27 [0.48, 8.64] (contains 1)
+   Rc′, and each census's appearances counted by origins      16, 8, 8; aged/fresh 2.14 [0.48, 7.99] (contains 1)
+   sensitivity: Rc with the short window (250)                22, 10, 8; aged/fresh 2.94 [0.89, 10.16] (contains 1)
+   sensitivity: Rc with Dbroad                                17, 7, 6; aged/fresh 3.03 [0.62, 14.72] (contains 1)
+
+5. The reading, by the rules fixed in the note
+   The aged soup's appearances the time rule removes: 16; classifiable 16; D-derived 16, not from D 0.
+   Two thirds or more are D-derived: they are made mostly of the dominant group's material, fragments as the time rule assumed.
+   The recount: Rc contains 1, Rc′ contains 1. A copy is not a lineage of descent from one program: "D-derived" says what the bytes passed through, not that the appearance is a mutated copy of the dominant group's program.
