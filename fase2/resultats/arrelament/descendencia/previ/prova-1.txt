@@ -1,0 +1,66 @@
+A measure of descent by position: the instrument's checks (exploratory). The code: bddcc253+canvis, v16.15.1.
+
+1. The interpreter and the mutations, again; the new origins of mutations
+   ok   the same tape and operations as evaluate: 20000 of 20000 tapes
+   ok   mutateListed: the same buffer and random numbers as mutate (284 mutations)
+   ok   each mutated byte takes a new origin of its own, above the world's bytes and in order (a byte mutated twice, the second)
+
+2. The tags against a slow reference written another way (the tags on the world's bytes), at every epoch
+   ok   mutation 0: the origins, flags and bits equal to the reference's at 60 of 60 epochs (0 new origins of mutations)
+   ok   mutation 0: the invariant holds at every epoch
+   ok   mutation 0.002: the origins, flags and bits equal to the reference's at 60 of 60 epochs (7734 new origins of mutations)
+   ok   mutation 0.002: the invariant holds at every epoch
+
+3. Known answers, one case at a time
+   FAIL exact replication: 63 bytes of the partner come from the replicator, 1 of them at their position or the mirror
+   ok   '+' and '-' keep the origin and set the flag
+   ok   a copy onto an equal value takes the source's origin
+   ok   a chain of copies keeps the first origin
+   ok   two origins in one cell: the partner holds bytes from both cells
+   ok   a mutation to the same value: a new origin and the flag, the invariant holds
+   ok   recombination: half a copy scores 32 of 64
+   ok   a new arrangement of the same bytes: by position 2 of 64 (at any position, 64)
+   ok   a backward copy: with the mirror 64 of 64, by position only 0
+   ok   a false carrier made by a mutation: no write, the exposure bit on 64 of 64 bytes, the descent score 0
+   ok   disappearance and rebirth: 64 of 64 before, 0 after its bytes are all mutated; its copy shares its 64 new origins
+
+4. The descent score in test worlds: the replicator, its variant and an independent planting of the replicator
+   mutation 0: carriers of the replicator 438 (half A 219, half B 219), of the independent planting 651, of the variant 336; far cells 57
+   FAIL the test world is usable: the plantings kept apart, enough carriers of each
+   FAIL the replicator's half B: q10 = 0 of 64, 1.000 at q10 or above
+   FAIL specificity, the variant (not a descendant): 1.000 of its carriers at q10 or above
+   FAIL specificity, the independent planting (the same program, another ancestry): 1.000 at q10 or above
+   FAIL the far cells: 1.000 at q10 or above
+      p1 (descriptive): q10 0, half B 1.000, the variant 1.000, the independent planting 1.000, far 1.000
+      the exposure bit (descriptive): half B 0.997, the variant 0.024, the independent planting 0.994
+   mutation 0.0005: carriers of the replicator 299 (half A 150, half B 149), of the independent planting 620, of the variant 439; far cells 55
+   ok   the test world is usable: the plantings kept apart, enough carriers of each
+   FAIL the replicator's half B: q10 = 0 of 64, 1.000 at q10 or above
+   FAIL specificity, the variant (not a descendant): 1.000 of its carriers at q10 or above
+   FAIL specificity, the independent planting (the same program, another ancestry): 1.000 at q10 or above
+   FAIL the far cells: 1.000 at q10 or above
+      p1 (descriptive): q10 0, half B 1.000, the variant 1.000, the independent planting 1.000, far 1.000
+      the exposure bit (descriptive): half B 0.990, the variant 0.004, the independent planting 0.994
+
+5. The one-origin rule in the test world (no mutation)
+   FAIL copies of the replicator near each other share an origin: 370 of 3994 pairs at 16 bytes or more
+   FAIL the replicator and its variant never: 26 of 147168 pairs
+   ok   the null, neighbouring cells with no program: 0 of 210 pairs
+
+6. A tiny world from a capture, run by sim.mjs and by the instrument with this note's tracers open
+   ok   the measures of sim.mjs: 6 of 6 equal (both tracers open from epoch 101)
+   ok   the final fingerprint: 50767670 against sim.mjs's 50767670
+
+7. The validators fail closed (AU2-219) and the comparator says a difference by its exit code (AU2-223)
+   ok   a valid synthetic record set: 0 problems
+   ok   impossible records rejected: 19 of 19
+   ok   a folder with a file that is not the list's: rejected
+   ok   analisi.mjs --check: exit 0 for the valid set, 1 for an impossible one
+   ok   compara.mjs: exit 0 for records that differ only in the ignored fields, 1 for a difference, 2 for wrong arguments
+
+8. The analysis (analisi.mjs) on synthetic records with a known answer
+   ok   all copies of D: the reading ("Two thirds or more are copies of D…") and Rd's counts (17, 5, 4)
+   ok   none a copy of D: the reading ("Two thirds or more are not copies of D…") and Rd's counts (33, 12, 4)
+   ok   the neighbourhood as high (undecided): the reading ("cannot tell…") and Rd's counts (17, 5, 4)
+
+12 checks FAIL: the instrument is not used.
