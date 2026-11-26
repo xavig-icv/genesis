@@ -672,18 +672,19 @@ Nothing is planted in any experiment, and no simulator is touched.
 **The measure.** At the window's start (1,250 epochs before the census) each byte is its own origin; a copy passes it on, `+` and `-` keep
 it, and a mutation gives a new one, so two cells that descend from one mutated byte share it (auditor 2's requirement). The dominant group's
 carriers (*D*, as in entry 27) are split in two halves at random; from half A, **the map**: the pairs of origins that two adjacent bytes have
-in 1 % of its carriers or more. **A cell's score** is how many of its 63 pairs of adjacent bytes have both origins in the map: a copy keeps
-that order, forward or backward and at any offset, and a new arrangement of the same bytes breaks it; a run of 16 bytes (15 pairs) counts as
-descent. The first version scored origins at their position, as auditor 1's post hoc measure; on test worlds the replicator of Phase 1
+in 1 % of its carriers or more. **A cell's score** is how many of its 63 pairs of adjacent bytes have both origins in the map, anywhere in
+the cell: a copy keeps that order, forward or backward and at any offset; shuffling the bytes one by one breaks it, shuffling them in pieces
+of 2 bytes or more does not. A score of 15 counts as descent: the note called it "the run", the adjacency of 16 bytes in a row, but it is a
+count of pairs, not a run (audit 45, below). The first version scored origins at their position, as auditor 1's post hoc measure; on test worlds the replicator of Phase 1
 turned out to copy itself backwards and shifted (byte *g* to 62 − *g*), which a positional measure does not recognise, while the order is
-kept (62 or 63 of 63 pairs). **The rule:** "a copy of D" if it reaches the run and lies above 90 % of its 200 matched cells (entry 27's: the
-same distance from the dominant group, no tracked set); "not a copy" if below the run and at the median or lower; otherwise "undecided";
+kept (62 or 63 of 63 pairs). **The rule:** "a copy of D" if it reaches 15 and lies above 90 % of its 200 matched cells (entry 27's: the
+same distance from the dominant group, no tracked set); "not a copy" if below 15 and at the median or lower; otherwise "undecided";
 "unclassifiable" with no *D* or when the census fails its controls.
 
 **The checks, before use.** Known answers one case at a time (auditor 2's list, including a false carrier made by a mutation: the exposure
 bit takes all 64 bytes, the descent score stays 0). In a test world with random bytes, with and without mutations, the replicator in three
 cells, a variant of it beside them and the same replicator far away, kept apart: with the map from half the replicator's carriers, all of the
-other half reach the run, and **none of the variant's or the independent planting's carriers** do; the exposure bit gives the independent
+other half reach 15, and **none of the variant's or the independent planting's carriers** do (their bytes carry origins of their own); the exposure bit gives the independent
 planting 0.99. A second tracer written another way gives the same origins at every epoch; the data check fails closed (21 impossible records
 of 21 rejected; AU2-219) and the comparator exits with an error on a difference (AU2-223).
 
@@ -692,31 +693,52 @@ first rejected 17 of them through an error of mine in the validator: it asked fo
 makes one per open window, unrelated to the measures. It now asks for the exact count; all 18 records have it, and every check passed again
 before any score was looked at. Then the analysis, kept as it came out before it was read, and one check after the fact, declared.
 
-**The controls.** At the main window the 12 censuses with a *D* pass: half B reaches the run (its 10th percentile from 29 to 53 pairs) and no
+**The controls.** At the main window the 12 censuses with a *D* pass: half B reaches 15 (its 10th percentile from 29 to 53 pairs) and no
 far cell does (50,624 to 107,748 per census). With the 250-epoch window, 4 of 12 fail, as the note foresaw: a copy made before the window is
 not seen.
 
-**The aged soup's 16 appearances that the time rule removes: 4 copies of D, none not a copy, 12 undecided.** All 16 reach the run (20 to 54
-pairs of 63); the 12 undecided lie between the 51st and 89th percentiles of their matched cells. **Why so many are undecided** (after the
-fact, declared): the matched cells reach the run too, a median of 59 % of them per appearance (3 to 89 %). Near the dominant group, runs of
-16 bytes in its order are common; 64 cells or more away, there are none. Every sensitivity (the map at 0.5 % or 5 %, by position or mirror,
+**The aged soup's 16 appearances that the time rule removes: 4 "a copy of D" by the rule (a high score, above their neighbourhood; 7059's,
+auditor 1 finds, a mosaic of pieces of 4 bytes or less), none not a copy, 12 undecided.** All 16 reach 15 (20 to 54 pairs of 63), but only 2
+hold 16 bytes in a row in the dominant group's order (auditor 1, audit 45); the 12 undecided lie between
+the 51st and 89th percentiles of their matched cells. **Why so many are undecided** (after the fact, declared): the matched cells reach 15
+too, a median of 59 % of them per appearance (3 to 89 %). Near the dominant group, cells with 15 pairs or more of its material are common;
+64 cells or more away, there are none. Every sensitivity (the map at 0.5 % or 5 %, by position or mirror,
 by position only, at any position) gives 2 to 5 copies and **no "not a copy"**; the 250-epoch window gives 4 "not a copy", but cannot see a
 copy older than itself. **The shuffled soup** (9): 2 copies, 5 undecided, 2 with no earlier dominant lineage; **the fresh soup's** 4 cannot
-be classified. **One origin** (descriptive): world 7052's seven at epoch 10,000 make six (null 0.003); 7059's three, three; 7048's two at
-13,500, one; the burst of 7046 and 7014's pair cannot be told (the null is above 5 %).
+be classified. **One origin** (descriptive): world 7052's seven at epoch 10,000 make six components by shared pairs (null 0.003); 7059's
+three, three; 7048's two at 13,500, one; the burst of 7046 and 7014's pair cannot be told (the null is above 5 %). Components, not origins:
+two appearances that both carry the dominant group's material share its pairs, and by a common run of 16 bytes none is joined (auditor 1,
+post hoc).
 
 **The recount.** Rd, the main one (of the appearances the time rule removes, only those shown not to be copies are counted again, in every
 soup): there are none, so it is the time rule's, 4.55 [0.90, 22.91], containing 1. Removing only the copies (Rd+, a sensitivity), 3.88
-[1.13, 13.41], above 1; the map variants and the positional measures 4.55; the 250-epoch window 5.62 [1.47, 27.28].
+[1.13, 13.41]: R0 minus four, counting the 12 undecided as new. The map variants and the positional measures 4.55; the 250-epoch window 5.62
+[1.47, 27.28], with 4 of its 12 censuses failing their control.
 
 **The reading.** By the rule fixed in the note, **we cannot tell**: neither two thirds copies of the dominant group (4 of 16) nor two thirds
-not (none). None is a new arrangement by this measure: all carry runs of 16 bytes in the dominant group's order. But so does their
-neighbourhood, and the rule asks the appearance to stand out from it; 12 lie in between. Never "the 12 are copies", "new arrangements" or
-"fragments". **Unlike the exposure bit, the measure is specific** (none in the test worlds' controls, none far from the dominant group);
-what keeps it from deciding is that near the dominant group its material in its order is everywhere. Auditor 1's lead (entry 27) is
-neither confirmed nor contradicted, and for the aged soup this was not an independent test. **The excess left is not shown under this
-rule** — never "there is no excess"; removing only the appearances shown to be copies, the interval lies above 1 (a sensitivity). The order
-of origins says what was copied together within the window, not by whom; the 17 aged appearances the time rule keeps are not classified;
-exploratory, and where maturation acts is still not known (AUD-184 = AU2-151). Next: one audit round (45); then the owner's choice. With a
-measure that is specific, what remains is whether the appearances stand apart from their neighbourhood; the full record, with the 17 kept
-appearances and a definition of a new appearance fixed before (AU2-209), could say.
+not (none). All 16 carry many pairs of the dominant group's material; only 2 hold 16 bytes in a row in its order, and a new arrangement of
+its material in pieces of 2 bytes or more would score as high, so **the measure cannot say that an appearance is not a new arrangement.** The
+rule also asked a copy to stand out from its neighbourhood, which near the dominant group holds its material too: a condition of place, not
+of descent. Never "the 12 are copies", "new arrangements" or "fragments". **The measure is specific to the dominant group's material**
+(none in the test worlds' controls, none far from the dominant group), **not to its order.** Post hoc, by the order and bridging their own
+mutations (auditor 1 at audit 45, a measure chosen after seeing the data), 11 of the 16 look like mutated copies of the dominant group's
+program and 5 like pieces of its material: a lead, not a result; auditor 1's lead of entry 27 is not tested by a measure fixed before.
+**The excess left is not shown under this rule** — never "there is no excess"; it lies between Rd and Rd+ depending on what the 12
+undecided are, and neither is a ratio of births. The order of origins says what was copied together within the window, not by whom; the 17
+aged appearances the time rule keeps are not classified; exploratory, and where maturation acts is still not known (AUD-184 = AU2-151).
+Next: one audit round (45); then the owner's choice. All three of us would first fix a measure of continuity (16 bytes in a row in the
+dominant group's order, bridging their own mutations) and test it with adversarial known answers, before any full record.
+
+*Corrected after audit 45 (26 November 2026).* Both auditors reproduced the note (auditor 1 re-ran the seven aged branches with a tracer, a
+map and a score of their own; auditor 2 recounted the classes independently and enumerated the invariant checks), accept it and the
+validator's correction, and ask for no computation. The outputs do not change; the text above is the corrected one. "The run" is a count of
+15 pairs anywhere in the cell, not a run: on the branches' own material a new arrangement in 2-byte pieces reaches it 97 to 99 % of the time,
+and the known-answer checks could not see it (their new arrangement shuffled 64 distinct origins one by one). Withdrawn: "all carry runs of
+16 bytes in the dominant group's order", "none is a new arrangement by this measure" and "specific" without saying of what (AUD-231 =
+AU2-225). The neighbourhood's condition asks a copy for more descent than its neighbours, who descend from the dominant group too; the
+neighbourhood is a descriptive contrast (AUD-232, AU2-226). Rd+ is R0 minus four, not a result of its own, and neither it nor Rd bounds a
+ratio of births (AUD-233, AU2-227). "Six origins" are six components by shared pairs (AUD-235, AU2-228). The validators accept some
+impossible records (an empty baseline, 64 pairs in a cell, a false threshold, distance 0, a list hash or commit equally false everywhere),
+none of them in the real data: open, fixed before the code is used again (AUD-234, AU2-229). The name "by position" stays in the scripts'
+outputs (AU2-230). The three scripts whose hashes at the note's commit differ from the last run before the note were not touched: only
+their line ends (CRLF in the working copy, LF in git) differ. "The full record could say" is withdrawn (N-3).

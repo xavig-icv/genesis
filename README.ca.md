@@ -438,15 +438,19 @@ Vegeu l'[entrada 27](quadern/index.html#entrada-27).
 
 ### Còpies o arranjaments nous (exploratori)
 
-Una mesura de descendència fixada abans de calcular, separada de la marca de pas: quantes parelles de bytes veïns d'una cel·la conserven
-l'ordre que tenen els seus orígens als portadors del grup dominant (una còpia el conserva, en qualsevol sentit i desplaçada; un arranjament
-nou el trenca). Provada primer amb resposta coneguda en mons de prova sintètics, on separa les còpies d'un replicador de les d'una variant i
+Una mesura de descendència fixada abans de calcular, separada de la marca de pas: quantes de les 63 parelles de bytes veïns d'una cel·la
+tenen els dos orígens junts en un mapa fet amb els portadors del grup dominant (on sigui de la cel·la: un recompte de parelles, no un tros de
+bytes seguits). Provada primer amb resposta coneguda en mons de prova sintètics, on separa les còpies d'un replicador de les d'una variant i
 de les d'una còpia independent del mateix programa (la marca de pas no ho fa); després, les mateixes 18 branques (sense plantar res):
-- **De les 16 aparicions de la sopa vella que treu la regla del temps, 4 són còpies del grup dominant, cap no és un arranjament nou i 12
-  queden sense decidir:** per la regla fixada, **no ho podem dir.** Totes 16 porten tirades de 16 bytes amb l'ordre del grup dominant, però
-  més de la meitat del seu veïnat també (a posteriori), i la regla demana que l'aparició en sobresurti.
-- **L'excés que queda no es mostra amb aquesta regla** (4,55 [0,90; 22,91]); treient només les que s'ha mostrat que són còpies, l'interval
-  queda per sobre d'1 (3,88 [1,13; 13,41], una sensibilitat).
+- **De les 16 aparicions de la sopa vella que treu la regla del temps, 4 surten «una còpia de *D*» per la regla de la nota (una puntuació
+  alta i per sobre del seu veïnat; una d'elles, un mosaic de trossos de 4 bytes o menys), cap «no una còpia» i 12 queden sense decidir:** per
+  la regla fixada, **no ho podem dir.** Totes 16 porten moltes parelles del material del
+  grup dominant, però només 2 en porten 16 bytes seguits en el seu ordre, i un arranjament nou d'aquest material a trossos de 2 bytes o més
+  puntuaria igual: la mesura és específica del material, no del seu ordre (l'auditoria 45). A posteriori, una mesura de la continuïtat
+  (l'auditor 1) apunta a 11 còpies mutades i 5 trossos: una pista, no un resultat.
+- **L'excés que queda no es mostra amb aquesta regla** (4,55 [0,90; 22,91]). Treient només les quatre que la regla diu còpies (3,88 [1,13;
+  13,41]), les 12 sense decidir es compten com a noves; l'excés va de l'un a l'altre segons què siguin, i cap dels dos no és un quocient de
+  naixements.
 
 Vegeu l'[entrada 28](quadern/index.html#entrada-28).
 
@@ -455,8 +459,9 @@ Vegeu l'[entrada 28](quadern/index.html#entrada-28).
 - **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats; el nul dins del món (l'entrada 26)
   deixava els trossos sense decidir; el registre petit de les còpies (l'entrada 27) troba que els bytes de les aparicions que treu la regla
   del temps han passat per les cel·les del grup dominant, com els del seu veïnat, i això no mostra que siguin trossos; i una mesura de
-  descendència específica (l'entrada 28) no pot dir si són còpies, perquè a prop del grup dominant el seu material amb el seu ordre és a tot
-  arreu. On actua la maduració, encara no ho sabem. El que ho podria respondre ho tria el responsable: el registre sencer de les còpies, amb
+  descendència (l'entrada 28) no pot dir si són còpies: és específica del material del grup dominant, no del seu ordre. On actua la
+  maduració, encara no ho sabem. El que ho podria respondre ho tria el responsable: primer, i hi coincidim tots tres (l'auditoria 45), una
+  mesura de la continuïtat fixada abans i provada amb casos de resposta coneguda adversos; després, el registre sencer de les còpies, amb
   les aparicions que la regla del temps es queda i una definició d'aparició nova fixada abans; una intervenció sobre els primers bytes de la
   sopa vella; plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió
   nova i l'acord dels tres.

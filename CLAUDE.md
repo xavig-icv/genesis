@@ -438,17 +438,32 @@ Llegeix-los abans de proposar canvis.
         comptabilitat, i cap control no mira l'especificitat.
     - **La mesura de descendència** (26-11-2026, l'entrada 28, exploratori; `fase2/resultats/arrelament/descendencia/`, amb `previ/`, el que
       es va fer córrer abans de la nota): l'ordre dels orígens, quantes de les 63 parelles de bytes veïns d'una cel·la tenen els dos orígens
-      veïns al mapa de la meitat A dels portadors de *D*; una mutació dona un origen nou; la tirada, 15 parelles; «una còpia de *D*», també el
-      percentil 0,90 entre les 200 aparellades. Reutilitza `mon.mjs`, `dades.mjs` i la llista del registre petit; la `--check` d'aquesta nota
-      falla tancada i el seu `compara.mjs` surt amb codi (les eines de les notes d'abans, encara no).
-      - **Específica** (als mons de prova, la variant i una còpia independent del mateix programa, 0 a la tirada; lluny del grup dominant, cap),
-        però **per la regla fixada no ho pot dir:** de les 16 de la sopa vella, 4 còpies, 0 que no ho siguin, 12 sense decidir; totes arriben a la
-        tirada, i a posteriori, una mediana del 59 % del seu veïnat també. **«No ho podem dir»,** mai «les 12 són còpies», ni «arranjaments
-        nous», ni «trossos»; la pista de l'auditor 1 (AUD-228), «ni confirmada ni contradita».
-      - **«L'excés que queda no es mostra amb aquesta regla»** (Rd = R1, 4,55 [0,90; 22,91]); treient només les còpies (Rd+, una sensibilitat),
-        3,88 [1,13; 13,41], per sobre d'1. La finestra de 250 no separa (una còpia d'abans de la finestra no s'hi veu).
+      veïns al mapa de la meitat A dels portadors de *D*, **on sigui de la cel·la** (la nota en diu «la tirada», 15 parelles: és un recompte de
+      parelles, no un tros seguit; AUD-231 = AU2-225); una mutació dona un origen nou; «una còpia de *D*», també el percentil 0,90 entre les 200
+      aparellades. Reutilitza `mon.mjs`, `dades.mjs` i la llista del registre petit; el seu `compara.mjs` surt amb codi, però la `--check`
+      accepta alguns registres impossibles (AUD-234, AU2-229, obertes com l'AU2-205, l'AU2-216, l'AU2-219 i l'AU2-223: es corregeixen abans
+      de tornar a fer servir el codi).
+      - **Específica del material del grup dominant, no del seu ordre** (lluny, cap; als mons de prova, cap de la variant ni de la còpia
+        independent, que porten orígens propis): un arranjament nou del seu material a trossos de 2 bytes o més hi arriba gairebé sempre, i
+        només 2 de les 16 porten 16 bytes seguits. **Per la regla fixada no ho pot dir:** de les 16 de la sopa vella, 4 còpies, 0 «no una
+        còpia», 12 sense decidir. **«No ho podem dir»,** mai «les 12 són còpies», ni «arranjaments nous», ni «trossos», **ni «cap no és un
+        arranjament nou»** (la mesura no ho pot dir), ni «totes porten tirades de 16 bytes». El veïnat, un contrast descriptiu, no un negatiu
+        (AUD-232, AU2-226). A posteriori (l'auditor 1, una mesura de la continuïtat triada després), 11 còpies mutades i 5 trossos: **una pista,
+        no un resultat;** la pista de l'AUD-228, per la regla fixada «ni confirmada ni contradita».
+      - **«L'excés que queda no es mostra amb aquesta regla»** (Rd = R1, 4,55 [0,90; 22,91], una identitat); l'Rd+ (3,88 [1,13; 13,41]) és l'R0
+        menys quatre, i compta com a noves les 12 sense decidir: l'excés va de l'un a l'altre segons què siguin, mai «per sobre d'1» sol, i cap
+        dels dos no és un quocient de naixements (AUD-233, AU2-227). La finestra de 250 no separa. «Un origen», **components per parelles
+        compartides**, no orígens (AUD-235, AU2-228).
       - **La primera `--check` en va rebutjar 17 de 18** per un límit inferior meu equivocat al validador (comprovacions d'invariant per mesura);
-        corregit al nombre exacte (`924b18f`) abans de mirar cap puntuació. Els scripts i les sortides diuen «by position», el nom de la primera
-        versió: la mesura és per l'ordre.
+        corregit al nombre exacte (`924b18f`) abans de mirar cap puntuació, i tots dos auditors ho accepten. Els scripts i les sortides diuen
+        «by position», el nom de la primera versió: la mesura és per l'ordre. **Les SHA-256 de `previ/`** eren dels fitxers amb CRLF de la
+        còpia de treball, i git els desa amb LF (la N-1 de l'auditor 1: els scripts no es van tocar després de `prova-5`).
+      - **L'auditoria 45:** tots tres coincidim que, abans de cap registre sencer, cal una mesura de la continuïtat (16 bytes seguits en
+        l'ordre del grup dominant, passant per sobre de les mutacions pròpies) fixada abans i provada amb casos de resposta coneguda adversos,
+        amb els validadors corregits. **El carril d'explorar, des d'ara** (`docs/disseny.md`, l'acord dels tres): tot el que es fa córrer per
+        a una nota fora del càlcul que fixa (abans de la nota, i després fora dels passos previstos), també el que falla, es desa amb la
+        sortida, l'stderr, el codi de sortida, l'hora i la SHA-256 del codi, i diu si ha mirat res del pilot o d'una sèrie. Si `previ/` ha
+        d'acabar també amb la SHA-256 dels scripts tal com entren al commit de la nota, i si les SHA-256 han de ser les dels fitxers tal com
+        els desa git, ho preguntem a l'auditor 2 (X-140) abans d'escriure-ho.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

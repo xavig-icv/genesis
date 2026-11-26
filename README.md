@@ -437,15 +437,18 @@ See notebook [entry 27](quadern/index.html#entrada-27), in Catalan, or its [Engl
 
 ### Copies or new arrangements (exploratory)
 
-A measure of descent fixed before computing, apart from the exposure bit: how many of a cell's pairs of adjacent bytes keep the order their
-origins have in the dominant group's carriers (a copy keeps it, forward or backward and shifted; a new arrangement breaks it). Tested with
-known answers on synthetic test worlds first, where it tells a replicator's copies from those of a variant and of an independent copy of the
-same program (the exposure bit does not); then the same 18 branches again (nothing planted):
-- **Of the aged soup's 16 failed appearances that the time rule removes, 4 are copies of the dominant group, none is not, and 12 are
-  undecided:** by the rule fixed in the note, **we cannot tell.** All 16 carry runs of 16 bytes in the dominant group's order, but so do more
-  than half of their neighbours (after the fact), and the rule asks an appearance to stand out from them.
-- **The excess left is not shown under this rule** (4.55 [0.90, 22.91]); removing only the appearances shown to be copies, its interval lies
-  above 1 (3.88 [1.13, 13.41], a sensitivity).
+A measure of descent fixed before computing, apart from the exposure bit: how many of a cell's 63 pairs of adjacent bytes have their two
+origins together in a map made from the dominant group's carriers (anywhere in the cell: a count of pairs, not a stretch of bytes). Tested
+with known answers on synthetic test worlds first, where it tells a replicator's copies from those of a variant and of an independent copy of
+the same program (the exposure bit does not); then the same 18 branches again (nothing planted):
+- **Of the aged soup's 16 failed appearances that the time rule removes, 4 come out "a copy of D" by the note's rule (a high score, above
+  their neighbourhood; one of them a mosaic of pieces of 4 bytes or less), none "not a copy", and 12 are undecided:** by the rule fixed in the
+  note, **we cannot tell.** All 16 carry many pairs of the dominant group's material,
+  but only 2 hold 16 bytes in a row in its order, and a new arrangement of that material in pieces of 2 bytes or more would score as high:
+  the measure is specific to the material, not to its order (audit 45). Post hoc, a measure of continuity (auditor 1) points to 11 mutated
+  copies and 5 pieces: a lead, not a result.
+- **The excess left is not shown under this rule** (4.55 [0.90, 22.91]). Removing only the four the rule calls copies (3.88 [1.13, 13.41])
+  counts the 12 undecided as new; the excess lies between the two depending on what they are, and neither is a ratio of births.
 
 See notebook [entry 28](quadern/index.html#entrada-28), in Catalan, or its [English text](quadern/resum.en.md#entry-28).
 
@@ -453,10 +456,11 @@ See notebook [entry 28](quadern/index.html#entrada-28), in Catalan, or its [Engl
 
 - **The soup before life:** the synthesis (entry 25) closes the line of planted replicators; the within-world null (entry 26) left the
   fragments undecided; the small record of copies (entry 27) finds that the bytes of the appearances the time rule removes passed through
-  the dominant group's cells, like their neighbourhood's, which does not show fragments; and a specific measure of descent (entry 28) cannot
-  tell whether they are copies, because near the dominant group its material in its order is everywhere. Where maturation acts is still not
-  known. What could answer it is the owner's choice: the full record of copies, with the appearances the time rule keeps and a definition of
-  a new appearance fixed before; an intervention on the aged soup's first bytes; planting the natural lineages themselves; or a
+  the dominant group's cells, like their neighbourhood's, which does not show fragments; and a measure of descent (entry 28) cannot tell
+  whether they are copies: it is specific to the dominant group's material, not to its order. Where maturation acts is still not known. What
+  could answer it is the owner's choice: first, all three agree (audit 45), a measure of continuity fixed before and tested with adversarial
+  known answers; then the full record of copies, with the appearances the time rule keeps and a definition of a new appearance fixed before;
+  an intervention on the aged soup's first bytes; planting the natural lineages themselves; or a
   confirmatory series, after the record. Planting again needs a new decision and the agreement of the three.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.

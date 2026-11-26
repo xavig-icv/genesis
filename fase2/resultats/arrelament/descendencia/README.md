@@ -206,44 +206,64 @@ whom; and a copy made before the window's start is not seen as one (its bytes ar
   censuses with no dominant lineage detected before (the aged soup's 7046, the shuffled soup's 7018 and 7033, the fresh soup's 7054, 7058
   twice and 7068) are unclassifiable.
 - **The aged soup's 16 time-rule appearances,** all classifiable: **a copy of *D* 4, not a copy of *D* 0, undecided 12** (§1, §2). **All 16
-  reach the run** (from 20 to 54 pairs of 63, per cell); the 12 undecided sit from the 51st to the 89th percentile of their matched cells. The
-  four copies: world 7014 at 9,000 (two appearances: 46 pairs and percentile 0.96; 41 and 0.90), 7054 at 14,000 (53.7, three cells; 0.93) and
-  7059 at 13,250 (21; 0.98).
-- **Why so many are undecided** (after the fact, declared; `posteriori-sortida.txt`): **their matched cells reach the run themselves**, a
-  median of 0.59 of them per appearance (from 0.03 to 0.89), and their median score, per appearance, from 0 to 33.5 pairs (20 for the middle
-  appearance). Near the dominant group, runs of 16 bytes in its arrangement are common; 64 cells or more away from it, none.
+  reach the score of 15** (from 20 to 54 of their 63 pairs in the map, per cell). The score counts pairs anywhere in the cell, not a run:
+  only 2 of the 16 hold 16 bytes in a row in the dominant group's order (auditor 1 at audit 45; "Corrections after audit 45"). The 12
+  undecided sit from the 51st to the 89th percentile of their matched cells. The four "copies" by the rule (a high score, above their
+  neighbourhood; auditor 2 asks the text to call them that): world 7014 at 9,000 (two appearances: 46 pairs and percentile 0.96; 41 and
+  0.90), 7054 at 14,000 (53.7, three cells; 0.93) and 7059 at 13,250 (21; 0.98), which auditor 1 finds a mosaic of pieces of 4 bytes or
+  less (its longest stretch in a row, 3 pairs).
+- **Why so many are undecided** (after the fact, declared; `posteriori-sortida.txt`): **their matched cells reach the score of 15
+  themselves**, a median of 0.59 of them per appearance (from 0.03 to 0.89), and their median score, per appearance, from 0 to 33.5 pairs (20
+  for the middle appearance). Near the dominant group, cells with 15 pairs or more of its material are common; 64 cells or more away from it,
+  none.
 - **The sensitivities of the 16** (§2): the map at 0.5 %, 2 copies; at 5 %, 5; by position or the mirror (this note's first version), 5; by
   position only (auditor 1's post hoc measure), 5; any position, 3; **none of them classes any as "not a copy of D".** At the window of 250
   epochs: 0 copies, 4 not copies, 7 undecided and 5 unclassifiable; a copy older than the window is not seen as one (the note, "What it is
   not"), so this window cannot separate them.
 - **The shuffled soup** (9 time-rule appearances, descriptive): 2 copies, 5 undecided, 2 unclassifiable. **The fresh soup** (4):
   unclassifiable, no dominant lineage detected before.
-- **One origin** (§3; descriptive, 15 pairs): world 7052's seven aged appearances at 10,000, **6 origins** (null 0.003); 7059's three, 3
-  (null 0.000); 7048's two at 13,500, 1 (null 0.000); 7014's two, cannot tell (null 0.171); the burst of world 7046 (no *D*), cannot tell
-  (null 0.247; 7 origins at 31 pairs); the shuffled 7027's two, 2 (null 0.029).
+- **One origin** (§3; descriptive, 15 shared pairs; the output says "origins", read **components by shared pairs**): world 7052's seven aged
+  appearances at 10,000, **6 components** (null 0.003); 7059's three, 3 (null 0.000); 7048's two at 13,500, 1 (null 0.000); 7014's two,
+  cannot tell (null 0.171); the burst of world 7046 (no *D*), cannot tell (null 0.247; 7 components at 31 pairs); the shuffled 7027's two, 2
+  (null 0.029). Two appearances that both carry the dominant group's material share its pairs, which does not make one come from the other;
+  by a common run of 16 bytes, none is joined (auditor 1, post hoc, audit 45).
 - **The recount** (§4; failed appearances per 1,000 world-epochs, aged against fresh, the bootstrap over worlds): R0 4.41 [1.45; 14.90] and R1
   4.55 [0.90; 22.91], again exactly the within-world null note's; **Rd (main) = R1, 4.55 [0.90; 22.91]**, because no time-rule appearance is
-  "not a copy of D"; Rd′ the same; **Rd+ (only the copies removed, a sensitivity), 3.88 [1.13; 13.41]**; the map variants and the measures
-  by position, 4.55; the window of 250, 5.62 [1.47; 27.28].
+  "not a copy of D" (an identity, not new evidence); Rd′ the same; **Rd+ (only the copies removed, a sensitivity), 3.88 [1.13; 13.41]**: R0
+  minus the four aged copies, counting the 12 undecided as new; the map variants and the measures by position, 4.55; the window of 250, 5.62
+  [1.47; 27.28], with 4 of its 12 censuses failing their control.
 
 ## The reading (by the rules fixed in the note)
 
-- **The aged soup's 16 time-rule appearances: cannot tell.** Neither two thirds copies of *D* (4 of 16) nor two thirds not (0 of 16). **None
-  is a new arrangement by this measure:** all 16 hold 15 pairs or more of adjacent bytes in the dominant group's arrangement. But more than
-  half of their matched neighbours hold them too (after the fact), and the rule asks for an appearance above 90 % of them: 12 are in between.
-- **The excess left (Rd): not shown under this rule** (4.55 [0.90; 22.91]); never "there is no excess". Removing only the appearances shown
-  to be copies (Rd+, a sensitivity), the interval lies above 1 (3.88 [1.13; 13.41]).
-- **Auditor 1's post hoc lead** (AUD-228): neither confirmed nor contradicted. No appearance is "not a copy of D", which would have gone
-  against it, and only 4 pass the neighbourhood's control. For the aged soup this was not an independent test (the note).
-- **The measure, unlike the exposure bit, is specific:** in the test worlds (the variant and the independent planting of the same program, 0
-  at the run) and in the pilot's censuses (no far cell reaches the run). Near the dominant group its material in its arrangement is common,
-  and that is what keeps most appearances undecided.
+*(Corrected after audit 45: "Corrections after audit 45", at the end.)*
+
+- **The aged soup's 16 time-rule appearances: by the rule fixed in the note, cannot tell.** Neither two thirds copies of *D* (4 of 16) nor
+  two thirds not (0 of 16). All 16 carry many pairs of the dominant group's material (20 to 54 of 63); only 2 hold 16 bytes in a row in its
+  order. The score counts pairs anywhere in the cell: shuffling the bytes one by one breaks the order, shuffling them in pieces of 2 bytes or
+  more keeps it and reaches the score almost always (auditor 1, post hoc). **The measure cannot say that an appearance is not a new
+  arrangement** of the dominant group's material. And the rule asked a copy to stand out from its neighbourhood, which near the dominant group
+  holds its material, in pieces and in copies, too: a condition of place, the right one for the exposure bit, not for a measure of descent;
+  the neighbourhood is a descriptive contrast, not a known negative.
+- **Post hoc** (auditor 1 at audit 45: a measure and a threshold chosen after seeing the data, on the same branches), by the order and
+  bridging their own mutations, 11 of the 16 look like mutated copies of the dominant group's program (world 7074's is the whole program with
+  16 pairs broken by its own mutations and nothing else) and 5 like pieces of its material mixed with other material (7059's three and two of
+  7052's). **A lead, not a result.** Auditor 1's lead of audit 44 (AUD-228) is not tested by a measure fixed before: by the rule fixed here,
+  neither confirmed nor contradicted; post hoc, it fits 11 and said too much for 5.
+- **The excess left (Rd): not shown under this rule** (4.55 [0.90; 22.91]); never "there is no excess". Rd+ (3.88 [1.13; 13.41], a
+  sensitivity) is R0 minus the four aged copies and counts as new the 12 undecided, which carry the dominant group's material: the excess left
+  lies between Rd and Rd+ depending on what these 12 are (from 2.27 to 7.76 by how the abstentions are counted; auditor 1, post hoc). These
+  are sensitivities of the count, not bounds of a ratio of births: the classification's errors are not calibrated, and *D* is available for
+  all 16 aged appearances and for none of the 4 fresh (auditor 2).
+- **The measure, unlike the exposure bit, is specific to the dominant group's material:** in the test worlds nothing of the variant or of the
+  independent planting of the same program reaches 15, in the pilot's censuses no far cell does, and almost all the pairs of the map formed
+  within the window (auditor 1). **Not to its order:** it counts pairs, not stretches.
 
 ### What it does not say
 
 - Not that the 12 undecided are copies of *D*, nor that they are new arrangements of its material.
-- Not that the appearances' neighbours are copies of the dominant group's program: a cell with a run of 16 bytes in its arrangement may hold
-  other material in its other bytes.
+- Not that any appearance is not a new arrangement of the dominant group's material (the score cannot say it).
+- Not that the appearances' neighbours are copies of the dominant group's program: a cell with 15 pairs or more of the map may hold them in
+  pieces, and other material in its other bytes.
 - Not where maturation acts (AUD-184 = AU2-151), and nothing about the 17 appearances the time rule keeps, which this note does not classify.
 - The adjacency of origins says what was copied together within the window, not by whom; a copy made before the window's start is not seen.
 
@@ -257,3 +277,49 @@ whom; and a copy made before the window's start is not seen as one (its bytes ar
   not kept) and from `b8239e4` (exit code 0; `check-sortida.txt`).
 - **`analisi.mjs`, once** (`b8239e4`; `analisi-sortida.txt`), and **one check after the fact** (`posteriori.mjs`, `f04f6a0`).
 - Nothing else was run on the records.
+
+## Corrections after audit 45 (26 November 2026)
+
+Both auditors reproduced the note (auditor 1 re-ran the seven aged branches with a tracer, a map and a score of their own, all equal to the
+records, and ran `prova.mjs`, the check, the analysis and the check after the fact; auditor 2 checked both zips, recounted the classes
+independently, enumerated the 275 invariant checks and reproduced the check after the fact), accept it as exploratory, accept the
+validator's correction as legitimate and its exact count as right, and ask for nothing to be computed again. **The outputs do not change.**
+The text of "What came out", "The reading" and "What it does not say" is the corrected one; what the note fixed before computing ("What is
+measured, and how", the rule and "What would change my mind") is as it was, including its words "the run" and "a fragment of 16 bytes".
+- **"The run" is a count of pairs, not a run** (AUD-231 = AU2-225). `score()` counts how many of a cell's 63 pairs of adjacent bytes have both
+  origins in the map, anywhere in the cell and at every position; it asks for no stretch in a row. On the branches' own material, a new
+  arrangement in pieces of 2 bytes reaches 15 in 97 to 99 % of cases, and even the bytes shuffled one by one in 3 to 65 % (auditor 1); a
+  64-byte cell of 2-byte blocks reordered scores 32 with no two blocks in their order (auditor 2). Only 2 of the 16 aged appearances hold 16
+  bytes in a row in the dominant group's order. Withdrawn: "all carry runs of 16 bytes in the dominant group's order", "none is a new
+  arrangement by this measure", "a new arrangement of the same bytes breaks it" (only shuffling one by one does) and "unlike the exposure bit,
+  the measure is specific" without saying of what (of the material, not of its order). The checks with a known answer could not see it: their
+  new arrangement shuffled 64 distinct origins one by one, and their fragment was exactly a run of 16 bytes.
+- **"A copy of D" is the rule's name for a high score above the neighbourhood,** not a copy of the program (AU2-225): the score is about
+  origins, not values (a `+` or a `-` keeps a byte's origin and changes its value), and the map's pairs may come from different carriers. To
+  speak of the program, the values or the instructions must be checked too (auditor 2). One of the four (world 7059's) is a mosaic of pieces
+  of 4 bytes or less (auditor 1).
+- **The neighbourhood's condition** (AUD-232, AU2-226): asking a copy to stand out from cells that also descend from the dominant group asks
+  for more descent than theirs; auditor 1, who asked for it at audit 44, now withdraws that request. The neighbourhood is a descriptive contrast, not a
+  known negative; and it compares an appearance's mean over its cells with single cells (auditor 2). The post hoc lead (11 mutated copies,
+  5 pieces) is in "The reading", as a lead.
+- **Rd+** (AUD-233, AU2-227): R0 minus four, not a result of its own; "its interval lies above 1" no longer stands alone. Rd = R1 is an
+  identity. Neither bounds a ratio of births.
+- **One origin** (AUD-235, AU2-228): "6 origins", "1 origin" are components by shared pairs; the local null is not matched on the dominant
+  group's material nor calibrated at the scale of a group (auditor 2). By a common run of 16 bytes, no appearance is joined to another
+  (auditor 1, post hoc).
+- **The validators** (AUD-234, AU2-229): `validate()` accepts an empty baseline (and `classify()` would then read a `null` percentile as
+  0.50 or less: "not a copy of D"), 64 pairs in a cell (an appearance, a matched cell or a histogram), a map threshold that is not the rule's,
+  a baseline at distance 0, and a list's SHA-256 or a commit equally false in every record. None of these is in the real records (their 46
+  baselines have 200 cells each). Open, like AU2-205, AU2-216, AU2-219 and AU2-223: fixed, with an impossible case for each, before the code
+  is used again.
+- **The name left** (AU2-230): the scripts' "by position" stays with the outputs; the next version names the measure in the code before
+  computing.
+- **Before this note** (auditor 1, N-1): the SHA-256 of `traca.mjs`, `descendencia.mjs` and `valida.mjs` at the note's commit are not those of
+  `prova-5` in `previ/registre.txt`, but the scripts were not touched after `prova-5`: in the working copy they had CRLF line ends (left by
+  edits made with Python), and git keeps them with LF. The commit's files, with CRLF, give `prova-5`'s SHA-256 exactly (the team's check at
+  audit 45). Whether `previ/` should hash the scripts as git keeps them is asked of auditor 2 before it becomes a rule (the agreement of the
+  three).
+- **The first `--check`'s output** (N-2) was not kept ("Everything tried" said so); from now on, the output of every run, failed ones too, is
+  kept.
+- **Entry 28's "the full record … could say"** (N-3) is withdrawn: with the same score and the same control it would classify other
+  appearances, not answer for these 16.
