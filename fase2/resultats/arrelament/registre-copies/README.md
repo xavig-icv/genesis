@@ -162,35 +162,52 @@ about 5 hours of CPU, about an hour with 6 processes at low priority. The limit 
 
 ## What came out (exploratory)
 
-**In short:** the instrument passes its controls, and by the rule fixed in the note **the aged soup's 16 appearances that the time rule
-removes are made of the dominant group's material** (all 16 D-derived: 0.70 to 0.98 of their bytes passed, within 1,250 epochs, through
-cells that carried the dominant group's windows), **as the time rule assumed. But so is their neighbourhood:** 15 of the 16 are one or two
-cells from a carrier of the dominant group, where the cells at the same distance are 0.59 to 0.81 made of its material on average, and
-their percentile among those cells is 0.35 to 0.86. The record says which cells their bytes passed through, not that they are copies of the
-dominant group's program. **Without the D-derived, the excess of failed appearances in the aged soup is not shown** (Rc, 2.27 [0.48, 8.64];
-counting origins, with the short window and with *Dbroad*, the interval contains 1 too), which is not to say that there is no excess. And
-**the two bursts of seven are not one origin each:** six origins in each, by the note's rule.
+**In short** (corrected after audit 44): the instrument passes its controls, and by the rule fixed in the note the aged soup's 16
+appearances that the time rule removes are all D-derived: 0.70 to 0.98 of their bytes passed, within 1,250 epochs, through cells that
+carried the dominant group's windows. **But the bit records exposure (where bytes have been), not which program they come from, and their
+neighbourhood is D-derived too:** 15 of the 16 are one or two cells from a carrier of the dominant group, where the cells at the same
+distance are 0.59 to 0.81 D on average, and their percentile among those cells is 0.35 to 0.86. The dominant group appeared and spread
+within every window (no carrier at any window's start), so the rule could hardly have come out otherwise: **it does not show that they are
+fragments.** Post hoc, the bytes' origins by position point to mutated copies of the dominant group's program (auditor 1; a lead, not a
+result). **Without the D-derived, the excess of failed appearances in the aged soup is not shown under this rule** (Rc, 2.27 [0.48, 8.64],
+which mixes two rules; treated alike in both soups it is R1 again, 4.55 [0.90, 22.91]; every variant contains 1), which is not to say that
+there is no excess. And **the two bursts of seven are not one origin each:** by the note's rule, six components of its provenance graph in
+each, which are not six births.
 
 1. **The instrument** (section 0). It reproduces the 18 pilot branches it re-runs (923 measures and every final fingerprint), and passes the
    controls fixed in the note, in both windows: 41 sets of 41 with 10 carriers or more have every carrier holding a full window with the
    set's bit (the lowest share, 1.000), and the cells 64 or more from the dominant group carry none of its bit (the highest mean, 0.000, at
    12 censuses). **What these controls check, and what not:** the positive one checks the bookkeeping (a carrier's bytes take the bit when it
    interacts, and a window that persists keeps it: it could only fail for windows made anew, by mutations or by chance); the far one, that the
-   bit stays where the dominant group has been and does not spread through the soup. Neither says that a bit means descent from a program.
+   bit stays where the dominant group has been and does not spread through the soup. Neither says that a bit means descent from a program,
+   and neither checks specificity: whether a cell next to the dominant group that does not come from it comes out "not from D" (audit 44).
+   Auditor 2 made all 64 bytes of a cell take the bit with no copy at all, through a carrier window made by a mutation, and the positive
+   control still passes (AUD-227 = AU2-218).
 
 2. **The aged soup's 16 appearances that the time rule removes** (sections 1 and 2):
    - **All 16 are D-derived** in the main window, 15 of them at 0.84 or more (the lowest, 0.70, world 7059 at 13,250); with *Dbroad*, the
-     same. **By the rule fixed in the note: "made mostly of the dominant group's material: fragments, as the time rule assumed".**
+     same. The note fixed this reading before computing: "made mostly of the dominant group's material: fragments, as the time rule
+     assumed". **It is withdrawn** (audit 44): the rule could hardly have come out otherwise (the next point), and the bit does not show
+     fragments.
    - **Like their neighbourhood** (the baseline, descriptive): 14 are next to a carrier of the dominant group and one two cells away, where
      the cells at the same distance are 0.59 to 0.81 D on average; their percentile among them, 0.35 to 0.86. Only one stands out from its
-     neighbourhood: world 7059's at 13,250 (appearance 3), four cells away, 0.70 against 0.03 (percentile 0.97). The other 15 are about as
-     made of the dominant group's material as the cells around them.
-   - **New arrangements within the window:** almost none of their bytes stayed unchanged in its own place since the window's start (the
-     `self` column, 0.00 to two decimals); 0.10 to 0.40 of them descend from a byte overwritten by a mutation within the window, and 0.06 to
-     0.28 were changed by `+` or `-`.
+     neighbourhood: world 7059's at 13,250 (appearance 3), four cells away, 0.70 against 0.03 (percentile 0.97). The other 15 have about as
+     many bytes that passed through the dominant group's cells as the cells around them. **And it could hardly have been otherwise:** the
+     dominant group had no carrier at the start of any of the 12 main windows with *D* (2,740 to 14,966 at *E*), and one cell from a
+     carrier, 0.61 to 0.84 of the cells that are not appearances are D-derived too (auditor 1, post hoc; AUD-227 = AU2-218). The class alone
+     is not informative.
+   - **The bytes' origins by position** (auditor 1, post hoc, audit 44; AUD-228): the record also carries each byte's origin, and a copy
+     keeps its program's origins at the same positions. With the dominant group's carriers at *E* as the reference (0.41 to 0.80; they make
+     the map) and the cells far from it at 0.000, 15 of the 16 have as much of the dominant group's ancestry at their own positions as its
+     carriers (0.84 to 1.25 times their mean), and all 16 more than the median of their neighbourhood: they look like mutated copies of the
+     dominant group's program. A measure and a threshold chosen after seeing the data, in six branches with seven of the 16 from one: a
+     lead, not a result.
+   - **Moved within the window:** almost none of their bytes stayed unchanged in its own place since the window's start (the `self`
+     column, 0.00 to two decimals); 0.10 to 0.40 of them have a mutation in their ancestry within the window, and 0.06 to 0.28 a `+` or `-`
+     (flags on each byte's ancestry, not counts of events).
    - **The window's length:** with 250 epochs, 11 are D-derived, one mixed (world 7052 at 10,000, appearance 11: 0.39), and four older than
-     the window: their own windows were already in 1 to 38 cells 250 epochs before the census (worlds 7014, 7052, 7054 and 7074). They took
-     shape between 1,250 and 250 epochs before it.
+     the window: a window of their own was already in 1 to 38 cells 250 epochs before the census (worlds 7014, 7052, 7054 and 7074), and in
+     none 1,250 epochs before. A matching window present at the window's start; it does not date the lineage (AU2-222).
 
 3. **The shuffled and fresh soups** (descriptive). Shuffled, 9: 6 D-derived, one mixed (world 7037, 0.39), and two with no earlier dominant
    lineage. Fresh, 4: all four with no earlier dominant lineage (the dominant group was first detected at the same census or later), so the
@@ -198,9 +215,13 @@ counting origins, with the short window and with *Dbroad*, the interval contains
    whole list with no bit of *Dbroad* (worlds 7033, 7058 twice) are mostly bytes changed by `+` or `-` (0.67 to 0.97).
 
 4. **The censuses with two or more appearances** (section 3): world 7046 at 16,000 (no dominant group: the branch did not become
-   established), 7 appearances and **6 origins**; world 7052 at 10,000 (its establishment), 7 appearances and **6 origins**, all seven
-   D-derived. The others: 7014, 2 and 1; 7048, 2 and 1; 7027, 2 and 2; 7059, 3 and 3. By the 16-byte rule, a burst is several appearances
-   at once, each made of the material around it, not one appearance broken into seven.
+   established), 7 appearances and **6 components**; world 7052 at 10,000 (its establishment), 7 appearances and **6 components**, all
+   seven D-derived. The others: 7014, 2 and 1; 7048, 2 and 1; 7027, 2 and 2; 7059, 3 and 3. (Corrected after audit 44; the output says
+   "origins".) All four joins come from the rule's second half, one start cell giving 16 bytes or more to each; the bit half joins nothing
+   (the largest cross share, 0.03, 2 bytes), and the second half depends on how the material was split among cells at the window's start
+   (AUD-230 = AU2-220). **Components of the note's provenance graph, not births.** With a measure by position (16 bytes with the same
+   origin at the same position or its mirror, which neighbouring cells reach in 0 to 3 % of pairs; auditor 1, post hoc), world 7046 has six
+   origins, joined differently, and 7052 seven: the appearances of a burst are not copies of one another.
 
 5. **The recount** (section 4; the failed appearances per 1,000 world-epochs, aged against fresh, with the bootstrap over worlds of the
    within-world null note, which gives R0 and R1 again exactly):
@@ -215,23 +236,36 @@ counting origins, with the short window and with *Dbroad*, the interval contains
    | Rc, *Dbroad* | 17, 7, 6 | 3.03 [0.62, 14.72] | contains 1 |
 
    Rc removes the same 16 aged appearances as the time rule, but keeps the fresh soup's four (they have no earlier dominant lineage) and
-   three of the shuffled soup's nine: so it falls below R1. Its point estimate is still above 1, with 17 appearances against 8.
+   three of the shuffled soup's nine: so it falls below R1. Its point estimate is still above 1, with 17 appearances against 8. **So Rc
+   mixes two rules** (audit 44; AUD-229 = AU2-221): it treats the fresh soup's four unclassifiable appearances unlike the aged soup's.
+   Treated alike (removed, like the time rule), it is R1 again, 4.55 [0.90, 22.91], and counting origins 4.28 [0.90, 21.31] (auditor 1,
+   post hoc, with the note's bootstrap and seed). Every variant contains 1; the size of what is left depends on how the unclassifiable
+   appearances are counted, and 2.27 alone is not "the excess left".
 
-## The reading (by the rules fixed in the note)
+## The reading (by the rules fixed in the note; corrected after audit 44)
 
-- **The question:** the appearances that the time rule removes in the aged soup are made of material that passed through the dominant
-  group's carriers, as the time rule assumed, **and so is their neighbourhood**. The record cannot tell a mutated copy of the dominant
-  group's program from a new arrangement of bytes that passed through its cells. **"Made of the dominant group's material, like their
-  neighbourhood"; never "they are copies of the dominant group", and "fragments" only as the rule's reading, with its condition.**
-- **The excess:** once the D-derived are removed, it is not shown (Rc, Rc′ and both sensitivities contain 1). With entry 26, where the excess
-  was "neither separated from fragmentation nor shown to be fragments": the time rule's removal now has direct support in the aged soup, by
-  material; **"the excess left without the D-derived is not shown"**, never "there is no excess" nor "the excess was fragments". The counts
-  are small (17 against 8), the interval wide, and the other failed appearances keep their count (the small version).
-- **The bursts:** six origins in each, by the 16-byte rule.
+- **The question:** the appearances that the time rule removes in the aged soup have bytes that passed through the dominant group's
+  carriers, **and so has their neighbourhood**. The bit cannot tell a mutated copy of the dominant group's program from a new arrangement of
+  bytes that passed through its cells, and with the dominant group spreading within every window the class could hardly have come out
+  otherwise: **it does not show that they are fragments.** The bytes' origins, by position, could tell them apart, and the note did not use
+  them for it; post hoc they point to mutated copies (auditor 1). **"Their bytes passed through the dominant group's cells, like their
+  neighbourhood's"; never "they are copies of the dominant group", nor "they are fragments".**
+- **The excess:** once the D-derived are removed, it is not shown under this rule (Rc, Rc′, both sensitivities and the symmetric recount
+  contain 1). With entry 26, where the excess was "neither separated from fragmentation nor shown to be fragments": the bit is consistent
+  with the time rule, as place was, and adds no support of its own. **"The excess left without the D-derived is not shown"**, never "there
+  is no excess" nor "the excess was fragments", and 2.27 alone is not "the excess left". The counts are small (17 against 8), the interval
+  wide, and the other failed appearances keep their count (the small version).
+- **The bursts:** six components each by the note's 16-byte rule, not six births; post hoc, by position, not copies of one another.
 
 ### What it does not say
 
-- **Not descent** (the note's limit): a bit says that a byte passed through a carrier, and every byte of a carrier takes it.
+- **Not descent, and not fragments** (the note's limit, sharpened at audit 44): a bit says that a byte passed through a carrier, and every
+  byte of a carrier takes it, also bytes that are not the program's and bytes that no copy touched (AU2-218).
+- **Not a validator to reuse as it is:** `analisi.mjs --check` accepts impossible records (a false seed and fingerprint, D = 2, a cell out
+  of range, a duplicate control; AU2-219), and `prova/compara.mjs` prints differences but exits 0 (AU2-223; the package check reads the
+  count it prints). The measures and fingerprints were checked by `registre.mjs` as it ran, which stops with a `fail` line otherwise;
+  `--check` only reads what the records say. This note's data pass both auditors' independent checks. Both stay open, like AU2-205 and
+  AU2-216, and are fixed before the code is used again.
 - **Not about the failed appearances outside the list:** the 17 aged ones that the time rule keeps were not traced (the small version).
 - **Not confirmatory, and not where maturation acts:** the rule stays (AUD-184 = AU2-151).
 
@@ -242,3 +276,31 @@ counting origins, with the short window and with *Dbroad*, the interval contains
 - From the note's commit: `prova.mjs` once and the short test once; from `fd6ab4c`, the full run once, with no failure and no relaunch.
 - After the run: the comparison of the short test's branch with the full run's (`prova/compara.mjs`), a check, not an analysis.
 - `analisi.mjs --check` once, and the analysis once. Nothing else was computed; the numbers in this section are read from the output.
+- After audit 44: nothing computed by the team for the note. The auditors' post hoc measures (auditor 1's origins by position, the class by
+  place and the symmetric recount; auditor 2's tag counterexample and negative tests) are theirs, re-run by the team as they are, and quoted
+  as theirs.
+
+## Corrections after audit 44 (26 November 2026)
+
+Both auditors reproduced the note (auditor 1 re-ran the seven aged branches with a tracer of their own and rebuilt the list, the classes
+and the recount; auditor 2 checked the captures, the records and the analysis, and ran the instrument against the plain epoch on a real
+capture), accept it as exploratory, and ask for nothing to be computed again. **The outputs do not change.** The text of "What came out" and
+"The reading" is the corrected one; what the note fixed before computing is as it was.
+- **"By the rule fixed in the note: fragments, as the time rule assumed"** and **"the time rule's removal now has direct support in the aged
+  soup, by material"** are withdrawn (AUD-227 = AU2-218). The bit records exposure, where bytes have been: every byte of a carrier takes it
+  when the carrier interacts, also bytes no copy touched; the dominant group had no carrier at the start of any window and spread within
+  it; and one cell from a carrier, 0.61 to 0.84 of the cells that are not appearances are D-derived too. The rule could hardly have come out
+  otherwise. The bit is consistent with the time rule, as place was, and adds no support of its own.
+- **"The record cannot tell a mutated copy of the dominant group's program from a new arrangement of bytes"** said too little (AUD-228): the
+  bit cannot, but the bytes' origins by position could, and post hoc they point to mutated copies (auditor 1). A lead, not a result.
+- **Rc** (AUD-229 = AU2-221): it mixes two rules; treated alike in both soups it is R1, 4.55 [0.90, 22.91] (4.28 counting origins). "2.27"
+  alone is not "the excess left".
+- **"Six origins in each burst"** (AUD-230 = AU2-220): six components of the note's provenance graph, all joined by a shared start cell, none
+  by the bit; not six births. By position (auditor 1, post hoc), six and seven, not copies of one another.
+- **"They took shape between 1,250 and 250 epochs before it"** (AU2-222) is withdrawn: a matching window present at the short window's start
+  does not date a lineage. `mut` and `arith` are flags on a byte's ancestry, not counts of events.
+- **The validators** (AU2-219, AU2-223): `--check` accepts impossible records and `prova/compara.mjs` exits 0 on a difference; open, fixed
+  before the code is used again (like AU2-205 and AU2-216). The baseline is descriptive, not calibrated as a classifier (AU2-224).
+- **Details** (auditor 1, N-1, N-2, N-4): in entry 27, the fresh soup's four are at censuses where the dominant group is first detected at
+  the same census or later; "0.70 to 0.98 of their bytes", not "almost all"; and world 7037's shuffled appearance, the only one with less bit
+  than its neighbourhood (0.39 against 0.89, percentile 0.06), is classed "mixed", not "not from D".

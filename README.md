@@ -425,21 +425,23 @@ See notebook [entry 26](quadern/index.html#entrada-26), in Catalan, or its [Engl
 
 A record of heritable copies, in its small version: 18 pilot branches run again with a copy of the world's epoch that tags where every byte
 comes from and which cells it has passed through, checked against the simulator and every pilot record it uses (nothing planted):
-- **The aged soup's 16 failed appearances that the time rule removes are made of the dominant group's material,** as the rule assumed:
-  0.70 to 0.98 of their bytes passed, within 1,250 epochs, through cells carrying its windows. **But so is their neighbourhood** (15 of 16
-  within two cells of it, where the cells around are 0.59 to 0.81 made of it): material, not descent.
-- **Without them, the aged soup's excess of failed appearances is not shown** (2.27 [0.48, 8.64]; also counting origins, with a shorter
-  window and with all the dominant group's lineages), which is not to say there is none: 17 appearances against 8.
-- **Each burst of seven same-census appearances has six origins.**
+- **The bytes of the aged soup's 16 failed appearances that the time rule removes passed through the dominant group's cells:** 0.70 to 0.98
+  of them, within 1,250 epochs. **But so did their neighbourhood's** (15 of 16 within two cells of a carrier, where the cells around are
+  0.59 to 0.81), and the dominant group spread within every window: the bit records exposure, not descent, and **does not show that they
+  are fragments** (audit 44). Post hoc, the bytes' origins by position point to mutated copies of the dominant group (auditor 1; a lead).
+- **Without them, the aged soup's excess of failed appearances is not shown under this rule** (every variant contains 1; 2.27 [0.48,
+  8.64] mixes two rules, and treated alike in both soups it is 4.55 [0.90, 22.91]), which is not to say there is none.
+- **The two bursts of seven same-census appearances are not one origin each,** and not copies of one another.
 
 See notebook [entry 27](quadern/index.html#entrada-27), in Catalan, or its [English text](quadern/resum.en.md#entry-27).
 
 ### What we study now
 
 - **The soup before life:** the synthesis (entry 25) closes the line of planted replicators; the within-world null (entry 26) left the
-  fragments undecided, and the small record of copies (entry 27) finds the appearances the time rule removes made of the dominant group's
-  material, like their neighbourhood. Where maturation acts is still not known. What could answer it is the owner's choice: the full record
-  of copies, once what counts as a new appearance is fixed; an intervention on the aged soup's first bytes; planting the natural lineages
+  fragments undecided, and the small record of copies (entry 27) finds that the bytes of the appearances the time rule removes passed through
+  the dominant group's cells, like their neighbourhood's, which does not show fragments. Where maturation acts is still not known. What
+  could answer it is the owner's choice: the full record of copies, once a measure of descent, what counts as one origin and a symmetric
+  recount are fixed and tested with known answers; an intervention on the aged soup's first bytes; planting the natural lineages
   themselves; or a confirmatory series, after the record. Planting again needs a new decision and the agreement of the three.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.

@@ -420,10 +420,21 @@ Llegeix-los abans de proposar canvis.
     - **El registre de les còpies, la versió petita** (26-11-2026, l'entrada 27, exploratori; `fase2/resultats/arrelament/registre-copies/`): una
       còpia instrumentada del pas del món (`traca.mjs`, `mon.mjs`, `registre.mjs`; el simulador no es toca) torna a fer 18 branques del pilot i
       n'ha de reproduir cada mesura i l'empremta final; `dades.mjs` hi comprova les dades amb la llista de l'AU2-216. Les 36 aparicions en
-      disputa (les que treu la regla del temps i la ràfega del 7046). Per la regla fixada, les 16 de la sopa envellida que treu la regla del temps
-      estan fetes del material del grup dominant: **«fetes del material del grup dominant, com el seu veïnat»,** mai «són còpies del grup
-      dominant», i «trossos» només com la lectura de la regla, amb la seva condició (material, no descendència). **«L'excés que queda sense
-      les derivades de *D* no es mostra»** (2,27 [0,48; 8,64]), mai «no hi ha excés» ni «l'excés eren trossos». Cada ràfega de set, sis
-      orígens per la regla dels 16 bytes. El control positiu comprova la comptabilitat, no la descendència.
+      disputa (les que treu la regla del temps i la ràfega del 7046). L'auditoria 44 (acceptada com a exploratòria per tots dos; correccions
+      de lectura):
+      - **La marca és exposició, no descendència ni trossos** (AUD-227 = AU2-218): la prenen tots els bytes d'un portador quan interactua,
+        també els que no ha tocat cap còpia, i el grup dominant s'escampa dins de cada finestra; la regla fixada gairebé no podia sortir d'una
+        altra manera. **«Els seus bytes han passat per les cel·les del grup dominant, com els del seu veïnat»,** mai «fetes del material del
+        grup dominant» sense dir què vol dir, ni «són còpies del grup dominant», ni «són trossos», tampoc com a lectura de la regla; mai
+        «suport directe» a la regla del temps («compatible, com ho era el lloc»). Els orígens per posició apunten a còpies mutades, a
+        posteriori (l'auditor 1, AUD-228): **una pista, no un resultat.**
+      - **«L'excés que queda sense les derivades de *D* no es mostra amb aquesta regla»,** mai «no hi ha excés» ni «l'excés eren trossos». El
+        2,27 [0,48; 8,64] barreja dues regles: tractant igual les dues sopes, 4,55 [0,90; 22,91] (AUD-229 = AU2-221); mai el 2,27 sol com «el
+        que queda de l'excés».
+      - **Les ràfegues:** «sis components de la regla de la nota», mai «sis orígens» ni «sis naixements»; per posició, no són còpies l'una de
+        l'altra (AUD-230 = AU2-220). «Més antiga que la finestra» és una finestra igual a l'inici, no l'edat del llinatge (AU2-222).
+      - **La `--check` de la nota accepta registres impossibles, i `prova/compara.mjs` surt amb el codi 0 quan troba diferències** (AU2-219,
+        AU2-223): obertes, com l'AU2-205 i l'AU2-216; es corregeixen abans de tornar a fer servir el codi. El control positiu comprova la
+        comptabilitat, i cap control no mira l'especificitat.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

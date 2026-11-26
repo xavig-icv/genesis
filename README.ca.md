@@ -425,21 +425,24 @@ Vegeu l'[entrada 26](quadern/index.html#entrada-26).
 
 Un registre de les còpies hereditàries, en la versió petita: 18 branques del pilot tornades a fer córrer amb una còpia del pas del món que
 apunta d'on ve cada byte i per quines cel·les ha passat, comprovada contra el simulador i contra cada registre del pilot (sense plantar res):
-- **Les 16 aparicions de la sopa vella que treu la regla del temps estan fetes del material del grup dominant,** com suposava la regla: del
-  0,70 al 0,98 dels seus bytes han passat, en 1.250 èpoques, per cel·les que en portaven les finestres. **Però el seu veïnat també** (15 de
-  16 a dues cel·les o menys, on les cel·les del voltant en tenen del 0,59 al 0,81): material, no descendència.
-- **Sense elles, l'excés d'aparicions de la sopa vella no es mostra** (2,27 [0,48; 8,64]; també comptant els orígens, amb una finestra més
-  curta i amb tots els llinatges del grup dominant), i això no vol dir que no n'hi hagi: 17 aparicions contra 8.
-- **Cada ràfega de set aparicions d'un mateix cens té sis orígens.**
+- **Els bytes de les 16 aparicions de la sopa vella que treu la regla del temps han passat per les cel·les del grup dominant:** del 0,70 al
+  0,98, en 1.250 èpoques. **Però els del seu veïnat també** (15 de 16 a dues cel·les o menys d'un portador, on les cel·les del voltant en
+  tenen del 0,59 al 0,81), i el grup dominant s'escampa dins de cada finestra: la marca diu per on han passat, no la descendència, i **no
+  mostra que siguin trossos** (l'auditoria 44). A posteriori, els orígens dels bytes per posició apunten a còpies mutades del grup dominant
+  (l'auditor 1; una pista).
+- **Sense elles, l'excés d'aparicions de la sopa vella no es mostra amb aquesta regla** (totes les variants contenen 1; el 2,27 [0,48;
+  8,64] barreja dues regles, i tractant igual les dues sopes és 4,55 [0,90; 22,91]), i això no vol dir que no n'hi hagi.
+- **Les dues ràfegues de set aparicions d'un mateix cens no són una sola aparició cadascuna,** ni còpies l'una de l'altra.
 
 Vegeu l'[entrada 27](quadern/index.html#entrada-27).
 
 ### El que estudiem ara
 
 - **La sopa abans de la vida:** la síntesi (l'entrada 25) tanca la línia dels replicadors plantats; el nul dins del món (l'entrada 26)
-  deixava els trossos sense decidir, i el registre petit de les còpies (l'entrada 27) troba que les aparicions que treu la regla del temps
-  estan fetes del material del grup dominant, com el seu veïnat. On actua la maduració, encara no ho sabem. El que ho podria respondre ho tria
-  el responsable: el registre sencer de les còpies, després de fixar què és una aparició nova; una intervenció sobre els primers bytes de la
+  deixava els trossos sense decidir, i el registre petit de les còpies (l'entrada 27) troba que els bytes de les aparicions que treu la regla
+  del temps han passat per les cel·les del grup dominant, com els del seu veïnat, i això no mostra que siguin trossos. On actua la maduració,
+  encara no ho sabem. El que ho podria respondre ho tria el responsable: el registre sencer de les còpies, després de fixar i provar amb
+  casos de resposta coneguda una mesura de descendència, què és un origen i un recompte simètric; una intervenció sobre els primers bytes de la
   sopa vella; plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió
   nova i l'acord dels tres.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
