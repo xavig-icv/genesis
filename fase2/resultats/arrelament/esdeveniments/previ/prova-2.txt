@@ -1,0 +1,32 @@
+A record of copy events: the instrument's checks (exploratory). The code: 5b2c5b75+canvis, v16.15.1.
+
+1. The generator and the world
+   ok   the generator gives the numbers of fase1/soup.js (three seeds, 100,000 numbers each)
+   ok   its state, saved and set again, gives the same numbers
+   ok   this world and the small record's, 300 epochs of a 64 × 64 test world with mutations: the same soup at every epoch, the same operations; with a seventh of the cells followed, too
+   ok   every record keeps its own check (175800 records), and a cell's state after an epoch is its state before the next
+   ok   a segment run again from its checkpoint ends in the next checkpoint, byte for byte, and gives the records of its cells
+   ok   the replay does not fail
+   ok   a checkpoint with one bit changed: the replay fails
+   ok   the replays are counted
+
+2. The rules, one case at a time, with synthetic records
+   ok   the census test: the replicator and its variant are heritable, random bytes are not
+   ok   the replicator has a byte whose change kills its heredity (21)
+   ok   a copy of a heritable partner over random bytes: inherited from the partner, at its state before the interaction
+   ok   its chain moves to the partner, heritable since the window's start: older
+   ok   a broken copy, never heritable, repaired by the cell's own '+': a birth at that interaction
+   ok   heredity lost by a mutation and repaired: inherited from the cell itself before the loss (63 bytes), then older
+   ok   bytes from a partner that is not heritable, which got them from a heritable cell one transfer before: inherited from that cell (63 bytes)
+   ok   the same with no transfer allowed: not decided (unresolved)
+   ok   a heritable cell overwritten by a heritable partner: a replacement, the chain moves to the partner
+   ok   a heritable cell with fewer than half of its bytes from a heritable partner: no replacement, the chain stays
+   ok   random bytes made heritable by mutations: a birth by mutation, at its epoch
+   ok   inherited from a carrier of a lineage detected before: an earlier lineage
+   ok   a byte copied from the partner and then changed by '+' or '-' still counts as from the partner
+   ok   the class of an appearance: the end of more than half of its cells, else mixed
+
+3. The chains in test worlds whose genealogy is known by construction
+   a. one planting of the replicator at cell 1300, epoch 10; 1371 heritable cells at 200; 501 replays; ends: birth 1300@10 (mutation): 1371
+   ok   every heritable cell's chain ends at the planting (its cell, its epoch, a change in place)
+   ok   every other cell reaches it through inherited copies (or replacements)

@@ -1,0 +1,75 @@
+A record of copy events: the instrument's checks (exploratory). The code: 5b2c5b75+canvis, v16.15.1.
+
+1. The generator and the world
+   ok   the generator gives the numbers of fase1/soup.js (three seeds, 100,000 numbers each)
+   ok   its state, saved and set again, gives the same numbers
+   ok   this world and the small record's, 300 epochs of a 64 × 64 test world with mutations: the same soup at every epoch, the same operations; with a seventh of the cells followed, too
+   ok   every record keeps its own check (175800 records), and a cell's state after an epoch is its state before the next
+   ok   a segment run again from its checkpoint ends in the next checkpoint, byte for byte, and gives the records of its cells
+   ok   the replay does not fail
+   ok   a checkpoint with one bit changed: the replay fails
+   ok   the replays are counted
+
+2. The rules, one case at a time, with synthetic records
+   ok   the census test: the replicator and its variant are heritable, random bytes are not
+   ok   the replicator has a byte whose change kills its heredity (21)
+   ok   a copy of a heritable partner over random bytes: inherited from the partner, at its state before the interaction
+   ok   its chain moves to the partner, heritable since the window's start: older
+   ok   a broken copy, never heritable, repaired by the cell's own '+': a birth at that interaction
+   ok   heredity lost by a mutation and repaired: inherited from the cell itself before the loss (63 bytes), then older
+   ok   bytes from a partner that is not heritable, which got them from a heritable cell one transfer before: inherited from that cell (63 bytes)
+   ok   the same with no transfer allowed: not inherited (63 bytes past the transfers allowed)
+   ok   a heritable cell overwritten by a heritable partner: a replacement, the chain moves to the partner
+   ok   a heritable cell with fewer than half of its bytes from a heritable partner: no replacement, the chain stays
+   ok   random bytes made heritable by mutations: a birth by mutation, at its epoch
+   ok   inherited from a carrier of a lineage detected before: an earlier lineage
+   ok   a byte copied from the partner and then changed by '+' or '-' still counts as from the partner
+   ok   a birth that an earlier lineage's chains also reach is that lineage's origin (earlier lineage, by origin); another birth, or another end, stays
+   ok   the class of an appearance: the end of more than half of its cells, else mixed
+
+3. The chains in test worlds whose genealogy is known by construction
+   a. one planting of the replicator at cell 1300, epoch 10; 1371 heritable cells at 200 (150 followed); 383 replays; ends: birth 1300@10 (mutation): 150
+   ok   every heritable cell's chain ends at the planting (its cell, its epoch, a change in place)
+   ok   every other cell reaches it through inherited copies (or replacements)
+   b. the same program planted twice, at cells 6192 and 6480, epoch 10; 2778 heritable carriers at 150, 150 followed; ends: birth 6192@10 (mutation): 82; birth 6480@10 (mutation): 68
+   ok   the test world is usable: no carrier of the replicator in the middle band (columns 160 to 223) at 150
+   ok   two origins: every chain ends at the planting on its own side, never at the other (equal programs, two ancestries)
+   c. a planting at epoch 5, the window from 50; 1635 heritable cells at 200, 150 followed; ends: older: 150
+   ok   every chain ends older than the window (a copy before the window: not a birth)
+   d. the replicator, a lineage detected before; 1828 heritable cells at 200, 150 followed; ends: earlier lineage: 150
+   ok   every chain that inherits ends as an earlier lineage (where a holder still carries one of its windows: its heritable variants may not)
+   e. the planting at 3120; at 120 the cells of columns 40 to 55 replaced by random bytes; 609 of them heritable again at 200, 150 followed; ends: birth 3120@10 (mutation): 150
+   ok   every wiped cell heritable again acquired it after the wipe (its first hop, in the interaction of epoch 120 or later), not at the first planting
+   ok   and every chain still ends at the planting
+   f. a broken replicator planted at 2080, epoch 10, repaired at 30; 1760 heritable cells at 200, 150 followed; ends: birth 2080@30 (mutation): 150
+   ok   every chain ends at the repair (epoch 30), not at the planting of a program that was not heritable
+   g. the variant at 2072 and the replicator at 2088, epoch 10; heritable carriers at 200: 77 of the replicator, 73 of the variant; 97 chains with a replacement; ends: birth 2088@10 (mutation): 77; birth 2072@10 (mutation): 73
+   ok   every carrier of the replicator ends at its planting
+   ok   every carrier of the variant ends at its planting
+   i. the planting at 2580, epoch 10; a lineage detected at 100 (4 cells: birth 2580@10:mutation, birth 2580@10:mutation, birth 2580@10:mutation, birth 2580@10:mutation); an appearance at 200 (40 cells)
+   ok   the earlier lineage's chains end at the planting
+   ok   every chain of the appearance ends at that birth: the earlier lineage's origin, not a new one
+   h. with mutations (0.0005): one planting at 1324, epoch 10; 1349 heritable cells at 200, 150 followed; ends: birth 1324@10 (mutation): 150
+   ok   with mutations, 150 of 150 chains end at the planting (95 % or more)
+
+4. The validator fails closed (valida.mjs), with a synthetic record and impossible variants of it
+   ok   the synthetic record is valid (no problems)
+   ok   39 of 39 impossible records rejected
+   ok   no record: rejected
+   ok   a file more in the folder: rejected
+
+5. The analysis (analisi.mjs), on synthetic records of every branch of the list, with a known answer
+   the classes' table: aged 33 28 4 0 0 1; shuffled 14 0 0 14 0 0; fresh 8 0 8 0 0 0 (exit code 0)
+   ok   the analysis runs, and counts the 33, 14 and 8 failed appearances
+   ok   the shuffled soup's are older, the fresh soup's earlier lineages, the aged soup's births, but those that reach a reference lineage's birth
+   ok   the origin rule applies (6 chains end at an earlier lineage's birth)
+   ok   the reading is printed, with the aged soup's 16 time-rule removals
+   ok   with another commit, the analysis reads nothing (exit code 1)
+
+6. Auditor 1's coverage (cobertura.mjs), with known answers, on a synthetic record of the continuity note's format
+   a copy 58, its mirror 58, shifted by 5 53, a piece of 20 bytes 20, one byte in four at its place 16, a donor 64
+   ok   the coverage counts the bytes one donor holds at one alignment, forward or backward, in a row or not
+   the synthetic appearance: threshold 51; cells 58/38 copy, 20/20 long piece, 0/0 none; the appearance long piece
+   ok   a copy reaches the threshold, a piece of 20 bytes in order does not (a long piece), a cell with nothing of the donors is none; a copy and a long piece of three: the appearance is a long piece
+
+every check passes

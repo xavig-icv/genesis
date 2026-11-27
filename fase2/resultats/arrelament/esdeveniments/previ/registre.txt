@@ -1,0 +1,581 @@
+(The machine's paths in three command lines below, the pilot's computation copy and the session's transcript, were replaced by a
+description before the note went into git: the project keeps the machine's paths out of the repository. Nothing else was changed.)
+
+== prova-1 (this entry was written by hand afterwards; see the last lines)
+command: node fase2/resultats/arrelament/esdeveniments/prova.mjs (through previ/executa.sh, inside the tool's time limit: timeout 1200)
+start: 2026-11-27 10:39:52 +0100 (the launch, from the session's transcript); the output was last written at 10:58:15 +0100; the time limit stopped the run at about 10:59:52 +0100 (timeout's exit code, 124), during section 3.g
+looked at the pilot or a series: no
+commit: 5b2c5b75; the note's folder untracked; nothing else changed in the repository
+the code as it was at the launch (the first version of the rules: an acquisition classified by its own step only), rebuilt from the session's transcript by previ/reconstrueix.mjs (the run reconstrueix-1, below) and kept in previ/prova-1-codi/; SHA-256 as git keeps it (LF):
+  0cf4fe77e23d8b4863335d216bca7ff45106c1114a9b26a860a9b1184168c5e0  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  c7162dd8b654c1552c758af7e12353f7b4c6a4dfac653df3ef94fdf541497a6e  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  e34fa2aaf85ae2906a0f91e46dced8492800204df0707f51c0f0dda396417afd  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  (the modules imported from other folders: those of the next entry, unchanged since 5b2c5b75)
+what it gave (previ/prova-1.txt, as the run left it): sections 1 and 2 pass; in section 3, a, b, c, d, e and f fail: with one planting and no mutations, hundreds of chains end in "births" that are not the planting (cells that received part of a copy from a heritable cell and completed it later, with their own bytes or a non-heritable partner's). The rule was changed: at an acquisition, every byte is traced back to a heritable holder (cadena.mjs, from prova-2 on).
+why by hand: the time limit stopped previ/executa.sh too, before it wrote this entry; since then previ/executa.sh writes each run's header before the run.
+== prova-2
+command: node fase2/resultats/arrelament/esdeveniments/prova.mjs
+start: 2026-11-27 10:55:02 +0100; end: 2026-11-27 11:07:19 +0100; exit code: 127
+looked at the pilot or a series: no
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  8a1950917bbf66e87ba3a9620b13512912ad8c23279cd2cfeaa1a606a8e5c18c  (working copy: 8a1950917bbf66e87ba3a9620b13512912ad8c23279cd2cfeaa1a606a8e5c18c)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  86f73184eafc9552d0c1d366adfabedb8b8cec813d85c31abd48a3af01b43b17  (working copy: 86f73184eafc9552d0c1d366adfabedb8b8cec813d85c31abd48a3af01b43b17)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  c7162dd8b654c1552c758af7e12353f7b4c6a4dfac653df3ef94fdf541497a6e  (working copy: c7162dd8b654c1552c758af7e12353f7b4c6a4dfac653df3ef94fdf541497a6e)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+note on prova-2 (written by hand): I stopped it at 11:07:19 +0100 (Stop-Process of its node process; hence the exit code 127). Sections 1 and 2 passed, and 3.a too (1,371 of 1,371 chains end at the planting; 501 replays, 11 minutes); with every heritable cell of every test world as a head, the rest would have outlasted the tool's time limit (timeout 3000), which would have stopped previ/executa.sh before its entry. From prova-3 on, each test world follows a fixed sample of its heritable cells.
+== reconstrueix-1
+command: node fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs <the session's transcript on this machine>
+start: 2026-11-27 11:08:24 +0100
+looked at the pilot or a series: no (the session transcript only)
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  8a1950917bbf66e87ba3a9620b13512912ad8c23279cd2cfeaa1a606a8e5c18c  (working copy: 8a1950917bbf66e87ba3a9620b13512912ad8c23279cd2cfeaa1a606a8e5c18c)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  344c461809fe3677d765b8f51044a23aeec638efa801e6bf8bc37bb5f1c47777  (working copy: 344c461809fe3677d765b8f51044a23aeec638efa801e6bf8bc37bb5f1c47777)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  005fe23fbfbb854f7bcd6ff87642b8e7afbdceb8551a286d364ae5246c67750b  (working copy: 005fe23fbfbb854f7bcd6ff87642b8e7afbdceb8551a286d364ae5246c67750b)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056  (working copy: 1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  86f73184eafc9552d0c1d366adfabedb8b8cec813d85c31abd48a3af01b43b17  (working copy: 86f73184eafc9552d0c1d366adfabedb8b8cec813d85c31abd48a3af01b43b17)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+end of reconstrueix-1: 2026-11-27 11:08:29 +0100; exit code: 0
+== prova-3
+command: node fase2/resultats/arrelament/esdeveniments/prova.mjs
+start: 2026-11-27 11:09:57 +0100
+looked at the pilot or a series: no
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  8a1950917bbf66e87ba3a9620b13512912ad8c23279cd2cfeaa1a606a8e5c18c  (working copy: 8a1950917bbf66e87ba3a9620b13512912ad8c23279cd2cfeaa1a606a8e5c18c)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  344c461809fe3677d765b8f51044a23aeec638efa801e6bf8bc37bb5f1c47777  (working copy: 344c461809fe3677d765b8f51044a23aeec638efa801e6bf8bc37bb5f1c47777)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  005fe23fbfbb854f7bcd6ff87642b8e7afbdceb8551a286d364ae5246c67750b  (working copy: 005fe23fbfbb854f7bcd6ff87642b8e7afbdceb8551a286d364ae5246c67750b)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056  (working copy: 1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  00630f6448adb8c0dc81abd638cc91e38dd12aca3a0476efd0fbf99558fc7dcc  (working copy: 00630f6448adb8c0dc81abd638cc91e38dd12aca3a0476efd0fbf99558fc7dcc)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+== prepara-1
+command: node fase2/resultats/arrelament/esdeveniments/prepara.mjs <the pilot folder of the pilot's computation copy on this machine>
+start: 2026-11-27 11:12:50 +0100
+looked at the pilot or a series: yes: the pilot's part-B records and the lineage note's trackings (data in git: the failed appearances, their cells and programs, the lineages before each census, the exposures), and the start captures of the 33 branches, copied from the pilot's computation copy with their SHA-256 checked; no branch run, no measure
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  53b3222c853ba01e64136271890bfe46d1784e0eef72d821e5ba1afb24f5f1e4  (working copy: 53b3222c853ba01e64136271890bfe46d1784e0eef72d821e5ba1afb24f5f1e4)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  8a1950917bbf66e87ba3a9620b13512912ad8c23279cd2cfeaa1a606a8e5c18c  (working copy: 8a1950917bbf66e87ba3a9620b13512912ad8c23279cd2cfeaa1a606a8e5c18c)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  344c461809fe3677d765b8f51044a23aeec638efa801e6bf8bc37bb5f1c47777  (working copy: 344c461809fe3677d765b8f51044a23aeec638efa801e6bf8bc37bb5f1c47777)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  005fe23fbfbb854f7bcd6ff87642b8e7afbdceb8551a286d364ae5246c67750b  (working copy: 005fe23fbfbb854f7bcd6ff87642b8e7afbdceb8551a286d364ae5246c67750b)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056  (working copy: 1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  00630f6448adb8c0dc81abd638cc91e38dd12aca3a0476efd0fbf99558fc7dcc  (working copy: 00630f6448adb8c0dc81abd638cc91e38dd12aca3a0476efd0fbf99558fc7dcc)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  9f009bdac9695e781c0f90df0453173366f92d087b30ada3309b3cdb15c23db7  (working copy: 9f009bdac9695e781c0f90df0453173366f92d087b30ada3309b3cdb15c23db7)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+end of prepara-1: 2026-11-27 11:14:19 +0100; exit code: 0
+end of prova-3: 2026-11-27 11:42:45 +0100; exit code: 1
+== prova-4
+command: node fase2/resultats/arrelament/esdeveniments/prova.mjs
+start: 2026-11-27 11:43:18 +0100
+looked at the pilot or a series: no
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  0c92585ce93c1697251705076d081e4c944dfaf3aaf7836a1010f2a26d822b3d  (working copy: 0c92585ce93c1697251705076d081e4c944dfaf3aaf7836a1010f2a26d822b3d)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  bd55f6ed7319c6dffc62c3dab98287756ac88450facf99c590d6498e72160944  (working copy: bd55f6ed7319c6dffc62c3dab98287756ac88450facf99c590d6498e72160944)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52  (working copy: dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  9bef4ac945d9a7763f9df0ed9dafab398ab14c42584535ce9d4a487fc870644a  (working copy: 9bef4ac945d9a7763f9df0ed9dafab398ab14c42584535ce9d4a487fc870644a)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  20c28e172a64cbe24e76f6688faa772d76cec28419e8213f296d1479c6687d36  (working copy: 20c28e172a64cbe24e76f6688faa772d76cec28419e8213f296d1479c6687d36)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056  (working copy: 1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  bea1e3d079670927ce5fc43e247d9706f49a5306f5847110e8f4fa5ae75f7dc2  (working copy: bea1e3d079670927ce5fc43e247d9706f49a5306f5847110e8f4fa5ae75f7dc2)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  be209f958ca7b88bf00cb42f955a19682a6901aab2bcbeb3e3af1929a7d533d4  (working copy: be209f958ca7b88bf00cb42f955a19682a6901aab2bcbeb3e3af1929a7d533d4)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+end of prova-4: 2026-11-27 12:15:43 +0100; exit code: 1
+== diag-1
+command: node fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+start: 2026-11-27 12:16:30 +0100
+looked at the pilot or a series: no
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  0c92585ce93c1697251705076d081e4c944dfaf3aaf7836a1010f2a26d822b3d  (working copy: 0c92585ce93c1697251705076d081e4c944dfaf3aaf7836a1010f2a26d822b3d)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  bd55f6ed7319c6dffc62c3dab98287756ac88450facf99c590d6498e72160944  (working copy: bd55f6ed7319c6dffc62c3dab98287756ac88450facf99c590d6498e72160944)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52  (working copy: dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  9bef4ac945d9a7763f9df0ed9dafab398ab14c42584535ce9d4a487fc870644a  (working copy: 9bef4ac945d9a7763f9df0ed9dafab398ab14c42584535ce9d4a487fc870644a)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  20c28e172a64cbe24e76f6688faa772d76cec28419e8213f296d1479c6687d36  (working copy: 20c28e172a64cbe24e76f6688faa772d76cec28419e8213f296d1479c6687d36)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056  (working copy: 1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0  (working copy: 6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0)  fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  bea1e3d079670927ce5fc43e247d9706f49a5306f5847110e8f4fa5ae75f7dc2  (working copy: bea1e3d079670927ce5fc43e247d9706f49a5306f5847110e8f4fa5ae75f7dc2)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  be209f958ca7b88bf00cb42f955a19682a6901aab2bcbeb3e3af1929a7d533d4  (working copy: be209f958ca7b88bf00cb42f955a19682a6901aab2bcbeb3e3af1929a7d533d4)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+end of diag-1: 2026-11-27 12:16:32 +0100; exit code: 0
+== referencies-1
+command: node fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+start: 2026-11-27 12:17:30 +0100
+looked at the pilot or a series: yes: the lineage note's trackings and the pilot's part-B records (in git): the counts of the other lineages first detected inside the appearances' windows and of their cells; no branch run, no measure
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  0c92585ce93c1697251705076d081e4c944dfaf3aaf7836a1010f2a26d822b3d  (working copy: 0c92585ce93c1697251705076d081e4c944dfaf3aaf7836a1010f2a26d822b3d)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  bd55f6ed7319c6dffc62c3dab98287756ac88450facf99c590d6498e72160944  (working copy: bd55f6ed7319c6dffc62c3dab98287756ac88450facf99c590d6498e72160944)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52  (working copy: dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  9bef4ac945d9a7763f9df0ed9dafab398ab14c42584535ce9d4a487fc870644a  (working copy: 9bef4ac945d9a7763f9df0ed9dafab398ab14c42584535ce9d4a487fc870644a)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  20c28e172a64cbe24e76f6688faa772d76cec28419e8213f296d1479c6687d36  (working copy: 20c28e172a64cbe24e76f6688faa772d76cec28419e8213f296d1479c6687d36)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056  (working copy: 1fe3162e1276557a9022fd4366051000dd0bfa80601262f2cdfa8863b40bf056)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0  (working copy: 6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0)  fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36  (working copy: 7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36)  fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  bea1e3d079670927ce5fc43e247d9706f49a5306f5847110e8f4fa5ae75f7dc2  (working copy: bea1e3d079670927ce5fc43e247d9706f49a5306f5847110e8f4fa5ae75f7dc2)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  be209f958ca7b88bf00cb42f955a19682a6901aab2bcbeb3e3af1929a7d533d4  (working copy: be209f958ca7b88bf00cb42f955a19682a6901aab2bcbeb3e3af1929a7d533d4)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+end of referencies-1: 2026-11-27 12:18:46 +0100; exit code: 0
+== prepara-2
+command: node fase2/resultats/arrelament/esdeveniments/prepara.mjs <the pilot folder of the pilot's computation copy on this machine>
+start: 2026-11-27 12:21:34 +0100
+looked at the pilot or a series: yes: as prepara-1, and the reference lineages of each census (the other tracked lineages first detected inside its window: their first census, cells and programs, from the trackings in git); no branch run, no measure
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  802b0d779d9f84e751dc42d0ef9ea0920e3654d01740284d3ae01875c1c5e783  (working copy: 802b0d779d9f84e751dc42d0ef9ea0920e3654d01740284d3ae01875c1c5e783)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  c718997f6797a9046dc0024524b568806566ff2b16789c115ca2bd8eb64d0a0f  (working copy: c718997f6797a9046dc0024524b568806566ff2b16789c115ca2bd8eb64d0a0f)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52  (working copy: dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  957cbce84915ed88e9ff10b0b8269b410383973e5c99e4544ca4e8612082316e  (working copy: 957cbce84915ed88e9ff10b0b8269b410383973e5c99e4544ca4e8612082316e)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  07c3bd55fb3babf6bce4e0b9ce9b82f3c49ad9d181a0a15398aa680c1a3984a2  (working copy: 07c3bd55fb3babf6bce4e0b9ce9b82f3c49ad9d181a0a15398aa680c1a3984a2)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb  (working copy: 97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0  (working copy: 6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0)  fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36  (working copy: 7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36)  fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  56437c0228ce1ca6165467c59095c79115ae907dd3b738d81681091d2644f5c4  (working copy: 56437c0228ce1ca6165467c59095c79115ae907dd3b738d81681091d2644f5c4)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc  (working copy: 17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+end of prepara-2: 2026-11-27 12:22:53 +0100; exit code: 0
+== prova-5
+command: node fase2/resultats/arrelament/esdeveniments/prova.mjs
+start: 2026-11-27 12:23:08 +0100
+looked at the pilot or a series: no
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  802b0d779d9f84e751dc42d0ef9ea0920e3654d01740284d3ae01875c1c5e783  (working copy: 802b0d779d9f84e751dc42d0ef9ea0920e3654d01740284d3ae01875c1c5e783)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  c718997f6797a9046dc0024524b568806566ff2b16789c115ca2bd8eb64d0a0f  (working copy: c718997f6797a9046dc0024524b568806566ff2b16789c115ca2bd8eb64d0a0f)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52  (working copy: dd2b63b471c2d87fffe60fbdc6b3bfb06f4ddf3716357d45e4adf902d8be8c52)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d  (working copy: 0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  07c3bd55fb3babf6bce4e0b9ce9b82f3c49ad9d181a0a15398aa680c1a3984a2  (working copy: 07c3bd55fb3babf6bce4e0b9ce9b82f3c49ad9d181a0a15398aa680c1a3984a2)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb  (working copy: 97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0  (working copy: 6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0)  fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36  (working copy: 7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36)  fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  56437c0228ce1ca6165467c59095c79115ae907dd3b738d81681091d2644f5c4  (working copy: 56437c0228ce1ca6165467c59095c79115ae907dd3b738d81681091d2644f5c4)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc  (working copy: 17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+== temps-1
+command: node fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+start: 2026-11-27 12:26:39 +0100
+looked at the pilot or a series: no
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  4bd4ed3e6ae8c1b18ccc1734ad9b361fedecdaec00131e80dfe7f12fbeb909ce  (working copy: 4bd4ed3e6ae8c1b18ccc1734ad9b361fedecdaec00131e80dfe7f12fbeb909ce)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  f6b3126db0e0ea4a06d3d70594993b26baa9b573ad077bf9f1c66662aaaba7fd  (working copy: f6b3126db0e0ea4a06d3d70594993b26baa9b573ad077bf9f1c66662aaaba7fd)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  d78c3ab99395b6a97b82f91c5766652a964a079e844a4050acec16c22cbc7e5c  (working copy: d78c3ab99395b6a97b82f91c5766652a964a079e844a4050acec16c22cbc7e5c)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d  (working copy: 0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  871db6d9b99f23671173738272e8ee6bc7a06953d3262c27e88273894c6deb13  (working copy: 871db6d9b99f23671173738272e8ee6bc7a06953d3262c27e88273894c6deb13)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb  (working copy: 97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0  (working copy: 6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0)  fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36  (working copy: 7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36)  fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  40ff2dc30930fcafa86452a024aa6e8d5b46177f802508091e90cb3681c95bb3  (working copy: 40ff2dc30930fcafa86452a024aa6e8d5b46177f802508091e90cb3681c95bb3)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc  (working copy: 17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+end of prova-5: 2026-11-27 12:59:58 +0100; exit code: 0
+end of temps-1: 2026-11-27 13:00:36 +0100; exit code: 0
+== prova-6
+command: node fase2/resultats/arrelament/esdeveniments/prova.mjs
+start: 2026-11-27 13:01:27 +0100
+looked at the pilot or a series: no
+commit: 5b2c5b75; changed or untracked anywhere in the repository (but previ/): 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  4bd4ed3e6ae8c1b18ccc1734ad9b361fedecdaec00131e80dfe7f12fbeb909ce  (working copy: 4bd4ed3e6ae8c1b18ccc1734ad9b361fedecdaec00131e80dfe7f12fbeb909ce)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  5eaf324d89c1914d3056f9880102bd6d15cccf217555182269bf002c86813b0c  (working copy: 5eaf324d89c1914d3056f9880102bd6d15cccf217555182269bf002c86813b0c)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  d78c3ab99395b6a97b82f91c5766652a964a079e844a4050acec16c22cbc7e5c  (working copy: d78c3ab99395b6a97b82f91c5766652a964a079e844a4050acec16c22cbc7e5c)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d  (working copy: 0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  871db6d9b99f23671173738272e8ee6bc7a06953d3262c27e88273894c6deb13  (working copy: 871db6d9b99f23671173738272e8ee6bc7a06953d3262c27e88273894c6deb13)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb  (working copy: 97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0  (working copy: 6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0)  fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36  (working copy: 7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36)  fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  40ff2dc30930fcafa86452a024aa6e8d5b46177f802508091e90cb3681c95bb3  (working copy: 40ff2dc30930fcafa86452a024aa6e8d5b46177f802508091e90cb3681c95bb3)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc  (working copy: 17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+end of prova-6: 2026-11-27 13:42:45 +0100; exit code: 0
+== final: the code as it enters the note's commit (2026-11-27 13:44:19 +0100)
+in the note's folder, not staged: 0; untracked: 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  4bd4ed3e6ae8c1b18ccc1734ad9b361fedecdaec00131e80dfe7f12fbeb909ce  (working copy: 4bd4ed3e6ae8c1b18ccc1734ad9b361fedecdaec00131e80dfe7f12fbeb909ce)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  5eaf324d89c1914d3056f9880102bd6d15cccf217555182269bf002c86813b0c  (working copy: 5eaf324d89c1914d3056f9880102bd6d15cccf217555182269bf002c86813b0c)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  d78c3ab99395b6a97b82f91c5766652a964a079e844a4050acec16c22cbc7e5c  (working copy: d78c3ab99395b6a97b82f91c5766652a964a079e844a4050acec16c22cbc7e5c)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d  (working copy: 0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  ed82b09a530ed4800b1bfd568d3bfa58443c2db54179676d19c8e8c53cc4c88f  (working copy: ed82b09a530ed4800b1bfd568d3bfa58443c2db54179676d19c8e8c53cc4c88f)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb  (working copy: 97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0  (working copy: 6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0)  fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36  (working copy: 7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36)  fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  40ff2dc30930fcafa86452a024aa6e8d5b46177f802508091e90cb3681c95bb3  (working copy: 40ff2dc30930fcafa86452a024aa6e8d5b46177f802508091e90cb3681c95bb3)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc  (working copy: 17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447  (working copy: ce7348fff1e4b68ed6063506b13298278c7f70a531a5d092bc7cfba197105447)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+changed since the last run (as git keeps it):
+  changed: eines/arrelament-analisi.mjs
+  changed: eines/arrelament.mjs
+  changed: eines/b1-comu.mjs
+  changed: eines/llindars-maduracio.mjs
+  changed: eines/pilot.mjs
+  changed: eines/sembra.mjs
+  changed: fase1/bff.js
+  changed: fase1/soup.js
+  changed: fase2/b2-serie.mjs
+  changed: fase2/census.js
+  changed: fase2/families.js
+  changed: fase2/inert.js
+  changed: fase2/llinatge.js
+  changed: fase2/maduracio-serie.mjs
+  changed: fase2/replication.js
+  changed: fase2/resultats/arrelament/continuitat/mesura.mjs
+  changed: fase2/resultats/arrelament/descendencia/traca.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/compara.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/comu.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/curta.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/mon.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/prova.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/valida.mjs
+  changed: fase2/resultats/arrelament/registre-copies/dades.mjs
+  changed: fase2/resultats/arrelament/registre-copies/mon.mjs
+  changed: fase2/resultats/arrelament/registre-copies/traca.mjs
+  changed: fase2/world.js
+  changed: fase2/resultats/arrelament/esdeveniments/llanca.sh
+  changed: fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+  (end of the list)
+note on the final block above (written by hand): its list of changes is wrong; --final read back its own lines, so every file appeared twice. Its SHA-256 are right. previ/executa.sh is fixed (it reads the last run's hashes first), and the final block below replaces this one.
+== final: the code as it enters the note's commit (2026-11-27 13:45:11 +0100)
+in the note's folder, not staged: 0; untracked: 0
+  f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017  (working copy: f6e7d27e2d79bf870e003a547f73167b64103433865093e9f2ac3675d2feb017)  eines/arrelament-analisi.mjs
+  5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e  (working copy: 5e2ca4ead84756171febf501e214d3aedc8ce5d3486438a7c452c9291ef5510e)  eines/arrelament.mjs
+  30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e  (working copy: 30317cdc8d2db951782301582ba055e37a34ff0780251d2d0a17584cc03c0b0e)  eines/b1-comu.mjs
+  f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e  (working copy: f453ae468bb7741cffb42a65f42bfdefd2f4e114124455dd31a3bb284b1bf81e)  eines/llindars-maduracio.mjs
+  3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66  (working copy: 3fe842d6b69486551514664427efd140b14d409206686ec1755f16ff99b09f66)  eines/pilot.mjs
+  d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955  (working copy: d223e9d46f2f999f0d283ded912f35a750aec5e2ad2ec9eb83b79fc901051955)  eines/sembra.mjs
+  dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e  (working copy: dc1a52d249488d8851e2f5d1993da17572d7bdf07cb9b4cf0ae8b551d3f7d26e)  fase1/bff.js
+  40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1  (working copy: 40d3278918b5ccab632890ca3ce4e3a300b0a47f5bfe29dd5066e036831cafd1)  fase1/soup.js
+  b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4  (working copy: b4b05e870ea7a41003f232583de17cf732fd67ff9c056d2154093eb840ea16d4)  fase2/b2-serie.mjs
+  3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179  (working copy: 3b8be23e5cdeb08ef3fe86166e174595889e834aa7b1d0320a0c165de5e06179)  fase2/census.js
+  1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e  (working copy: 1ded7336740b3e5f7cf8bd9a59cb31818f0d0fa830a26150a79bd37246bff19e)  fase2/families.js
+  bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed  (working copy: bc97fe79b8f8b3eb37ff89a17a10d291ae557b7a5071fabeef48fce1779519ed)  fase2/inert.js
+  17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe  (working copy: 17e40cd346809548d1a365133daaca831b4978e5b969349d591f64172b9a8fbe)  fase2/llinatge.js
+  1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd  (working copy: 1006d04fc33180f0e0a2a5ba4e9f9a7842ca5c0ba3f6baec272aaf644de467dd)  fase2/maduracio-serie.mjs
+  9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b  (working copy: 9238a0ae6e22669d813e6a43667bbb70452b9ad0bc98f604c083691bbda5b81b)  fase2/replication.js
+  623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90  (working copy: 623f19247caed746a2391b1238e3f10ad823a83a4f2e55b21f46df3530c80a90)  fase2/resultats/arrelament/continuitat/mesura.mjs
+  e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6  (working copy: e2c44c7fdaae4faf412da04e344d512dc9baba7268bdcbff574ac47322424ff6)  fase2/resultats/arrelament/descendencia/traca.mjs
+  4bd4ed3e6ae8c1b18ccc1734ad9b361fedecdaec00131e80dfe7f12fbeb909ce  (working copy: 4bd4ed3e6ae8c1b18ccc1734ad9b361fedecdaec00131e80dfe7f12fbeb909ce)  fase2/resultats/arrelament/esdeveniments/analisi.mjs
+  5eaf324d89c1914d3056f9880102bd6d15cccf217555182269bf002c86813b0c  (working copy: 5eaf324d89c1914d3056f9880102bd6d15cccf217555182269bf002c86813b0c)  fase2/resultats/arrelament/esdeveniments/cadena.mjs
+  d78c3ab99395b6a97b82f91c5766652a964a079e844a4050acec16c22cbc7e5c  (working copy: d78c3ab99395b6a97b82f91c5766652a964a079e844a4050acec16c22cbc7e5c)  fase2/resultats/arrelament/esdeveniments/cobertura.mjs
+  b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01  (working copy: b767c54da4b065b9b854725d5980d7deb663193226b00ddf759cf62b48868a01)  fase2/resultats/arrelament/esdeveniments/compara.mjs
+  0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d  (working copy: 0a4f8720b9b80a660ec881e48dee3c74fd786f75b9623e2f5bf7fe54e06f4d1d)  fase2/resultats/arrelament/esdeveniments/comu.mjs
+  70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699  (working copy: 70e5be4a8ffa47f37a14f63b5f8ee3a4ccf1e002187752ed3ff35847b1b21699)  fase2/resultats/arrelament/esdeveniments/curta.mjs
+  ed82b09a530ed4800b1bfd568d3bfa58443c2db54179676d19c8e8c53cc4c88f  (working copy: ed82b09a530ed4800b1bfd568d3bfa58443c2db54179676d19c8e8c53cc4c88f)  fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550  (working copy: f0cf01fdb4494024168ce4a39a9910f4ce158a64b6738118d0ef1ec593e2f550)  fase2/resultats/arrelament/esdeveniments/mon.mjs
+  97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb  (working copy: 97680c6fcd23ec4cd4cbfa5e75a0332d376a6176bdd8523b1faa75f8f390d1eb)  fase2/resultats/arrelament/esdeveniments/prepara.mjs
+  6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0  (working copy: 6ab1b505ec9af0116feb8aa111ac561538bcadb5b2223e04501eb2617eeb87b0)  fase2/resultats/arrelament/esdeveniments/previ/diag.mjs
+  c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213  (working copy: c54bdc62d34b49e6eb23d6f61002c7ddfb19709392e5fb9be4d249293afcd213)  fase2/resultats/arrelament/esdeveniments/previ/moduls.mjs
+  45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0  (working copy: 45d1cf152eaccd932a0844f778f2a5299e614d438da7aed51103c0750a1fe3a0)  fase2/resultats/arrelament/esdeveniments/previ/reconstrueix.mjs
+  7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36  (working copy: 7ed3b3c8c1f5ad696226466226345836cda4b863552e26a3be479872a0147e36)  fase2/resultats/arrelament/esdeveniments/previ/referencies.mjs
+  e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008  (working copy: e660f5f1b5d80d105448d1bdb658c30d3e67f15648fa1feedfa249c3158ce008)  fase2/resultats/arrelament/esdeveniments/previ/temps.mjs
+  40ff2dc30930fcafa86452a024aa6e8d5b46177f802508091e90cb3681c95bb3  (working copy: 40ff2dc30930fcafa86452a024aa6e8d5b46177f802508091e90cb3681c95bb3)  fase2/resultats/arrelament/esdeveniments/prova.mjs
+  17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc  (working copy: 17014cc8091617377a1861988eed2c6d026487d832e87b809d76cf20a106dddc)  fase2/resultats/arrelament/esdeveniments/valida.mjs
+  bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0  (working copy: bcc0def304342f2b6eee63fc6f195f242f0c6c7f37accfdc0b3b5662c031f5f0)  fase2/resultats/arrelament/registre-copies/dades.mjs
+  bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0  (working copy: bf5255a6e5977284fd951e94a094c4f722189afd9ad009fa3426aaf9e764bdf0)  fase2/resultats/arrelament/registre-copies/mon.mjs
+  e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0  (working copy: e8ad4c3b6a876ac83090e608177fd416b75c6c701a5d26d79eeb8e51a81395a0)  fase2/resultats/arrelament/registre-copies/traca.mjs
+  2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035  (working copy: 2cda6aebf477cb01459b6bef8a29b357bba71cda9b4532d374fe527e1bfac035)  fase2/world.js
+  6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc  (working copy: 6f63131b2f647d7fb1d0e3111a1c37818b0f072e93e6a0acb46367e46b0f5cdc)  fase2/resultats/arrelament/esdeveniments/llanca.sh
+  a07a4c65a60b12f1d996bf9f8c95669e3dcace6c294275c29548a516b1072871  (working copy: a07a4c65a60b12f1d996bf9f8c95669e3dcace6c294275c29548a516b1072871)  fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+changed since the last run (as git keeps it):
+  changed: fase2/resultats/arrelament/esdeveniments/esdeveniments.mjs
+  changed: fase2/resultats/arrelament/esdeveniments/previ/executa.sh
+  (end of the list)
