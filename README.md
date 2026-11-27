@@ -428,7 +428,8 @@ comes from and which cells it has passed through, checked against the simulator 
 - **The bytes of the aged soup's 16 failed appearances that the time rule removes passed through the dominant group's cells:** 0.70 to 0.98
   of them, within 1,250 epochs. **But so did their neighbourhood's** (15 of 16 within two cells of a carrier, where the cells around are
   0.59 to 0.81), and the dominant group spread within every window: the bit records exposure, not descent, and **does not show that they
-  are fragments** (audit 44). Post hoc, the bytes' origins by position point to mutated copies of the dominant group (auditor 1; a lead).
+  are fragments** (audit 44). Post hoc, the bytes' origins by position point to the dominant group's material at its position (auditor 1;
+  a lead; not to copies, audit 46).
 - **Without them, the aged soup's excess of failed appearances is not shown under this rule** (every variant contains 1; 2.27 [0.48,
   8.64] mixes two rules, and treated alike in both soups it is 4.55 [0.90, 22.91]), which is not to say there is none.
 - **The two bursts of seven same-census appearances are not one origin each,** and not copies of one another.
@@ -445,8 +446,8 @@ the same program (the exposure bit does not); then the same 18 branches again (n
   their neighbourhood; one of them a mosaic of pieces of 4 bytes or less), none "not a copy", and 12 are undecided:** by the rule fixed in the
   note, **we cannot tell.** All 16 carry many pairs of the dominant group's material,
   but only 2 hold 16 bytes in a row in its order, and a new arrangement of that material in pieces of 2 bytes or more would score as high:
-  the measure is specific to the material, not to its order (audit 45). Post hoc, a measure of continuity (auditor 1) points to 11 mutated
-  copies and 5 pieces: a lead, not a result.
+  the measure is specific to the material, not to its order (audit 45). Post hoc, 11 hold 16 bytes or more in the dominant group's order
+  (auditor 1); by a rule fixed before, 10 (entry 29); whether copies of the program or long pieces, not known (audit 46).
 - **The excess left is not shown under this rule** (4.55 [0.90, 22.91]). Removing only the four the rule calls copies (3.88 [1.13, 13.41])
   counts the 12 undecided as new; the excess lies between the two depending on what they are, and neither is a ratio of births.
 
@@ -460,11 +461,14 @@ adversarial controls made of its own material (pieces of 1, 2 and 4 bytes reorde
 18 branches every census of the main window passes them: **the measure separates the dominant group's order from its material**, as far as
 those controls test it.
 - **Of the aged soup's 16 failed appearances that the time rule removes, 10 carry 16 bytes or more in the dominant group's order** (runs of
-  21 to 63 bytes in one of its carriers), **6 only pieces of its material and none nothing of it:** by the rule fixed in the note, **mixed**
-  (two thirds would have needed 11). Audit 45's lead (11 mutated copies, 5 pieces) is neither confirmed nor contradicted. "Ordered" is not
-  "a copy of the program": a piece of 16 bytes or more is ordered too.
-- **The excess depends on what the pieces are,** which this measure does not decide: counted as fragments, 4.55 [0.90, 22.91]; as births,
-  6.15 [1.65, 29.51], whose lower end rests on removing the fresh soup's four unclassifiable appearances (with them, 3.08 [0.88, 11.04]).
+  21 to 63 bytes in one of its carriers), **6 do not and none carries nothing of it:** by the rule fixed in the note, **mixed** (two thirds
+  would have needed 11). 16 bytes or more in the dominant group's order: 11 post hoc (audit 45), 10 by a rule fixed before; whether they
+  are copies of the program or long pieces, not known. "Ordered" is not "a copy of the program": a piece of 16 bytes or more is ordered too;
+  and "pieces" is not "little material" (audit 46).
+- **The excess depends on what the pieces are,** which this measure does not decide, and on how the unclassifiable appearances are
+  counted: treating what is not known alike in both soups, both ends contain 1 (all out, 4.55 [0.90, 22.91]; all in, 3.08 [0.88,
+  11.04]); the pieces as births with the fresh soup's four unclassifiable removed, 6.15 [1.65, 29.51], is above 1 only because it treats
+  the two soups differently (audit 46). None is a ratio of births.
 
 See notebook [entry 29](quadern/index.html#entrada-29), in Catalan, or its [English text](quadern/resum.en.md#entry-29).
 
@@ -474,11 +478,12 @@ See notebook [entry 29](quadern/index.html#entrada-29), in Catalan, or its [Engl
   fragments undecided; the small record of copies (entry 27) finds that the bytes of the appearances the time rule removes passed through
   the dominant group's cells, like their neighbourhood's, which does not show fragments; a measure of descent (entry 28) cannot tell
   whether they are copies: it is specific to the dominant group's material, not to its order; and a measure of continuity (entry 29), which
-  does separate the order from the material, finds them mixed: 10 of 16 with 16 bytes or more in the dominant group's order, 6 with pieces
-  only. Where maturation acts is still not known. What could answer it is the owner's choice, after the audit of entry 29: the full record
-  of copies, with the appearances the time rule keeps and a definition of a new appearance fixed before; a way to tell a long piece from a
-  mutated copy; an intervention on the aged soup's first bytes; planting the natural lineages themselves; or a confirmatory series, after
-  the record. Planting again needs a new decision and the agreement of the three.
+  does separate the order from the material, finds them mixed: 10 of 16 with 16 bytes or more in the dominant group's order, 6 without;
+  whether copies of the program or long pieces, not known. Where maturation acts is still not known. What could answer it is the owner's
+  choice, after audit 46: a short note, with no branch run, that fixes in advance how to tell a copy from a long piece (auditor 1); a record
+  of copy events, tested first on known genealogies and then applied to the appearances the time rule keeps, with a definition of a new
+  appearance fixed before (auditor 2); an intervention on the aged soup's first bytes; planting the natural lineages themselves; or a
+  confirmatory series, after the record. Planting again needs a new decision and the agreement of the three.
 - **The ingredients of the chemistry:** the exploratory computation is done (entry 17). Level 2, the soup, if it is
   done, with a preregistered design.
 

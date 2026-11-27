@@ -428,8 +428,8 @@ apunta d'on ve cada byte i per quines cel·les ha passat, comprovada contra el s
 - **Els bytes de les 16 aparicions de la sopa vella que treu la regla del temps han passat per les cel·les del grup dominant:** del 0,70 al
   0,98, en 1.250 èpoques. **Però els del seu veïnat també** (15 de 16 a dues cel·les o menys d'un portador, on les cel·les del voltant en
   tenen del 0,59 al 0,81), i el grup dominant s'escampa dins de cada finestra: la marca diu per on han passat, no la descendència, i **no
-  mostra que siguin trossos** (l'auditoria 44). A posteriori, els orígens dels bytes per posició apunten a còpies mutades del grup dominant
-  (l'auditor 1; una pista).
+  mostra que siguin trossos** (l'auditoria 44). A posteriori, els orígens dels bytes per posició apunten al material del grup dominant a la
+  seva posició (l'auditor 1; una pista; no a còpies, l'auditoria 46).
 - **Sense elles, l'excés d'aparicions de la sopa vella no es mostra amb aquesta regla** (totes les variants contenen 1; el 2,27 [0,48;
   8,64] barreja dues regles, i tractant igual les dues sopes és 4,55 [0,90; 22,91]), i això no vol dir que no n'hi hagi.
 - **Les dues ràfegues de set aparicions d'un mateix cens no són una sola aparició cadascuna,** ni còpies l'una de l'altra.
@@ -446,8 +446,9 @@ de les d'una còpia independent del mateix programa (la marca de pas no ho fa); 
   alta i per sobre del seu veïnat; una d'elles, un mosaic de trossos de 4 bytes o menys), cap «no una còpia» i 12 queden sense decidir:** per
   la regla fixada, **no ho podem dir.** Totes 16 porten moltes parelles del material del
   grup dominant, però només 2 en porten 16 bytes seguits en el seu ordre, i un arranjament nou d'aquest material a trossos de 2 bytes o més
-  puntuaria igual: la mesura és específica del material, no del seu ordre (l'auditoria 45). A posteriori, una mesura de la continuïtat
-  (l'auditor 1) apunta a 11 còpies mutades i 5 trossos: una pista, no un resultat.
+  puntuaria igual: la mesura és específica del material, no del seu ordre (l'auditoria 45). A posteriori, 11 en porten 16 bytes o més en
+  l'ordre del grup dominant (l'auditor 1); per una regla fixada abans, 10 (l'entrada 29); si són còpies del programa o trossos llargs, no se
+  sap (l'auditoria 46).
 - **L'excés que queda no es mostra amb aquesta regla** (4,55 [0,90; 22,91]). Treient només les quatre que la regla diu còpies (3,88 [1,13;
   13,41]), les 12 sense decidir es compten com a noves; l'excés va de l'un a l'altre segons què siguin, i cap dels dos no és un quocient de
   naixements.
@@ -462,12 +463,14 @@ d'un portador del grup dominant, per sobre de les mutacions pròpies de la cel·
 amb mutacions), i a les mateixes 18 branques tots els censos de la finestra principal els passen: **la mesura separa l'ordre del grup
 dominant del seu material**, tant com aquests controls ho proven.
 - **De les 16 aparicions de la sopa vella que treu la regla del temps, 10 porten 16 bytes o més en l'ordre del grup dominant** (tirades de
-  21 a 63 bytes dins d'un portador seu), **6 només trossos del seu material i cap no en porta res:** per la regla fixada, **mixt** (per als
-  dos terços en calien 11). La pista de l'auditoria 45 (11 còpies mutades, 5 trossos) ni es confirma ni es contradiu. «En ordre» no vol dir
-  «una còpia del programa»: un tros de 16 bytes o més també hi surt.
-- **L'excés depèn del que siguin els trossos,** i aquesta mesura no ho decideix: comptats com a fragments, 4,55 [0,90; 22,91]; com a
-  naixements, 6,15 [1,65; 29,51], que té l'extrem baix per sobre d'1 només si es treuen les quatre de la sopa nova que no es poden classificar
-  (amb elles, 3,08 [0,88; 11,04]).
+  21 a 63 bytes dins d'un portador seu), **6 no, i cap no en porta res:** per la regla fixada, **mixt** (per als dos terços en calien 11).
+  16 bytes o més en l'ordre del grup dominant: 11 a posteriori (l'auditoria 45), 10 per una regla fixada abans; si són còpies del programa o
+  trossos llargs, no se sap. «En ordre» no vol dir «una còpia del programa»: un tros de 16 bytes o més també hi surt; i «trossos» no vol dir
+  «poc material» (l'auditoria 46).
+- **L'excés depèn del que siguin els trossos,** i aquesta mesura no ho decideix, i de com es compten les que no es poden classificar:
+  tractant igual les dues sopes el que no se sap, tots dos extrems contenen 1 (tot fora, 4,55 [0,90; 22,91]; tot dins, 3,08 [0,88; 11,04]);
+  els trossos com a naixements i les quatre de la nova fora, 6,15 [1,65; 29,51], només queda per sobre d'1 perquè no tracta igual les dues
+  sopes (l'auditoria 46). Cap no és un quocient de naixements.
 
 Vegeu l'[entrada 29](quadern/index.html#entrada-29).
 
@@ -478,11 +481,12 @@ Vegeu l'[entrada 29](quadern/index.html#entrada-29).
   del temps han passat per les cel·les del grup dominant, com els del seu veïnat, i això no mostra que siguin trossos; una mesura de
   descendència (l'entrada 28) no pot dir si són còpies: és específica del material del grup dominant, no del seu ordre; i una mesura de la
   continuïtat (l'entrada 29), que sí que separa l'ordre del material, les troba mixtes: 10 de 16 amb 16 bytes o més en l'ordre del grup
-  dominant, i 6 només amb trossos. On actua la maduració, encara no ho sabem. El que ho podria respondre ho tria el responsable, després de
-  l'auditoria de l'entrada 29: el registre sencer de les còpies, amb les aparicions que la regla del temps es queda i una definició d'aparició
-  nova fixada abans; una manera de separar un tros llarg d'una còpia mutada; una intervenció sobre els primers bytes de la sopa vella;
-  plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar demana una decisió nova i
-  l'acord dels tres.
+  dominant, i 6 sense; si són còpies del programa o trossos llargs, no se sap. On actua la maduració, encara no ho sabem. El que ho podria
+  respondre ho tria el responsable, després de l'auditoria 46: una nota curta, sense fer córrer cap branca, que fixi abans com se separa una
+  còpia d'un tros llarg (l'auditor 1); un registre dels esdeveniments de còpia, provat primer amb genealogies conegudes i aplicat després a
+  les aparicions que la regla del temps es queda, amb una definició d'aparició nova fixada abans (l'auditor 2); una intervenció sobre els
+  primers bytes de la sopa vella; plantar els llinatges naturals mateixos; o una sèrie confirmatòria, després del registre. Tornar a plantar
+  demana una decisió nova i l'acord dels tres.
 - **Els ingredients de la química:** el càlcul exploratori ja és fet (l'entrada 17). El nivell 2, la sopa, si es fa,
   amb un disseny preregistrat.
 

@@ -301,6 +301,11 @@ Llegeix-los abans de proposar canvis.
     commit i la versió de Node a la sortida, com la línia d'inici dels registres del pas 2b); la llista de tot el que s'ha provat, també
     del que no ha sortit; cap llavor de cap pla ni cap dada d'una sèrie no decidida; l'etiqueta
     «exploratori», també al quadern; una prova sencera curta abans d'un càlcul llarg. L'auditoria, després i en una sola ronda.
+    - **El que es fa córrer fora del càlcul** (l'acord dels tres, auditories 45 i 46, X-140): tot el que es fa córrer per a una nota fora del
+      càlcul que fixa (abans de la nota, i després fora dels passos previstos), també el que falla, es desa a `previ/` amb la sortida,
+      l'stderr, el codi de sortida, les hores i la SHA-256 del codi, i diu si ha mirat res del pilot o d'una sèrie. Les SHA-256, les dels
+      fitxers tal com els desa git (LF), també dels mòduls que la nota importa d'altres carpetes; el registre diu què canvia després de l'última
+      passada, i acaba amb les SHA-256 del codi tal com entra al commit de la nota.
   - **Confirmar,** com ara: protocol, auditoria, etiqueta i segell, amb mons nous, i l'efecte mínim i la potència fixats abans.
 - **La línia de la maduració** (11-11-2026): on actua la maduració (que aparegui un replicador, o que hi arreli) i per quin procés. El
   pas 1 (exploratori) és a `fase2/resultats/maduracio/descripcio/`, i els passos 2a, 2b i 3, a `escriptures/`, `recompte/` i `durada/`.
@@ -426,8 +431,8 @@ Llegeix-los abans de proposar canvis.
         també els que no ha tocat cap còpia, i el grup dominant s'escampa dins de cada finestra; la regla fixada gairebé no podia sortir d'una
         altra manera. **«Els seus bytes han passat per les cel·les del grup dominant, com els del seu veïnat»,** mai «fetes del material del
         grup dominant» sense dir què vol dir, ni «són còpies del grup dominant», ni «són trossos», tampoc com a lectura de la regla; mai
-        «suport directe» a la regla del temps («compatible, com ho era el lloc»). Els orígens per posició apunten a còpies mutades, a
-        posteriori (l'auditor 1, AUD-228): **una pista, no un resultat.**
+        «suport directe» a la regla del temps («compatible, com ho era el lloc»). Els orígens per posició apunten al material del grup
+        dominant a la seva posició, a posteriori (l'auditor 1, AUD-228): **una pista, no un resultat;** mai «còpies mutades» (AUD-236).
       - **«L'excés que queda sense les derivades de *D* no es mostra amb aquesta regla»,** mai «no hi ha excés» ni «l'excés eren trossos». El
         2,27 [0,48; 8,64] barreja dues regles: tractant igual les dues sopes, 4,55 [0,90; 22,91] (AUD-229 = AU2-221); mai el 2,27 sol com «el
         que queda de l'excés».
@@ -448,8 +453,9 @@ Llegeix-los abans de proposar canvis.
         només 2 de les 16 porten 16 bytes seguits. **Per la regla fixada no ho pot dir:** de les 16 de la sopa vella, 4 còpies, 0 «no una
         còpia», 12 sense decidir. **«No ho podem dir»,** mai «les 12 són còpies», ni «arranjaments nous», ni «trossos», **ni «cap no és un
         arranjament nou»** (la mesura no ho pot dir), ni «totes porten tirades de 16 bytes». El veïnat, un contrast descriptiu, no un negatiu
-        (AUD-232, AU2-226). A posteriori (l'auditor 1, una mesura de la continuïtat triada després), 11 còpies mutades i 5 trossos: **una pista,
-        no un resultat;** la pista de l'AUD-228, per la regla fixada «ni confirmada ni contradita».
+        (AUD-232, AU2-226). A posteriori (l'auditor 1, una mesura de la continuïtat triada després), 11 de les 16 amb 16 bytes o més en l'ordre
+        del grup dominant; per una regla fixada abans, 10 (l'entrada 29): **si són còpies del programa o trossos llargs, no se sap;** mai «11
+        còpies mutades» (AUD-236, l'auditoria 46).
       - **«L'excés que queda no es mostra amb aquesta regla»** (Rd = R1, 4,55 [0,90; 22,91], una identitat); l'Rd+ (3,88 [1,13; 13,41]) és l'R0
         menys quatre, i compta com a noves les 12 sense decidir: l'excés va de l'un a l'altre segons què siguin, mai «per sobre d'1» sol, i cap
         dels dos no és un quocient de naixements (AUD-233, AU2-227). La finestra de 250 no separa. «Un origen», **components per parelles
@@ -462,24 +468,40 @@ Llegeix-los abans de proposar canvis.
         l'ordre del grup dominant, passant per sobre de les mutacions pròpies) fixada abans i provada amb casos de resposta coneguda adversos,
         amb els validadors corregits. **El carril d'explorar, des d'ara** (`docs/disseny.md`, l'acord dels tres): tot el que es fa córrer per
         a una nota fora del càlcul que fixa (abans de la nota, i després fora dels passos previstos), també el que falla, es desa amb la
-        sortida, l'stderr, el codi de sortida, l'hora i la SHA-256 del codi, i diu si ha mirat res del pilot o d'una sèrie. Si `previ/` ha
-        d'acabar també amb la SHA-256 dels scripts tal com entren al commit de la nota, i si les SHA-256 han de ser les dels fitxers tal com
-        els desa git, ho preguntem a l'auditor 2 (X-140) abans d'escriure-ho.
+        sortida, l'stderr, el codi de sortida, l'hora i la SHA-256 del codi, i diu si ha mirat res del pilot o d'una sèrie. Les SHA-256 tal com
+        les desa git, també dels mòduls importats, i les del commit de la nota: l'acord dels tres a l'auditoria 46 (a «Dos carrils»).
     - **La mesura de la continuïtat** (26-11-2026, l'entrada 29, exploratori; `fase2/resultats/arrelament/continuitat/`, amb `previ/`, el que
       es va fer córrer abans de la nota i, declarada, una comprovació a posteriori, amb les SHA-256 del codi tal com és i tal com el desa git):
-      la tirada més llarga de bytes seguits d'una cel·la que és, en el mateix ordre, **dins d'un sol portador** de la meitat A, cada parella
-      del mapa, passant per sobre de fins a 2 mutacions pròpies seguides; tres classes («en ordre», 16 bytes o més; «trossos»; «res»); controls
+      la tirada més llarga de bytes seguits d'una cel·la que és, en el mateix ordre, **dins d'un sol portador** de la meitat A, passant per
+      sobre de fins a 2 mutacions pròpies seguides (orígens de mutació que no són al mapa), cada parella de bytes no passats per sobre, del
+      mapa (**la longitud compta els bytes passats per sobre:** 16 bytes poden portar 6 orígens del portador i cap parella del mapa; a les
+      aparicions, de 17 a 55 no passats per sobre; AU2-231); tres classes («en ordre», 16 bytes o més; «trossos»; «res»); controls
       a cada cens, també adversos fets del seu propi material; el recompte, una forquilla (Rf, Rb, Rb+). **Els registres desen els orígens de
       les cel·les puntuades:** `analisi.mjs --code d4edbb28` ho mesura tot sense tornar a fer córrer res. La `--check` i el comparador són
       d'aquesta nota (els validadors de les notes d'abans, encara oberts).
       - **Tots els censos de la finestra principal passen els controls:** separa l'ordre del grup dominant del seu material, **tant com
         aquests controls ho proven**. Un tros de 16 bytes o més surt en ordre per construcció: **«en ordre» no és «una còpia del programa»**.
       - **De les 16 de la sopa vella, 10 en ordre, 6 trossos i 0 «res»: per la regla fixada, «mixt»**, mai «10 són còpies», «6 són naixements»
-        ni «arranjaments nous». La pista de l'auditoria 45, «ni confirmada ni contradita» (amb el portador, 10 i 6; sense, 11 i 5). Dues
+        ni «arranjaments nous». **«16 bytes o més en l'ordre del grup dominant: 11 a posteriori, 10 per una regla fixada abans; si són còpies del
+        programa o trossos llargs, no se sap»** (AUD-236; mai «11 còpies mutades»). «Trossos» és «sense 16 bytes seguits en l'ordre d'un
+        portador», no «poc material»: a posteriori, 4 de les 6 tenen de 30 a 38 bytes d'un sol portador al seu lloc (AUD-237). Dues
         sensibilitats arriben als dos terços per una aparició: no es llegeixen.
-      - **L'excés «depèn del que siguin els trossos»** (Rf 4,55 [0,90; 22,91]; Rb 6,15 [1,65; 29,51]), i l'extrem baix de l'Rb depèn de treure
-        les quatre de la nova que no es poden classificar (Rb+ 3,08 [0,88; 11,04]); mai «hi ha excés» ni «no n'hi ha».
-      - **L'ordre del grup dominant es va arranjar dins de la finestra** (la comprovació a posteriori: de 0 a 14 de les 177 a 385 parelles del
-        mapa eren veïnes a l'inici); com, la nota no ho mesura.
+      - **L'excés «depèn del que siguin els trossos»,** i de com es compten les que no es poden classificar: **tractant igual les dues sopes el
+        que no se sap, Rf (4,55 [0,90; 22,91]) i Rb+ (3,08 [0,88; 11,04]) contenen 1;** l'Rb (6,15 [1,65; 29,51]) només queda per sobre perquè
+        no ho fa (AUD-238, AU2-233). Cap no és un quocient de naixements ni un límit; l'Rf+ (l'auditor 2, a posteriori), 2,27 [0,48; 8,64]: de les quatre, només l'Rb queda per sobre d'1. Mai «hi ha
+        excés» ni «no n'hi ha».
+      - **L'ordre del grup dominant es va fer dins de la finestra** (la comprovació a posteriori: de 0 a 14 de les 177 a 385 parelles del
+        mapa eren veïnes a l'inici); quan, on, des de quines cel·les i en quina seqüència, la nota no ho mesura: mai «i després es va
+        escampar» (AU2-234). No el fan còpies desplaçades ni recombinades, que conserven els veïns (un 7 % de veïnes; AUD-240). **La mesura
+        segueix la procedència, no el programa:** una còpia del programa feta d'una altra manera és un tercer fals negatiu. Els controls
+        proven l'alineament, no la genealogia (AU2-232).
+      - **L'auditoria 46** (27-11-2026; tots dos l'accepten com a exploratòria, cap càlcul nou; les correccions, de lectura): la `--check`
+        d'aquesta nota accepta cinc registres impossibles que no són a les dades (AUD-239, AU2-235, obertes com les de les notes d'abans: es
+        corregeixen abans de tornar a fer servir el codi); el comentari de `mesura.mjs` «0 if the cell holds no map pair» no és cert amb
+        tots els bytes del portador separats per mutacions (AU2-231). **El que ve, dues propostes:** l'auditor 1, una nota curta sense cap
+        branca que fixi abans com se separa una còpia d'un tros llarg (quatre classes, la cobertura d'un sol portador, els valors, l'Rb+, la
+        sopa barrejada com a primera prova cega); l'auditor 2, un registre dels esdeveniments de còpia (la font, el destí, el material, les
+        mutacions, l'adquisició de l'herència), provat primer amb genealogies conegudes, i després les 17 aparicions que la regla del temps es
+        queda. Ho tria el responsable.
     - ***λ*det són les aparicions detectades, no el ritme de formació** (AU2-160), i el producte amb *P*(arrela | detectada), una
       aproximació (AU2-161). «Dominant»: la meitat o més de les hereditàries del cens inert, a totes dues parts (AU2-158).

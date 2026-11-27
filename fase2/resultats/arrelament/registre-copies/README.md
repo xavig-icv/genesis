@@ -168,8 +168,8 @@ carried the dominant group's windows. **But the bit records exposure (where byte
 neighbourhood is D-derived too:** 15 of the 16 are one or two cells from a carrier of the dominant group, where the cells at the same
 distance are 0.59 to 0.81 D on average, and their percentile among those cells is 0.35 to 0.86. The dominant group appeared and spread
 within every window (no carrier at any window's start), so the rule could hardly have come out otherwise: **it does not show that they are
-fragments.** Post hoc, the bytes' origins by position point to mutated copies of the dominant group's program (auditor 1; a lead, not a
-result). **Without the D-derived, the excess of failed appearances in the aged soup is not shown under this rule** (Rc, 2.27 [0.48, 8.64],
+fragments.** Post hoc, the bytes' origins by position point to the dominant group's material at its position (auditor 1; a lead, not a
+result; "mutated copies" corrected after audit 46, AUD-236). **Without the D-derived, the excess of failed appearances in the aged soup is not shown under this rule** (Rc, 2.27 [0.48, 8.64],
 which mixes two rules; treated alike in both soups it is R1 again, 4.55 [0.90, 22.91]; every variant contains 1), which is not to say that
 there is no excess. And **the two bursts of seven are not one origin each:** by the note's rule, six components of its provenance graph in
 each, which are not six births.
@@ -199,9 +199,10 @@ each, which are not six births.
    - **The bytes' origins by position** (auditor 1, post hoc, audit 44; AUD-228): the record also carries each byte's origin, and a copy
      keeps its program's origins at the same positions. With the dominant group's carriers at *E* as the reference (0.41 to 0.80; they make
      the map) and the cells far from it at 0.000, 15 of the 16 have as much of the dominant group's ancestry at their own positions as its
-     carriers (0.84 to 1.25 times their mean), and all 16 more than the median of their neighbourhood: they look like mutated copies of the
-     dominant group's program. A measure and a threshold chosen after seeing the data, in six branches with seven of the 16 from one: a
-     lead, not a result.
+     carriers (0.84 to 1.25 times their mean), and all 16 more than the median of their neighbourhood: they carry the dominant group's
+     material at its position, which a mosaic of pieces of different carriers, each in its place, would also give (corrected after audit
+     46, AUD-236: "they look like mutated copies" said more than the measure could). A measure and a threshold chosen after seeing the data,
+     in six branches with seven of the 16 from one: a lead, not a result.
    - **Moved within the window:** almost none of their bytes stayed unchanged in its own place since the window's start (the `self`
      column, 0.00 to two decimals); 0.10 to 0.40 of them have a mutation in their ancestry within the window, and 0.06 to 0.28 a `+` or `-`
      (flags on each byte's ancestry, not counts of events).
@@ -248,8 +249,9 @@ each, which are not six births.
   carriers, **and so has their neighbourhood**. The bit cannot tell a mutated copy of the dominant group's program from a new arrangement of
   bytes that passed through its cells, and with the dominant group spreading within every window the class could hardly have come out
   otherwise: **it does not show that they are fragments.** The bytes' origins, by position, could tell them apart, and the note did not use
-  them for it; post hoc they point to mutated copies (auditor 1). **"Their bytes passed through the dominant group's cells, like their
-  neighbourhood's"; never "they are copies of the dominant group", nor "they are fragments".**
+  them for it; post hoc they point to the dominant group's material at its position (auditor 1; not to copies: AUD-236, audit 46). **"Their
+  bytes passed through the dominant group's cells, like their neighbourhood's"; never "they are copies of the dominant group", nor "they are
+  fragments".**
 - **The excess:** once the D-derived are removed, it is not shown under this rule (Rc, Rc′, both sensitivities and the symmetric recount
   contain 1). With entry 26, where the excess was "neither separated from fragmentation nor shown to be fragments": the bit is consistent
   with the time rule, as place was, and adds no support of its own. **"The excess left without the D-derived is not shown"**, never "there
@@ -304,3 +306,10 @@ capture), accept it as exploratory, and ask for nothing to be computed again. **
 - **Details** (auditor 1, N-1, N-2, N-4): in entry 27, the fresh soup's four are at censuses where the dominant group is first detected at
   the same census or later; "0.70 to 0.98 of their bytes", not "almost all"; and world 7037's shuffled appearance, the only one with less bit
   than its neighbourhood (0.39 against 0.89, percentile 0.06), is classed "mixed", not "not from D".
+
+## After audit 46 (27 November 2026)
+
+**The lead of the bytes' origins by position** (AUD-228) said "mutated copies" of what that measure could not tell from a mosaic of pieces of
+different carriers, each in its place (AUD-236; the phrase was auditor 1's, who withdraws it). It reads "they point to the dominant group's
+material at its position", above; the section before this one keeps the words it had, as the record of audit 44. Entries 28 and 29 tested
+other measures of the same appearances: whether they are copies of the program or long pieces, none of them says.

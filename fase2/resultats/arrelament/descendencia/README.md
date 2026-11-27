@@ -244,11 +244,11 @@ whom; and a copy made before the window's start is not seen as one (its bytes ar
   arrangement** of the dominant group's material. And the rule asked a copy to stand out from its neighbourhood, which near the dominant group
   holds its material, in pieces and in copies, too: a condition of place, the right one for the exposure bit, not for a measure of descent;
   the neighbourhood is a descriptive contrast, not a known negative.
-- **Post hoc** (auditor 1 at audit 45: a measure and a threshold chosen after seeing the data, on the same branches), by the order and
-  bridging their own mutations, 11 of the 16 look like mutated copies of the dominant group's program (world 7074's is the whole program with
-  16 pairs broken by its own mutations and nothing else) and 5 like pieces of its material mixed with other material (7059's three and two of
-  7052's). **A lead, not a result.** Auditor 1's lead of audit 44 (AUD-228) is not tested by a measure fixed before: by the rule fixed here,
-  neither confirmed nor contradicted; post hoc, it fits 11 and said too much for 5.
+- **Post hoc** (auditor 1 at audit 45: a measure and a threshold chosen after seeing the data, on the same branches), 11 of the 16 hold 16
+  bytes or more in the dominant group's order, passing over their own mutations (world 7074's, the whole program with 16 pairs broken by its
+  own mutations and nothing else); by a rule fixed before, 10 within one carrier (entry 29). **Whether they are copies of the program or long
+  pieces, neither measure says** (corrected after audit 46, AUD-236: "11 look like mutated copies" said more than the measure could). Auditor
+  1's lead of audit 44 (AUD-228) points to the dominant group's material at its position, not to copies.
 - **The excess left (Rd): not shown under this rule** (4.55 [0.90; 22.91]); never "there is no excess". Rd+ (3.88 [1.13; 13.41], a
   sensitivity) is R0 minus the four aged copies and counts as new the 12 undecided, which carry the dominant group's material: the excess left
   lies between Rd and Rd+ depending on what these 12 are (from 2.27 to 7.76 by how the abstentions are counted; auditor 1, post hoc). These
@@ -323,3 +323,11 @@ measured, and how", the rule and "What would change my mind") is as it was, incl
   kept.
 - **Entry 28's "the full record … could say"** (N-3) is withdrawn: with the same score and the same control it would classify other
   appearances, not answer for these 16.
+
+## After audit 46 (27 November 2026)
+
+**The post hoc lead** (AUD-236; the phrase was auditor 1's, who withdraws it; auditor 2 accepts the lead only as "ordered by a post hoc
+rule"): "11 mutated copies, 5 pieces", above and in the section before this one, reads "post hoc, 11 of the 16 hold 16 bytes or more in the
+dominant group's order, passing over their own mutations (auditor 1, audit 45); by a rule fixed before, 10 within one carrier (entry 29);
+whether they are copies of the program or long pieces, neither measure says". "The reading" is corrected; the section above keeps the words
+it had, as the record of audit 45.

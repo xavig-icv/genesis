@@ -617,8 +617,9 @@ the dominant group, where the cells at the same distance are 0.59 to 0.81 D on a
 dominant group had no carrier at the start of any main window and spread within it, and one cell from a carrier 0.61 to 0.84 of the cells
 that are not appearances are D-derived (auditor 1, post hoc). The bit records exposure, where bytes have been, not which program they come
 from. **The bytes' origins by position** could tell a copy from a new arrangement: post hoc (auditor 1), 15 of the 16 have as much of the
-dominant group's ancestry at their own positions as its carriers, and all 16 more than the median of their neighbourhood; they look like
-mutated copies of the dominant group's program, a lead from a measure chosen after seeing the data, not a result. Almost none of their
+dominant group's ancestry at their own positions as its carriers, and all 16 more than the median of their neighbourhood; they carry the
+dominant group's material at its position (which a mosaic of pieces of different carriers, each in its place, would also give), a lead from
+a measure chosen after seeing the data, not a result. Almost none of their
 bytes stayed unchanged in its place since the window's start: 10 to 40 % have a mutation in their ancestry, 6 to 28 % a `+` or `-`. With
 the 250-epoch window, 11 are D-derived, one mixed and four older than the window: a matching window was already present 250 epochs before
 the census, which does not date the lineage.
@@ -658,6 +659,11 @@ in each burst were six components of the note's rule, all joined by a shared sta
 and 250 epochs before the census" does not follow (AU2-222). The data check accepts impossible records and the short test's comparator exits
 0 on a difference: both open, like the earlier notes' (AU2-219, AU2-223); the baseline is descriptive (AU2-224). And three details from
 auditor 1 (N-1, N-2, N-4).
+
+*Corrected after audit 46 (27 November 2026).* The lead of the origins by position said "mutated copies" of what that measure could not tell
+from a mosaic of pieces of different carriers, each in its place (AUD-236; the phrase was auditor 1's, who withdraws it): it points to the
+dominant group's material at its position, as the text above now says. Entries 28 and 29 tested other measures: whether the appearances are
+copies of the program or long pieces, none of them says.
 
 <a id="entry-28"></a>
 ## Entry 28 · 26 November 2026 · The soup before life, part eleven: copies or new arrangements (exploratory)
@@ -720,9 +726,11 @@ not (none). All 16 carry many pairs of the dominant group's material; only 2 hol
 its material in pieces of 2 bytes or more would score as high, so **the measure cannot say that an appearance is not a new arrangement.** The
 rule also asked a copy to stand out from its neighbourhood, which near the dominant group holds its material too: a condition of place, not
 of descent. Never "the 12 are copies", "new arrangements" or "fragments". **The measure is specific to the dominant group's material**
-(none in the test worlds' controls, none far from the dominant group), **not to its order.** Post hoc, by the order and bridging their own
-mutations (auditor 1 at audit 45, a measure chosen after seeing the data), 11 of the 16 look like mutated copies of the dominant group's
-program and 5 like pieces of its material: a lead, not a result; auditor 1's lead of entry 27 is not tested by a measure fixed before.
+(none in the test worlds' controls, none far from the dominant group), **not to its order.** Post hoc (auditor 1 at audit 45, a measure
+chosen after seeing the data), 11 of the 16 hold 16 bytes or more in the dominant group's order, bridging their own mutations; by a rule
+fixed before, 10 within one carrier (entry 29); **whether they are copies of the program or long pieces, neither measure says** (corrected
+after audit 46: "11 look like mutated copies" said more than the measure could). Auditor 1's lead of entry 27 points to the dominant
+group's material at its position, not to copies.
 **The excess left is not shown under this rule** — never "there is no excess"; it lies between Rd and Rd+ depending on what the 12
 undecided are, and neither is a ratio of births. The order of origins says what was copied together within the window, not by whom; the 17
 aged appearances the time rule keeps are not classified; exploratory, and where maturation acts is still not known (AUD-184 = AU2-151).
@@ -743,6 +751,11 @@ none of them in the real data: open, fixed before the code is used again (AUD-23
 outputs (AU2-230). The three scripts whose hashes at the note's commit differ from the last run before the note were not touched: only
 their line ends (CRLF in the working copy, LF in git) differ. "The full record could say" is withdrawn (N-3).
 
+*Corrected after audit 46 (27 November 2026).* "11 of the 16 look like mutated copies" (audit 45's lead) said more than the measure could:
+a piece of 16 bytes or more reaches it too (AUD-236; the phrase was auditor 1's, who withdraws it, and auditor 2 accepts the lead only as
+"ordered by a post hoc rule"). It reads "16 bytes or more in the dominant group's order: 11 post hoc, 10 by a rule fixed before; copies of the
+program or long pieces, not known", as the text above now says.
+
 <a id="entry-29"></a>
 ## Entry 29 · 26 November 2026 · The soup before life, part twelve: sixteen bytes in order (exploratory)
 
@@ -752,18 +765,20 @@ data checks corrected. Auditor 1 added three classes, the recount as a range and
 sit in one concrete carrier and that the map's habit of joining pairs of different carriers be tested. The owner agreed on 26-11-2026. The
 note (`fase2/resultats/arrelament/continuitat/`) was written before anything was computed on the pilot's branches; everything run before it
 (test worlds only) is in `previ/`, with its output, stderr, exit code, times and the code's SHA-256 as it is and as git keeps it. Nothing is
-planted and no simulator is touched. Auditor 1's post hoc numbers at audit 45 (11 mutated copies and 5 pieces in the aged soup) had been
-seen: for the aged soup the note is not independent of them.
+planted and no simulator is touched. Auditor 1's post hoc numbers at audit 45 (in the aged soup, 11 with 16 bytes or more in the dominant
+group's order and 5 without) had been seen: for the aged soup the note is not independent of them.
 
 **The measure.** The origins and the map are entry 28's. **The ordered run:** the longest run of a cell's consecutive bytes that sits, in the
-same order (forward or backward, at any offset), in one carrier of half A; every pair in it is a map pair, and it may pass over up to 2 of
-the cell's own mutations in a row, which keep their place. **Three classes:** ordered (a run of 16 bytes or more), pieces (shorter, but some
+same order (forward or backward, at any offset), in one carrier of half A; it may pass over up to 2 of the cell's own mutations in a row
+(mutation origins not in the map, which may have come from another cell), which keep their place, and every pair of its bytes that are not
+passed over is a map pair. Its length counts the bytes it passes over: 16 bytes can hold as few as 6 of the carrier's origins and no map
+pair (auditor 2, audit 46). **Three classes:** ordered (a run of 16 bytes or more), pieces (shorter, but some
 map pair), none (no map pair); an appearance is ordered if half or more of its cells are. **The controls of each census** (fail one and its
 appearances are not classified): half B 90 % or more ordered; far cells 95 % or more none; and adversarial cases made of that census's own
 material: half B's cells cut into pieces of 1, 2 and 4 bytes and reordered, and 16 pieces of 2 bytes in a far cell, each 5 % or fewer
 ordered; a map pair repeated over the whole cell, none; 4 own mutations inside a 32-byte run, 90 % or more ordered. **The recount, a
 range:** Rf counts the pieces as fragments (only "none" is counted again), Rb as births ("pieces" and "none"), Rb+ adds back the
-unclassifiable (a sensitivity).
+unclassifiable (a sensitivity). Rf and Rb+ treat what is not known the same way in both soups; Rb does not (audit 46).
 
 **The checks, before use.** Both auditors' counterexamples of audit 45 stop there: 2-byte blocks reordered (entry 28's score 32; the run
 2), a repeated pair (63; here 2), a mosaic of 8-byte pieces (8), a chain of 8 programs joined by shared origins where every pair is a map
@@ -781,12 +796,15 @@ all 9,246 the same. Nothing failed or was repeated; one check after the fact, de
 **The controls.** Of 19 tracked censuses, 12 have a *D*, and at the main window every one passes every control: half B 992 to 1,000 of
 1,000 ordered; far cells none, 1,000 of 1,000; reordered pieces of 1, 2 and 4 bytes, at most 1 of 500 ordered; 2-byte pieces in a far
 cell and the repeated pair, none; 4 own mutations, all ordered. **On these worlds the measure separates the dominant group's order from its
-material,** as far as these controls test it. A piece of 16 bytes or more is ordered by construction (440 to 499 of 500). With the 250-epoch
+material,** as far as these controls test it. They test the alignment, not a genealogy, and the adversarial ones pass almost by
+construction: filters, not estimates of a sensitivity or a specificity (both auditors, audit 46). A piece of 16 bytes or more is ordered by
+construction (440 to 499 of 500). With the 250-epoch
 window, 4 of 12 censuses fail (half B 782 to 878 of 1,000 ordered).
 
 **The appearances the time rule removes. The aged soup, 16: 10 ordered, 6 pieces, none none.** The ten ordered hold runs of 21 to 63 bytes
-in one carrier (7074's 63 of 64 in both its cells; the others 21 to 50); the six pieces, runs of 5 to 14 bytes (7014 at window 7, two of
-7052, the three of 7059). Auditor 1's measure made exact (the map's order, no carrier) gives 11 and 5, audit 45's numbers; the carrier
+in one carrier (7074's 63 of 64 in both its cells; the others 21 to 50; 20 to 55 of their bytes not passed over); the six pieces, runs of 5
+to 14 bytes (7014 at window 7, two of 7052, the three of 7059). "Pieces" means no 16 bytes in a row in a carrier's order, not little
+material: post hoc (auditor 1, audit 46), 4 of the 6 hold 30 to 38 bytes of a single carrier in their place, not in a row. Auditor 1's measure made exact (the map's order, no carrier) gives 11 and 5, audit 45's numbers; the carrier
 condition moves one, 7014 at 9,000: 39 bytes in the map's order, at most 11 in one carrier. **The shuffled soup, 9: 3 ordered, 4 pieces, 0
 none, 2 with no earlier dominant lineage** (no one had measured its continuity); the fresh soup's 4 cannot be classified. The matched cells
 are often ordered too (54 to 123 of 200); the ten ordered sit at percentiles 0.78 to 0.96 of theirs (descriptive). No two appearances of a
@@ -798,24 +816,53 @@ or not there).
 **An odd column.** For each ordered run, the output says how many of its pairs were two neighbouring bytes of one cell at the window's start:
 none, but for 3 of 12 in one run. A check after the fact, declared, shows the same for the dominant group's order itself: of the map's 177
 to 385 pairs, 0 to 14 are of that kind; the rest hold a mutation's origin or two origins that were not neighbours at the start. **The order
-the measure looks for was arranged within the window and then spread among the carriers.** How (recombined or shifted copies), this note
-does not measure.
+the measure looks for was made within the window.** When, where, by which cells and in what sequence (made once and spread, or made again
+and again), this note does not measure. Nor is it what shifted or recombined copies would make, which keep neighbours: of the carriers'
+adjacent pairs whose two origins come from one start cell, only 7 % were neighbours there; the rest were the same byte or 2, 4 or 8
+positions apart (auditor 1, audit 46).
 
 **The recount.** Rf (the pieces as fragments): no appearance is none, so it is the time rule's, 4.55 [0.90, 22.91], containing 1. Rb (the
 pieces as births): 6.15 [1.65, 29.51], above 1; but its lower end rests on removing the fresh soup's four unclassifiable appearances: with
-them (Rb+), 3.08 [0.88, 11.04], containing 1. With the 250-epoch window Rf lies above 1 (5.35 [1.31, 26.06]): a sensitivity, blind to
-copies older than itself and failing its controls at four censuses.
+them (Rb+), 3.08 [0.88, 11.04], containing 1. **Rb is not symmetric:** it keeps the aged soup's pieces and removes the fresh soup's
+unclassifiable appearances; at both ends that treat what is not known alike, Rf and Rb+, the interval contains 1. None is a ratio of births,
+nor are they the ends of an interval: the fourth way, the pieces as fragments and the unclassifiable kept (auditor 2's Rf+, post hoc), gives
+2.27 [0.48, 8.64], containing 1: of the four, only Rb lies above 1. With the 250-epoch window Rf lies above 1 (5.35 [1.31, 26.06]): a sensitivity, blind to copies older than itself and failing its
+controls at four censuses.
 
 **The reading.** By the rule fixed in the note, **mixed:** 10 of 16 carry 16 bytes or more in the dominant group's order, in one of its
-carriers, over their own mutations, and 6 only pieces of its material; neither class reaches two thirds (11 were needed). Audit 45's lead
-(11 mutated copies, 5 pieces) is **neither confirmed nor contradicted** by a rule fixed before: with the run in one carrier, 10 and 6.
+carriers, over their own mutations, and 6 do not; neither class reaches two thirds (11 were needed). **16 bytes or more in the dominant
+group's order: 11 post hoc (audit 45), 10 by a rule fixed before, on the same sample; whether they are copies of the program or long pieces,
+not known.** Neither an independent confirmation nor a refutation.
 **"Ordered" is not "a copy of the program":** a piece of 16 bytes or more is ordered too, and of the ten only 7074's spans almost the whole
 program. Never "10 are copies", "6 are births" or "new arrangements". **The instrument holds:** every census of the main window passes its
 controls, the adversarial ones made of its own material included; it is the first measure in this line, fixed before, that separates the
 dominant group's order from its material, as far as these controls test it. **The excess depends on what the pieces are,** which this
-measure does not decide; never "there is an excess" or "there is none". An ordered run says that 16 bytes or more of a cell sit in the
-order of the dominant group's carriers, made within the window, not who copied whom; it cannot see a copy made before the window or a
-variant held by too few carriers; the 17 aged appearances the time rule keeps are not classified; exploratory, and where maturation acts is
-still not known (AUD-184 = AU2-151). Next: one audit round (46); then the owner's choice, with a measure of continuity that holds its
-controls: the full record of copies (auditor 2's proposal), with the 17 the time rule keeps and a definition of a new appearance fixed
-before and tested with known cases (AU2-209), or first a way to tell a long piece from a mutated copy.
+measure does not decide, and on how the unclassifiable appearances are counted: treating what is not known alike in both soups, the
+interval contains 1; Rb lies above 1 only because it does not. Never "there is an excess" or "there is none". An ordered run says that 16
+bytes or more of a cell sit in the order of the dominant group's carriers, made within the window, not who copied whom; it follows the
+bytes' provenance, not the program, so a copy of the program made another way, with its origins in another order, is not seen; it cannot
+see a copy made before the window or a variant held by too few carriers; the data checks accept some impossible records, none in the real
+data; the 17 aged appearances the time rule keeps are not classified; exploratory, and where maturation acts is still not known (AUD-184 =
+AU2-151). Next: one audit round (46, below); then the owner's choice. Both auditors agree that these branches need not be run again, that
+nothing should be planted, and that no measure made from the saved origins is a genealogy. Auditor 1 proposes, before the full record, a
+short note with no branch run that fixes in advance how to tell a copy from a long piece (four classes, the coverage of a single carrier and
+the values, with the shuffled soup as the first blind test); auditor 2, a record of copy events (source, destination, material, mutations,
+and when a cell acquires heredity), tested first with known genealogies and then applied to the 17 appearances the time rule keeps.
+
+*Corrected after audit 46 (27 November 2026).* Both auditors reproduced the note (auditor 1 rebuilt the map and the ordered run by brute
+force, the same at 3,718 cells, and re-ran four aged branches with a tracer of their own, with the records' origins; auditor 2 classified the
+30 cells with an alignment search of their own and checked the records' flags, rings and repeated cells), accept it as exploratory with
+"mixed" as the rule's reading, and ask for no computation. The outputs do not change; the text above is the corrected one. "11 mutated
+copies" (audit 45's lead) said more than any measure could, a piece of 16 bytes or more reaching it too (AUD-236; auditor 1's phrase,
+withdrawn); post hoc, by auditor 1's coverage, 9 of the 11 are as close to one carrier as the carriers are to one another and 2 are long
+pieces, a lead. "6 only pieces" said too little: 4 of the 6 hold 30 to 38 bytes of a single carrier in their place (AUD-237). Rb is not
+symmetric and Rb+ is; neither Rf nor Rb bounds a ratio of births (AUD-238, AU2-233). A run's length is not a count of matching bytes: one
+origin in three gives a run of 64 with no map pair, and the code's comment "0 if the cell holds no map pair" is wrong in that case; in the
+real appearances 17 to 55 of the ordered cells' bytes are not passed over, and no class changes (AU2-231). The controls test the alignment,
+not a genealogy (AU2-232). "Arranged within the window and then spread" added a sequence nobody observed, and "recombined or shifted copies"
+named two ways that keep neighbours, which the carriers do not; the measure follows provenance, so a copy of the program made another way is
+a third false negative (AU2-234, AUD-240). The data checks accept a mutation origin without its flag, a flag on a start origin, more excluded
+carriers than appearance cells, a ring cell far from its appearance and a ring that differs between windows, none in the real records: open,
+like the earlier notes' (AUD-239, AU2-235). And details of the lane (auditor 1, N-1 to N-3; auditor 2): what changed in the analysis before
+the last run before the note (two checks added, two strings repaired, nothing else), the modules imported from other folders (not hashed,
+unchanged), and "nothing failed" meaning the planned steps after the note.
